@@ -1,0 +1,136 @@
+# Use vi bindings
+setw -g mode-keys vi
+set-option -g status-keys vi
+
+# Allow nested tmux sessions by making "C-b b" possible for sending a control
+# sequence to a nested session
+bind-key b send-prefix
+
+set-window-option -g mode-mouse off
+
+# reload
+#bind-key R source-file ~/.tmux.conf; display-message "source-file done"
+
+bind-key R respawn-window
+
+# Copy mode
+unbind [
+# Enter copy mode
+bind Escape copy-mode
+# Select text
+bind-key -t vi-copy 'v' begin-selection
+# Vertical selection
+bind-key -t vi-copy 'r' rectangle-toggle
+# Copy text to buffer
+bind-key -t vi-copy 'y' copy-selection
+# move tmux copy buffer into x clipboard
+bind C-y run "tmux save-buffer - | xclip -i -selection clipboard"
+# Paste buffer
+# XXX disabled as it breaks navigating windows
+#unbind p
+#bind p paste-buffer
+# move x clipboard into tmux paste buffer
+bind C-p run "xclip -o | tmux load-buffer -"
+
+# Bind horizontal and vertical splits to more memorable sequences
+#unbind-key %
+#unbind-key '"'
+bind-key | split-window -h
+bind-key - split-window -v
+
+# Panes
+bind up resize-pane -U 5
+bind down resize-pane -D 5
+bind left resize-pane -L 5
+bind right resize-pane -R 5
+unbind space
+bind tab next-layout
+unbind C-o
+bind r rotate-window
+bind-key C-a last-window
+
+# Add vim-like navigation bindings
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# pane movement
+bind-key @ command-prompt -p "create pane from:"  "join-pane -s '%%'"
+bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
+
+# window movement / renumbering like in screen's :number
+bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
+bind-key . command-prompt "move-window -r -t '%%'"
+
+# mpd control
+#bind -n F1 run-shell 'mpc toggle >/dev/null 2>&1'
+#bind -n F2 run-shell 'mpc'
+#bind -n F3 run-shell 'mpc prev >/dev/null 2>&1'
+#bind -n F4 run-shell 'mpc next >/dev/null 2>&1'
+#bind -n F5 run-shell 'mpc volume -5 >/dev/null 2>&1'
+#bind -n F6 run-shell 'mpc volume +5 >/dev/null 2>&1'
+
+# Change status bar colors
+#set-option -g status on
+#set-option -g status-position "top"
+#set-option -g status-interval 2
+#set-option -g status-utf8 on
+#set-option -g status-justify "left"
+##set-option -g status-left-length 60
+#set-option -g status-right-length 100
+## https://github.com/erikw/tmux-powerline
+##set-option -g status-left "#(~/repos/perso/tmux-powerline/status-left.sh)"
+##set-option -g status-right "#(~/repos/perso/tmux-powerline/status-right.sh)"
+
+#set -g status-fg white
+#set -g status-bg black
+#set -g status-right-fg blue
+#set-window-option -g window-status-fg green
+#set-window-option -g window-status-bg black
+#set-window-option -g window-status-current-fg black
+#set-window-option -g window-status-current-bg green
+
+set-option -g mouse-select-pane off
+#set-option -g pane-active-border-fg black
+#set-option -g pane-active-border-bg cyan
+#set-option -g pane-border-fg white
+#set-option -g pane-border-bg black
+
+# change foreground-background for the current window
+#setw -g window-status-current-attr reverse
+setw -g monitor-activity off
+
+# highlight status bar on activity
+set -g visual-activity off
+
+# Don't wait for escape sequences
+set -s escape-time 0
+
+# Window status format (default: '#I:#W#F')
+set-window-option -g window-status-format ' #I:#W '
+set-window-option -g window-status-current-format ' #I:#W '
+
+# Use zsh (login shell)
+set -g default-command '/bin/zsh -l'
+
+# Disable automatic changes of titles
+set -g set-titles on
+setw -g automatic-rename off
+set -g renumber-windows on
+
+# Create session
+new-session -s0 -n 'updates' 'yaourt -Syu'
+# for future windows, stay open after the command exits
+set set-remain-on-exit on
+new-window -n 'irssi' irssi
+new-window -n 'mutt' mutt
+# for future windows, revert r-o-e to global value
+set set-remain-on-exit off
+new-window -n 'coding'
+new-window -n 'downloads' -c ~/.jd/downloads
+split-window -h -p 50 -t 0 -c ~/Downloads
+select-window -t 0
+
+## https://powerline.readthedocs.org/en/latest/overview.html#usage
+source "/home/baptiste/.config/powerline/tmux/powerline.conf"
