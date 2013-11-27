@@ -9,10 +9,8 @@ export SHELL=`which zsh`
 
 fpath=( ~/.zsh_functions $fpath )
 [[ -d $HOME/.zsh_functions/VCS_Info ]] \
-    && fpath[1]=( ${fpath[1]} $HOME/.zsh_functions/**/* )
+  && fpath[1]=( ${fpath[1]} $HOME/.zsh_functions/**/* )
 
-#setopt prompt_subst
-#setopt transient_rprompt
 autoload -U colors && colors
 autoload -U promptinit
 autoload -Uz vcs_info
@@ -24,12 +22,16 @@ if [ "$OS" != "SunOS" ]; then
   if who am i | grep -q '([^:]*)$'; then
     SSH=yes
   fi
+  user=$(who am i | cut -f 1 -d' ')
+  if [ $(id -u) -eq 0 -a -z "$user" -a "$user" != 'root' ]; then
+    SSH=yes
+  fi
 fi
 
 # Do we have root privileges ?
 ROOT=no
-if [ "$(id -u)" -eq 0 ]; then
-	ROOT=yes
+if [ $(id -u) -eq 0 ]; then
+  ROOT=yes
 fi
 
 # Define constants for colors in prompt.
@@ -52,33 +54,29 @@ CSEP="%{[0m[33;1m%}"
 CHOST="%{[37;1m%}"
 CPROMPT="%{[1;32m%}"
 case $ROOT in
-	yes)
-	CSTART="%{[31;1m%}"
-	case $SSH in
-		yes)
-		CHOST="%{[41;37;1m%}"
-		;;
-	esac
-	;;
-	no)
-	CSTART="%{[34;1m%}"
-	case $SSH in
-		yes)
-		CHOST="%{[46;37;1m%}"
-		;;
-	esac
-	;;
+  yes)
+  CSTART="%{[31;1m%}"
+  case $SSH in
+    yes)
+    CHOST="%{[41;37;1m%}"
+    ;;
+  esac
+  ;;
+  no)
+  CSTART="%{[34;1m%}"
+  case $SSH in
+    yes)
+    CHOST="%{[46;37;1m%}"
+    ;;
+  esac
+  ;;
 esac
-
-#FSTART="%{[31;1m%}" FHOST="%{[32;1m%}" FPATH="%{[33;1m%}" FRESET="%{[0m%}"
-#FTP_PROMPT="$FSTART $FHOST\$ZFTP_USER@\$ZFTP_HOST$FRESET $FPATH\$ZFTP_PATH$FRESET$FSTART $FRESET "
-#FTP_PROMPT="$FSTART $FHOST\$ZFTP_USER@\$ZFTP_HOST$FRESET $FPATH"
 
 case $TERM in
   screen|screen-w)
   alias titlecmd="screen_title"
   ;;
-  xterm)
+  xterm|rxvt)
   alias titlecmd="xterm_title"
   ;;
   *)
@@ -96,26 +94,15 @@ screen_title() {
 }
 
 precmd () {
-    titlecmd "%m %4~"
-    vcs_info
-    setprompt
+#  titlecmd "%m %4~"
+  vcs_info
+  setprompt
 }
 
 ## autoset title based on location and process
 preexec () {
-  titlecmd "%m %4~" ":" "\"$1\""
+#  titlecmd "%m %4~" ":" "\"$1\""
 }
-
-# Executed after a command has been read and is to be executed.
-#function preexec {
-#    # if running gnu screen, set the window name to the last run command
-#    # FIXME any way to make this not change certain window titles (by window
-#    # number or if a title isn't already set?)
-#    if [[ "$TERM" =~ "screen" ]]; then
-#        local CMD=${1[(wr)^(*=*|ssh|sudo|-*)]}
-#        echo -ne "\ek$CMD\e\\"
-#    fi
-#}
 
 ssh() {
   titlecmd "$1";
@@ -169,99 +156,99 @@ zstyle ':vcs_info:svn:*' branchformat ''
 
 ### Store the localrev and global hash for use in other hooks
 function +vi-hg-storerev() {
-    user_data[localrev]=${hook_com[localrev]}
-    user_data[hash]=${hook_com[hash]}
+  user_data[localrev]=${hook_com[localrev]}
+  user_data[hash]=${hook_com[hash]}
 }
 
 ### Dynamically set hgrevformat based on if the local rev is available
 # We don't always know the local revision, e.g. if use-simple is set
 # Truncate long hash to 12-chars but also allow for multiple parents
 function +vi-hg-hashfallback() {
-    if [[ -z ${hook_com[localrev]} ]] ; then
-        local -a parents
+  if [[ -z ${hook_com[localrev]} ]] ; then
+    local -a parents
 
-        parents=( ${(s:+:)hook_com[hash]} )
-        parents=( ${(@r:12:)parents} )
-        hook_com[rev-replace]="${(j:+:)parents}"
+    parents=( ${(s:+:)hook_com[hash]} )
+    parents=( ${(@r:12:)parents} )
+    hook_com[rev-replace]="${(j:+:)parents}"
 
-        ret=1
-    fi
+    ret=1
+  fi
 }
 
 ### Show when mq itself is under version control
 function +vi-mq-vcs() {
-    # if [[ -d ${hook_com[base]}/.hg/patches/.hg ]]; then
-        # hook_com[hg-mqpatch-string]="mq:${hook_com[hg-mqpatch-string]}"
-    # fi
+  # if [[ -d ${hook_com[base]}/.hg/patches/.hg ]]; then
+  # hook_com[hg-mqpatch-string]="mq:${hook_com[hg-mqpatch-string]}"
+  # fi
 }
 
 ### Show marker when the working directory is not on a branch head
 # This may indicate that running `hg up` will do something
 function +vi-hg-branchhead() {
-    local branchheadsfile i_tiphash i_branchname
-    local -a branchheads
+  local branchheadsfile i_tiphash i_branchname
+  local -a branchheads
 
-    local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
+  local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
 
-    # Bail out if any mq patches are applied
-    [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
+  # Bail out if any mq patches are applied
+  [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
 
-    if [[ -r ${branchheadsfile} ]] ; then
-        while read -r i_tiphash i_branchname ; do
-            branchheads+=( $i_tiphash )
-        done < ${branchheadsfile}
+  if [[ -r ${branchheadsfile} ]] ; then
+    while read -r i_tiphash i_branchname ; do
+      branchheads+=( $i_tiphash )
+    done < ${branchheadsfile}
 
-        if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
-            hook_com[revision]="${red}^${grey}${hook_com[revision]}"
-        fi
+    if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
+      hook_com[revision]="${red}^${grey}${hook_com[revision]}"
     fi
+  fi
 }
 
 # Show remote ref name and number of commits ahead-of or behind
 function +vi-git-st() {
-    local ahead behind remote
-    local -a gitstatus
+  local ahead behind remote
+  local -a gitstatus
 
-    # Are we on a remote-tracking branch?
-    remote=${$(/usr/bin/git rev-parse --verify ${hook_com[branch]}@{upstream} \
-        --symbolic-full-name --abbrev-ref 2>/dev/null)}
+  # Are we on a remote-tracking branch?
+  remote=${$(/usr/bin/git rev-parse --verify ${hook_com[branch]}@{upstream} \
+    --symbolic-full-name --abbrev-ref 2>/dev/null)}
 
-    if [[ -n ${remote} ]] ; then
-        # for git prior to 1.7
-        # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-        ahead=$(/usr/bin/git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-        (( $ahead )) && gitstatus+=( "${green}+${ahead}${blue}" )
+  if [[ -n ${remote} ]] ; then
+    # for git prior to 1.7
+    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
+    ahead=$(/usr/bin/git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    (( $ahead )) && gitstatus+=( "${green}+${ahead}${blue}" )
 
-        # for git prior to 1.7
-        # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-        behind=$(/usr/bin/git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-        (( $behind )) && gitstatus+=( "${red}-${behind}${blue}" )
+    # for git prior to 1.7
+    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
+    behind=$(/usr/bin/git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+    (( $behind )) && gitstatus+=( "${red}-${behind}${blue}" )
 
-	if [ $behind -gt 0 -o $ahead -gt 0 ]; then
-        	hook_com[branch]="${brightwhite}${hook_com[branch]} ${brightblue}[${remote} ${(j:/:)gitstatus}]"
-	fi
+    if [ $behind -gt 0 -o $ahead -gt 0 ]; then
+      hook_com[branch]="${brightwhite}${hook_com[branch]} ${brightblue}[${remote} ${(j:/:)gitstatus}]"
     fi
+  fi
 }
 
 # Show count of stashed changes
 function +vi-git-stash() {
-    local -a stashes
+  local -a stashes
 
-    if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
-        stashes=$(/usr/bin/git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+=" (${stashes} stashed)"
-    fi
+  if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
+    stashes=$(/usr/bin/git stash list 2>/dev/null | wc -l)
+    hook_com[misc]+=" (${stashes} stashed)"
+  fi
 }
 
 # Show count of non tracked files
 function +vi-git-untracked() {
-    local -a untracked
+  local -a untracked
 
-    if [[ ! -z $(/usr/bin/git ls-files --other --exclude-standard 2> /dev/null) ]] {
-        untracked=$(/usr/bin/git ls-files --other --exclude-standard 2>/dev/null | wc -l)
-        hook_com[misc]+=" (${untracked} untracked)"
-        #hook_com[misc]+=" (${untracked} %{[1;31m%}…%F{blue})"
-    }
+  if [[ ! -z $(/usr/bin/git ls-files --other --exclude-standard 2> /dev/null) ]] {
+    untracked=$(/usr/bin/git ls-files --other --exclude-standard 2>/dev/null | wc -l)
+    hook_com[misc]+=" (${untracked} untracked)"
+    #hook_com[misc]+=" (${untracked} %{[1;31m%}…%F{blue})"
+  }
 }
 
 # Actualy defines the prompt varaibles.
@@ -270,92 +257,84 @@ function +vi-git-untracked() {
 # %~ current path
 # %# prompt symbol
 function setprompt() {
-    local -a lines infoline
-    local x i pet dungeon filler i_width i_pad pathcolor pathprompt
+  local -a lines infoline
+  local x i pet dungeon filler i_width i_pad pathcolor pathprompt
 
-    # A domestic animal, the _tame dog_ (_Canis familiaris_)
-    pet=d
+  # A domestic animal, the _tame dog_ (_Canis familiaris_)
+  pet=d
 
-    ### First, assemble the top line
-    # Current dir; show in yellow if not writable
-    [[ -w $PWD ]] && pathcolor=${brightgrey} || pathcolor=${red}
+  ### First, assemble the top line
+  # Current dir; show in yellow if not writable
+  [[ -w $PWD ]] && pathcolor=${brightgrey} || pathcolor=${red}
 
-    # Username & host if using ssh
-    [[ -n $SSH_CLIENT ]] && pathprompt="${brightyellow}@${CHOST}%m"
-    infoline+=("${CSTART}%n${pathprompt}${reset} ")
+  # Username & host if using ssh
+  [ $SSH = 'yes' ] && pathprompt="${brightyellow}@${CHOST}%m"
+  infoline+=("${CSTART}%n${pathprompt}${reset} ")
 
-    # Local path
-    infoline+=("${brightwhite}[${pathcolor}%~${brightwhite}]")
+  # Local path
+  infoline+=("${brightwhite}[${pathcolor}%~${brightwhite}]")
 
-    datetime="${brightgrey}%T"
-    returncode="${brightred}%139(?,SigSegv,%130(?,SigInt,%138(?,SigBus,%134(?,SigAbrt,%?))))"
-    jobsnumber="%1(j, ${white}[${brightred}%j${white}],)"
-    rprompt="${brightwhite}[%(?,${datetime},${returncode})${jobsnumber}${brightwhite}]"
-    infoline+=( " ${rprompt}${white}" )
-    # Strip color to find text width & make the full-width filler
-    zstyle -T ":pr-nethack:" show-pet && i_pad=4 || i_pad=0
+  datetime="${brightgrey}%T"
+  returncode="${brightred}%139(?,SigSegv,%130(?,SigInt,%138(?,SigBus,%134(?,SigAbrt,%?))))"
+  jobsnumber="%1(j, ${white}[${brightred}%j${white}],)"
+  rprompt="${brightwhite}[%(?,${datetime},${returncode})${jobsnumber}${brightwhite}]"
+  infoline+=( " ${rprompt}${white}" )
+  # Strip color to find text width & make the full-width filler
+  zstyle -T ":pr-nethack:" show-pet && i_pad=4 || i_pad=0
 
-    i_width=${(S)infoline//\%\{*\%\}} # search-and-replace color escapes
-    i_width=${#${(%)i_width}} # expand all escapes and count the chars
+  i_width=${(S)infoline//\%\{*\%\}} # search-and-replace color escapes
+  i_width=${#${(%)i_width}} # expand all escapes and count the chars
 
-    filler="${reset}${grey}${(l:$(( $COLUMNS - $i_width - $i_pad ))::.:)}"
-    infoline[2]=( "${infoline[2]} ${filler}" )
+  filler="${reset}${grey}${(l:$(( $COLUMNS - $i_width - $i_pad ))::.:)}"
+  infoline[2]=( "${infoline[2]} ${filler}" )
 
-    ### Now, assemble all prompt lines
-    lines+=( ${(j::)infoline} )
-    [[ -n ${vcs_info_msg_0_} ]] && lines+=( "${vcs_info_msg_0_}" )
-    lines+=( "%(1j.${brightwhite}%j${reset} .)%(0?.${brightwhite}.${red})${brightwhite} %# " )
+  ### Now, assemble all prompt lines
+  lines+=( ${(j::)infoline} )
+  [[ -n ${vcs_info_msg_0_} ]] && lines+=( "${vcs_info_msg_0_}" )
+  lines+=( "%(1j.${brightwhite}%j${reset} .)%(0?.${brightwhite}.${red})${brightwhite} %# " )
 
-    ### Add dungeon floor to each line
-    # Allow easy toggling of pet display
-    if zstyle -T ":pr-nethack:" show-pet ; then
-        dungeon=${(l:$(( ${#lines} * 3 ))::.:)}
-        dungeon[$[${RANDOM}%${#dungeon}]+1]=$pet
+  ### Add dungeon floor to each line
+  # Allow easy toggling of pet display
+  if zstyle -T ":pr-nethack:" show-pet ; then
+    dungeon=${(l:$(( ${#lines} * 3 ))::.:)}
+    dungeon[$[${RANDOM}%${#dungeon}]+1]=$pet
 
-        for (( i=1; i < $(( ${#lines} + 1 )); i++ )) ; do
-            case $i in
-                1) x=1;; 2) x=4;; 3) x=7;; 4) x=10;;
-            esac
-            lines[$i]="${brightgrey}${dungeon[x,$(( $x + 2 ))]} ${lines[$i]}${reset}"
-        done
-    fi
+    for (( i=1; i < $(( ${#lines} + 1 )); i++ )) ; do
+      case $i in
+        1) x=1;; 2) x=4;; 3) x=7;; 4) x=10;;
+      esac
+      lines[$i]="${brightgrey}${dungeon[x,$(( $x + 2 ))]} ${lines[$i]}${reset}"
+    done
+  fi
 
-    # Default prompt
-    PROMPT=${(F)lines}
-    # Right prompt
-    #RPROMPT=""
-    # Prompt for loops
-    PROMPT2='{%_}  '
-    # Prompt for selections
-    PROMPT3='{ … }  '
-    # So far I don't use "setopt xtrace", so I don't need this prompt
-    # PROMPT4=''
+  # Default prompt
+  PROMPT=${(F)lines}
+  # Right prompt
+  #RPROMPT=""
+  # Prompt for loops
+  PROMPT2='{%_}  '
+  # Prompt for selections
+  PROMPT3='{ … }  '
+  # So far I don't use "setopt xtrace", so I don't need this prompt
+  # PROMPT4=''
 }
-
-# function zle-keymap-select {
-    # VIMODE="${${KEYMAP/vicmd/ M:command}/(main|viins)/}"
-    # zle reset-prompt
-# }
-# zle -N zle-keymap-select
-#
-########## Or this one?:
-# function zle-line-init zle-keymap-select {
-    # RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    # RPS2=$RPS1
-    # zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
 
 # Turn on color output
 if [ $(uname) = FreeBSD ]; then
   export CLICOLOR=true
 fi
 
-#  bindkeys
+# bindkeys
+# Find keycode:
+# execute cat, press the key and crtl + c
 bindkey -v
 bindkey -M vicmd "^R" redo
 bindkey -M vicmd "u" undo
+bindkey -M vicmd "k" history-beginning-search-backward
+bindkey -M vicmd "j" history-beginning-search-forward
+bindkey -M viins '^r' history-incremental-search-backward # crtl-r
+bindkey -M vicmd '^r' history-incremental-search-backward # crtl-r
+
 bindkey "^A"    beginning-of-line       # Home
 bindkey "^E"    end-of-line             # End
 bindkey "^D"    delete-char             # Del
@@ -366,22 +345,21 @@ bindkey "[6~" history-search-forward  # PgDn
 #bindkey "^?"    backward-delete-char    # Backspace
 bindkey "^?" backward-delete-char
 
-bindkey "^[[1~" beginning-of-line # Home (console)
-bindkey "^[[4~" end-of-line # End (console)
-bindkey "^[OH" beginning-of-line # Home (gnome-terminal)
-bindkey "^[OF" end-of-line # End (gnome-terminal)
-bindkey "^[[H" beginning-of-line # Home (konsole+xterm)
-bindkey "^[[F" end-of-line # End (konsole+xterm)
+bindkey "[1~" beginning-of-line # Home (console)
+bindkey "[4~" end-of-line # End (console)
+bindkey "OH" beginning-of-line # Home (gnome-terminal)
+bindkey "OF" end-of-line # End (gnome-terminal)
+bindkey "[H" beginning-of-line # Home (konsole+xterm)
+bindkey "[F" end-of-line # End (konsole+xterm)
 bindkey "[A" history-beginning-search-backward
+bindkey "^[[A" history-beginning-search-backward
 bindkey "[B" history-beginning-search-forward
-bindkey -M viins '^r' history-incremental-search-backward # crtl-r
-bindkey -M vicmd '^r' history-incremental-search-backward # crtl-r
 bindkey "[3;5~" delete-word # Ctrl w
 bindkey "[5C" forward-word # Alt ->
 bindkey "[1;3C" forward-word # Alt ->
-bindkey "^[^[[C" forward-word
+bindkey "^[[C" forward-word
 bindkey "[5D" backward-word # Alt <-
-bindkey "^[^[[D" backward-word
+bindkey "^[[D" backward-word
 bindkey "[1;3D" backward-word # Alt <-
 bindkey "[3~" delete-char # Suppr
 bindkey "[2~" overwrite-mode # Inser
@@ -390,10 +368,14 @@ bindkey "[H" beginning-of-line
 # bindkey m menu-select
 bindkey "h" run-help # esc-h
 #bindkey "^M" run-help
+# Keycode for up/down in application mode on ubuntu
+# http://www.f30.me/2012/10/oh-my-zsh-key-bindings-on-ubuntu-12-10/
+bindkey "${terminfo[kcuu1]}" up-line-or-search
+bindkey "${terminfo[kcud1]}" down-line-or-search
 
 # urxvt
-bindkey "^[[5" up-line-or-history
-bindkey "^[[6" down-line-or-history
+bindkey "[5" up-line-or-history
+bindkey "[6" down-line-or-history
 bindkey "[7~" beginning-of-line
 bindkey "[8~" end-of-line
 
@@ -428,13 +410,18 @@ bindkey '^J' push-line
 autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd "v" edit-command-line
+
+# Alt-S inserts sudo at the starts of the line
+insert_sudo () { zle beginning-of-line; zle -U 'sudo ' }
+zle -N insert-sudo insert_sudo
+bindkey 's' insert-sudo
 # }}}
 
 # {{{ environment settings
 # zshoptions
 
 REPORTTIME=60       # Report time statistics for progs that take more than a minute to run
-WATCH=all         # Report any login/logout of other users
+WATCH=not-me        # Report any login/logout of other users
 WATCHFMT='%n %a %l from %m at %T.'
 LOGCHECK=10
 
@@ -470,7 +457,10 @@ setopt glob_assign
 # Do not perform filename completion and expansion when using unquoted =
 unsetopt equals
 
-# Options de complétion
+# Completion options
+[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
+[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
+
 # Automatically list choices on an ambiguous completion
 setopt auto_list
 # Complétion
@@ -492,8 +482,12 @@ autoload incremental-complete-word
 # Traite les liens symboliques comme il faut
 setopt chase_links
 
-## disable mail checking
-MAILCHECK=0
+# mail checking
+MAILCHECK=1
+MAIL=$HOME/Mail/INBOX
+mailpath=(
+"$HOME/Mail/INBOX?You have new mail in INBOX"
+)
 
 # Quand l'utilisateur commence sa commande par '!' pour faire de la
 # complétion historique, il n'exécute pas la commande immédiatement
@@ -521,11 +515,8 @@ unsetopt hup
 setopt auto_resume # resume background task instead of starting new ones
 setopt check_jobs # report status of bg-jobs if exiting a shell with job control enabled
 
-#
-# 4. Paramètres de l'historique des commandes
-#
+# Command history parameters
 
-# Nombre d'entrées dans l'historique
 #export HISTORY=1000
 HISTFILE=$HOME/.zshistory
 HISTFILESIZE=65536
@@ -551,7 +542,6 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns par '*?.o' '*?.c~' '*?.
 zstyle ':completion:*' format '[32m-=> [01m%d[0m'
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _complete _correct _approximate
-#zstyle ':completion:*::::' completer _expand _complete _ignored _approximate
 # insère toutes les possibilités pour le completer expand
 #zstyle ':completion:*:expand:*' tag-order all-expansions
 zstyle ':completion:*' group-name ''
@@ -568,7 +558,6 @@ case $(uname) in
 esac
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=** r:|=**'
 zstyle ':completion:*' max-errors 1
-#zstyle ':completion:*' max-errors 3 numeric
 zstyle ':completion:*' menu select=5
 zstyle ':completion:*' original true
 zstyle ':completion:*' squeeze-slashes true
@@ -580,12 +569,9 @@ setopt LIST_TYPES
 autoload -U compinit
 # }}}
 
+# e.g., zmv *.JPEG *.jpg
 autoload -U zmv
 alias zmv='noglob zmv'
-# e.g., zmv *.JPEG *.jpg
-
-#zmodload zsh/zftp
-#autoload -U zfanon zfautocheck zfcd zfcd_match zfcget zfclose zfcput zfdir zffcache zfgcp zfget zfget_match zfgoto zfhere zfinit zfls zfmark zfopen zfparams zfpcp zfput zfrglob zfrtime zfsession zfstat zftp_chpwd zftp_progress zftransfer zftype zfuget zfuput
 
 #compinit
 compinit -i ${HOME}/.zcompdump
@@ -593,47 +579,14 @@ compinit -i ${HOME}/.zcompdump
 # name directories
 hash -d repos=~/repos
 hash -d Desktop=~/Desktop
-hash -d Documents=~/Documents
 hash -d Downloads=~/Downloads
+hash -d DL=~/Downloads
+hash -d Documents=~/Documents
+hash -d Docs=~/Documents
 hash -d dev=~/dev
 
-# display error output in red
-#exec 2>>(while read line; do
-#  print '\e[91m'${(q)line}'\e[0m' > /dev/tty; print -n $'\0'; done &)
-
-# Lancement de gpg-agent
-#GPG_TTY=`tty`
-#export GPG_TTY
-
-# switching to seahorse
-#if [ -f $HOME/.gpg-agent-info ] &&
-#     kill -0 `head -n 1 $HOME/.gpg-agent-info | cut -d: -f 2` 2>/dev/null; then
-#     echo 'gpg-agent currently running, updating env...'
-#     . "${HOME}/.gpg-agent-info"
-#     export GPG_AGENT_INFO
-#     export SSH_AUTH_SOCK
-#     export SSH_AGENT_PID
-#     echo 'gpg-agent env refreshed.'
-#else
-#     echo 'Starting gpg-agent...'
-#     eval `gpg-agent --disable-scdaemon --daemon --enable-ssh-support  --write-env-file ${HOME}/.gpg-agent-info`
-#     echo 'gpg-agent ready.'
-#fi
-
-#if [ -f ~/.ssh-agent ]; then
-#    source ~/.ssh-agent
-#fi
-
-#if [ -z "$SSH_AUTH_SOCK" ] || [ ! -w "$SSH_AUTH_SOCK" ]; then
-#    if read -q '?Start ssh-agent? (y/n) '; then
-#        ssh-agent -s >~/.ssh-agent                && \
-#            source ~/.ssh-agent                        && \
-#            ssh-add
-#    fi
-#fi
-
 [ -x /usr/games/fortune ] && /usr/games/fortune /usr/local/share/games/fortune/bofh
-fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
+[ -x /usr/bin/fortune ] && fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
 echo
 [ -x /usr/games/fortune ] && /usr/games/fortune freebsd-tips
 
@@ -650,28 +603,27 @@ if [ `hostname` = 'htpc' ]; then
 fi
 
 function mainClasses {
-    if [ -d ./src ] ; then
-	find ./src/main -type f -iname "*.java" \
-             | sed 's?.*src/main/[^/]*/\(.*\)\..*?-DmainClass=\1?' | sed 's+/+.+g'
-    fi
+  if [ -d ./src ] ; then
+    find ./src/main -type f -iname "*.java" \
+      | sed 's?.*src/main/[^/]*/\(.*\)\..*?-DmainClass=\1?' | sed 's+/+.+g'
+  fi
 }
 
 function mainTests {
-    if [ -d ./src ] ; then
-	find ./src/test -type f -iname "*test*.java"  \
-             | sed 's?.*src/test/[^/]*/\(.*\)\..*?-Dtest=\1?' | sed 's+/+.+g'
-    fi
+  if [ -d ./src ] ; then
+    find ./src/test -type f -iname "*test*.java"  \
+      | sed 's?.*src/test/[^/]*/\(.*\)\..*?-Dtest=\1?' | sed 's+/+.+g'
+  fi
 }
 
 function listMavenCompletions {
-reply=(archetype:generate compile clean package install test
-    test-compile deploy release scala:run scala:cc
-    -Dmaven.test.skip=true
-    `mainClasses`
-    `mainTests`
-    -q -o
-    );
-
+  reply=(archetype:generate compile clean package install test
+      test-compile deploy release scala:run scala:cc
+      -Dmaven.test.skip=true
+      `mainClasses`
+      `mainTests`
+      -q -o
+      );
 }
 
 compctl -K listMavenCompletions mvn%
@@ -680,7 +632,7 @@ compctl -K listMavenCompletions mvn%
 # Output total memory currently in use by you {{{1
 
 memtotaller() {
-    /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
+  /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
 }
 
 # }}}
@@ -691,30 +643,30 @@ memtotaller() {
 # Go up n levels:
 # .. 3
 function .. (){
-    local arg=${1:-1};
-    local dir=""
-    while [ $arg -gt 0 ]; do
-        dir="../$dir"
-        arg=$(($arg - 1));
-    done
-    cd $dir >&/dev/null
+  local arg=${1:-1};
+  local dir=""
+  while [ $arg -gt 0 ]; do
+    dir="../$dir"
+    arg=$(($arg - 1));
+  done
+  cd $dir >&/dev/null
 }
 
 # Go up to a named dir
 # ... usr
 function ... (){
-    if [ -z "$1" ]; then
-        return
+  if [ -z "$1" ]; then
+    return
+  fi
+  local maxlvl=16
+  local dir=$1
+  while [ $maxlvl -gt 0 ]; do
+    dir="../$dir"
+    maxlvl=$(($maxlvl - 1));
+    if [ -d "$dir" ]; then
+      cd $dir >&/dev/null
     fi
-    local maxlvl=16
-    local dir=$1
-    while [ $maxlvl -gt 0 ]; do
-        dir="../$dir"
-        maxlvl=$(($maxlvl - 1));
-        if [ -d "$dir" ]; then 
-            cd $dir >&/dev/null
-        fi
-    done
+  done
 }
 
 # }}}
@@ -722,12 +674,12 @@ function ... (){
 # Generates a tough password of a given length
 
 function genpass() {
-    if [ ! "$1" ]; then
-        echo "Usage: $0 20"
-        echo "For a random, 20-character password."
-        return 1
-    fi
-    dd if=/dev/urandom count=1 2>/dev/null | tr -cd 'A-Za-z0-9!@#$%^&*()_+' | cut -c-$1
+  if [ ! "$1" ]; then
+    echo "Usage: $0 20"
+    echo "For a random, 20-character password."
+    return 1
+  fi
+  dd if=/dev/urandom count=1 2>/dev/null | tr -cd 'A-Za-z0-9!@#$%^&*()_+' | cut -c-$1
 }
 
 # }}}
@@ -736,17 +688,17 @@ function genpass() {
 # Print it double-sided and fold in the middle
 
 bookletize () {
-    if which pdfinfo && which pdflatex; then
-        pagecount=$(pdfinfo $1 | awk '/^Pages/{print $2+3 - ($2+3)%4;}')
+  if which pdfinfo && which pdflatex; then
+    pagecount=$(pdfinfo $1 | awk '/^Pages/{print $2+3 - ($2+3)%4;}')
 
-        # create single fold booklet form in the working directory
-        pdflatex -interaction=batchmode \
-        '\documentclass{book}\
-        \usepackage{pdfpages}\
-        \begin{document}\
-        \includepdf[pages=-,signature='$pagecount',landscape]{'$1'}\
-        \end{document}' 2>&1 >/dev/null
-    fi
+    # create single fold booklet form in the working directory
+    pdflatex -interaction=batchmode \
+      '\documentclass{book}\
+      \usepackage{pdfpages}\
+      \begin{document}\
+      \includepdf[pages=-,signature='$pagecount',landscape]{'$1'}\
+      \end{document}' 2>&1 >/dev/null
+  fi
 }
 
 # }}}
@@ -754,7 +706,7 @@ bookletize () {
 # Merges, or joins multiple PDF files into "joined.pdf"
 
 joinpdf () {
-    gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=joined.pdf "$@"
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=joined.pdf "$@"
 }
 
 # }}}
@@ -762,7 +714,7 @@ joinpdf () {
 # 256-colors test {{{
 
 256test() {
-    echo -e "\e[38;5;196mred\e[38;5;46mgreen\e[38;5;21mblue\e[0m"
+  echo -e "\e[38;5;196mred\e[38;5;46mgreen\e[38;5;21mblue\e[0m"
 }
 
 # }}}
@@ -771,19 +723,14 @@ joinpdf () {
 # http://linuxcommando.blogspot.com/2007/10/dictionary-lookup-via-command-line.html
 
 dict() {
-    curl 'dict://dict.org/d:$1:*'
+  curl 'dict://dict.org/d:$1:*'
 }
 
 spell() {
-    echo $1 | aspell -a
+  echo $1 | aspell -a
 }
 
 # }}}
-# Output total memory currently in use by you {{{1
 
-memtotaller() {
-    /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
-}
-
-# }}}
 # EOF
+# vim:set ts=2 sw=2 expandtab:
