@@ -1,0 +1,174 @@
+# mutt
+#alias mutt-healthgrid='mutt -f imap://mail.healthgrid.org'
+#alias mutt-bapt.name='mutt -f imaps://imap.bapt.name'
+alias mutt='echo -en "\033]0;mutt\a";mutt'
+#alias mutt='mutt -f imaps://imap.bapt.name'
+#alias muttng='muttng -f imaps://imap.bapt.name'
+
+#alias git="git-achievements"
+
+alias mduml='~/MagicDraw\ UML\ 17.0.4\ beta/bin/mduml'
+
+# df
+alias df='pydf'
+#alias df='df -h'
+#alias df='df --human-readable'
+
+# network
+alias my_ip='/sbin/ifconfig eth0 | grep "addr:" | sed -e "s/^.*addr://" |sed -e "s/ Bcast.*//" '
+alias my_ports='netstat -alpe --ip'
+alias netstati="netstat --verbose --tcp --udp --programs --extend"
+
+# multimedia
+alias mp3burn-direct='mp3burn -c 80:00 -o " -v speed=48 dev=0,1,0 "'
+#alias mplayer='mplayer -ao alsa9:nforce'
+#alias mplayer-tv='mplayer -screenw 800 -screenh 600'
+alias webcam='xawtv -device /dev/v4l/video1'
+alias divx='find /mnt/cdrom -name \*.[Aa][Vv][Ii] -o -name \*.[oO][Gg][Mm] -ok mplayer \-fs \-x 512 \-y 300 {} \;'
+alias playdvd='mplayer dvd://1 -dvd-device /dev/cdroms/cdrom0'
+alias getdvd='dvdbackup -i /dev/acd0 -v 2 -M -o /mnt/videos'
+
+alias links-fb='links -g -driver fb'
+
+OS="$(uname)"
+if [ "$OS" = "FreeBSD" ]; then
+  alias ls='ls -h -F -G'
+  alias du='du -h'
+  alias ducks='du -cks * | sort -rn | head -15'
+  alias grep='grep --color=auto'
+  alias grepc="grep --color=always"
+elif [ "$OS" = "Linux" ]; then
+  alias du='du --human-readable'
+  alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first'
+  alias grep='grep --color=auto'
+  alias locate='locate -i'
+  alias grepc="grep --color=always"
+  alias dirtree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+  alias info='info --vi-keys'
+fi
+
+#  ls and colors
+# eval `dircolors -b`
+#alias ls="ls -lrSF --si --color"
+#alias ls='ls -FG'
+#alias l='ls -CFh'
+#alias la='ls -Ah'
+alias l='ls -h'
+alias la='ls -a'
+alias ll='ls -lh'
+alias lla='ls -lAh'
+alias lll='ls -l | less'
+alias llla='ls -la | less'
+# list only directories
+#alias lsd='ls -F | ls -d */'
+alias lsd='\ls | ls -d */'
+# list only source code (c, c++, Perl in my case)
+alias lsp='ls *.c *.h *.cc *.pl *.pm *.py'
+
+# Quelques alias pratiques
+alias c='clear'
+#alias less='less --quiet'
+
+# Demande confirmation avant d'écraser un fichier
+#alias cp='cp --interactive'
+#alias mv='mv --interactive'
+#alias rm='rm --interactive'
+
+# directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias cd..='cd ..'
+
+#alias strartx-640='startx -- -xf86config XFree86Config-4-640'
+#alias strartx-800='startx -- -xf86config XFree86Config-4-800'
+#alias strartx-1024='startx -- -xf86config XFree86Config-4-1024'
+
+alias forest='ps -e --forest'
+
+alias qfind='find . -name'
+
+#alias kernelinfo    'finger @kernel.org'
+alias kernelinfo='lynx -dump http://www.kernel.org/kdist/finger_banner'
+alias kernel_comp='cd /usr/src/linux/ && cp .config .. && make clean && make mrproper && cp ../.config . && make menuconfig && make dep && make bzImage modules modules_install && cp System.map /boot/System.map-020916 && cp arch/i386/boot/bzImage /boot/bzImage-020916 && lilo && echo "finished"'
+
+# ssh
+alias doudonkey-halt='ssh doudonkey "sudo halt -p"'
+alias dune-halt='ssh dune "sudo halt -p"'
+#alias emule='wine "~/.wine/drive_c/Program Files/emule/emule.exe"'
+#alias semule='sudo wine "~/.wine/drive_c/Program Files/emule/emule.exe"'
+alias dvdshrink='wine "~/.wine/drive_c/Program Files/DVD Shrink/DVD Shrink 3.2.exe"'
+
+alias tail="grc tail"
+
+# cvs
+alias cvsstat='cvs status \!* | grep "Status:"'
+alias cvswhat='cvs status \!* | grep "Status:" | grep -v "to-date"'
+
+alias netbeans='netbeans  --laf com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+alias netbeans55='netbeans55  -laf com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+alias eclipse='eclipse -Xms1024M -Xmx4096M -XX:MaxPermSize=512M'
+
+alias svn_update_all='for f (*); do (echo "\nUpdating $f"; cd $f ; svn up; cd ..); done'
+alias svn_status_all='for f (*); do (echo "\nStatus of $f"; cd $f ; svn st; cd ..); done'
+svn_add_all() {
+  for f in `svn st| grep \? | awk '{print $2}'` ; do svn add $f ; done
+}
+
+gg()
+{
+  outfile="/tmp/gg-${USER}"
+  q="$(echo $@ | sed 's/ /+/g')"
+  s_umask=`umask`
+  umask 077
+  lynx -dump -listonly -hiddenlinks=ignore http://google.fr/search\?q="${q}" | awk ' \
+  BEGIN { \
+    n = 0; \
+  } \
+  $1 ~ /[[:digit:]]+\./ && $2 !~ /http:\/\/([[:alpha:]][[:alnum:]]+\.google|[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\/search)/ { \
+    print "alias g"n"=\"epiphany -n \\\""$2"\\\"\""; \
+    print "printf \"%4d. %s\\n\" "n" \""$2"\""; \
+    n++ \
+  } ' > "${outfile}"
+  s_umask=$s_umask
+  . "${outfile}"
+  rm "${outfile}"
+}
+
+fix_mpd_db_rights()
+{
+  sudo chown -R baptiste:mpd ~/Musique/
+  sudo find ~/Musique/ -type d -exec chmod ug+rwx {} \;
+  sudo find ~/Musique/ -type f -exec chmod ug+rw {} \;
+  mpc update
+}
+if [ "$OS" = "SunOS" ]; then
+  [ $DISPLAY != "x" ] && alias vim='TERM=xtermc vim'
+  alias ls='/usr/gnu/bin/ls --color=auto'
+fi
+
+tips()
+{
+  grep "$@" ~/tips.txt
+}
+
+alias tmux-fbf-all='ssh-multi srv{3,4,5,6,7,8,9,10,11,12,13,14,15,16}.fatebenefratelli.it'
+alias tmux-fbf-servers='ssh-multi srv{3,4,5,6,}.fatebenefratelli.it'
+alias tmux-fbf-wn='ssh-multi srv{7,8,9,10,11,12,13,14,15,16}.fatebenefratelli.it'
+alias tmux-hug-all='ssh-multi ng-hug-server{0,3,4,5,6}.neuro.hcuge.ch ng-hug-wn{0,1,2,3,4,5,6}.neuro.hcuge.ch'
+alias tmux-hug-servers='ssh-multi ng-hug-server{0,3,4,5,6}.neuro.hcuge.ch'
+alias tmux-hug-wn='ssh-multi ng-hug-wn{0,1,2,3,4,5,6}.neuro.hcuge.ch'
+alias tmux-ki-all='ssh-multi ng-ki-server{4,5,6,7}.ki.se ng-hug-wn{0,1,2,3}.local'
+alias tmux-ki-servers='ssh-multi ng-ki-server{4,5,6,7}.ki.se'
+alias tmux-ki-wn='ssh-multi ng-hug-wn{0,1,2,3}.local'
+alias tmux-maat-all='ssh-multi ng-maat-server{3,5,6,8,9}.gnubila.fr {bdii,bdii-site,lfc,myproxy,nagios,sentinelle1,voms,wms}.gnubila.fr'
+
+# Suffix aliases
+alias -s tex=vim
+alias -s pdf=evince
+alias -s png=gpicview
+alias -s jpeg=gpicview
+alias -s jpg=gpicview
+alias -s html=$BROWSER
+alias -s htm=$BROWSER
+alias tips.txt='vim ~/tips.txt'
+alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
