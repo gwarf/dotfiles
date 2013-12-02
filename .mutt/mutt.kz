@@ -1,0 +1,2 @@
+set nm_default_uri = "notmuch:///home/baptiste/.Mail-offlineimap/"
+virtual-mailboxes "My INBOX" "notmuch://?query=tag:inbox"

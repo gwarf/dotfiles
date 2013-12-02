@@ -1,0 +1,36 @@
+###############
+##  Sidebar  ##
+###############
+
+## Options ##
+
+# Largeur (px)
+set sidebar_width=25
+
+# Visible (yes/no)
+set sidebar_visible=no
+
+# Délimiteur
+set sidebar_delim='|'
+
+# Trie alphabétique (yes/no)
+#set sidebar_sort=no
+
+# Libellé(s) à affiché(s) ( =box1 =box2)
+mailboxes =INBOX =_Read =_Reply =_Waiting =_Defer =lists =Spam =Trash =Sent =Drafts =Zic =RSS =TODO
+
+# Couleur (Nouveau mail)
+color sidebar_new red default
+
+## Raccourcis clavier ##
+
+# Précédent, suivant, ouvrir
+bind index \CP sidebar-prev
+bind index \CN sidebar-next
+bind index \CO sidebar-open
+bind pager \CP sidebar-prev
+bind pager \CN sidebar-next
+bind pager \CO sidebar-open
+
+# Afficher/Cacher la sidebar
+macro index,pager \e0 'toggle sidebar_visible' 'Toggle Sidebar'

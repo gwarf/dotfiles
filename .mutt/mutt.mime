@@ -1,0 +1,42 @@
+### MIME-Viewer
+#
+unauto_view *
+auto_view text/html
+auto_view application/msword
+auto_view application/pdf
+auto_view image/x-portable
+auto_view image/x-portable-bitmap
+auto_view image/x-portable-graymap
+auto_view image/x-portable-anymap
+auto_view image/x-portable-pixmap
+auto_view application/pgp-signature
+auto_view application/pgp
+auto_view application/x-gunzip
+auto_view application/postscript
+auto_view application/x-troff-man
+auto_view application/x-troff-me
+auto_view application/x-troff
+auto_view application/x-gtar
+auto_view application/x-tar
+auto_view application/x-tar-gz
+auto_view application/x-sh
+auto_view application/x-csh
+auto_view application/x-shar
+auto_view application/x-latex
+auto_view application/x-tex
+auto_view application/x-dvi
+auto_view application/x-zip-compressed
+auto_view application/x-cpio text/richtext
+auto_view application/pgp-keys
+auto_view application/octet-stream
+auto_view text/x-vcard
+auto_view text/enriched
+#auto_view audio/*
+#auto_view image/jpeg
+#auto_view image/png
+# Show the "text/plain" part *before* the "text/html" part:
+alternative_order text/plain text/html
+# Plain as default:
+# message-hook ~A 'alternative_order text/plain'
+# But not for a special sender:
+# message-hook '~f news@letter\.com' 'unalternative_order *'

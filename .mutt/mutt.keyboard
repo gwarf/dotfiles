@@ -1,0 +1,154 @@
+### Keyboard
+#
+# \C control
+# \e Alt
+# \e esc
+# compose
+
+# Moving
+bind index zt current-top
+bind index zz current-middle
+bind index zb current-bottom
+bind index { top-page
+bind index } bottom-page
+bind pager G bottom
+bind pager <down> next-line
+bind pager <up> previous-line
+
+# Flagging
+bind index F flag-message
+bind pager F flag-message
+
+# Fetching mail
+macro index \cf "<shell-escape>offlineimap\r"
+#bind index G imap-fetch-mail
+
+macro index z    "c?\t"                            "List mailboxes and switch to selected one"
+
+# default save path
+macro attach s <save-entry><bol>~/Downloads/<eol>
+
+# help
+macro generic <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro index <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro pager <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+
+# macros to invoke a profile
+macro   index   <F6>     ":source ~/.mutt/profile.gmail.gwarf12\n" "Load profile: gmail.gwarf12"
+macro   index   <F7>     ":source ~/.mutt/profile.gmail.baptiste\n" "Load profile: gmail.baptiste"
+macro   index   <F8>     ":source ~/.mutt/profile.maat\n" "Load profile: maat"
+macro   index   <F9>     ":source ~/.mutt/profile.gnubila\n" "Load profile: gnubila"
+macro   index   <F10>    ":source ~/.mutt/profile.healthgrid\n" "Load profile: healthgrid"
+macro   index   <F11>    ":source ~/.mutt/profile.perso\n" "Load profile: perso"
+macro   index   <F12>    ":source ~/.mutt/profile.gwarf\n" "Load profile: gwarf"
+
+macro compose <F7> "<enter-command>source ~/.mutt/profile.gmail.gwarf12\n<edit-from><kill-line>Baptiste Grenier <gwarf12@gmail.com>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gmail.gwarf12"
+macro compose <F8> "<enter-command>source ~/.mutt/profile.gmail.baptiste\n<edit-from><kill-line>Baptiste Grenier <baptiste.grenier@gmail.com>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gmail.baptiste"
+macro compose <F9> "<enter-command>source ~/.mutt/profile.maat\n<edit-from><kill-line>Baptiste Grenier <bgrenier@maatg.com>\n<enter-command>set editor='chsig ~/.mutt/signature.maat'\n<edit-headers>\n" "Load profile: maat"
+macro compose <F10> "<enter-command>source ~/.mutt/profile.healthgrid\n<edit-from><kill-line>Baptiste Grenier <baptiste.grenier@healthgrid.org>\n<enter-command>set editor='chsig ~/.mutt/signature.healthgrid'\n<edit-headers>\n" "Load profile: healthgrid"
+macro compose <F11> "<enter-command>source ~/.mutt/profile.perso\n<edit-from><kill-line>Baptiste Grenier <baptiste@bapt.name>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: perso"
+macro compose <F12> "<enter-command>source ~/.mutt/profile.gwarf\n<edit-from><kill-line>Baptiste Grenier <gwarf@gwarf.org>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gwarf"
+
+# Attachments
+macro attach W <save-entry><kill-line>/home/baptiste/Documents/
+macro attach E <save-entry><kill-line>/home/baptiste/Documents/<enter>
+
+# reload config
+#macro compose <F12> "<enter-command>source ~/.muttrc\n" "Reload config"
+#macro index <F12> "<enter-command>source ~/.muttrc\n" "Reload config"
+
+# show _all_ mails
+macro index \# "l~A\r"      "Show ALL Mails"
+# show flagged and unread mails (i.e. important)
+macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
+# show unreplied and flagged mails (i.e. TODO)
+macro index \` "l(! ~Q | ~F) ! ~D\r"  "Show TODO Mail"
+# mark everything as read
+macro index + "T~N\n;N;t" "Mark everything as read"
+
+#macro index \cb |urlview\n  # simulate the old browse-url function
+#macro pager \cb |urlview\n  # simulate the old browse-url function
+macro index \cB |w3m\n "call w3m to extract URLs out of a message"
+macro pager \cB |w3m\n "call w3m to extract URLs out of a message"
+
+# http://www.memoryhole.net/~kyle/extract_url/
+# require:
+# FreeBSD:
+# /usr/ports/mail/p5-MIME-Tools
+# /usr/ports/www/p5-HTML-Parser
+# /usr/ports/devel/p5-Getopt-Long
+# /usr/ports/devel/p5-Curses
+# /usr/ports/textproc/p5-URI-Find
+# Archlinux:
+# perl-curses-ui perl-html-parser perl-mime-tools perl-uri-find perlxml
+# gentoo:
+# dev-perl/MIME-tools
+# dev-perl/HTML-Parser
+# perl-core/Getopt-Long
+# dev-perl/Curses
+# dev-perl/URI-Find
+# dev-perl/libxml-perl
+macro index,pager \cb "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+        <enter-command> unset pipe_decode<enter>\
+        <pipe-message>~/.mutt/extract_url.pl<enter>\
+        <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
+        macro index,pager ,b "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+        <enter-command> unset pipe_decode<enter>\
+        <pipe-message>~/.mutt/extract_url.pl<enter>\
+        <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
+
+macro index,pager ,B "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+        <enter-command> set pipe_decode<enter>\
+        <pipe-message>~/.mutt/extract_url.pl<enter>\
+        <enter-command> set pipe_decode=\$my_pdsave<enter>" "decrypt message, then get URLs"
+
+# mutt macros for mu
+# index mail: mu index
+#macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/Mail/search " "mu find"
+#macro index <F9> "<change-folder-readonly>~/Mail/search" "mu find results"
+
+# mutt macros for notmuch
+# http://upsilon.cc/~zack/blog/posts/2011/01/how_to_use_Notmuch_with_Mutt/
+#macro index <F4> \
+#      "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
+#      "search mail (using notmuch)"
+#macro index <F5> \
+#      "<enter-command>unset wait_key<enter><pipe-message>~/.mutt/mutt-notmuch thread<enter><change-folder-readonly>~/.cache/mutt_results<enter><enter-command>set wait_key<enter>" \
+#      "search and reconstruct owning thread (using notmuch)"
+macro index <F3> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt tag -inbox<enter>" \
+      "notmuch: remove message from inbox"
+macro index <F4> \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
+      "notmuch: search mail"
+macro index <F5> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
+      "notmuch: reconstruct thread"
+
+# Namazu/nmzmail
+#macro generic ,F "<shell-escape>nmzmail -r ~/Mail/.Search<enter>" "search via nmzmail"
+# Load the results mailbox
+#macro generic ,,f "<change-folder><kill-line>=.Search<enter>" "load the search results mailbox"
+# Jump to original email - https://github.com/weisslj/muttjump
+#macro generic ,j "<enter-command>push <pipe-message>muttjump<enter><enter>" "jump to original message"
+
+# abook
+macro generic,index,pager \ca "abook" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+
+# GTG http://gtg.fritalk.com/post/2010/02/03/GTG-tips-and-tricks2
+macro index ,t "<enter-command>set pipe_decode<enter><pipe-message>gtg_new_task --interactive Follow up:<enter><save-message>+TODO<enter>"
+#macro index ,t "<enter-command>set pipe_decode<enter><pipe-message>gtg_new_task --interactive Follow up:<enter>"
+
+macro editor ";" \Ct # bin ; to  Ctrl-t in editor-mode (easier IMO)
+
+# GTD
+macro index \e1 "<save-message>+_Read<enter>" "Save Message to _Read"
+macro index \e2 "<save-message>+_Reply<enter>" "Save Message to _Reply"
+macro index \e3 "<save-message>+_Waiting<enter>" "Save Message to _Waiting"
+macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
+macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
+macro index \e6 "<save-message>+Spam<enter>" "Move Message to Spam"
+
+# bounce-message
+bind index B bounce-message
