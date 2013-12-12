@@ -1,5 +1,7 @@
 # ZSH configuration for interactive shells
 
+# oh-my-zsh
+#curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # Source system profile
 source /etc/profile
 
@@ -352,7 +354,6 @@ bindkey "OF" end-of-line # End (gnome-terminal)
 bindkey "[H" beginning-of-line # Home (konsole+xterm)
 bindkey "[F" end-of-line # End (konsole+xterm)
 bindkey "[A" history-beginning-search-backward
-bindkey "^[[A" history-beginning-search-backward
 bindkey "[B" history-beginning-search-forward
 bindkey "[3;5~" delete-word # Ctrl w
 bindkey "[5C" forward-word # Alt ->
@@ -515,10 +516,8 @@ unsetopt hup
 setopt auto_resume # resume background task instead of starting new ones
 setopt check_jobs # report status of bg-jobs if exiting a shell with job control enabled
 
-# Command history parameters
-
-#export HISTORY=1000
-HISTFILE=$HOME/.zshistory
+# Command history parameters #export HISTORY=1000
+# HISTFILE=$HOME/.zshistory
 HISTFILESIZE=65536
 HISTSIZE=4096
 SAVEHIST=$HISTSIZE
