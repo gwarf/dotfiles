@@ -30,6 +30,10 @@ if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
   export GEM_HOME="$HOME/.gem/ruby/2.0.0"
 fi
 
+if [ -x '~/.gem/ruby/2.0.0/bin/chit' ]; then
+  chit () { '~/.gem/ruby/2.0.0/bin/chit' "$@" | "$PAGER" }
+fi
+
 # Set grep to ignore SCM directories
 grep --exclude-dir 2> /dev/null
 if [ $? -eq 0 ]; then
