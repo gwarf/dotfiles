@@ -24,6 +24,21 @@ case ${SOLARIZED_THEME:-dark} in
     *)     bkg=black;;
 esac
 
+git_remote_changes() {
+  remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
+  if [[ -n ${remote} ]] ; then
+    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+    if [ $ahead -eq 0 ] && [ $behind -gt 0 ]; then
+ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}%ahead ↑%{$reset_color%}"
+    elif [ $ahead -gt 0 ] && [ $behind -eq 0 ]; then
+ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}%ahead ↑%{$reset_color%}"
+    elif [ $ahead -gt 0 ] && [ $behind -gt 0 ]; then
+ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}%ahead ↑%{$reset_color%}"
+    fi
+    fi
+}
+
 ZSH_THEME_GIT_PROMPT_PREFIX=" [%{%B%F{blue}%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{%f%k%b%K{${bkg}}%B%F{green}%}]"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}*%{%f%k%b%}"
