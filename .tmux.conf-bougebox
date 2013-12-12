@@ -134,3 +134,4 @@ new-window -n 'coding'
 
 ## https://powerline.readthedocs.org/en/latest/overview.html#usage
 source "/home/baptiste/.config/powerline/tmux/powerline.conf"
+#source "/usr/share/tmux/solarized-dark.conf"
