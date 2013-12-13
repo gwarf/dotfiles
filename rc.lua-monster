@@ -42,7 +42,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
---beautiful.init(os.getenv("HOME") .. "/repos/gwarf/dotfiles/awesome3/.config/awesome/themes/mine.lua")
+--beautiful.init(os.getenv("HOME") .. "/repos/perso/gwarf/dotfiles/awesome3/.config/awesome/themes/mine.lua")
 beautiful.init(os.getenv("HOME") .. "/repos/perso/dotfiles/theme-awesome-solarized-dark.lua")
 theme.wallpaper_cmd = { "awsetbg -f  " .. os.getenv("HOME") .. "/Images/wallpaper/tjZzK.jpg" }
 
@@ -774,8 +774,8 @@ run_once("mpd")
 run_once("udiskie")
 run_once("offlineimap", nil, "/usr/bin/python.*/bin/offlineimap")
 run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
-run_once("revelation", "~/repos/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")
-run_once("revelation", "~/repos/gwarf/private/revelation/keyring-maatg", "/usr/bin/python.*/bin/revelation.*/keyring-maatg")
+run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")
+run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-maatg", "/usr/bin/python.*/bin/revelation.*/keyring-maatg")
 run_once("firefox")
 -- run_once("deluge")
 run_once("jdownloader")

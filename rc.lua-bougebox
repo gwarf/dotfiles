@@ -42,9 +42,9 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/home/baptiste/repos/perso/gwarf/dotfiles/awesome3/.config/awesome/themes/mine.lua")
--- beautiful.init( awful.util.getdir("config") .. "/themes/awesome-solarized/dark/theme.lua" )
-theme.wallpaper_cmd = { "awsetbg -f /home/baptiste/Images/wallpaper/tjZzK.jpg" }
+--beautiful.init(os.getenv("HOME") .. "/repos/perso/gwarf/dotfiles/awesome3/.config/awesome/themes/mine.lua")
+beautiful.init(os.getenv("HOME") .. "/repos/perso/dotfiles/theme-awesome-solarized-dark.lua")
+theme.wallpaper_cmd = { "awsetbg -f  " .. os.getenv("HOME") .. "/Images/wallpaper/tjZzK.jpg" }
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
