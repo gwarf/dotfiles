@@ -132,5 +132,8 @@ new-window -n 'coding'
 #split-window -h -p 50 -t 0 -c ~/Downloads
 #select-window -t 0
 
+set -g default-terminal "screen-256color"
+
 ## https://powerline.readthedocs.org/en/latest/overview.html#usage
 source "/home/baptiste/.config/powerline/tmux/powerline.conf"
+#source "/usr/share/tmux/solarized-dark.conf"
