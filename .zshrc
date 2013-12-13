@@ -732,4 +732,4 @@ spell() {
 # }}}
 
 # EOF
-# vim:set ts=2 sw=2 expandtab:
+# vim:set ft=zsh ts=2 sw=2 expandtab:
