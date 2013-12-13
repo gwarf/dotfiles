@@ -87,16 +87,61 @@ bindkey -M vicmd '^r' history-incremental-search-backward # crtl-r
 
 bindkey "^A"    beginning-of-line       # Home
 bindkey "^E"    end-of-line             # End
+bindkey "^D"    delete-char             # Del
+bindkey "[3~" delete-char             # Del
+bindkey "[2~" overwrite-mode          # Insert
+bindkey "[5~" history-search-backward # PgUp
+bindkey "[6~" history-search-forward  # PgDn
+#bindkey "^?"    backward-delete-char    # Backspace
+bindkey "^?" backward-delete-char
+
+bindkey "[1~" beginning-of-line # Home (console)
+bindkey "[4~" end-of-line # End (console)
+bindkey "OH" beginning-of-line # Home (gnome-terminal)
+bindkey "OF" end-of-line # End (gnome-terminal)
+bindkey "[H" beginning-of-line # Home (konsole+xterm)
+bindkey "[F" end-of-line # End (konsole+xterm)
 bindkey "[A" history-beginning-search-backward
 bindkey "[B" history-beginning-search-forward
+bindkey "[3;5~" delete-word # Ctrl w
+bindkey "[5C" forward-word # Alt ->
+bindkey "[1;3C" forward-word # Alt ->
+bindkey "^[[C" forward-word
+bindkey "[5D" backward-word # Alt <-
+bindkey "^[[D" backward-word
+bindkey "[1;3D" backward-word # Alt <-
+bindkey "[3~" delete-char # Suppr
+bindkey "[2~" overwrite-mode # Inser
+bindkey "[F" end-of-line
+bindkey "[H" beginning-of-line
+# bindkey m menu-select
 bindkey "h" run-help # esc-h
-# Push a command onto a stack allowing you to run another command first
-bindkey '^J' push-line
-# Screent/tmux
-if [ "$TERM" = "linux" -o "$TERM" = "screen" -o "$TERM" = "rxvt" ]; then
+#bindkey "^M" run-help
+# Keycode for up/down in application mode on ubuntu
+# http://www.f30.me/2012/10/oh-my-zsh-key-bindings-on-ubuntu-12-10/
+bindkey "${terminfo[kcuu1]}" up-line-or-search
+bindkey "${terminfo[kcud1]}" down-line-or-search
+
+# urxvt
+bindkey "[5" up-line-or-history
+bindkey "[6" down-line-or-history
+bindkey "[7~" beginning-of-line
+bindkey "[8~" end-of-line
+
+# Console linux, dans un screen ou un rxvt
+if [ "$TERM" = "linux" -o "$TERM" = "screen" -o "$TERM" = "rxvt" ]
+then
   bindkey "[1~" beginning-of-line       # Home
   bindkey "[4~" end-of-line             # End
 fi
+
+# xterm
+if [ "$TERM" = "xterm" ]
+then
+  bindkey "[H"  beginning-of-line       # Home
+  bindkey "[F"  end-of-line             # End
+fi
+
 # Gnome terminal
 if [ "$COLORTERM" = "gnome-terminal" ]
 then
@@ -106,6 +151,9 @@ then
   bindkey "[1;3D" backward-word # Alt <-
   bindkey "[1;3A" history-search-backward
 fi
+
+# Push a command onto a stack allowing you to run another command first
+bindkey '^J' push-line
 
 # Allows editing the command line with an external editor
 autoload edit-command-line
