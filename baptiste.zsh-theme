@@ -31,39 +31,35 @@ git_remote_changes() {
     ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
     behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
     if [ $ahead -eq 0 ] && [ $behind -gt 0 ]; then
-ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}${ahead} ↑%{$reset_color%}"
+      ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}${ahead} ↑%{$reset_color%}"
     elif [ $ahead -gt 0 ] && [ $behind -eq 0 ]; then
-ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}${ahead} ↑%{$reset_color%}"
+      ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}${ahead} ↑%{$reset_color%}"
     elif [ $ahead -gt 0 ] && [ $behind -gt 0 ]; then
-ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}$ahead ↑%{$reset_color%}"
+      ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}$ahead ↑%{$reset_color%}"
     fi
-    fi
+  fi
 }
 
 # Show count of non tracked files
 function _untracked() {
-  if [[ ! -z $(/usr/bin/git ls-files --other --exclude-standard 2> /dev/null) ]] then
+  if [[ ! -z $(/usr/bin/git ls-files --other --exclude-standard 2> /dev/null) ]]; then
     untracked=$(/usr/bin/git ls-files --other --exclude-standard 2>/dev/null | wc -l)
-  if [ $untracked -gt 0 ]; then
-    echo " (${untracked} untracked)"
-  else
-    echo "*"
-  fi
+    if [ $untracked -gt 0 ]; then
+      echo "%{%B%F{blue}%} %{%F{red}%}${untracked} %{$fg_bold[magenta]%}untracked%{$reset_color%}"
+    fi
   fi
 }
 
-
 ZSH_THEME_GIT_PROMPT_PREFIX=" [%{%B%F{blue}%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{%f%k%b%K{${bkg}}%B%F{green}%}]"
-#ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}*%{%f%k%b%}"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}$(_untracked)%{%f%k%b%}"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}*%{%f%k%b%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE=" %{$fg_bold[magenta]%}↓%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE=" %{$fg_bold[magenta]%}↑%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIVERGED_REMOTE=" %{$fg_bold[magenta]%}↕%{$reset_color%}"
 
 PROMPT='%{%f%k%b%}
-%{%K{${bkg}}%B%F{green}%}%n%{%B%F{blue}%}@%{%B%F{cyan}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%3c%{%B%F{green}%}$(git_prompt_info)$(git_remote_status)%E%{%f%k%b%}
+%{%K{${bkg}}%B%F{green}%}%n%{%B%F{blue}%}@%{%B%F{cyan}%}%m%{%B%F{green}%} %{%b%F{yellow}%K{${bkg}}%}%3c%{%B%F{green}%}$(git_prompt_info)$(git_remote_status)$(_untracked)%E%{%f%k%b%}
 %{%K{${bkg}}%}$(_prompt_char)%{%K{${bkg}}%} %#%{%f%k%b%} '
 
 local return_code="%{$reset_color%}%(?..%{$fg_no_bold[red]%}%? ↵%{$reset_color%})"
