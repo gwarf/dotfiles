@@ -5,7 +5,7 @@ color body          color136        color234        "(baptiste|genier|gnubila|he
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
 color index         color136        color234        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" !~N !~T !~F !~p !~P"
-color index         J_cream         color230        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" ~N !~T !~F !~p !~P"
+#color index         J_cream         color230        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" ~N !~T !~F !~p !~P"
 color index         color136        color37         "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" ~T !~F !~p !~P"
 #color index         color136        J_magent        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" ~F !~p !~P"
 # messages which are in reference to my mails
