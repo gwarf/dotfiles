@@ -12,8 +12,8 @@ source ~/.mutt/mutt.compte
 #source ~/.mutt/mutt.colors
 source ~/.mutt/mutt.colors-solarized
 # Need built against slang (mutt -v)
-source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
-#source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-16.muttrc
+#source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
+source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-16.muttrc
 # Mime types
 source ~/.mutt/mutt.mime
 # Headers configuration
