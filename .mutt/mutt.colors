@@ -147,3 +147,5 @@ color body green      default "^[\+]{3} .*"
 color body cyan       default "^[\+][^\+]+.*"
 color body red        default "^\-[^\-]+.*"
 color body brightblue default "^@@ .*"
+
+# vim: filetype=muttrc
