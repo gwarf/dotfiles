@@ -6,9 +6,11 @@
     login_shell = True
     background_image = None
     use_system_font = False
+    foreground_color = "#839496"
     scroll_on_output = False
     show_titlebar = False
     font = Inconsolata-dz for Powerline Medium 14
+    background_color = "#002b36"
     cursor_blink = False
     scrollback_infinite = True
 [layouts]

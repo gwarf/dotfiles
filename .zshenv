@@ -71,6 +71,9 @@ export GREP_OPTIONS
 # Fix the gnome-terminal clear screen issue
 #export TERM="xterm-noclear"
 
+# Use a 256color term
+export TERM="xterm-256color"
+
 # ri doc formating
 export RI="--format bs --width 70"
 export CVS_RSH="ssh"
