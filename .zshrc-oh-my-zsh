@@ -4,8 +4,16 @@ ZSH=$HOME/.oh-my-zsh
 # Source system profile
 emulate sh -c 'source /etc/profile'
 
+eval "`dircolors -b`"
+
+# Gem on archlinux
+if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
+  PATH="/home/baptiste/.gem/ruby/2.0.0/bin:$PATH"
+  export GEM_HOME="$HOME/.gem/ruby/2.0.0"
+fi
+
 #[ -f ~/.zshenv ] && source ~/.zshenv
-#[ -f ~/.zshenv ] && source ~/.zshenv
+#[ -f ~/.alias ] && source ~/.alias
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -53,7 +61,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(gitfast git-flow archlinux bundler command-not-found gem history-substring-search mvn rake ruby tmux svn terminator urltools vagrant vi-mode vundle web-search sysadmin common-aliases)
+plugins=(colorize colored-man gitfast git-flow archlinux bundler command-not-found gem history-substring-search mvn rake ruby tmux svn terminator urltools vagrant vi-mode vundle web-search sysadmin common-aliases)
 
 source $ZSH/oh-my-zsh.sh
 
