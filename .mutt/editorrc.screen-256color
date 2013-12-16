@@ -1,0 +1,1 @@
+set editor="sh -c 'vim $0 && echo -ne \"\\033kmutt\\033\\134\"' "
