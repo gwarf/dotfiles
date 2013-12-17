@@ -69,9 +69,10 @@
 
 ! URxvt ----------------------------------------------------------------------
 !URxvt.title:urxvt
-!URxvt.saveLines:5000
+URxvt.saveLines:65535
 URxvt.loginShell:true
-!URxvt.scrollBar:false
+URxvt.scrollBar:false
+URxvt.urgentOnBell:true
 !URxvt.transparentScrollbar:true
 !URxvt.scrollBar_floating:true
 !URxvt.scrollBar_right:true
@@ -86,7 +87,6 @@ URxvt.termName:rxvt-256color
 URxvt.urlLauncher:firefox
 URxvt.matcher.button:3
 
-URxvt*scrollBar: false
 !URxvt.font: xft:Inconsolata for Powerline:size=16
 !URxvt.font: xft:Source Code Pro Medium:size=14,xft:Source Code Pro Medium for Powerline
 !URxvt.font: xft:Source Code Pro Medium:size=16,xft:Source Code Pro Medium for Powerline
@@ -132,7 +132,7 @@ xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 ! URxvt*buffered: boolean
 
 ! Create the window with the specified X window geometry [default 80x24]; option -geometry.
-URxvt*geometry: 122x70+8+28
+!URxvt*geometry: 122x70+8+28
 
 ! Use the specified colour as the windows background colour [default White]; option -bg.
 ! URxvt*background: colour
@@ -290,7 +290,7 @@ URxvt*geometry: 122x70+8+28
 ! URxvt*pastableTabs: boolean
 
 ! True: blink the cursor. False: do not blink the cursor [default]; option -bc.
-! URxvt*cursorBlink: boolean
+URxvt*cursorBlink: false
 
 ! True: Make the cursor underlined. False: Make the cursor a box [default]; option -uc.
 ! URxvt*cursorUnderline: boolean
