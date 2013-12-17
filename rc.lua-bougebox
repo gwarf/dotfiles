@@ -47,7 +47,7 @@ beautiful.init(os.getenv("HOME") .. "/repos/perso/dotfiles/theme-awesome-solariz
 theme.wallpaper_cmd = { "awsetbg -f  " .. os.getenv("HOME") .. "/Images/wallpaper/tjZzK.jpg" }
 
 -- This is used later as the default terminal and editor to run.
-terminal = "roxterm"
+terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -x " .. editor
 
@@ -766,7 +766,7 @@ end
 run_once("pulseaudio", "-D")
 run_once("mpd")
 run_once("udiskie")
-run_once("roxterm")
+run_once("urxvt")
 run_once("offlineimap", nil, "/usr/bin/python.*/bin/offlineimap")
 --run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")

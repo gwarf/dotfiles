@@ -91,10 +91,10 @@ URxvt.matcher.button:3
 !URxvt*font:xft:Inconsolata\\-dz:Medium:pixelsize=16
 !URxvt.font: xft:Source Code Pro Medium:size=14,xft:Source Code Pro Medium for Powerline
 !URxvt.font: xft:Source Code Pro Medium:size=16,xft:Source Code Pro Medium for Powerline
-URxvt.font: xft:Consolas:size=16, xft:Inconsolata for Powerline
+!URxvt.font: xft:Consolas:size=16, xft:Inconsolata for Powerline
 !URxvt.font: xft:Inconsolata for Powerline:size=16
 !URxvt*font:xft:Inconsolata\\-dz:Medium:pixelsize=16
-!URxvt.font: xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16
+URxvt.font: xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16
 !URxvt.font: xft:Inconsolata\\-dz for Powerline:Medium:size=16
 !URxvt*font:xft:Inconsolata\\-dz for Powerline:Medium:pixelsize=16
 !URxvt*font:xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16
