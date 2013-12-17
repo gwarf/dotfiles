@@ -88,9 +88,21 @@ URxvt.urlLauncher:firefox
 URxvt.matcher.button:3
 
 !URxvt.font: xft:Inconsolata for Powerline:size=16
+!URxvt*font:xft:Inconsolata\\-dz:Medium:pixelsize=16
 !URxvt.font: xft:Source Code Pro Medium:size=14,xft:Source Code Pro Medium for Powerline
 !URxvt.font: xft:Source Code Pro Medium:size=16,xft:Source Code Pro Medium for Powerline
-URxvt.font: xft:Consolas:size=16, xft:Droid Sans Mono for Powerline
+URxvt.font: xft:Consolas:size=16, xft:Inconsolata for Powerline
+!URxvt.font: xft:Inconsolata for Powerline:size=16
+!URxvt*font:xft:Inconsolata\\-dz:Medium:pixelsize=16
+!URxvt.font: xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16
+!URxvt.font: xft:Inconsolata\\-dz for Powerline:Medium:size=16
+!URxvt*font:xft:Inconsolata\\-dz for Powerline:Medium:pixelsize=16
+!URxvt*font:xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16
+!URxvt*font:xft:Inconsolata\\-dz for Powerline:dz-for-Powerline:size=14
+!URxvt*font: xft:Inconsolata\-dz for Powerline:pixelsize=16:antialias=true:hinting=true
+!URxvt*boldfont: xft:Inconsolata\-dz for Powerline:bold:pixelsize=16:antialias=false:hinting=true
+
+!URxvt.font: xft:Inconsolata dz for Powerline Medium:size=14
 
 !URxvt.font: xft:Consolas:pixelsize=16,xft:PowerlineSymbols
 !URxvt.font: xft:Anonymous Pro:size=12,xft:Anonymous Pro for Powerline
