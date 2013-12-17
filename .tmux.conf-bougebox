@@ -134,6 +134,6 @@ new-window -n 'coding'
 
 set -g default-terminal "screen-256color"
 
-## https://powerline.readthedocs.org/en/latest/overview.html#usage
+# https://powerline.readthedocs.org/en/latest/overview.html#usage
 source "/home/baptiste/.config/powerline/tmux/powerline.conf"
 #source "/usr/share/tmux/solarized-dark.conf"
