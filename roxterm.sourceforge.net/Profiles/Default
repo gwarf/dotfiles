@@ -1,0 +1,19 @@
+[roxterm profile]
+colour_scheme=solarized
+font=Inconsolata-dz for Powerline Medium 16
+login_shell=1
+scroll_on_keystroke=0
+tab_pos=4
+disable_menu_access=1
+hide_menubar=1
+show_resize_grip=0
+always_show_tabs=0
+show_add_tab_btn=0
+maximise=1
+full_screen=0
+audible_bell=0
+scroll_on_output=0
+scrollback_lines=500
+cursor_blink_mode=2
+term=xterm-256color
+scrollbar_pos=0
