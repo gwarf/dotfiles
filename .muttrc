@@ -11,8 +11,8 @@ source ~/.mutt/mutt.compte
 # Colors
 #source ~/.mutt/mutt.colors
 source ~/.mutt/mutt.colors-solarized
-#source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
-source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-16.muttrc
+source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
+#source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-16.muttrc
 # Mime types
 source ~/.mutt/mutt.mime
 # Headers configuration
@@ -24,8 +24,8 @@ source ~/.mutt/hooks
 # Display filter
 source ~/.mutt/mutt.t-prot
 # Sidebar config
-source ~/.mutt/mutt.sidebar
+#source ~/.mutt/mutt.sidebar
 # Mutt-kz specific conf (notmuch integration)
-source ~/.mutt/mutt.kz
+#source ~/.mutt/mutt.kz
 
 # vim: filetype=muttrc
