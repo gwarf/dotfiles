@@ -234,6 +234,7 @@ musicwidget:register_buttons({ { "", awesompd.MOUSE_LEFT, musicwidget:command_to
              { "", awesompd.MOUSE_RIGHT, musicwidget:command_show_menu() },
                                { "", "XF86AudioLowerVolume", musicwidget:command_volume_down() },
                                { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
+                               { "", "XF86AudioPlay", musicwidget:command_playpause() },
                                { modkey, "Pause", musicwidget:command_playpause() } })
 musicwidget:run() -- After all configuration is done, run the widget
 -- })
@@ -765,10 +766,9 @@ end
 -- {{{ Autostart
 run_once("pulseaudio", "-D")
 run_once("mpd")
-run_once("udiskie")
-run_once("urxvt")
+run_once("udiskie", nil, "/usr/bin/python.*/bin/udiskie")
 run_once("offlineimap", nil, "/usr/bin/python.*/bin/offlineimap")
---run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
+run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-maatg", "/usr/bin/python.*/bin/revelation.*/keyring-maatg")
 run_once("firefox")
