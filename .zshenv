@@ -108,6 +108,9 @@ umask 022
 
 #export WINEARCH=win32
 
+# Use gnome keyring for ssh auth
+export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+
 [ -f ~/.alias ] && source ~/.alias
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
