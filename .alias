@@ -61,7 +61,7 @@ alias lll='ls -l | less'
 alias llla='ls -la | less'
 # list only directories
 #alias lsd='ls -F | ls -d */'
-alias lsd='\ls | ls -d */'
+alias lsd='ls -d */'
 # list only source code (c, c++, Perl in my case)
 alias lsp='ls *.c *.h *.cc *.pl *.pm *.py'
 
