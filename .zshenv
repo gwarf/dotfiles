@@ -72,7 +72,9 @@ export GREP_OPTIONS
 #export TERM="xterm-noclear"
 
 # Use a 256color term
-export TERM="xterm-256color"
+#export TERM="xterm-256color"
+export TERM="screen-256color"
+#export TERM="xterm"
 
 # ri doc formating
 export RI="--format bs --width 70"
