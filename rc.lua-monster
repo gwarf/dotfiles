@@ -47,7 +47,7 @@ beautiful.init(os.getenv("HOME") .. "/repos/perso/dotfiles/theme-awesome-solariz
 theme.wallpaper_cmd = { "awsetbg -f  " .. os.getenv("HOME") .. "/Images/wallpaper/tjZzK.jpg" }
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "terminator"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -x " .. editor
 
@@ -598,10 +598,16 @@ awful.rules.rules = {
                             "Xmarks: Status",
                             "Firefox Update",
                             "Add Security Exception",
+                            "Software Installation",
                             "Session Manager - Mozilla Firefox"} },
       properties = { floating = true,
                      tag = tags[2][1] } },
     { rule = { class = "Firefox", instance = "Dialog" },
+      properties = { floating = true },
+      callback = function(c)
+              awful.client.movetotag(tags[mouse.screen][awful.tag.getidx()], c)
+      end },
+    { rule = { class = "Firefox", instance = "SessionManager" },
       properties = { floating = true },
       callback = function(c)
               awful.client.movetotag(tags[mouse.screen][awful.tag.getidx()], c)
@@ -650,6 +656,10 @@ awful.rules.rules = {
                      tag = tags[2][1] } },
     { rule = { class = "Pidgin",
                name = "Modify Account" },
+      properties = { floating = true,
+                     tag = tags[2][1] } },
+    { rule = { class = "Pidgin",
+               name = "Incoming Call" },
       properties = { floating = true,
                      tag = tags[2][1] } },
     { rule = { class = "Pidgin",
