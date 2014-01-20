@@ -43,7 +43,8 @@ DISABLE_LS_COLORS="false"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want to disable command autocorrection
-DISABLE_CORRECTION="false"
+#DISABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
@@ -71,7 +72,7 @@ source ~/repos/perso/dotfiles/baptiste.zsh-theme
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
-[ -x /usr/bin/fortune ] && fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
+[ -x /usr/bin/fortune ] && fortune -a
 # name directories
 hash -d repos=~/repos
 hash -d Desktop=~/Desktop
