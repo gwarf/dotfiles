@@ -47,7 +47,7 @@ beautiful.init(os.getenv("HOME") .. "/repos/perso/dotfiles/theme-awesome-solariz
 theme.wallpaper_cmd = { "awsetbg -f  " .. os.getenv("HOME") .. "/Images/wallpaper/tjZzK.jpg" }
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvt"
+terminal = "terminator"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -x " .. editor
 
@@ -234,6 +234,7 @@ musicwidget:register_buttons({ { "", awesompd.MOUSE_LEFT, musicwidget:command_to
              { "", awesompd.MOUSE_RIGHT, musicwidget:command_show_menu() },
                                { "", "XF86AudioLowerVolume", musicwidget:command_volume_down() },
                                { "", "XF86AudioRaiseVolume", musicwidget:command_volume_up() },
+                               { "", "XF86AudioPlay", musicwidget:command_playpause() },
                                { modkey, "Pause", musicwidget:command_playpause() } })
 musicwidget:run() -- After all configuration is done, run the widget
 -- })
@@ -765,10 +766,9 @@ end
 -- {{{ Autostart
 run_once("pulseaudio", "-D")
 run_once("mpd")
-run_once("udiskie")
-run_once("urxvt")
+run_once("udiskie", nil, "/usr/bin/python.*/bin/udiskie")
 run_once("offlineimap", nil, "/usr/bin/python.*/bin/offlineimap")
---run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
+run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-maatg", "/usr/bin/python.*/bin/revelation.*/keyring-maatg")
 run_once("firefox")
@@ -776,6 +776,7 @@ run_once("firefox")
 run_once("jdownloader")
 -- run_once("pidgin")
 -- run_once("tomboy")
+run_once("nm-applet")
 run_once("nitrogen", "--restore")
 -- run_once("gnome-volume-manager")
 -- run_once("~/bin/gnome-keyring-launcher")
