@@ -96,9 +96,9 @@ URxvt.matcher.button:3
 !URxvt.font: xft:Inconsolata\\-dz for Powerline:dzForPowerline:size=16,xft:Symbola:pixelsize=1
 !URxvt.font: xft:Symbola:pixelsize=14
 !URxvt*font:xft:Inconsolata\\-dz for Powerline:Medium:size=14,xft:Symbola:size=14
-URxvt.font: xft:Envy Code R for Powerline:pixelsize=13,xft:Free Mono:pixelsize=12,xft:Symbola:pixelsize=11
+!URxvt.font: xft:Envy Code R for Powerline:pixelsize=13,xft:Free Mono:pixelsize=12,xft:Symbola:pixelsize=11
 !URxvt.font: xft:Consolas:size=14,xft:PowerlineSymbols
-!URxvt*font: xft:Inconsolata\-dz for Powerline:pixelsize=16:antialias=true:hinting=true
+URxvt*font: xft:Inconsolata\-dz for Powerline:size=16:antialias=true:hinting=true,xft:Free Mono:size=16,xft:Symbola:size=16
 !URxvt*boldfont: xft:Inconsolata\-dz for Powerline:bold:pixelsize=16:antialias=false:hinting=true
 
 !URxvt.font: xft:Inconsolata dz for Powerline Medium:size=14
