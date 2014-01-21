@@ -66,8 +66,8 @@ macro index \` "l(! ~Q | ~F) ! ~D\r"  "Show TODO Mail"
 # mark everything as read
 macro index + "T~N\n;N;t" "Mark everything as read"
 
-#macro index \cb |urlview\n  # simulate the old browse-url function
-#macro pager \cb |urlview\n  # simulate the old browse-url function
+macro index \cb |urlview\n  # simulate the old browse-url function
+macro pager \cb |urlview\n  # simulate the old browse-url function
 macro index \cB |w3m\n "call w3m to extract URLs out of a message"
 macro pager \cB |w3m\n "call w3m to extract URLs out of a message"
 
