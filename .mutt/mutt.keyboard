@@ -66,10 +66,10 @@ macro index \` "l(! ~Q | ~F) ! ~D\r"  "Show TODO Mail"
 # mark everything as read
 macro index + "T~N\n;N;t" "Mark everything as read"
 
-macro index \cb |urlview\n  # simulate the old browse-url function
-macro pager \cb |urlview\n  # simulate the old browse-url function
-macro index \cB |w3m\n "call w3m to extract URLs out of a message"
-macro pager \cB |w3m\n "call w3m to extract URLs out of a message"
+macro index \ci |urlview\n  # simulate the old browse-url function
+macro pager \ci |urlview\n  # simulate the old browse-url function
+#macro index \ci |w3m\n "call w3m to extract URLs out of a message"
+#macro pager \ci |w3m\n "call w3m to extract URLs out of a message"
 
 # http://www.memoryhole.net/~kyle/extract_url/
 # require:
@@ -88,11 +88,12 @@ macro pager \cB |w3m\n "call w3m to extract URLs out of a message"
 # dev-perl/Curses
 # dev-perl/URI-Find
 # dev-perl/libxml-perl
-macro index,pager \cb "<enter-command> set my_pdsave=\$pipe_decode<enter>\
-        <enter-command> unset pipe_decode<enter>\
-        <pipe-message>~/.mutt/extract_url.pl<enter>\
-        <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
-        macro index,pager ,b "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+#macro index,pager \cb "<enter-command> set my_pdsave=\$pipe_decode<enter>\
+#        <enter-command> unset pipe_decode<enter>\
+#        <pipe-message>~/.mutt/extract_url.pl<enter>\
+#        <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"
+
+macro index,pager ,b "<enter-command> set my_pdsave=\$pipe_decode<enter>\
         <enter-command> unset pipe_decode<enter>\
         <pipe-message>~/.mutt/extract_url.pl<enter>\
         <enter-command> set pipe_decode=\$my_pdsave<enter>" "get URLs"

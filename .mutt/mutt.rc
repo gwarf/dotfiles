@@ -164,9 +164,9 @@ set locale="fr_FR"
 set send_charset="us-ascii:iso-8859-1:iso-8859-15:utf-8"
 # attempt to make a best effort to convert undisplayable chars with iconv
 #set charset=//TRANSLIT
-set charset="utf-8"
+#set charset="utf-8"
 
-# deoce attachments' filenames
+# decode attachments' filenames
 set rfc2047_parameters
 #unset strict_mime
 mime_lookup application/octet-stream

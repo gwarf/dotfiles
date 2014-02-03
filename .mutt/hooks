@@ -60,6 +60,7 @@ message-hook ~G 'macro index,pager \cb ,B "URL viewer"'
 #charset-hook ^iso-8859-1$ cp1252
 #set assumed_charset="cp1252"
 #set assumed_charset="utf-8"
+#charset-hook ^iso-8859-1$ utf-8
 
 # charset-hooks for charsets' aliases
 charset-hook x-unknown UTF-8
