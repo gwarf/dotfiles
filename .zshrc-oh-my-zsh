@@ -62,7 +62,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(colorize colored-man gitfast git-flow archlinux bundler command-not-found gem history-substring-search mvn rake ruby tmux svn terminator urltools vagrant vi-mode vundle web-search sysadmin common-aliases)
+plugins=(colorize colored-man gitfast git-flow archlinux bundler command-not-found gem history-substring-search mvn rake ruby tmux svn terminator urltools vagrant vi-mode vundle web-search sysadmin common-aliases rvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -72,7 +72,7 @@ source ~/repos/perso/dotfiles/baptiste.zsh-theme
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
-[ -x /usr/bin/fortune ] && fortune -a
+[ -x /usr/bin/fortune ] && fortune -a && echo
 # name directories
 hash -d repos=~/repos
 hash -d Desktop=~/Desktop
@@ -199,3 +199,5 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

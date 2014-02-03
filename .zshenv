@@ -25,10 +25,14 @@ fi
 export SDL_AUDIODRIVER="pulse"
 
 # Gem on archlinux
-if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
-  PATH="/home/baptiste/.gem/ruby/2.0.0/bin:$PATH"
-  export GEM_HOME="$HOME/.gem/ruby/2.0.0"
-fi
+#if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
+#  PATH="/home/baptiste/.gem/ruby/2.0.0/bin:$PATH"
+#  export GEM_HOME="$HOME/.gem/ruby/2.0.0"
+#fi
+#if [ -d "$HOME/.gem/ruby/2.1.0/bin" ]; then
+#  PATH="/home/baptiste/.gem/ruby/2.1.0/bin:$PATH"
+#  export GEM_HOME="$HOME/.gem/ruby/2.1.0"
+#fi
 
 if [ -x '~/.gem/ruby/2.0.0/bin/chit' ]; then
   chit () { '~/.gem/ruby/2.0.0/bin/chit' "$@" | "$PAGER" }
@@ -72,9 +76,8 @@ export GREP_OPTIONS
 #export TERM="xterm-noclear"
 
 # Use a 256color term
-#export TERM="xterm-256color"
-export TERM="screen-256color"
-#export TERM="xterm"
+export TERM="xterm-256color"
+[ -n "$TMUX" ] && export TERM="screen-256color"
 
 # ri doc formating
 export RI="--format bs --width 70"
