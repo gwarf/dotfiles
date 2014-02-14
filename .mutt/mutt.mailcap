@@ -48,6 +48,7 @@ image/*                         ; fbi %s                 		        ; copiousoutp
 #text/html                       ; w3m %s; nametemplate=%s.html; print = firefoxurl %s
 #text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = firefoxurl %s
 text/html                       ; w3m -I %{charset} -T text/html -dump ;           ; copiousoutput ; print = firefoxurl %s
+#text/html                       ; w3m -I %{charset} -dump %s -cols $COLUMNS; copiousoutput; description=HTML Text; nametemplate=%s.html
 #text/html                       ; w3m -I iso-8859-15 -T text/html -dump ;           ; copiousoutput ; print = firefoxurl %s
 #text/html                       ; w3m -I utf-8 -T text/html -dump ;           ; copiousoutput ; print = firefoxurl %s
 #text/html                       ; lynx -dump -assume_charset=%{charset} -display_charset=utf-8 -width=120 %s| sed 's/^   //'; copiousoutput; needsterminal; nametemplate=%s.html

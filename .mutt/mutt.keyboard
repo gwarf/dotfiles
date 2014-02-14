@@ -151,5 +151,9 @@ macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
 macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
 macro index \e6 "<save-message>+Spam<enter>" "Move Message to Spam"
 
+macro pager B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
+macro index B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
+macro pager l "<pipe-message>mhonarc -single | w3m -T text/html\n"
+
 # bounce-message
-bind index B bounce-message
+#bind index B bounce-message
