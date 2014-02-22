@@ -1,5 +1,6 @@
 [global_config]
 [keybindings]
+  full_screen = <Alt>F11
 [profiles]
   [[default]]
     scrollbar_position = hidden
