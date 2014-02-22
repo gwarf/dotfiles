@@ -81,6 +81,7 @@ hash -d DL=~/Downloads
 hash -d Documents=~/Documents
 hash -d Docs=~/Documents
 hash -d dev=~/dev
+hash -d maatpuppet=~/repos/maatG/fr.maatg/infrastructure/puppet
 
 # Alt-S inserts sudo at the starts of the line
 insert_sudo () { zle beginning-of-line; zle -U 'sudo ' }
@@ -199,5 +200,7 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+autoload -U zmv
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
