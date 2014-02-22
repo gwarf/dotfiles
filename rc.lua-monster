@@ -616,6 +616,8 @@ awful.rules.rules = {
       end },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "evince" },
+      properties = { floating = true } },
     { rule = { name = "GNOME Document Previewer" },
       properties = { floating = true } },
     { rule_any = { class = { "jd-Main", "JDownloader" } },
