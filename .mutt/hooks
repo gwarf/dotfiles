@@ -10,6 +10,11 @@ reply-hook "~t gwarf@gwarf.org" "source ~/.mutt/profile.gwarf"
 reply-hook "~t baptiste.grenier@gmail.com" "source ~/.mutt/profile.gmail.baptiste"
 reply-hook "~t gwarf12@gmail.com" "source ~/.mutt/profile.gmail.gwarf12"
 
+# When sending load profile corresponding to the To:
+send-hook @gnubila\\.fr$ "source ~/.mutt/profile.gnubila"
+send-hook @maatg\\.fr$ "source ~/.mutt/profile.gnubila"
+send-hook @lists\\.maatg\\.fr$ "source ~/.mutt/profile.gnubila"
+
 #folder-hook +INBOX push "<limit>!~s'Liferay\\\ Forums'<enter>"
 #folder-hook = push "<limit>!~s'Liferay\\\ Forums'<enter>"
 
