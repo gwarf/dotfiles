@@ -1,4 +1,5 @@
 [global_config]
+  geometry_hinting = False
 [keybindings]
   full_screen = <Alt>F11
 [profiles]
