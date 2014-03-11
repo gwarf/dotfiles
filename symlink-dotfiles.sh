@@ -20,3 +20,8 @@ link_conf() {
 for configfile in $(ls $dotfiles/.config); do
   link_conf "$dotfiles/.config/$configfile" "$HOME/.config/$configfile"
 done
+
+for dotfile in $(ls $dotfiles/.*); do
+  [ $dotfile = '.git' ] && next
+  link_conf "$dotfiles/$dotfile" "$HOME/$dotfile"
+done
