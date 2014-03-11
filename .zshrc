@@ -66,7 +66,7 @@ plugins=(colorize colored-man gitfast git-flow archlinux bundler command-not-fou
 
 source $ZSH/oh-my-zsh.sh
 
-source ~/repos/perso/dotfiles/baptiste.zsh-theme
+source ~/repos/perso/dotfiles/.zsh-theme.baptiste
 
 # User configuration
 
