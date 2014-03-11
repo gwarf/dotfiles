@@ -17,11 +17,12 @@ link_conf() {
   ln -s "$from" "$to"
 }
 
+mkdir ~/.config
 for configfile in $(ls $dotfiles/.config); do
   link_conf "$dotfiles/.config/$configfile" "$HOME/.config/$configfile"
 done
 
-for dotfile in $(ls $dotfiles/.*); do
+for dotfile in $(ls -a $dotfiles | grep '^\.'); do
   [ $dotfile = '.git' ] && next
   link_conf "$dotfiles/$dotfile" "$HOME/$dotfile"
 done
