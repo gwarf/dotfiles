@@ -614,9 +614,13 @@ awful.rules.rules = {
       callback = function(c)
               awful.client.movetotag(tags[mouse.screen][awful.tag.getidx()], c)
       end },
+    { rule = { name = "gedit" },
+      properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
-    { rule = { class = "evince" },
+    { rule = { class = "Evince" },
+      properties = { floating = true } },
+    { rule = { name = "Evince" },
       properties = { floating = true } },
     { rule = { name = "GNOME Document Previewer" },
       properties = { floating = true } },
