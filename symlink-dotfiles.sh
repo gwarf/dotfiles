@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dotfiles="~/repos/gwarf/dotfiles"
+dotfiles="$HOME/repos/gwarf/dotfiles"
 
 if [ -d "$dotfiles" ]; then
   echo "Symlinking dotfiles from $dotfiles"
