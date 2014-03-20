@@ -6,6 +6,7 @@ export LC_ALL LANG
 
 export VISUAL="vim"
 export EDITOR="vim"
+export TERMINAL='terminator'
 LESS='-imJMWR'
 PAGER="less $LESS"
 MANPAGER=$PAGER
@@ -120,5 +121,12 @@ export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
 export PATH
+
+if [ -n "$DESKTOP_SESSION" ];then
+  if [ -n "$GNOME_KEYRING_PID" ]; then
+    eval $(gnome-keyring-daemon --start --components=ssh,gpg)
+    export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+  fi
+fi
 
 # vim:set ts=2 sw=2 expandtab:
