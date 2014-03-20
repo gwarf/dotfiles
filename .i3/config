@@ -155,6 +155,7 @@ assign [class="^Firefox$" instance="^Navigator$"] → 2: web
 
 for_window [class="Gedit"] floating enable
 for_window [class="^Firefox$" instance="^Navigator$"] border none
+for_window [class="^Terminator$"] border none
 
 #exec pulseaudio -D
 #exec offlineimap
