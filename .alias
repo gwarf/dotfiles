@@ -16,6 +16,7 @@ alias df='pydf'
 
 # network
 alias my_ip='/sbin/ifconfig eth0 | grep "addr:" | sed -e "s/^.*addr://" |sed -e "s/ Bcast.*//" '
+alias my_publicip='curl ipinfo.io'
 alias my_ports='netstat -alpe --ip'
 alias netstati="netstat --verbose --tcp --udp --programs --extend"
 
