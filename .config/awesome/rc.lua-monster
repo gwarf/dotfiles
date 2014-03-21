@@ -808,7 +808,6 @@ end
 -- {{{ Autostart
 run_once("pulseaudio", "-D")
 run_once("mpd")
-run_once("udiskie", nil, "/usr/bin/python.*/bin/udiskie")
 run_once("offlineimap", nil, "/usr/bin/python.*/bin/offlineimap")
 run_once("terminator", nil, "/usr/bin/python.*/bin/terminator.*")
 run_once("revelation", "~/repos/perso/gwarf/private/revelation/keyring-perso", "/usr/bin/python.*/bin/revelation.*/keyring-perso")
