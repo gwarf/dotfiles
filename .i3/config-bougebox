@@ -89,14 +89,14 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Workspace names
-workspace "1: term"
-workspace "2: web"
-workspace "3: misc"
-workspace "4: virt"
-workspace "5: files"
-workspace "6: revelation"
-workspace "7: download"
-workspace "8: games"
+#workspace "1: term"
+#workspace "2: web"
+#workspace "3: misc"
+#workspace "4: virt"
+#workspace "5: files"
+#workspace "6: revelation"
+#workspace "7: download"
+#workspace "8: games"
 
 # switch to workspace
 bindsym $mod+1 workspace "1: term"
