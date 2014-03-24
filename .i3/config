@@ -88,27 +88,37 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
+# Workspace names
+workspace "1: term" output DVI-I-2
+workspace "2: web" output DVI-I-3
+workspace "3: misc" output DVI-I-2
+workspace "4: virt" output DVI-I-2
+workspace "5: files" output DVI-I-2
+workspace "6: revelation" output DVI-I-3
+workspace "7: download" output DVI-I-3
+workspace "8: games" output DVI-I-2
+
 # switch to workspace
-bindsym $mod+1 workspace "1: term" # screen left
-bindsym $mod+2 workspace "2: web"  # screen right
-bindsym $mod+3 workspace "3: misc" # screen left
-bindsym $mod+4 workspace "4: virt" # screen left
-bindsym $mod+5 workspace "5: files" # screen left
-bindsym $mod+6 workspace "6: revelation" # screen right
+bindsym $mod+1 workspace "1: term"
+bindsym $mod+2 workspace "2: web"
+bindsym $mod+3 workspace "3: misc"
+bindsym $mod+4 workspace "4: virt"
+bindsym $mod+5 workspace "5: files"
+bindsym $mod+6 workspace "6: revelation"
 bindsym $mod+7 workspace "7: download"
-bindsym $mod+8 workspace 8
+bindsym $mod+8 workspace "8: games"
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+1 move container to workspace 1: term
+bindsym $mod+Shift+2 move container to workspace 2: web
+bindsym $mod+Shift+3 move container to workspace 3: misc
+bindsym $mod+Shift+4 move container to workspace 4: virt
+bindsym $mod+Shift+5 move container to workspace 5: files
+bindsym $mod+Shift+6 move container to workspace 6: revelation
+bindsym $mod+Shift+7 move container to workspace 7: download
+bindsym $mod+Shift+8 move container to workspace 8: games
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
@@ -126,6 +136,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 -- +10% && killall -SIGUSR1 i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -- -10% && killall -SIGUSR1 i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioPlay exec --no-startup-id mpc toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -161,6 +172,10 @@ bar {
 assign [class="^Terminator$" instance="^terminator$"] → 1: term
 assign [class="^chromium-browser$" instance="^Chromium-browser$"] → 2: web
 assign [class="^Firefox$" instance="^Navigator$"] → 2: web
+assign [class="^Pidgin$"] → 2: web
+assign [class="^Revelation$"] → 6: revelation
+assign [class="^JDownloader$"] → 7: download
+assign [class="^warzone2100$"] → 8: games
 
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
@@ -169,16 +184,16 @@ for_window [class="^Terminator$"] border none
 for_window [class="Skype"] floating enable
 for_window [class="Vlc"] floating enable
 for_window [class="Smplayer"] floating enable
-for_window [class="JDownloader"] floating enable
-for_window [class="jdMain"] floating enable
-for_window [class="jd-Main"] floating enable
+for_window [class="Uzbl-core"] focus child, layout tabbed, focus
+for_window [class="warzone2100"] fullscreen
 
 #exec offlineimap
 exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap-notify &> /tmp/offlineimap-log
 #exec pulseaudio -D
 exec --no-startup-id pkill pulseaudio; sleep 3 && pulseaudio --start
+exec --no-startup-id pa-applet
 exec --no-startup-id mpd
-exec --no-startup-id udiskie
+#exec --no-startup-id udiskie
 exec --no-startup-id terminator
 exec --no-startup-id firefox
 exec --no-startup-id jdownloader
@@ -191,3 +206,4 @@ exec --no-startup-id revelation ~/repos/perso/gwarf/private/revelation/keyring-m
 # anamnesis, clipman, copyq, gpaste could be alternatives
 exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
+exec --no-startup-id xmodmap ~/.Xmodmap
