@@ -1,6 +1,6 @@
 # ~/.zshenv
 
-LC_ALL='en_GB.UTF-8'
+LC_ALL='fr_FR.UTF-8'
 LANG='fr_FR.UTF-8'
 export LC_ALL LANG
 
