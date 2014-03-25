@@ -90,7 +90,7 @@ bindsym $mod+a focus parent
 
 # Workspace names
 workspace "1: term" output DVI-I-2
-workspace "2: web" output DVI-I-3
+workspace "2: web" output DVI-I-3 layout splitv
 workspace "3: misc" output DVI-I-2
 workspace "4: virt" output DVI-I-2
 workspace "5: files" output DVI-I-2
@@ -173,22 +173,26 @@ assign [class="^Terminator$" instance="^terminator$"] → 1: term
 assign [class="^chromium-browser$" instance="^Chromium-browser$"] → 2: web
 assign [class="^Firefox$" instance="^Navigator$"] → 2: web
 assign [class="^Pidgin$"] → 2: web
+assign [class="^VirtualBox$"] → 4: virt
 assign [class="^Revelation$"] → 6: revelation
 assign [class="^JDownloader$"] → 7: download
 assign [class="^warzone2100$"] → 8: games
 
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
-for_window [class="^Firefox$" instance="^Navigator$"] border none
+for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
+for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
 for_window [class="^Terminator$"] border none
 for_window [class="Skype"] floating enable
 for_window [class="Vlc"] floating enable
 for_window [class="Smplayer"] floating enable
 for_window [class="Uzbl-core"] focus child, layout tabbed, focus
+for_window [class="VirtualBox"] layout tabbed
 for_window [class="warzone2100"] fullscreen
 
 #exec offlineimap
-exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap-notify &> /tmp/offlineimap-log
+#exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap-notify &> /tmp/offlineimap-log
+exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap
 #exec pulseaudio -D
 exec --no-startup-id pkill pulseaudio; sleep 3 && pulseaudio --start
 exec --no-startup-id pa-applet
@@ -207,3 +211,8 @@ exec --no-startup-id revelation ~/repos/perso/gwarf/private/revelation/keyring-m
 exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
 exec --no-startup-id xmodmap ~/.Xmodmap
+exec --no-startup-id xrdb -load ~/.Xresources
+
+# Switch back to original workspace on a second press of workspace
+# shortcurt
+workspace_auto_back_and_forth yes
