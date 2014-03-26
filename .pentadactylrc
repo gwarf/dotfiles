@@ -1,2 +1,2 @@
 colorscheme solarized-dark
-defsearch ddg
+set defsearch=ddg
