@@ -21,6 +21,16 @@ set $mod Mod4
 # font pango:DejaVu Sans Mono 10
 font pango:Inconsolata 12
 
+# solarized
+client.focused   #93a1a1 #073642 #93a1a1
+client.focused_inactive #586e75 #002b36 #586e75
+client.unfocused #657b83 #002b36 #657b83
+client.urgent  #d33682 #073642 #d33682
+
+# Switch back to original workspace on a second press of workspace
+# shortcurt
+workspace_auto_back_and_forth yes
+
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -197,7 +207,6 @@ assign [class="^warzone2100$"] → 8: games
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
 #for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
-#for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
 for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
 for_window [class="^Terminator$"] border none
 for_window [class="Skype"] floating enable
@@ -229,13 +238,3 @@ exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id xrdb -load ~/.Xresources
-
-# Switch back to original workspace on a second press of workspace
-# shortcurt
-workspace_auto_back_and_forth yes
-
-# solarized
-client.focused   #93a1a1 #073642 #93a1a1
-client.focused_inactive #586e75 #002b36 #586e75
-client.unfocused #657b83 #002b36 #657b83
-client.urgent  #d33682 #073642 #d33682
