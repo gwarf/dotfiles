@@ -196,7 +196,8 @@ assign [class="^warzone2100$"] → 8: games
 
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
-for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
+#for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
+#for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
 for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
 for_window [class="^Terminator$"] border none
 for_window [class="Skype"] floating enable
