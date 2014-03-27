@@ -182,8 +182,8 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         #status_command i3status
-        status_command ~/bin/i3status.sh
-        #status_command python ~/.i3/myi3pystatus.py
+        #status_command ~/bin/i3status.sh
+        status_command python ~/.i3/myi3pystatus.py
         position top
         font pango:Inconsolata 14
 	colors {
