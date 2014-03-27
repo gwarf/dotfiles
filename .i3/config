@@ -184,6 +184,14 @@ bar {
 #            active_workspace #11aaff #005500
 #            urgent_workspace #ffffff #990000
 #        }
+	colors {
+		background #002b36
+		#statusline #002b36
+		focused_workspace #93a1a1 #073642
+		active_workspace #587e75 #002b36
+		inactive_workspace #657b83 #002b36
+		urgent_workspace #d33682 #073642
+	}
 }
 assign [class="^Terminator$" instance="^terminator$"] → 1: term
 assign [class="^chromium-browser$" instance="^Chromium-browser$"] → 2: web
@@ -233,3 +241,9 @@ exec --no-startup-id xrdb -load ~/.Xresources
 # Switch back to original workspace on a second press of workspace
 # shortcurt
 workspace_auto_back_and_forth yes
+
+# solarized
+client.focused   #93a1a1 #073642 #93a1a1
+client.focused_inactive #586e75 #002b36 #586e75
+client.unfocused #657b83 #002b36 #657b83
+client.urgent  #d33682 #073642 #d33682
