@@ -90,7 +90,7 @@ bindsym $mod+a focus parent
 
 # Workspace names
 workspace "1: term" output DVI-I-2
-workspace "2: web" output DVI-I-3 layout splitv
+workspace "2: web" output DVI-I-3
 workspace "3: misc" output DVI-I-2
 workspace "4: virt" output DVI-I-2
 workspace "5: files" output DVI-I-2
