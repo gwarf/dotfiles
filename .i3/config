@@ -221,7 +221,8 @@ for_window [class="warzone2100"] fullscreen
 exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap
 #exec pulseaudio -D
 exec --no-startup-id pkill pulseaudio; sleep 3 && pulseaudio --start
-exec --no-startup-id pa-applet
+#exec --no-startup-id pa-applet
+exec --no-startup-id pasystray
 exec --no-startup-id mpd
 #exec --no-startup-id udiskie
 exec --no-startup-id terminator
