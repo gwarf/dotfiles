@@ -191,7 +191,7 @@ assign [class="^Firefox$" instance="^Navigator$"] → 2: web
 assign [class="^Pidgin$"] → 2: web
 assign [class="^VirtualBox$"] → 4: virt
 assign [class="^Revelation$"] → 6: revelation
-assign [class="^JDownloader$"] → 7: download
+assign [class="^jd-Main$" instance="^sun-awt-X11-XFramePeer$"] → 7: download
 assign [class="^warzone2100$"] → 8: games
 
 for_window [class="Evince"] floating enable
