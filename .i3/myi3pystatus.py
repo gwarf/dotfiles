@@ -63,9 +63,9 @@ status.register("temp",
 # (defaults of format_down and color_down)
 #
 # Note: the network module requires PyPI package netifaces-py3
-status.register("network",
-    interface="enp2s0",
-    format_up="{v4cidr}",)
+#status.register("network",
+#    interface="enp2s0",
+#    format_up="{v4cidr}",)
 
 # Has all the options of the normal network and adds some wireless specific things
 # like quality and network names.
