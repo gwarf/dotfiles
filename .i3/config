@@ -172,21 +172,13 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         #status_command i3status
-        #status_command /home/baptiste/bin/i3status.sh
-        #status_command i3pystatus
-        status_command python ~/.i3/myi3pystatus.py
+        status_command ~/bin/i3status.sh
+        #status_command python ~/.i3/myi3pystatus.py
         position top
-        font pango:Inconsolata 12
-#        colors {
-#            background #000000
-#            statusline #33aaff
-#            focused_workspace #11aaff #005500
-#            active_workspace #11aaff #005500
-#            urgent_workspace #ffffff #990000
-#        }
+        font pango:Inconsolata 14
 	colors {
 		background #002b36
-		#statusline #002b36
+		statusline #839496
 		focused_workspace #93a1a1 #073642
 		active_workspace #587e75 #002b36
 		inactive_workspace #657b83 #002b36
