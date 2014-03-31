@@ -10,7 +10,8 @@ status = Status(standalone=True)
 # Tue 30 Jul 11:59:46 PM KW31
 #                          ^-- calendar week
 status.register("clock",
-    format="%a %-d %b %X - Week %V",)
+    format="%a %-d %b %X - Week %V",
+    color="i3Bar")
 
 # Shows the average load of the last minute and the last 5 minutes
 # (the default value for format is used)

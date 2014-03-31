@@ -238,4 +238,8 @@ exec --no-startup-id revelation ~/repos/perso/gwarf/private/revelation/keyring-m
 exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
 exec --no-startup-id xmodmap ~/.Xmodmap
-exec --no-startup-id xrdb -load ~/.Xresources
+#xmodmap -e "remove Lock = Caps_Lock"
+#xmodmap -e "keysym Caps_Lock = Control_L"
+#xmodmap -e "add Control = Control_L"
+exec --no-startup-id xrdb -merge ~/.Xresources
+#xsetroot -cursor_name left_ptr
