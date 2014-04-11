@@ -152,6 +152,15 @@ bindsym XF86AudioStop exec ncmpcpp stop
 bindsym XF86AudioPrev exec ncmpcpp prev
 bindsym XF86AudioNext exec ncmpcpp next
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+# Show the pidgin scratchpad window, if any.
+bindsym $mod+p [title="^Pidgin"] scratchpad show
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
@@ -239,4 +248,4 @@ exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id xrdb -load ~/.Xresources
-execc --no-startup-id setxkbmap us -option 'compose:ralt'
+exec --no-startup-id setxkbmap us -option 'compose:ralt'
