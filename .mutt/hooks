@@ -8,6 +8,7 @@ reply-hook "~t bgrenier@maatg.com" "source ~/.mutt/profile.maat"
 reply-hook "~t baptiste.grenier@healthgrid.org" "source ~/.mutt/profile.healthgrid"
 reply-hook "~t gwarf@gwarf.org" "source ~/.mutt/profile.gwarf"
 reply-hook "~t baptiste.grenier@gmail.com" "source ~/.mutt/profile.gmail.baptiste"
+reply-hook "~e googlegroups\.com" "source ~/.mutt/profile.gmail.baptiste"
 reply-hook "~t gwarf12@gmail.com" "source ~/.mutt/profile.gmail.gwarf12"
 
 # When sending load profile corresponding to the To:
