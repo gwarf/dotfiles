@@ -247,5 +247,9 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
 exec --no-startup-id xmodmap ~/.Xmodmap
+#xmodmap -e "remove Lock = Caps_Lock"
+#xmodmap -e "keysym Caps_Lock = Control_L"
+#xmodmap -e "add Control = Control_L"
 exec --no-startup-id xrdb -load ~/.Xresources
 exec --no-startup-id setxkbmap us -option 'compose:ralt'
+#xsetroot -cursor_name left_ptr
