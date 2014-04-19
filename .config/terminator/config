@@ -1,5 +1,7 @@
 [global_config]
   geometry_hinting = False
+  window_state = maximise
+  borderless = True
 [keybindings]
   full_screen = <Alt>F11
 [profiles]
