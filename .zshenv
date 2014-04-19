@@ -114,19 +114,19 @@ umask 022
 
 #export WINEARCH=win32
 
-# Use gnome keyring for ssh auth
-export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 
 [ -f ~/.alias ] && source ~/.alias
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
 export PATH
 
-if [ -n "$DESKTOP_SESSION" ];then
-  if [ -n "$GNOME_KEYRING_PID" ]; then
+# Use gnome keyring for ssh auth
+#export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+#if [ -n "$DESKTOP_SESSION" ];then
+  #if [ -n "$GNOME_KEYRING_PID" ]; then
     eval $(gnome-keyring-daemon --start --components=ssh,gpg)
-    export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
-  fi
-fi
-
+    #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+    export GPG_AGENT_INFO SSH_AUTH_SOCK
+  #fi
+#fi
 # vim:set ts=2 sw=2 expandtab:
