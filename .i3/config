@@ -220,15 +220,11 @@ for_window [class="Uzbl-core"] focus child, layout tabbed, focus
 for_window [class="VirtualBox"] layout tabbed
 for_window [class="warzone2100"] fullscreen
 
-#exec offlineimap
-#exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap-notify &> /tmp/offlineimap-log
 exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap
-#exec pulseaudio -D
 exec --no-startup-id pkill pulseaudio; sleep 3 && pulseaudio --start
 #exec --no-startup-id pa-applet
 exec --no-startup-id pasystray
 exec --no-startup-id mpd
-#exec --no-startup-id udiskie
 exec --no-startup-id terminator
 exec --no-startup-id firefox
 exec --no-startup-id jdownloader
