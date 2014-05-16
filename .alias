@@ -94,6 +94,7 @@ alias kernel_comp='cd /usr/src/linux/ && cp .config .. && make clean && make mrp
 
 # ssh
 #alias ssh='TERM=xterm-256color ssh'
+alias ssh='TERM=screen ssh'
 #alias emule='wine "~/.wine/drive_c/Program Files/emule/emule.exe"'
 #alias semule='sudo wine "~/.wine/drive_c/Program Files/emule/emule.exe"'
 alias dvdshrink='wine "~/.wine/drive_c/Program Files/DVD Shrink/DVD Shrink 3.2.exe"'
