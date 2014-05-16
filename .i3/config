@@ -227,6 +227,7 @@ exec --no-startup-id pasystray
 exec --no-startup-id mpd
 exec --no-startup-id terminator
 exec --no-startup-id firefox
+exec --no-startup-id deluge
 exec --no-startup-id jdownloader
 exec --no-startup-id pidgin
 exec --no-startup-id nm-applet
