@@ -185,8 +185,8 @@ SAVEHIST=$HISTSIZE
 setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 
 # Completion options
-[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
-[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
+#[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
+#[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
 
 # # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
