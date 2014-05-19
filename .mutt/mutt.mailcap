@@ -38,9 +38,9 @@ audio/x-pn-realaudio            ; /usr/bin/X11/realplay %s                      
 audio/x-wav                     ; mplayer %s                                    ;
 audio/*                         ; mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
 image/*; sxiv -bf %s \; reset
+image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
 image/*                         ; mutt_bgrun eog %s                             ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/*                         ; fbi %s                 		        ; copiousoutput
 #text/html;                      mutt_netscape %s; test=sh -c 'test $DISPLAY'
 #text/html                       ; mutt_bgrun uzbl-browser -u %s                                   ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
