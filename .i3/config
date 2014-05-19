@@ -220,8 +220,12 @@ for_window [class="Uzbl-core"] focus child, layout tabbed, focus
 for_window [class="VirtualBox"] layout tabbed
 for_window [class="warzone2100"] fullscreen
 
+# http://i3wm.org/docs/user-contributed/lzap-config.html
+exec ~/.i3/autostart
+
 exec --no-startup-id pkill offlineimap || sleep 3 && offlineimap
 exec --no-startup-id pkill pulseaudio; sleep 3 && pulseaudio --start
+exec --no-startup-id pactl set-sink-volume 0 '60%'
 #exec --no-startup-id pa-applet
 exec --no-startup-id pasystray
 exec --no-startup-id mpd
@@ -235,13 +239,7 @@ exec --no-startup-id nitrogen --restore
 exec --no-startup-id revelation ~/repos/perso/gwarf/private/revelation/keyring-perso
 exec --no-startup-id revelation ~/repos/perso/gwarf/private/revelation/keyring-maatg
 #exec --no-startup-id volti # starting volume control
-# anamnesis, clipman, copyq, gpaste could be alternatives
+# parcellite, anamnesis, clipman, copyq, gpaste could be alternatives
 exec --no-startup-id clipit # starting clipboard manager
 #exec --no-startup-id compton --config .config/compton/compton.conf -b # starting compositor
-exec --no-startup-id xmodmap ~/.Xmodmap
-#xmodmap -e "remove Lock = Caps_Lock"
-#xmodmap -e "keysym Caps_Lock = Control_L"
-#xmodmap -e "add Control = Control_L"
-exec --no-startup-id xrdb -load ~/.Xresources
-exec --no-startup-id setxkbmap us -option 'compose:ralt'
 #xsetroot -cursor_name left_ptr
