@@ -205,7 +205,7 @@ assign [class="^jd-Main$" instance="^sun-awt-X11-XFramePeer$"] → 7: download
 assign [class="^deluge$"] → 7: download
 assign [class="^warzone2100$"] → 8: games
 
-for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
+for_window [class="^chromium-browser$"] focus child, layout tabbed, focus
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
 for_window [class="mpv"] floating enable
