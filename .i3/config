@@ -205,19 +205,20 @@ assign [class="^jd-Main$" instance="^sun-awt-X11-XFramePeer$"] → 7: download
 assign [class="^deluge$"] → 7: download
 assign [class="^warzone2100$"] → 8: games
 
+for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
 for_window [class="Evince"] floating enable
 for_window [class="Gedit"] floating enable
 for_window [class="mpv"] floating enable
 for_window [class="MPlayer"] floating enable
 #for_window [class="^Firefox$" instance="^Navigator$"] focus child, layout tabbed, focus
-for_window [class="^chromium-browser$"] focus child, layout tabbed, focus 
-for_window [class="^Terminator$"] border none
+for_window [class="net-sourceforge-jnlp-runtime-Boot"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [class="Skype"] floating enable
-for_window [class="Vlc"] floating enable
 for_window [class="Smplayer"] floating enable
+for_window [class="^Terminator$"] border none
 for_window [class="Uzbl-core"] focus child, layout tabbed, focus
 for_window [class="VirtualBox"] layout tabbed
+for_window [class="Vlc"] floating enable
 for_window [class="warzone2100"] fullscreen
 
 # http://i3wm.org/docs/user-contributed/lzap-config.html
