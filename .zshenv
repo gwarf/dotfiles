@@ -14,7 +14,7 @@ BROWSER='chromium-browser'
 OS="$(uname)"
 if [ "$OS" != "SunOS" ]; then
   export PAGER="most"
-  export MANPAGER="most"
+  export MANPAGER="most -s"
   # lesspipe
   export LESSOPEN="|lesspipe.sh %s"
   PATH="/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/usr/sbin:/usr/bin/X11:/usr/X11R6/bin:/usr/games:/sbin:/opt/texlive/bin:/opt/mozilla/bin:/opt/e17/bin:/opt/openoffice/program:/usr/local/openoffice.org-3.0.0/openoffice.org3/program:/opt/gnome/bin:$HOME/bin:$HOME/webtest/bin:/usr/lib/openoffice/program:$HOME/repos/git-achievements/:/usr/lib64/libreoffice/program:/usr/libexec:$PATH"
