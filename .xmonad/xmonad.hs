@@ -65,6 +65,7 @@ import XMonad.Hooks.EwmhDesktops
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
     spawn "sh ~/.xmonad/autostart.sh"
+    spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000"
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {  
           	  manageHook = myManageHook
         	, layoutHook = myLayoutHook   
@@ -75,7 +76,7 @@ main = do
         	, modMask = myModMask  
         	, terminal = myTerminal
 		, workspaces = myWorkspaces
-                , focusFollowsMouse = False
+                , focusFollowsMouse = True
                 , logHook = dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50}
 	        , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 		}
@@ -88,15 +89,16 @@ myManageHook = composeAll
                 [ isFullscreen                  --> doFullFloat
 		, className =?  "Xmessage" 	--> doCenterFloat 
 	    	, className =? "stalonetray" --> doIgnore
+	    	, className =? "Trayer" --> doIgnore
                 , className =? "chromium-browser"          --> doShift "2:web"
                 , className =? "Firefox"          --> doShift "2:web"
                 , className =? "Pidgin"           --> doShift "2:web"
-                , className =? "VirtualBox"           --> doShift "2:virt"
-                , className =? "jd-Main"           --> doShift "2:download"
-                , className =? "deluge"           --> doShift "2:download"
+                , className =? "VirtualBox"           --> doShift "4:virt"
+                , className =? "jd-Main"           --> doShift "7:download"
+                , className =? "deluge"           --> doShift "7:download"
                 , className =? "warzone2100"           --> doShift "8:games"
                 , className =? "Skype"           --> doShift "2:web"
-		, className =? "Revelation"	--> doShift "1:term"
+		, className =? "Revelation"	--> doShift "6:revelation"
 		, className =? "Terminator"	--> doShift "1:term"
                 , fmap ("libreoffice"  `isInfixOf`) className --> doShift "3:misc"
 		, className =? "MPlayer"	--> (ask >>= doF . W.sink) 
@@ -127,7 +129,7 @@ customPP = defaultPP {
 -- some nice colors for the prompt windows to match the dzen status bar.
 myXPConfig = defaultXPConfig                                    
     { 
-	font  = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
+	font  = "Inconsolata-16" 
 	,fgColor = "#0096d1"
 	, bgColor = "#000000"
 	, bgHLight    = "#000000"
@@ -172,7 +174,7 @@ myLayoutHook  =  onWorkspace "2:web" imLayout  $ onWorkspace "6:VM" fullL $ onWo
 -------------------------------------------------------------------------------
 ---- Terminal --
 myTerminal :: String
-myTerminal = "termite"
+myTerminal = "terminator"
 
 
 -------------------------------------------------------------------------------
