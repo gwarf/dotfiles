@@ -34,6 +34,10 @@ export SDL_AUDIODRIVER="pulse"
 #  PATH="/home/baptiste/.gem/ruby/2.1.0/bin:$PATH"
 #  export GEM_HOME="$HOME/.gem/ruby/2.1.0"
 #fi
+#
+if [ -d "$HOME/.cabal/bin" ]; then
+  PATH="$HOME/.cabal/bin:$PATH"
+fi
 
 if [ -x '~/.gem/ruby/2.0.0/bin/chit' ]; then
   chit () { '~/.gem/ruby/2.0.0/bin/chit' "$@" | "$PAGER" }
