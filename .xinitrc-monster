@@ -127,8 +127,12 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 #exec ck-launch-session startfluxbox & wmpid=$!
 
 # Awesome
-exec awesome & wmpid=$!
+#exec awesome & wmpid=$!
 #exec ck-launch-session awesome & wmpid=$!
+
+# xmonad
+xsetroot -cursor_name left_ptr
+exec ck-launch-session xmonad & wmpid=$!
 
 # gnome + awesome
 #exec ck-launch-session gnome-session & wmpid=$!
