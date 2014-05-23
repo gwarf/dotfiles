@@ -143,7 +143,7 @@ myXPConfig = defaultXPConfig
 
 
 --LayoutHook
-myLayoutHook  =  onWorkspace "2:web" imLayout  $ onWorkspace "6:VM" fullL $ onWorkspace "8:vid" fullL $ onWorkspace "7:games" fullL  $ standardLayouts 
+myLayoutHook  =  onWorkspace "2:web" webL  $ onWorkspace "4:virt" fullL $ onWorkspace "6:VM" fullL $ onWorkspace "8:vid" fullL $ onWorkspace "7:games" fullL  $ standardLayouts
    where
 	standardLayouts =   avoidStruts  $ (tiled |||  reflectTiled ||| Mirror tiled ||| Grid ||| Full) 
 
