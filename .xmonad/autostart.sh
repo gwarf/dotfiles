@@ -1,53 +1,70 @@
 #!/bin/sh
 
+# Run a program only once
+#
+# run_once $program, $program_arguments, $process_name
+run_once {
+ program="$1"
+ program_arguments="$2"
+ process_name="$3"
+
+ [ -z "$process_name" ] && process_name="$program"
+
+ if [ -z "$program_arguments" ]; then
+   pgrep -f -u $USER -x "$process_name" || ( "$program" )
+ else
+   pgrep -f -u $USER -x "$process_name" || ( "$program" "$program_arguments" )
+ fi
+}
+
 ## Disable beeps
-xset -b &
+xset -b
 
 ## DPMS monitor setting (standby -> suspend -> off) (seconds)
-xset dpms 300 600 900 &
+xset dpms 300 600 900
 
 ## Set LCD brightness
-xbacklight -set 90 &
+xbacklight -set 90
 
 ## Keybord layout setting
-setxkbmap us -option 'compose:ralt' &
+setxkbmap us -option 'compose:ralt'
 
 ## Load Xmodmap conf
 #xmodmap -e "remove Lock = Caps_Lock"
 #xmodmap -e "keysym Caps_Lock = Control_L"
 #xmodmap -e "add Control = Control_L"
-xmodmap ~/.Xmodmap &
+xmodmap ~/.Xmodmap
 
 ## Load Xresources
-xmxrdb -load ~/.Xresources &
+xmxrdb -load ~/.Xresources
 
 ## OSD
-dunst &
+run_once dunst
 
 # Wallpapers
-nitrogen --restore &
+run_once nitrogen "--restore"
 
 pkill offlineimap || sleep 3 && offlineimap &
 
 # Pulse audio
 pkill pulseaudio; sleep 3 && pulseaudio --start &
-pactl set-sink-volume 0 '60%' &
-pasystray &
+pactl set-sink-volume 0 '60%'
+run_once pasystray
 
 # MPD
-mpd &
+run_once mpd
 
 # NetworkManager
-nm-applet &
+run_once nm-applet
 
 # Clipboard manager
-clipit &
+run_once clipit
 
 # Misc
-revelation ~/repos/perso/gwarf/private/revelation/keyring-perso &
-revelation ~/repos/perso/gwarf/private/revelation/keyring-maatg &
-terminator &
-pidgin &
-firefox &
-deluge &
-jdownloader &
+run_once revelation ~/repos/perso/gwarf/private/revelation/keyring-perso "/usr/bin/python.*/bin/revelation.*/keyring-perso"
+run_once revelation ~/repos/perso/gwarf/private/revelation/keyring-maatg "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
+run_once terminator
+run_once pidgin
+run_once firefox
+run_once deluge
+run_once jdownloader
