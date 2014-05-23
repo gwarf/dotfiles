@@ -24,7 +24,7 @@ import XMonad.Actions.Submap
 -- utils
 
 import XMonad.Util.Run
-import qualified XMonad.Prompt 		as P
+import qualified XMonad.Prompt as P
 import XMonad.Prompt.Shell
 import XMonad.Prompt
 import XMonad.Prompt.AppendFile (appendFilePrompt)
@@ -67,43 +67,43 @@ main = do
     spawn "sh ~/.xmonad/autostart.sh"
     spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000"
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {  
-          	  manageHook = myManageHook
-        	, layoutHook = myLayoutHook   
-		, borderWidth = myBorderWidth
-		, normalBorderColor = myNormalBorderColor
-		, focusedBorderColor = myFocusedBorderColor
-		, keys = myKeys
-        	, modMask = myModMask  
-        	, terminal = myTerminal
-		, workspaces = myWorkspaces
-                , focusFollowsMouse = True
-                , logHook = dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50}
-	        , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
-		}
+            manageHook = myManageHook
+          , layoutHook = myLayoutHook   
+          , borderWidth = myBorderWidth
+          , normalBorderColor = myNormalBorderColor
+          , focusedBorderColor = myFocusedBorderColor
+          , keys = myKeys
+          , modMask = myModMask  
+          , terminal = myTerminal
+          , workspaces = myWorkspaces
+          , focusFollowsMouse = True
+          , logHook = dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50}
+          , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
+}
 
 
 -- hooks
 -- automaticly switching app to workspace 
 myManageHook :: ManageHook
 myManageHook = composeAll
-                [ isFullscreen                  --> doFullFloat
-		, className =?  "Xmessage" 	--> doCenterFloat 
-	    	, className =? "stalonetray" --> doIgnore
-	    	, className =? "Trayer" --> doIgnore
-                , className =? "chromium-browser"          --> doShift "2:web"
-                , className =? "Firefox"          --> doShift "2:web"
-                , className =? "Pidgin"           --> doShift "2:web"
-                , className =? "VirtualBox"           --> doShift "4:virt"
-                , className =? "jd-Main"           --> doShift "7:download"
-                , className =? "deluge"           --> doShift "7:download"
-                , className =? "warzone2100"           --> doShift "8:games"
-                , className =? "Skype"           --> doShift "2:web"
-		, className =? "Revelation"	--> doShift "6:revelation"
-		, className =? "Terminator"	--> doShift "1:term"
-                , fmap ("libreoffice"  `isInfixOf`) className --> doShift "3:misc"
-		, className =? "MPlayer"	--> (ask >>= doF . W.sink) 
-		, manageDocks
-	    	, scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
+                [ isFullscreen --> doFullFloat
+                , className =?  "Xmessage" --> doCenterFloat 
+                , className =? "stalonetray" --> doIgnore
+                , className =? "Trayer" --> doIgnore
+                , className =? "chromium-browser" --> doShift "2:web"
+                , className =? "Firefox" --> doShift "2:web"
+                , className =? "Pidgin" --> doShift "2:web"
+                , className =? "VirtualBox" --> doShift "4:virt"
+                , className =? "jd-Main" --> doShift "7:download"
+                , className =? "deluge" --> doShift "7:download"
+                , className =? "warzone2100" --> doShift "8:games"
+                , className =? "Skype" --> doShift "2:web"
+                , className =? "Revelation" --> doShift "6:revelation"
+                , className =? "Terminator" --> doShift "1:term"
+                , fmap ("libreoffice" `isInfixOf`) className --> doShift "3:misc"
+                , className =? "MPlayer" --> (ask >>= doF . W.sink) 
+                , manageDocks
+                , scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
                 ]
 
 -- scratchpads
@@ -118,9 +118,9 @@ myLogHook h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
 ---- bar
 customPP :: PP
 customPP = defaultPP { 
-     			    ppHidden = xmobarColor "#00FF00" ""
-			  , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
-			  , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
+                            ppHidden = xmobarColor "#00FF00" ""
+                          , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
+                          , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
                           , ppLayout = xmobarColor "#FF0000" ""
                           , ppTitle = xmobarColor "#00FF00" "" . shorten 80
                           , ppSep = "<fc=#0033FF> | </fc>"
@@ -129,12 +129,12 @@ customPP = defaultPP {
 -- some nice colors for the prompt windows to match the dzen status bar.
 myXPConfig = defaultXPConfig                                    
     { 
-	font  = "Inconsolata-16" 
-	,fgColor = "#0096d1"
-	, bgColor = "#000000"
-	, bgHLight    = "#000000"
-	, fgHLight    = "#FF0000"
-	, position = Top
+          font  = "Inconsolata-16" 
+        , fgColor = "#0096d1"
+        , bgColor = "#000000"
+        , bgHLight    = "#000000"
+        , fgHLight    = "#FF0000"
+        , position = Top
         , historySize = 512
         , showCompletionOnTab = True
         , historyFilter = deleteConsecutive
@@ -143,28 +143,28 @@ myXPConfig = defaultXPConfig
 
 
 --LayoutHook
-myLayoutHook  =  onWorkspace "2:web" webL  $ onWorkspace "4:virt" fullL $ onWorkspace "6:VM" fullL $ onWorkspace "8:vid" fullL $ onWorkspace "7:games" fullL  $ standardLayouts
+myLayoutHook = onWorkspace "1:term" full $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $ onWorkspace "6:VM" fullL $ onWorkspace "8:vid" fullL $ onWorkspace "7:games" fullL $ standardLayouts
    where
-	standardLayouts =   avoidStruts  $ (tiled |||  reflectTiled ||| Mirror tiled ||| Grid ||| Full) 
+        standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full) 
 
         --Layouts
-	tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
+        tiled = smartBorders (ResizableTall 1 (2/100) (1/2) [])
         reflectTiled = (reflectHoriz tiled)
-	full 	  = noBorders Full
+        full = noBorders Full
 
         --Im Layout
-	--Show pidgin tiled left and skype right
+        --Show pidgin tiled left and skype right
         imLayout = avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
-                chatLayout      = Grid
-	        ratio = (1%9)
+                chatLayout = Grid
+                ratio = (1%9)
                 skypeRatio = (1%8)
-                pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
-                skypeRoster  = (ClassName "Skype")     `And`
+                pidginRoster = And (ClassName "Pidgin") (Role "buddy_list")
+                skypeRoster = (ClassName "Skype")     `And`
                                (Not (Title "Options")) `And`
                                               (Not (Role "Chats"))    `And`
                                                              (Not (Role "CallWindowForm"))
-	--Weblayout
-	webL      = avoidStruts $  full ||| tiled ||| reflectHoriz tiled  
+        --Weblayout
+        webL = avoidStruts $ full ||| tiled ||| reflectHoriz tiled  
 
         --VirtualLayout
         fullL = avoidStruts $ full
@@ -261,8 +261,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- , ((0, xF86XK_Messenger ), runOrRaise "pidgin" (className =? "Pidgin"))
     
     , ((0, 0x1008ff18 ), runOrRaise "aurora" (className =? "Aurora"))
-    , ((0, xF86XK_Calculator	), safeSpawn "gnome-calculator" [])
-    , ((0, xF86XK_Display	), spawn "bash /home/jelle/bin/xrandr-laptop")
+    , ((0, xF86XK_Calculator ), safeSpawn "gnome-calculator" [])
+    , ((0, xF86XK_Display ), spawn "bash /home/jelle/bin/xrandr-laptop")
 
     -- volume control
     , ((0, xF86XK_AudioRaiseVolume ), safeSpawn "ponymix" ["-N","increase", "2"])
@@ -270,8 +270,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((0, xF86XK_AudioMute ), safeSpawn "ponymix" ["-N","toggle"])
 
     -- brightness control
-    , ((0 			, 0x1008ff03 ), safeSpawn "xbacklight" ["-inc", "10"])
-    , ((0 			, 0x1008ff02 ), safeSpawn "xbacklight" ["-dec","10"])
+    , ((0 , 0x1008ff03 ), safeSpawn "xbacklight" ["-inc", "10"])
+    , ((0 , 0x1008ff02 ), safeSpawn "xbacklight" ["-dec","10"])
 
     -- toggle trackpad
     , ((modMask .|. shiftMask, xK_t ), safeSpawn "/home/jelle/bin/trackpad-toggle.sh" [] )
