@@ -6,3 +6,8 @@
 .pentadactyl/info/default/register-ring
 .pentadactyl/info/default/registers
 .pentadactyl/info/default/url-marks
+.xmonad/history
+.xmonad/xmonad-x86_64-linux
+.xmonad/xmonad.errors
+.xmonad/xmonad.hi
+.xmonad/xmonad.o
