@@ -64,7 +64,7 @@ import XMonad.Hooks.EwmhDesktops
 -- Main --
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-    spawn "sh ~/.xmonad/autostart.sh"
+    spawn "~/.xmonad/autostart.sh"
     spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000"
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {  
             manageHook = myManageHook
