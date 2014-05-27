@@ -1,20 +1,22 @@
 #!/bin/sh
 
+set -x
+
 # Run a program only once
 #
 # run_once $program, $program_arguments, $process_name
-run_once {
- program="$1"
- program_arguments="$2"
- process_name="$3"
+run_once() {
+  program="$1"
+  program_arguments="$2"
+  process_name="$3"
 
- [ -z "$process_name" ] && process_name="$program"
+  [ -z "$process_name" ] && process_name="$program"
 
- if [ -z "$program_arguments" ]; then
-   pgrep -f -u $USER -x "$process_name" || ( "$program" )
- else
-   pgrep -f -u $USER -x "$process_name" || ( "$program" "$program_arguments" )
- fi
+  if [ -z "$program_arguments" ]; then
+    pgrep -f -u $USER -x "$process_name" || ( "$program" & )
+  else
+    pgrep -f -u $USER -x "$process_name" || ( "$program" "$program_arguments" & )
+  fi
 }
 
 ## Disable beeps
@@ -36,7 +38,7 @@ setxkbmap us -option 'compose:ralt'
 xmodmap ~/.Xmodmap
 
 ## Load Xresources
-xmxrdb -load ~/.Xresources
+xrdb -load ~/.Xresources
 
 ## OSD
 run_once dunst
@@ -47,8 +49,8 @@ run_once nitrogen "--restore"
 pkill offlineimap || sleep 3 && offlineimap &
 
 # Pulse audio
-pkill pulseaudio; sleep 3 && pulseaudio --start &
-pactl set-sink-volume 0 '60%'
+pkill pulseaudio; sleep 3 && pulseaudio --start -D
+pactl set-sink-volume 0 '60%' &
 run_once pasystray
 
 # MPD
@@ -61,8 +63,12 @@ run_once nm-applet
 run_once clipit
 
 # Misc
-run_once revelation ~/repos/perso/gwarf/private/revelation/keyring-perso "/usr/bin/python.*/bin/revelation.*/keyring-perso"
-run_once revelation ~/repos/perso/gwarf/private/revelation/keyring-maatg "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
+run_once revelation \
+  ~/repos/perso/gwarf/private/revelation/keyring-perso \
+  "/usr/bin/python.*/bin/revelation.*/keyring-perso"
+run_once revelation \
+  ~/repos/perso/gwarf/private/revelation/keyring-maatg \
+  "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 run_once terminator
 run_once pidgin
 run_once firefox
