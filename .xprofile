@@ -1,0 +1,10 @@
+#
+# ~/.xprofile
+#
+# Executed by gdm at login
+# Allows to start programs prior starting the WM
+#
+
+#xmodmap -e "pointer =1 2 3 6 7 4 5" # set mouse buttons up correctly
+#xsetroot -solid black              # sets the background to black
+xsetroot -cursor_name left_ptr
