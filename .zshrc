@@ -12,8 +12,8 @@ if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
   export GEM_HOME="$HOME/.gem/ruby/2.0.0"
 fi
 
-#[ -f ~/.zshenv ] && source ~/.zshenv
-#[ -f ~/.alias ] && source ~/.alias
+[ -f ~/.zshenv ] && source ~/.zshenv
+[ -f ~/.alias ] && source ~/.alias
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
