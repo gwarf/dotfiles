@@ -4,8 +4,8 @@
 
 -- Import stuff
 import XMonad
-import qualified XMonad.StackSet as W 
-import qualified XMonad.StackSet as Z 
+import qualified XMonad.StackSet as W
+import qualified XMonad.StackSet as Z
 import qualified Data.Map as M
 import XMonad.Util.EZConfig(additionalKeys)
 import System.Exit
@@ -53,6 +53,7 @@ import XMonad.Layout.ComboP
 import XMonad.Layout.Column
 import XMonad.Layout.Named
 import XMonad.Layout.TwoPane
+-- import XMonad.Layout.LayoutModifier
 
 -- Data.Ratio for IM layout
 import Data.Ratio ((%))
@@ -66,49 +67,66 @@ main = do
     xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
     spawn "~/.xmonad/autostart.sh"
     spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000"
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {  
+    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {
             manageHook = myManageHook
-          , layoutHook = myLayoutHook   
+          , layoutHook = myLayoutHook
           , borderWidth = myBorderWidth
           , normalBorderColor = myNormalBorderColor
           , focusedBorderColor = myFocusedBorderColor
           , keys = myKeys
-          , modMask = myModMask  
+          , modMask = myModMask
           , terminal = myTerminal
           , workspaces = myWorkspaces
           , focusFollowsMouse = True
-          , logHook = dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc , ppTitle = xmobarColor "green" "" . shorten 50}
+          , logHook = dynamicLogWithPP $ xmobarPP
+               { ppOutput = hPutStrLn xmproc
+               , ppTitle = xmobarColor "blue" "" . shorten 50
+               , ppLayout = const "" -- to disable the layout info on xmobar
+               }
           , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 }
 
 
 -- hooks
--- automaticly switching app to workspace 
+-- automaticly switching app to workspace
+-- http://www.haskell.org/haskellwiki/Xmonad/General_xmonad.hs_config_tips
+-- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/John_Goerzen%27s_Configuration
 myManageHook :: ManageHook
 myManageHook = composeAll
                 [ isFullscreen --> doFullFloat
-                , className =?  "Xmessage" --> doCenterFloat 
-                , className =? "stalonetray" --> doIgnore
-                , className =? "Trayer" --> doIgnore
-                , className =? "chromium-browser" --> doShift "2:web"
-                , className =? "Firefox" --> doShift "2:web"
+                , (className =? "Firefox" <&&> role =? "navigator") --> doShift "2:web"
+		, (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
                 , className =? "Pidgin" --> doShift "2:web"
-                , className =? "VirtualBox" --> doShift "4:virt"
-                , className =? "jd-Main" --> doShift "7:download"
-                , className =? "deluge" --> doShift "7:download"
-                , className =? "warzone2100" --> doShift "8:games"
+                , className =? "Revelation" --> doShift "3:revelation"
                 , className =? "Skype" --> doShift "2:web"
-                , className =? "Revelation" --> doShift "6:revelation"
+                , className =? "Steam" --> doShift "7:games"
                 , className =? "Terminator" --> doShift "1:term"
-                , fmap ("libreoffice" `isInfixOf`) className --> doShift "3:misc"
-                , className =? "MPlayer" --> (ask >>= doF . W.sink) 
+                , className =? "Trayer" --> doIgnore
+                , className =? "VirtualBox" --> doShift "4:virt"
+                , className =? "Xmessage" --> doCenterFloat
+                , className =? "chromium-browser" --> doShift "2:web"
+                , className =? "deluge" --> doShift "5:download"
+                , (name =? "sun-awt-X11-XFramePeer" <&&> className =? "jd-Main") --> doShift "5:download"
+                , className =? "trayer" --> doIgnore
+                , className =? "warzone2100" --> doShift "7:games"
+                , fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc"
+                , className =? "MPlayer" --> (ask >>= doF . W.sink)
+		, className =? c --> doFloat | c <- myFloatsC
+		, fmap ( c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC
+		, fmap ( c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT
                 , manageDocks
                 , scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
                 ]
+		where
+		-- filter on class name
+		myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc"]
+		-- filter on any part of the class name
+		myMatchAnywhereFloatsC = []
+		-- filter on any part of the title
+		myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
 
 -- scratchpads
 scratchpads = [ NS "gvim" "gvim -S ~/.vim/sessions/Session.vim" (className =? "Gvim") (customFloating $ W.RationalRect (0) (0) (0) (0)) ]
-
 
 --logHook
 myLogHook :: Handle -> X ()
@@ -117,7 +135,7 @@ myLogHook h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
 ---- Looks --
 ---- bar
 customPP :: PP
-customPP = defaultPP { 
+customPP = defaultPP {
                             ppHidden = xmobarColor "#00FF00" ""
                           , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
                           , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
@@ -127,9 +145,9 @@ customPP = defaultPP {
                      }
 
 -- some nice colors for the prompt windows to match the dzen status bar.
-myXPConfig = defaultXPConfig                                    
-    { 
-          font  = "Inconsolata-16" 
+myXPConfig = defaultXPConfig
+    {
+          font  = "Inconsolata-16"
         , fgColor = "#0096d1"
         , bgColor = "#000000"
         , bgHLight    = "#000000"
@@ -140,12 +158,10 @@ myXPConfig = defaultXPConfig
         , historyFilter = deleteConsecutive
     }
 
-
-
 --LayoutHook
-myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $ onWorkspace "6:VM" fullL $ onWorkspace "8:vid" fullL $ onWorkspace "7:games" fullL $ standardLayouts
+myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $  onWorkspace "7:download" fullL $ onWorkspace "8:games" full $ standardLayouts
    where
-        standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full) 
+        standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full)
 
         --Layouts
         tiled = smartBorders (ResizableTall 1 (2/100) (1/2) [])
@@ -164,25 +180,21 @@ myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspa
 --                                               (Not (Role "Chats"))    `And`
 --                                                              (Not (Role "CallWindowForm"))
         --Weblayout
-        webL = avoidStruts $ full ||| tiled ||| reflectHoriz tiled  
+        webL = avoidStruts $ full ||| tiled ||| reflectHoriz tiled
 
         --VirtualLayout
         fullL = avoidStruts $ full
-
-
 
 -------------------------------------------------------------------------------
 ---- Terminal --
 myTerminal :: String
 myTerminal = "terminator"
 
-
 -------------------------------------------------------------------------------
 -- Keys/Button bindings --
 -- modmask
 myModMask :: KeyMask
 myModMask = mod4Mask
-
 
 -- borders
 myBorderWidth :: Dimension
@@ -193,8 +205,7 @@ myFocusedBorderColor = "#306EFF"
 
 --Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:term", "2:web", "3:misc", "4:virt", "5:files", "6:revelation" ,"7:download", "8:games"] 
-
+myWorkspaces = ["1:term", "2:web", "3:revelation", "4:virt", "5:download", "6:misc" , "7:games"]
 
 -- keys
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
@@ -205,7 +216,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- opening program launcher / search engine
     ,((modMask , xK_p), shellPrompt myXPConfig)
-    
+
     -- GridSelect
     , ((modMask, xK_g), goToSelected defaultGSConfig)
 
@@ -216,36 +227,36 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_space ), sendMessage NextLayout)
     , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     , ((modMask, xK_b ), sendMessage ToggleStruts)
- 
+
     -- floating layer stuff
     , ((modMask, xK_t ), withFocused $ windows . W.sink)
- 
+
     -- refresh'
     , ((modMask, xK_n ), refresh)
- 
+
     -- focus
     , ((modMask, xK_Tab ), windows W.focusDown)
     , ((modMask, xK_j ), windows W.focusDown)
     , ((modMask, xK_k ), windows W.focusUp)
     , ((modMask, xK_m ), windows W.focusMaster)
 
- 
+
     -- swapping
     , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
     , ((modMask .|. shiftMask, xK_j ), windows W.swapDown )
     , ((modMask .|. shiftMask, xK_k ), windows W.swapUp )
- 
+
     -- increase or decrease number of windows in the master area
     , ((modMask , xK_comma ), sendMessage (IncMasterN 1))
     , ((modMask , xK_period), sendMessage (IncMasterN (-1)))
- 
+
     -- resizing
     , ((modMask, xK_h ), sendMessage Shrink)
     , ((modMask, xK_l ), sendMessage Expand)
     , ((modMask .|. shiftMask, xK_h ), sendMessage MirrorShrink)
     , ((modMask .|. shiftMask, xK_l ), sendMessage MirrorExpand)
 
-    -- scratchpad 
+    -- scratchpad
     , ((modMask,  xK_f ),  namedScratchpadAction scratchpads "gvim")
     , ((modMask,  xK_x ),  safeSpawn "xscreensaver-command" ["--lock"] )
 
@@ -259,7 +270,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- , ((0, xF86XK_Favorites ), safeSpawn "")
     -- , ((0, xF86XK_Mail ), runOrRaise "thunderbird" (className =? "Thunderbird"))
     -- , ((0, xF86XK_Messenger ), runOrRaise "pidgin" (className =? "Pidgin"))
-    
+
     , ((0, 0x1008ff18 ), runOrRaise "aurora" (className =? "Aurora"))
     , ((0, xF86XK_Calculator ), safeSpawn "gnome-calculator" [])
     , ((0, xF86XK_Display ), spawn "bash /home/jelle/bin/xrandr-laptop")
