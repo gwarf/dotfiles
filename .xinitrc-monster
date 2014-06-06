@@ -84,7 +84,7 @@ export XDG_MENU_PREFIX="gnome-"
 #~/bin/awesomestart.sh &
 #xcompmgr -f &
 #pidgin &
-/usr/libexec/gnome-settings-daemon &
+#/usr/libexec/gnome-settings-daemon &
 #gnome-volume-manager &
 
 # Conf for htpc
@@ -131,8 +131,11 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 #exec ck-launch-session awesome & wmpid=$!
 
 # xmonad
-xsetroot -cursor_name left_ptr
-exec ck-launch-session xmonad & wmpid=$!
+#xsetroot -cursor_name left_ptr
+[ -f ~/.xprofile ] && source ~/.xprofile
+#exec ck-launch-session xmonad & wmpid=$!
+PATH="~/.cabal/bin:$PATH"
+exec xmonad & wmpid=$!
 
 # gnome + awesome
 #exec ck-launch-session gnome-session & wmpid=$!
