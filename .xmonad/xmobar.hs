@@ -19,5 +19,5 @@ Config {
     ],
     sepChar = "%",
     alignSep = "}{",
-    template = "%StdinReader% }{ %mpd% }{ %memory%   %swap%   %enp2s0%  <fc=#FFFFCC>%date%</fc>"
+    template = "%StdinReader% }{ %mpd% %memory%   %swap%   %enp2s0%  <fc=#FFFFCC>%date%</fc>"
 }

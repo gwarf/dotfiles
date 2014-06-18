@@ -91,11 +91,16 @@ main = do
 -- automaticly switching app to workspace
 -- http://www.haskell.org/haskellwiki/Xmonad/General_xmonad.hs_config_tips
 -- http://www.haskell.org/haskellwiki/Xmonad/Config_archive/John_Goerzen%27s_Configuration
+-- resource (also known as appName) is the first element in WM_CLASS(STRING) 
+-- className is the second element in WM_CLASS(STRING) 
+-- title is WM_NAME(STRING)
+-- stringProperty "WM_WINDOW_ROLE" =? "presentationWidget" --> doFloat
 myManageHook :: ManageHook
 myManageHook = composeAll
                 [ isFullscreen --> doFullFloat
+                , isDialog --> doCenterFloat
                 , (className =? "Firefox" <&&> role =? "navigator") --> doShift "2:web"
-		, (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat
+		, (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat
                 , className =? "Pidgin" --> doShift "2:web"
                 , className =? "Revelation" --> doShift "3:revelation"
                 , className =? "Skype" --> doShift "2:web"
@@ -104,6 +109,7 @@ myManageHook = composeAll
                 , className =? "Trayer" --> doIgnore
                 , className =? "VirtualBox" --> doShift "4:virt"
                 , className =? "Xmessage" --> doCenterFloat
+                , className =? "Pavucontrol" --> doCenterFloat
                 , className =? "chromium-browser" --> doShift "2:web"
                 , className =? "deluge" --> doShift "5:download"
                 , (name =? "sun-awt-X11-XFramePeer" <&&> className =? "jd-Main") --> doShift "5:download"
@@ -111,9 +117,9 @@ myManageHook = composeAll
                 , className =? "warzone2100" --> doShift "7:games"
                 , fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc"
                 , className =? "MPlayer" --> (ask >>= doF . W.sink)
-		, className =? c --> doFloat | c <- myFloatsC
-		, fmap ( c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC
-		, fmap ( c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT
+		-- , className =? c --> doFloat | c <- myFloatsC
+		, fmap (c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC
+		, fmap (c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT
                 , manageDocks
                 , scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
                 ]
