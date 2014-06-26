@@ -12,7 +12,6 @@ import System.Exit
 import Graphics.X11.Xlib
 import System.IO
 
-
 -- actions
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowGo
@@ -22,7 +21,6 @@ import XMonad.Actions.FloatKeys
 import XMonad.Actions.Submap
 
 -- utils
-
 import XMonad.Util.Run
 import qualified XMonad.Prompt as P
 import XMonad.Prompt.Shell
@@ -61,14 +59,13 @@ import Data.List (isInfixOf)
 
 import XMonad.Hooks.EwmhDesktops
 
-
 -- Main --
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
     spawn "~/.xmonad/autostart.sh"
     spawn "trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000"
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig  {
-            manageHook = myManageHook
+            manageHook = manageDocks <+> myManageHook
           , layoutHook = myLayoutHook
           , borderWidth = myBorderWidth
           , normalBorderColor = myNormalBorderColor
@@ -86,7 +83,6 @@ main = do
           , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
 }
 
-
 -- hooks
 -- automaticly switching app to workspace
 -- http://www.haskell.org/haskellwiki/Xmonad/General_xmonad.hs_config_tips
@@ -96,40 +92,41 @@ main = do
 -- title is WM_NAME(STRING)
 -- stringProperty "WM_WINDOW_ROLE" =? "presentationWidget" --> doFloat
 myManageHook :: ManageHook
-myManageHook = composeAll
-                [ isFullscreen --> doFullFloat
-                , isDialog --> doCenterFloat
-                , (className =? "Firefox" <&&> role =? "navigator") --> doShift "2:web"
-		, (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat
-                , className =? "Pidgin" --> doShift "2:web"
-                , className =? "Revelation" --> doShift "3:revelation"
-                , className =? "Skype" --> doShift "2:web"
-                , className =? "Steam" --> doShift "7:games"
-                , className =? "Terminator" --> doShift "1:term"
-                , className =? "Trayer" --> doIgnore
-                , className =? "VirtualBox" --> doShift "4:virt"
-                , className =? "Xmessage" --> doCenterFloat
-                , className =? "Pavucontrol" --> doCenterFloat
-                , className =? "chromium-browser" --> doShift "2:web"
-                , className =? "deluge" --> doShift "5:download"
-                , (name =? "sun-awt-X11-XFramePeer" <&&> className =? "jd-Main") --> doShift "5:download"
-                , className =? "trayer" --> doIgnore
-                , className =? "warzone2100" --> doShift "7:games"
-                , fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc"
-                , className =? "MPlayer" --> (ask >>= doF . W.sink)
-		-- , className =? c --> doFloat | c <- myFloatsC
-		, fmap (c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC
-		, fmap (c `isInfixOf`) title     --> doFloat | c <- myMatchAnywhereFloatsT
-                , manageDocks
-                , scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
-                ]
-		where
-		-- filter on class name
-		myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc"]
-		-- filter on any part of the class name
-		myMatchAnywhereFloatsC = []
-		-- filter on any part of the title
-		myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
+myManageHook = composeAll . concat $
+	[ [ isFullscreen --> doFullFloat ]
+        , [ isDialog --> doCenterFloat ]
+        , [ (className =? "Firefox" <&&> appName =? "Navigator") --> doShift "2:web" ]
+	, [ (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat ]
+        , [ className =? "Pidgin" --> doShift "2:web" ]
+        , [ className =? "Revelation" --> doShift "3:revelation" ]
+        , [ className =? "Skype" --> doShift "2:web" ]
+        , [ className =? "Steam" --> doShift "7:games" ]
+        , [ className =? "Terminator" --> doShift "1:term" ]
+        , [ className =? "Trayer" --> doIgnore ]
+        , [ className =? "VirtualBox" --> doShift "4:virt" ]
+        , [ className =? "Xmessage" --> doCenterFloat ]
+        , [ className =? "Pavucontrol" --> doFloat ]
+        , [ className =? "chromium-browser" --> doShift "2:web" ]
+        , [ className =? "deluge" --> doShift "5:download" ]
+        , [ (appName =? "sun-awt-X11-XFramePeer" <&&> className =? "jd-Main") --> doShift "5:download" ]
+        , [ className =? "trayer" --> doIgnore ]
+        , [ className =? "warzone2100" --> doShift "7:games" ]
+        , [ fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc" ]
+        , [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
+	, [ className =? c --> doFloat | c <- myFloatsC ]
+	, [ fmap (c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC ]
+	, [ fmap (c `isInfixOf`) title --> doFloat | c <- myMatchAnywhereFloatsT ]
+	]
+	-- what is it for?
+	-- should be set in main like manageDocks?
+        --, scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
+	where
+	-- filter on class name
+	myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc"]
+	-- filter on any part of the class name
+	myMatchAnywhereFloatsC = []
+	-- filter on any part of the title
+	myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
 
 -- scratchpads
 scratchpads = [ NS "gvim" "gvim -S ~/.vim/sessions/Session.vim" (className =? "Gvim") (customFloating $ W.RationalRect (0) (0) (0) (0)) ]
@@ -186,7 +183,7 @@ myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspa
 --                                               (Not (Role "Chats"))    `And`
 --                                                              (Not (Role "CallWindowForm"))
         --Weblayout
-        webL = avoidStruts $ full ||| tiled ||| reflectHoriz tiled
+        webL = avoidStruts $ tiled ||| reflectHoriz tiled
 
         --VirtualLayout
         fullL = avoidStruts $ full
@@ -245,7 +242,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_j ), windows W.focusDown)
     , ((modMask, xK_k ), windows W.focusUp)
     , ((modMask, xK_m ), windows W.focusMaster)
-
 
     -- swapping
     , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
