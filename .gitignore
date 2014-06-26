@@ -1,6 +1,7 @@
 .mutt/headers
 .mutt/history
 .mutt/mutt.compte
+.pentadactyl/info/default/cache
 .pentadactyl/info/default/command-history
 .pentadactyl/info/default/local-marks
 .pentadactyl/info/default/register-ring
