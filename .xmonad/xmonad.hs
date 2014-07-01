@@ -113,16 +113,16 @@ myManageHook = composeAll . concat $
         , [ className =? "warzone2100" --> doShift "7:games" ]
         , [ fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc" ]
         , [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
-	, [ className =? c --> doFloat | c <- myFloatsC ]
-	, [ fmap (c `isInfixOf`) className --> doFloat | c <- myMatchAnywhereFloatsC ]
-	, [ fmap (c `isInfixOf`) title --> doFloat | c <- myMatchAnywhereFloatsT ]
+	, [ className =? c --> doCenterFloat | c <- myFloatsC ]
+	, [ fmap (c `isInfixOf`) className --> doCenterFloat | c <- myMatchAnywhereFloatsC ]
+	, [ fmap (c `isInfixOf`) title --> doCenterFloat | c <- myMatchAnywhereFloatsT ]
 	]
 	-- what is it for?
 	-- should be set in main like manageDocks?
         --, scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
 	where
 	-- filter on class name
-	myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc"]
+	myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc", "Firefox Preferences"]
 	-- filter on any part of the class name
 	myMatchAnywhereFloatsC = []
 	-- filter on any part of the title
@@ -162,7 +162,7 @@ myXPConfig = defaultXPConfig
     }
 
 --LayoutHook
-myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $  onWorkspace "7:download" fullL $ onWorkspace "8:games" full $ standardLayouts
+myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $  onWorkspace "5:download" fullL $ onWorkspace "7:games" full $ standardLayouts
    where
         standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full)
 
@@ -197,7 +197,7 @@ myTerminal = "terminator"
 -- Keys/Button bindings --
 -- modmask
 myModMask :: KeyMask
-myModMask = mod4Mask
+myModMask = mod3Mask
 
 -- borders
 myBorderWidth :: Dimension
@@ -263,10 +263,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,  xK_x ),  safeSpawn "xscreensaver-command" ["--lock"] )
 
     --Spotify
-    , ((modMask , xK_a ), safeSpawn "dbus-send" ["--print-reply"," --dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Previous"] )
-    , ((modMask, xK_s ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause"] )
-    , ((0, xF86XK_AudioPlay ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause"] )
-    , ((modMask, xK_d ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Next"] )
+    -- , ((modMask , xK_a ), safeSpawn "dbus-send" ["--print-reply"," --dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Previous"] )
+    -- , ((modMask, xK_s ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause"] )
+    -- , ((0, xF86XK_AudioPlay ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause"] )
+    -- , ((modMask, xK_d ), safeSpawn "dbus-send" ["--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Next"] )
 
     --Launching programs
     -- , ((0, xF86XK_Favorites ), safeSpawn "")
@@ -300,9 +300,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
         | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
-    -- mod-[w,e,r] %! switch to twinview screen 1/2/3
-    -- mod-shift-[w,e] %! move window to screen 1/2/3
+    -- mod-[w,e] %! switch to twinview screen 1/2
+    -- mod-shift-[w,e] %! move window to screen 1/2
     [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+        | (key, sc) <- zip [xK_w, xK_e ] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
