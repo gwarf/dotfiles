@@ -1,0 +1,25 @@
+! applications
+keycode 161 = XF86Calculator
+keycode 236 = XF86Mail
+keycode 130 = XF86HomePage
+keycode 234 = XF86Back
+keycode 233 = XF86Forward
+
+! audio
+keycode 162 = XF86AudioPlay XF86AudioPause
+keycode 176 = XF86AudioRaiseVolume
+keycode 172 = XF86AudioLowerVolume
+keycode 160 = XF86AudioMute
+keycode 144 = XF86AudioPrev
+keycode 153 = XF86AudioNext
+
+! Disable Caps_Lock and use it as shift
+!remove Lock = Caps_Lock
+clear Lock
+add Shift = Shift_L Shift_R Caps_Lock
+
+! Use Home Key as Mod3
+remove Mod4 = Super_L
+clear Mod3
+!add Mod3 = Multi_key Super_L
+add Mod3 = Super_L
