@@ -55,6 +55,7 @@ run_once pasystray
 
 # MPD
 run_once mpd
+run_once mpdscribble
 
 # NetworkManager
 run_once nm-applet
