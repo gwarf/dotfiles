@@ -109,6 +109,7 @@ myManageHook = composeAll . concat $
         , [ className =? "chromium-browser" --> doShift "2:web" ]
         , [ className =? "deluge" --> doShift "5:download" ]
         , [ (appName =? "sun-awt-X11-XFramePeer" <&&> className =? "jd-Main") --> doShift "5:download" ]
+        , [ (appName =? "sun-awt-X11-XFramePeer" <&&> className =? "JDownloader") --> doShift "5:download" ]
         , [ className =? "trayer" --> doIgnore ]
         , [ className =? "warzone2100" --> doShift "7:games" ]
         , [ fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc" ]
