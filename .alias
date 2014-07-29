@@ -14,6 +14,9 @@ alias df='pydf'
 #alias df='df -h'
 #alias df='df --human-readable'
 
+# emacs
+alias emacs='emacs -nw'
+
 # network
 alias my_ip='/sbin/ifconfig eth0 | grep "addr:" | sed -e "s/^.*addr://" |sed -e "s/ Bcast.*//" '
 alias my_publicip='curl ipinfo.io'
