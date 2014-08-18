@@ -125,7 +125,7 @@ myManageHook = composeAll . concat $
 	-- filter on class name
 	myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc", "Firefox Preferences"]
 	-- filter on any part of the class name
-	myMatchAnywhereFloatsC = []
+	myMatchAnywhereFloatsC = [ "Foxmarks" ]
 	-- filter on any part of the title
 	myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
 
