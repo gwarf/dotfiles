@@ -100,6 +100,7 @@ myManageHook = composeAll . concat $
         , [ className =? "Pidgin" --> doShift "2:web" ]
         , [ className =? "Revelation" --> doShift "3:revelation" ]
         , [ className =? "Skype" --> doShift "2:web" ]
+        , [ stringProperty "WM_WINDOW_ROLE" =? "CallWindow" --> doFloat ]
         , [ className =? "Steam" --> doShift "7:games" ]
         , [ className =? "Terminator" --> doShift "1:term" ]
         , [ className =? "Trayer" --> doIgnore ]
