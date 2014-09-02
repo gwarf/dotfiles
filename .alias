@@ -88,6 +88,7 @@ alias cd..='cd ..'
 #alias strartx-1024='startx -- -xf86config XFree86Config-4-1024'
 
 alias forest='ps -e --forest'
+alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias qfind='find . -name'
 
