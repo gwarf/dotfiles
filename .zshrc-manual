@@ -95,22 +95,16 @@ screen_title() {
   xterm_title "$@"
 }
 
-precmd () {
-#  titlecmd "%m %4~"
-  vcs_info
-  setprompt
-}
-
 ## autoset title based on location and process
 preexec () {
 #  titlecmd "%m %4~" ":" "\"$1\""
 }
 
-ssh() {
-  titlecmd "$1";
-  command ssh $*;
-  titlecmd "$HOSTNAME";
-}
+#ssh() {
+#  titlecmd "$1";
+#  command ssh $*;
+#  titlecmd "$HOSTNAME";
+#}
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#SEC273
 zstyle ':vcs_info:*' enable git svn cvs hg
@@ -321,6 +315,12 @@ function setprompt() {
   # PROMPT4=''
 }
 
+precmd () {
+#  titlecmd "%m %4~"
+  vcs_info
+  setprompt
+}
+
 # Turn on color output
 if [ $(uname) = FreeBSD ]; then
   export CLICOLOR=true
@@ -517,7 +517,7 @@ setopt auto_resume # resume background task instead of starting new ones
 setopt check_jobs # report status of bg-jobs if exiting a shell with job control enabled
 
 # Command history parameters #export HISTORY=1000
-# HISTFILE=$HOME/.zshistory
+ HISTFILE=$HOME/.zshistory
 HISTFILESIZE=65536
 HISTSIZE=4096
 SAVEHIST=$HISTSIZE
@@ -733,3 +733,5 @@ spell() {
 
 # EOF
 # vim:set ft=zsh ts=2 sw=2 expandtab:
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

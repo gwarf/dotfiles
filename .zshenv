@@ -133,4 +133,7 @@ export PATH
     export GPG_AGENT_INFO SSH_AUTH_SOCK
   #fi
 #fi
+
+export PATH="~/.bundler_binstubs:$PATH"
+
 # vim:set ts=2 sw=2 expandtab:
