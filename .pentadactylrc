@@ -1,2 +1,31 @@
+" https://github.com/azuwis/.pentadactyl/blob/master/rc
+
+" Colors
 colorscheme solarized-dark
+
+" Search provider
 set defsearch=ddg
+
+" Keys
+" Pass <C-t> to firefox
+" Consider adding "o" at the end
+map -b <C-t> <pass-next-key><C-t>
+
+"Select all
+map -b <C-a> <pass-next-key><C-a>
+imap -b <C-a> <pass-next-key><C-a>
+
+" Pass through for some sites
+autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
+set passkeys+=feed.lxl.io:jk<CR>
+
+" autocmd LocationChange facebook.com :normal! <C-z>
+
+" Plugins config
+"source ~/.pentadactyl/pentadactylrc_plugins
+
+"" disable smooth scroll
+set scrollsteps=1
+set scrolltime=0
+
+" vim: set ft=pentadactyl et ts=4
