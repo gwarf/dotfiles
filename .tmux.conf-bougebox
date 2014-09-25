@@ -49,6 +49,10 @@ unbind C-o
 bind r rotate-window
 bind-key C-a last-window
 
+# quick pane cycling
+unbind ^L
+bind ^L select-pane -t :.+
+
 # Add vim-like navigation bindings
 bind h select-pane -L
 bind j select-pane -D
@@ -123,6 +127,7 @@ set -g renumber-windows on
 new-session -s0 -n 'updates' 'yaourt -Syu'
 # for future windows, stay open after the command exits
 set set-remain-on-exit on
+new-window -n 'logs' 'sudo journalctl -fxn'
 #new-window -n 'irssi' irssi
 #new-window -n 'mutt' mutt
 # for future windows, revert r-o-e to global value
