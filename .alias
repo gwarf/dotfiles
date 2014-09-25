@@ -156,6 +156,11 @@ tips()
   grep "$@" ~/tips.txt
 }
 
+# Attach or create tmux session named the same as current directory.
+tat() {
+  tmux new-session -As "$(basename "$PWD" | tr . -)"
+}
+
 alias tmux-pcdr-all='ssh-multi clrpcsv-ginseng-cas-vdev01.in2p3.fr clrpcsv-ginseng-gw-devel01.in2p3.fr ginseng.unice.fr pcdr-amga.gnubila.fr pcdr-gw-ccpm1.gnubila.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr pcdr-querynode.gnubila.fr'
 alias tmux-fbf-all='ssh-multi srv{3,4,5,6,7,8,9,10,11,12,13,14,15,16}.fatebenefratelli.it ns{1,2}.fatebenefratelli.it'
 alias tmux-fbf-servers='ssh-multi srv{3,4,5,6,}.fatebenefratelli.it ns{1,2}.fatebenefratelli.it'
