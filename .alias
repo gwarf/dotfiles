@@ -167,6 +167,7 @@ alias tmux-ki-all='ssh-multi ng-ki-server{4,5,6,7}.ki.se ng-ki-wn{0,1,2,3,4,5,6,
 alias tmux-ki-servers='ssh-multi ng-ki-server{4,5,6,7}.ki.se'
 alias tmux-ki-wn='ssh-multi ng-ki-wn{0,1,2,3,4,5,6,7,8,9}.local'
 alias tmux-maat-all='ssh-multi ng-maat-server{3,5,6,8,9}.gnubila.fr {bdii,bdii-site,idp,dev-idp,lfc,myproxy,nagios,pipeline,ra,sentinelle1,slipstream,voms,wms}.gnubila.fr'
+alias tmux-gw='ssh-multi ng-maat-devel1.gnubila.fr clrpcsv-ginseng-gw-devel01.in2p3.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr srv4.fatebenefratelli.it ng-hug-server4.neuro.hcuge.ch ng-ki-server7.ki.se'
 
 # Suffix aliases
 alias -s tex=vim
