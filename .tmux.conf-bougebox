@@ -8,12 +8,42 @@ bind-key b send-prefix
 
 set-window-option -g mode-mouse off
 
+# colors
+set -g default-terminal "screen-256color"
+
+## unicode
+setw -g utf8 on
+set -g status-utf8 on
+
+## History limit
+set -g history-limit 50000
+
+# tmux messages are displayed for 4 seconds
+set -g display-time 4000
+
+# refresh 'status-left' and 'status-right' more often
+set -g status-interval 5
+
 # reload
 #bind-key R source-file ~/.tmux.conf; display-message "source-file done"
 
 bind-key R respawn-window
 
-# Copy mode
+# Start Window Numbering at 1
+set -g base-index 1
+
+## Copy mode
+# http://jasonwryan.com/blog/2011/06/07/copy-and-paste-in-tmux/
+#
+# Copying between tmux frames
+#
+# ctrl-b Escape - enter copy mode
+# move cursor to the start or end of the desired text string
+# v - to activate highlighting
+# move cursor to cover the requisite string
+# y - to copy
+# q - to exit copy mode
+# ctrl-b m - to paste
 unbind [
 # Enter copy mode
 bind Escape copy-mode
@@ -32,11 +62,18 @@ bind C-y run "tmux save-buffer - | xclip -i -selection clipboard"
 # move x clipboard into tmux paste buffer
 bind C-p run "xclip -o | tmux load-buffer -"
 
+# URL view
+bind-key u capture-pane \; save-buffer /tmp/tmux-buffer \; new-window -n "urlview" '$SHELL -c "urlview < /tmp/tmux-buffer"'
+
 # Bind horizontal and vertical splits to more memorable sequences
 #unbind-key %
 #unbind-key '"'
 bind-key | split-window -h
 bind-key - split-window -v
+
+# easier and faster switching between next/prev window
+bind C-p previous-window
+bind C-n next-window
 
 # Panes
 bind up resize-pane -U 5
