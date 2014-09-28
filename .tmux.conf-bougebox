@@ -118,11 +118,11 @@ bind-key . command-prompt "move-window -r -t '%%'"
 #set-option -g status-interval 2
 #set-option -g status-utf8 on
 #set-option -g status-justify "left"
-##set-option -g status-left-length 60
+#set-option -g status-left-length 60
 #set-option -g status-right-length 100
-## https://github.com/erikw/tmux-powerline
-##set-option -g status-left "#(~/repos/perso/tmux-powerline/status-left.sh)"
-##set-option -g status-right "#(~/repos/perso/tmux-powerline/status-right.sh)"
+# https://github.com/erikw/tmux-powerline
+#set-option -g status-left "#(~/repos/perso/tmux-powerline/status-left.sh)"
+#set-option -g status-right "#(~/repos/perso/tmux-powerline/status-right.sh)"
 
 #set -g status-fg white
 #set -g status-bg black
@@ -146,7 +146,8 @@ setw -g monitor-activity off
 set -g visual-activity off
 
 # Don't wait for escape sequences
-set -s escape-time 0
+# Fix delay when switching modes in vim
+set -sg escape-time 0
 
 # Window status format (default: '#I:#W#F')
 set-window-option -g window-status-format ' #I:#W '
@@ -187,7 +188,7 @@ set -g @tpm_plugins "           \
       "
 
 # initializes TMUX plugin manager
-run-shell /home/baptiste/.tmux/plugins/tpm/tpm
+run-shell ~/.tmux/plugins/tpm/tpm
 
 set -g @resurrect-processes 'ssh mutt psql mysql sqlite3'
 set -g @resurrect-processes '"sudo journalctl -fxn"'
