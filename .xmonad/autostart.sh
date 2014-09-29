@@ -73,5 +73,5 @@ run_once revelation \
 run_once terminator
 run_once pidgin
 run_once firefox
-run_once deluge
+#run_once deluge
 run_once JDownloader
