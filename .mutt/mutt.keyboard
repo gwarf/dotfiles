@@ -6,14 +6,56 @@
 # compose
 
 # Moving
+# Bind Browser {{{1
+bind browser g top-page
+bind browser G bottom-page
+bind browser \cb previous-page
+bind browser \cf next-page
+bind browser <Enter> view-file
+bind browser A check-new
+# Bind Index {{{1
+bind index g first-entry
+bind index G last-entry
+bind index H current-top
+bind index M current-middle
+bind index L current-bottom
+bind index pagedown     next-page
+bind index pageup   previous-page
 bind index zt current-top
 bind index zz current-middle
 bind index zb current-bottom
 bind index { top-page
 bind index } bottom-page
+bind index ~ set-flag
+bind index \cv what-key
+bind index i mail
+# Bind Pager {{{1
+bind pager g top
 bind pager G bottom
+bind pager j next-line
+bind pager k previous-line
+bind pager i edit
+bind pager R group-reply
 bind pager <down> next-line
 bind pager <up> previous-line
+bind pager \cd half-down
+bind pager \ce next-line
+bind pager \cf next-page
+bind pager \cm next-line
+bind pager \cn half-down
+bind pager \cn next-page
+bind pager \cp half-up
+bind pager \cu half-up
+# Bind Index/Pager {{{1
+bind index,pager \cn next-thread
+bind index,pager \cn read-thread
+bind index,pager \cd delete-thread
+bind index,pager f forward-message
+#bind index,pager n next-undeleted
+#bind index,pager p previous-undeleted
+bind index,pager N next-unread
+bind index,pager P previous-unread
+# }}}
 
 # Flagging
 bind index F flag-message
@@ -157,3 +199,5 @@ macro pager l "<pipe-message>mhonarc -single | w3m -T text/html\n"
 
 # bounce-message
 #bind index B bounce-message
+
+# vim: ft=muttrc
