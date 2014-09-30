@@ -22,6 +22,13 @@ alias my_ip='/sbin/ifconfig eth0 | grep "addr:" | sed -e "s/^.*addr://" |sed -e 
 alias my_publicip='curl ipinfo.io'
 alias my_ports='netstat -alpe --ip'
 alias netstati="netstat --verbose --tcp --udp --programs --extend"
+alias ports='netstat -tulanp'
+
+# get web server headers #
+alias header='curl -I'
+
+# find out if remote server supports gzip / mod_deflate or not #
+alias headerc='curl -I --compress'
 
 # multimedia
 alias mp3burn-direct='mp3burn -c 80:00 -o " -v speed=48 dev=0,1,0 "'
@@ -73,22 +80,66 @@ alias lsp='ls *.c *.h *.cc *.pl *.pm *.py'
 alias c='clear'
 #alias less='less --quiet'
 
-# Demande confirmation avant d'écraser un fichier
-#alias cp='cp --interactive'
-#alias mv='mv --interactive'
-#alias rm='rm --interactive'
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
 
 # directory navigation
 alias ..='cd ..'
 alias ...='cd ../..'
 alias cd..='cd ..'
 
-#alias strartx-640='startx -- -xf86config XFree86Config-4-640'
-#alias strartx-800='startx -- -xf86config XFree86Config-4-800'
-#alias strartx-1024='startx -- -xf86config XFree86Config-4-1024'
+# fixlines: edit files in place to ensure Unix line-endings
+fixlines () { /usr/bin/perl -pi~ -e 's/\r\n?/\n/g' "$@" ; }
+
+alias mount='mount | column -t'
+
+alias h='history'
+alias j='jobs -l'
+
+alias path='echo -e ${PATH//:/\\n}'
+alias now='date +"%T'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
 
 alias forest='ps -e --forest'
 alias psc='ps xawf -eo pid,user,cgroup,args'
+
+## pass options to free ## 
+alias meminfo='free -m -l -t'
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+# to find memory hogs:
+alias mem_hogs_top='top -l 1 -o rsize -n 10'
+alias mem_hogs_ps='ps wwaxm -o pid,stat,vsize,rss,time,command | head -10'
+
+# to find CPU hogs
+alias cpu_hogs='ps wwaxr -o pid,stat,%cpu,time,command | head -10'
+
+# continual 'top' listing (every 10 seconds) showing top 15 CPU consumers
+alias topforever='top -l 0 -s 10 -o cpu -n 15'
+
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
 
 alias qfind='find . -name'
 
@@ -105,6 +156,17 @@ alias dvdshrink='wine "~/.wine/drive_c/Program Files/DVD Shrink/DVD Shrink 3.2.e
 
 alias tail="grc tail"
 
+# Use VIM!
+alias vi=vim
+alias svi='sudo vi'
+alias vis='vim "+set si"'
+alias edit='vim'
+
+# Stop after sending count ECHO_REQUEST packets #
+alias ping='ping -c 5'
+# Do not wait interval 1 second, go fast #
+alias fastping='ping -c 100 -s.2'
+
 # cvs
 alias cvsstat='cvs status \!* | grep "Status:"'
 alias cvswhat='cvs status \!* | grep "Status:" | grep -v "to-date"'
@@ -115,6 +177,7 @@ alias eclipse='eclipse -Xms1024M -Xmx4096M -XX:MaxPermSize=512M'
 
 alias svn_update_all='for f (*); do (echo "\nUpdating $f"; cd $f ; svn up; cd ..); done'
 alias svn_status_all='for f (*); do (echo "\nStatus of $f"; cd $f ; svn st; cd ..); done'
+
 svn_add_all() {
   for f in `svn st| grep \? | awk '{print $2}'` ; do svn add $f ; done
 }
@@ -146,6 +209,7 @@ fix_mpd_db_rights()
   sudo find ~/Musique/ -type f -exec chmod ug+rw {} \;
   mpc update
 }
+
 if [ "$OS" = "SunOS" ]; then
   [ $DISPLAY != "x" ] && alias vim='TERM=xtermc vim'
   alias ls='/usr/gnu/bin/ls --color=auto'
@@ -184,3 +248,5 @@ alias -s html=$BROWSER
 alias -s htm=$BROWSER
 alias tips.txt='vim ~/tips.txt'
 alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
+
+alias -g M='| most' G='| grep'
