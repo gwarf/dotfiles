@@ -136,4 +136,10 @@ export PATH
 
 export PATH="~/.bundler_binstubs:$PATH"
 
+if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
+  export MC_SKIN=$HOME/.mc/lib/mc-solarized-skin/solarized.ini
+else
+  git clone https://github.com/iwfmp/mc-solarized-skin.git $HOME/.mc/lib/mc-solarized-skin
+fi
+
 # vim:set ts=2 sw=2 expandtab:
