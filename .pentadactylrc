@@ -4,7 +4,7 @@
 colorscheme solarized-dark
 
 " Search provider
-set defsearch=ddg
+set defsearch=duckduckgo
 
 " Keys
 " Pass <C-t> to firefox
