@@ -17,6 +17,7 @@ imap -b <C-a> <pass-next-key><C-a>
 
 " Pass through for some sites
 autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
+autocmd LocationChange ^https?://github\.com/ :normal! <C-z>
 set passkeys+=feed.lxl.io:jk<CR>
 
 " autocmd LocationChange facebook.com :normal! <C-z>
