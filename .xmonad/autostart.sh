@@ -75,3 +75,4 @@ run_once pidgin
 run_once firefox
 #run_once deluge
 run_once JDownloader
+run_once syncthing-gtk
