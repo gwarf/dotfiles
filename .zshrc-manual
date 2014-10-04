@@ -356,6 +356,7 @@ bindkey "[F" end-of-line # End (konsole+xterm)
 bindkey "[A" history-beginning-search-backward
 bindkey "[B" history-beginning-search-forward
 bindkey "[3;5~" delete-word # Ctrl w
+bindkey "d" kill-word # Alt d
 bindkey "[5C" forward-word # Alt ->
 bindkey "[1;3C" forward-word # Alt ->
 bindkey "^[[C" forward-word
@@ -410,6 +411,7 @@ bindkey '^J' push-line
 # Allows editing the command line with an external editor
 autoload edit-command-line
 zle -N edit-command-line
+# Press Esc=v to edit command line
 bindkey -M vicmd "v" edit-command-line
 
 # Alt-S inserts sudo at the starts of the line
