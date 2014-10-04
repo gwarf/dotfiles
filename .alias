@@ -252,3 +252,4 @@ alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
 alias -g M='| most' G='| grep'
 
 alias big_syncthing='ssh -N -L 8081:localhost:45028 big.bapt.name'
+alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
