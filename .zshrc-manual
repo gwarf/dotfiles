@@ -9,10 +9,6 @@ source /etc/profile
 
 export SHELL=`which zsh`
 
-fpath=( ~/.zsh_functions $fpath )
-[[ -d $HOME/.zsh_functions/VCS_Info ]] \
-  && fpath[1]=( ${fpath[1]} $HOME/.zsh_functions/**/* )
-
 autoload -U colors && colors
 autoload -U promptinit
 autoload -Uz vcs_info
@@ -734,6 +730,8 @@ spell() {
 # }}}
 
 # EOF
-# vim:set ft=zsh ts=2 sw=2 expandtab:
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# Use promptline.vim
+[ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
+
+# vim:set ft=zsh ts=2 sw=2 et:

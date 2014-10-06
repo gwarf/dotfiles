@@ -134,6 +134,8 @@ export PATH
   #fi
 #fi
 
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
 export PATH="~/.bundler_binstubs:$PATH"
 
 if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
@@ -142,4 +144,4 @@ else
   git clone https://github.com/iwfmp/mc-solarized-skin.git $HOME/.mc/lib/mc-solarized-skin
 fi
 
-# vim:set ts=2 sw=2 expandtab:
+# vim:set ft=zsh ts=2 sw=2 et:

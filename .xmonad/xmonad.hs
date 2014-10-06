@@ -93,14 +93,14 @@ main = do
 -- stringProperty "WM_WINDOW_ROLE" =? "presentationWidget" --> doFloat
 myManageHook :: ManageHook
 myManageHook = composeAll . concat $
-	[ [ isFullscreen --> doFullFloat ]
+        [ [ isFullscreen --> doFullFloat ]
         , [ isDialog --> doCenterFloat ]
         , [ (className =? "Firefox" <&&> appName =? "Navigator") --> doShift "2:web" ]
-	, [ (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat ]
+        , [ (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat ]
         , [ className =? "Pidgin" --> doShift "2:web" ]
         , [ className =? "Revelation" --> doShift "3:revelation" ]
         , [ className =? "Skype" --> doShift "2:web" ]
-        , [ stringProperty "WM_WINDOW_ROLE" =? "CallWindow" --> doFloat ]
+        , [ stringProperty "WM_WINDOW_ROLE" =? "CallWindow" --> doShift "6:misc" ]
         , [ className =? "Steam" --> doShift "7:games" ]
         , [ className =? "Terminator" --> doShift "1:term" ]
         , [ className =? "Trayer" --> doIgnore ]
@@ -115,20 +115,20 @@ myManageHook = composeAll . concat $
         , [ className =? "warzone2100" --> doShift "7:games" ]
         , [ fmap ("libreoffice" `isInfixOf`) className --> doShift "6:misc" ]
         , [ className =? "MPlayer" --> (ask >>= doF . W.sink) ]
-	, [ className =? c --> doCenterFloat | c <- myFloatsC ]
-	, [ fmap (c `isInfixOf`) className --> doCenterFloat | c <- myMatchAnywhereFloatsC ]
-	, [ fmap (c `isInfixOf`) title --> doCenterFloat | c <- myMatchAnywhereFloatsT ]
-	]
-	-- what is it for?
-	-- should be set in main like manageDocks?
+        , [ className =? c --> doCenterFloat | c <- myFloatsC ]
+        , [ fmap (c `isInfixOf`) className --> doCenterFloat | c <- myMatchAnywhereFloatsC ]
+        , [ fmap (c `isInfixOf`) title --> doCenterFloat | c <- myMatchAnywhereFloatsT ]
+        ]
+        -- what is it for?
+        -- should be set in main like manageDocks?
         --, scratchpadManageHook (W.RationalRect 0.125 0.25 0.75 0.5)
-	where
-	-- filter on class name
-	myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc", "Firefox Preferences"]
-	-- filter on any part of the class name
-	myMatchAnywhereFloatsC = [ "Foxmarks" ]
-	-- filter on any part of the title
-	myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
+        where
+        -- filter on class name
+        myFloatsC = ["Evince", "Gedit", "mpv", "MPlayer", "net-sourceforge-jnlp-runtime-Boot", "Pavucontrol", "Skype", "Smplayer", "Vlc", "Firefox Preferences"]
+        -- filter on any part of the class name
+        myMatchAnywhereFloatsC = [ "Foxmarks" ]
+        -- filter on any part of the title
+        myMatchAnywhereFloatsT = ["VLC"] -- this one is silly for only one string!
 
 -- scratchpads
 scratchpads = [ NS "gvim" "gvim -S ~/.vim/sessions/Session.vim" (className =? "Gvim") (customFloating $ W.RationalRect (0) (0) (0) (0)) ]
