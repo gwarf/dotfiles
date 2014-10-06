@@ -19,6 +19,7 @@ bind index G last-entry
 bind index H current-top
 bind index M current-middle
 bind index L current-bottom
+bind index N toggle-new
 bind index pagedown     next-page
 bind index pageup   previous-page
 bind index zt current-top
