@@ -1,7 +1,7 @@
 " https://github.com/azuwis/.pentadactyl/blob/master/rc
 
 " Colors
-colorscheme solarized-dark
+"colorscheme solarized-dark
 
 " Search provider
 set defsearch=duckduckgo
@@ -31,5 +31,11 @@ set scrolltime=0
 
 " Disable tab bar
 :set showtabline=never
+
+" http://www.ferdev.com/2013/02/19/pentadactyl-the-reason-i-use-firefox.html
+:map timer :tabopen timer<CR>
+:mkp!
+
+:map db :tabopen dribbble 
 
 " vim: set ft=pentadactyl et ts=4
