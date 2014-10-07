@@ -29,4 +29,7 @@ set passkeys+=feed.lxl.io:jk<CR>
 set scrollsteps=1
 set scrolltime=0
 
+" Disable tab bar
+:set showtabline=never
+
 " vim: set ft=pentadactyl et ts=4
