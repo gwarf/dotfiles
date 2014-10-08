@@ -141,26 +141,25 @@ myLogHook h = dynamicLogWithPP $ customPP { ppOutput = hPutStrLn h }
 ---- bar
 customPP :: PP
 customPP = defaultPP {
-                            ppHidden = xmobarColor "#00FF00" ""
-                          , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
-                          , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
-                          , ppLayout = xmobarColor "#FF0000" ""
-                          , ppTitle = xmobarColor "#00FF00" "" . shorten 80
-                          , ppSep = "<fc=#0033FF> | </fc>"
-                     }
+  ppHidden = xmobarColor "#00FF00" ""
+  , ppCurrent = xmobarColor "#FF0000" "" . wrap "[" "]"
+  , ppUrgent = xmobarColor "#FF0000" "" . wrap "*" "*"
+  , ppLayout = xmobarColor "#FF0000" ""
+  , ppTitle = xmobarColor "#00FF00" "" . shorten 80
+  , ppSep = "<fc=#0033FF> | </fc>"
+}
 
 -- some nice colors for the prompt windows to match the dzen status bar.
-myXPConfig = defaultXPConfig
-{
+myXPConfig = defaultXPConfig {
   font  = "Inconsolata-16"
-    , fgColor = "#0096d1"
-    , bgColor = "#000000"
-    , bgHLight    = "#000000"
-    , fgHLight    = "#FF0000"
-    , position = Top
-    , historySize = 512
-    , showCompletionOnTab = True
-    , historyFilter = deleteConsecutive
+  , fgColor = "#0096d1"
+  , bgColor = "#000000"
+  , bgHLight    = "#000000"
+  , fgHLight    = "#FF0000"
+  , position = Top
+  , historySize = 512
+  , showCompletionOnTab = True
+  , historyFilter = deleteConsecutive
 }
 
 --LayoutHook
