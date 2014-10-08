@@ -36,6 +36,6 @@ set scrolltime=0
 :map timer :tabopen timer<CR>
 :mkp!
 
-:map db :tabopen dribbble 
+:map db :tabopen dribbble
 
 " vim: set ft=pentadactyl et ts=4
