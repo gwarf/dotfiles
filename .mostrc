@@ -1,0 +1,6 @@
+% Keybindings
+unsetkey "k"
+setkey "up" "k"
+
+unsetkey "j"
+setkey "down" "j"
