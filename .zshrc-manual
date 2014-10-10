@@ -1,74 +1,15 @@
 # ZSH configuration for interactive shells
 
-# oh-my-zsh
-#curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 # Source system profile
 source /etc/profile
 
 [ -f ~/.zshenv ] && source ~/.zshenv
 
-export SHELL=`which zsh`
+export SHELL=$(which zsh)
 
 autoload -U colors && colors
 autoload -U promptinit
 autoload -Uz vcs_info
-
-# Is the connection over SSH ?
-SSH=no
-OS="$(uname)"
-if [ "$OS" != "SunOS" ]; then
-  if who am i | grep -q '([^:]*)$'; then
-    SSH=yes
-  fi
-  user=$(who am i | cut -f 1 -d' ')
-  if [ $(id -u) -eq 0 -a -z "$user" -a "$user" != 'root' ]; then
-    SSH=yes
-  fi
-fi
-
-# Do we have root privileges ?
-ROOT=no
-if [ $(id -u) -eq 0 ]; then
-  ROOT=yes
-fi
-
-# Define constants for colors in prompt.
-local reset white grey green red yellow
-reset="%{${reset_color}%}"
-white="%{$fg[white]%}"
-brightwhite="%{$fg_bold[white]%}"
-blue="%{$fg[blue]%}"
-brightblue="%{$fg_bold[blue]%}"
-grey="%{$fg[black]%}"
-brightgrey="%{$fg_bold[black]%}"
-green="%{$fg_bold[green]%}"
-red="%{$fg[red]%}"
-brightred="%{$fg_bold[red]%}"
-yellow="%{$fg[yellow]%}"
-brightyellow="%{$fg_bold[yellow]%}"
-pink="%{[35m%}"
-
-CSEP="%{[0m[33;1m%}"
-CHOST="%{[37;1m%}"
-CPROMPT="%{[1;32m%}"
-case $ROOT in
-  yes)
-  CSTART="%{[31;1m%}"
-  case $SSH in
-    yes)
-    CHOST="%{[41;37;1m%}"
-    ;;
-  esac
-  ;;
-  no)
-  CSTART="%{[34;1m%}"
-  case $SSH in
-    yes)
-    CHOST="%{[46;37;1m%}"
-    ;;
-  esac
-  ;;
-esac
 
 case $TERM in
   screen|screen-w)
@@ -101,221 +42,6 @@ preexec () {
 #  command ssh $*;
 #  titlecmd "$HOSTNAME";
 #}
-
-# http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#SEC273
-zstyle ':vcs_info:*' enable git svn cvs hg
-zstyle ':vcs_info:(hg*|git*):*' get-revision true
-zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
-
-zstyle ':vcs_info:*' stagedstr "${pink}↑"
-zstyle ':vcs_info:*' unstagedstr "${brightred}≅"
-
-## (scm) repo hash_changes branch
-zstyle ':vcs_info:git*' command /usr/bin/git
-zstyle ':vcs_info:git*' formats "${reset}${grey}(%s) ${brightgrey}%r ${brightblue}[%.7i ${brightblue}%b${blue}%m%c%u${brightblue}]${reset}"
-zstyle ':vcs_info:git*' actionformats "(%s|%a) %12.2i %c%u %b%m"
-#zstyle ':vcs_info:git*' actionformats "(%s|${white}%a${grey}) %12.12i %c%u %b%m"
-#zstyle ':vcs_info:(cvs|svn|git|hg):*' branchformat ''
-#zstyle ':vcs_info:(cvs|svn|git|hg):*' branchformat ''
-zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash git-untracked
-
-zstyle ':vcs_info:hg:*' formats "(%s) %{[1;30m%}%r${blue} [%b] %i%m%c%u%f${blue}%f "
-#zstyle ':vcs_info:hg*' formats "(%s)[%i%u %b %m]" # rev+changes branch misc
-zstyle ':vcs_info:hg*' actionformats "(%s|${white}%a${grey})[%i%u %b %m]"
-zstyle ':vcs_info:hg*:netbeans' use-simple true
-zstyle ':vcs_info:hg*:*' get-bookmarks true
-zstyle ':vcs_info:hg*:*' get-mq true
-zstyle ':vcs_info:hg*:*' get-unapplied true
-zstyle ':vcs_info:hg*:*' patch-format "mq(%g):%n/%c %p"
-zstyle ':vcs_info:hg*:*' nopatch-format "mq(%g):%n/%c %p"
-#zstyle ':vcs_info:hg*:*' unstagedstr "${green}+${grey}"
-zstyle ':vcs_info:hg*:*' hgrevformat "%r" # only show local rev.
-zstyle ':vcs_info:hg*:*' branchformat "%b" # only show branch
-zstyle ':vcs_info:hg*+set-hgrev-format:*' hooks hg-hashfallback
-zstyle ':vcs_info:hg*+set-message:*' hooks mq-vcs hg-storerev hg-branchhead
-# zstyle ':vcs_info:hg:*:-all-' command fakehg
-zstyle ':vcs_info:hg*+set-hgrev-format:*' hooks hg-hashfallback
-zstyle ':vcs_info:hg*+set-message:*' hooks mq-vcs hg-storerev hg-branchhead
-
-zstyle ':vcs_info:cvs:*' formats "%{[1;30m%}%r${blue}%i%m%c%u%f${blue}%f "
-
-zstyle ':vcs_info:svn*' formats "(%s) %{[1;30m%}%r${blue} [%i%b%m%c%u%f%f${reset}%{[1;30m%}${blue}] %f${reset}"
-zstyle ':vcs_info:svn:*' branchformat ''
-
-#zstyle ':vcs_info:*' nvcsformats ' '
-
-#zstyle ':vcs_info:*+*:*' debug true
-
-### Store the localrev and global hash for use in other hooks
-function +vi-hg-storerev() {
-  user_data[localrev]=${hook_com[localrev]}
-  user_data[hash]=${hook_com[hash]}
-}
-
-### Dynamically set hgrevformat based on if the local rev is available
-# We don't always know the local revision, e.g. if use-simple is set
-# Truncate long hash to 12-chars but also allow for multiple parents
-function +vi-hg-hashfallback() {
-  if [[ -z ${hook_com[localrev]} ]] ; then
-    local -a parents
-
-    parents=( ${(s:+:)hook_com[hash]} )
-    parents=( ${(@r:12:)parents} )
-    hook_com[rev-replace]="${(j:+:)parents}"
-
-    ret=1
-  fi
-}
-
-### Show when mq itself is under version control
-function +vi-mq-vcs() {
-  # if [[ -d ${hook_com[base]}/.hg/patches/.hg ]]; then
-  # hook_com[hg-mqpatch-string]="mq:${hook_com[hg-mqpatch-string]}"
-  # fi
-}
-
-### Show marker when the working directory is not on a branch head
-# This may indicate that running `hg up` will do something
-function +vi-hg-branchhead() {
-  local branchheadsfile i_tiphash i_branchname
-  local -a branchheads
-
-  local branchheadsfile=${hook_com[base]}/.hg/branchheads.cache
-
-  # Bail out if any mq patches are applied
-  [[ -s ${hook_com[base]}/.hg/patches/status ]] && return 0
-
-  if [[ -r ${branchheadsfile} ]] ; then
-    while read -r i_tiphash i_branchname ; do
-      branchheads+=( $i_tiphash )
-    done < ${branchheadsfile}
-
-    if [[ ! ${branchheads[(i)${user_data[hash]}]} -le ${#branchheads} ]] ; then
-      hook_com[revision]="${red}^${grey}${hook_com[revision]}"
-    fi
-  fi
-}
-
-# Show remote ref name and number of commits ahead-of or behind
-function +vi-git-st() {
-  local ahead behind remote
-  local -a gitstatus
-
-  # Are we on a remote-tracking branch?
-  remote=${$(/usr/bin/git rev-parse --verify ${hook_com[branch]}@{upstream} \
-    --symbolic-full-name --abbrev-ref 2>/dev/null)}
-
-  if [[ -n ${remote} ]] ; then
-    # for git prior to 1.7
-    # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-    ahead=$(/usr/bin/git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-    (( $ahead )) && gitstatus+=( "${green}+${ahead}${blue}" )
-
-    # for git prior to 1.7
-    # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-    behind=$(/usr/bin/git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-    (( $behind )) && gitstatus+=( "${red}-${behind}${blue}" )
-
-    if [ $behind -gt 0 -o $ahead -gt 0 ]; then
-      hook_com[branch]="${brightwhite}${hook_com[branch]} ${brightblue}[${remote} ${(j:/:)gitstatus}]"
-    fi
-  fi
-}
-
-# Show count of stashed changes
-function +vi-git-stash() {
-  local -a stashes
-
-  if [[ -s ${hook_com[base]}/.git/refs/stash ]] ; then
-    stashes=$(/usr/bin/git stash list 2>/dev/null | wc -l)
-    hook_com[misc]+=" (${stashes} stashed)"
-  fi
-}
-
-# Show count of non tracked files
-function +vi-git-untracked() {
-  local -a untracked
-
-  if [[ ! -z $(/usr/bin/git ls-files --other --exclude-standard 2> /dev/null) ]] {
-    untracked=$(/usr/bin/git ls-files --other --exclude-standard 2>/dev/null | wc -l)
-    hook_com[misc]+=" (${untracked} untracked)"
-    #hook_com[misc]+=" (${untracked} %{[1;31m%}…%F{blue})"
-  }
-}
-
-# Actualy defines the prompt varaibles.
-# %n username
-# %m hostname
-# %~ current path
-# %# prompt symbol
-function setprompt() {
-  local -a lines infoline
-  local x i pet dungeon filler i_width i_pad pathcolor pathprompt
-
-  # A domestic animal, the _tame dog_ (_Canis familiaris_)
-  pet=d
-
-  ### First, assemble the top line
-  # Current dir; show in yellow if not writable
-  [[ -w $PWD ]] && pathcolor=${brightgrey} || pathcolor=${red}
-
-  # Username & host if using ssh
-  [ $SSH = 'yes' ] && pathprompt="${brightyellow}@${CHOST}%m"
-  infoline+=("${CSTART}%n${pathprompt}${reset} ")
-
-  # Local path
-  infoline+=("${brightwhite}[${pathcolor}%~${brightwhite}]")
-
-  datetime="${brightgrey}%T"
-  returncode="${brightred}%139(?,SigSegv,%130(?,SigInt,%138(?,SigBus,%134(?,SigAbrt,%?))))"
-  jobsnumber="%1(j, ${white}[${brightred}%j${white}],)"
-  rprompt="${brightwhite}[%(?,${datetime},${returncode})${jobsnumber}${brightwhite}]"
-  infoline+=( " ${rprompt}${white}" )
-  # Strip color to find text width & make the full-width filler
-  zstyle -T ":pr-nethack:" show-pet && i_pad=4 || i_pad=0
-
-  i_width=${(S)infoline//\%\{*\%\}} # search-and-replace color escapes
-  i_width=${#${(%)i_width}} # expand all escapes and count the chars
-
-  filler="${reset}${grey}${(l:$(( $COLUMNS - $i_width - $i_pad ))::.:)}"
-  infoline[2]=( "${infoline[2]} ${filler}" )
-
-  ### Now, assemble all prompt lines
-  lines+=( ${(j::)infoline} )
-  [[ -n ${vcs_info_msg_0_} ]] && lines+=( "${vcs_info_msg_0_}" )
-  lines+=( "%(1j.${brightwhite}%j${reset} .)%(0?.${brightwhite}.${red})${brightwhite} %# " )
-
-  ### Add dungeon floor to each line
-  # Allow easy toggling of pet display
-  if zstyle -T ":pr-nethack:" show-pet ; then
-    dungeon=${(l:$(( ${#lines} * 3 ))::.:)}
-    dungeon[$[${RANDOM}%${#dungeon}]+1]=$pet
-
-    for (( i=1; i < $(( ${#lines} + 1 )); i++ )) ; do
-      case $i in
-        1) x=1;; 2) x=4;; 3) x=7;; 4) x=10;;
-      esac
-      lines[$i]="${brightgrey}${dungeon[x,$(( $x + 2 ))]} ${lines[$i]}${reset}"
-    done
-  fi
-
-  # Default prompt
-  PROMPT=${(F)lines}
-  # Right prompt
-  #RPROMPT=""
-  # Prompt for loops
-  PROMPT2='{%_}  '
-  # Prompt for selections
-  PROMPT3='{ … }  '
-  # So far I don't use "setopt xtrace", so I don't need this prompt
-  # PROMPT4=''
-}
-
-precmd () {
-#  titlecmd "%m %4~"
-  vcs_info
-  setprompt
-}
 
 # Turn on color output
 if [ $(uname) = FreeBSD ]; then
@@ -368,8 +94,8 @@ bindkey "h" run-help # esc-h
 #bindkey "^M" run-help
 # Keycode for up/down in application mode on ubuntu
 # http://www.f30.me/2012/10/oh-my-zsh-key-bindings-on-ubuntu-12-10/
-bindkey "${terminfo[kcuu1]}" up-line-or-search
-bindkey "${terminfo[kcud1]}" down-line-or-search
+#bindkey "${terminfo[kcuu1]}" up-line-or-search
+#bindkey "${terminfo[kcud1]}" down-line-or-search
 
 # urxvt
 bindkey "[5" up-line-or-history
@@ -589,16 +315,6 @@ echo
 
 #[ ! -h /tmp/.esd-${UID} ] && ln -s /tmp/.esd /tmp/.esd-${UID}
 
-# x autostart
-if [ `hostname` = 'htpc' ]; then
-  if [ -z "$DISPLAY" ] && [ `tty` = "/dev/tty8" ]; then
-    while true; do
-      startx
-      sleep 10
-    done
-  fi
-fi
-
 function mainClasses {
   if [ -d ./src ] ; then
     find ./src/main -type f -iname "*.java" \
@@ -651,7 +367,7 @@ function .. (){
 
 # Go up to a named dir
 # ... usr
-function ... (){
+function ... () {
   if [ -z "$1" ]; then
     return
   fi
