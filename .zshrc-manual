@@ -729,9 +729,9 @@ spell() {
 
 # }}}
 
-# EOF
-
 # Use promptline.vim
 [ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
+
+# EOF
 
 # vim:set ft=zsh ts=2 sw=2 et:
