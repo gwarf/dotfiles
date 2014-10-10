@@ -73,6 +73,8 @@ alias llla='ls -la | less'
 # list only directories
 #alias lsd='ls -F | ls -d */'
 alias lsd='ls -d */'
+# list only files
+alias lsf="ls -rtF | grep -v '.*/'"
 # list only source code (c, c++, Perl in my case)
 alias lsp='ls *.c *.h *.cc *.pl *.pm *.py'
 
