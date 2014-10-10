@@ -6,35 +6,11 @@ emulate sh -c 'source /etc/profile'
 
 eval "`dircolors -b`"
 
-# Gem on archlinux
-if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
-  PATH="/home/baptiste/.gem/ruby/2.0.0/bin:$PATH"
-  export GEM_HOME="$HOME/.gem/ruby/2.0.0"
-fi
-
 [ -f ~/.zshenv ] && source ~/.zshenv
 [ -f ~/.alias ] && source ~/.alias
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="blinks"
-#ZSH_THEME="sunrise"
-#ZSH_THEME="intheloop"
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="false"
-
-# Uncomment this to disable bi-weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment to change how often before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
 
 # Uncomment following line if you want to disable colors in ls
 DISABLE_LS_COLORS="false"
@@ -54,18 +30,23 @@ COMPLETION_WAITING_DOTS="true"
 # much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment following line if you want to  shown in the command execution time stamp 
+# Uncomment following line if you want to  shown in the command execution time stamp
 # in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
 # yyyy-mm-dd
 HIST_STAMPS="mm/dd/yyyy"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(colorize colored-man gitfast git-flow archlinux bundler command-not-found gem history-substring-search mvn rake ruby tmux svn terminator urltools vagrant vi-mode vundle web-search sysadmin common-aliases rvm)
 
 source $ZSH/oh-my-zsh.sh
 
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+#ZSH_THEME="random"
+#ZSH_THEME="blinks"
+#ZSH_THEME="sunrise"
+#ZSH_THEME="intheloop"
 source ~/.zsh-theme.baptiste
 
 # User configuration
@@ -87,7 +68,6 @@ hash -d maatpuppet=~/repos/maatG/fr.maatg/infrastructure/puppet
 insert_sudo () { zle beginning-of-line; zle -U 'sudo ' }
 zle -N insert-sudo insert_sudo
 bindkey 's' insert-sudo
-# }}}
 
 # bindkeys
 # Find keycode:
@@ -188,13 +168,6 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 #[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
 #[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
 
-# # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -202,5 +175,3 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 autoload -U zmv
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
