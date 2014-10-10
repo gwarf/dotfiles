@@ -1,0 +1,3 @@
+[Default Applications]
+application/pdf=evince.desktop;
+text/plain=gvim.desktop;
