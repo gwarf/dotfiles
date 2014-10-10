@@ -56,9 +56,9 @@ bind-key -t vi-copy 'y' copy-selection
 # move tmux copy buffer into x clipboard
 bind C-y run "tmux save-buffer - | xclip -i -selection clipboard"
 # Paste buffer
-# XXX disabled as it breaks navigating windows
-#unbind p
-#bind p paste-buffer
+# XXX p would be better, butdisabled as it breaks navigating windows
+unbind P
+bind P paste-buffer
 # move x clipboard into tmux paste buffer
 bind C-p run "xclip -o | tmux load-buffer -"
 
@@ -115,14 +115,10 @@ bind-key . command-prompt "move-window -r -t '%%'"
 # Change status bar colors
 #set-option -g status on
 #set-option -g status-position "top"
-#set-option -g status-interval 2
 #set-option -g status-utf8 on
 #set-option -g status-justify "left"
 #set-option -g status-left-length 60
 #set-option -g status-right-length 100
-# https://github.com/erikw/tmux-powerline
-#set-option -g status-left "#(~/repos/perso/tmux-powerline/status-left.sh)"
-#set-option -g status-right "#(~/repos/perso/tmux-powerline/status-right.sh)"
 
 #set -g status-fg white
 #set -g status-bg black
@@ -157,8 +153,9 @@ set-window-option -g window-status-current-format ' #I:#W '
 set -g default-command '/bin/zsh -l'
 
 # Disable automatic changes of titles
-set -g set-titles on
-setw -g automatic-rename off
+set -g set-titles off
+set-window-option -g automatic-rename off
+set-window-option -g allow-rename off
 set -g renumber-windows on
 
 # Create session
@@ -172,25 +169,34 @@ new-window -n 'local'
 new-window -n 'downloads' -c ~/.jdownloader/downloads
 select-window -t 3
 
-set -g default-terminal "screen-256color"
-
 # https://powerline.readthedocs.org/en/latest/overview.html#usage
 source "/home/baptiste/.config/powerline/tmux/powerline.conf"
-#source "/usr/share/tmux/solarized-dark.conf"
 
-# Plugins
-set -g @tpm_plugins "           \
-      tmux-plugins/tpm              \
-      tmux-plugins/tmux-resurrect   \
-      "
+# List of plugins
+# prefix+I to install
+# Supports `github_username/repo` or full git URLs
+set -g @tpm_plugins "              \
+  tmux-plugins/tpm                 \
+  tmux-plugins/tmux-resurrect      \
+  tmux-plugins/tmux-sessionist     \
+  tmux-plugins/tmux-yank           \
+  tmux-plugins/tmux-logging        \
+  tmux-plugins/tmux-sensible       \
+"
+set -g @almost-sensible 'off'
+# Other examples:
+# github_username/plugin_name    \
+# git@github.com/user/plugin     \
+# git@bitbucket.com/user/plugin  \
 
 # initializes TMUX plugin manager
 run-shell ~/.tmux/plugins/tpm/tpm
 
+# Tmux resurect
+# Restore more programms
 set -g @resurrect-processes 'ssh mutt psql mysql sqlite3'
 set -g @resurrect-processes '"sudo journalctl -fxn"'
-
-# Restore vim sessions
+# Resurrect vim session (see https://github.com/tpope/vim-obsession)
 set -g @resurrect-strategy-vim 'session'
 
 # Tmux resurect
