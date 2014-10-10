@@ -182,10 +182,6 @@ setopt glob_assign
 # Do not perform filename completion and expansion when using unquoted =
 unsetopt equals
 
-# Completion options
-[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
-[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
-
 # Automatically list choices on an ambiguous completion
 setopt auto_list
 # Complétion
@@ -214,9 +210,7 @@ mailpath=(
 "$HOME/Mail/INBOX?You have new mail in INBOX"
 )
 
-# Quand l'utilisateur commence sa commande par '!' pour faire de la
-# complétion historique, il n'exécute pas la commande immédiatement
-# mais il écrit la commande dans le prompt
+# When using ! to recall a command from history write it before executing it
 setopt hist_verify
 # Avoid duplicating older command in the history
 setopt hist_ignore_dups
@@ -289,14 +283,11 @@ zstyle ':completion:*:processes' list-colors '=(#b)(?????)(#B)??????????????????
 
 setopt LIST_TYPES
 
-autoload -U compinit
-# }}}
-
 # e.g., zmv *.JPEG *.jpg
 autoload -U zmv
 alias zmv='noglob zmv'
 
-#compinit
+autoload -U compinit
 compinit -i ${HOME}/.zcompdump
 
 # name directories
@@ -312,8 +303,6 @@ hash -d dev=~/dev
 [ -x /usr/bin/fortune ] && fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
 echo
 [ -x /usr/games/fortune ] && /usr/games/fortune freebsd-tips
-
-#[ ! -h /tmp/.esd-${UID} ] && ln -s /tmp/.esd /tmp/.esd-${UID}
 
 function mainClasses {
   if [ -d ./src ] ; then
@@ -341,109 +330,9 @@ function listMavenCompletions {
 
 compctl -K listMavenCompletions mvn%
 
-# }}}
-# Output total memory currently in use by you {{{1
-
-memtotaller() {
-  /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
-}
-
-# }}}
-# Miscellaneous Functions:
-# ..(), ...() for quickly changing $CWD {{{1
-# http://www.shell-fu.org/lister.php?id=769
-
-# Go up n levels:
-# .. 3
-function .. (){
-  local arg=${1:-1};
-  local dir=""
-  while [ $arg -gt 0 ]; do
-    dir="../$dir"
-    arg=$(($arg - 1));
-  done
-  cd $dir >&/dev/null
-}
-
-# Go up to a named dir
-# ... usr
-function ... () {
-  if [ -z "$1" ]; then
-    return
-  fi
-  local maxlvl=16
-  local dir=$1
-  while [ $maxlvl -gt 0 ]; do
-    dir="../$dir"
-    maxlvl=$(($maxlvl - 1));
-    if [ -d "$dir" ]; then
-      cd $dir >&/dev/null
-    fi
-  done
-}
-
-# }}}
-# {{{ genpass()
-# Generates a tough password of a given length
-
-function genpass() {
-  if [ ! "$1" ]; then
-    echo "Usage: $0 20"
-    echo "For a random, 20-character password."
-    return 1
-  fi
-  dd if=/dev/urandom count=1 2>/dev/null | tr -cd 'A-Za-z0-9!@#$%^&*()_+' | cut -c-$1
-}
-
-# }}}
-# {{{ bookletize()
-# Converts a PDF to a fold-able booklet sized PDF
-# Print it double-sided and fold in the middle
-
-bookletize () {
-  if which pdfinfo && which pdflatex; then
-    pagecount=$(pdfinfo $1 | awk '/^Pages/{print $2+3 - ($2+3)%4;}')
-
-    # create single fold booklet form in the working directory
-    pdflatex -interaction=batchmode \
-      '\documentclass{book}\
-      \usepackage{pdfpages}\
-      \begin{document}\
-      \includepdf[pages=-,signature='$pagecount',landscape]{'$1'}\
-      \end{document}' 2>&1 >/dev/null
-  fi
-}
-
-# }}}
-# {{{ joinpdf()
-# Merges, or joins multiple PDF files into "joined.pdf"
-
-joinpdf () {
-  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=joined.pdf "$@"
-}
-
-# }}}
-
-# 256-colors test {{{
-
-256test() {
-  echo -e "\e[38;5;196mred\e[38;5;46mgreen\e[38;5;21mblue\e[0m"
-}
-
-# }}}
-# Dictionary lookup {{{1
-# Many more options, see:
-# http://linuxcommando.blogspot.com/2007/10/dictionary-lookup-via-command-line.html
-
-dict() {
-  curl 'dict://dict.org/d:$1:*'
-}
-
-spell() {
-  echo $1 | aspell -a
-}
-
-# }}}
+# Completion options
+[ -f /etc/zsh/git-flow-completion.zsh ] && source /etc/zsh/git-flow-completion.zsh
+[ -f /usr/share/git-flow/git-flow-completion.zsh ] && source /usr/share/git-flow/git-flow-completion.zsh
 
 # Use promptline.vim
 [ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh

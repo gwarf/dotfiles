@@ -217,9 +217,92 @@ if [ "$OS" = "SunOS" ]; then
   alias ls='/usr/gnu/bin/ls --color=auto'
 fi
 
-tips()
-{
+tips() {
   grep "$@" ~/tips.txt
+}
+
+# Generates a tough password of a given length
+function genpass() {
+  if [ ! "$1" ]; then
+    echo "Usage: $0 20"
+    echo "For a random, 20-character password."
+    return 1
+  fi
+  dd if=/dev/urandom count=1 2>/dev/null | tr -cd 'A-Za-z0-9!@#$%^&*()_+' | cut -c-$1
+}
+
+# Output total memory currently in use by you
+memtotaller() {
+  /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
+}
+
+# Converts a PDF to a fold-able booklet sized PDF
+# Print it double-sided and fold in the middle
+bookletize () {
+  if which pdfinfo && which pdflatex; then
+    pagecount=$(pdfinfo $1 | awk '/^Pages/{print $2+3 - ($2+3)%4;}')
+
+    # create single fold booklet form in the working directory
+    pdflatex -interaction=batchmode \
+      '\documentclass{book}\
+      \usepackage{pdfpages}\
+      \begin{document}\
+      \includepdf[pages=-,signature='$pagecount',landscape]{'$1'}\
+      \end{document}' 2>&1 >/dev/null
+  fi
+}
+
+# Merges, or joins multiple PDF files into "joined.pdf"
+joinpdf () {
+  gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=joined.pdf "$@"
+}
+
+# 256-colors test
+256test() {
+  echo -e "\e[38;5;196mred\e[38;5;46mgreen\e[38;5;21mblue\e[0m"
+}
+
+# Miscellaneous Functions:
+# ..(), ...() for quickly changing $CWD
+# http://www.shell-fu.org/lister.php?id=769
+# Go up n levels:
+# .. 3
+function .. (){
+  local arg=${1:-1};
+  local dir=""
+  while [ $arg -gt 0 ]; do
+    dir="../$dir"
+    arg=$(($arg - 1));
+  done
+  cd $dir >&/dev/null
+}
+
+# Go up to a named dir
+# ... usr
+function ... () {
+  if [ -z "$1" ]; then
+    return
+  fi
+  local maxlvl=16
+  local dir=$1
+  while [ $maxlvl -gt 0 ]; do
+    dir="../$dir"
+    maxlvl=$(($maxlvl - 1));
+    if [ -d "$dir" ]; then
+      cd $dir >&/dev/null
+    fi
+  done
+}
+
+# Dictionary lookup
+# Many more options, see:
+# http://linuxcommando.blogspot.com/2007/10/dictionary-lookup-via-command-line.html
+dict() {
+  curl 'dict://dict.org/d:$1:*'
+}
+
+spell() {
+  echo $1 | aspell -a
 }
 
 # Attach or create tmux session named the same as current directory.
