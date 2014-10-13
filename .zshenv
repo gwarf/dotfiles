@@ -138,7 +138,7 @@ export PATH
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-export PATH="~/.bundler_binstubs:$PATH"
+#export PATH="~/.bundler_binstubs:$PATH"
 
 if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
   export MC_SKIN=$HOME/.mc/lib/mc-solarized-skin/solarized.ini
