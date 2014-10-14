@@ -165,11 +165,11 @@ myXPConfig = defaultXPConfig {
 --LayoutHook
 myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspace "4:virt" fullL $  onWorkspace "5:download" fullL $ onWorkspace "7:games" full $ standardLayouts
   where
-standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full)
+  standardLayouts = avoidStruts $ (tiled ||| reflectTiled ||| Mirror tiled ||| Grid ||| Full)
 
   --Layouts
   tiled = smartBorders (ResizableTall 1 (2/100) (1/2) [])
-reflectTiled = (reflectHoriz tiled)
+  reflectTiled = (reflectHoriz tiled)
   full = noBorders Full
 
   --Im Layout
