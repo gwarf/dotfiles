@@ -166,7 +166,7 @@ new-window -n 'mutt' mutt
 # for future windows, revert r-o-e to global value
 set -g set-remain-on-exit off
 new-window -n 'local'
-new-window -n 'downloads' -c ~/.jdownloader/downloads
+new-window -n 'downloads' -c ~/downloads
 select-window -t 3
 
 # https://powerline.readthedocs.org/en/latest/overview.html#usage
