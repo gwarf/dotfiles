@@ -15,7 +15,7 @@
     foreground_color = "#839496"
     scroll_on_output = False
     show_titlebar = False
-    font = Inconsolata-dz for Powerline Medium 15
+    font = Source Code Pro for Powerline 13
     word_chars = "-A-Za-z0-9,./?%&#:_~"
     cursor_blink = False
 [layouts]
