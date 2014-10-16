@@ -63,7 +63,9 @@ set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 
 set markers=no # do not diplay line return markers for long urls
 set smart_wrap
-set wrapmargin=100
+# Avoid setting wrapmargin, too dependent of display size and broke some
+# large width mails' content
+#set wrapmargin=100
 # Utiliser le visualisateur interne pour consulter les messages
 set visual=builtin
 unset arrow_cursor         # Show current mail with an inverse bar.
