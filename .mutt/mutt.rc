@@ -33,10 +33,10 @@ set mailcap_path="~/.mutt/mutt.mailcap:/etc/mailcap"
 set include=yes         # Always include original
 set copy=yes            # Always save outgoing mails
 set delete=ask-yes      # ask and delete
-set move=no           	# don't move
+set move=no             # don't move
 set postpone=ask-yes    # demande d'ajourner
 set reply_to=ask-yes    # useful for mailinglists
-set confirmappend=no 	# set: prompt for confirmation on appending mail to folder
+set confirmappend=no  # set: prompt for confirmation on appending mail to folder
 set confirmcreate       # set: prompt for confirmation on creation of folders
 set abort_nosubject=ask-yes
 set abort_unmodified=ask-yes
@@ -45,8 +45,8 @@ set quit=ask-no
 
 ### Varia
 #
-unset mark_old	        # set: make distinction between New mail and Old mail.
-set allow_8bit		# send data as it is.  no conversion.
+unset mark_old          # set: make distinction between New mail and Old mail.
+set allow_8bit    # send data as it is.  no conversion.
 
 ### Sorting mails
 set sort=threads
@@ -90,11 +90,11 @@ set indent_str="> "
 set mime_forward="ask-no"
 set pager_context=1
 set noprompt_after
-set read_inc=10	         # show count number for every tenth mail
+set read_inc=10          # show count number for every tenth mail
 set write_inc=10         # update number after each tenth read mail
 set nosave_empty
 set tilde
-set history=1000	# number of input lines for prompts to remember
+set history=1000  # number of input lines for prompts to remember
 set history_file = "~/.mutt/history"
 set save_history=1000
 set fast_reply
