@@ -19,7 +19,6 @@ bind index G last-entry
 bind index H current-top
 bind index M current-middle
 bind index L current-bottom
-bind index N toggle-new
 bind index pagedown     next-page
 bind index pageup   previous-page
 bind index zt current-top
@@ -30,6 +29,7 @@ bind index } bottom-page
 bind index ~ set-flag
 bind index \cv what-key
 bind index i mail
+bind index N toggle-new
 # Bind Pager {{{1
 bind pager g top
 bind pager G bottom
@@ -47,6 +47,7 @@ bind pager \cn half-down
 bind pager \cn next-page
 bind pager \cp half-up
 bind pager \cu half-up
+bind pager N next-unread
 # Bind Index/Pager {{{1
 bind index,pager \cn next-thread
 bind index,pager \cn read-thread
@@ -54,7 +55,8 @@ bind index,pager \cd delete-thread
 bind index,pager f forward-message
 #bind index,pager n next-undeleted
 #bind index,pager p previous-undeleted
-bind index,pager N next-unread
+#bind index,pager N next-unread
+#bind index,pager N toggle-new
 bind index,pager P previous-unread
 # }}}
 
