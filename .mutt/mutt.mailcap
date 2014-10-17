@@ -41,13 +41,14 @@ image/*; sxiv -bf %s \; reset
 image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
 image/*                         ; mutt_bgrun eog %s                             ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; fbi %s                 		        ; copiousoutput
+image/*                         ; fbi %s                            ; copiousoutput
 #text/html;                      mutt_netscape %s; test=sh -c 'test $DISPLAY'
 #text/html                       ; mutt_bgrun uzbl-browser -u %s                                   ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 #text/html                       ; w3m -T text/html -dump                        ; copiousoutput; print = firefoxurl %s;
 #text/html;                      w3m -I %{charset} -T text/html -dump; copiousoutput
 #text/html                       ; w3m %s; nametemplate=%s.html; print = firefoxurl %s
 #text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = firefoxurl %s
+
 text/html                       ; w3m -I %{charset} -T text/html -dump ;           ; copiousoutput ; print = firefoxurl %s
 
 # Some troubles converting...
@@ -70,7 +71,7 @@ text/richtext                   ; mutt_bgrun abiword %s                         
 text/x-vcard                    ; ~/mutt/mutt.vcard.filter %s                   ; copiousoutput
 text/*                          ; edit=vim %s                                   ; copiousoutput
 video/*                         ; mutt_bgrun mplayer %s                         ; copiousoutput
-application/pgp-signature		    ; cat %s										                    ; copiousoutput
+application/pgp-signature       ; cat %s                                        ; copiousoutput
 #application/excel              ; xls2csv %s | column -s, -tn                   ; copiousoutput
 #application/vnd.ms-excel       ; xls2csv %s | column -s, -tn                   ; copiousoutput
 application/vnd.ms-excel        ; mutt_bgrun scalc %s                           ; test=test -n "$DISPLAY" > /dev/null
@@ -80,7 +81,7 @@ application/msword              ; mutt_bgrun swriter %s                         
 application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun swriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 application/msword              ; antiword %s                                   ; copiousoutput
 application/x-msword            ; antiword %s                                   ; copiousoutput
-application/vnd.oasis.opendocument.text	; odt2txt %s                            ; copiousoutput
+application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
 application/vnd.ms-powerpoint   ; mutt_bgrun simpress %s                        ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.oasis.opendocument.presentation   ; mutt_bgrun simpress %s      ; test=test -n "$DISPLAY" > /dev/null
 application/x-pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
