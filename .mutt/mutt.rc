@@ -76,6 +76,10 @@ set tilde                # show non-existant lines of text with a tilde at begin
 set collapse_unread     # collapse threads with unread mails
 
 # Pager
+# does not allow to use mutt shortcuts for next/previous message and
+# other nice stuff
+#set pager="vim -c /^$/ -c /"
+#set prompt_after=no
 set pager_context=5      # number of lines that overlap on paging
 set pager_index_lines=6  # number of lines to see from the index
 set pager_stop           # "next_page" won't jump to next message at end of messages
