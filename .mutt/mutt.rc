@@ -146,6 +146,11 @@ set nostrict_threads     # Lets have some fuzzy threading.
 
 unset followup_to          # do not generate a Followup-To header
 
+# Mail format
+# http://joeclark.org/ffaq.html
+# To avoid ugly line breaks on small displays
+set text_flowed=yes
+
 # GnuPG/PGP Options
 set pgp_use_gpg_agent
 set pgp_timeout=8400
