@@ -213,7 +213,7 @@ myWorkspaces = ["1:term", "2:web", "3:revelation", "4:virt", "5:download", "6:mi
 
 -- keys
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-  myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- killing programs
   [ ((modMask, xK_Return), spawn $ XMonad.terminal conf)
   , ((modMask .|. shiftMask, xK_c ), kill)
@@ -306,4 +306,3 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
   | (key, sc) <- zip [xK_w, xK_e ] [0..]
   , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
