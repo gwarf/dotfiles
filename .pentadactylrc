@@ -1,19 +1,13 @@
-" https://github.com/azuwis/.pentadactyl/blob/master/rc
+"hg7101
+
+loadplugins '\.(js|penta)$'
+group user
 
 " Colors
-"colorscheme solarized-dark
+colorscheme solarized-dark
 
 " Search provider
 set defsearch=duckduckgo
-
-" Keys
-" Pass <C-t> to firefox
-" Consider adding "o" at the end
-map -b <C-t> <pass-next-key><C-t>
-
-"Select all
-map -b <C-a> <pass-next-key><C-a>
-imap -b <C-a> <pass-next-key><C-a>
 
 " Pass through for some sites
 autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
@@ -25,17 +19,66 @@ set passkeys+=feed.lxl.io:jk<CR>
 " Plugins config
 "source ~/.pentadactyl/pentadactylrc_plugins
 
-"" disable smooth scroll
+" disable smooth scroll
 set scrollsteps=1
 set scrolltime=0
 
 " Disable tab bar
-:set showtabline=never
+set showtabline=never
 
-" http://www.ferdev.com/2013/02/19/pentadactyl-the-reason-i-use-firefox.html
-:map timer :tabopen timer<CR>
-:mkp!
+" Mappings
+
+" Pass <C-t> to firefox
+"map -count -modes=n,v <C-t> -builtin <count><pass-next-key><C-t>
+" Consider adding "o" at the end
+map -b <C-t> <pass-next-key><C-t>
+
+"Select all
+"map -count -modes=n,v <C-a> -builtin <count><pass-next-key><C-a>
+map -b <C-a> <pass-next-key><C-a>
+imap -b <C-a> <pass-next-key><C-a>
+
+" Go down half a page with j
+map -count -modes=n,v j <count><C-d>
+
+" Go up half a page with k
+map -count -modes=n,v k <count><C-u>
+
+" Yank page title and URL with <c-y>
+map -modes=n,v <C-y> -ex :y buffer.title + "\n" + buffer.URL
+
+" Go down a single line with J
+map -count -modes=n,v J <count><Down>
+
+" Go up a single line with K
+map -count -modes=n,v K <count><Up>
+
+" Enter hint mode where all hints are opened in background tabs
+map -count -modes=n,v <C-f> <count>g;b
+
+" Open prompt whose result will be opened in a background tab
+map -count -modes=n,v <C-t> <count>:tabopen!<Space>
+
+" Yank selected text to clipboard
+map -modes=n Y <yank-selection>
 
 :map db :tabopen dribbble
 
-" vim: set ft=pentadactyl et ts=4
+" http://www.ferdev.com/2013/02/19/pentadactyl-the-reason-i-use-firefox.html
+:map timer :tabopen timer<CR>
+
+" Set hintkeys according to my home row in my keyboard layout
+set hintkeys=aioegslntv
+
+" Same as vim; highlight search results
+set hlfind
+
+" Yank (copy) to default clipboard with Y
+" Will not yank to default clipboard by default.
+" See:
+"     Issue 719 - dactyl - Copy with 'Y' is not pasted - A Vim-like five-fingered
+"     interface for Firefox and other XULRunner-based apps. - Google Project Hosting
+"     https://code.google.com/p/dactyl/issues/detail?id=719#c10
+js editor.defaultRegister="+"
+
+" vim: set ft=pentadactyl:
