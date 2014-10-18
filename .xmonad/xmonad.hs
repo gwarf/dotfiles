@@ -216,13 +216,13 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
   myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- killing programs
   [ ((modMask, xK_Return), spawn $ XMonad.terminal conf)
-, ((modMask .|. shiftMask, xK_c ), kill)
+  , ((modMask .|. shiftMask, xK_c ), kill)
 
   -- opening program launcher / search engine
-,((modMask , xK_p), shellPrompt myXPConfig)
+  ,((modMask , xK_p), shellPrompt myXPConfig)
 
   -- GridSelect
-, ((modMask, xK_g), goToSelected defaultGSConfig)
+  , ((modMask, xK_g), goToSelected defaultGSConfig)
 
   -- Display key
   --, ("<XF86Display>", spawn "xrandr --auto")
@@ -230,34 +230,34 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
   -- layouts
   , ((modMask, xK_space ), sendMessage NextLayout)
   , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-, ((modMask, xK_b ), sendMessage ToggleStruts)
+  , ((modMask, xK_b ), sendMessage ToggleStruts)
 
   -- floating layer stuff
-, ((modMask, xK_t ), withFocused $ windows . W.sink)
+  , ((modMask, xK_t ), withFocused $ windows . W.sink)
 
   -- refresh'
-, ((modMask, xK_n ), refresh)
+  , ((modMask, xK_n ), refresh)
 
   -- focus
   , ((modMask, xK_Tab ), windows W.focusDown)
   , ((modMask, xK_j ), windows W.focusDown)
   , ((modMask, xK_k ), windows W.focusUp)
-, ((modMask, xK_m ), windows W.focusMaster)
+  , ((modMask, xK_m ), windows W.focusMaster)
 
   -- swapping
   , ((modMask .|. shiftMask, xK_Return), windows W.swapMaster)
   , ((modMask .|. shiftMask, xK_j ), windows W.swapDown )
-, ((modMask .|. shiftMask, xK_k ), windows W.swapUp )
+  , ((modMask .|. shiftMask, xK_k ), windows W.swapUp )
 
   -- increase or decrease number of windows in the master area
   , ((modMask , xK_comma ), sendMessage (IncMasterN 1))
-, ((modMask , xK_period), sendMessage (IncMasterN (-1)))
+  , ((modMask , xK_period), sendMessage (IncMasterN (-1)))
 
   -- resizing
   , ((modMask, xK_h ), sendMessage Shrink)
   , ((modMask, xK_l ), sendMessage Expand)
   , ((modMask .|. shiftMask, xK_h ), sendMessage MirrorShrink)
-, ((modMask .|. shiftMask, xK_l ), sendMessage MirrorExpand)
+  , ((modMask .|. shiftMask, xK_l ), sendMessage MirrorExpand)
 
   -- scratchpad
   , ((modMask,  xK_f ),  namedScratchpadAction scratchpads "gvim")
@@ -291,19 +291,19 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
   , ((modMask .|. shiftMask, xK_t ), safeSpawn "/home/jelle/bin/trackpad-toggle.sh" [] )
 
   -- quit, or restart
-, ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
+  , ((modMask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
   , ((modMask , xK_q ), restart "xmonad" True)
   ]
   ++
   -- mod-[1..9] %! Switch to workspace N
   -- mod-shift-[1..9] %! Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
-| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+  | (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
   , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
   ++
   -- mod-[w,e] %! switch to twinview screen 1/2
   -- mod-shift-[w,e] %! move window to screen 1/2
-[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
   | (key, sc) <- zip [xK_w, xK_e ] [0..]
   , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
