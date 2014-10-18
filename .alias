@@ -64,19 +64,17 @@ fi
 #alias ls='ls -FG'
 #alias l='ls -CFh'
 #alias la='ls -Ah'
-alias l='ls -h'
-alias la='ls -a'
-alias ll='ls -lh'
-alias lla='ls -lAh'
+alias l='ls -lh'
+alias la='ls -lAh'
 alias lll='ls -l | less'
-alias llla='ls -la | less'
+alias llla='ls -lA | less'
 # list only directories
 #alias lsd='ls -F | ls -d */'
 alias lsd='ls -d */'
 # list only files
 alias lsf="ls -rtF | grep -v '.*/'"
 # list only source code (c, c++, Perl in my case)
-alias lsp='ls *.c *.h *.cc *.pl *.pm *.py'
+alias lsp='ls *.c *.h *.cc *.pl *.pm *.py *.rb *.pp'
 
 # Quelques alias pratiques
 alias c='clear'
