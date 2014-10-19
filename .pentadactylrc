@@ -38,20 +38,20 @@ map -b <C-t> <pass-next-key><C-t>
 map -b <C-a> <pass-next-key><C-a>
 imap -b <C-a> <pass-next-key><C-a>
 
-" Go down half a page with j
-map -count -modes=n,v j <count><C-d>
+" Go down half a page with J
+map -count -modes=n,v J <count><C-d>
 
-" Go up half a page with k
-map -count -modes=n,v k <count><C-u>
+" Go up half a page with K
+map -count -modes=n,v K <count><C-u>
 
 " Yank page title and URL with <c-y>
 map -modes=n,v <C-y> -ex :y buffer.title + "\n" + buffer.URL
 
-" Go down a single line with J
-map -count -modes=n,v J <count><Down>
+" Go down a single line with j
+map -count -modes=n,v j <count><Down>
 
-" Go up a single line with K
-map -count -modes=n,v K <count><Up>
+" Go up a single line with k
+map -count -modes=n,v k <count><Up>
 
 " Enter hint mode where all hints are opened in background tabs
 map -count -modes=n,v <C-f> <count>g;b
@@ -68,7 +68,7 @@ map -modes=n Y <yank-selection>
 :map timer :tabopen timer<CR>
 
 " Set hintkeys according to my home row in my keyboard layout
-set hintkeys=aioegslntv
+set hintkeys=asdfghjkl
 
 " Same as vim; highlight search results
 set hlfind
