@@ -130,6 +130,12 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 #exec awesome & wmpid=$!
 #exec ck-launch-session awesome & wmpid=$!
 
+# bspwm
+sxhkd &
+panel &
+urxvt &
+exec bspwm
+
 # xmonad
 #xsetroot -cursor_name left_ptr
 [ -f ~/.xprofile ] && source ~/.xprofile
