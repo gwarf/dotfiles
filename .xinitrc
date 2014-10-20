@@ -143,7 +143,7 @@ exec xmonad & wmpid=$!
 #if [ `hostname` = 'bougebox' ]; then
 #  exec ck-launch-session dbus-launch openbox-session & wmpid=$!
 #else
-#	exec ck-launch-session fvwm & wmpid=$!
+# exec ck-launch-session fvwm & wmpid=$!
 #fi
 #exec wmfs & wmpid=$!
 #exec openbox
