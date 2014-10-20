@@ -146,4 +146,9 @@ else
   git clone https://github.com/iwfmp/mc-solarized-skin.git $HOME/.mc/lib/mc-solarized-skin
 fi
 
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_HEIGHT=24
+PANEL_FONT_FAMILY="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
+export PANEL_FIFO PANEL_HEIGHT PANEL_FONT_FAMILY
+
 # vim:set ft=zsh ts=2 sw=2 et:
