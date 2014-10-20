@@ -178,6 +178,7 @@ alias cvswhat='cvs status \!* | grep "Status:" | grep -v "to-date"'
 
 alias eclipse='eclipse -Xms1024M -Xmx4096M -XX:MaxPermSize=512M'
 
+alias gi='git'
 alias git_update_all='for f (*); do (echo "\nUpdating $f"; cd $f ; git pull; cd ..); done'
 alias git_push_all='for f (*); do (echo "\nUpdating $f"; cd $f ; git pull && git push; cd ..); done'
 
