@@ -103,6 +103,7 @@ myManageHook = composeAll . concat $
   , [ stringProperty "WM_WINDOW_ROLE" =? "CallWindow" --> doShift "6:misc" ]
   , [ className =? "Steam" --> doShift "7:games" ]
   , [ className =? "Terminator" --> doShift "1:term" ]
+  , [ className =? "urxvt" --> doShift "1:term" ]
   , [ className =? "Trayer" --> doIgnore ]
   , [ className =? "VirtualBox" --> doShift "4:virt" ]
   , [ className =? "Xmessage" --> doCenterFloat ]
@@ -192,7 +193,7 @@ myLayoutHook = onWorkspace "1:term" fullL $ onWorkspace "2:web" webL $ onWorkspa
 -------------------------------------------------------------------------------
 ---- Terminal --
 myTerminal :: String
-myTerminal = "terminator"
+myTerminal = "urxvt"
 
 -------------------------------------------------------------------------------
 -- Keys/Button bindings --
