@@ -18,10 +18,9 @@ usermodmap=$HOME/.Xmodmap
 #    xmodmap $sysmodmap
 #fi
 
-if [ -f $userxresources ]; then
-    xrdb -load $userxresources
-    #xrdb -merge $userxresources
-fi
+[ -f $userxresources ] && xrdb -load $userxresources
+
+[ -f ~/.xprofile ] && source ~/.xprofile
 
 # load xkeymap
 setxkbmap us -option 'compose:ralt'
@@ -130,18 +129,21 @@ export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 #exec awesome & wmpid=$!
 #exec ck-launch-session awesome & wmpid=$!
 
+# Start urxvt demon
+urxvtd -q -f -o &
+
 # bspwm
 sxhkd &
-panel &
-urxvt &
-exec bspwm
+[ -f ~/.xmonad/autostart.sh ] && ~/.xmonad/autostart.sh
+#export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
+export CONKY_WIDTH="150"
+# Unclutter - hides the mouse cursor after 5 seconds of idle
+unclutter -root -jitter 10 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000
+exec bspwm & wmpid=$!
 
 # xmonad
-#xsetroot -cursor_name left_ptr
-[ -f ~/.xprofile ] && source ~/.xprofile
-#exec ck-launch-session xmonad & wmpid=$!
-PATH="~/.cabal/bin:$PATH"
-exec xmonad & wmpid=$!
+#exec xmonad & wmpid=$!
 
 # gnome + awesome
 #exec ck-launch-session gnome-session & wmpid=$!
