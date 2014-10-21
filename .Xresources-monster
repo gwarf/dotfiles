@@ -82,26 +82,49 @@ URxvt.termName:rxvt-256color
 !!Fade the text by the given percentage when focus is lost
 !URxvt*fading:20
 !URxvt*borderLess:true
-!URxvt.perl-ext-common:default,matcher,selection,option-popup,selection-popup
-!!default,matcher,selection,option-popup,selection-popup,tabbed
-URxvt.urlLauncher:firefox
-URxvt.matcher.button:3
 
+! Specifies the program to be started with a URL argument. Used by the "selection-popup" and "matcher"
+URxvt.colorUL: #4682B4
+
+! Comma-separated list(s) of perl extension scripts (default: "default") to use in this terminal
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
+!URxvt.perl-ext-common:default,matcher,selection,option-popup,selection-popup,tabbed
+!URxvt.url-select.launcher:  chromium
+!URxvt.url-select.launcher: firefoxurl
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
+URxvt.keysym.C-i:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+
+! XXX fallback font does not seems to work for clock symbol
+!URxvt.font: xft:Anonymice Powerline:size=16,xft:Symbola:size=16
+
+!URxvt.font: xft:Consolas:size=16,xft:Droid Sans Mono for Powerline
+
+! Missing clock symbol
+!URxvt.font: xft:Droid Sans Mono for Powerline:size=16
+
+! clock on powerline/tmux bar is missing
+!URxvt.font: xft:Inconsolata\\-dz for Powerline:Medium:size=14,xft:Symbola:size=14
 !URxvt.font: xft:Inconsolata for Powerline:size=16
-!URxvt.font: xft:Source Code Pro Medium:size=14,xft:Source Code Pro Medium for Powerline
-!URxvt.font: xft:Source Code Pro Medium:size=16,xft:Source Code Pro Medium for Powerline
-URxvt.font: xft:Consolas:size=16, xft:Droid Sans Mono for Powerline
 
-!URxvt.font: xft:Consolas:pixelsize=16,xft:PowerlineSymbols
-!URxvt.font: xft:Anonymous Pro:size=12,xft:Anonymous Pro for Powerline
-!URxvt.font: xft:Consolas:size=16, xft:Inconsolata for Powerline
-!URxvt.font: xft:Monaco:size=16, xft:Inconsolata for Powerline
+! Missing clock symbol
+!URxvt.font: xft:Inconsolata for Powerline:size=16
 
-! Not working
-!URxvt.font: xft:Inconsolata\-dz Powerline:pixelsize=16
-!URxvt.font: xft:Inconsolata-dz-Powerline:pixelsize=16
-!URxvt.font: xft:Inconsolata-dz for Powerline:size=16
-!URxvt*font: xft:Inconsolata\-dz for Powerline:pixelsize=14
+! Missing clock symbol
+!URxvt.font: xft:Source Code Pro for Powerline:Medium:size=16
+
+! Missing clock symbol but classy
+!URxvt.font: xft:Anonymice Powerline:size=16,xft:Symbola:size=16
+
+! Missing clock but realy nice
+URxvt*font:                 xft:Monaco for Powerline:regular:size=15
+URxvt*imFont:               xft:Monaco for Powerline:regular:size=15
+URxvt*boldFont:             xft:Monaco for Powerline:bold:size=15
+URxvt*italicFont:           xft:Monaco for Powerline:italic:size=15
+URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=15
+
 URxvt*transparent: false
 URxvt*depth: 32
 
@@ -109,8 +132,6 @@ xterm*metaSendsEscape: true
 xterm*eightBitInput: false
 xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 
-!URxvt.font:xft:Inconsolata=14
-!URxvt.boldFont:9x15bold,xft:Inconsolata
 !URxvt.jumpScroll:True
 !URxvt.scrollTtyOutput:False
 !URxvt.scrollTtyKeypress:True
@@ -143,7 +164,6 @@ xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 ! Use the specified colour for the colour value n, where 0-7 corresponds to low-intensity (normal)
 ! URxvt*colorn: colour
 
-! 
 ! URxvt*colorBD: colour
 
 ! Use the specified colour to display bold or italic characters when the foreground colour is the
@@ -199,7 +219,6 @@ xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 
 ! URxvt*boldFont: fontlist
 
-! 
 ! URxvt*italicFont: fontlist
 
 ! The font list to use for displaying bold, italic or bold italic characters, respectively.
@@ -358,11 +377,6 @@ URxvt*cursorBlink: false
 ! Compile frills: Associate string with keysym sym. The intervening resource name keysym. cannot be
 ! URxvt*keysym.sym: string
 
-! URxvt*perl-ext-common: string
-
-! Comma-separated list(s) of perl extension scripts (default: "default") to use in this terminal
-! URxvt*perl-ext: string
-
 ! Perl code to be evaluated when all extensions have been registered. See the urxvtperl(3) manpage.
 ! URxvt*perl-eval: string
 
@@ -377,9 +391,6 @@ URxvt*cursorBlink: false
 
 ! Sets the hotkey that starts the incremental scrollback buffer search (default: "M-s").
 ! URxvt*searchable-scrollback: keysym
-
-! Specifies the program to be started with a URL argument. Used by the "selection-popup" and "matcher"
-! URxvt*url-launcher: string
 
 ! Compile frills: Sets the WM_TRANSIENT_FOR property to the given window id.
 ! URxvt*transient-for: windowid
