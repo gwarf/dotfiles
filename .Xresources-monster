@@ -93,7 +93,8 @@ URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
 !URxvt.url-select.launcher: firefoxurl
 URxvt.url-select.launcher: /usr/bin/xdg-open
 URxvt.url-select.underline: true
-URxvt.keysym.C-i:           perl:url-select:select_next
+! Alt-u
+URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
 
