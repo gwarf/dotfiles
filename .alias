@@ -26,6 +26,7 @@ alias c='clear'
 # eval `dircolors -b`
 # Long listing by default
 alias l='ls -lh'
+alias ll='l'
 alias la='ls -lAh'
 alias lll='ls -l | less'
 alias llla='ls -lA | less'
