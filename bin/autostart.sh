@@ -69,7 +69,7 @@ run_once revelation \
   ~/repos/perso/gwarf/private/revelation/keyring-maatg \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 run_once urxvtc
-run_once pidgin
+#run_once pidgin
 run_once firefox
 #run_once deluge
 run_once JDownloader
