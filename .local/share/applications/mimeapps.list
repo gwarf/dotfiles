@@ -1,0 +1,9 @@
+[Default Applications]
+image/png=eog.desktop
+x-scheme-handler/http=firefox.desktop
+text/html=firefox.desktop
+text/xml=firefox.desktop
+application/xhtml+xml=firefox.desktop
+
+[Added Associations]
+image/png=eog.desktop;
