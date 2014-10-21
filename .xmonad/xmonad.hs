@@ -98,6 +98,7 @@ myManageHook = composeAll . concat $
   , [ (className =? "Firefox" <&&> appName =? "Navigator") --> doShift "2:web" ]
   , [ (className =? "Firefox" <&&> appName =? "Dialog") --> doCenterFloat ]
   , [ className =? "Pidgin" --> doShift "2:web" ]
+  , [ className =? "Empathy" --> doShift "2:web" ]
   , [ className =? "Revelation" --> doShift "3:revelation" ]
   , [ className =? "Skype" --> doShift "2:web" ]
   , [ stringProperty "WM_WINDOW_ROLE" =? "CallWindow" --> doShift "6:misc" ]
@@ -275,14 +276,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- , ((0, xF86XK_Mail ), runOrRaise "thunderbird" (className =? "Thunderbird"))
   -- , ((0, xF86XK_Messenger ), runOrRaise "pidgin" (className =? "Pidgin"))
 
-  , ((0, 0x1008ff18 ), runOrRaise "aurora" (className =? "Aurora"))
+  -- , ((0, 0x1008ff18 ), runOrRaise "aurora" (className =? "Aurora"))
   , ((0, xF86XK_Calculator ), safeSpawn "gnome-calculator" [])
-  , ((0, xF86XK_Display ), spawn "bash /home/jelle/bin/xrandr-laptop")
+  -- , ((0, xF86XK_Display ), spawn "bash /home/jelle/bin/xrandr-laptop")
 
   -- volume control
-  , ((0, xF86XK_AudioRaiseVolume ), safeSpawn "ponymix" ["-N","increase", "2"])
-  , ((0, xF86XK_AudioLowerVolume ), safeSpawn "ponymix" ["-N","decrease", "2"])
-  , ((0, xF86XK_AudioMute ), safeSpawn "ponymix" ["-N","toggle"])
+  , ((0, xF86XK_AudioRaiseVolume ), safeSpawn "pactl" ["set-sink-volume","alsa_output.pci-0000_00_1b.0.analog-stereo", "--", "+10% "])
+  , ((0, xF86XK_AudioLowerVolume ), safeSpawn "pactl" ["set-sink-volume","alsa_output.pci-0000_00_1b.0.analog-stereo", "--", "-10% "])
+  , ((0, xF86XK_AudioMute ), safeSpawn "pactl" ["set-sink-mute", "alsa_output.pci-0000_00_1b.0.analog-stereo", "toggle"])
 
   -- brightness control
   , ((0 , 0x1008ff03 ), safeSpawn "xbacklight" ["-inc", "10"])
