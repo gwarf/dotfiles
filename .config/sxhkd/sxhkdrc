@@ -2,47 +2,60 @@
 # bspwm hotkeys
 #
 
+# Quit bspwm
 super + alt + Escape
   bspc quit
 
+# Close window
 super + w
   bspc window -c
 
+# Change desktop layout
 super + t
   bspc desktop -l next
 
+# Balance splits
 super + b
   bspc desktop -B
 
+# Toggle float/full screen
 super + {s,f}
   bspc window -t {floating,fullscreen}
 
+# Switch focus to last {desktop,window}
 super + {grave,Tab}
   bspc {window,desktop} -f last
 
+# Swap windows
 super + apostrophe
   bspc window -s last
 
+# Navigate through windows history
 super + {o,i}
   bspc control --record-history off; \
   bspc window {older,newer} -f; \
   bspc control --record-history on
 
+# Transplant !? window
 super + y
   bspc window -w last.manual
 
 super + m
   bspc window -s biggest
 
+# Navigate/move windows
 super + {_,shift + }{h,j,k,l}
   bspc window -{f,s} {left,down,up,right}
 
+# Focus windows
 super + {_,shift + }c
   bspc window -f {next,prev}
 
+# Curculate the leaves
 super + {comma,period}
   bspc desktop -C {backward,forward}
 
+# Navigate desktops
 super + bracket{left,right}
   bspc desktop -f {prev,next}
 
@@ -52,12 +65,14 @@ super + ctrl + {h,j,k,l}
 super + ctrl + {_,shift + }space
   bspc {window -p cancel,desktop -c}
 
+# Resize window
 super + alt + {h,j,k,l}
   bspc window -e {left -10,down +10,up -10,right +10}
 
 super + alt + shift + {h,j,k,l}
   bspc window -e {right -10,up +10,down -10,left +10}
 
+# Adjust splitting ratio
 super + ctrl + {1-9}
   bspc window -r 0.{1-9}
 
@@ -81,7 +96,7 @@ super + @button{1-3}
 #
 
 super + Return
-  terminator
+  urxvt
 
 super + space
   dmenu_run
@@ -89,3 +104,34 @@ super + space
 # make sxhkd reload its configuration files:
 super + Escape
   pkill -USR1 -x sxhkd
+
+super + {1-9,0}
+  D={1-9,0}; \
+  M=$(bspc query --monitors --desktop $D); \
+  if [ $(bspc query --desktops --monitor $M | wc -l) -gt 1 ]; then \
+    if [ $(bspc query --desktops --desktop focused) != $D ]; then \
+      bspc desktop $D --to-monitor focused; \
+      bspc desktop $D --focus; \
+      fi; \
+      elif [ $(bspc query --monitors --monitor focused) != $M ]; then \
+      bspc desktop DVI-0:focused --swap DVI-1:fOcused; \
+      fi
+
+alt + shift + o
+   if [ $(xrandr | grep '*' | cut -dx -f1 | sort | tail -1) -gt 1024 ]; then \
+     if xdotool search --onlyvisible --classname 'Conky' windowunmap; then \
+       bspc config -m DVI-1 right_padding 0; \
+     else \
+       bspc config -m DVI-1 right_padding $CONKY_WIDTH; \
+       xdotool search --classname 'Conky' windowmap \
+       || conky -q -c ~/.config/conky/conkyrc.$(hostname) & \
+     fi; \
+   else \
+     xdotool search --onlyvisible --classname 'Conky' windowunmap \
+     || xdotool search --classname 'Conky' windowmap \
+     || conky -q -c ~/.config/conky/conkyrc.$(hostname) & \
+   fi
+
+alt + ctrl + o
+   bspc config -m DVI-1 right_padding $CONKY_WIDTH; \
+   raise Conky
