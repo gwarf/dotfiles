@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 # Run a program only once
 #
 # run_once $program, $program_arguments, $process_name
@@ -50,7 +48,7 @@ pkill offlineimap || sleep 3 && offlineimap &
 
 # Pulse audio
 pkill pulseaudio; sleep 3 && pulseaudio --start -D
-pactl set-sink-volume 0 '60%' &
+pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
 run_once pasystray
 
 # MPD
@@ -70,7 +68,7 @@ run_once revelation \
 run_once revelation \
   ~/repos/perso/gwarf/private/revelation/keyring-maatg \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
-run_once terminator
+run_once urxvtc
 run_once pidgin
 run_once firefox
 #run_once deluge
