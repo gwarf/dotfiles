@@ -134,7 +134,7 @@ urxvtd -q -f -o &
 
 # bspwm
 sxhkd &
-[ -f ~/.xmonad/autostart.sh ] && ~/.xmonad/autostart.sh
+[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
 #export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
 export CONKY_WIDTH="150"
 # Unclutter - hides the mouse cursor after 5 seconds of idle
