@@ -3,110 +3,110 @@
 #
 
 # Quit bspwm
-super + alt + Escape
+mod3 + alt + Escape
   bspc quit
 
 # Close window
-super + w
+mod3 + w
   bspc window -c
 
 # Change desktop layout
-super + t
+mod3 + t
   bspc desktop -l next
 
 # Balance splits
-super + b
+mod3 + b
   bspc desktop -B
 
 # Toggle float/full screen
-super + {s,f}
+mod3 + {s,f}
   bspc window -t {floating,fullscreen}
 
 # Switch focus to last {desktop,window}
-super + {grave,Tab}
+mod3 + {grave,Tab}
   bspc {window,desktop} -f last
 
 # Swap windows
-super + apostrophe
+mod3 + apostrophe
   bspc window -s last
 
 # Navigate through windows history
-super + {o,i}
+mod3 + {o,i}
   bspc control --record-history off; \
   bspc window {older,newer} -f; \
   bspc control --record-history on
 
 # Transplant !? window
-super + y
+mod3 + y
   bspc window -w last.manual
 
-super + m
+mod3 + m
   bspc window -s biggest
 
 # Navigate/move windows
-super + {_,shift + }{h,j,k,l}
+mod3 + {_,shift + }{h,j,k,l}
   bspc window -{f,s} {left,down,up,right}
 
 # Focus windows
-super + {_,shift + }c
+mod3 + {_,shift + }c
   bspc window -f {next,prev}
 
 # Curculate the leaves
-super + {comma,period}
+mod3 + {comma,period}
   bspc desktop -C {backward,forward}
 
 # Navigate desktops
-super + bracket{left,right}
+mod3 + bracket{left,right}
   bspc desktop -f {prev,next}
 
-super + ctrl + {h,j,k,l}
+mod3 + ctrl + {h,j,k,l}
   bspc window -p {left,down,up,right}
 
-super + ctrl + {_,shift + }space
+mod3 + ctrl + {_,shift + }space
   bspc {window -p cancel,desktop -c}
 
 # Resize window
-super + alt + {h,j,k,l}
+mod3 + alt + {h,j,k,l}
   bspc window -e {left -10,down +10,up -10,right +10}
 
 # Resize window
-super + alt + shift + {h,j,k,l}
+mod3 + alt + shift + {h,j,k,l}
   bspc window -e {right -10,up +10,down -10,left +10}
 
 # Adjust splitting ratio
-super + ctrl + {1-9}
+mod3 + ctrl + {1-9}
   bspc window -r 0.{1-9}
 
-super + {_,shift + }{1-9,0}
+mod3 + {_,shift + }{1-9,0}
   bspc {desktop -f,window -d} ^{1-9,10}
 
 ~button1
   bspc pointer -g focus
 
-super + button{1-3}
+mod3 + button{1-3}
   bspc pointer -g {move,resize_side,resize_corner}
 
-super + !button{1-3}
+mod3 + !button{1-3}
   bspc pointer -t %i %i
 
-super + @button{1-3}
+mod3 + @button{1-3}
   bspc pointer -u
 
 #
 # wm independent hotkeys
 #
 
-super + Return
+mod3 + Return
   urxvt
 
-super + space
+mod3 + space
   dmenu_run
 
 # make sxhkd reload its configuration files:
-super + Escape
+mod3 + Escape
   pkill -USR1 -x sxhkd
 
-super + {1-9,0}
+mod3 + {1-9,0}
   D={1-9,0}; \
   M=$(bspc query --monitors --desktop $D); \
   if [ $(bspc query --desktops --monitor $M | wc -l) -gt 1 ]; then \
