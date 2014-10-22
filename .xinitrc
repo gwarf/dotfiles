@@ -139,7 +139,7 @@ sxhkd &
 export CONKY_WIDTH="150"
 # Unclutter - hides the mouse cursor after 5 seconds of idle
 unclutter -root -jitter 10 &
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
 exec bspwm & wmpid=$!
 
 # xmonad
