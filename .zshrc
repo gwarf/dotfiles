@@ -6,8 +6,8 @@ emulate sh -c 'source /etc/profile'
 
 eval "`dircolors -b`"
 
-[ -f ~/.zshenv ] && source ~/.zshenv
-[ -f ~/.alias ] && source ~/.alias
+[ -f ~/.zshenv ] && . ~/.zshenv
+[ -f ~/.alias ] && . ~/.alias
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="false"
@@ -47,7 +47,8 @@ source $ZSH/oh-my-zsh.sh
 #ZSH_THEME="blinks"
 #ZSH_THEME="sunrise"
 #ZSH_THEME="intheloop"
-source ~/.zsh-theme.baptiste
+[ -f ~/.zsh-theme.baptiste ] && . ~/.zsh-theme.baptiste
+[ -f ~/.shell_prompt ] && . ~/.shell_prompt.sh
 
 # User configuration
 
