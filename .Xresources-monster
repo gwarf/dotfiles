@@ -80,9 +80,6 @@ URxvt.scrollBar: false
 URxvt.urgentOnBell: true
 ! True: use visual bell on receipt of a bell character; option -vb.  False: no visual bell [default];
 URxvt.visualBell: true
-!URxvt.transparentScrollbar:true
-!URxvt.scrollBar_floating:true
-!URxvt.scrollBar_right:true
 !URxvt.scrollstyle:plain
 ! Specifies the terminal type name to be set in the TERM environment variable; option -tn.
 !uRxvt.termName:rxvt-unicode
@@ -101,49 +98,23 @@ URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
 !URxvt.perl-ext-common:default,matcher,selection,option-popup,selection-popup,tabbed
 !URxvt.url-select.launcher:  chromium
 !URxvt.url-select.launcher: firefoxurl
-URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.launcher: xdg-open
 URxvt.url-select.underline: true
 ! Alt-u
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
 
-! XXX fallback font does not seems to work for clock symbol
-!URxvt.font: xft:Anonymice Powerline:size=16,xft:Symbola:size=16
-
-!URxvt.font: xft:Consolas:size=16,xft:Droid Sans Mono for Powerline
-
-! Missing clock symbol
-!URxvt.font: xft:Droid Sans Mono for Powerline:size=16
-
-! clock on powerline/tmux bar is missing
-!URxvt.font: xft:Inconsolata\\-dz for Powerline:Medium:size=14,xft:Symbola:size=14
-!URxvt.font: xft:Inconsolata for Powerline:size=16
-
-! Missing clock symbol
-!URxvt.font: xft:Inconsolata for Powerline:size=16
-
-! Missing clock symbol
-!URxvt.font: xft:Source Code Pro for Powerline:Medium:size=16
-
-! Missing clock symbol but classy
-!URxvt.font: xft:Anonymice Powerline:size=16,xft:Symbola:size=16
-
-! Missing clock but realy nice
 ! Select the fonts to be used. This is a comma separated list of font names that are checked in order
-URxvt.font:                 xft:Monaco for Powerline:regular:size=15
-URxvt.imFont:               xft:Monaco for Powerline:regular:size=15
-URxvt.boldFont:             xft:Monaco for Powerline:bold:size=15
-URxvt.italicFont:           xft:Monaco for Powerline:italic:size=15
+URxvt.font:                 xft:Source Code Pro for Powerline:regular:size=15
+URxvt.imFont:               xft:Source Code Pro for Powerline:regular:size=15
+URxvt.boldFont:             xft:Source Code Pro for Powerline:bold:size=15
+URxvt.italicFont:           xft:Source Code Pro for Powerline:italic:size=15
 ! The font list to use for displaying bold, italic or bold italic characters, respectively.
-URxvt.boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=15
+URxvt.boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=15
 
 URxvt.transparent: false
 URxvt.depth: 32
-
-xterm*metaSendsEscape: true
-xterm*eightBitInput: false
-xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 
 ! Transparency
 !URxvt.inheritPixmap:true
@@ -157,7 +128,7 @@ xterm*faceName: Inconsolata\-dz for Powerline:pixelsize=16
 !URxvt.depth: bitdepth
 
 ! Create the window with the specified X window geometry [default 80x24]; option -geometry.
-!URxvt.geometry: 122x70+8+28
+!URxvt.geometry: 70x30+0+0
 
 ! Set MWM hints to request a borderless window, i.e. if honoured by the WM, the rxvt-unicode window
 URxvt.borderLess: true
@@ -167,3 +138,7 @@ URxvt.borderLess: true
 
 ! True: blink the cursor. False: do not blink the cursor [default]; option -bc.
 URxvt.cursorBlink: false
+
+xterm*metaSendsEscape: true
+xterm*eightBitInput: false
+xterm*faceName: Source Code Pro for Powerline:pixelsize=15
