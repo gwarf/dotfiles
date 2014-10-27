@@ -51,7 +51,7 @@ mod3 + {_,shift + }{h,j,k,l}
 mod3 + {_,shift + }c
   bspc window -f {next,prev}
 
-# Curculate the leaves
+# Circulate the leaves
 mod3 + {comma,period}
   bspc desktop -C {backward,forward}
 
