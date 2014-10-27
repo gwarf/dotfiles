@@ -74,9 +74,9 @@ macro index z    "c?\t"                            "List mailboxes and switch to
 macro attach s <save-entry><bol>~/Downloads/<eol>
 
 # help
-macro generic <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
-macro index <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
-macro pager <f1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro generic <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro index <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro pager <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
 
 # macros to invoke a profile
 macro   index   <F6>     ":source ~/.mutt/profile.gmail.gwarf12\n" "Load profile: gmail.gwarf12"
@@ -157,16 +157,16 @@ macro index,pager ,B "<enter-command> set my_pdsave=\$pipe_decode<enter>\
 # http://upsilon.cc/~zack/blog/posts/2011/01/how_to_use_Notmuch_with_Mutt/
 #macro index <F4> \
 #      "<enter-command>unset wait_key<enter><shell-escape>~/.mutt/mutt-notmuch --prompt search<enter><change-folder-readonly>~/.cache/mutt_results<enter>" \
-#      "search mail (using notmuch)"
-#macro index <F5> \
-#      "<enter-command>unset wait_key<enter><pipe-message>~/.mutt/mutt-notmuch thread<enter><change-folder-readonly>~/.cache/mutt_results<enter><enter-command>set wait_key<enter>" \
-#      "search and reconstruct owning thread (using notmuch)"
 macro index <F3> \
       "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt tag -inbox<enter>" \
       "notmuch: remove message from inbox"
+
+# search mail (using notmuch)"
 macro index <F4> \
       "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
       "notmuch: search mail"
+
+# search and reconstruct owning thread (using notmuch)"
 macro index <F5> \
       "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
       "notmuch: reconstruct thread"
