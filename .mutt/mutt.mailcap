@@ -49,7 +49,7 @@ image/*                         ; fbi %s                            ; copiousout
 #text/html                       ; w3m %s; nametemplate=%s.html; print = firefoxurl %s
 #text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = firefoxurl %s
 
-text/html                       ; w3m -I %{charset} -T text/html -dump ;           ; copiousoutput ; print = firefoxurl %s
+text/html                       ; w3m -I %{charset} -T text/html -dump ;           ; copiousoutput ; print = chromium %s
 
 # Some troubles converting...
 #text/html; pandoc -f html -t markdown; copiousoutput; compose=vim %s;print = firefoxurl %s
