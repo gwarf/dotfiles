@@ -35,6 +35,23 @@ xset r on
 # Mouse accelleration
 xset m 3/1 3
 
+# Make additional fonts available
+#xset +fp /usr/share/fonts/local
+#xset fp rehash
+
+# Give opacity to specific windows. See ~/.devilspie/opacity.ds
+#devilspie -a &
+
+# Redshift - changed screen colour temp
+#redshift-gtk -l 55.978301:-3.228586 -t 6000:4500 &
+
+# slow virtual desktop switching
+# compton --respect-prop-shadow -bc -t -8 -l -9 -r 6 -o 0.7 &
+# compton -cCGfF -o 0.38 -O 200 -I 200 -t 0.02 -l 0.02 -r 3.2 -D2 -m
+# 0.88 -i 0 &
+# compton -cCGfzb -o 0.8 -O 200 -I 200 -t -9 -l -9 -r 6 -D 2 -m 0.98 -e
+# 1 -i 1 --respect-prop-shadow --shadow-ignore-shaped
+
 export OOO_FORCE_DESKTOP=gnome
 
 #export __GL_FSAA_MODE=1
