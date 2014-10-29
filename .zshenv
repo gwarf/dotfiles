@@ -125,14 +125,19 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 export PATH
 
 # Use gnome keyring for ssh auth
-#export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
-#if [ -n "$DESKTOP_SESSION" ];then
-  #if [ -n "$GNOME_KEYRING_PID" ]; then
-    eval $(gnome-keyring-daemon --start --components=ssh,gpg)
-    #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
-    export GPG_AGENT_INFO SSH_AUTH_SOCK
-  #fi
-#fi
+##export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+##if [ -n "$DESKTOP_SESSION" ];then
+#  #if [ -n "$GNOME_KEYRING_PID" ]; then
+#    eval $(gnome-keyring-daemon --start --components=ssh,gpg)
+#    #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+#    export GPG_AGENT_INFO SSH_AUTH_SOCK
+#  #fi
+##fi
+
+# Use envoy for ssh/gpg agent
+# https://github.com/vodik/envoy
+envoy -t gpg-agent
+source <(envoy -p)
 
 # Load RVM into a shell session *as a function*
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
