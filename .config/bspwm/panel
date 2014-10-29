@@ -1,6 +1,7 @@
 #! /bin/sh
 
-PATH="~/.config/bspwm:$PATH"
+SCRIPT_DIR="$(readlink -m $(dirname $0))"
+PATH="$SCRIPT_DIR:$PATH"
 
 if [ $(pgrep -cx panel) -gt 1 ] ; then
   printf "%s\n" "The panel is already running." >&2
@@ -19,6 +20,6 @@ clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
 
 . panel_colors
 
-cat "$PANEL_FIFO" | ~/panel_bar | bar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
+cat "$PANEL_FIFO" | panel_bar | bar -g x$PANEL_HEIGHT -f "$PANEL_FONT_FAMILY" -F "$COLOR_FOREGROUND" -B "$COLOR_BACKGROUND" &
 
 wait

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-PATH="$(pwd):$PATH"
+SCRIPT_DIR="$(readlink -m $(dirname $0))"
+PATH="$SCRIPT_DIR:$PATH"
 
 panel &
 
