@@ -65,7 +65,7 @@ run_once revelation \
 run_once revelation \
   ~/repos/perso/gwarf/private/revelation/keyring-maatg \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
-run_once urxvtc
+run_once terminator
 #run_once pidgin
 run_once firefox
 #run_once deluge

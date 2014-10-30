@@ -97,7 +97,7 @@ mod3 + @button{1-3}
 #
 
 mod3 + Return
-  urxvt
+  terminator
 
 mod3 + space
   dmenu_run
