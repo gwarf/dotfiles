@@ -90,15 +90,17 @@ alias emacs='emacs -nw'
 alias ssh='TERM=screen ssh'
 
 # Suffix aliases to open files automatically
-alias -s tex=vim
-alias -s txt=vim
-alias -s md=vim
-alias -s pdf=evince
-alias -s png=gpicview
-alias -s jpeg=gpicview
-alias -s jpg=gpicview
-alias -s html=$BROWSER
-alias -s htm=$BROWSER
+if [ $SHELL = '/bin/zsh' ]; then
+  alias -s tex=vim
+  alias -s txt=vim
+  alias -s md=vim
+  alias -s pdf=evince
+  alias -s png=gpicview
+  alias -s jpeg=gpicview
+  alias -s jpg=gpicview
+  alias -s html=$BROWSER
+  alias -s htm=$BROWSER
+fi
 
 # network
 alias my_ip='/sbin/ifconfig eth0 | grep "addr:" | sed -e "s/^.*addr://" |sed -e "s/ Bcast.*//" '
@@ -326,6 +328,7 @@ if command -v "ssh-multi" >/dev/null 2>&1; then
   alias tmux-ki-wn='ssh-multi ng-ki-wn{0,1,2,3,4,5,6,7,8,9}.local'
   alias tmux-maat-all='ssh-multi ng-maat-server{3,5,6,8,9}.gnubila.fr {bdii,bdii-site,idp,dev-idp,lfc,myproxy,nagios,pipeline,ra,sentinelle1,slipstream,voms,wms}.gnubila.fr'
   alias tmux-gw='ssh-multi ng-maat-devel1.gnubila.fr clrpcsv-ginseng-gw-devel01.in2p3.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr srv4.fatebenefratelli.it ng-hug-server4.neuro.hcuge.ch ng-ki-server7.ki.se'
+  alias tmux-bapt.name='ssh-multi {misc,dns,big}.bapt.name'
 fi
 
 # Attach or create tmux session named the same as current directory.
