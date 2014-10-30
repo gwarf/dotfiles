@@ -113,19 +113,20 @@ URxvt.italicFont:           xft:Source Code Pro for Powerline:italic:size=15
 ! The font list to use for displaying bold, italic or bold italic characters, respectively.
 URxvt.boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=15
 
-URxvt.transparent: false
-URxvt.depth: 32
-
 ! Transparency
-!URxvt.inheritPixmap:true
-!URxvt.tintColor:white
+! Real transparency (composite)
+URxvt.depth: 32
+! Use the specified colour as the windows background colour [default White]; option -bg.
+!URxvt.background: rgba:0000/0000/0200/c800
+
+! Fake transparency
+!URxvt.transparent: true
 ! Darken (0 .. 100) or lighten (-1 .. -100) the transparent background
 ! image in addition to tinting it
 !URxvt.shading:20
-! Use the specified colour as the windows background colour [default White]; option -bg.
-!URxvt.background: rgba:0000/0000/0000/dddd
-! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
-!URxvt.depth: bitdepth
+
+!URxvt.inheritPixmap:true
+!URxvt.tintColor:white
 
 ! Create the window with the specified X window geometry [default 80x24]; option -geometry.
 !URxvt.geometry: 70x30+0+0
