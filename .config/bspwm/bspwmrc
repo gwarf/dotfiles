@@ -3,7 +3,7 @@
 SCRIPT_DIR="$(readlink -m $(dirname $0))"
 PATH="$SCRIPT_DIR:$PATH"
 
-panel &
+~/.config/bspwm/panel &
 
 bspc config border_width        2
 bspc config window_gap         12

@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+# Inspired by :
+#   z3bra - http://blog.z3bra.org/2014/04/pop-it-up.html
+#   bruenig - https://bbs.archlinux.org/viewtopic.php?id=46608
+
+source $(dirname $0)/config
+
+err() {
+	echo "$1"
+	exit 1
+}
+
+usage() {
+	echo "usage: notify_volume [option] [argument]"
+	echo
+	echo "Options:"
+	echo "	 +, -i, --increase  - increase volume by \`argument'"
+	echo "	 -, -d, --decrease  - decrease volume by \`argument'"
+	echo "	 +, -i, --toggle    - mute/unmute"
+	echo "	 -h, --help         - display this"
+	exit
+}
+
+
+level() {
+	amixer get Master | sed -n 's/^.*\[\([0-9]\+\)%.*$/\1/p' | uniq
+}
+
+state() {
+	amixer get Master | sed -n 's/^.*\[\(o[nf]\+\)]$/\1/p' | uniq
+}
+
+case $1 in
+	'+'|'-i'|'--increase')
+		[ -z "$2" ] && err "No argument specified for increase"
+		AMIXARG="${2}%+"
+		;;
+	'-'|'-d'|'--decrease')
+		[ -z "$2" ] && err "No argument specified for decrease."
+		AMIXARG="${2}%-"
+		;;
+	'!'|'-t'|'--toggle')
+		AMIXARG="toggle"
+		;;
+	''|'-h'|'--help')
+		usage
+		;;
+	*)
+		err "Unrecognized option \`$1', see notify_volume --help"
+esac
+
+amixer set Master $AMIXARG >/dev/null
+
+if [[ `state` != "on" ]]; then
+	icon=""
+elif [[ `level` -lt 30 ]]; then
+	icon=""
+else
+	icon=""
+fi
+
+steps=$(echo "100/$BAR_LENGTH" | bc)
+current=$(echo "`level`/$steps" | bc)
+for i in `seq 1 $BAR_LENGTH`;
+do
+	if [[ `state` != "on" ]]; then
+		bar+=" "
+	elif [ $i -lt $current ]; then
+		bar+="%{F$COLOR_ACTIVE}${BAR_CHAR}%{F-}"
+	else
+		bar+="%{F$COLOR_OCCUPIED}${BAR_CHAR}%{F-}"
+	fi
+done
+
+$(dirname $0)/notify  "%{F$COLOR_ICON}$icon%{F-}  [$bar]"&
+mplayer "$CLIP" >/dev/null&
