@@ -36,8 +36,8 @@ xset r on
 xset m 3/1 3
 
 # Make additional fonts available
-#xset +fp /usr/share/fonts/local
-#xset fp rehash
+xset +fp /usr/share/fonts/local
+xset fp rehash
 
 # Give opacity to specific windows. See ~/.devilspie/opacity.ds
 #devilspie -a &
@@ -91,12 +91,12 @@ source /etc/X11/xinit/xinitrc.d/30-dbus
 #fi
 
 # Start GNOME Keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+#eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 # You probably need to do this too:
-export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+#export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 # Start urxvt demon
-#urxvtd -q -f -o & urxvtdpid=$!
+urxvtd -q -f -o & urxvtdpid=$!
 
 # Keychain
 #eval $(keychain --eval id_rsa)
