@@ -136,7 +136,7 @@ export PATH
 
 # Use envoy for ssh/gpg agent
 # https://github.com/vodik/envoy
-envoy -t gpg-agent
+envoy -t ssh-agent
 source <(envoy -p)
 
 # Load RVM into a shell session *as a function*
