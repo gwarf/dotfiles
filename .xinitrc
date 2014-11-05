@@ -96,7 +96,8 @@ source /etc/X11/xinit/xinitrc.d/30-dbus
 #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
 # Start urxvt demon
-urxvtd -q -f -o & urxvtdpid=$!
+#urxvtd -q -f -o & urxvtdpid=$!
+urxvtd -f -o
 
 # Keychain
 #eval $(keychain --eval id_rsa)
