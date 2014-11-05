@@ -155,6 +155,10 @@ unset followup_to          # do not generate a Followup-To header
 # To avoid ugly line breaks on small displays
 set text_flowed=yes
 
+# SSL/TLS options
+set ssl_use_sslv2=no
+set ssl_use_sslv3=no
+
 # GnuPG/PGP Options
 set pgp_use_gpg_agent
 set pgp_timeout=8400
