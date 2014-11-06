@@ -21,6 +21,8 @@ bspc monitor DVI-I-2 -d I II III IV
 # Right
 bspc monitor DVI-I-3 -d V VI VII VIII IX X
 
+bspc config -m DVI-I-3 top_padding 6
+
 bspc rule -a Gimp desktop=^8 follow=on floating=on
 bspc rule -a urxvt desktop=^1
 bspc rule -a Terminator desktop=^1

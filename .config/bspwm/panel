@@ -21,7 +21,6 @@ mkfifo "$PANEL_FIFO"
 # https://github.com/windelicato/dotfiles/blob/master/.config/bspwm/panel/panel
 #bspc config top_padding $PANEL_HEIGHT
 bspc config -m DVI-I-2 top_padding $PANEL_HEIGHT
-bspc config -m DVI-I-3 top_padding 0
 bspc control --subscribe > "$PANEL_FIFO" &
 xtitle -sf 'T%s' > "$PANEL_FIFO" &
 if mpc current > /dev/null 2>&1; then
