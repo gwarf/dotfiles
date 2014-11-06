@@ -99,6 +99,12 @@ source /etc/X11/xinit/xinitrc.d/30-dbus
 #urxvtd -q -f -o & urxvtdpid=$!
 urxvtd -f -o
 
+# Unclutter - hides the mouse cursor after 5 seconds of idle
+unclutter -root -jitter 10 &
+
+# Autstart applications
+[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
+
 # Keychain
 #eval $(keychain --eval id_rsa)
 
@@ -109,14 +115,16 @@ urxvtd -f -o
 #exec ck-launch-session awesome & wmpid=$!
 
 # bspwm
-sxhkd &
-[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
-#export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
-export CONKY_WIDTH="150"
-# Unclutter - hides the mouse cursor after 5 seconds of idle
-unclutter -root -jitter 10 &
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
-exec bspwm & wmpid=$!
+#sxhkd &
+##export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
+#export CONKY_WIDTH="150"
+#trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
+#exec bspwm & wmpid=$!
+
+# hebsluftwm
+# start herbstluftwm in locked mode (it will be unlocked at the end of
+# your autostart)
+exec herbstluftwm --locked
 
 # xmonad
 #exec xmonad & wmpid=$!
