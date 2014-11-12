@@ -17,9 +17,9 @@ bspc config focus_follows_pointer true
 #bspc monitor -d I II III IV V VI VII VIII IX X
 
 # Left
-bspc monitor DVI-I-2 -d I II III IV
+bspc monitor DVI-I-2 -d I II III
 # Right
-bspc monitor DVI-I-3 -d V VI VII VIII IX X
+bspc monitor DVI-I-3 -d IV V VI
 
 bspc config -m DVI-I-3 top_padding 6
 
