@@ -10,7 +10,7 @@ hc emit_hook reload
 
 xsetroot -solid black
 
-wmname LG3D
+hc set wmname LG3D
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -46,6 +46,9 @@ hc keybind $Mod-Shift-h     shift left
 hc keybind $Mod-Shift-j     shift down
 hc keybind $Mod-Shift-k     shift up
 hc keybind $Mod-Shift-l     shift right
+
+# ???
+hc keybind $Mod-Shift-r rotate
 
 # layouting
 hc keybind $Mod-r remove
@@ -154,18 +157,28 @@ hc rule class=Firefox tag=2
 hc rule class=Revelation tag=3
 hc rule class=JDownloader tag=5
 
+#jdownloader
+hc rule title="Please confirm" pseudotile=on
+hc rule title="Add URL(s)" pseudotile=on
+hc rule title="Terms of Service are not accepted" pseudotile=on
+hc rule title="Deep Decryption?" pseudotile=on
+
 imtag=4 # just set the name of the tag here
 hc load "$imtag" '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
 hc rule class=Pidgin   windowrole=buddy_list tag=$imtag index=1 focus=off
 hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag index=0
 
+hc rule instance=findDialog_popup pseudotile=on focus=on
+hc rule class=Conky manage=off
+
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+
 hc rule focus=on # normally focus new clients
 #hc rule focus=off # normally do not focus new clients
 # give focus to most common terminals
 #hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
-hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # unlock, just to be sure
 hc unlock
