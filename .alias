@@ -336,4 +336,10 @@ tat() {
   tmux new-session -As "$(basename "$PWD" | tr . -)"
 }
 
+if command -v "herbstclient" >/dev/null 2>&1; then
+  hc() {
+    herbstclient "$@"
+  }
+fi
+
 # vim:set ft=sh ts=2 sw=2 et:
