@@ -122,8 +122,6 @@ umask 022
 [ -f ~/.alias ] && source ~/.alias
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
-export PATH
-
 # Use gnome keyring for ssh auth
 ##export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 ##if [ -n "$DESKTOP_SESSION" ];then
@@ -141,9 +139,14 @@ source <(envoy -p)
 
 # Load RVM into a shell session *as a function*
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+if [ -d "$HOME/.rvm/bin" ]; then
+  # Add RVM to PATH for scripting
+  PATH="$PATH:$HOME/.rvm/bin"
+fi
 
 #export PATH="~/.bundler_binstubs:$PATH"
+
+export PATH
 
 if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
   export MC_SKIN=$HOME/.mc/lib/mc-solarized-skin/solarized.ini
