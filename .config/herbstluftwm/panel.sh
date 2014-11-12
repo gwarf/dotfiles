@@ -12,10 +12,26 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 panel_height=16
-font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
+#font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
+#font="xft:Source Code Pro for Powerline:regular:size=15"
+font='-*-liberation mono-*-r-*-*-15-*-*-*-*-*-*-*'
+#font="Envy Code R-6"
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
+
+# XXX only on second monitor
+if [ $monitor == '1' ]; then
+  (trayer --edge top --align right \
+    --SetDockType true \
+    --SetPartialStrut true \
+    --expand true \
+    --width 15 --height 12 \
+    --transparent true --tint 0x000000) &
+  trayerpid=$!
+else
+  trayerpid=''
+fi
 
 ####
 # Try to find textwidth binary.
@@ -61,7 +77,8 @@ hc pad $monitor $panel_height
     # e.g.
     #   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
 
-    #mpc idleloop player &
+    mpc idleloop player &
+    mpc_pid=$!
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
@@ -70,12 +87,13 @@ hc pad $monitor $panel_height
     done > >(uniq_linebuffered) &
     childpid=$!
     hc --idle
-    kill $childpid
+    kill $childpid $mpc_pid
 } 2> /dev/null | {
     IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
     visible=true
     date=""
     windowtitle=""
+    nowplaying=""
     while true ; do
 
         ### Output ###
@@ -116,8 +134,13 @@ hc pad $monitor $panel_height
         done
         echo -n "$separator"
         echo -n "^bg()^fg() ${windowtitle//^/^^}"
+        echo -n "$separator"
+        echo -n "^bg()^fg() $nowplaying"
         # small adjustments
-        right="$separator^bg() $date $separator"
+        # Display date only on first monitor
+        if [ $monitor == '0' ]; then
+          right="$separator^bg() $date $separator"
+        fi
         right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
         width=$($textwidth "$font" "$right_text_only    ")
@@ -170,8 +193,12 @@ hc pad $monitor $panel_height
             focus_changed|window_title_changed)
                 windowtitle="${cmd[@]:2}"
                 ;;
-            #player)
-            #    ;;
+            mpd_player|player)
+                #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
+                nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
+                touch /tmp/testlpop
+
+                ;;
         esac
     done
 
@@ -182,3 +209,9 @@ hc pad $monitor $panel_height
 } 2> /dev/null | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \
     -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
     -ta l -bg "$bgcolor" -fg '#efefef'
+
+herbstclient --wait '^(quit_panel|reload).*'
+
+[ -n "$trayerpid" ] && kill -TERM $trayerpid
+
+exit 0
