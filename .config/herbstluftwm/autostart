@@ -10,6 +10,8 @@ hc emit_hook reload
 
 xsetroot -solid black
 
+wmname LG3D
+
 # remove all existing keybindings
 hc keyunbind --all
 
