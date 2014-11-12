@@ -61,6 +61,9 @@ export OOO_FORCE_DESKTOP=gnome
 # for Gentoo
 export XDG_MENU_PREFIX="gnome-"
 
+# Set default black background
+xsetroot -solid black
+
 # apps
 #stalonetray &
 # maison
@@ -95,7 +98,7 @@ source /etc/X11/xinit/xinitrc.d/30-dbus
 # You probably need to do this too:
 #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 
-# Start urxvt demon
+# Start urxvt daemon
 #urxvtd -q -f -o & urxvtdpid=$!
 urxvtd -f -o
 
