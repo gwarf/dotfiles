@@ -25,6 +25,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvtc
 hc keybind $Mod-space spawn dmenu_run
+#hc keybind $Mod-p spawn dmenu_run  -i -fn -*-bitocra -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'
 
 # basic movement
 # focusing clients
@@ -107,39 +108,46 @@ hc keybind $Mod-Shift-Tab   cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto urgent
 
-# colors
-#hc set frame_border_active_color '#1793D0'
-#hc set frame_border_normal_color '#123456'
-#hc set frame_border_width 1
-#hc set window_border_width 1
-#hc set window_border_normal_color '#123456'
-#hc set window_border_active_color '#1793D0'
-
 # theme
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
-hc set frame_border_active_color '#222222'
-hc set frame_border_normal_color '#101010'
-hc set frame_bg_normal_color '#565656'
-hc set frame_bg_active_color '#345F0C'
+
 hc set frame_border_width 1
 hc set always_show_frame 1
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 5
 hc set frame_gap 4
 
-hc attr theme.active.color '#9fbc00'
-hc attr theme.normal.color '#454545'
-hc attr theme.urgent.color orange
-hc attr theme.inner_width 1
-hc attr theme.inner_color black
 hc attr theme.border_width 3
+hc attr theme.inner_width 1
+
+hc attr theme.inner_color black
+hc attr theme.background_color '#141414'
+
+hc attr theme.active.color '#4B00BC'
+hc attr theme.active.inner_color '#0A42E4'
+hc attr theme.active.outer_color '#F16E08'
+
+hc attr theme.normal.color '#454545'
+
+hc attr theme.urgent.color orange
+
 hc attr theme.floating.border_width 4
 hc attr theme.floating.outer_width 1
 hc attr theme.floating.outer_color black
-hc attr theme.active.inner_color '#3E4A00'
-hc attr theme.active.outer_color '#3E4A00'
-hc attr theme.background_color '#141414'
+
+# colors
+
+#hc set window_border_width 1
+
+hc set frame_bg_normal_color '#565656'
+hc set frame_bg_active_color '#AC9F8F'
+
+hc set frame_border_active_color '#1793D0'
+hc set frame_border_normal_color '#123456'
+
+hc set window_border_normal_color '#123456'
+hc set window_border_active_color '#1793D0'
 
 hc set window_gap 5
 hc set frame_padding 0
@@ -150,24 +158,7 @@ hc set mouse_recenter_gap 0
 # rules
 hc unrule -F
 
-hc rule class=URxvt tag=1
-hc rule class=Terminator tag=1
-hc rule class=Chromium tag=2
-hc rule class=Firefox tag=2
-hc rule class=Revelation tag=3
-hc rule class=JDownloader tag=5
-
-#jdownloader
-hc rule title="Please confirm" pseudotile=on
-hc rule title="Add URL(s)" pseudotile=on
-hc rule title="Terms of Service are not accepted" pseudotile=on
-hc rule title="Deep Decryption?" pseudotile=on
-
-imtag=4 # just set the name of the tag here
-hc load "$imtag" '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
-hc rule class=Pidgin   windowrole=buddy_list tag=$imtag index=1 focus=off
-hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag index=0
-
+# Generic
 hc rule instance=findDialog_popup pseudotile=on focus=on
 hc rule class=Conky manage=off
 
@@ -175,10 +166,31 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
-hc rule focus=on # normally focus new clients
-#hc rule focus=off # normally do not focus new clients
 # give focus to most common terminals
-#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole|Terminator)' focus=on
+
+# Applications
+hc rule class=URxvt tag=1
+hc rule class=Terminator tag=1
+hc rule class=Chromium tag=2
+hc rule class=Firefox tag=2
+hc rule class=Revelation tag=3
+hc rule class=JDownloader tag=5
+
+# JDownloader
+hc rule title="Please confirm" pseudotile=on
+hc rule title="Add URL(s)" pseudotile=on
+hc rule title="Terms of Service are not accepted" pseudotile=on
+hc rule title="Deep Decryption?" pseudotile=on
+
+# Pidgin
+imtag=4 # just set the name of the tag here
+hc load "$imtag" '(split horizontal:0.800000:0 (clients grid:0) (clients vertical:0))'
+hc rule class=Pidgin   windowrole=buddy_list tag=$imtag index=1 focus=off
+hc rule class=Pidgin ! windowrole=buddy_list tag=$imtag index=0
+
+# normally focus new clients
+hc rule focus=on
 
 # unlock, just to be sure
 hc unlock
