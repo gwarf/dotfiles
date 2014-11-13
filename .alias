@@ -337,9 +337,11 @@ tat() {
 }
 
 if command -v "herbstclient" >/dev/null 2>&1; then
-  hc() {
-    herbstclient "$@"
-  }
+ if ! command -v "hc" >/dev/null 2>&1; then
+    hc() {
+      herbstclient "$@"
+    }
+  fi
 fi
 
 # vim:set ft=sh ts=2 sw=2 et:
