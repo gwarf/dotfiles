@@ -67,7 +67,11 @@
 *color14:                 S_base1
 *color15:                 S_base3
 
-! URxvt ----------------------------------------------------------------------
+! URxvt
+
+! delimiters for double-click mouse selection
+URxvt.cutchars: "`\"'&()*,;<=>?@[]^{|}|│"
+
 ! URxvt.title: string
 !URxvt.title:urxvt
 ! Save number lines in the scrollback buffer [default 64]. This resource is limited on most machines
@@ -94,14 +98,14 @@ URxvt.termName: rxvt-256color
 URxvt.colorUL: #4682B4
 
 ! Comma-separated list(s) of perl extension scripts (default: "default") to use in this terminal
-URxvt*perl-ext-common:      default,clipboard,url-select,keyboard-select
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select
 !URxvt.perl-ext-common:default,matcher,selection,option-popup,selection-popup,tabbed
 !URxvt.url-select.launcher:  chromium
 !URxvt.url-select.launcher: firefoxurl
 URxvt.url-select.launcher: xdg-open
 URxvt.url-select.underline: true
 ! Meta-u (Alt? Home?)
- urxvt.keysym.M-u:       perl:url-select:select_next
+URxvt.keysym.M-u:       perl:url-select:select_next
 URxvt.keysym.Control-o:           perl:url-select:select_next
 URxvt.keysym.Control-p:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
@@ -138,9 +142,9 @@ URxvt.boldItalicFont:       xft:Source Code Pro for Powerline:bold:italic:size=1
 ! True: blink the cursor. False: do not blink the cursor [default]; option -bc.
 URxvt.cursorBlink: false
 
-xterm*metaSendsEscape: true
-xterm*eightBitInput: false
-xterm*faceName: Source Code Pro for Powerline:pixelsize=15
+xterm.metaSendsEscape: true
+xterm.eightBitInput: false
+xterm.faceName: Source Code Pro for Powerline:pixelsize=15
 
 !!!Dzen
 
