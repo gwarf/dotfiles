@@ -304,7 +304,7 @@ tips() {
 alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
 
 alias http-server-python2='python -m SimpleHTTPServer 8000'
-alias http-server-python3='ython -m http.server 8000'
+alias http-server-python3='python -m http.server 8000'
 
 alias big_syncthing='ssh -N -L 8081:localhost:45028 big.bapt.name'
 alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
