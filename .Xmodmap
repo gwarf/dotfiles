@@ -14,9 +14,14 @@ keycode 144 = XF86AudioPrev
 keycode 153 = XF86AudioNext
 
 ! Disable Caps_Lock and use it as shift
-!remove Lock = Caps_Lock
-clear Lock
-add Shift = Shift_L Shift_R Caps_Lock
+!clear Lock
+!add Shift = Shift_L Shift_R Caps_Lock
+
+! Disable Caps_Lock and use it as esc
+remove Lock = Caps_Lock
+keysym Escape = Caps_Lock
+keysym Caps_Lock = Escape
+add Lock = Caps_Lock
 
 ! Use Home Key as Mod3
 remove Mod4 = Super_L
