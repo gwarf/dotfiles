@@ -71,5 +71,8 @@ run_once pidgin
 run_once chromium
 #run_once deluge
 run_once kalu
+run_once redshift
+run_once redshift-gtk
+run_once rofi "-key mod1+tab -terminal urxvtc"
 run_once JDownloader
 run_once syncthing-gtk
