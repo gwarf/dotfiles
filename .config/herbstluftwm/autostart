@@ -10,7 +10,8 @@ hc emit_hook reload
 
 xsetroot -solid black
 
-hc set wmname LG3D
+# Fixed using export _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
+# hc set wmname LG3D
 
 # remove all existing keybindings
 hc keyunbind --all
