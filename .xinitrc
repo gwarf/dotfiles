@@ -10,30 +10,32 @@ usermodmap=$HOME/.Xmodmap
 [ -f $userxresources ] && xrdb -load $userxresources
 
 [ -f $usermodmap ] && xmodmap $usermodmap
-#xmodmap -e "remove Lock = Caps_Lock"
-#xmodmap -e "keysym Caps_Lock = Control_L"
-#xmodmap -e "add Control = Control_L"
 
 [ -f ~/.xprofile ] && source ~/.xprofile
-
-# Keybord layout setting
-setxkbmap us -option 'compose:ralt'
-
-# Ctrl+Alt+Backspace kills X
-setxkbmap -option 'terminate:ctrl_alt_bksp'
 
 #xhost +localhost
 #xhost +local:root > /dev/null
 
-# DPMS monitor setting (standby -> suspend -> off) (seconds)
-xset dpms 300 600 900
 # Disable beeps
 xset -b
+
+# DPMS monitor setting (standby -> suspend -> off) (seconds)
+xset dpms 300 600 900
 xset b off
+
 # Turn on autorepeat
 xset r on
-# Mouse accelleration
+
+# Mouse acceleration
 xset m 3/1 3
+
+## Set LCD brightness
+xbacklight -set 90
+
+# Keyboard layout setting
+setxkbmap us -option 'compose:ralt'
+# Ctrl+Alt+Backspace kills X
+setxkbmap -option 'terminate:ctrl_alt_bksp'
 
 # Make additional fonts available
 xset +fp /usr/share/fonts/local
@@ -121,12 +123,15 @@ compton -b
 #exec awesome & wmpid=$!
 #exec ck-launch-session awesome & wmpid=$!
 
+# i3
+exec i3 & wmpid=$!
+
 # bspwm
 #sxhkd &
 ##export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
 #export CONKY_WIDTH="150"
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
-exec bspwm & wmpid=$!
+#trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
+#exec bspwm & wmpid=$!
 
 # hebsluftwm
 # start herbstluftwm in locked mode (it will be unlocked at the end of

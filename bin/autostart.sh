@@ -19,21 +19,26 @@ run_once() {
 
 ## Disable beeps
 xset -b
-
 ## DPMS monitor setting (standby -> suspend -> off) (seconds)
 xset dpms 300 600 900
-
+xset b off
+# Turn on autorepeat
+xset r on
+# Mouse acceleration
+xset m 3/1 3
 ## Set LCD brightness
 xbacklight -set 90
-
-## Keybord layout setting
+## Keyboard layout setting
 setxkbmap us -option 'compose:ralt'
-
+# Ctrl+Alt+Backspace kills X
+setxkbmap -option 'terminate:ctrl_alt_bksp'
 ## Load Xmodmap conf
 xmodmap ~/.Xmodmap
-
 ## Load Xresources
 xrdb -load ~/.Xresources
+# Make additional fonts available
+xset +fp /usr/share/fonts/local
+xset fp rehash
 
 ## OSD
 run_once dunst
@@ -76,7 +81,7 @@ run_once pidgin
 run_once chromium
 #run_once deluge
 run_once kalu
-run_once trayer-srg
+run_once trayer
 run_once redshift
 run_once redshift-gtk
 run_once rofi "-key mod1+tab -terminal urxvtc"
