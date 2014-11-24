@@ -42,11 +42,14 @@ run_once dunst
 run_once nitrogen "--restore"
 
 pkill offlineimap || sleep 3 && offlineimap &
+#&& offlineimap-notify &> /tmp/offlineimap-log
 
 # Pulse audio
 pkill pulseaudio; sleep 3 && pulseaudio --start -D
 pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
 run_once pasystray
+#exec --no-startup-id volti # starting volume control
+#exec --no-startup-id pa-applet
 
 # MPD
 run_once mpd
@@ -56,6 +59,7 @@ run_once mpdscribble
 run_once nm-applet
 
 # Clipboard manager
+# anamnesis, clipman, copyq, gpaste could be alternatives
 run_once clipit
 
 # Misc
@@ -67,12 +71,15 @@ run_once revelation \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 run_once urxvtc
 run_once pidgin
+#run_once fink
 #run_once firefox
 run_once chromium
 #run_once deluge
 run_once kalu
+run_once trayer-srg
 run_once redshift
 run_once redshift-gtk
 run_once rofi "-key mod1+tab -terminal urxvtc"
 run_once JDownloader
 run_once syncthing-gtk
+#exec --no-startup-id udiskie
