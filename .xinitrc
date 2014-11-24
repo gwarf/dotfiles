@@ -63,6 +63,7 @@ export XDG_MENU_PREFIX="gnome-"
 
 # Set default black background
 xsetroot -solid black
+xsetroot -cursor_name left_ptr
 
 # apps
 #stalonetray &
@@ -113,6 +114,9 @@ unclutter -root -jitter 10 &
 
 #xrandr --output DVI-0 --mode  1680x1050_60 --pos 0x0 --output VGA-0 --mode 1280x1024_75 --pos 1680x0
 
+# starting compositor
+compton -b
+
 # Awesome
 #exec awesome & wmpid=$!
 #exec ck-launch-session awesome & wmpid=$!
@@ -121,13 +125,13 @@ unclutter -root -jitter 10 &
 #sxhkd &
 ##export CONKY_WIDTH=$(grep 'maximum_width' ~/.config/conky/conkyrc.$(hostname) | cut -d' ' -f2)
 #export CONKY_WIDTH="150"
-#trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
-#exec bspwm & wmpid=$!
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
+exec bspwm & wmpid=$!
 
 # hebsluftwm
 # start herbstluftwm in locked mode (it will be unlocked at the end of
 # your autostart)
-exec herbstluftwm --locked
+#exec herbstluftwm --locked
 
 # xmonad
 #exec xmonad & wmpid=$!
