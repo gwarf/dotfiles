@@ -39,6 +39,9 @@ xrdb -load ~/.Xresources
 # Make additional fonts available
 xset +fp /usr/share/fonts/local
 xset fp rehash
+# Set default black background
+xsetroot -solid black
+xsetroot -cursor_name left_ptr
 
 ## OSD
 run_once dunst
@@ -81,10 +84,18 @@ run_once pidgin
 run_once chromium
 #run_once deluge
 run_once kalu
-run_once trayer
+#stalonetray &
+#tomboy &
+#alunn &
+#workrave &
+#nvidia-settings --load-config-only &
+# Redshift - changed screen colour temp
 run_once redshift
 run_once redshift-gtk
 run_once rofi "-key mod1+tab -terminal urxvtc"
 run_once JDownloader
 run_once syncthing-gtk
 #exec --no-startup-id udiskie
+#/usr/libexec/gnome-settings-daemon &
+#gnome-volume-manager &
+#x11vnc -ncache 10 -many -q -bg -rfbauth .vnc/passwd
