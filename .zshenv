@@ -43,14 +43,6 @@ if [ -x '~/.gem/ruby/2.0.0/bin/chit' ]; then
   chit () { '~/.gem/ruby/2.0.0/bin/chit' "$@" | "$PAGER" }
 fi
 
-# Set grep to ignore SCM directories
-grep --exclude-dir 2> /dev/null
-if [ $? -eq 0 ]; then
-    GREP_OPTIONS="--color --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git"
-else
-    GREP_OPTIONS="--color --exclude=\*.svn\* --exclude=\*.pyc --exclude=\*.hg\* --exclude=\*.bzr\* --exclude=\*.git\*"
-fi
-export GREP_OPTIONS
 # For java apps under awesome
 # http://awesome.naquadah.org/wiki/Problems_with_Java
 #export AWT_TOOLKIT="MToolkit"
