@@ -70,6 +70,10 @@ run_once nm-applet
 # anamnesis, clipman, copyq, gpaste could be alternatives
 run_once clipit
 
+# Start urxvt daemon
+#urxvtd -q -f -o & urxvtdpid=$!
+#urxvtd -f -o
+
 # Misc
 run_once revelation \
   ~/repos/perso/gwarf/private/revelation/keyring-perso \
@@ -79,7 +83,6 @@ run_once revelation \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 run_once terminology
 run_once pidgin
-#run_once fink
 run_once firefox
 #run_once chromium
 #run_once deluge
