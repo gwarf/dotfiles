@@ -110,24 +110,22 @@ umask 022
 
 #export WINEARCH=win32
 
-
 [ -f ~/.alias ] && source ~/.alias
+
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
 # Use gnome keyring for ssh auth
-##export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
-##if [ -n "$DESKTOP_SESSION" ];then
-#  #if [ -n "$GNOME_KEYRING_PID" ]; then
-#    eval $(gnome-keyring-daemon --start --components=ssh,gpg)
-#    #export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+#export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
+#if [ -n "$DESKTOP_SESSION" ];then
+#  if [ -n "$GNOME_KEYRING_PID" ]; then
+#    eval $(gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+#    export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GNOME_KEYRING_SOCKET
 #    export GPG_AGENT_INFO SSH_AUTH_SOCK
-#  #fi
-##fi
+#  fi
+#fi
 
-# Start GNOME Keyring
-#eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
-#export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GNOME_KEYRING_SOCKET
-#export GPG_AGENT_INFO SSH_AUTH_SOCK
+# Keychain
+#eval $(keychain --eval id_rsa)
 
 # Use envoy for ssh/gpg agent
 # https://github.com/vodik/envoy
