@@ -27,5 +27,5 @@ REGEXP (((http|https|ftp|gopher)|mailto)[.:][^ >"\t]*|www\.[-a-z0-9.]+)[^ .,;\t>
 #COMMAND netscape -remote 'openURL(%s)'
 #COMMAND url_handler.sh
 
-#COMMAND firefoxurl %s
-COMMAND chromium %s
+COMMAND firefoxurl %s
+#COMMAND chromium %s
