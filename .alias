@@ -5,14 +5,10 @@ if [ "$OS" = "FreeBSD" ]; then
   alias ls='ls -h -F -G'
   alias du='du -h'
   alias ducks='du -cks * | sort -rn | head -15'
-  alias grep='grep --color=auto'
-  alias grepc="grep --color=always"
 elif [ "$OS" = "Linux" ]; then
   alias du='du --human-readable'
   alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first'
-  alias grep='grep --color=auto'
   alias locate='locate -i'
-  alias grepc="grep --color=always"
   alias dirtree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
   alias info='info --vi-keys'
 elif [ "$OS" = "SunOS" ]; then
@@ -21,6 +17,15 @@ elif [ "$OS" = "SunOS" ]; then
 fi
 
 alias c='clear'
+
+# Grep aliases
+grep --exclude-dir 2> /dev/null
+if [ $? -eq 0 ]; then
+  alias grepc='grep --color=always --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
+  alias grep='grep --color=auto --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
+else
+  alias grep='grep --color --exclude=\*.svn\* --exclude=\*.pyc --exclude=\*.hg\* --exclude=\*.bzr\* --exclude=\*.git\*'
+fi
 
 #  ls and colors
 # eval `dircolors -b`
