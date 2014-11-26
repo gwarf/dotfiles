@@ -90,7 +90,7 @@ trayer --edge top --align right \
 #exec ck-launch-session awesome & wmpid=$!
 
 # i3
-exec i3 & wmpid=$!
+#exec i3 & wmpid=$!
 
 # bspwm
 #sxhkd &
@@ -101,7 +101,7 @@ exec i3 & wmpid=$!
 # hebsluftwm
 # start herbstluftwm in locked mode (it will be unlocked at the end of
 # your autostart)
-#exec herbstluftwm --locked
+exec herbstluftwm --locked
 
 # xmonad
 #exec xmonad & wmpid=$!
