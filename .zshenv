@@ -132,6 +132,11 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 #  #fi
 ##fi
 
+# Start GNOME Keyring
+#eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+#export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GNOME_KEYRING_SOCKET
+#export GPG_AGENT_INFO SSH_AUTH_SOCK
+
 # Use envoy for ssh/gpg agent
 # https://github.com/vodik/envoy
 envoy -t ssh-agent
@@ -159,5 +164,8 @@ PANEL_FIFO=/tmp/panel-fifo
 PANEL_HEIGHT=24
 PANEL_FONT_FAMILY="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
 export PANEL_FIFO PANEL_HEIGHT PANEL_FONT_FAMILY
+
+export OOO_FORCE_DESKTOP=gnome
+export XDG_MENU_PREFIX="gnome-"
 
 # vim:set ft=zsh ts=2 sw=2 et:
