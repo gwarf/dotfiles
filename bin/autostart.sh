@@ -86,7 +86,6 @@ run_once pidgin
 run_once firefox
 #run_once chromium
 #run_once deluge
-run_once kalu
 #stalonetray &
 #tomboy &
 #alunn &
