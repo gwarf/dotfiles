@@ -20,8 +20,8 @@ bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
 
-# XXX only on second monitor
-if [ $monitor == '1' ]; then
+# XXX only on first monitor
+if [ $monitor == '0' ]; then
   (trayer --edge top --align right \
     --SetDockType true \
     --SetPartialStrut true \
