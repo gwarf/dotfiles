@@ -27,7 +27,7 @@ if [ $monitor == '0' ]; then
     --SetPartialStrut true \
     --expand true \
     --width 15 --height 12 \
-    --transparent true --tint 0x000000) &
+    --transparent true --tint 0x000000 --alpha 100) &
   trayerpid=$!
 else
   trayerpid=''
