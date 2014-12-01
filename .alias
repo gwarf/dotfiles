@@ -90,6 +90,10 @@ alias edit='vim'
 # emacs
 alias emacs='emacs -nw'
 
+# rake
+# setopt extended_glob causes troubles with rake tasks' arguments
+alias rake='noglob rake'
+
 # ssh
 #alias ssh='TERM=xterm-256color ssh'
 alias ssh='TERM=screen ssh'
