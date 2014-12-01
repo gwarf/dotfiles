@@ -10,7 +10,11 @@ fi
 # geometry has the format W H X Y
 x=${geometry[0]}
 y=${geometry[1]}
-panel_width=${geometry[2]}
+if [ $(hostname) = 'bougebox' ]; then
+  panel_width=$((${geometry[2]} - 122 ))
+else
+  panel_width=${geometry[2]}
+fi
 panel_height=16
 #font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 #font="xft:Source Code Pro for Powerline:regular:size=15"
@@ -26,8 +30,8 @@ if [ $monitor == '0' ]; then
     --SetDockType true \
     --SetPartialStrut true \
     --expand true \
-    --widthtype request --height 12 \
-    --transparent true --alpha 100) &
+    --width 120 --height 12 \
+    --transparent true --alpha 100 --tint 0x000000) &
   trayerpid=$!
 else
   trayerpid=''
@@ -130,15 +134,11 @@ hc pad $monitor $panel_height
     # small adjustments
     # Display date only on first monitor
     if [ $monitor == '0' ]; then
-      right="$separator^bg() $date $separator"
+      right="$separator^bg() $date"
     fi
     right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
     # get width of right aligned text.. and add some space..
-    if [ $(hostname) = 'bougebox' ]; then
-      width=$($textwidth "$font" "$right_text_only              ")
-    else
-      width=$($textwidth "$font" "$right_text_only    ")
-    fi
+    width=$($textwidth "$font" "$right_text_only"  )
     echo -n "^pa($(($panel_width - $width)))$right"
     echo
 
