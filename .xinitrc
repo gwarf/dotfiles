@@ -100,4 +100,3 @@ kill -15 `pidof offlineimap`
 kill -15 `pidof gnome-session`
 kill -15 `pidof gnome-keyring-daemon`
 kill -15 `pidof pulseaudio`
-kill -15 `pidof urxvtd`
