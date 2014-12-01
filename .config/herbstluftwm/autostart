@@ -12,6 +12,8 @@ xsetroot -solid black
 
 # Fixed using export _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
 # hc set wmname LG3D
+# XXX required for JDownloader?
+wmname LG3D
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -165,6 +167,7 @@ hc rule class=Chromium tag=2
 hc rule class=Firefox tag=2
 hc rule class=Revelation tag=3
 hc rule class=JDownloader tag=5
+hc rule class=Skype tag=4
 
 # JDownloader
 hc rule title="Please confirm" pseudotile=on
