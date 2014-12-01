@@ -129,16 +129,18 @@ hc pad $monitor $panel_height
     done
     echo -n "$separator"
     echo -n "^bg()^fg() ${windowtitle//^/^^}"
-    echo -n "$separator"
-    echo -n "^bg()^fg() $nowplaying"
+    if [ -n "$nowplaying" ]; then
+      echo -n "$separator"
+      echo -n "^bg()^fg() $nowplaying"
+    fi
     # small adjustments
     # Display date only on first monitor
     if [ $monitor == '0' ]; then
-      right="$separator^bg() $date"
+      right="$separator^bg() $date $separator"
     fi
     right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
     # get width of right aligned text.. and add some space..
-    width=$($textwidth "$font" "$right_text_only"  )
+    width=$($textwidth "$font" "$right_text_only")
     echo -n "^pa($(($panel_width - $width)))$right"
     echo
 
