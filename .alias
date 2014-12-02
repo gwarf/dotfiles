@@ -89,6 +89,7 @@ alias edit='vim'
 
 # emacs
 alias emacs='emacs -nw'
+alias ec='emacsclient -c --socket-name /tmp/emacs1000/server'
 
 # rake
 # setopt extended_glob causes troubles with rake tasks' arguments
