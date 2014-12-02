@@ -24,14 +24,15 @@ bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
 
-# XXX only on first monitor
+# Systray only on first monitor
 if [ $monitor == '0' ]; then
   (trayer --edge top --align right \
     --SetDockType true \
     --SetPartialStrut true \
-    --expand true \
-    --width 120 --height 12 \
-    --transparent true --alpha 100 --tint 0x000000) &
+    --expand false \
+    --widthtype request --height 16 \
+    --distancefrom right --distance 190 \
+    --transparent true --alpha 0 --tint 0x${bgcolor#\#}) &
   trayerpid=$!
 else
   trayerpid=''
