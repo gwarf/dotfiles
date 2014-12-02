@@ -10,11 +10,7 @@ fi
 # geometry has the format W H X Y
 x=${geometry[0]}
 y=${geometry[1]}
-if [ $(hostname) = 'bougebox' ]; then
-  panel_width=$((${geometry[2]} - 122 ))
-else
-  panel_width=${geometry[2]}
-fi
+panel_width=${geometry[2]}
 panel_height=16
 #font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 #font="xft:Source Code Pro for Powerline:regular:size=15"
