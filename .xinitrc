@@ -5,10 +5,8 @@ LC_ALL=fr_FR.UTF-8
 MM_CHARSET=fr_FR.UTF-8
 export LANG LC_ALL MM_CHARSET
 
-userxresources=$HOME/.Xresources
-usermodmap=$HOME/.Xmodmap
-[ -f $userxresources ] && xrdb -load $userxresources
-[ -f $usermodmap ] && xmodmap $usermodmap
+xrdb -load ~/.Xresources
+xmodmap ~/.Xmodmap
 
 [ -f ~/.xprofile ] && source ~/.xprofile
 
@@ -63,8 +61,10 @@ compton -b
 # compton -cCGfzb -o 0.8 -O 200 -I 200 -t -9 -l -9 -r 6 -D 2 -m 0.98 -e
 # 1 -i 1 --respect-prop-shadow --shadow-ignore-shaped
 
-# Autstart applications
-[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
+# Autostart applications
+# XXX this script should be run once the env has been set by the WM
+# Ex: JDownloader needs wmname LG3D before being launched
+#[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
 
 # Start WM and keep pid so we can wait for it to exit
 
