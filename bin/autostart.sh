@@ -17,32 +17,6 @@ run_once() {
   fi
 }
 
-## Disable beeps
-xset -b
-## DPMS monitor setting (standby -> suspend -> off) (seconds)
-xset dpms 300 600 900
-xset b off
-# Turn on autorepeat
-xset r on
-# Mouse acceleration
-xset m 3/1 3
-## Set LCD brightness
-xbacklight -set 90
-## Keyboard layout setting
-setxkbmap us -option 'compose:ralt'
-# Ctrl+Alt+Backspace kills X
-setxkbmap -option 'terminate:ctrl_alt_bksp'
-## Load Xmodmap conf
-xmodmap ~/.Xmodmap
-## Load Xresources
-xrdb -load ~/.Xresources
-# Make additional fonts available
-xset +fp /usr/share/fonts/local
-xset fp rehash
-# Set default black background
-xsetroot -solid black
-xsetroot -cursor_name left_ptr
-
 ## OSD
 run_once dunst
 
