@@ -5,10 +5,10 @@ LC_ALL=fr_FR.UTF-8
 MM_CHARSET=fr_FR.UTF-8
 export LANG LC_ALL MM_CHARSET
 
-xrdb -load ~/.Xresources
-xmodmap ~/.Xmodmap
+[ -r ~/.Xresources ] && xrdb -load ~/.Xresources
+[ -r ~/.Xmodmap ] && xmodmap ~/.Xmodmap
 
-[ -f ~/.xprofile ] && source ~/.xprofile
+[ -r ~/.xprofile ] && source ~/.xprofile
 
 #xhost +localhost
 #xhost +local:root > /dev/null
