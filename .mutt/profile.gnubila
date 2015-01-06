@@ -1,5 +1,7 @@
 # Mutt sender profile: gnubila
 
+set folder="~/Mail/gnubila"
+
 # Signature file
 set signature="~/.mutt/signature-gnubila"
 

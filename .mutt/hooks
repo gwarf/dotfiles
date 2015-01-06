@@ -1,5 +1,9 @@
 # Fine tune mutt depending on aspects of a message.
 
+# Load the appropriate profile depending on the folder
+folder-hook perso 'source ~/.mutt/profile.perso'
+folder-hook gnubila 'source ~/.mutt/profile.gnubila'
+
 # When replying load profile corresponding to the To:
 reply-hook "~t baptiste@bapt.name" "source ~/.mutt/profile.perso"
 reply-hook "~t bgrenier@maatg.fr" "source ~/.mutt/profile.maat"

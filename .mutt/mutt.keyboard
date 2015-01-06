@@ -104,6 +104,8 @@ macro attach E <save-entry><kill-line>/home/baptiste/Documents/<enter>
 
 # show _all_ mails
 macro index \# "l~A\r"      "Show ALL Mails"
+# Show work emails
+macro index \" "l !(~f 'Hacker News 50' | ~s puppet | ~s mcollective | ~f GetMetal.org | ~f Reflets | ~f 'New Album Releases' | ~f LinuxFr.org)\r"
 # show flagged and unread mails (i.e. important)
 macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 # show unreplied and flagged mails (i.e. TODO)

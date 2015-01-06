@@ -1,5 +1,7 @@
 # Mutt sender profile: perso
 
+set folder="~/Mail/perso"
+
 # Signature file
 #set signature='~/.mutt/signature-perso'
 set signature="sh ~/.mutt/createsign.sh|"
