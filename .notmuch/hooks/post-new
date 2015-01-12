@@ -1,0 +1,7 @@
+#!/bin/sh
+# https://github.com/guyzmo/notmuch-abook/
+
+# first update notmuch-abook
+for file in $(notmuch search --output=files tag:new) ; do
+  cat $file | $HOME/bin/notmuch_abook update
+done
