@@ -11,17 +11,17 @@
 # configured here named ".notmuch".
 #
 [database]
-path=/home/baptiste/.Mail-offlineimap
+path=/home/baptiste/Mail
 
 # User configuration
 #
 # Here is where you can let notmuch know how you would like to be
 # addressed. Valid settings are
 #
-#	name		Your full name.
-#	primary_email	Your primary email address.
-#	other_email	A list (separated by ';') of other email addresses
-#			at which you receive email.
+# name    Your full name.
+# primary_email Your primary email address.
+# other_email A list (separated by ';') of other email addresses
+#     at which you receive email.
 #
 # Notmuch will use the various email addresses configured here when
 # formatting replies. It will avoid including your own addresses in the
@@ -30,15 +30,15 @@ path=/home/baptiste/.Mail-offlineimap
 #
 [user]
 name=Baptiste Grenier
-primary_email=baptiste@bapt.name
-other_email=bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.org;baptiste.grenier@healthgrid.org;baptiste.grenier@gmail.com;gwarf12@hotmail.com;bgrenier@maatg.fr;bgrenier@gnubila.fr
+primary_email=bgrenier@gnubila.fr
+other_email=bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.org;baptiste.grenier@healthgrid.org;baptiste.grenier@gmail.com;gwarf12@hotmail.com;bgrenier@maatg.fr;baptiste@bapt.name
 
 # Configuration for "notmuch new"
 #
 # The following options are supported here:
 #
-#	tags	A list (separated by ';') of the tags that will be
-#		added to all messages incorporated by "notmuch new".
+# tags  A list (separated by ';') of the tags that will be
+#   added to all messages incorporated by "notmuch new".
 #
 [new]
 tags=unread;inbox;
@@ -47,26 +47,29 @@ tags=unread;inbox;
 #
 # The following option is supported here:
 #
-#	synchronize_flags      Valid values are true and false.
+# synchronize_flags      Valid values are true and false.
 #
-#	If true, then the following maildir flags (in message filenames)
-#	will be syncrhonized with the corresponding notmuch tags:
+# If true, then the following maildir flags (in message filenames)
+# will be syncrhonized with the corresponding notmuch tags:
 #
-#		Flag	Tag
-#		----	-------
-#		D	draft
-#		F	flagged
-#		P	passed
-#		R	replied
-#		S	unread (added when 'S' flag is not present)
+#   Flag  Tag
+#   ----  -------
+#   D draft
+#   F flagged
+#   P passed
+#   R replied
+#   S unread (added when 'S' flag is not present)
 #
-#	The "notmuch new" command will notice flag changes in filenames
-#	and update tags, while the "notmuch tag" and "notmuch restore"
-#	commands will notice tag changes and update flags in filenames
+# The "notmuch new" command will notice flag changes in filenames
+# and update tags, while the "notmuch tag" and "notmuch restore"
+# commands will notice tag changes and update flags in filenames
 #
 [maildir]
 synchronize_flags=true
 
+# http://notmuchmail.org/vimtips/
+# <c-x><c-u> in a header field
+# notmuch_abook lookup baptiste
 [addressbook]
 path=/home/baptiste/.notmuch-abook.db
 backend=sqlite3
