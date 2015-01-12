@@ -90,7 +90,7 @@ fi
 # mercurial
 export HGEDITOR=~/bin/hgeditor
 
-umask 022
+umask 0027
 
 # Proxy HTTP / FTP sans mot de passe
 #export http_proxy="http://proxy.exemple.org:8080"
