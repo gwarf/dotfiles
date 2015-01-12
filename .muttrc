@@ -26,6 +26,6 @@ source ~/.mutt/mutt.t-prot
 # Sidebar config
 #source ~/.mutt/mutt.sidebar
 # Mutt-kz specific conf (notmuch integration)
-#source ~/.mutt/mutt.kz
+source ~/.mutt/mutt.kz
 
 # vim: filetype=muttrc

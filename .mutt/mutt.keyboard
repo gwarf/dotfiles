@@ -109,7 +109,7 @@ macro index \" "l !(~f 'Hacker News 50' | ~s puppet | ~s mcollective | ~f GetMet
 # show flagged and unread mails (i.e. important)
 macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 # show unreplied and flagged mails (i.e. TODO)
-macro index \` "l(! ~Q | ~F) ! ~D\r"  "Show TODO Mail"
+#macro index \` "l(! ~Q | ~F) ! ~D\r"  "Show TODO Mail"
 # mark everything as read
 macro index + "T~N\n;N;t" "Mark everything as read"
 
@@ -191,12 +191,13 @@ macro index ,t "<enter-command>set pipe_decode<enter><pipe-message>gtg_new_task 
 macro editor ";" \Ct # bin ; to  Ctrl-t in editor-mode (easier IMO)
 
 # GTD
+macro index \er "<modify-labels>-inbox -unread +read\\n" "Flag message as read"
 macro index \e1 "<save-message>+_Read<enter>" "Save Message to _Read"
 macro index \e2 "<save-message>+_Reply<enter>" "Save Message to _Reply"
 macro index \e3 "<save-message>+_Waiting<enter>" "Save Message to _Waiting"
 macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
 macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
-macro index \e6 "<save-message>+Spam<enter>" "Move Message to Spam"
+macro index \e6 "<modify-labels>-inbox -unread +spam<enter><save-message>+Spam<enter>" "Move Message to Spam"
 
 macro pager B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
 macro index B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"

@@ -1,2 +1,32 @@
-set nm_default_uri = "notmuch:///home/baptiste/.Mail-offlineimap/"
-virtual-mailboxes "My INBOX" "notmuch://?query=tag:inbox"
+set nm_default_uri = "notmuch:///home/baptiste/Mail"
+# sets up queries for virtual folders
+# use X to switch of virtual mbox
+virtual-mailboxes \
+    "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
+    "archive"   "notmuch://?query=tag:archive"\
+    "gnubila"   "notmuch://?query=tag:gnubila"\
+    "perso"     "notmuch://?query=tag:perso"\
+    "Unread"    "notmuch://?query=tag:unread"\
+    "Starred"   "notmuch://?query=tag:*"\
+    "Sent"      "notmuch://?query=tag:sent"
+
+# notmuch bindings
+macro index \\\\ "<vfolder-from-query>"              # looks up a hand made query
+macro index A "<modify-labels>+archive -unread -inbox\\n"        # tag as Archived
+macro index I "<modify-labels>-inbox -unread\\n"                 # removed from inbox
+macro index S "<modify-labels-then-hide>-inbox -unread +junk\\n" # tag as Junk mail
+macro index + "<modify-labels>+*\\n<sync-mailbox>"               # tag as starred
+macro index - "<modify-labels>-*\\n<sync-mailbox>"               # tag as unstarred
+
+# sidebar
+set sidebar_width   = 20
+set sidebar_visible = no
+color sidebar_new yellow default
+# sidebar bindings
+bind index <left> sidebar-prev          # got to previous folder in sidebar
+bind index <right> sidebar-next         # got to next folder in sidebar
+bind index <space> sidebar-open         # open selected folder from sidebar
+# sidebar toggle
+macro index ,@) "<enter-command> set sidebar_visible=no; macro index ~ ,@( 'Toggle sidebar'<Enter>"
+macro index ,@( "<enter-command> set sidebar_visible=yes; macro index ~ ,@) 'Toggle sidebar'<Enter>"
+macro index ~ ,@( 'Toggle sidebar'      # toggle the sidebar
