@@ -2,6 +2,9 @@
 
 set folder="~/Mail/perso"
 
+set record="+Sent"
+set postponed="+Drafts"
+
 # Signature file
 #set signature='~/.mutt/signature-perso'
 set signature="sh ~/.mutt/createsign.sh|"

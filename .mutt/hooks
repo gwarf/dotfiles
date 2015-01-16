@@ -33,6 +33,7 @@ folder-hook +.Sent 'set sort=reverse-date-sent'
 folder-hook .      'macro index d <tag-prefix><save-message>+Trash<enter>'
 folder-hook =Trash 'macro index d <tag-prefix><delete-message>'
 folder-hook =.Trash 'macro index d <tag-prefix><delete-message>'
+folder-hook =Trash/ 'macro index d <tag-prefix><delete-message>'
 
 folder-hook .      'macro pager d <save-message>+Trash<enter>'
 folder-hook =Trash 'macro pager d <delete-message>'
