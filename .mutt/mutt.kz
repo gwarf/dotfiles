@@ -1,14 +1,14 @@
 set nm_default_uri = "notmuch:///home/baptiste/Mail"
 # sets up queries for virtual folders
 # use X to switch of virtual mbox
-virtual-mailboxes \
-    "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
-    "archive"   "notmuch://?query=tag:archive"\
-    "gnubila"   "notmuch://?query=tag:gnubila"\
-    "perso"     "notmuch://?query=tag:perso"\
-    "Unread"    "notmuch://?query=tag:unread"\
-    "Starred"   "notmuch://?query=tag:*"\
-    "Sent"      "notmuch://?query=tag:sent"
+#virtual-mailboxes \
+#    "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
+#    "archive"   "notmuch://?query=tag:archive"\
+#    "gnubila"   "notmuch://?query=tag:gnubila"\
+#    "perso"     "notmuch://?query=tag:perso"\
+#    "Unread"    "notmuch://?query=tag:unread"\
+#    "Starred"   "notmuch://?query=tag:*"\
+#    "Sent"      "notmuch://?query=tag:sent"
 
 # notmuch bindings
 macro index \\\\ "<vfolder-from-query>"              # looks up a hand made query
