@@ -145,7 +145,7 @@ alias links-fb='links -g -driver fb'
 # fixlines: edit files in place to ensure Unix line-endings
 fixlines () { perl -pi~ -e 's/\r\n?/\n/g' "$@" ; }
 
-alias mount='mount | column -t'
+alias mountc='mount | column -t'
 
 alias h='history'
 alias j='jobs -l'
