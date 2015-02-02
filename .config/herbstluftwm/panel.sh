@@ -190,8 +190,8 @@ hc pad $monitor $panel_height
       mpd_player|player)
         #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
         nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
+        # XXX Debug this!
         touch /tmp/testlpop
-
         ;;
     esac
   done
