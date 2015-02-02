@@ -1,8 +1,7 @@
 set config_charset=utf-8
 
 ### Editeur pour les messages
-#set editor="vim"
-source "~/.mutt/editorrc.$TERM"
+set editor="vim"
 
 set tmpdir="~/tmp"
 
