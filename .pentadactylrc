@@ -3,6 +3,12 @@
 loadplugins '\.(js|penta)$'
 group user
 
+" GUI options
+" Show navigation bar
+set guioptions+=T
+" Hide menu
+set guioptions-=m
+
 " Colors
 colorscheme solarized-dark
 
