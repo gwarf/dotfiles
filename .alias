@@ -135,6 +135,8 @@ alias header='curl -I'
 alias headerc='curl -I --compress'
 
 # multimedia
+alias vol_up='pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -- +10%'
+alias vol_down='pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo -- -10%'
 alias mp3burn-direct='mp3burn -c 80:00 -o " -v speed=48 dev=0,1,0 "'
 alias webcam='xawtv -device /dev/v4l/video1'
 alias playdvd='mplayer dvd://1 -dvd-device /dev/cdroms/cdrom0'
