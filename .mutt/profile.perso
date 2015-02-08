@@ -16,7 +16,7 @@ unmy_hdr *                      # remove all extra headers first.
 
 my_hdr From: Baptiste Grenier <baptiste@bapt.name>
 my_hdr Reply-To: Baptiste Grenier <baptiste@bapt.name>
-my_hdr X-PGP-Key: http://keys.bapt.name/pubkey.asc
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
 
 # Pretty Good Privacy (PGP):
 unset smime_is_default
