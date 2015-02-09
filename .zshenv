@@ -129,8 +129,10 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
 # Use envoy for ssh/gpg agent
 # https://github.com/vodik/envoy
-envoy -t ssh-agent
-source <(envoy -p)
+if command -v "envoy" >/dev/null 2>&1; then
+  envoy -t ssh-agent
+  source <(envoy -p)
+fi
 
 # Load RVM into a shell session *as a function*
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
