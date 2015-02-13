@@ -100,8 +100,9 @@ exec startkde & wmpid=$!
 
 wait $wmpid # wait for the window manager to exit.
 
-kill -15 `pidof workrave`
-kill -15 `pidof offlineimap`
-kill -15 `pidof gnome-session`
-kill -15 `pidof gnome-keyring-daemon`
-kill -15 `pidof pulseaudio`
+kill -15 $(pidof mpd)
+kill -15 $(pidof workrave)
+kill -15 $(pidof offlineimap)
+kill -15 $(pidof gnome-session)
+kill -15 $(pidof gnome-keyring-daemon)
+kill -15 $(pidof pulseaudio)
