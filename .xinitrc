@@ -93,7 +93,7 @@ exec startkde & wmpid=$!
 
 # herbstluftwm
 # start herbstluftwm in locked mode (will be unlocked at the end of autostart)
-exec herbstluftwm --locked & wmpid=$!
+#exec herbstluftwm --locked & wmpid=$!
 
 # xmonad
 #exec xmonad & wmpid=$!
