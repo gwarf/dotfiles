@@ -54,7 +54,9 @@ if [ -f /etc/X11/xinit/xinitrc.d/30-dbus ]; then
 fi
 
 # starting compositor
-compton -b
+# XXX disable compton with KDE
+# XXX should go to autostart or WM init script?
+#compton -b
 # slow virtual desktop switching
 # compton --respect-prop-shadow -bc -t -8 -l -9 -r 6 -o 0.7 &
 # compton -cCGfF -o 0.38 -O 200 -I 200 -t 0.02 -l 0.02 -r 3.2 -D2 -m 0.88 -i 0 &
@@ -67,6 +69,9 @@ compton -b
 #[ -f ~/bin/autostart.sh ] && ~/bin/autostart.sh
 
 # Start WM and keep pid so we can wait for it to exit
+
+# Start Plasma Desktop
+exec startkde & wmpid=$!
 
 # Awesome
 #~/bin/awesomestart.sh &
