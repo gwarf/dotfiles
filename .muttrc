@@ -1,30 +1,38 @@
 # Filename:      .muttrc
 # Purpose:       configuration for mailclient mutt
-# Author:        Baptiste GRENIER gwarf@gwarf.org
-# License:       This file is licensed under the GPL v2.
+# Author:        Baptiste Grenier baptiste@bapt.name
+# License:       This file is licensed under MIT license.
 ################################################################################
 
 # General parameters
 source ~/.mutt/mutt.rc
+
 # Sendint/receiving parameters
 source ~/.mutt/mutt.compte
+
 # Colors
 #source ~/.mutt/mutt.colors
 source ~/.mutt/mutt.colors-solarized
-source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
-#source /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-16.muttrc
-# Mime types
+source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
+
+# Mime types
 source ~/.mutt/mutt.mime
+
 # Headers configuration
 source ~/.mutt/mutt.headers
+
 # keybindings:
 source ~/.mutt/mutt.keyboard
+
 # Hooks
 source ~/.mutt/hooks
+
 # Display filter
 source ~/.mutt/mutt.t-prot
+
 # Sidebar config
 #source ~/.mutt/mutt.sidebar
+
 # Mutt-kz specific conf (notmuch integration)
 source ~/.mutt/mutt.kz
 
