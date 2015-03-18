@@ -326,7 +326,7 @@ alias big_syncthing='ssh -N -L 8081:localhost:45028 big.bapt.name'
 alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
 
 # mutt
-alias mutt='echo -en "\033]0;mutt\a";mutt'
+#alias mutt='echo -en "\033]0;mutt\a";mutt'
 #alias muttng='muttng -f imaps://imap.bapt.name'
 
 #alias git="git-achievements"
