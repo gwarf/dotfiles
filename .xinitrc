@@ -74,7 +74,7 @@ fi
 # Start WM and keep pid so we can wait for it to exit
 
 # Start Plasma Desktop
-exec startkde & wmpid=$!
+#exec startkde & wmpid=$!
 
 # Awesome
 #~/bin/awesomestart.sh &
@@ -96,7 +96,7 @@ exec startkde & wmpid=$!
 
 # herbstluftwm
 # start herbstluftwm in locked mode (will be unlocked at the end of autostart)
-#exec herbstluftwm --locked & wmpid=$!
+exec herbstluftwm --locked & wmpid=$!
 
 # xmonad
 #exec xmonad & wmpid=$!
