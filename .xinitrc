@@ -48,9 +48,12 @@ unclutter -root -jitter 10 &
 # Give opacity to specific windows. See ~/.devilspie/opacity.ds
 #devilspie -a &
 
-# Start a D-Bus session
-if [ -f /etc/X11/xinit/xinitrc.d/30-dbus ]; then
-  source /etc/X11/xinit/xinitrc.d/30-dbus
+# Start a D-Bus session and other required stuff
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
 fi
 
 # starting compositor
