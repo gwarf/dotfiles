@@ -34,6 +34,13 @@ else
   trayerpid=''
 fi
 
+function nowplaying() {
+  if [[ -n $(mpc current) ]]; then
+    echo -n "^ca(1,mpc toggle)^fg(#707070)$(m title) ^fg(${color[red]})par
+    ^fg(#707070)$(m artist)^ca() "
+  fi
+}
+
 ####
 # Try to find textwidth binary.
 # In e.g. Ubuntu, this is named dzen2-textwidth.
@@ -75,17 +82,17 @@ hc pad $monitor $panel_height
     # "date" output is checked once a second, but an event is only
     # generated if the output changed compared to the previous run.
     date +$'date\t^fg(#efefef)%H:%M^fg(#909090), %Y-%m-^fg(#efefef)%d'
-    sleep 1 || break
+    sleep 5 || break
   done > >(uniq_linebuffered) &
-  childpid=$!
+  date_pid=$!
   hc --idle
-  kill $childpid $mpc_pid
+  kill $date_pid $mpc_pid
+
 } 2> /dev/null | {
   IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
   visible=true
   date=""
   windowtitle=""
-  nowplaying=""
   while true ; do
 
     ### Output ###
@@ -113,16 +120,13 @@ hc pad $monitor $panel_height
           echo -n "^bg()^fg(#ababab)"
           ;;
       esac
-      if [ ! -z "$dzen2_svn" ] ; then
-        # clickable tags if using SVN dzen
-        echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
-        echo -n "focus_monitor \"$monitor\" && "
-        echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
-        echo -n "use \"${i:1}\") ${i:1} ^ca()"
-      else
-        # non-clickable tags if using older dzen
-        echo -n " ${i:1} "
-      fi
+      # clickable tags using recent dzen
+      echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
+      echo -n "focus_monitor \"$monitor\" && "
+      echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
+      echo -n "use \"${i:1}\") ${i:1} ^ca()"
+      # non-clickable tags if using older dzen
+      #  echo -n " ${i:1} "
     done
     echo -n "$separator"
     echo -n "^bg()^fg() ${windowtitle//^/^^}"
@@ -154,11 +158,9 @@ hc pad $monitor $panel_height
     # find out event origin
     case "${cmd[0]}" in
       tag*)
-        #echo "resetting tags" >&2
         IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
         ;;
       date)
-        #echo "resetting date" >&2
         date="${cmd[@]:1}"
         ;;
       quit_panel)
@@ -187,12 +189,13 @@ hc pad $monitor $panel_height
       focus_changed|window_title_changed)
         windowtitle="${cmd[@]:2}"
         ;;
-      mpd_player|player)
-        #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
-        nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
-        # XXX Debug this!
-        logger "panel: nowplaying: $nowplaying"
-        ;;
+      # XXX https://gist.github.com/PodColl/8932496
+      #mpd_player|player)
+      #  #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
+      #  nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
+      #  # XXX Debug this!
+      #  logger "panel: nowplaying: $nowplaying"
+      #  ;;
     esac
   done
 
