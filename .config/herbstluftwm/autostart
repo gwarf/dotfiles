@@ -2,9 +2,7 @@
 
 # this is a simple config for herbstluftwm
 
-hc() {
-  herbstclient "$@"
-}
+alias hc=herbstclient
 
 hc emit_hook reload
 
@@ -33,6 +31,7 @@ hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn terminology
 hc keybind $Mod-space spawn rofi -rnow
 #hc keybind $Mod-space spawn dmenu_run
+#hc keybind $Mod-q spawn scrot -e 'mkdir -p ~/screenshot;mv $f ~/screenshot/'
 
 # basic movement
 # focusing clients
@@ -55,6 +54,7 @@ hc keybind $Mod-r remove
 hc keybind $Mod-t cycle_layout 1
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
+# Pseudotile is useful for dialogs
 hc keybind $Mod-p pseudotile toggle
 
 # splitting frames
@@ -96,7 +96,7 @@ hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
 
 # focus
-herbstclient set focus_follows_mouse 1
+hc set focus_follows_mouse 1
 hc keybind $Mod-BackSpace   cycle_monitor
 hc keybind $Mod-Tab         cycle_all +1
 hc keybind $Mod-Shift-Tab   cycle_all -1
@@ -157,12 +157,17 @@ hc unrule -F
 hc rule instance=findDialog_popup pseudotile=on focus=on
 hc rule class=Conky manage=off
 
+hc rule focus=off # normally do not focus new clients
+
+# When pseudo tiled dialog have missing buttons, use $Mod-p
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 
 # give focus to most common terminals
-hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole|Terminator)' focus=on
+# XXX could this be the thing that prevent dialogs to get the focus
+# using keyboard?
+#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole|Terminator)' focus=on
 
 # Applications
 hc rule class=URxvt tag=1
