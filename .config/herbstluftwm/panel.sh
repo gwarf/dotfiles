@@ -12,10 +12,10 @@ x=${geometry[0]}
 y=${geometry[1]}
 panel_width=${geometry[2]}
 panel_height=16
-#font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
-#font="xft:Source Code Pro for Powerline:regular:size=15"
-font='-*-liberation mono-*-r-*-*-15-*-*-*-*-*-*-*'
-#font="Envy Code R-6"
+# xfontsel
+#font='-*-liberation mono-*-r-*-*-15-*-*-*-*-*-*-*'
+#font='-*-inconsolata-*-r-*-*-15-*-*-*-*-*-*-*'
+font='-*-anonymous pro for powerline-*-r-*-*-15-*-*-*-*-*-*-*'
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
 selfg='#101010'
