@@ -1,8 +1,6 @@
 #    yaourtrc  - Configuration for yaourt
-# 
-#   See yaourtrc(5) for more information
-#   
 #
+#   See yaourtrc(5) for more information
 
 # General
 AUTOSAVEBACKUPFILE=1
@@ -31,10 +29,10 @@ AURUPGRADE=1
 AURVOTE=1
 
 # Build
-#EXPORT=0           # Export to 1: EXPORTDIR or PKGDEST
+EXPORT=1           # Export to 1: EXPORTDIR or PKGDEST
                     # 2: pacman cache (as root)
-#EXPORTSRC=0        # Need EXPORT>0 to be used
-#EXPORTDIR=""       # If empty, use makepkg's connfiguration (see makepkg.conf)
+EXPORTSRC=1        # Need EXPORT>0 to be used
+EXPORTDIR="/var/abs/local/exports"       # If empty, use makepkg's connfiguration (see makepkg.conf)
 
 # Prompt
 #NOCONFIRM=0
