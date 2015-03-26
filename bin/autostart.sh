@@ -57,6 +57,7 @@ run_once revelation \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 run_once terminology
 run_once pidgin
+run_once workrave
 run_once firefox
 #run_once chromium
 #run_once deluge
