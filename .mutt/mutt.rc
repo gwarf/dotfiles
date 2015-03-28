@@ -48,9 +48,8 @@ unset mark_old          # set: make distinction between New mail and Old mail.
 set allow_8bit    # send data as it is.  no conversion.
 
 ### Sorting mails
-set sort=threads
+set sort=reverse-threads
 set sort_aux=reverse-last-date-sent
-#set sort_aux=reverse-last-date-received
 # Sort order of entries in the file browser
 set sort_browser=date
 
