@@ -32,7 +32,8 @@ hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn terminology
-hc keybind $Mod-space spawn rofi -rnow
+#hc keybind $Mod-space spawn rofi -rnow
+hc keybind $Mod-space spawn rofi -show run
 #hc keybind $Mod-space spawn dmenu_run
 #hc keybind $Mod-q spawn scrot -e 'mkdir -p ~/screenshot;mv $f ~/screenshot/'
 
