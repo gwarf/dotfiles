@@ -33,8 +33,17 @@ mesg y
 if [ $(hostname) != 'htpc'  ]; then
   # tmux
   if which tmux 2>&1 >/dev/null; then
-    #if not inside a tmux session, and if no session is started, start a new session
-    #test -z "$TMUX" && (tmux attach -t0)
+    # if not inside a tmux session
+    # and if no session is started, start a new session
+    if [ -z "$TMUX" ]; then
+      # Start default session if not found
+      if ! tmux has-session -t home; then
+        logger 'no session!'
+        [ -x ~/bin/tmux-default-session ] && (~/bin/tmux-default-session)
+      fi
+      # No more automatically attach session
+      #(tmux attach -t home)
+    fi
     #test -z "$TMUX" && (tmux attach || ~/bin/tmux-new-session)
   fi
 fi
