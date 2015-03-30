@@ -72,6 +72,7 @@ run_once redshift-gtk
 run_once rofi "-key mod1+tab -terminal urxvtc"
 run_once JDownloader
 run_once syncthing-gtk
+run_once owncloud
 #exec --no-startup-id udiskie
 #/usr/libexec/gnome-settings-daemon &
 #gnome-volume-manager &
