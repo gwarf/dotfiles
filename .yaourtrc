@@ -4,12 +4,13 @@
 
 # General
 AUTOSAVEBACKUPFILE=1
+DEVELSRCDIR="/var/abs/local/yaourtsrc"
 DEVELBUILDDIR="/var/abs/local/yaourtbuild"
 DEVEL=1
-#EDITOR="$EDITOR"
+EDITOR="vim"
 #FORCEENGLISH=0
 #FORCE=0
-TMPDIR="/var/abs/local/yaourt-tmp"
+#TMPDIR="/var/abs/local/yaourt-tmp"
 
 # SUDO
 #SUDONOVERIF=0      # Avoid multiple sudo checks when timestamp_timeout=0
@@ -45,10 +46,10 @@ EDITFILES=0
 # Output
 #USECOLOR=1
 #USEPAGER=0
-DETAILUPGRADE=2
-#SHOWORPHANS=1
+DETAILUPGRADE=4
+SHOWORPHANS=0
 #TERMINALTITLE=1
 
 # Command
 #PACMAN="pacman"
-#DIFFEDITCMD="vimdiff"
+DIFFEDITCMD="vimdiff"
