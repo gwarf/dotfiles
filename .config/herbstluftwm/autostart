@@ -22,11 +22,7 @@ hc keyunbind --all
 # keybindings
 # if you have a super key you will be much happier with Mod set to Mod4
 #Mod=Mod1    # Use alt as the main modifier
-if [ $(hostname) = 'bougebox' ]; then
-  Mod=Mod4   # Use the super key as the main modifier
-else
-  Mod=Mod3   # Use the super key as the main modifier
-fi
+Mod=Mod4   # Use the super key as the main modifier
 
 hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
