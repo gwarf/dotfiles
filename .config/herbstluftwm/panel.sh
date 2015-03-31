@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# http://dotshare.it/dots/600/1/raw/
+
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
 geometry=( $(herbstclient monitor_rect "$monitor") )
@@ -33,13 +35,6 @@ if [ $monitor == '0' ]; then
 else
   trayerpid=''
 fi
-
-function nowplaying() {
-  if [[ -n $(mpc current) ]]; then
-    echo -n "^ca(1,mpc toggle)^fg(#707070)$(m title) ^fg(${color[red]})par
-    ^fg(#707070)$(m artist)^ca() "
-  fi
-}
 
 ####
 # Try to find textwidth binary.
@@ -76,8 +71,11 @@ hc pad $monitor $panel_height
   # e.g.
   #   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
 
+  # mpd
   mpc idleloop player &
   mpc_pid=$!
+
+  # Date
   while true ; do
     # "date" output is checked once a second, but an event is only
     # generated if the output changed compared to the previous run.
@@ -85,14 +83,20 @@ hc pad $monitor $panel_height
     sleep 5 || break
   done > >(uniq_linebuffered) &
   date_pid=$!
+
+  # hlwm events
   hc --idle
-  kill $date_pid $mpc_pid
+
+  # exiting: kill envent-emitting process
+  kill $date_pid $mpc_pid $trayerpid
 
 } 2> /dev/null | {
   IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
   visible=true
   date=""
   windowtitle=""
+  nowplaying=""
+
   while true ; do
 
     ### Output ###
@@ -125,11 +129,12 @@ hc pad $monitor $panel_height
       echo -n "focus_monitor \"$monitor\" && "
       echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
       echo -n "use \"${i:1}\") ${i:1} ^ca()"
-      # non-clickable tags if using older dzen
+      # non-clickable tags
       #  echo -n " ${i:1} "
     done
     echo -n "$separator"
     echo -n "^bg()^fg() ${windowtitle//^/^^}"
+    # Display mpd only on first monitor
     if [ -n "$nowplaying" ]; then
       echo -n "$separator"
       echo -n "^bg()^fg() $nowplaying"
@@ -189,13 +194,11 @@ hc pad $monitor $panel_height
       focus_changed|window_title_changed)
         windowtitle="${cmd[@]:2}"
         ;;
-      # XXX https://gist.github.com/PodColl/8932496
-      #mpd_player|player)
-      #  #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
-      #  nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
-      #  # XXX Debug this!
-      #  logger "panel: nowplaying: $nowplaying"
-      #  ;;
+      mpd_player|player)
+        #nowplaying="$(mpc current -f '^fg()[%artist% - ][%title%|%file%]')"
+        nowplaying="$(mpc current -f '[%artist% - ][%title%|%file%]')"
+        logger "panel: nowplaying: $nowplaying"
+        ;;
     esac
   done
 
@@ -208,7 +211,3 @@ hc pad $monitor $panel_height
     -ta l -bg "$bgcolor" -fg '#efefef'
 
 herbstclient --wait '^(quit_panel|reload).*'
-
-[ -n "$trayerpid" ] && kill -TERM $trayerpid
-
-exit 0
