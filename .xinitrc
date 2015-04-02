@@ -30,7 +30,7 @@ xset m 3/1 3
 xbacklight -set 90
 
 # Keyboard layout setting
-setxkbmap us -option 'compose:ralt'
+setxkbmap us -option 'compose:rwin'
 # Ctrl+Alt+Backspace kills X
 setxkbmap -option 'terminate:ctrl_alt_bksp'
 
