@@ -24,8 +24,11 @@ send-hook @lists\\.maatg\\.fr$ "source ~/.mutt/profile.gnubila"
 #folder-hook = push "<limit>!~s'Liferay\\\ Forums'<enter>"
 
 folder-hook .     'set sort=threads'
-folder-hook +Spam 'set sort=spam'
-folder-hook +.Spam 'set sort=spam'
+folder-hook +Spam 'set sort=subject'
+folder-hook +.Spam 'set sort=subject'
+folder-hook +Junk 'set sort=subject'
+folder-hook =Junk 'set sort=subject'
+folder-hook +.Junk 'set sort=subject'
 folder-hook +Sent 'set sort=reverse-date-sent'
 folder-hook +.Sent 'set sort=reverse-date-sent'
 
