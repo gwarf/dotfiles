@@ -30,9 +30,8 @@ xset m 3/1 3
 xbacklight -set 90
 
 # Keyboard layout setting
-setxkbmap us -option 'compose:rwin'
 # Ctrl+Alt+Backspace kills X
-setxkbmap -option 'terminate:ctrl_alt_bksp'
+setxkbmap us -option 'compose:rwin' -option 'terminate:ctrl_alt_bksp'
 
 # Make additional fonts available
 xset +fp /usr/share/fonts/local
