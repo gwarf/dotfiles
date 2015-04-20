@@ -37,7 +37,7 @@ audio/x-pn-realaudio-plugin     ; /usr/bin/X11/realplay %s                      
 audio/x-pn-realaudio            ; /usr/bin/X11/realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
 audio/x-wav                     ; mplayer %s                                    ;
 audio/*                         ; mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
-image/*; sxiv -bf %s \; reset
+image/*                         ; mutt_bgrun sxiv -bf %s \; reset
 image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
 image/*                         ; mutt_bgrun eog %s                             ; test=test -n "$DISPLAY" > /dev/null
