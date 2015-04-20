@@ -18,6 +18,7 @@ fi
 # bindkeys
 # Find keycode:
 # execute cat, press the key and crtl + c
+# Show configuration: bindkey -l
 bindkey -v
 bindkey -M vicmd "^R" redo
 bindkey -M vicmd "u" undo
@@ -107,6 +108,17 @@ bindkey -M vicmd "v" edit-command-line
 insert_sudo () { zle beginning-of-line; zle -U 'sudo ' }
 zle -N insert-sudo insert_sudo
 bindkey 's' insert-sudo
+
+typeset -Ag abbreviations
+abbreviations=(
+  'Ia'    '| awk'
+  'Ig'    '| grep'
+  'Ip'    "| $PAGER"
+  'Ih'    '| head'
+  'It'    '| tail'
+  'Is'    '| sort'
+  'Iw'    '| wc'
+)
 
 # environment settings
 # zshoptions
