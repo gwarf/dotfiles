@@ -366,4 +366,14 @@ if command -v "herbstclient" >/dev/null 2>&1; then
   fi
 fi
 
+venv() {
+  local activate=~/.python/$1/bin/activate
+  if [ -e "$activate" ] ; then
+    source "$activate"
+  else
+    echo "Error: Not found: $activate"
+  fi
+}
+venv27() { venv 27 ; }
+
 # vim:set ft=sh ts=2 sw=2 et:
