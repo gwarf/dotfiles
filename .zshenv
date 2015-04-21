@@ -141,6 +141,11 @@ if [ -d "$HOME/.rvm/bin" ]; then
   PATH="$PATH:$HOME/.rvm/bin"
 fi
 
+# Load rbenv
+if command -v "rbenv" >/dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
 #export PATH="~/.bundler_binstubs:$PATH"
 
 export PATH
