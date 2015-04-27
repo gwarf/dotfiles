@@ -1,4 +1,5 @@
 .config/ranger/__pycache__/
+.config/ranger/history
 .mutt/headers
 .mutt/history
 .mutt/mutt.compte
