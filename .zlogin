@@ -14,11 +14,11 @@ uname -a
 uptime
 echo
 if $(type task &> /dev/null); then
-  echo Tasks:
+  printf 'Tasks:\n'
   task list
 fi
 if $(type remind &> /dev/null); then
-  echo
+  printf 'Reminds:\n'
   remind -f ~/.reminders
 fi
 
