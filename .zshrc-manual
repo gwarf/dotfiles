@@ -278,7 +278,8 @@ hash -d Docs=~/Documents
 hash -d dev=~/dev
 
 [ -x /usr/games/fortune ] && /usr/games/fortune /usr/local/share/games/fortune/bofh
-[ -x /usr/bin/fortune ] && fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
+#[ -x /usr/bin/fortune ] && fortune bofh-excuses dune hitchhiker heretics-of-dune house-atreides house-harkonnen
+[ -x /usr/bin/fortune ] && fortune
 echo
 [ -x /usr/games/fortune ] && /usr/games/fortune freebsd-tips
 
