@@ -29,6 +29,9 @@ set passkeys+=feed.lxl.io:jk<CR>
 set scrollsteps=1
 set scrolltime=0
 
+" Editor, C-e invokes it in text fields
+set editor="emacsclient"
+
 " Disable tab bar
 set showtabline=never
 
@@ -74,10 +77,14 @@ map -modes=n Y <yank-selection>
 :map timer :tabopen timer<CR>
 
 " Set hintkeys according to my home row in my keyboard layout
-set hintkeys=asdfghjkl
+set hintkeys=asdfjkl
+hi -a Hint font-size: 9pt !important;
 
-" Same as vim; highlight search results
+" Highlight search results and incremental search
 set hlfind
+set incfind
+" Ignore case in search unless pattern has uppercase chars
+set findcase=smart
 
 " Yank (copy) to default clipboard with Y
 " Will not yank to default clipboard by default.
@@ -86,5 +93,31 @@ set hlfind
 "     interface for Firefox and other XULRunner-based apps. - Google Project Hosting
 "     https://code.google.com/p/dactyl/issues/detail?id=719#c10
 js editor.defaultRegister="+"
+
+" Email current url
+command email-url :open gmail-this
+
+" Save to org-mode Read Later Tree
+" command read-later :open org-capture-read-later
+
+command private-tab -nargs=+ -description "Open Private Tab" -javascript <<EOF
+        privateTab.readyToOpenTab(true);
+        gBrowser.addTab("about:blank");
+        dactyl.execute(":tablast");
+        dactyl.execute(":open " + args);
+        privateTab.stopToOpenTabs();
+EOF
+
+command search-hackernews -nargs=+ -description "Search news.ycombinator.com" -javascript <<EOF
+        dactyl.execute(":tabopen");
+        dactyl.open("site:news.ycombinator.com " + args);
+EOF
+
+command read-later -description "Execute emacsclient" -javascript <<EOF
+        var emacsClient = "/Applications/Emacs.app/Contents/MacOS/bin/emacsclient";
+        var url = "\"org-protocol://capture://l/"+ encodeURIComponent(content.location) + "/"+ encodeURIComponent(content.document.title) +"/" + encodeURIComponent(content.window.getSelection()) + "\"";
+        var command = emacsClient + " " + url;
+        CommandExMode().open("!" + command);
+EOF
 
 " vim: set ft=pentadactyl:
