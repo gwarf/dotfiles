@@ -70,6 +70,7 @@ else
 fi
 
 alias qfind='find . -iname'
+alias f='find . -iname'
 
 # Quick pagging and grepping
 if [ $SHELL = '/bin/zsh' ]; then
@@ -344,6 +345,7 @@ if command -v "ssh-multi" >/dev/null 2>&1; then
   alias tmux-hug-all='ssh-multi ng-hug-server{0,3,4,5,6}.neuro.hcuge.ch ng-hug-wn{0,1,2,3,4,5,6}.neuro.hcuge.ch'
   alias tmux-hug-servers='ssh-multi ng-hug-server{0,3,4,5,6}.neuro.hcuge.ch'
   alias tmux-hug-wn='ssh-multi ng-hug-wn{0,1,2,3,4,5,6}.neuro.hcuge.ch'
+  alias tmux-hug-xen='ssh-multi xenserver-hug-0{1,2,3,4,5,6,7,8,9}.gnubila.fr'
   alias tmux-ki-all='ssh-multi ng-ki-server{4,5,6,7}.ki.se ng-ki-wn{0,1,2,3,4,5,6,7,8,9}.local'
   alias tmux-ki-servers='ssh-multi ng-ki-server{4,5,6,7}.ki.se'
   alias tmux-ki-wn='ssh-multi ng-ki-wn{0,1,2,3,4,5,6,7,8,9}.local'
