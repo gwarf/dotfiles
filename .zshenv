@@ -7,7 +7,18 @@ export LC_ALL LANG
 export VISUAL="vim"
 export EDITOR="vim"
 export TERMINAL='terminator'
+
+# Set the default Less options.
+# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
+# Remove -X and -F (exit if the content fits on one screen) to enable it.
+#export LESS='-F -g -i -M -R -S -w -X -z-4'
 LESS='-imJMWR'
+
+# Set the Less input preprocessor.
+if (( $+commands[lesspipe.sh] )); then
+  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
+fi
+
 PAGER="less $LESS"
 MANPAGER=$PAGER
 BROWSER='chromium-browser'
@@ -24,6 +35,20 @@ else
 fi
 export SDL_AUDIODRIVER="pulse"
 
+#
+# Temporary Files
+#
+
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/$USER"
+  mkdir -p -m 700 "$TMPDIR"
+fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+if [[ ! -d "$TMPPREFIX" ]]; then
+  mkdir -p "$TMPPREFIX"
+fi
+
 # Gem on archlinux
 #if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
 #  PATH="/home/baptiste/.gem/ruby/2.0.0/bin:$PATH"
@@ -33,7 +58,8 @@ export SDL_AUDIODRIVER="pulse"
 #  PATH="/home/baptiste/.gem/ruby/2.1.0/bin:$PATH"
 #  export GEM_HOME="$HOME/.gem/ruby/2.1.0"
 #fi
-#
+
+# Haskell cabal conf
 if [ -d "$HOME/.cabal/bin" ]; then
   PATH="$HOME/.cabal/bin:$PATH"
 fi
@@ -48,22 +74,8 @@ fi
 # new method:
 #export _JAVA_AWT_WM_NONREPARENTING=1
 
-# For browser in eclipse
-#export MOZILLA_FIVE_HOME="/usr/lib/xulrunner"
-
-#PATH=/opt/sunjava/jre1.6.0_13/bin:$PATH
-#export JAVA_HOME="/opt/sunjava/jre1.6.0_13"
-#export AXIS2_HOME="/home/baptiste/dev/axis2-1.4.1/"
-#PATH="/usr/share/java/apache-ant/bin:$PATH"
-#export JDK_MAJOR_VERSION=1.6
-#export CATALINA_HOME=~/dev/liferay/liferay-portal-5.2.3/tomcat-6.0.18
-#export TOMCAT_MAJOR_VERSION=6.0
-
 # For dcmtk
 #export DCMDICTPATH=/usr/lib/dicom.dic
-
-#export JSAGA_HOME="/home/baptiste/dev/jsaga-0.9.8/"
-#PATH="$JSAGA_HOME/bin:$PATH"
 
 # for eclim
 #export ECLIM_ECLIPSE_HOME=/usr/share/eclipse
@@ -91,20 +103,22 @@ export HGEDITOR=~/bin/hgeditor
 
 umask 0027
 
-# Proxy HTTP / FTP sans mot de passe
+# Proxy HTTP / FTP without password
 #export http_proxy="http://proxy.exemple.org:8080"
 #export ftp_proxy="ftp://proxy.exemple.org:8080"
 
-# Proxy HTTP / FTP avec mot de passe
+# Proxy HTTP / FTP with password
 #export http_proxy="http://login:password@proxy.exemple.org:8080"
 #export ftp_proxy="ftp://login:password@proxy.exemple.org:8080"
 
-# Ne pas passer par le proxy pour les domaines locaux
+# Disable proxy for example.org
 #export no_proxy="exemple.org"
+
 #if [ `hostname` = 'bougebox' ]; then
 #  source /opt/UItar/etc/profile.d/grid-env.sh
 #fi
 
+# Source grid environment
 [ -f /opt/emi/etc/profile.d/grid-env.sh ] && . /opt/emi/etc/profile.d/grid-env.sh
 
 #export WINEARCH=win32
@@ -116,6 +130,7 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 # Use gnome keyring for ssh auth
 #export SSH_AUTH_SOCK="$GNOME_KEYRING_CONTROL/ssh"
 #if [ -n "$DESKTOP_SESSION" ];then
+#  # No point to start gnome-keyring-daemon if ssh-agent is not up
 #  if [ -n "$GNOME_KEYRING_PID" ]; then
 #    eval $(gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
 #    export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GNOME_KEYRING_SOCKET
@@ -127,6 +142,7 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 #eval $(keychain --eval id_rsa)
 
 # Use envoy for ssh/gpg agent
+# use envoy -a to add identities to agent
 # https://github.com/vodik/envoy
 if command -v "envoy" >/dev/null 2>&1; then
   envoy -t ssh-agent
@@ -145,15 +161,29 @@ if command -v "rbenv" >/dev/null 2>&1; then
   eval "$(rbenv init -)"
 fi
 
-#export PATH="~/.bundler_binstubs:$PATH"
-
-export PATH
+#PATH="~/.bundler_binstubs:$PATH"
 
 if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
   export MC_SKIN=$HOME/.mc/lib/mc-solarized-skin/solarized.ini
 else
   git clone https://github.com/iwfmp/mc-solarized-skin.git $HOME/.mc/lib/mc-solarized-skin
 fi
+
+#
+# Paths
+#
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+  ~/bin
+  /usr/local/{bin,sbin}
+  $path
+)
+
+export PATH
 
 # Configure bspwm's panel
 PANEL_FIFO=/tmp/panel-fifo

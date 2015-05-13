@@ -30,7 +30,7 @@ mesg y
 #    setleds +num
 #esac
 
-if [ $(hostname) != 'htpc'  ]; then
+if [ $(hostname) != htpc  ]; then
   # tmux
   if which tmux 2>&1 >/dev/null; then
     # if not inside a tmux session
