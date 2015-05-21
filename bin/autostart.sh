@@ -23,7 +23,8 @@ run_once dunst
 # Wallpapers
 run_once nitrogen "--restore"
 
-pkill offlineimap || sleep 3 && offlineimap &
+# Disable offlineimap while testing a user systemd service + timer
+# pkill offlineimap || sleep 3 && offlineimap &
 #&& offlineimap-notify &> /tmp/offlineimap-log
 
 # Pulse audio
