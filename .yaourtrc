@@ -30,7 +30,7 @@ AURUPGRADE=1
 AURVOTE=1
 
 # Build
-EXPORT=1           # Export to 1: EXPORTDIR or PKGDEST
+EXPORT=0           # Export to 1: EXPORTDIR or PKGDEST
                     # 2: pacman cache (as root)
 EXPORTSRC=1        # Need EXPORT>0 to be used
 EXPORTDIR="/var/abs/local/exports"       # If empty, use makepkg's connfiguration (see makepkg.conf)
