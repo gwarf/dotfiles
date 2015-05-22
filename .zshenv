@@ -145,7 +145,9 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 # use envoy -a to add identities to agent
 # https://github.com/vodik/envoy
 if command -v "envoy" >/dev/null 2>&1; then
-  envoy -t ssh-agent
+  if ! envoy -l | grep -q "$HOME/.ssh/id_rsa" >/dev/null 2>&1; then
+    envoy -t ssh-agent -a ~/.ssh/id_rsa
+  fi
   source <(envoy -p)
 fi
 
