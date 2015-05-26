@@ -48,7 +48,7 @@ if [ $(hostname) != htpc  ]; then
   fi
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 ## Print a random, hopefully interesting, adage.
 #if (( $+commands[fortune] )); then

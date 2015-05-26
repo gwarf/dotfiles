@@ -159,11 +159,11 @@ if command -v "envoy" >/dev/null 2>&1; then
 fi
 
 # Load RVM into a shell session *as a function*
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-if [ -d "$HOME/.rvm/bin" ]; then
-  # Add RVM to PATH for scripting
-  PATH="$PATH:$HOME/.rvm/bin"
-fi
+#[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
+#if [ -d "$HOME/.rvm/bin" ]; then
+#  # Add RVM to PATH for scripting
+#  PATH="$PATH:$HOME/.rvm/bin"
+#fi
 
 # Load rbenv
 if command -v "rbenv" >/dev/null 2>&1; then
