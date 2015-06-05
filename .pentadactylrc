@@ -13,7 +13,7 @@ set guioptions-=m
 colorscheme solarized-dark
 
 " Search provider
-set defsearch=duckduckgo
+"set defsearch=duckduckgo
 
 " Pass through for some sites
 autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
