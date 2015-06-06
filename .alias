@@ -324,6 +324,7 @@ tips() {
 }
 
 alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
+alias vimbtabbed='tabbed -c vimb -e'
 
 alias http-server-python2='python -m SimpleHTTPServer 8000'
 alias http-server-python3='python -m http.server 8000'
