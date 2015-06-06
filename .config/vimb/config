@@ -1,0 +1,15 @@
+shortcut-add d=https://duckduckgo.com/?q=$0
+shortcut-add dl=https://duckduckgo.com/lite/?q=$0
+shortcut-add gh=https://github.com/$0/$1
+shortcut-add qw=https://www.qwant.com/?q=$0&t=web
+shortcut-add q=https://www.qwant.com/?q=$0
+shortcut-default qw
+set hintkeys=sdfghjkl
+set spacial-navigation=true
+set spell-checking=true
+set spell-checking-languages=fr_FR,en_GB,en_US
+set editor-command=gvim -f %s
+nnoremap gt :sh! xdotool key --window $VIMB_XID ctrl+shift+l<CR><Esc>
+nnoremap gT :sh! xdotool key --window $VIMB_XID ctrl+shift+h<CR><Esc>
+nnoremap 1gt :sh! xdotool key --window $VIMB_XID ctrl+1<CR><Esc>
+nnoremap 9gt :sh! xdotool key --window $VIMB_XID ctrl+9<CR><Esc>
