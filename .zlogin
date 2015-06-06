@@ -39,7 +39,7 @@ if [ $(hostname) != htpc  ]; then
       # Start default session if not found
       if ! tmux has-session -t home; then
         logger 'no session!'
-        [ -x ~/bin/tmux-default-session ] && (~/bin/tmux-default-session)
+        #[ -x ~/bin/tmux-default-session ] && (~/bin/tmux-default-session)
       fi
       # No more automatically attach session
       #(tmux attach -t home)
