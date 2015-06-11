@@ -74,8 +74,8 @@ run_once rofi "-key mod1+tab -terminal urxvtc"
 run_once JDownloader
 #run_once syncthing-gtk
 run_once owncloud
-run_once flow
-run_once kontaminuti
+#run_once flow
+#un_once kontaminuti
 #exec --no-startup-id udiskie
 #/usr/libexec/gnome-settings-daemon &
 #gnome-volume-manager &
