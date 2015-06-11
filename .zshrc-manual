@@ -266,7 +266,7 @@ autoload -U zmv
 alias zmv='noglob zmv'
 
 autoload -U compinit
-compinit -i ${HOME}/.zcompdump
+#compinit -i ${HOME}/.zcompdump
 
 # name directories
 hash -d repos=~/repos
