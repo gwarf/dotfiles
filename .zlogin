@@ -32,12 +32,12 @@ mesg y
 
 if [ $(hostname) != htpc  ]; then
   # tmux
-  if which tmux 2>&1 >/dev/null; then
+  if which tmux >/dev/null 2>&1; then
     # if not inside a tmux session
     # and if no session is started, start a new session
     if [ -z "$TMUX" ]; then
       # Start default session if not found
-      if ! tmux has-session -t home; then
+      if ! tmux has-session -t home >/dev/null 2>&1; then
         logger 'no session!'
         #[ -x ~/bin/tmux-default-session ] && (~/bin/tmux-default-session)
       fi
