@@ -144,18 +144,20 @@ export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 # Use envoy for ssh/gpg agent
 # use envoy -a to add identities to agent
 # https://github.com/vodik/envoy
-if command -v "envoy" >/dev/null 2>&1; then
-  if [ -f "$HOME/.ssh/id_dsa" ]; then
-    if ! envoy -l | grep -q "$HOME/.ssh/id_dsa" >/dev/null 2>&1; then
-      envoy -t ssh-agent -a ~/.ssh/id_dsa
+if ! env | grep -qi sudo; then
+  if command -v "envoy" >/dev/null 2>&1; then
+    if [ -f "$HOME/.ssh/id_dsa" ]; then
+      if ! envoy -l | grep -q "$HOME/.ssh/id_dsa" >/dev/null 2>&1; then
+        envoy -t ssh-agent -a ~/.ssh/id_dsa
+      fi
     fi
-  fi
-  if [ -f "$HOME/.ssh/id_rsa" ]; then
-    if ! envoy -l | grep -q "$HOME/.ssh/id_rsa" >/dev/null 2>&1; then
-      envoy -t ssh-agent -a ~/.ssh/id_rsa
+    if [ -f "$HOME/.ssh/id_rsa" ]; then
+      if ! envoy -l | grep -q "$HOME/.ssh/id_rsa" >/dev/null 2>&1; then
+        envoy -t ssh-agent -a ~/.ssh/id_rsa
+      fi
     fi
+    source <(envoy -p)
   fi
-  source <(envoy -p)
 fi
 
 # Load RVM into a shell session *as a function*
