@@ -13,13 +13,12 @@ set guioptions-=m
 colorscheme solarized-dark
 
 " Search provider
-"set defsearch=duckduckgo
 set defsearch=qwant-com
 
 " Pass through for some sites
-autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
+"autocmd LocationChange ^https?://(drive|docs)\.google\.com/ :normal! <C-z>
 autocmd LocationChange ^https?://github\.com/ :normal! <C-z>
-set passkeys+=feed.lxl.io:jk<CR>
+"set passkeys+=feed.lxl.io:jk<CR>
 
 " autocmd LocationChange facebook.com :normal! <C-z>
 
@@ -72,7 +71,7 @@ map -count -modes=n,v <C-t> <count>:tabopen!<Space>
 " Yank selected text to clipboard
 map -modes=n Y <yank-selection>
 
-:map db :tabopen dribbble
+:map tc :tabopen https://cloud.bapt.name
 
 " http://www.ferdev.com/2013/02/19/pentadactyl-the-reason-i-use-firefox.html
 :map timer :tabopen timer<CR>
