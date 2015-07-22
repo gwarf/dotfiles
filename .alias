@@ -357,7 +357,7 @@ if command -v "ssh-multi" >/dev/null 2>&1; then
   alias tmux-gnubila-all='ssh-multi ng-maat-server{3,5,6,8,9}.gnubila.fr {bdii,bdii-site,idp,dev-idp,lfc,myproxy,nagios,pipeline,ra,sentinelle1,slipstream,voms,wms}.gnubila.fr'
   alias tmux-gnubila-site='ssh-multi ng-maat-server{3,5,6,8,9}.gnubila.fr bdii-site.gnubila.fr'
   alias tmux-gnubila-central='ssh-multi {bdii,idp,dev-idp,lfc,myproxy,nagios,pipeline,ra,slipstream,voms,wms}.gnubila.fr'
-  alias tmux-gw='ssh-multi ng-maat-devel1.gnubila.fr clrpcsv-ginseng-gw-devel01.in2p3.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr srv4.fatebenefratelli.it ng-hug-server4.neuro.hcuge.ch ng-ki-server7.ki.se mdp-dhzb1.gnubila.fr mdp-igg1.gnubila.fr pcdr-gw-ccpm1.gnubila.fr'
+  alias tmux-gw='ssh-multi ng-maat-devel1.gnubila.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr srv4.fatebenefratelli.it ng-hug-server4.neuro.hcuge.ch mdp-dhzb1.gnubila.fr mdp-igg1.gnubila.fr pcdr-gw-ccpm1.gnubila.fr'
   alias tmux-bapt.name='ssh-multi {misc,dns,big}.bapt.name'
 fi
 
@@ -394,5 +394,9 @@ man() {
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
 }
+
+if command -v "thefuck" >/dev/null 2>&1; then
+  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
+fi
 
 # vim:set ft=sh ts=2 sw=2 et:
