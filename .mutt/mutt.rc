@@ -43,13 +43,13 @@ set recall=ask-yes      # prompt for recalling postponed mails with 'm'
 set quit=ask-no
 
 ### Varia
-#
 unset mark_old          # set: make distinction between New mail and Old mail.
 set allow_8bit    # send data as it is.  no conversion.
 
 ### Sorting mails
 set sort=reverse-threads
 set sort_aux=reverse-last-date-sent
+
 # Sort order of entries in the file browser
 set sort_browser=date
 
