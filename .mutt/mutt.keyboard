@@ -68,31 +68,33 @@ bind pager F flag-message
 macro index \cf "<shell-escape>offlineimap\r"
 #bind index G imap-fetch-mail
 
-macro index z    "c?\t"                            "List mailboxes and switch to selected one"
+macro index z "c?\t" "List mailboxes and switch to selected one"
 
 # default save path
 macro attach s <save-entry><bol>~/Downloads/<eol>
 
 # help
-macro generic <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
-macro index <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
-macro pager <F1> "!vim ~/.mutt/mutt.help\n" "Afficher le manuel d'utilisation"
+macro generic <F1> "!vim ~/.mutt/mutt.help\n" "Man page"
+macro index <F1> "!vim ~/.mutt/mutt.help\n" "Man page"
+macro pager <F1> "!vim ~/.mutt/mutt.help\n" "Man page"
 
 # macros to invoke a profile
-macro   index   <F6>     ":source ~/.mutt/profile.gmail.gwarf12\n" "Load profile: gmail.gwarf12"
-macro   index   <F7>     ":source ~/.mutt/profile.gmail.baptiste\n" "Load profile: gmail.baptiste"
-macro   index   <F8>     ":source ~/.mutt/profile.maat\n" "Load profile: maat"
-macro   index   <F9>     ":source ~/.mutt/profile.gnubila\n" "Load profile: gnubila"
-macro   index   <F10>    ":source ~/.mutt/profile.healthgrid\n" "Load profile: healthgrid"
-macro   index   <F11>    ":source ~/.mutt/profile.perso\n" "Load profile: perso"
-macro   index   <F12>    ":source ~/.mutt/profile.gwarf\n" "Load profile: gwarf"
+macro index <F8> ":source ~/.mutt/profile.gnubila\n" "Load profile: gnubila"
+macro index <F9> ":source ~/.mutt/profile.perso\n" "Load profile: perso"
+macro index <F10> ":source ~/.mutt/profile.gwarf\n" "Load profile: gwarf"
 
-macro compose <F7> "<enter-command>source ~/.mutt/profile.gmail.gwarf12\n<edit-from><kill-line>Baptiste Grenier <gwarf12@gmail.com>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gmail.gwarf12"
-macro compose <F8> "<enter-command>source ~/.mutt/profile.gmail.baptiste\n<edit-from><kill-line>Baptiste Grenier <baptiste.grenier@gmail.com>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gmail.baptiste"
-macro compose <F9> "<enter-command>source ~/.mutt/profile.maat\n<edit-from><kill-line>Baptiste Grenier <bgrenier@maatg.com>\n<enter-command>set editor='chsig ~/.mutt/signature.maat'\n<edit-headers>\n" "Load profile: maat"
-macro compose <F10> "<enter-command>source ~/.mutt/profile.healthgrid\n<edit-from><kill-line>Baptiste Grenier <baptiste.grenier@healthgrid.org>\n<enter-command>set editor='chsig ~/.mutt/signature.healthgrid'\n<edit-headers>\n" "Load profile: healthgrid"
-macro compose <F11> "<enter-command>source ~/.mutt/profile.perso\n<edit-from><kill-line>Baptiste Grenier <baptiste@bapt.name>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: perso"
-macro compose <F12> "<enter-command>source ~/.mutt/profile.gwarf\n<edit-from><kill-line>Baptiste Grenier <gwarf@gwarf.org>\n<enter-command>set editor='chsig ~/.mutt/signature.perso'\n<edit-headers>\n" "Load profile: gwarf"
+macro compose <F8> "<enter-command>source ~/.mutt/profile.gnubila\n<edit-from>\
+  <kill-line>Baptiste Grenier <bgrenier@gnubila.fr>\n<enter-command>\
+  set editor='chsig ~/.mutt/signature-gnubila'\n<edit-headers>\n" \
+  "Load profile: gnubila"
+macro compose <F9> "<enter-command>source ~/.mutt/profile.perso\n<edit-from>\
+  <kill-line>Baptiste Grenier <baptiste@bapt.name>\n<enter-command>\
+  set editor='chsig ~/.mutt/signature-perso'\n<edit-headers>\n" \
+  "Load profile: perso"
+macro compose <F10> "<enter-command>source ~/.mutt/profile.gwarf\n<edit-from>\
+  <kill-line>Baptiste Grenier <gwarf@gwarf.org>\n<enter-command>\
+  set editor='chsig ~/.mutt/signature-perso'\n<edit-headers>\n" \
+  "Load profile: gwarf"
 
 # Attachments
 macro attach W <save-entry><kill-line>/home/baptiste/Documents/
@@ -105,7 +107,8 @@ macro attach E <save-entry><kill-line>/home/baptiste/Documents/<enter>
 # show _all_ mails
 macro index \# "l~A\r"      "Show ALL Mails"
 # Show work emails
-macro index \" "l !(~f 'Hacker News 50' | ~s puppet | ~s mcollective | ~f GetMetal.org | ~f Reflets | ~f 'New Album Releases' | ~f LinuxFr.org)\r"
+macro index \" "l !(~f 'Hacker News 50' | ~s puppet | ~s mcollective \
+  | ~f GetMetal.org | ~f Reflets | ~f 'New Album Releases' | ~f LinuxFr.org)\r"
 # show flagged and unread mails (i.e. important)
 macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 # show unreplied and flagged mails (i.e. TODO)
@@ -182,10 +185,13 @@ macro index <F5> \
 
 # abook
 macro generic,index,pager \ca "abook" "launch abook"
-macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" \
+  "add the sender address to abook"
 
 # GTG http://gtg.fritalk.com/post/2010/02/03/GTG-tips-and-tricks2
-macro index ,t "<enter-command>set pipe_decode<enter><pipe-message>gtg_new_task --interactive Follow up:<enter><save-message>+TODO<enter>"
+macro index ,t "<enter-command>set pipe_decode<enter>\
+  <pipe-message>gtg_new_task --interactive Follow up:<enter>\
+  <save-message>+TODO<enter>"
 #macro index ,t "<enter-command>set pipe_decode<enter><pipe-message>gtg_new_task --interactive Follow up:<enter>"
 
 macro editor ";" \Ct # bin ; to  Ctrl-t in editor-mode (easier IMO)
@@ -197,11 +203,12 @@ macro index \e2 "<save-message>+_Reply<enter>" "Save Message to _Reply"
 macro index \e3 "<save-message>+_Waiting<enter>" "Save Message to _Waiting"
 macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
 macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
-macro index \e6 "<modify-labels>-inbox -unread +spam<enter><save-message>+Spam<enter>" "Move Message to Spam"
+macro index \e6 "<modify-labels>-inbox -unread +spam<enter>\
+  <save-message>+Spam<enter>" "Move Message to Spam"
 
-macro pager B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
-macro index B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
-macro pager l "<pipe-message>mhonarc -single | w3m -T text/html\n"
+#macro pager B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
+#macro index B ":unset wait_key\n<pipe-message>mhonarc -single | browser\n:set wait_key\n"
+#macro pager l "<pipe-message>mhonarc -single | w3m -T text/html\n"
 
 # bounce-message
 #bind index B bounce-message
