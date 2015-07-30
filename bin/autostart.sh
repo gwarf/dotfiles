@@ -56,10 +56,17 @@ run_once revelation \
 run_once revelation \
   ~/repos/perso/gwarf/private/revelation/keyring-maatg \
   "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
+
 run_once terminology
 run_once pidgin
-run_once workrave
 run_once firefox
+run_once redshift
+run_once redshift-gtk
+run_once rofi "-key mod1+tab -terminal urxvtc"
+run_once JDownloader
+
+# Disabled
+#run_once workrave
 #run_once chromium
 #run_once deluge
 #stalonetray &
@@ -67,13 +74,8 @@ run_once firefox
 #alunn &
 #workrave &
 #nvidia-settings --load-config-only &
-# Redshift - changed screen colour temp
-run_once redshift
-run_once redshift-gtk
-run_once rofi "-key mod1+tab -terminal urxvtc"
-run_once JDownloader
 #run_once syncthing-gtk
-run_once owncloud
+#run_once owncloud
 #run_once flow
 #un_once kontaminuti
 #exec --no-startup-id udiskie
