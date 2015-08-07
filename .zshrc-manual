@@ -10,6 +10,9 @@ export SHELL=$(which zsh)
 autoload -U colors && colors
 autoload -U promptinit
 
+autoload -U compinit
+compinit
+
 # Turn on color output
 if [ $(uname) = FreeBSD ]; then
   export CLICOLOR=true
@@ -133,7 +136,7 @@ unsetopt beep
 unsetopt hist_beep
 unsetopt list_beep
 # force write when using > and file already exists
-setopt clobber
+#setopt clobber
 # Ctrl+D to logout
 unsetopt ignore_eof
 # Display return code if different from 0
@@ -155,15 +158,17 @@ setopt numeric_globsort
 setopt bad_pattern # print out an error if a pattern or glob is badly formed
 # http://www.zsh.org/mla/workers/1996/msg01463.html
 setopt magic_equal_subst
-setopt glob_assign
+# XXX breaks completion
+# _main_complete:388: _lastcomp: assignment to invalid subscript range
+#setopt glob_assign
 
-# Do not perform filename completion and expansion when using unquoted =
+## Do not perform filename completion and expansion when using unquoted =
 unsetopt equals
 
 # Automatically list choices on an ambiguous completion
 setopt auto_list
-# Complétion
-#unsetopt list_ambiguous
+# Completion
+unsetopt list_ambiguous
 # Add a slash after a completed directory name
 setopt auto_param_slash
 setopt auto_param_keys
@@ -222,9 +227,9 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 
 # completions
 
-#zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' use-compctl false
 # autorise un caractère sur trois à être une erreur de typo
-#zstyle -e ':completion:*:approximate:*' max-errors par 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+zstyle -e ':completion:*:approximate:*' max-errors par 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
 # formatage et décoration
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*' verbose yes
@@ -238,7 +243,7 @@ zstyle ':completion:*' format '[32m-=> [01m%d[0m'
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _complete _correct _approximate
 # insère toutes les possibilités pour le completer expand
-#zstyle ':completion:*:expand:*' tag-order all-expansions
+zstyle ':completion:*:expand:*' tag-order all-expansions
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' insert-unambiguous true
 case $(uname) in
@@ -264,9 +269,6 @@ setopt LIST_TYPES
 # e.g., zmv *.JPEG *.jpg
 autoload -U zmv
 alias zmv='noglob zmv'
-
-autoload -U compinit
-#compinit -i ${HOME}/.zcompdump
 
 # name directories
 hash -d repos=~/repos
