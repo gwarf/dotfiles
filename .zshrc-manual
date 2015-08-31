@@ -274,9 +274,8 @@ alias zmv='noglob zmv'
 hash -d repos=~/repos
 hash -d Desktop=~/Desktop
 hash -d Downloads=~/Downloads
-hash -d DL=~/Downloads
+hash -d jddl=~/Downloads/misc/downloads
 hash -d Documents=~/Documents
-hash -d Docs=~/Documents
 hash -d dev=~/dev
 
 [ -x /usr/games/fortune ] && /usr/games/fortune /usr/local/share/games/fortune/bofh
