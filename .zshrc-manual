@@ -229,7 +229,13 @@ setopt share_history hist_find_no_dups hist_ignore_all_dups hist_ignore_space
 
 zstyle ':completion:*' use-compctl false
 # autorise un caractère sur trois à être une erreur de typo
-zstyle -e ':completion:*:approximate:*' max-errors par 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+#zstyle -e ':completion:*:approximate:*' max-errors par 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+zstyle ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) )'
+# XXX more than '2' degrades performance regardless of "matcher-list"
+#zstyle ':completion:*:approximate:*' max-errors         2
+zstyle ':completion:*:approximate*:*' insert-unambiguous true
+zstyle ':completion:*:approximate*:*' original false
+
 # formatage et décoration
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*' verbose yes
