@@ -9,6 +9,7 @@
 # Bind Browser {{{1
 bind browser g top-page
 bind browser G bottom-page
+# cb is catched by tmux...
 bind browser \cb previous-page
 bind browser \cf next-page
 bind browser <Enter> view-file
@@ -116,8 +117,12 @@ macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 # mark everything as read
 macro index + "T~N\n;N;t" "Mark everything as read"
 
-macro index \ci |urlview\n  # simulate the old browse-url function
-macro pager \ci |urlview\n  # simulate the old browse-url function
+#macro index \ci |urlview\n  # simulate the old browse-url function
+#macro pager \ci |urlview\n  # simulate the old browse-url function
+
+macro index,pager \ci "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \ci "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
 #macro index \ci |w3m\n "call w3m to extract URLs out of a message"
 #macro pager \ci |w3m\n "call w3m to extract URLs out of a message"
 

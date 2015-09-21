@@ -180,7 +180,8 @@ source ~/.mutt/gpg.rc
 
 set locale="fr_FR"
 
-set send_charset="us-ascii:iso-8859-1:iso-8859-15:utf-8"
+# Send mails in ascii if possible or utf-8
+set send_charset="us-ascii:utf-8"
 # attempt to make a best effort to convert undisplayable chars with iconv
 #set charset=//TRANSLIT
 #set charset="utf-8"

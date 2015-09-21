@@ -33,13 +33,13 @@ folder-hook +Sent 'set sort=reverse-date-sent'
 folder-hook +.Sent 'set sort=reverse-date-sent'
 
 # Poor-man trash
-folder-hook .      'macro index d <tag-prefix><save-message>+Trash<enter>'
-folder-hook +Trash 'macro index d <tag-prefix><delete-message>'
+#folder-hook .      'macro index d <tag-prefix><save-message>+Trash<enter>'
+#folder-hook +Trash 'macro index d <tag-prefix><delete-message>'
 
-folder-hook .      'macro pager d <save-message>+Trash<enter>'
-folder-hook +Trash 'macro pager d <delete-message>'
+#folder-hook .      'macro pager d <save-message>+Trash<enter>'
+#folder-hook +Trash 'macro pager d <delete-message>'
 
-folder-hook .      'macro index <esc>d "<tag-thread>;<save-message>+Trash<enter>"'
+#folder-hook .      'macro index <esc>d "<tag-thread>;<save-message>+Trash<enter>"'
 
 # Spam management
 folder-hook . "macro index S '<save-message>+Spam<enter>' 'Retrain as Spam'"
@@ -57,9 +57,6 @@ message-hook "~h \"X-Mailer: (Microsoft Outlook IMO|Experian ContactMail)\"" "se
 # IncrediMail, whatever the hell that is, sends out its text alternative as
 # DOS formatted text. Clean things up.
 message-hook "~h \"X-Mailer: IncrediMail" "set display_filter='tr -d \\\\r'"
-
-message-hook .  'macro index,pager \cb ,b "URL viewer"'
-message-hook ~G 'macro index,pager \cb ,B "URL viewer"'
 
 # auto encrypt messages to Jerome
 #send-hook '(~t .*)' 'unset pgp_autoencrypt'

@@ -1,8 +1,20 @@
 # Mutt sender profile: gnubila
 
 set folder="~/Mail/gnubila"
-set record="+Sent"
-set postponed="+Drafts"
+#set spoolfile="+/gnubila/INBOX"
+set mbox="+INBOX"
+set record="+INBOX.Sent"
+set postponed="+INBOX.Drafts"
+
+folder-hook .      'macro index d <tag-prefix><save-message>+INBOX.Trash<enter>'
+folder-hook +INBOX.Trash 'macro index d <tag-prefix><delete-message>'
+
+folder-hook .      'macro pager d <save-message>+INBOX.Trash<enter>'
+folder-hook +INBOX.Trash 'macro pager d <delete-message>'
+
+#unset confirmappend
+#folder-hook . set trash="+INBOX.Trash"
+#folder-hook trash$ unset trash
 
 # Signature file
 set signature="~/.mutt/signature-gnubila"
