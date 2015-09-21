@@ -22,7 +22,7 @@ source ~/.mutt/mutt.mime
 source ~/.mutt/mutt.headers
 
 # keybindings:
-source ~/.mutt/mutt.keyboard
+source ~/.mutt/keyboard
 
 # Hooks
 source ~/.mutt/hooks
