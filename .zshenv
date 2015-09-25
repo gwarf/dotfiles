@@ -124,6 +124,7 @@ umask 0027
 #export WINEARCH=win32
 
 [ -f ~/.alias ] && source ~/.alias
+[ -f ~/.alias.local ] && source ~/.alias.local
 
 export ANT_OPTS="-Xmx1024m -XX:MaxPermSize=256m"
 
