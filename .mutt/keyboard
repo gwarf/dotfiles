@@ -120,8 +120,8 @@ macro index + "T~N\n;N;t" "Mark everything as read"
 #macro index \ci |urlview\n  # simulate the old browse-url function
 #macro pager \ci |urlview\n  # simulate the old browse-url function
 
-macro index,pager \ci "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
-macro attach,compose \ci "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro index,pager \ci "<pipe-message> urlscan -c<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \ci "<pipe-entry> urlscan -c<Enter>" "call urlscan to extract URLs out of a message"
 
 #macro index \ci |w3m\n "call w3m to extract URLs out of a message"
 #macro pager \ci |w3m\n "call w3m to extract URLs out of a message"
