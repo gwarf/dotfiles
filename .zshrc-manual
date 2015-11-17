@@ -326,3 +326,5 @@ compctl -K listMavenCompletions mvn%
 # EOF
 
 # vim:set ft=zsh ts=2 sw=2 et:
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
