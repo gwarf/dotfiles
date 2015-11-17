@@ -175,6 +175,15 @@ fi
 
 #PATH="~/.bundler_binstubs:$PATH"
 
+if command -v "ag" >/dev/null 2>&1; then
+  if command -v "fzf" >/dev/null 2>&1; then
+    # Setting ag as the default source for fzf
+    export FZF_DEFAULT_COMMAND='ag -l -g ""'
+    # To apply the command to CTRL-T as well
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  fi
+fi
+
 if [ -d "$HOME/.mc/lib/mc-solarized-skin" ]; then
   export MC_SKIN=$HOME/.mc/lib/mc-solarized-skin/solarized.ini
 else
