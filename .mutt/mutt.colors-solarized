@@ -1,8 +1,11 @@
 # /usr/share/doc/mutt/colors/solarized/mutt-colors-solarized-dark-256.muttrc
 # custom body highlights -----------------------------------------------
 # highlight my name and other personally relevant strings
-color body          color136        color234        "(baptiste|genier|gnubila|healthgrid|boob?bgrenier|gwarf)"
+color body          color136        color234        "(baptiste|genier|gnubila|healthgrid|boob|bgrenier|gwarf)"
 # custom index highlights ----------------------------------------------
+# Important messages from check_mk/nagios
+color index         white        color234        "~s \"Check_MK.*Certificate validity period.*\""
+color index         white        color234        "~s \"Check_MK.*fs_.*\""
 # messages which mention my name in the body
 color index         color136        color234        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" !~N !~T !~F !~p !~P"
 #color index         J_cream         color230        "~b \"baptiste(\!| grenier)|gwarf|bgrenier\" ~N !~T !~F !~p !~P"
