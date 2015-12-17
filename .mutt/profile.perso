@@ -27,3 +27,9 @@ set pgp_autosign              # Default (sign))
 
 # Include the profile name in the status line
 set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---@perso---%?V?(Filter: %V)?--%>-(%P)---"
+
+macro index \e1 "<save-message>+_Read<enter>" "Save Message to _Read"
+macro index \e2 "<save-message>+_Reply<enter>" "Save Message to _Reply"
+macro index \e3 "<save-message>+_Waiting<enter>" "Save Message to _Waiting"
+macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
+macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
