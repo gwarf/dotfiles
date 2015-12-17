@@ -5,7 +5,12 @@
 Description=OfflineIMAP Quicksync timer
 
 [Timer]
-OnCalendar=*:*:0/30
+# Check systemd.time(7)
+# Every 30 seconds
+# OnCalendar=*:*:0/30
+OnCalendar=*-*-* *:0/2:00
+#OnCalendar=hourly
+#OnCalendar=minutely
 Unit=offlineimap.service
 
 [Install]
