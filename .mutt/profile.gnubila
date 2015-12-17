@@ -57,7 +57,7 @@ set crypt_autosmime = yes
 
 # The (default) keyfile for signing/decrypting.  Uncomment the following
 # line and replace the keyid with your own.
-set smime_default_key="13cf2c5f.0"
+set smime_default_key="13cf2c5f.1"
 
 # Uncommen to make mutt ask what key to use when trying to decrypt a message.
 # It will use the default key above (if that was set) else.
@@ -132,3 +132,9 @@ openssl smime -verify -inform DER -in %s -noverify 2>/dev/null"
 
 # Include the profile name in the status line
 set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---@gnubila---%?V?(Filter: %V)?--%>-(%P)---"
+
+macro index \e1 "<save-message>+INBOX._Read<enter>" "Save Message to _Read"
+macro index \e2 "<save-message>+_INBOX.Reply<enter>" "Save Message to _Reply"
+macro index \e3 "<save-message>+_INBOX.Waiting<enter>" "Save Message to _Waiting"
+macro index \e4 "<save-message>+_INBOX.Defer<enter>" "Save Message to _Defer"
+macro index \e5 "<save-message>+lINBOX.ists<enter>" "Save Message to lists"
