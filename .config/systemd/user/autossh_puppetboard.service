@@ -1,0 +1,13 @@
+# autossh.service
+# https://wiki.archlinux.org/index.php/Secure_Shell#Autossh_-_automatically_restarts_SSH_sessions_and_tunnels
+
+[Unit]
+Description=AutoSSH service for puppetboard
+After=network.target
+
+[Service]
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=/usr/bin/autossh -M0 -nNT -o TCPKeepAlive=yes -L 5000:localhost:5000 puppet.gnubila.fr
+
+[Install]
+WantedBy=multi-user.target
