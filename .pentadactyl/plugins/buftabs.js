@@ -1,3 +1,4 @@
+// https://github.com/grassofhust/buftabs
 'use strict';
 let buftabs = {
     id: 'dactyl-statusline-field-buftabs',
