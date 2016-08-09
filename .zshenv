@@ -1,8 +1,8 @@
 # ~/.zshenv
 
-LC_ALL='fr_FR.UTF-8'
-LANG='fr_FR.UTF-8'
-export LC_ALL LANG
+#LC_ALL='fr_FR.UTF-8'
+#LANG='fr_FR.UTF-8'
+#export LC_ALL LANG
 
 export VISUAL="vim"
 export EDITOR="vim"
