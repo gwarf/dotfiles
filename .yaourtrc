@@ -33,7 +33,7 @@ AURVOTE=1
 EXPORT=0           # Export to 1: EXPORTDIR or PKGDEST
                     # 2: pacman cache (as root)
 EXPORTSRC=0        # Need EXPORT>0 to be used
-EXPORTDIR="/var/abs/local/exports"       # If empty, use makepkg's connfiguration (see makepkg.conf)
+#EXPORTDIR="/var/abs/local/exports"       # If empty, use makepkg's connfiguration (see makepkg.conf)
 
 # Prompt
 #NOCONFIRM=0
