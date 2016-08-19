@@ -43,7 +43,7 @@ set recall=ask-yes      # prompt for recalling postponed mails with 'm'
 set quit=ask-no
 
 ### Varia
-unset mark_old          # set: make distinction between New mail and Old mail.
+unset mark_old    # set: make distinction between New mail and Old mail.
 set allow_8bit    # send data as it is.  no conversion.
 
 ### Sorting mails
@@ -66,10 +66,9 @@ set smart_wrap
 #set wrapmargin=100
 # Utiliser le visualisateur interne pour consulter les messages
 set visual=builtin
-unset arrow_cursor         # Show current mail with an inverse bar.
+unset arrow_cursor       # Show current mail with an inverse bar.
 set ascii_chars          # set: use ASCII characters to build the thread tree
-unset move                 # do not move read mails from mailbox to  (was: "set hold")
-unset prompt_after         # set: gives you a prompt when pager exits
+unset prompt_after       # set: gives you a prompt when pager exits
 set tilde                # show non-existant lines of text with a tilde at begin-of-line
 set collapse_unread     # collapse threads with unread mails
 
@@ -90,7 +89,6 @@ set beep_new
 set beep
 set indent_str="> "
 set mime_forward="ask-no"
-set pager_context=1
 set noprompt_after
 set read_inc=10          # show count number for every tenth mail
 set write_inc=10         # update number after each tenth read mail
@@ -138,7 +136,6 @@ set simple_search = "~f %s | ~C %s | ~s %s" # Search method  -- default pattern 
 set attribution="Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"              # how to cite the author
 #set reply_regexp="^((aw|antw.?|antwort|re|r e|r?f|sv):[ \t]*)*"
 set reply_regexp="^((\
-\\[sd-pro\\]|\
 \\[[a-z][a-z0-9 :-]+[0-9]\\]|\
 (\\(fwd\\))|\
 (re(\\[[0-9]\\])?|aw|fw|fwd|\\?\\?|ç­.å¤.|´ð¸´|\\?\\?\\?\\?):\
@@ -200,6 +197,5 @@ set attach_split = yes
 set alias_file="~/.aliases"
 source ~/.aliases
 set query_command="abook --mutt-query '%s'"  # address book
-# Recherche dans l'annuraie ldap
 #set query_command="~/mutt/mutt-ldap-query.pl '%s'"
 set fcc_clear                             # Keep fcc's clear of signatues and encryption.
