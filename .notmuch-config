@@ -30,8 +30,8 @@ path=/home/baptiste/Mail
 #
 [user]
 name=Baptiste Grenier
-primary_email=bgrenier@gnubila.fr
-other_email=bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.org;baptiste.grenier@healthgrid.org;baptiste.grenier@gmail.com;gwarf12@hotmail.com;bgrenier@maatg.fr;baptiste@bapt.name
+primary_email=baptiste.grenier@egi.eu
+other_email=bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.org;baptiste.grenier@healthgrid.org;baptiste.grenier@gmail.com;gwarf12@hotmail.com;bgrenier@maatg.fr;baptiste@bapt.name;bgrenier@gnubila.fr
 
 # Configuration for "notmuch new"
 #
