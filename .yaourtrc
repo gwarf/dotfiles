@@ -10,7 +10,7 @@ DEVEL=1
 EDITOR="vim"
 #FORCEENGLISH=0
 #FORCE=0
-#TMPDIR="/var/abs/local/yaourt-tmp"
+TMPDIR="/var/abs/local/yaourt-tmp"
 
 # SUDO
 #SUDONOVERIF=0      # Avoid multiple sudo checks when timestamp_timeout=0
