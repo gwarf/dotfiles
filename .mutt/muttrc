@@ -3,6 +3,11 @@
 set mbox_type   = Maildir
 set folder = ~/Mail
 
+# Caching
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+
 set tmpdir="~/tmp"
 
 set editor = 'vim -c "set spell spelllang=en_us"'
@@ -11,6 +16,16 @@ set shell="/bin/zsh"
 set history=1000  # number of input lines for prompts to remember
 set history_file = "~/.mutt/history"
 set save_history=1000
+
+set crypt_use_gpgme=yes
+set smime_is_default = yes
+
+set crypt_autosmime = yes
+set crypt_verify_sig = yes
+set crypt_autosign = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+set smime_ask_cert_label
 
 set mailcap_path="~/.mutt/mutt.mailcap:/etc/mailcap"
 
@@ -137,17 +152,19 @@ macro index <F5> \
       "notmuch: reconstruct thread"
 
 # macros to invoke a profile
-macro index <F8> ":source ~/.mutt/profile.egi\n" "Load profile: egi"
-macro index <F9> ":source ~/.mutt/profile.perso\n" "Load profile: perso"
+macro index <F8> ":source ~/.mutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
+macro index <F9> ":source ~/.mutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
 
-macro compose <F8> "<enter-command>source ~/.mutt/profile.egi\n<edit-from>\
-  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu>\n<enter-command>\
-  set editor='chsig ~/.mutt/signature-egi'\n<edit-headers>\n" \
+macro compose <F8> "<enter-command>source ~/.mutt/profile.egi<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\
+  set editor='chsig ~/.mutt/signature-egi'<enter><edit-headers><enter>" \
   "Load profile: egi"
-macro compose <F9> "<enter-command>source ~/.mutt/profile.perso\n<edit-from>\
-  <kill-line>Baptiste Grenier <baptiste@bapt.name>\n<enter-command>\
-  set editor='chsig ~/.mutt/signature-perso'\n<edit-headers>\n" \
+macro compose <F9> "<enter-command>source ~/.mutt/profile.perso<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste@bapt.name><enter><enter-command>\
+  set editor='chsig ~/.mutt/signature-perso'<enter><edit-headers><enter>" \
   "Load profile: perso"
+
+macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
 #macro index D \
 #    "<save-message>+[Gmail].Bin<enter>" \
@@ -174,7 +191,7 @@ unignore mail-followup-to:
 unignore message-id:
 # and in this order
 unhdr_order *
-hdr_order Sender: From From: Reply-To: Subject: Organization: Date: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent: To: Cc: Newsgroups: X-Resent Followup-To: Mail-Followup-To:
+hdr_order Sender: From: Reply-To: Subject: Organization: Date: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent: To: Cc: Newsgroups: X-Resent: Followup-To: Mail-Followup-To:
 
 # MIME-Viewer
 unauto_view *

@@ -18,13 +18,8 @@ mailboxes +INBOX
 set from       = "baptiste@bapt.name"
 
 # Signature file
-#set signature='~/.mutt/signature-perso'
-set signature="sh ~/.mutt/createsign.sh|"
-
-# Caching
-set header_cache =~/.mutt/cache/headers.perso
-set message_cachedir =~/.mutt/cache/bodies.perso
-set certificate_file =~/.mutt/certificates.perso
+set signature='~/.mutt/signature-perso'
+#set signature="sh ~/.mutt/createsign.sh|"
 
 set envelope_from_address="baptiste@bapt.name"
 
