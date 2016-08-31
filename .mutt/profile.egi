@@ -15,7 +15,6 @@ set trash="+[Gmail].Bin"
 
 mailboxes +INBOX
 set from       = "baptiste.grenier@egi.eu"
-set signature  = ~/.mutt/signature-egi
 
 # Caching
 set header_cache =~/.mutt/cache/headers.egi
