@@ -213,24 +213,24 @@ svn_add_all() {
   for f in `svn st| grep \? | awk '{print $2}'` ; do svn add $f ; done
 }
 
-gg() {
-  outfile="/tmp/gg-${USER}"
-  q="$(echo $@ | sed 's/ /+/g')"
-  s_umask=`umask`
-  umask 077
-  lynx -dump -listonly -hiddenlinks=ignore http://google.fr/search\?q="${q}" | awk ' \
-  BEGIN { \
-    n = 0; \
-  } \
-  $1 ~ /[[:digit:]]+\./ && $2 !~ /http:\/\/([[:alpha:]][[:alnum:]]+\.google|[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\/search)/ { \
-    print "alias g"n"=\"epiphany -n \\\""$2"\\\"\""; \
-    print "printf \"%4d. %s\\n\" "n" \""$2"\""; \
-    n++ \
-  } ' > "${outfile}"
-  s_umask=$s_umask
-  . "${outfile}"
-  rm "${outfile}"
-}
+#gg() {
+#  outfile="/tmp/gg-${USER}"
+#  q="$(echo $@ | sed 's/ /+/g')"
+#  s_umask=`umask`
+#  umask 077
+#  lynx -dump -listonly -hiddenlinks=ignore http://google.fr/search\?q="${q}" | awk ' \
+#  BEGIN { \
+#    n = 0; \
+#  } \
+#  $1 ~ /[[:digit:]]+\./ && $2 !~ /http:\/\/([[:alpha:]][[:alnum:]]+\.google|[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\/search)/ { \
+#    print "alias g"n"=\"epiphany -n \\\""$2"\\\"\""; \
+#    print "printf \"%4d. %s\\n\" "n" \""$2"\""; \
+#    n++ \
+#  } ' > "${outfile}"
+#  s_umask=$s_umask
+#  . "${outfile}"
+#  rm "${outfile}"
+#}
 
 # Generates a tough password of a given length
 function genpass() {
@@ -278,32 +278,32 @@ joinpdf () {
 # http://www.shell-fu.org/lister.php?id=769
 # Go up n levels:
 # .. 3
-function .. (){
-  local arg=${1:-1};
-  local dir=""
-  while [ $arg -gt 0 ]; do
-    dir="../$dir"
-    arg=$(($arg - 1));
-  done
-  cd $dir >&/dev/null
-}
+# function .. (){
+#   local arg=${1:-1};
+#   local dir=""
+#   while [ $arg -gt 0 ]; do
+#     dir="../$dir"
+#     arg=$(($arg - 1));
+#   done
+#   cd $dir >&/dev/null
+# }
 
 # Go up to a named dir
 # ... usr
-function ... () {
-  if [ -z "$1" ]; then
-    return
-  fi
-  local maxlvl=16
-  local dir=$1
-  while [ $maxlvl -gt 0 ]; do
-    dir="../$dir"
-    maxlvl=$(($maxlvl - 1));
-    if [ -d "$dir" ]; then
-      cd $dir >&/dev/null
-    fi
-  done
-}
+# function ... () {
+#   if [ -z "$1" ]; then
+#     return
+#   fi
+#   local maxlvl=16
+#   local dir=$1
+#   while [ $maxlvl -gt 0 ]; do
+#     dir="../$dir"
+#     maxlvl=$(($maxlvl - 1));
+#     if [ -d "$dir" ]; then
+#       cd $dir >&/dev/null
+#     fi
+#   done
+# }
 
 # Dictionary lookup
 # Many more options, see:
@@ -333,8 +333,9 @@ alias big_syncthing='ssh -N -L 8081:localhost:45028 big.bapt.name'
 alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
 
 # mutt
-#alias mutt='echo -en "\033]0;mutt\a";mutt'
-#alias muttng='muttng -f imaps://imap.bapt.name'
+
+alias muttperso='mutt -f "=Perso/INBOX"'
+alias mutt='mutt -f "=Gmail/INBOX"'
 
 #alias git="git-achievements"
 
