@@ -1,13 +1,30 @@
 # Mutt sender profile: perso
 
-set folder="~/Mail/perso"
+set folder = ~/Mail/Perso
+set sendmail = "/usr/bin/msmtp -a perso"
 
+color status green default
+
+set spoolfile   = "+INBOX"
+set mbox        = "+_Read"
 set record="+Sent"
 set postponed="+Drafts"
+
+# If using trash-folder-patch
+set trash="+INBOX.Trash"
+
+mailboxes +INBOX
+
+set from       = "baptiste@bapt.name"
 
 # Signature file
 #set signature='~/.mutt/signature-perso'
 set signature="sh ~/.mutt/createsign.sh|"
+
+# Caching
+set header_cache =~/.mutt/cache/headers.perso
+set message_cachedir =~/.mutt/cache/bodies.perso
+set certificate_file =~/.mutt/certificates.perso
 
 set envelope_from_address="baptiste@bapt.name"
 
