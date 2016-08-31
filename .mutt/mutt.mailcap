@@ -2,7 +2,7 @@
 
 application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
 application/ghostview           ; mutt_bgrun evince %s                          ; test=test -n "$DISPLAY" > /dev/null
-application/pdf                 ; mutt_bgrun zathura %s    ; print=mutt_bgrun evince %s;                     ; test=test -n "$DISPLAY" > /dev/null
+application/pdf                 ; mutt_bgrun evince %s    ; print=mutt_bgrun zathura %s;                     ; test=test -n "$DISPLAY" > /dev/null
 application/pdf                 ; pdftotext %s -                                ; copiousoutput;
 application/postscript          ; mutt_bgrun evince %s                          ; test=test -n "$DISPLAY" > /dev/null
 application/x-bzip2             ; /usr/bin/bzip2 -dc %s                         ; copiousoutput
@@ -37,11 +37,11 @@ audio/x-pn-realaudio-plugin     ; /usr/bin/X11/realplay %s                      
 audio/x-pn-realaudio            ; /usr/bin/X11/realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
 audio/x-wav                     ; mplayer %s                                    ;
 audio/*                         ; mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; mutt_bgrun sxiv -bf %s \; reset
-image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
+#image/*                         ; mutt_bgrun sxiv -bf %s \; reset
+#image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
 image/*                         ; mutt_bgrun eog %s                             ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; fbi %s                            ; copiousoutput
+#image/*                         ; fbi %s                            ; copiousoutput
 #text/html;                      mutt_netscape %s; test=sh -c 'test $DISPLAY'
 #text/html                       ; mutt_bgrun uzbl-browser -u %s                                   ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 #text/html                       ; w3m -T text/html -dump                        ; copiousoutput; print = firefoxurl %s;
@@ -63,7 +63,7 @@ text/html                       ; w3m -I %{charset} -T text/html -dump %s; namet
 # Allows mutt to decode text/html attachments and display them inline.
 #text/html; elinks -dump -dump-charset utf-8 -default-mime-type text/html %s; needsterminal; copiousoutput;
 #text/html; elinks -force-html -dump-width $COLUMNS %s; copiousoutput
-text/x-diff                     ;  cat %s | colordiff                           ;copiousoutput
+text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
 text/x-patch                    ; cat %s | colordiff                            ;copiousoutput
 text/x-compress-html            ; /bin/zcat %s lynx -dump -force_html           ; copiousoutput
 text/x-gzip-html                ; /bin/zcat %s lynx -dump -force_html           ; copiousoutput
@@ -75,16 +75,16 @@ video/*                         ; mutt_bgrun mplayer %s                         
 application/pgp-signature       ; cat %s                                        ; copiousoutput
 #application/excel              ; xls2csv %s | column -s, -tn                   ; copiousoutput
 #application/vnd.ms-excel       ; xls2csv %s | column -s, -tn                   ; copiousoutput
-application/vnd.ms-excel        ; mutt_bgrun scalc %s                           ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.ms-excel        ; mutt_bgrun localc %s                           ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.oasis.opendocument.spreadsheet ; mutt_bgrun scalc %s            ; test=test -n "$DISPLAY" > /dev/null
-application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun scalc %s            ; test=test -n "$DISPLAY" > /dev/null
-application/msword              ; mutt_bgrun swriter %s                         ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
-application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun swriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun localc %s            ; test=test -n "$DISPLAY" > /dev/null
+application/msword              ; mutt_bgrun lowriter %s                         ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun lowriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 application/msword              ; antiword %s                                   ; copiousoutput
 application/x-msword            ; antiword %s                                   ; copiousoutput
 application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
-application/vnd.ms-powerpoint   ; mutt_bgrun simpress %s                        ; test=test -n "$DISPLAY" > /dev/null
-application/vnd.oasis.opendocument.presentation   ; mutt_bgrun simpress %s      ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.ms-powerpoint   ; mutt_bgrun loimpress %s                        ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.oasis.opendocument.presentation   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
 application/x-pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
 application/pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
 
