@@ -1,48 +1,48 @@
 # shell aliases
 
 OS="$(uname)"
-if [ "$OS" = "FreeBSD" ]; then
-  alias ls='ls -h -F -G'
-  alias du='du -h'
-  alias ducks='du -cks * | sort -rn | head -15'
-elif [ "$OS" = "Linux" ]; then
-  alias du='du --human-readable'
-  alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first'
-  alias locate='locate -i'
-  alias dirtree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
-  alias info='info --vi-keys'
-elif [ "$OS" = "SunOS" ]; then
-  [ $DISPLAY != "x" ] && alias vim='TERM=xtermc vim'
-  alias ls='/usr/gnu/bin/ls --color=auto'
-fi
+#if [ "$OS" = "FreeBSD" ]; then
+#  alias ls='ls -h -F -G'
+#  alias du='du -h'
+#  alias ducks='du -cks * | sort -rn | head -15'
+#elif [ "$OS" = "Linux" ]; then
+#  alias du='du --human-readable'
+#  alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first'
+#  alias locate='locate -i'
+#  alias dirtree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+#  alias info='info --vi-keys'
+#elif [ "$OS" = "SunOS" ]; then
+#  [ $DISPLAY != "x" ] && alias vim='TERM=xtermc vim'
+#  alias ls='/usr/gnu/bin/ls --color=auto'
+#fi
 
 alias c='clear'
 
 # Grep aliases
-grep --exclude-dir 2> /dev/null
-if [ $? -eq 0 ]; then
-  alias grepc='grep --color=always --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
-  alias grep='grep --color=auto --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
-else
-  alias grep='grep --color --exclude=\*.svn\* --exclude=\*.pyc --exclude=\*.hg\* --exclude=\*.bzr\* --exclude=\*.git\*'
-fi
+#grep --exclude-dir 2> /dev/null
+#if [ $? -eq 0 ]; then
+#  alias grepc='grep --color=always --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
+#  alias grep='grep --color=auto --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
+#else
+#  alias grep='grep --color --exclude=\*.svn\* --exclude=\*.pyc --exclude=\*.hg\* --exclude=\*.bzr\* --exclude=\*.git\*'
+#fi
 
 #  ls and colors
 # eval `dircolors -b`
 # Long listing by default
-alias l='ls -lh'
-alias ll='l'
-alias la='ls -lAh'
-alias lll='ls -l | less'
-alias llla='ls -lA | less'
-# list only directories
-alias lsd='\ls -d */'
-# list only files
-alias lsf="ls -rtF | grep -v '.*/'"
-# list only source code (c, c++, Perl in my case)
-alias lsp='ls *.c *.h *.cc *.pl *.pm *.py *.rb *.pp *.sh'
-# Sort files by size
-alias lss="ls -lrSF --si --color"
+#alias l='ls -lh'
+#alias ll='l'
+#alias la='ls -lAh'
+#alias lll='ls -l | less'
+#alias llla='ls -lA | less'
+## list only directories
+#alias lsd='\ls -d */'
+## list only files
+#alias lsf="ls -rtF | grep -v '.*/'"
+## list only source code (c, c++, Perl in my case)
+#alias lsp='ls *.c *.h *.cc *.pl *.pm *.py *.rb *.pp *.sh'
+## Sort files by size
+#alias lss="ls -lrSF --si --color"
 
 # do not delete / or prompt if deleting more than 3 files at a time
 alias rm='rm -I --preserve-root'
@@ -58,9 +58,9 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # directory navigation
-alias ..='cd ..'
-alias ...='cd ../..'
-alias cd..='cd ..'
+#alias ..='cd ..'
+#alias ...='cd ../..'
+#alias cd..='cd ..'
 
 # df
 if command -v "pydf" >/dev/null 2>&1; then
@@ -106,7 +106,7 @@ alias rake='noglob rake'
 
 # ssh
 #alias ssh='TERM=xterm-256color ssh'
-alias ssh='TERM=screen ssh'
+#alias ssh='TERM=screen ssh'
 
 # Suffix aliases to open files automatically
 if [ $SHELL = '/bin/zsh' ]; then
@@ -396,8 +396,8 @@ man() {
     man "$@"
 }
 
-if command -v "thefuck" >/dev/null 2>&1; then
-  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
-fi
+#if command -v "thefuck" >/dev/null 2>&1; then
+#  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
+#fi
 
 # vim:set ft=sh ts=2 sw=2 et:
