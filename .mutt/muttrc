@@ -1,0 +1,212 @@
+# https://pbrisbin.com/posts/mutt_gmail_offlineimap/
+
+set mbox_type   = Maildir
+set folder = ~/Mail
+
+set tmpdir="~/tmp"
+
+set editor = 'vim -c "set spell spelllang=en_us"'
+
+set shell="/bin/zsh"
+set history=1000  # number of input lines for prompts to remember
+set history_file = "~/.mutt/history"
+set save_history=1000
+
+set mailcap_path="~/.mutt/mutt.mailcap:/etc/mailcap"
+
+# Printing
+set print=ask-yes       # ask before printing
+set print_cmd="muttprint"
+
+set fast_reply
+
+set folder_format="%3C %t %N %f"
+
+# Quotations
+set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set indent_str="> "
+set attribution="Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"              # how to cite the author
+
+set text_flowed=yes
+
+set collapse_unread     # collapse threads with unread mails
+
+# main options
+set realname   = "Baptiste Grenier"
+set mail_check = 0
+set envelope_from
+
+# Load the appropriate profile depending on the folder
+folder-hook Perso/* 'source ~/.mutt/profile.perso'
+folder-hook Gmail/* 'source ~/.mutt/profile.egi'
+folder-hook Perso 'source ~/.mutt/profile.perso'
+folder-hook Gmail 'source ~/.mutt/profile.egi'
+
+# When replying load profile corresponding to the To:
+reply-hook "~t baptiste@bapt.name" "source ~/.mutt/profile.perso"
+reply-hook "~t baptiste.grenier@egi.eu" "source ~/.mutt/profile.egi"
+
+# When sending load profile corresponding to the To:
+send-hook @egi\\.eu$ "source ~/.mutt/profile.egi"
+
+unset move           # gmail does that
+#set move             # Move read email to All Mail folder
+set delete           # don't ask, just do
+unset confirmappend  # don't ask, just do!
+set quit             # don't ask, just do!!
+unset mark_old       # read/new is good enough for me
+
+# sort/threading
+set sort     = threads
+set sort_aux = reverse-last-date-received
+set sort_re
+
+# look and feel
+set pager_index_lines = 8
+set pager_context     = 5
+set pager_stop
+set menu_scroll
+set smart_wrap
+set tilde
+unset markers
+
+# composing
+set fcc_attach
+unset mime_forward
+set forward_format = "Fwd: %s"
+set include
+set forward_quote
+
+# Colors
+source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
+
+# Caching
+# set header_cache =~/.mutt/cache/headers
+# set message_cachedir =~/.mutt/cache/bodies
+# set certificate_file =~/.mutt/certificates
+
+# Querying Google contacts
+set query_command="goobook query %s"
+macro index,pager a "<pipe-message>goobook --verbose add<return>" "add sender to google contacts"
+macro index,pager gr "!goobook reload\n" "Goobook reload"
+bind editor <Tab> complete-query
+
+# Key bindings
+# Needed to fix handling of space in dir names
+bind editor <space> noop
+bind pager g top
+bind pager G bottom
+bind pager j next-line
+bind pager k previous-line
+bind pager i edit
+bind pager R group-reply
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager \cd half-down
+bind pager \ce next-line
+bind pager \cf next-page
+bind pager \cm next-line
+bind pager \cn half-down
+bind pager \cn next-page
+bind pager \cp half-up
+bind pager \cu half-up
+bind pager N next-unread
+bind index,pager F flag-message
+
+# Fetching mail
+macro index \cf "<shell-escape>offlineimap\r"
+
+# default save path
+macro attach s <save-entry><bol>~/Downloads/<eol>
+macro index,pager I  <set-flag>O  "Mark as read"
+macro index,pager U  <clear-flag>O  "Mark as unread"
+
+macro index,pager gl <change-folder>?       "Go to 'Label'"
+macro index,pager gi \
+    <change-folder>=INBOX<enter> \
+    "Go to inbox"
+
+# search mail (using notmuch)"
+macro index <F4> \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
+      "notmuch: search mail"
+
+# search and reconstruct owning thread (using notmuch)"
+macro index <F5> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
+      "notmuch: reconstruct thread"
+
+# macros to invoke a profile
+macro index <F8> ":source ~/.mutt/profile.egi\n" "Load profile: egi"
+macro index <F9> ":source ~/.mutt/profile.perso\n" "Load profile: perso"
+
+macro compose <F8> "<enter-command>source ~/.mutt/profile.egi\n<edit-from>\
+  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu>\n<enter-command>\
+  set editor='chsig ~/.mutt/signature-egi'\n<edit-headers>\n" \
+  "Load profile: egi"
+macro compose <F9> "<enter-command>source ~/.mutt/profile.perso\n<edit-from>\
+  <kill-line>Baptiste Grenier <baptiste@bapt.name>\n<enter-command>\
+  set editor='chsig ~/.mutt/signature-perso'\n<edit-headers>\n" \
+  "Load profile: perso"
+
+#macro index D \
+#    "<save-message>+[Gmail].Bin<enter>" \
+#    "move message to the trash"
+
+# Spelling
+set ispell="aspell -e -c"
+
+# Headers
+#set autoedit            # call editor without prompting for To: and Subject:
+set edit_headers         # edit all headers lines in the editor
+set edit_hdrs editor="vim +/^\$ +:noh"
+# first, ignore all headers
+ignore *
+# then, show only these
+unignore from: date: subject: to: cc: reply-to:
+unignore x-url x-resent organization organisation x-mailing-list:
+unignore x-mailing-list:
+unignore user-agent: x-agent: x-mailer: x-newsreader:
+unignore newsgroups: posted-to: x-also-posted-to:
+unignore sender:
+unignore priority: importance:
+unignore mail-followup-to:
+unignore message-id:
+# and in this order
+unhdr_order *
+hdr_order Sender: From From: Reply-To: Subject: Organization: Date: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent: To: Cc: Newsgroups: X-Resent Followup-To: Mail-Followup-To:
+
+# MIME-Viewer
+unauto_view *
+auto_view text/html
+auto_view application/msword
+auto_view application/pdf
+auto_view image/x-portable
+auto_view image/x-portable-bitmap
+auto_view image/x-portable-graymap
+auto_view image/x-portable-anymap
+auto_view image/x-portable-pixmap
+auto_view application/pgp-signature
+auto_view application/pgp
+auto_view application/x-gunzip
+auto_view application/postscript
+auto_view application/x-troff-man
+auto_view application/x-troff-me
+auto_view application/x-troff
+auto_view application/x-gtar
+auto_view application/x-tar
+auto_view application/x-tar-gz
+auto_view application/x-sh
+auto_view application/x-csh
+auto_view application/x-shar
+auto_view application/x-latex
+auto_view application/x-tex
+auto_view application/x-dvi
+auto_view application/x-zip-compressed
+auto_view application/x-cpio text/richtext
+auto_view application/pgp-keys
+auto_view application/octet-stream
+auto_view text/x-vcard
+auto_view text/enriched
+
+alternative_order text/plain text/html
