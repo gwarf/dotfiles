@@ -129,7 +129,7 @@ bind pager N next-unread
 bind index,pager F flag-message
 
 # Fetching mail
-macro index \cf "<shell-escape>offlineimap\r"
+macro index \cf "<shell-escape>offlineimap -o<enter>"
 
 # default save path
 macro attach s <save-entry><bol>~/Downloads/<eol>
@@ -166,12 +166,20 @@ macro compose <F9> "<enter-command>source ~/.mutt/profile.perso<enter><edit-from
 
 macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
+ macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+# Use Ctrl-l to list URL using urlscan
+
 #macro index D \
 #    "<save-message>+[Gmail].Bin<enter>" \
 #    "move message to the trash"
 
 # Spelling
 set ispell="aspell -e -c"
+
+set send_charset="utf-8"
+
+#set print_command="/usr/bin/muttprint %s -P A4 -p CanonMX920"
+set print_command="/usr/bin/muttprint %s -P A4 -C lpr"
 
 # Headers
 #set autoedit            # call editor without prompting for To: and Subject:

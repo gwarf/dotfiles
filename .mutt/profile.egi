@@ -34,8 +34,8 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # http://wiki.netbsd.org/users/wiz/mutt-smime/
 # gpgsm --import ~/GoogleDrive/dutchgrid.pem
 # gpgsm --import ~/GoogleDrive/Personal\ information/baptiste-grenier-certificate-2017-04-14.p12
+set smime_is_default
 set smime_sign_as = 0x072CBD71
-#unset pgp_autosign
 
 # Include the profile name in the status line
 set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---@egi---%?V?(Filter: %V)?--%>-(%P)---"
@@ -74,3 +74,6 @@ macro index,pager gt \
 
 folder-hook +[Gmail].Bin macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
 folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
+
+# Fetching mail
+macro index \cf "<shell-escape>offlineimap -o -a Gmail<enter>"

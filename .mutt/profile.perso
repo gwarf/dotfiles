@@ -45,3 +45,10 @@ macro index \e2 "<save-message>+_Reply<enter>" "Save Message to _Reply"
 macro index \e3 "<save-message>+_Waiting<enter>" "Save Message to _Waiting"
 macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
 macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
+
+macro index,pager A \
+    '<save-message>+_Read<enter>' \
+    "move message to the archive"
+
+# Fetching mail
+macro index \cf "<shell-escape>offlineimap -o -a Perso<enter>"
