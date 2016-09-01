@@ -1,0 +1,51 @@
+[general]
+#ui = Quiet
+ui = ttyui
+accounts = Gmail,Perso
+maxsyncaccounts = 2
+fsync = false
+pythonfile = /home/baptiste/bin/offlineimap-helpers.py
+
+[Account Gmail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+synclabels = yes
+quick = 10
+postsynchook = notmuch new
+status_backend = sqlite
+
+[Repository Gmail-Local]
+type = GmailMaildir
+localfolders = ~/Mail/Gmail
+
+[Repository Gmail-Remote]
+type = Gmail
+maxconnections = 3
+remoteusereval = get_username("Gmail")
+remotepasseval = get_password("Gmail")
+realdelete = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+
+[Account Perso]
+localrepository = LocalPerso
+remoterepository = BaptName
+quick = 10
+postsynchook = notmuch new
+status_backend = sqlite
+
+[Repository LocalPerso]
+type = Maildir
+localfolders = ~/Mail/Perso
+
+[Repository BaptName]
+type = IMAP
+maxconnections = 3
+remotehost = imap.bapt.name
+ssl = yes
+cert_fingerprint = 65a1ffd4e7cc1f31e2a7ed34c16f7127124b392b
+remoteusereval = get_username('imap.bapt.name')
+remotepasseval = get_password('imap.bapt.name')
+folderfilter = lambda foldername: foldername not in ['Trash']
+idlefolders = ['INBOX']
+#foldersort=mycmp
