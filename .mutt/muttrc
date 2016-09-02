@@ -87,10 +87,14 @@ unset markers
 
 # composing
 set fcc_attach
-unset mime_forward
-set forward_format = "Fwd: %s"
 set include
-set forward_quote
+
+set forward_decrypt=yes
+set forward_decode=yes
+
+# Forward message as attachement
+set mime_forward=ask-yes
+set mime_forward_rest=ask-yes
 
 # Colors
 source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
