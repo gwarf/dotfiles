@@ -138,6 +138,24 @@ bind pager \cu half-up
 bind pager N next-unread
 bind index,pager F flag-message
 
+bind index g first-entry
+bind index G last-entry
+bind index H current-top
+bind index M current-middle
+bind index L current-bottom
+bind index pagedown     next-page
+bind index pageup   previous-page
+bind index zt current-top
+bind index zz current-middle
+bind index zb current-bottom
+bind index { top-page
+bind index } bottom-page
+bind index N toggle-new
+
+# Limit view to current thread
+# http://www.neomutt.org/feature/limit-current-thread/
+bind index <esc>L limit-current-thread
+
 # Fetching mail
 macro index \cf "<shell-escape>offlineimap -o<enter>"
 
