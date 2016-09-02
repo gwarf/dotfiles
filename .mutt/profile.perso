@@ -18,8 +18,7 @@ mailboxes +INBOX
 set from       = "baptiste@bapt.name"
 
 # Signature file
-set signature='~/.mutt/signature-perso'
-#set signature="sh ~/.mutt/createsign.sh|"
+set signature="sh ~/bin/createsign.sh|"
 
 set envelope_from_address="baptiste@bapt.name"
 
@@ -52,3 +51,9 @@ macro index,pager A \
 
 # Fetching mail
 macro index \cf "<shell-escape>offlineimap -o -a Perso<enter>"
+
+# Queryintg abook
+set query_command= "abook --mutt-query '%s'"
+macro index,pager a \
+  "<pipe-message>abook --add-email-quiet<return>" \
+  "add the sender address to abook"

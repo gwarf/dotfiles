@@ -100,10 +100,6 @@ source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
 # set message_cachedir =~/.mutt/cache/bodies
 # set certificate_file =~/.mutt/certificates
 
-# Querying Google contacts
-set query_command="goobook query %s"
-macro index,pager a "<pipe-message>goobook --verbose add<return>" "add sender to google contacts"
-macro index,pager gr "!goobook reload\n" "Goobook reload"
 bind editor <Tab> complete-query
 
 # Key bindings

@@ -77,3 +77,10 @@ folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
 
 # Fetching mail
 macro index \cf "<shell-escape>offlineimap -o -a Gmail<enter>"
+
+# Querying Google contacts
+set query_command="goobook query %s"
+macro index,pager a \
+  "<pipe-message>goobook --verbose add<return>!goobook reload<enter>" \
+  "add sender to google contacts"
+macro index,pager gr "!goobook reload\n" "Goobook reload"
