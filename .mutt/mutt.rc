@@ -88,7 +88,6 @@ set edit_hdrs editor="vim +/^\$ +:noh"
 set beep_new
 set beep
 set indent_str="> "
-set mime_forward="ask-no"
 set noprompt_after
 set read_inc=10          # show count number for every tenth mail
 set write_inc=10         # update number after each tenth read mail
