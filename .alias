@@ -400,4 +400,6 @@ man() {
 #  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 #fi
 
+alias spacemacs='bash ~/bin/spacemacs.bash'
+
 # vim:set ft=sh ts=2 sw=2 et:
