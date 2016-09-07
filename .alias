@@ -340,8 +340,7 @@ alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
 
 # mutt
 
-alias muttperso='mutt -f "=Perso/INBOX"'
-alias mutt='mutt -f "=Gmail/INBOX"'
+alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
 
 #alias git="git-achievements"
 
