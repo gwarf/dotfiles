@@ -265,3 +265,6 @@ alternative_order text/plain text/html
 
 # http://www.neomutt.org/feature/new-mail/
 set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
+
+# Source EGI profile
+source ~/.mutt/profile.egi
