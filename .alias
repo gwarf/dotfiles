@@ -96,6 +96,12 @@ alias svim='sudo vim'
 alias vis='vim "+set si"'
 alias edit='vim'
 
+# XXX aliases for testing dockerized editors
+alias edit_vim_bundle="docker run -ti --rm -v $(pwd):/home/developer/workspace jare/vim-bundle"
+alias edit_vim_bundle_update="docker pull jare/vim-bundle:latest"
+alias edit_drop_in="docker run -ti -v ~/.ssh/id_rsa.pub:/home/developer/.ssh/authorized_keys -v $(pwd):/home/developer/workspace -v /etc/localtime:/etc/localtime:ro -v /var/run/docker.sock:/var/run/docker.sock -d -p 80:80 -p 8080:8080 -p 62222:62222 -p 60001:60001/udp --name drop-in jare/drop-in"
+alias edit_drop_in_update="docker pull jare/drop-in:latest"
+
 # emacs
 alias emacs='emacs -nw'
 alias ec='emacsclient -c --socket-name /tmp/emacs1000/server'
