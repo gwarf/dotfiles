@@ -85,6 +85,7 @@ application/x-msword            ; antiword %s                                   
 application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
 application/vnd.ms-powerpoint   ; mutt_bgrun loimpress %s                        ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.oasis.opendocument.presentation   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.openxmlformats-officedocument.presentationml.slideshow   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
 application/x-pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
 application/pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
 
