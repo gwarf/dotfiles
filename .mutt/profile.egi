@@ -88,6 +88,10 @@ macro index,pager gr "!goobook reload\n" "Goobook reload"
 # Mailing lists
 lists technical-support-cases-c
 subscribe opeations@egi.eu
+subscribe indigo-wp3@lists.indigo-datacloud.eu
+subscribe indigo-wp4@lists.indigo-datacloud.eu
+subscribe indigo-wp5@lists.indigo-datacloud.eu
 
 # Save hooks
+save-hook ' ~s GGUS-Ticket-ID' =helpdesk
 save-hook ' ~e operations-bounces@mailman.egi.eu' =operations
