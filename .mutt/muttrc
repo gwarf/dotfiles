@@ -171,12 +171,12 @@ macro index,pager gi \
 
 # search mail (using notmuch)"
 macro index <F4> \
-      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --remove-dups --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
       "notmuch: search mail"
 
 # search and reconstruct owning thread (using notmuch)"
 macro index <F5> \
-      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt --remove-dups thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
       "notmuch: reconstruct thread"
 
 # macros to invoke a profile
