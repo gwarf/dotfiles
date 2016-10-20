@@ -194,7 +194,7 @@ macro compose <F9> "<enter-command>source ~/.mutt/profile.perso<enter><edit-from
 
 macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
- macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
 # Use Ctrl-l to list URL using urlscan
 
 #macro index D \
@@ -211,8 +211,7 @@ set print_command="/usr/bin/muttprint %s -P A4 -C lpr"
 
 # Headers
 #set autoedit            # call editor without prompting for To: and Subject:
-set edit_headers         # edit all headers lines in the editor
-set edit_hdrs editor="vim +/^\$ +:noh"
+set edit_hdrs         # edit all headers lines in the editor
 # first, ignore all headers
 ignore *
 # then, show only these
