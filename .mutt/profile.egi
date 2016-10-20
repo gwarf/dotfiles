@@ -25,7 +25,7 @@ set envelope_from_address="baptiste.grenier@egi.eu"
 unmy_hdr *                      # remove all extra headers first.
 
 my_hdr Organization: EGI Foundation
-my_hdr X-URL: http://egi.eu
+my_hdr X-URL: https://egi.eu
 
 my_hdr From: Baptiste Grenier <baptiste.grenier@egi.eu>
 my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
