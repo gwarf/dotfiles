@@ -1,72 +1,29 @@
 # shell aliases
 
-OS="$(uname)"
-#if [ "$OS" = "FreeBSD" ]; then
-#  alias ls='ls -h -F -G'
-#  alias du='du -h'
-#  alias ducks='du -cks * | sort -rn | head -15'
-#elif [ "$OS" = "Linux" ]; then
-#  alias du='du --human-readable'
-#  alias ls='ls --classify --tabsize=0 --literal --color=auto --show-control-chars --human-readable --group-directories-first'
-#  alias locate='locate -i'
-#  alias dirtree="ls -R | grep \":$\" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
-#  alias info='info --vi-keys'
-#elif [ "$OS" = "SunOS" ]; then
-#  [ $DISPLAY != "x" ] && alias vim='TERM=xtermc vim'
-#  alias ls='/usr/gnu/bin/ls --color=auto'
-#fi
-
 alias c='clear'
 
-# Grep aliases
-#grep --exclude-dir 2> /dev/null
-#if [ $? -eq 0 ]; then
-#  alias grepc='grep --color=always --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
-#  alias grep='grep --color=auto --exclude-dir=.svn --exclude=\*.pyc --exclude-dir=.hg --exclude-dir=.bzr --exclude-dir=.git'
-#else
-#  alias grep='grep --color --exclude=\*.svn\* --exclude=\*.pyc --exclude=\*.hg\* --exclude=\*.bzr\* --exclude=\*.git\*'
-#fi
-
-#  ls and colors
-# eval `dircolors -b`
 # Long listing by default
-#alias l='ls -lh'
-#alias ll='l'
-#alias la='ls -lAh'
-#alias lll='ls -l | less'
-#alias llla='ls -lA | less'
+alias l='ls -lh'
 ## list only directories
-#alias lsd='\ls -d */'
+alias lsd='\ls -d */'
 ## list only files
-#alias lsf="ls -rtF | grep -v '.*/'"
-## list only source code (c, c++, Perl in my case)
-#alias lsp='ls *.c *.h *.cc *.pl *.pm *.py *.rb *.pp *.sh'
+alias lsf="ls -rtF | grep -v '.*/'"
 ## Sort files by size
-#alias lss="ls -lrSF --si --color"
+alias lss="ls -lrSF --si --color"
 
 # do not delete / or prompt if deleting more than 3 files at a time
 alias rm='rm -I --preserve-root'
-
-# confirmation for mv/cp/ln
-alias mv='mv -i'
-alias cp='cp -i'
-alias ln='ln -i'
 
 # Parenting changing perms on /
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# directory navigation
-#alias ..='cd ..'
-#alias ...='cd ../..'
-#alias cd..='cd ..'
-
 # df
 if command -v "pydf" >/dev/null 2>&1; then
   alias df='pydf'
 else
-  alias df='df --human-readable'
+  alias df='df -kh'
 fi
 
 alias qfind='find . -iname'
@@ -109,10 +66,6 @@ alias ec='emacsclient -c --socket-name /tmp/emacs1000/server'
 # rake
 # setopt extended_glob causes troubles with rake tasks' arguments
 alias rake='noglob rake'
-
-# ssh
-#alias ssh='TERM=xterm-256color ssh'
-#alias ssh='TERM=screen ssh'
 
 # Suffix aliases to open files automatically
 if [ $SHELL = '/bin/zsh' ]; then
@@ -174,6 +127,11 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 ## pass options to free
 alias meminfo='free -m -l -t'
 
+# Output total memory currently in use by you
+memtotaller() {
+  /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
+}
+
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
 alias psmem10='ps auxf | sort -nr -k 4 | head -10'
@@ -202,73 +160,10 @@ fi
 
 alias kernelinfo='lynx -dump http://www.kernel.org/kdist/finger_banner'
 
-# cvs
-alias cvsstat='cvs status \!* | grep "Status:"'
-alias cvswhat='cvs status \!* | grep "Status:" | grep -v "to-date"'
-
 alias eclipse='eclipse -Xms1024M -Xmx4096M -XX:MaxPermSize=512M'
 
 alias gi='git'
 alias git='hub'
-alias git_update_all='for f (*); do (echo "\nUpdating $f"; cd $f ; git pull; cd ..); done'
-alias git_push_all='for f (*); do (echo "\nUpdating $f"; cd $f ; git pull && git push; cd ..); done'
-
-alias svn_update_all='for f (*); do (echo "\nUpdating $f"; cd $f ; svn up; cd ..); done'
-alias svn_status_all='for f (*); do (echo "\nStatus of $f"; cd $f ; svn st; cd ..); done'
-
-svn_add_all() {
-  for f in `svn st| grep \? | awk '{print $2}'` ; do svn add $f ; done
-}
-
-#gg() {
-#  outfile="/tmp/gg-${USER}"
-#  q="$(echo $@ | sed 's/ /+/g')"
-#  s_umask=`umask`
-#  umask 077
-#  lynx -dump -listonly -hiddenlinks=ignore http://google.fr/search\?q="${q}" | awk ' \
-#  BEGIN { \
-#    n = 0; \
-#  } \
-#  $1 ~ /[[:digit:]]+\./ && $2 !~ /http:\/\/([[:alpha:]][[:alnum:]]+\.google|[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+\/search)/ { \
-#    print "alias g"n"=\"epiphany -n \\\""$2"\\\"\""; \
-#    print "printf \"%4d. %s\\n\" "n" \""$2"\""; \
-#    n++ \
-#  } ' > "${outfile}"
-#  s_umask=$s_umask
-#  . "${outfile}"
-#  rm "${outfile}"
-#}
-
-# Generates a tough password of a given length
-function genpass() {
-  if [ ! "$1" ]; then
-    echo "Usage: $0 20"
-    echo "For a random, 20-character password."
-    return 1
-  fi
-  dd if=/dev/urandom count=1 2>/dev/null | tr -cd 'A-Za-z0-9!@#$%^&*()_+' | cut -c-$1
-}
-
-# Output total memory currently in use by you
-memtotaller() {
-  /bin/ps -u $(whoami) -o pid,rss,command | awk '{sum+=$2} END {print "Total " sum / 1024 " MB"}'
-}
-
-# Converts a PDF to a fold-able booklet sized PDF
-# Print it double-sided and fold in the middle
-bookletize () {
-  if which pdfinfo && which pdflatex; then
-    pagecount=$(pdfinfo $1 | awk '/^Pages/{print $2+3 - ($2+3)%4;}')
-
-    # create single fold booklet form in the working directory
-    pdflatex -interaction=batchmode \
-      '\documentclass{book}\
-      \usepackage{pdfpages}\
-      \begin{document}\
-      \includepdf[pages=-,signature='$pagecount',landscape]{'$1'}\
-      \end{document}' 2>&1 >/dev/null
-  fi
-}
 
 # Merges, or joins multiple PDF files into "joined.pdf"
 joinpdf () {
@@ -279,38 +174,6 @@ joinpdf () {
 256test() {
   echo -e "\e[38;5;196mred\e[38;5;46mgreen\e[38;5;21mblue\e[0m"
 }
-
-# Miscellaneous Functions:
-# ..(), ...() for quickly changing $CWD
-# http://www.shell-fu.org/lister.php?id=769
-# Go up n levels:
-# .. 3
-# function .. (){
-#   local arg=${1:-1};
-#   local dir=""
-#   while [ $arg -gt 0 ]; do
-#     dir="../$dir"
-#     arg=$(($arg - 1));
-#   done
-#   cd $dir >&/dev/null
-# }
-
-# Go up to a named dir
-# ... usr
-# function ... () {
-#   if [ -z "$1" ]; then
-#     return
-#   fi
-#   local maxlvl=16
-#   local dir=$1
-#   while [ $maxlvl -gt 0 ]; do
-#     dir="../$dir"
-#     maxlvl=$(($maxlvl - 1));
-#     if [ -d "$dir" ]; then
-#       cd $dir >&/dev/null
-#     fi
-#   done
-# }
 
 # Dictionary lookup
 # Many more options, see:
@@ -323,27 +186,14 @@ spell() {
   echo $1 | aspell -a
 }
 
-alias tips.txt='vim ~/tips.txt'
-
-# Grep ~/tips.txt
-tips() {
-  grep "$@" ~/tips.txt
-}
-
 alias vimprobable2="vimprobable2 -e \"\$(tabbed -d)\""
 alias vimbtabbed='tabbed -c vimb -e'
 
 alias http-server-python2='python -m SimpleHTTPServer 8000'
 alias http-server-python3='python -m http.server 8000'
 
-alias big_syncthing='ssh -N -L 8081:localhost:45028 big.bapt.name'
-alias htpc_syncthing='ssh -N -L 8082:localhost:47101 htpc'
-
 # mutt
-
 alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
-
-#alias git="git-achievements"
 
 if command -v "ssh-multi" >/dev/null 2>&1; then
   alias tmux-pcdr-all='ssh-multi clrpcsv-ginseng-cas-vdev01.in2p3.fr clrpcsv-ginseng-gw-devel01.in2p3.fr ginseng.unice.fr pcdr-amga.gnubila.fr pcdr-gw-ccpm1.gnubila.fr pcdr-gw-devel1.gnubila.fr pcdr-gw-opbg1.gnubila.fr pcdr-querynode.gnubila.fr'
@@ -406,7 +256,7 @@ man() {
 #  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 #fi
 
-alias spacemacs='bash ~/bin/spacemacs.bash'
+#alias spacemacs='bash ~/bin/spacemacs.bash'
 
 #alias msfconsole="msfconsole -x \"db_connect ${USER}@msf\""
 # vim:set ft=sh ts=2 sw=2 et:
