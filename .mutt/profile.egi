@@ -89,11 +89,19 @@ macro index,pager gr "!goobook reload\n" "Goobook reload"
 lists technical-support-cases-c
 subscribe opeations@egi.eu
 subscribe office@mailman.egi.eu
+subscribe indigo-datacloud-ea@lists.indigo-datacloud.eu
+subscribe indigo-datacloud-spb@lists.indigo-datacloud.eu
+subscribe indigo-integration-pilot@lists.indigo-datacloud.eu
+subscribe indigo-emt@lists.indigo-datacloud.eu
+subscribe indigo-wp2@lists.indigo-datacloud.eu
 subscribe indigo-wp3@lists.indigo-datacloud.eu
 subscribe indigo-wp4@lists.indigo-datacloud.eu
 subscribe indigo-wp5@lists.indigo-datacloud.eu
+subscribe onedata-test@lists.indigo-datacloud.eu
 
 # Save hooks
 save-hook ' ~s GGUS-Ticket-ID' =helpdesk
 save-hook ' ~e operations-bounces@mailman.egi.eu' =operations
 save-hook ' ~e office-bounces@mailman.egi.eu' =office
+save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
+save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
