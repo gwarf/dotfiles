@@ -72,7 +72,8 @@ macro index,pager gt \
     "<change-folder>+[Gmail].Sent Mail<enter>" \
     "Go to 'Sent Mail'"
 
-folder-hook +[Gmail].Bin 'set sort=reverse-date-sent'
+folder-hook +[Gmail].Bin 'set sort=reverse-date'
+folder-hook Sent 'set sort=reverse-date-sent'
 folder-hook +[Gmail].Bin macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
 folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
 
