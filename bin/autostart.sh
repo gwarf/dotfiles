@@ -29,14 +29,22 @@ run_once nitrogen "--restore"
 
 # Pulse audio
 pkill pulseaudio; sleep 3 && pulseaudio --start -D
-pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
-run_once pasystray
+#pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
+#run_once pasystray
 #exec --no-startup-id volti # starting volume control
 #exec --no-startup-id pa-applet
 
+# Automatic mounting
+devmon --no-gui &
+
+insync start
+dropbox
+
+run_once arandr-indicator
+
 # MPD
-run_once mpd
-run_once mpdscribble
+#run_once mpd
+#run_once mpdscribble
 
 # NetworkManager
 run_once nm-applet
@@ -50,20 +58,21 @@ run_once clipit
 #urxvtd -f -o
 
 # Misc
-run_once revelation \
-  ~/repos/perso/gwarf/private/revelation/keyring-perso \
-  "/usr/bin/python.*/bin/revelation.*/keyring-perso"
-run_once revelation \
-  ~/repos/perso/gwarf/private/revelation/keyring-maatg \
-  "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
+#run_once revelation \
+#  ~/repos/perso/gwarf/private/revelation/keyring-perso \
+#  "/usr/bin/python.*/bin/revelation.*/keyring-perso"
+#run_once revelation \
+#  ~/repos/perso/gwarf/private/revelation/keyring-maatg \
+#  "/usr/bin/python.*/bin/revelation.*/keyring-maatg"
 
 run_once terminology
 run_once pidgin
+run_once skypeforlinux
 run_once firefox
 run_once redshift
 run_once redshift-gtk
-run_once rofi "-key mod1+tab -terminal urxvtc"
-run_once JDownloader
+#run_once rofi "-key mod1+tab -terminal urxvtc"
+#run_once JDownloader
 
 # Disabled
 #run_once workrave
