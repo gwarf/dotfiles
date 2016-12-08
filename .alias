@@ -252,6 +252,9 @@ man() {
     man "$@"
 }
 
+# Force 256 color in tmux
+#alias tmux='tmux -2'
+
 #if command -v "thefuck" >/dev/null 2>&1; then
 #  alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 #fi
