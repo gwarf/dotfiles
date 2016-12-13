@@ -262,4 +262,5 @@ man() {
 #alias spacemacs='bash ~/bin/spacemacs.bash'
 
 #alias msfconsole="msfconsole -x \"db_connect ${USER}@msf\""
+
 # vim:set ft=sh ts=2 sw=2 et:
