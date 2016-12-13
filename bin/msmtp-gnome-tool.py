@@ -24,9 +24,9 @@ import sys, os.path, optparse, getpass
 try:
     import gnomekeyring as gk
 except ImportError:
-    print """Unable to import gnome keyring module
+    print("""Unable to import gnome keyring module
 On Debian like systems you probably need to install the following package(s):
-python-gnomekeyring"""
+python-gnomekeyring""")
     sys.exit(-1)
 
 class keyringManager():
@@ -39,14 +39,14 @@ class keyringManager():
             self.app = 'mpop'
             self.protocol = 'pop3'
         else:
-            print "ERR: program must contain 'msmtp' or 'mpop' in its name"
+            print("ERR: program must contain 'msmtp' or 'mpop' in its name")
             sys.exit(-1)
         # get default keyring name
         try:
             self.keyring = gk.get_default_keyring_sync()
         except gk.NoKeyringDaemonError:
-            print "ERR: can't open gnome keyring"
-            print "Are you running this program under a GNOME session ?"
+            print("ERR: can't open gnome keyring")
+            print("Are you running this program under a GNOME session ?")
             sys.exit(-1)
 
     def get_app(self):
@@ -83,11 +83,11 @@ class keyringManager():
         ret = True
         passwd = self.get(username, server)
         if passwd is None:
-            print "No password set for user '%s' in server '%s'" % (username, server)
+            print("No password set for user '%s' in server '%s'" % (username, server))
             ret = False
         else:
             #print "Password for user '%s' in server '%s': '%s'" % (username, server, passwd)
-            print passwd
+            print(passwd)
 
         return ret
 
@@ -95,21 +95,21 @@ class keyringManager():
         ret = True
         # Does it already exist?
         if self.get(username, server) is not None:
-            print "ERR: %s password for user '%s' in server '%s' already exists, try do delete it first" \
-                    % (self.get_app().upper(), username, server)
+            print("ERR: %s password for user '%s' in server '%s' already exists, try do delete it first" \
+                    % (self.get_app().upper(), username, server))
             ret = False
         else:
             msg = "Password for user '%s' in server '%s' ? " %(username, server)
             passwd = getpass.getpass(msg)
             passwd_confirmation = getpass.getpass("Confirmation ? ")
             if passwd != passwd_confirmation:
-                print "ERR: password and password confirmation mismatch"
+                print( "ERR: password and password confirmation mismatch")
                 ret = False
             else:
                 if self.set(username, passwd, server):
-                    print "Password successfully set"
+                    print("Password successfully set")
                 else:
-                    print "ERR: Password failed to set"
+                    print("ERR: Password failed to set")
                     ret = False
 
         return ret
@@ -121,12 +121,13 @@ class keyringManager():
         try:
             results = gk.find_network_password_sync(user=username, server=server, protocol=protocol)
         except gk.NoMatchError:
-            print "No password set for user '%s' in server '%s'" % (username, server)
+            print("No password set for user '%s' in server '%s'" % (username,
+                    server))
             ret = False
 
         if ret:
             gk.item_delete_sync(self.keyring, results[0]['item_id'])
-            print "Password successfully removed"
+            print("Password successfully removed")
 
         return ret
 
@@ -150,11 +151,11 @@ def main():
 
     if not opts.setpass and not opts.getpass and not opts.delpass:
         parser.print_help()
-        print "ERR: You have to use -s or -g or -d"
+        print("ERR: You have to use -s or -g or -d")
         ret = False
     elif not opts.username or not opts.server:
         parser.print_help()
-        print "ERR: You have to use both --username and --server"
+        print("ERR: You have to use both --username and --server")
         ret = False
     elif opts.getpass:
         ret = km.getpass(opts.username, opts.server)
@@ -163,7 +164,7 @@ def main():
     elif opts.delpass:
         ret = km.delpass(opts.username, opts.server)
     else:
-        print "ERR: Unknown option(s)"
+        print("ERR: Unknown option(s)")
         ret = False
 
     return ret
