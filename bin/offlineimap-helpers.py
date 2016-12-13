@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 import re
 import sys
@@ -6,7 +6,7 @@ import gtk
 import gnomekeyring as gkey
 
 class Keyring(object):
-    def __init__(self, name, server, protocol):
+    def __init__(self, name, server, protocol, user=None):
         self._name = name
         self._server = server
         self._protocol = protocol
@@ -39,8 +39,8 @@ def get_username(server):
     (username, password) = keyring.get_credentials()
     return username
 
-def get_password(server):
-    keyring = Keyring("offlineimap", server, "imap")
+def get_password(server, user=None):
+    keyring = Keyring("offlineimap", server, "imap", user)
     (username, password) = keyring.get_credentials()
     return password
 
@@ -80,3 +80,19 @@ def oimaptransfolder_gmail(foldername):
     retval = re.sub("/", ".", retval)
     return retval
 
+if __name__ == "__main__":
+    import sys
+    import os
+    import getpass
+    if len(sys.argv) != 3:
+        print "Usage: %s <repository> <username>" \
+            % (os.path.basename(sys.argv[0]))
+        sys.exit(0)
+    repo, username = sys.argv[1:]
+    password = getpass.getpass("Enter password for user '%s': " % username)
+    password_confirmation = getpass.getpass("Confirm password: ")
+    if password != password_confirmation:
+        print "Error: password confirmation does not match"
+        sys.exit(1)
+    keyring = Keyring("offlineimap", repo, "imap")
+    keyring.set_credentials((username, password))
