@@ -21,6 +21,8 @@ localfolders = ~/Mail/Gmail
 [Repository Gmail-Remote]
 type = Gmail
 maxconnections = 3
+# Adding passwords to gnome keyring
+# /bin/offlineimap-helpers.py Gmail baptiste.grenier@eg.eu
 remoteusereval = get_username("Gmail")
 remotepasseval = get_password("Gmail")
 realdelete = no
@@ -44,8 +46,10 @@ maxconnections = 3
 remotehost = imap.bapt.name
 ssl = yes
 cert_fingerprint = 65a1ffd4e7cc1f31e2a7ed34c16f7127124b392b
-remoteusereval = get_username('imap.bapt.name')
-remotepasseval = get_password('imap.bapt.name')
+# Adding passwords to gnome keyring
+# /bin/offlineimap-helpers.py BaptName baptiste
+remoteusereval = get_username('BaptName')
+remotepasseval = get_password('BaptName')
 folderfilter = lambda foldername: foldername not in ['Trash']
 idlefolders = ['INBOX']
 #foldersort=mycmp
