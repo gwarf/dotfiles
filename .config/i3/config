@@ -207,7 +207,7 @@ bar {
     }
 }
 
-assign [class="Firefox" instance="Navigator"] → $WS2
+#assign [class="Firefox" instance="Navigator"] → $WS2
 assign [class="Pidgin"] → $WS3
 assign [class="skypeforlinux"] → $WS3
 assign [class="terminology"] → $WS1
@@ -234,12 +234,11 @@ exec --no-startup-id pulseaudio --start
 exec --no-startup-id clipit
 exec --no-startup-id pasystray
 exec --no-startup-id nm-applet
-exec --no-startup-id arandr-indicator
 
 # Files synchronization
 exec --no-startup-id insync start
 exec --no-startup-id owncloud
-exec --no-startup-id dropbox
+#exec --no-startup-id dropbox
 
 # Gnomery
 #exec --no-startup-id gnome-sound-applet
