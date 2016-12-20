@@ -10,7 +10,7 @@ set certificate_file =~/.mutt/certificates
 
 set tmpdir="~/tmp"
 
-set editor = 'vim -c "set spell spelllang=en_us"'
+set editor = 'vim'
 
 set shell="/bin/zsh"
 set history=1000  # number of input lines for prompts to remember
