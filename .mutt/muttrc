@@ -1,23 +1,23 @@
 # https://pbrisbin.com/posts/mutt_gmail_offlineimap/
 
-set mbox_type   = Maildir
+set mbox_type = Maildir
 set folder = ~/Mail
 
 # Caching
-set header_cache =~/.mutt/cache/headers
-set message_cachedir =~/.mutt/cache/bodies
-set certificate_file =~/.mutt/certificates
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
 
-set tmpdir="~/tmp"
+set tmpdir = '~/tmp'
 
 set editor = 'vim'
 
-set shell="/bin/zsh"
-set history=1000  # number of input lines for prompts to remember
+set shell = "/bin/zsh"
+set history = 1000  # number of input lines for prompts to remember
 set history_file = "~/.mutt/history"
-set save_history=1000
+set save_history = 1000
 
-set crypt_use_gpgme=yes
+set crypt_use_gpgme = yes
 set smime_is_default = yes
 
 set crypt_autosmime = yes
@@ -27,26 +27,26 @@ set crypt_replysign = yes
 set crypt_replysignencrypted = yes
 set smime_ask_cert_label
 
-set mailcap_path="~/.mutt/mutt.mailcap:/etc/mailcap"
+set mailcap_path = "~/.mutt/mutt.mailcap:/etc/mailcap"
 
 # Printing
-set print=ask-yes       # ask before printing
-set print_cmd="muttprint"
+set print = ask-yes       # ask before printing
+set print_cmd = "muttprint"
 
 set fast_reply
 
-set folder_format="%3C %t %N %f"
+set folder_format = "%3C %t %N %f"
 
 # Quotations
-set quote_regexp="^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
-set attribution="Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set attribution = "Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"
 
-set text_flowed=yes
+set text_flowed = yes
 
 set collapse_unread     # collapse threads with unread mails
 
 # main options
-set realname   = "Baptiste Grenier"
+set realname = "Baptiste Grenier"
 set mail_check = 0
 set envelope_from
 
@@ -71,13 +71,13 @@ set quit             # don't ask, just do!!
 unset mark_old       # read/new is good enough for me
 
 # sort/threading
-set sort     = threads
+set sort = threads
 set sort_aux = reverse-last-date-received
 set sort_re
 
 # look and feel
 set pager_index_lines = 8
-set pager_context     = 5
+set pager_context = 5
 set pager_stop
 set menu_scroll
 set smart_wrap
@@ -88,12 +88,12 @@ unset markers
 set fcc_attach
 set include
 
-set forward_decrypt=yes
-set forward_decode=yes
+set forward_decrypt = yes
+set forward_decode = yes
 
 # Forward message as attachement
-set mime_forward=ask-yes
-set mime_forward_rest=ask-yes
+set mime_forward = ask-yes
+set mime_forward_rest = ask-yes
 
 # Colors
 #source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
@@ -202,12 +202,12 @@ macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
 #    "move message to the trash"
 
 # Spelling
-set ispell="aspell -e -c"
+set ispell = "aspell -e -c"
 
-set send_charset="utf-8"
+set send_charset = "utf-8"
 
 #set print_command="/usr/bin/muttprint %s -P A4 -p CanonMX920"
-set print_command="/usr/bin/muttprint %s -P A4 -C lpr"
+set print_command = "/usr/bin/muttprint %s -P A4 -C lpr"
 
 # Headers
 #set autoedit            # call editor without prompting for To: and Subject:
@@ -262,6 +262,12 @@ auto_view text/x-vcard
 auto_view text/enriched
 
 alternative_order text/plain text/html
+
+# Disaplay filter
+#set display_filter=/home/baptiste/.mutt/mutt_display_filter
+#set display_filter=/home/baptiste/.mutt/test_display_filter
+#set display_filter='par 72gqr'
+#set wrapmargin=60
 
 # http://www.neomutt.org/feature/new-mail/
 set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
