@@ -214,9 +214,9 @@ assign [class="terminology"] → $WS1
 assign [class="Terminator"] → $WS1
 
 for_window [class="Pcmanfm"] floating enable
-for_window [class="pinentry"] floating enable
 for_window [class="VirtualBox"] layout tabbed
 for_window [class="Thunar"] floating enable
+for_window [class="Pinentry"] floating enable
 
 # start the session
 # http://i3wm.org/docs/user-contributed/lzap-config.html
