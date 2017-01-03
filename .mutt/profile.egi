@@ -105,9 +105,12 @@ subscribe envriplus-wp9@helsinki.fi
 
 # Save hooks
 save-hook ' ~s GGUS-Ticket-ID' =helpdesk
+save-hook ' ~s Backup' =backup
+save-hook ' ~s oss-security' =security
+save-hook ' ~e fulldisclosure-bounces@seclists.org' =security
 save-hook ' ~e operations-bounces@mailman.egi.eu' =operations
 save-hook ' ~e office-bounces@mailman.egi.eu' =office
 save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
 save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
 save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
-save-hook ' ~f technical-support-cases-c@rt.egi.eu' =technical-support-cases
+save-hook ' ~f technial-support-cases-c@rt.egi.eu' =technical-support-cases
