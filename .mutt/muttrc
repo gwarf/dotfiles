@@ -201,6 +201,9 @@ macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
 #    "<save-message>+[Gmail].Bin<enter>" \
 #    "move message to the trash"
 
+# show flagged and unread mails (i.e. important)
+macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
+
 # Spelling
 set ispell = "aspell -e -c"
 
