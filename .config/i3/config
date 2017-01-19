@@ -152,6 +152,20 @@ bindsym $mod+Mod1+j  move workspace to output down
 bindsym $mod+Mod1+k    move workspace to output up
 bindsym $mod+Mod1+l  move workspace to output left
 
+# The middle button over a titlebar kills the window
+bindsym --release button2 kill
+
+# The middle button and a modifer over any part of the window kills the window
+bindsym --whole-window $mod+button2 kill
+
+# The right button toggles floating
+bindsym button3 floating toggle
+bindsym $mod+button3 floating toggle
+
+# The side buttons move the window around
+bindsym button9 move left
+bindsym button8 move right
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
@@ -215,6 +229,7 @@ assign [class="Terminator"] → $WS1
 
 for_window [class="Pcmanfm"] floating enable
 for_window [class="VirtualBox"] layout tabbed
+#for_window [class="VirtualBox"] floating enable
 for_window [class="Thunar"] floating enable
 for_window [class="Pinentry"] floating enable
 
