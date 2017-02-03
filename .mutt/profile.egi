@@ -91,10 +91,12 @@ macro index,pager gr "!goobook reload\n" "Goobook reload"
 lists technical-support-cases-c@rt.egi.eu
 subscribe operations@egi.eu
 subscribe office@mailman.egi.eu
+subscribe indigo-all@lists.indigo-datacloud.eu
+subscribe indigo-announce@lists.indigo-datacloud.eu
 subscribe indigo-datacloud-ea@lists.indigo-datacloud.eu
 subscribe indigo-datacloud-spb@lists.indigo-datacloud.eu
-subscribe indigo-integration-pilot@lists.indigo-datacloud.eu
 subscribe indigo-emt@lists.indigo-datacloud.eu
+subscribe indigo-integration-pilot@lists.indigo-datacloud.eu
 subscribe indigo-wp2@lists.indigo-datacloud.eu
 subscribe indigo-wp3@lists.indigo-datacloud.eu
 subscribe indigo-wp3-lead@lists.indigo-datacloud.eu
@@ -110,7 +112,7 @@ save-hook ' ~s Backup' =backup
 save-hook ' ~s oss-security' =security
 save-hook ' ~e fulldisclosure-bounces@seclists.org' =security
 save-hook ' ~e operations-bounces@.*\.egi\.eu' =operations
-save-hook ' ~e office-bounces@mailman.egi.eu' =office
+save-hook ' ~e office-bounces@.*\.egi\.eu' =office
 save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
 save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
 save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
