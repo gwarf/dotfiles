@@ -115,8 +115,8 @@ bindsym XF86Display exec lxrandr
 # Workspace conf
 set $WS1 1:term
 set $WS2 2:web
-set $WS3 3:misc
-set $WS4 4:code
+set $WS3 3:chat
+set $WS4 4:vbox
 set $WS5 5:media
 
 workspace $WS3 output DP-4
