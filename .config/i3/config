@@ -34,10 +34,10 @@ new_window pixel 1
 new_float normal
 
 # solarized
-client.focused   #93a1a1 #073642 #93a1a1
+client.focused          #93a1a1 #073642 #93a1a1
 client.focused_inactive #586e75 #002b36 #586e75
-client.unfocused #657b83 #002b36 #657b83
-client.urgent  #d33682 #073642 #d33682
+client.unfocused        #657b83 #002b36 #657b83
+client.urgent           #d33682 #073642 #d33682
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
