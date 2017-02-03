@@ -9,6 +9,8 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# Sending a command to i3 from the shell: i3-msg
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -40,6 +42,10 @@ client.urgent  #d33682 #073642 #d33682
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# make things usable
+#workspace_auto_back_and_forth yes
+focus_follows_mouse no
+
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec terminator
@@ -54,6 +60,11 @@ bindsym $mod+d exec "rofi -modi 'run,window' -show run"
 bindsym Mod1+Tab focus right
 bindsym Mod1+Shift+Tab focus left
 bindsym $mod+Tab workspace back_and_forth
+
+bindsym $mod+p workspace prev
+bindsym $mod+n workspace next
+bindsym $mod+Control+Left workspace prev
+bindsym $mod+Control+Right workspace next
 
 # change focus
 bindsym $mod+h focus left
@@ -80,6 +91,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+bindsym $mod+Shift+D layout default
 
 # toggle tiling / floating
 bindsym $mod+space floating toggle
@@ -92,6 +104,13 @@ bindsym $mod+a focus parent
 
 # focus the child container
 bindsym $mod+c focus child
+
+# special laptop keys!
+bindsym XF86Display exec lxrandr
+
+# universal pause button!
+#set $exi exec --no-startup-id
+#bindsym Pause $exi pause-button
 
 # Workspace conf
 set $WS1 1:term
@@ -116,15 +135,14 @@ bindsym $mod+Shift+3 move container to workspace $WS3
 bindsym $mod+Shift+4 move container to workspace $WS4
 bindsym $mod+Shift+5 move container to workspace $WS5
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# jump to the last urgent window
+bindsym $mod+u [urgent=latest] focus
 
 # scratchapd
+# move the currently focused window to the scratchpad
 bindsym $mod+m move scratchpad
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+o scratchpad show
 
 # move all floating windows to the scratchpad
@@ -140,17 +158,15 @@ bindsym XF86Launch1 exec /usr/bin/pactl play-sample that_was_easy
 bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 5
 
-# Lock screen
-bindsym $mod+Control+l exec i3lock-wrapper
-
 # Screenshot
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 
 # move workspace to outputs
-bindsym $mod+Mod1+h move workspace to output right
-bindsym $mod+Mod1+j  move workspace to output down
-bindsym $mod+Mod1+k    move workspace to output up
-bindsym $mod+Mod1+l  move workspace to output left
+# Win, alt
+bindsym $mod+Mod1+h move workspace to output left
+bindsym $mod+Mod1+j move workspace to output down
+bindsym $mod+Mod1+k move workspace to output up
+bindsym $mod+Mod1+l move workspace to output right
 
 # The middle button over a titlebar kills the window
 bindsym --release button2 kill
@@ -165,6 +181,15 @@ bindsym $mod+button3 floating toggle
 # The side buttons move the window around
 bindsym button9 move left
 bindsym button8 move right
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# Lock screen
+bindsym $mod+Control+l exec i3lock-wrapper
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -226,12 +251,18 @@ assign [class="Pidgin"] → $WS3
 assign [class="skypeforlinux"] → $WS3
 assign [class="terminology"] → $WS1
 assign [class="Terminator"] → $WS1
+assign [class="(?i)virtualbox"] → $WS4
 
 for_window [class="Pcmanfm"] floating enable
-for_window [class="VirtualBox"] layout tabbed
-#for_window [class="VirtualBox"] floating enable
+#for_window [class="(?i)virtualbox"] layout stacking
+for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Thunar"] floating enable
 for_window [class="Pinentry"] floating enable
+
+
+# Start keepass in the scratchpad
+#for_window [instance="scratchpad"] move scratchpad
+for_window [class="(?i)keepassx2"] move scratchpad
 
 # start the session
 # http://i3wm.org/docs/user-contributed/lzap-config.html
@@ -267,5 +298,8 @@ exec --no-startup-id terminator
 # IM
 exec --no-startup-id pidgin
 exec --no-startup-id skypeforlinux
+
+#exec --no-startup-id keepassx -name scratchpad
+exec --no-startup-id keepassx2
 
 # vim:filetype=i3
