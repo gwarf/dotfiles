@@ -43,10 +43,10 @@ if command -v "highlight" >/dev/null 2>&1; then
 fi
 
 # Use VIM!
-#if command -v "nvim" >/dev/null 2>&1; then
-#  alias vim='nvim'
-#  alias vimdiff='nvim -d'
-#fi
+if command -v "nvim" >/dev/null 2>&1; then
+  alias vim='nvim'
+  alias vimdiff='nvim -d'
+fi
 alias vi='vim'
 alias svi='sudo vi'
 alias svim='sudo vim'
