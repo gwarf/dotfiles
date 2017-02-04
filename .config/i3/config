@@ -105,8 +105,9 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+c focus child
 
-# special laptop keys!
-bindsym XF86Display exec lxrandr
+# special laptop keys
+# XXX triggered on LID closing/opening
+#bindsym XF86Display exec lxrandr
 
 # universal pause button!
 #set $exi exec --no-startup-id
@@ -254,8 +255,14 @@ assign [class="Terminator"] → $WS1
 assign [class="(?i)virtualbox"] → $WS4
 
 for_window [class="Pcmanfm"] floating enable
+# class VirtualBox: VM windows
+# class virtualbox: Manager window
+#for_window [title="(?i)Oracle VM VirtualBox Manager"] layout default
 #for_window [class="(?i)virtualbox"] layout stacking
-for_window [class="(?i)virtualbox"] floating enable border normal
+# Manager tiling
+for_window [class="virtualbox"] layout default
+# VM Floating
+for_window [class="VirtualBox"] floating enable border normal
 for_window [class="Thunar"] floating enable
 for_window [class="Pinentry"] floating enable
 
@@ -301,5 +308,8 @@ exec --no-startup-id skypeforlinux
 
 #exec --no-startup-id keepassx -name scratchpad
 exec --no-startup-id keepassx2
+
+# Enable masquerading of VirtualBox host-only network
+exec --no-startup-id /home/baptiste/bin/vbox-forward.sh
 
 # vim:filetype=i3
