@@ -1,0 +1,14 @@
+" Search provider
+set defsearch=qwant
+
+" Set hintkeys according to my home row in my keyboard layout
+set hintchars=asdfhjkl
+
+" Autocomplete using Firefox location bar entries and search engines
+set complete=ls
+
+" Select the longest autocomplete match
+set wildmode='list:full'
+
+" Show a (n)umber on tabs, the (b)ottom scrollbar, and the (r)ight scrollbar
+"set guioptions=nbr
