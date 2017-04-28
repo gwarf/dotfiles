@@ -49,11 +49,32 @@ macro index,pager A \
     '<save-message>+_Read<enter>' \
     "move message to the archive"
 
+macro index,pager gt \
+    "<change-folder>=Sent<enter>" \
+    "Go to 'Sent Mail'"
+
 # Fetching mail
 macro index \cf "<shell-escape>offlineimap -o -a Perso<enter>"
+
+# search mail (using notmuch)"
+macro index <F4> \
+      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --remove-dups --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
+      "notmuch: search mail"
+
+# search and reconstruct owning thread (using notmuch)"
+macro index <F5> \
+      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt --remove-dups thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
+      "notmuch: reconstruct thread"
 
 # Queryintg abook
 set query_command= "abook --mutt-query '%s'"
 macro index,pager a \
   "<pipe-message>abook --add-email-quiet<return>" \
   "add the sender address to abook"
+
+subscribe debiocidons-bureau@framalistes.org
+subscribe debiocidons-ca@framalistes.org
+subscribe debiocidons@framalistes.org
+save-hook ' ~h debiocidons@framalistes.org' =debiocidons
+save-hook ' ~h debiocidons-ca@framalistes.org' =debiocidons-ca
+save-hook ' ~h debiocidons-bureau@framalistes.org' =debiocidons-bureau

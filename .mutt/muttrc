@@ -41,7 +41,11 @@ set folder_format = "%3C %t %N %f"
 set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 set attribution = "Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"
 
+# Send flowed emails
 set text_flowed = yes
+# Wrap received flowed emails
+set reflow_text = yes
+set reflow_wrap = 76
 
 set collapse_unread     # collapse threads with unread mails
 
@@ -172,16 +176,6 @@ macro index,pager gi \
     <change-folder>=INBOX<enter> \
     "Go to inbox"
 
-# search mail (using notmuch)"
-macro index <F4> \
-      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --remove-dups --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
-      "notmuch: search mail"
-
-# search and reconstruct owning thread (using notmuch)"
-macro index <F5> \
-      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt --remove-dups thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
-      "notmuch: reconstruct thread"
-
 # macros to invoke a profile
 macro index <F8> ":source ~/.mutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
 macro index <F9> ":source ~/.mutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
@@ -232,13 +226,12 @@ unignore mail-followup-to:
 unignore message-id:
 # and in this order
 unhdr_order *
-hdr_order Sender: From: Reply-To: Subject: Organization: Date: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent: To: Cc: Newsgroups: X-Resent: Followup-To: Mail-Followup-To:
+hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To:
 
 # MIME-Viewer
 unauto_view *
 auto_view text/html
-auto_view application/msword
-auto_view application/pdf
+auto_view text/calendar application/ics
 auto_view image/x-portable
 auto_view image/x-portable-bitmap
 auto_view image/x-portable-graymap

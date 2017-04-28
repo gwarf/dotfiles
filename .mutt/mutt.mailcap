@@ -4,10 +4,10 @@
 */*; xdg-open "%s"
 
 application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
-application/ghostview           ; mutt_bgrun evince %s                          ; test=test -n "$DISPLAY" > /dev/null
-application/pdf                 ; mutt_bgrun evince %s    ; print=mutt_bgrun zathura %s;                     ; test=test -n "$DISPLAY" > /dev/null
-application/pdf                 ; pdftotext %s -                                ; copiousoutput;
-application/postscript          ; mutt_bgrun evince %s                          ; test=test -n "$DISPLAY" > /dev/null
+application/ghostview           ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
+application/pdf                 ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
+application/x-pdf               ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
+application/postscript          ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
 application/x-bzip2             ; /usr/bin/bzip2 -dc %s                         ; copiousoutput
 application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
 application/x-csh               ; cat %s                                        ; copiousoutput
@@ -30,6 +30,8 @@ application/x-troff-man         ; man -l %s 2>/dev/null                         
 application/x-troff-me          ; groff -me -Tlatin1 %s                         ; copiousoutput
 application/x-zip-compressed    ; unzip -v %s                                   ; copiousoutput
 application/zip                 ; unzip -v %s                                   ; copiousoutput
+text/calendar                   ; mutt-ics                                      ; copiousoutput
+application/ics                 ; mutt-ics                                      ; copiousoutput
 audio/basic                     ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY"  > /dev/null
 audio/midi                      ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
 audio/mpegurl                   ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
@@ -43,7 +45,7 @@ audio/*                         ; mplayer %s                                    
 #image/*                         ; mutt_bgrun sxiv -bf %s \; reset
 #image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; mutt_bgrun eog %s                             ; test=test -n "$DISPLAY" > /dev/null
+image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; fbi %s                            ; copiousoutput
 #text/html;                      mutt_netscape %s; test=sh -c 'test $DISPLAY'
 #text/html                       ; mutt_bgrun uzbl-browser -u %s                                   ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
@@ -83,9 +85,11 @@ application/vnd.oasis.opendocument.spreadsheet ; mutt_bgrun scalc %s            
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun localc %s            ; test=test -n "$DISPLAY" > /dev/null
 application/msword              ; mutt_bgrun lowriter %s                         ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun lowriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.documen ; mutt_bgrun lowriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
 application/msword              ; antiword %s                                   ; copiousoutput
 application/x-msword            ; antiword %s                                   ; copiousoutput
-application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
+#application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
+application/vnd.oasis.opendocument.text ; mutt_bgrun lowriter %s                ; copiousoutput
 application/vnd.ms-powerpoint   ; mutt_bgrun loimpress %s                        ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.oasis.opendocument.presentation   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.openxmlformats-officedocument.presentationml.slideshow   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
