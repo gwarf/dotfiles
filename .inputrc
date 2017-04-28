@@ -7,8 +7,8 @@ $if mode=vi
   set keymap vi-command
   "gg": beginning-of-history
   "G": end-of-history
-  set keymap vi-insert       #notice how the "jj" movement is
-  "jj": vi-movement-mode     #after 'set keymap vi-insert'?
+  set keymap vi-insert       # notice how the "jj" movement is
+  "jj": vi-movement-mode     # after 'set keymap vi-insert'?
   "\C-w": backward-kill-word
   "\C-p": history-search-backward
 
@@ -16,6 +16,10 @@ $if mode=vi
   # FIXME does not work
   "\C-a": beginning-of-line
   "\C-e": end-of-line
+  "\C-A": beginning-of-line
+  "\C-E": end-of-line
+  Control-A: beginning-of-line
+  Control-E: end-of-line
 $endif
 
 $if Psql
@@ -106,8 +110,8 @@ set completion-ignore-case on
 Control-A: beginning-of-line
 Control-E: end-of-line
 
-# Use ctrl+x to delete last word
-Control-X: backward-kill-word
+# Use ctrl+w to delete last word
+Control-W: backward-kill-word
 
 # Use Alt-D to delete next word
 "\e[3;5~": kill-word
