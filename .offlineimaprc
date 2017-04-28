@@ -11,8 +11,7 @@ localrepository = Gmail-Local
 remoterepository = Gmail-Remote
 synclabels = yes
 quick = 10
-postsynchook = notmuch new
-status_backend = sqlite
+postsynchook = notmuch --config=/home/baptiste/.notmuch-config-egi new
 
 [Repository Gmail-Local]
 type = GmailMaildir
@@ -33,8 +32,7 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 localrepository = LocalPerso
 remoterepository = BaptName
 quick = 10
-postsynchook = notmuch new
-status_backend = sqlite
+postsynchook = notmuch --config=/home/baptiste/.notmuch-config-perso new
 
 [Repository LocalPerso]
 type = Maildir
@@ -45,7 +43,7 @@ type = IMAP
 maxconnections = 3
 remotehost = imap.bapt.name
 ssl = yes
-cert_fingerprint = 65a1ffd4e7cc1f31e2a7ed34c16f7127124b392b
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 # Adding passwords to gnome keyring
 # /bin/offlineimap-helpers.py BaptName baptiste
 remoteusereval = get_username('BaptName')
