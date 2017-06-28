@@ -129,5 +129,5 @@ save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
 save-hook ' ~h "EGI - technical-support-cases"' =technical-support-cases
 save-hook ' ~h "EGI - report-vulnerability"' =report-vulnerability
 save-hook ' ~h indigo-wp3-lead@lists.indigo-datacloud.eu' =indigo-wp3
-save-hook ' ~h wise@lists.wise-community.org' =wise
+save-hook ' ~h lists.wise-community.org' =wise
 save-hook ' ~C Gaizer | ~f Gaizer' =ELITRANS
