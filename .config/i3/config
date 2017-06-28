@@ -255,13 +255,14 @@ assign [class="Clementine"] → $WS3
 assign [class="skypeforlinux"] → $WS3
 assign [class="(?i)virtualbox"] → $WS4
 
+for_window [class="Clementine"] layout tabbed
+#for_window [class="okular"] layout tabbed
 for_window [class="Pcmanfm"] floating enable
-for_window [class="VirtualBox"] layout tabbed
-for_window [class="Thunar"] floating enable
+for_window [class="Pidgin"] layout tabbed
 for_window [class="Pinentry"] floating enable
 for_window [class="skypeforlinux"] layout tabbed
-for_window [class="Pidgin"] layout tabbed
-for_window [class="Clementine"] layout tabbed
+for_window [class="Thunar"] floating enable
+for_window [class="VirtualBox"] layout tabbed
 
 # Start keepass in the scratchpad
 #for_window [instance="scratchpad"] move scratchpad
@@ -310,5 +311,7 @@ exec --no-startup-id keepassx2
 
 # Enable masquerading of VirtualBox host-only network
 exec --no-startup-id /home/baptiste/bin/vbox-forward.sh
+
+#exec --no-startup-id bitcoin-qt
 
 # vim:filetype=i3
