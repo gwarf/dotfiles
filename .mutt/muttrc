@@ -53,6 +53,7 @@ set collapse_unread     # collapse threads with unread mails
 set realname = "Baptiste Grenier"
 set mail_check = 0
 set envelope_from
+set reverse_alias
 
 # Load the appropriate profile depending on the folder
 folder-hook Perso/* 'source ~/.mutt/profile.perso'
@@ -126,7 +127,7 @@ bind editor <Tab> complete-query
 # Key bindings
 # Needed to fix handling of space in dir names
 bind editor <space> noop
-bind pager g top
+# bind pager g top
 bind pager G bottom
 bind pager j next-line
 bind pager k previous-line
@@ -145,13 +146,13 @@ bind pager \cu half-up
 bind pager N next-unread
 bind index,pager F flag-message
 
-bind index g first-entry
+# bind index g first-entry
 bind index G last-entry
 bind index H current-top
 bind index M current-middle
 bind index L current-bottom
-bind index pagedown     next-page
-bind index pageup   previous-page
+bind index <pagedown> next-page
+bind index <pageup> previous-page
 bind index zt current-top
 bind index zz current-middle
 bind index zb current-bottom
@@ -171,6 +172,8 @@ macro attach s <save-entry><bol>~/Downloads/<eol>
 macro index,pager I  <set-flag>O  "Mark as read"
 macro index,pager U  <clear-flag>O  "Mark as unread"
 
+# https://www.neomutt.org/guide/configuration.html#bind-warnings
+bind index,pager g noop
 macro index,pager gl <change-folder>?       "Go to 'Label'"
 macro index,pager gi \
     <change-folder>=INBOX<enter> \
