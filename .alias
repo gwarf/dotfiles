@@ -254,6 +254,17 @@ man() {
 }
 alias man='nocorrect man'
 
+# Create parent dir transparently
+mv_create() {
+  src="$1"
+  dest="$2"
+
+  dest_dir=$(dirname "$dest")
+
+  \mkdir -p "$dest_dir"
+  mv "$src" "$dest"
+}
+
 # Force 256 color in tmux
 #alias tmux='tmux -2'
 
