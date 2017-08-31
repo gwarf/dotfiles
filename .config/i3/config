@@ -253,6 +253,7 @@ assign [class="Terminator"] → $WS1
 assign [class="Pidgin"] → $WS3
 assign [class="Clementine"] → $WS3
 assign [class="skypeforlinux"] → $WS3
+assign [class="Skype Preview"] → $WS3
 assign [class="(?i)virtualbox"] → $WS4
 
 for_window [class="Clementine"] layout tabbed
@@ -261,6 +262,7 @@ for_window [class="Pcmanfm"] floating enable
 for_window [class="Pidgin"] layout tabbed
 for_window [class="Pinentry"] floating enable
 for_window [class="skypeforlinux"] layout tabbed
+for_window [class="Skype Preview"] layout tabbed
 for_window [class="Thunar"] floating enable
 for_window [class="VirtualBox"] layout tabbed
 
