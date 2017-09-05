@@ -47,8 +47,7 @@ floating_modifier $mod
 focus_follows_mouse no
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec terminator
+bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -300,9 +299,9 @@ exec --no-startup-id owncloud
 #exec --no-startup-id gnome-settings-daemon
 
 # Terminal
-exec --no-startup-id terminator
+#exec --no-startup-id terminator
 #exec --no-startup-id terminology
-#exec --no-startup-id uxvt
+exec --no-startup-id uxvt
 
 # IM
 exec --no-startup-id pidgin
