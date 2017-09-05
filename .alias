@@ -163,7 +163,6 @@ alias kernelinfo='lynx -dump http://www.kernel.org/kdist/finger_banner'
 alias eclipse='eclipse -Xms1024M -Xmx4096M -XX:MaxPermSize=512M'
 
 alias gi='git'
-alias git='hub'
 
 # Merges, or joins multiple PDF files into "joined.pdf"
 joinpdf () {
