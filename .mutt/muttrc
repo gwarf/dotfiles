@@ -104,8 +104,8 @@ set mime_forward = ask-yes
 set mime_forward_rest = ask-yes
 
 # Colors
-#source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
-source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
+source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
+#source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
 
 # Index colors
 # http://www.neomutt.org/feature/index-color/
