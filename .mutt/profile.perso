@@ -78,3 +78,4 @@ subscribe debiocidons@framalistes.org
 save-hook ' ~h debiocidons@framalistes.org' =debiocidons
 save-hook ' ~h debiocidons-ca@framalistes.org' =debiocidons-ca
 save-hook ' ~h debiocidons-bureau@framalistes.org' =debiocidons-bureau
+save-hook ' ~h boursorama' =boursorama
