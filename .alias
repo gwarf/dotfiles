@@ -264,6 +264,10 @@ mv_create() {
   mv "$src" "$dest"
 }
 
+drun() {
+  docker run --rm -v $(pwd):/source -it "$1"
+}
+
 # Force 256 color in tmux
 #alias tmux='tmux -2'
 
