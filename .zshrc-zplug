@@ -1,0 +1,203 @@
+# https://dotfiles.github.io/
+# HTTps://github.com/zplug/zplug
+# https://github.com/unixorn/zsh-quickstart-kit
+# http://awesomeawesome.party/awesome-zsh-plugins
+# http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
+# Ideas: https://github.com/mika/zsh-pony
+# Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
+
+# Requirements
+# Incremental search
+# ls, hub, docker, df/pydf and other useful aliases
+# tip on alias
+# syntax hilighting
+# Case insensitive directories completion
+# Shrunk path in prompt
+# completion (vboxmanage and all other)
+# autosuggestions
+# improved history
+# vim mode
+# push-line to use another command before current command
+# colored directories
+# colored man pages
+# auto cd
+# ls after cd
+# ssh key manamgement
+# simple calc
+# 256 color
+# python venv
+# git support
+
+export ZPLUG_HOME=~/repos/zplug
+
+if [ ! -d "$ZPLUG_HOME" ]; then
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+fi
+
+source "$ZPLUG_HOME/init.zsh"
+
+# Theme
+#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
+
+zplug "zlsun/solarized-man"
+
+zplug "plugins/shrink-path", from:oh-my-zsh
+
+zplug "modules/utility", from:prezto, defer:2
+zplug "modules/history", from:prezto
+zplug "modules/ssh", from:prezto
+
+zplug "zdharma/fast-syntax-highlighting", defer:1
+
+zplug "zsh-users/zsh-history-substring-search", defer:2
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+
+zplug "MichaelAquilina/zsh-you-should-use"
+zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
+# Usage: = 2+2
+zplug "arzzen/calc.plugin.zsh"
+zplug "b4b4r07/enhancd", use:init.sh
+zplug "marzocchi/zsh-notify"
+zplug "supercrabtree/k"
+zplug "djui/alias-tips"
+zplug "chrissicool/zsh-256color"
+zplug "zpm-zsh/mysql-colorize"
+zplug "sharat87/zsh-vim-mode"
+# Ctrl-R to search multi word with AND
+zplug "zdharma/history-search-multi-word"
+
+# Replaced by fzy when possible
+# Grab binaries from GitHub Releases
+# and rename with the "rename-to:" tag
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*linux*amd64*"
+
+zplug "so-fancy/diff-so-fancy", as:command
+
+if zplug check b4b4r07/enhancd; then
+  ENHANCD_FILTER='fzy:fzf'
+  export ENHANCD_FILTER
+fi
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Plugins-specific configuration
+
+if zplug check modules/utility; then
+  # Color output (auto set to 'no' on dumb terminals).
+  zstyle ':prezto:*:*' color 'yes'
+  # Hilight directories
+  zstyle ':completion:*:default' list-colors ''
+fi
+
+# Then, source plugins and add commands to $PATH
+# zplug load --verbose
+zplug load
+
+# Plugins-specific configuration
+
+if zplug check caiogondim/bullet-train.zsh; then
+  BULLETTRAIN_STATUS_EXIT_SHOW=true
+  # bullettrain promt: disable nvm and go, show path using custom segment
+  BULLETTRAIN_PROMPT_ORDER=(time status context custom perl ruby aws elixir virtualenv git hg cmd_exec_time)
+  # Display shunk path in custom prompt segement
+  BULLETTRAIN_CUSTOM_MSG='$(shrink_path -f "$PWD")'
+  BULLETTRAIN_CUSTOM_BG=blue
+  BULLETTRAIN_CUSTOM_FG=white
+fi
+
+if zplug check zsh-users/zsh-autosuggestions; then
+  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+  bindkey '^ ' autosuggest-accept
+fi
+
+# ZSH options
+
+# Make sure prompt is able to be generated properly.
+setopt prompt_subst
+setopt auto_cd
+
+# Completion menu's navigation with arrows
+zstyle ':completion:*' menu select
+
+# Case insensitive completion
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+
+# Archlinix command not found (needs pkgfile)
+if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
+#unsetopt correct_all
+#setopt menu_complete
+#unsetopt flowcontrol
+#setopt auto_pushd
+#setopt pushd_ignore_dups
+#setopt auto_list
+#setopt auto_menu
+#setopt interactive_comments
+#setopt complete_in_word
+#setopt promptpercent
+
+# Always use substring search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+bindkey -M vicmd 'j' history-substring-search-down
+
+# In Vi mode use q to allow to use another command before current one
+bindkey -M vicmd "q" push-line
+
+# Shell aliases and functions
+
+# do not delete / or prompt if deleting more than 3 files at a time
+alias rm='rm -I --preserve-root'
+
+# Parenting changing perms on /
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+# Long listing by default
+alias l='ls -lh'
+## list only directories
+alias lsd='\ls -d */'
+## list only files
+alias lsf="ls -rtF | grep -v '.*/'"
+## Sort files by size
+alias lss="ls -lrSF --si --color"
+
+alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
+
+if command -v "hub" >/dev/null 2>&1; then
+  alias git=hub
+fi
+
+# TODO check that vboxmanage completion is available
+# /usr/share/zsh/site-functions/_virtualbox
+if type compdef &>/dev/null; then
+  if type VBoxManage &>/dev/null; then
+    compdef vboxmanage=VBoxManage
+    compdef vboxheadless=VBoxHeadless
+  fi
+fi
+
+[ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
+
+drun() {
+  docker run --rm -v $(pwd):/source -it "$1"
+}
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
