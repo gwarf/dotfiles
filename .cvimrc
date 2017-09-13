@@ -27,34 +27,31 @@ set defaultnewtabpage
 " Search engines management
 let searchalias i = "imdb"
 
-let searchengine nar = "http://newalbumreleases.net/?s=%s"
+let searchengine nar = 'http://newalbumreleases.net/?s=%s'
 let searchalias n = "nar"
 
-let searchengine drive = "https://drive.google.com/drive/search?q=%s"
+let searchengine drive = 'https://drive.google.com/drive/search?q=%s'
 let searchalias d = "drive"
 
-let searchengine github = "https://github.com/search?q=%s&ref=opensearch"
+let searchengine github = 'https://github.com/search?q=%s&ref=opensearch'
 let searchalias g = "github"
 
-let searchengine qwant = "https://www.qwant.com/?q=%s&client=opensearch"
+let searchengine qwant = 'https://www.qwant.com/?q=%s&client=opensearch'
 let searchalias q = "qwant"
 
-let searchengine webopedia = "https://www.webopedia.com/sgsearch/results?q=%s"
+let searchengine webopedia = 'https://www.webopedia.com/sgsearch/results?q=%s'
 let searchalias w = "webopedia"
 
-let searchengine ixquick = "https://www.ixquick.com/do/dsearch?query=%s&cat=web&pl=opensearch&language=english"
+let searchengine ixquick = 'https://www.ixquick.com/do/dsearch?query=%s&cat=web&pl=opensearch&language=english'
 let searchengine i = "ixquick"
 
-" This will do the same thing as above, except typing ':tabnew withbase' into to command bar
-" without any search parameters will open https://www.dogpile.com
-" let searchengine dogpile = "https://www.dogpile.com/search/web?q=%s"
-let searchengine dogpile = [ "https://www.dogpile.com", "https://www.dogpile.com/search/web?q=%s" ]
-let searchalias dp = "dogpile"
+let searchengine dogpile = 'https://www.dogpile.com/search/web?q=%s'
+let searchalias p = "dogpile"
 
 " List of completion engines
 let completionengines = [  "qwant",  "google",  "drive",  "wikipedia",  "imdb", "duckduckgo",  "nar",  "dogpile",  "github",  "ixquick" ]
 
-let defaultengine = "dogpile"
+let defaultengine = "duckduckgo"
 
 " cVim disabled on sites
 let blacklists = [  "https://mail.google.com/*",  "*://mail.google.com/*",  "@https://mail.google.com/mail/*",  "https://connect.cesnet.cz" ]
