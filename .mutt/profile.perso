@@ -53,6 +53,10 @@ macro index,pager gt \
     "<change-folder>=Sent<enter>" \
     "Go to 'Sent Mail'"
 
+macro index,pager ga \
+    "<change-folder>+_Read<enter>"  \
+    "Go to all mail"
+
 # Fetching mail
 macro index \cf "<shell-escape>offlineimap -o -a Perso<enter>"
 

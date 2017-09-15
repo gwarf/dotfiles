@@ -8,12 +8,12 @@ application/ghostview           ; mutt_bgrun okular %s    ; print=pdftotext %s -
 application/pdf                 ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
 application/x-pdf               ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
 application/postscript          ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
-application/x-bzip2             ; /usr/bin/bzip2 -dc %s                         ; copiousoutput
+application/x-bzip2             ; bzip2 -dc %s                         ; copiousoutput
 application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
 application/x-csh               ; cat %s                                        ; copiousoutput
 application/x-gtar              ; tar tvf %s                                    ; copiousoutput
-application/x-gzip              ; /bin/tar tfvz %s                              ; copiousoutput
-application/x-gzip-postscript   ; /bin/zcat %s /usr/X11R6/bin/gv                ; copiousoutput
+application/x-gzip              ; tar tfvz %s                              ; copiousoutput
+application/x-gzip-postscript   ; zcat %s gv                ; copiousoutput
 application/x-latex             ; cat %s                                        ; copiousoutput
 application/x-perl              ; cat %s                                        ; copiousoutput
 application/x-rar-compressed    ; rar v %s                                      ; copiousoutput
@@ -38,22 +38,22 @@ audio/mpegurl                   ; mutt_bgrun mplayer %s                         
 audio/mpeg                      ; mutt_bgrun mplayer %s                         ; copiousoutput
 audio/x-midi                    ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
 audio/x-mod                     ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
-audio/x-pn-realaudio-plugin     ; /usr/bin/X11/realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
-audio/x-pn-realaudio            ; /usr/bin/X11/realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
-audio/x-wav                     ; mplayer %s                                    ;
-audio/*                         ; mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
+audio/x-pn-realaudio-plugin     ; realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
+audio/x-pn-realaudio            ; realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
+audio/*                         ; mutt_bgrun mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; mutt_bgrun sxiv -bf %s \; reset
 #image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; mutt_bgrun gv %s                              ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
+image/*                         ; mutt_bgrun sxiv %s                             ; test=test -n "$DISPLAY" > /dev/null
+#image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; fbi %s                            ; copiousoutput
 
 text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = chromium %s
 
 text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
 text/x-patch                    ; cat %s | colordiff                            ;copiousoutput
-text/x-compress-html            ; /bin/zcat %s lynx -dump -force_html           ; copiousoutput
-text/x-gzip-html                ; /bin/zcat %s lynx -dump -force_html           ; copiousoutput
+text/x-compress-html            ; zcat %s lynx -dump -force_html           ; copiousoutput
+text/x-gzip-html                ; zcat %s lynx -dump -force_html           ; copiousoutput
 text/plain                      ; cat %s                                        ; copiousoutput
 text/richtext                   ; mutt_bgrun abiword %s                         ; copiousoutput
 text/x-vcard                    ; ~/mutt/mutt.vcard.filter %s                   ; copiousoutput
