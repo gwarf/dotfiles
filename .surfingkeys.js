@@ -27,15 +27,14 @@ settings.clickableSelector = "*.jfk-button, *.goog-flat-menu-button";
 // show only tabs from the current window
 settings.omnibarTabsQuery = {currentWindow: true};
 
-// Follow link?
-// map f
+// Follow link in current page: f
 
 // Follow in new active tab: af
 //mapkey ('F', 'Open link in new tab', 'Hints.create (Hints.pointers, Hints.dispatchMouseClick, {tabbed: true})');
 
 // Follow in new background tab: gf
-// map gf
-// mapkey ('gf', 'open a new tab in the background link', 'Hints.create (Hints.pointers, Hints.dispatchMouseClick, {tabbed: true, active: false})');
+// map F
+mapkey ('F', 'open a new tab in the background link', 'Hints.create (Hints.pointers, Hints.dispatchMouseClick, {tabbed: true, active: false})');
 
 // Previous page in history: S
 // mapkey ('H', 'backward', 'history.go (-1)');
