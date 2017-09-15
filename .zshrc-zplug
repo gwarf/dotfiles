@@ -8,9 +8,9 @@
 
 # Requirements
 # Incremental search
-# ls, hub, docker, df/pydf and other useful aliases
-# tip on alias
-# syntax hilighting
+# l, ls, hub, docker, df/pydf and other useful aliases
+# tip on existing alias
+# syntax highlighting
 # Case insensitive directories completion
 # Shrunk path in prompt
 # completion (vboxmanage and all other)
@@ -22,11 +22,12 @@
 # colored man pages
 # auto cd
 # ls after cd
-# ssh key manamgement
+# ssh key management
 # simple calc
 # 256 color
 # python venv
 # git support
+# Fuzzy command line completion
 
 export ZPLUG_HOME=~/repos/zplug
 
@@ -42,33 +43,58 @@ zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 
 zplug "zlsun/solarized-man"
 
-zplug "plugins/shrink-path", from:oh-my-zsh
-
+# Aliases and color some command output
 zplug "modules/utility", from:prezto, defer:2
+zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
 zplug "modules/ssh", from:prezto
 
-zplug "zdharma/fast-syntax-highlighting", defer:1
+zplug "plugins/shrink-path", from:oh-my-zsh
 
 zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
+# To replace autosuggestions
+# zplug "hchbaw/auto-fu.zsh", at:pu, defer:1
 
+# XXX Find replaxcement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
+
 zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
+
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
-zplug "b4b4r07/enhancd", use:init.sh
+
+# Should be loaded after modules/utility to overwrite cd alias
+zplug "b4b4r07/enhancd", use:init.sh, defer:3
+export ENHANCD_FILTER='fzf'
+export ENHANCD_HOOK_AFTER_CD='k -h'
+# export ENHANCD_COMMAND='c'
+# export ENHANCD_DISABLE_HOME=1
+# export ENHANCD_HYPHEN_ARG=_
+# Run k when entering a directory
+
 zplug "marzocchi/zsh-notify"
+
 zplug "supercrabtree/k"
+
 zplug "djui/alias-tips"
+
 zplug "chrissicool/zsh-256color"
+
 zplug "zpm-zsh/mysql-colorize"
-zplug "sharat87/zsh-vim-mode"
+
+# XXX Check how to use forward-word with autosuggestions
+# Load after modute/editor to enable VI bindings
+zplug "sharat87/zsh-vim-mode", defer:3
+
+zplug "zdharma/fast-syntax-highlighting"
 # Ctrl-R to search multi word with AND
 zplug "zdharma/history-search-multi-word"
 
-# Replaced by fzy when possible
+# Fuzzy command line completion: Ctrl-T
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+# Download a binary for FZF if not available locally
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
 zplug "junegunn/fzf-bin", \
@@ -79,9 +105,26 @@ zplug "junegunn/fzf-bin", \
 
 zplug "so-fancy/diff-so-fancy", as:command
 
-if zplug check b4b4r07/enhancd; then
-  ENHANCD_FILTER='fzy:fzf'
-  export ENHANCD_FILTER
+# XXX to replace autojump
+#zplug "rupa/z", use:"*.sh"
+
+
+# Plugins-specific configuration required before loading them
+
+# prezto
+# Color output (auto set to 'no' on dumb terminals).
+zstyle ':prezto:*:*' color 'yes'
+
+# prezto/utility
+if zplug check modules/utility; then
+  # Use safe operations by default
+  zstyle ':prezto:module:utility' safe-ops 'yes'
+fi
+
+# prezto/editor
+if zplug check modules/editor; then
+  zstyle ':prezto:module:editor' key-bindings 'vi'
+  zstyle ':prezto:module:editor' dot-expansion 'yes'
 fi
 
 # Install plugins if there are plugins that have not been installed
@@ -92,20 +135,16 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# Plugins-specific configuration
-
-if zplug check modules/utility; then
-  # Color output (auto set to 'no' on dumb terminals).
-  zstyle ':prezto:*:*' color 'yes'
-  # Hilight directories
-  zstyle ':completion:*:default' list-colors ''
-fi
-
 # Then, source plugins and add commands to $PATH
 # zplug load --verbose
 zplug load
 
-# Plugins-specific configuration
+# Plugins-specific configuration required after loading them
+
+if zplug check zsh-users/zsh-autosuggestions; then
+  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+  bindkey '^ ' autosuggest-accept
+fi
 
 if zplug check caiogondim/bullet-train.zsh; then
   BULLETTRAIN_STATUS_EXIT_SHOW=true
@@ -117,16 +156,20 @@ if zplug check caiogondim/bullet-train.zsh; then
   BULLETTRAIN_CUSTOM_FG=white
 fi
 
-if zplug check zsh-users/zsh-autosuggestions; then
-  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-  bindkey '^ ' autosuggest-accept
+if zplug "MichaelAquilina/zsh-you-should-use"; then
+  export YSU_HARDCORE=1
 fi
 
 # ZSH options
 
 # Make sure prompt is able to be generated properly.
 setopt prompt_subst
+
+# Executing directories will open them
 setopt auto_cd
+
+# Hilight directories
+zstyle ':completion:*:default' list-colors ''
 
 # Completion menu's navigation with arrows
 zstyle ':completion:*' menu select
@@ -134,18 +177,13 @@ zstyle ':completion:*' menu select
 # Case insensitive completion
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-
-# Archlinix command not found (needs pkgfile)
-if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
-  source /usr/share/doc/pkgfile/command-not-found.zsh
-fi
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 #unsetopt correct_all
 #setopt menu_complete
 #unsetopt flowcontrol
 #setopt auto_pushd
 #setopt pushd_ignore_dups
-#setopt auto_list
 #setopt auto_menu
 #setopt interactive_comments
 #setopt complete_in_word
@@ -160,7 +198,15 @@ bindkey -M vicmd 'j' history-substring-search-down
 # In Vi mode use q to allow to use another command before current one
 bindkey -M vicmd "q" push-line
 
-# Shell aliases and functions
+# named directories
+hash -d repos=~/repos
+hash -d Downloads=~/Downloads
+hash -d Documents=~/Documents
+hash -d GoogleDrive=~/GoogleDrive
+
+#####################################################################
+## Shell aliases and functions
+#####################################################################
 
 # do not delete / or prompt if deleting more than 3 files at a time
 alias rm='rm -I --preserve-root'
@@ -169,20 +215,65 @@ alias rm='rm -I --preserve-root'
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
-# Long listing by default
-alias l='ls -lh'
+
+# k or long listing by default
+if command -v "k" >/dev/null 2>&1; then
+  alias l='k -h'
+  alias l='k -h'
+else
+  alias l='ls -lh'
+fi
 ## list only directories
 alias lsd='\ls -d */'
 ## list only files
 alias lsf="ls -rtF | grep -v '.*/'"
-## Sort files by size
-alias lss="ls -lrSF --si --color"
 
 alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
 
 if command -v "hub" >/dev/null 2>&1; then
   alias git=hub
 fi
+
+# Global aliases {{{
+alias -g A="| awk"
+alias -g G="| grep"
+alias -g GV="| grep -v"
+alias -g H="| head"
+alias -g L="| $PAGER"
+alias -g P=' --help | less'
+alias -g R="| ruby -e"
+alias -g S="| sed"
+alias -g T="| tail"
+alias -g V="| vim -R -"
+alias -g U=' --help | head'
+alias -g W="| wc"
+# }}}
+
+# Suffix aliases {{{
+alias -s zip=zipinfo
+alias -s tgz=gzcat
+alias -s gz=gzcat
+alias -s tbz=bzcat
+alias -s bz2=bzcat
+alias -s java=vim
+alias -s c=vim
+alias -s h=vim
+alias -s C=vim
+alias -s cpp=vim
+alias -s txt=vim
+alias -s xml=vim
+alias -s html=chromium
+alias -s xhtml=chromium
+alias -s pdf=okular
+alias -s gif=sxiv
+alias -s jpg=sxiv
+alias -s jpeg=sxiv
+alias -s png=sxiv
+alias -s bmp=sxiv
+alias -s mp3=clementine
+alias -s m4a=clementine
+alias -s ogg=clementine
+# }}
 
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
@@ -193,11 +284,13 @@ if type compdef &>/dev/null; then
   fi
 fi
 
-[ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
-
 drun() {
   docker run --rm -v $(pwd):/source -it "$1"
 }
 
+# Archlinix command not found (needs pkgfile)
+if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
