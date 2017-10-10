@@ -11,6 +11,7 @@
     ~/.vim: vim
     ~/.config/neomutt: config/neomutt
     ~/.yaourtrc: yaourtrc
+    ~/.gitconfig: gitconfig
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
