@@ -1,0 +1,129 @@
+# global configuration
+[global]
+
+# Add tag spam to spams
+[SpamFilter]
+spam_tag = spam
+
+# [ClassifyingFilter]
+
+[KillThreadsFilter]
+[ListMailsFilter]
+
+# XXX not done?
+# notmuch tag +spam +perso -- folder:'Perso/Spam'
+# notmuch tag +spam +egi -- folder:'EGI/Spam'
+
+# Add a tag based on the message's folder
+[FolderNameFilter]
+# Create lowercase tags
+folder_lowercases = true
+# Spilt folder hierarchy in multiple tags
+# ie. perso spam for messages in 'Perso/Spam' folder
+maildir_separator = /
+# Inbox will be handled by the inbox filter
+folder_blacklist = 'EGI/Inbox' 'Perso/Inbox' 'Perso/Archive'
+
+[Filter.1]
+message = Tag Perso mails
+query = to:baptiste@bapt.name OR from:baptiste@bapt.name OR from:gwarf@gwarf.org OR to:gwarf@gwarf.org
+tags = +perso
+
+[Filter.2]
+message = Tag Gnubila mails
+query = from:bgrenier@gnubila.fr OR to:bgrenier@gnubila.fr OR from:bgrenier@gnubila.com OR to:bgrenier@gnubila.com OR from:bgrenier@maatg.fr OR to:bgrenier@maatg.fr
+tags = +gnubila
+
+[Filter.3]
+message = Tag HealthGrid mails
+query = from:baptiste.grenier@healthgrid.org OR to:baptiste.grenier@healthgrid.org
+tags = +healthgrid
+
+[Filter.4]
+message = Tag EGI mails
+query = from:baptiste.grenier@egi.eu OR to:baptiste.grenier@egi.eu
+tags = +egi
+
+[Filter.5]
+message = Tag Office mails
+query = to:office@mailman.egi.eu OR tag:lists/office
+tags = +office
+
+[Filter.6]
+message = Tag Operations mails
+query = to:operations@mailman.egi.eu OR tag:lists/operations
+tags = +operations
+
+# XXX Empty, to test
+[Filter.7]
+message = Tag starred and important messages as important
+query = folder:'EGI/Starred' OR folder:'EGI/Important' OR tag:starred
+tags = +important;+starred
+
+# XXX not done
+# notmuch tag +egi +all -- folder:'EGI/All'
+[Filter.8]
+message = Tag EGI all
+query = folder:'EGI/All'
+tags = +all
+
+# XXX not done
+# notmuch tag +perso +all -- folder:'Perso/Archives' OR folder:'Perso/Archives.2015' OR folder:'Perso/Archives.2016'OR folder:'Perso/_Read'
+[Filter.9]
+message = Tag Perso archive
+query = folder:'Perso/Archive'
+tags = +perso;+all;-new
+
+[Filter.10]
+message = Tag Sent mails
+query = NOT tag:sent AND (folder:'EGI/Sent' OR folder:'Perso/Sent')
+tags = +sent;-new
+
+# XXX not done
+[Filter.11]
+message = Tag messages in All but not in Inbox as read
+query = folder:'EGI/All' AND tag:inbox AND NOT folder:'EGI/Inbox'
+tags = +all;-new
+
+# XXX not done
+# notmuch tag +deleted +perso -inbox -- folder:'Perso/Trash'
+# notmuch tag +deleted +egi -inbox -- folder:'EGI/Trash'
+[Filter.12]
+message = Tag Trash messages
+query = folder:'EGI/Trash' OR folder:'Perso/Trash'
+tags = +deleted;-new
+
+[Filter.13]
+message = Tag boursorama messages
+query = tag:perso AND boursorama
+tags = +boursorama
+
+# XXX Tag ics and calendar invites
+[Filter.14]
+message = Tag calendar invites
+query = mimetype:text/calendar
+tags = +invites
+
+[ArchiveSentMailsFilter]
+sent_tag = sent
+
+# Default inbox tagging
+[InboxFilter]
+
+# Move some emails based on their tags
+# Run separately from the afew tag run
+# Useful for spam/junk
+# XXX Mail manually marked as ham hould be moved to 'Perso/TrainHam'
+# XXX Mail manually marked as spam hould be moved to 'Perso/TrainSpam'
+[MailMover]
+folders = 'EGI/Inbox'
+'EGI/Inbox' = 'tag:egi AND tag:deleted':'EGI/Trash'
+# folders = 'EGI/Inbox' 'EGI/Spam' 'Perso/Inbox' 'Perso/Spam'
+# folders = 'Perso/Inbox' 'Perso/Spam'
+# max_age = 15
+# rules
+# XXX beware, take into account the All folder for Gmail accounts..
+# 'EGI/Inbox' = 'tag:egi AND tag:spam':'EGI/Spam' 'tag:egi AND tag:sent':'EGI/Sent' 'tag:egi AND NOT tag:inbox':'EGI/All'
+# 'EGI/Spam' = 'tag:egi AND NOT tag:spam AND tag:inbox':'EGI/Inbox' 'tag:egi AND NOT tag:spam':'EGI/All'
+# 'Perso/Inbox' = 'tag:perso AND tag:spam':'Perso/Spam' 'tag:perso AND tag:sent':'Perso/Sent' 'tag:perso AND NOT tag:inbox':'Perso/_Read'
+# 'Perso/Spam' = 'tag:perso AND NOT tag:spam AND tag:inbox':'Perso/Inbox' 'tag:perso AND NOT tag:spam':'Perso/_Read'

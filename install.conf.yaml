@@ -10,6 +10,7 @@
     ~/.vimrc: vimrc
     ~/.vim: vim
     ~/.config/neomutt: config/neomutt
+    ~/.config/afew: config/afew
     ~/.yaourtrc: yaourtrc
     ~/.gitconfig: gitconfig
     ~/.msmtprc: msmtprc
