@@ -32,6 +32,7 @@
     ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
     ~/.notmuch-config: notmuch-config
     ~/Mail/.notmuch/hooks: notmuch/hooks
+    ~/config/compton.conf: config/compton.conf
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
