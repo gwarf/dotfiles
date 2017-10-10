@@ -15,6 +15,7 @@
     ~/.msmtprc: msmtprc
     ~/.inputrc: inputrc
     ~/.mailcap: mailcap
+    ~/.surfingkeys.js: surfingkeys.js
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
