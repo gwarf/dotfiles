@@ -18,6 +18,7 @@
     ~/.surfingkeys.js: surfingkeys.js
     ~/.xinitrc: xinitrc
     ~/.xsession: xinitrc
+    ~/.zshrc: zshrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
