@@ -11,7 +11,7 @@ Managed using [dotbot][dotbot].
 
 ``` sh
 URL='git://github.com/gwarf/dotfiles'
-git clone "$URL" ~/.dotfiles && cd ~/.dotfiles && ./install
+git clone "$URL" && cd dotfiles && ./install
 ```
 
 [dotbot]: https://github.com/anishathalye/dotbot/
