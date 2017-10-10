@@ -14,6 +14,7 @@
     ~/.gitconfig: gitconfig
     ~/.msmtprc: msmtprc
     ~/.inputrc: inputrc
+    ~/.mailcap: mailcap
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
