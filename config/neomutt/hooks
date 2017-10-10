@@ -1,0 +1,16 @@
+# Hooks
+
+# Load the appropriate profile depending on the folder
+# folder-hook Perso/* 'source ~/.mutt/profile.perso'
+# folder-hook Gmail/* 'source ~/.mutt/profile.egi'
+# folder-hook Perso 'source ~/.mutt/profile.perso'
+# folder-hook Gmail 'source ~/.mutt/profile.egi'
+
+# When replying load profile corresponding to the To:
+# reply-hook "~t baptiste@bapt.name" "source ~/.mutt/profile.perso"
+# reply-hook "~t baptiste.grenier@egi.eu" "source ~/.mutt/profile.egi"
+
+# When sending load profile corresponding to the To:
+# send-hook @egi\\.eu$ "source ~/.mutt/profile.egi"
+
+# vim: set ft=muttrc:

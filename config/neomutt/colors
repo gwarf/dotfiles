@@ -1,0 +1,5 @@
+# Colors
+
+source ~/.config/neomutt/mutt-colors-solarized-dark-256.muttrc
+
+# vim: set ft=muttrc:

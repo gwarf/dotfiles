@@ -9,6 +9,7 @@
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     ~/.vim: vim
+    ~/.config/neomutt: config/neomutt
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

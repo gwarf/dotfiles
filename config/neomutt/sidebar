@@ -1,0 +1,27 @@
+# sidebar
+
+# set to "no" to disable sidebar view at startup
+set sidebar_visible = yes
+set sidebar_width   = 20
+
+set mail_check_stats
+
+color sidebar_new yellow default
+
+# sidebar toggle
+macro index ,@) "<enter-command> set sidebar_visible=no; macro index ~ ,@( 'Toggle sidebar'<Enter>"
+macro index ,@( "<enter-command> set sidebar_visible=yes; macro index ~ ,@) 'Toggle sidebar'<Enter>"
+macro index ~ ,@( 'Toggle sidebar'      # toggle the sidebar
+
+# sidebar bindings
+# got to previous folder in sidebar
+bind index,pager \CP sidebar-prev # Ctrl-Shift-P
+bind index <left> sidebar-prev
+# got to next folder in sidebar
+bind index <right> sidebar-next
+bind index,pager \CN sidebar-next # Ctrl-Shift-N
+# open selected folder from sidebar
+bind index <space> sidebar-open
+bind index,pager \CO sidebar-open # Ctrl-Shift-O
+
+# vim: set ft=muttrc:

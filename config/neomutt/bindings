@@ -1,0 +1,91 @@
+# Key bindings, macros
+
+bind editor <Tab> complete-query
+
+# Needed to fix handling of space in dir names
+bind editor <space> noop
+# bind pager g top
+bind pager G bottom
+bind pager j next-line
+bind pager k previous-line
+bind pager i edit
+bind pager R group-reply
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager \cd half-down
+bind pager \ce next-line
+bind pager \cf next-page
+bind pager \cm next-line
+bind pager \cn half-down
+bind pager \cn next-page
+bind pager \cp half-up
+bind pager \cu half-up
+bind pager N next-unread
+bind index,pager F flag-message
+
+# bind index g first-entry
+bind index G last-entry
+bind index H current-top
+bind index M current-middle
+bind index L current-bottom
+bind index <pagedown> next-page
+bind index <pageup> previous-page
+bind index zt current-top
+bind index zz current-middle
+bind index zb current-bottom
+bind index { top-page
+bind index } bottom-page
+bind index N toggle-new
+
+bind index,pager \t  next-unread
+bind index,pager ,\t previous-unread
+
+# Limit view to current thread
+# http://www.neomutt.org/feature/limit-current-thread/
+bind index <esc>L limit-current-thread
+
+# Fetching mail
+# macro index \cf "<shell-escape>offlineimap -o<enter>"
+macro index \cf "<shell-escape>mbsync -a<enter>"
+
+# default save path
+macro attach s <save-entry><bol>~/Downloads/<eol>
+
+# https://gist.github.com/manolomartinez/7082024
+macro attach S "<pipe-message>muttsaveattach"<enter>
+
+#macro index,pager I  <set-flag>O  "Mark as read"
+#macro index,pager U  <clear-flag>O  "Mark as unread"
+
+# https://www.neomutt.org/guide/configuration.html#bind-warnings
+bind index,pager g noop
+# macro index,pager gl <change-folder>?       "Go to 'Label'"
+# macro index,pager gi \
+#     <change-folder>=INBOX<enter> \
+#     "Go to inbox"
+
+# macros to invoke a profile
+# macro index <F8> ":source ~/.mutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
+# macro index <F9> ":source ~/.mutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
+
+macro compose <F8> "<enter-command>source ~/.mutt/profile.egi<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\
+  set editor='chsig ~/.mutt/signature-egi'<enter><edit-headers><enter>" \
+  "Load profile: egi"
+macro compose <F9> "<enter-command>source ~/.mutt/profile.perso<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste@bapt.name><enter><enter-command>\
+  set editor='chsig ~/.mutt/signature-perso'<enter><edit-headers><enter>" \
+  "Load profile: perso"
+
+# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+
+# Use Ctrl-l to list URL using urlscan
+macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+
+# show flagged and unread mails (i.e. important)
+#macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
+
+# Create a taskwarrior task using mutt2task
+# macro index,pager t "<pipe-message>mutt2task.py<enter>"
+
+# vim: set ft=muttrc:

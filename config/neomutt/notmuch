@@ -1,0 +1,224 @@
+# notmuch
+
+# XXX To be clarified
+# - search-based addressbook (instead of gobook)
+# - Updating files status from tags (like read emails)
+# - handling of deleted emails
+#   - https://github.com/neomutt/neomutt/issues/200
+# - seeing all the tags of an email from mutt
+# - seeing all the tags of an email from CLI
+# notmuch dump id:4DCAB3B3.8080301@maatg.com
+# - Best notmuch/search-based workflow with neomutt
+# - notmuch search, different results for tag= and tag:
+# - Best workflow for mutlitple accounts
+# - Best integration with gmail
+#   - delete
+#   - tags <=> labels
+#   - All: duplicates from Inbox, with different tags?
+#   - Managing Starred emails (separate folder?)
+# - Are folders updated automatically
+# - How are sorted emails in the change-vfolder view?
+# - Move automatically spam marked as trainham to the trainham folder for Perso
+# - validating managment of answered emails
+#   - Answer to 74BCB9D9-E942-466F-9204-0E46990087B5@cmcc.it (Sandro Fiore <sandro.fiore@cmcc.it> / Re: Stage rollout for analytics portle)
+#     -> My answer received: +all +egi +sent +signed
+#     -> His email received: +replied
+#        But not in Sent
+#   - Ordering vfolder browser
+
+set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
+
+# path to the maildir
+set nm_default_uri = "notmuch:///home/baptiste/Mail/"
+
+# enable virtual folders
+# When set, NeoMutt will use the first virtual mailbox (see virtual-mailboxes)
+# as a spoolfile.
+set virtual_spoolfile = yes
+
+# XXX virtual-mailboxes are loaded from profile-related conf
+# sets up queries for virtual folders
+virtual-mailboxes \
+    "Important"     "notmuch://?query=tag:important"
+ #   "Inbox"         "notmuch://?query=tag:inbox" \
+ #   "All"           "notmuch://?query=tag:all" \
+ #   "TODO"          "notmuch://?query=tag:todo" \
+ #   "Important"     "notmuch://?query=tag:important" \
+ #   "Trash"         "notmuch://?query=tag:deleted" \
+ #   "Spam"          "notmuch://?query=tag:spam" \
+ #   "Sent"          "notmuch://?query=tag:sent" \
+
+# set nm_hidden_tags = unread,draft,flagged,passed,replied,attachment,signed,encrypted
+
+# This variable specifies notmuch query type, supported types: 'threads' and
+# 'messages'.
+#set nm_query_type = threads
+set nm_query_type = messages
+
+# By default do not save sent emails
+# Gmail takes care of this
+unset record
+# Add messages stored to the NeoMutt record (see $record in the NeoMutt
+# docs) also to notmuch DB.
+# If you reply to an email then the new email inherits tags from the
+# original email.
+set nm_record = no
+
+# set nm_record_tag = 
+# Tags that should be removed or added to the to the messages stored in the NeoMutt record.
+#
+# example:
+# set record = "~/Mail/EGI/Sent"
+# set nm_record = yes
+# set nm_record_tags = "-inbox,archive,me,egi"
+
+# use new?
+set nm_unread_tag = unread
+
+# This variable specifies private notmuch tags which should not be printed
+# on screen (index, pager).
+# set nm_hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
+
+# The messages tagged with these tags are excluded and not loaded
+# from notmuch DB to NeoMutt unless specified explicitly.
+set nm_exclude_tags = ""
+
+# setup time window preferences
+# first setup the duration, and then the time unit of that duration
+# when set to 0 (the default) the search window feature is disabled
+set nm_query_window_duration=2
+# Could also be "hour", "day", "week", "month", "year"
+set nm_query_window_timebase="week"
+
+# Replace some tags with icons
+# tag-transforms "inbox"   "i"   \
+#                "unread"  "u"   \
+#                "replied" "↻ "  \
+#                "sent"    "➥ "  \
+#                "todo"    "T"   \
+#                "deleted" "DEL" \
+#                "invites" "CAL"
+
+# The formats must start with 'G' and the entire sequence is case sensitive.
+# tag-formats tag format-string { tag format-string ...}
+# tag-formats "inbox"   "GI" \
+#              "unread"  "GU" \
+#              "replied" "GR" \
+#              "sent"    "GS" \
+#              "todo"    "Gt" \
+#              "deleted" "GD" \
+#              "invites" "Gi"
+
+# These symbols are added to the index-color feature:
+# an individual message tag, %G, uses tag name
+# this symbol uses a pattern
+color index_tag red white "inbox"
+# the transformed message tags, %g
+# this symbol does not use a pattern
+color index_tags green default
+
+# notmuch bindings
+macro index \\\\ "<vfolder-from-query>"              # looks up a hand made query
+
+# open a different virtual folder
+bind index,pager X change-vfolder
+macro index c "<change-vfolder>?"
+# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+# modify (notmuch) tags
+bind index,pager \` modify-labels
+
+# generate virtual folder from query
+bind index,pager <F4> vfolder-from-query
+bind index,pager \eX vfolder-from-query
+# generate virtual folder from query with time window
+bind index < vfolder-window-backward
+bind index > vfolder-window-forward
+
+# read entire thread of the current message
+bind index,pager + entire-thread
+bind index,pager <F5> entire-thread
+
+# tag as read and archive
+# macro index A "<modify-labels-then-hide>+all -unread -inbox<enter>"
+macro index A "<modify-labels>+all -unread -inbox<enter>"
+# tag as unread and unarchive
+macro index N "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
+# toglle important flag
+macro index F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
+# Toggle the 'todo' tag
+# macro index,pager t "<modify-labels>!todo<enter><sync-mailbox>"
+# Create a taskwarrior task using mutt2task
+macro index,pager t "<pipe-message>~/bin/mutt2task.py<enter><modify-labels>!todo<enter><sync-mailbox>"
+macro index I "<modify-labels>-inbox -unread<enteR>"                 # removed from inbox
+macro index S "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>" # tag as Junk mail
+# Delete emails from the index, but NOT delete the file.
+# To be managed elsewhere (afew to move it in the Trahs folder?)
+# XXX how to recover?
+# XXX how are they hidden?
+# XXX how to flag mail as deleted/red in the UI?
+macro index,pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
+# bind index,pager D quasi-delete
+
+# 'L' performs a notmuch query, showing only the results
+macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+# 'a' shows all messages again (supersedes default <alias> binding)
+macro index a "<limit>all\n" "show all messages (undo limit)"
+
+# macros to invoke a profile
+macro index <F8> ":source ~/.mutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
+macro index <F9> ":source ~/.mutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
+
+# Colors messages based on tags
+#color index_tag default red 'tag:important'
+#color index_tag default red 'starred'
+# color index         color160        color234        "~F"                        # flagged messages
+
+color index         color160        color234        "important"                        # flagged messages
+color index         color160        color234        "starred"                        # flagged messages
+
+# set vfolder_format  = '%6n(%6N) %f plop'
+# Configure vfolder browser display
+# XXX how to order folder list?
+set vfolder_format  = '%6n (%N) %f'
+
+# Replace some tags with icons
+# tag-transforms tag transformed-string { tag transformed-string ...}
+tag-transforms "inbox"   "i"   \
+               "unread"  "u"   \
+               "replied" "↻ "  \
+               "sent"    "➥ "  \
+               "important"    "I"   \
+               "deleted" "D" \
+               "invites" "C"
+
+# The formats must start with 'G' and the entire sequence is case sensitive.
+# tag-formats tag format-string { tag format-string ...}
+tag-formats "inbox"   "Gi" \
+             "unread"  "GU" \
+             "replied" "GR" \
+             "sent"    "GS" \
+             "important"    "Gt" \
+             "deleted" "GD" \
+             "invites" "GI"
+
+# Now instead of using '%g' in your $index_format, which lists all tags
+# in a non-deterministic order, you can something like the following which puts
+# a transformed tag name in a specific spot on the index line:
+# %C: message number
+# %S: Single character status of the message ( “N”/ “O”/ “D”/ “d”/ “!”/ “r”/ “*”)
+# %Z: Message status flag on 3 chars
+#   - New, Read, Reply
+#   - Deletion or Encryption flags
+#   - Tagging, flagging or information about the To/Cc...
+# %[%y.%m.%d]: Date
+# %n: Author realname or email if missing
+# %W: Organization
+# .G: Notmuch tags info
+#   - %GU: unread
+#   - %GR: replied
+#   - %GI: invites (calendar invitation)
+# %s: message subject
+set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
+# Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
+
+# vim: set ft=muttrc:
