@@ -36,12 +36,14 @@ EXPORTSRC=0        # Need EXPORT>0 to be used
 #EXPORTDIR="/var/abs/local/exports"       # If empty, use makepkg's connfiguration (see makepkg.conf)
 
 # Prompt
-#NOCONFIRM=0
+NOCONFIRM=1
 UP_NOCONFIRM=1     # No prompt while build upgrades (including -Sbu)
 BUILD_NOCONFIRM=1  # Only prompt for editing files
 #PU_NOCONFIRM=0     # Add --noconfirm to $PACMAN -U
+# don’t propose to edit files (from AUR or from ABS), unless overwritten by
+# --edit
 EDITFILES=0
-#NOENTER=1
+NOENTER=1
 
 # Output
 #USECOLOR=1
