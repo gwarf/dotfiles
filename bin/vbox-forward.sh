@@ -4,7 +4,9 @@
 
 VBOX_NETWORK='192.168.56.0/24'
 
-OUT_IF=$(ip route show to 0.0.0.0/0 | awk '{print $5}')
+# Might retur multiple routes (for wired and wifi)
+# OUT_IF=$(ip route show to 0.0.0.0/0 | awk '{print $5}')
+OUT_IF=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $5}')
 LOCAL_IFS=$(ip link show up | grep -B1 'link/ether' | awk '/^[0-9]*:/ {print $2}' | sed 's/:$//')
 
 if ! echo "$LOCAL_IFS" | grep -q "$OUT_IF"; then
@@ -13,6 +15,10 @@ if ! echo "$LOCAL_IFS" | grep -q "$OUT_IF"; then
   printf "$LOCAL_IFS\n"
   exit 1
 fi
+
+
+# XXX OUT_IF should only contain one IP
+# XXX Add a check for this
 
 # Enable forwarding
 sudo sysctl -q -w net.ipv4.ip_forward=1
