@@ -1,9 +1,17 @@
 dotfiles
-========
+--------
 
-My messy dotfiles.
+## About
 
+My messy dotfiles. WIP of course :)
+
+Managed using [dotbot][dotbot].
+
+## Bootstrapping
 
 ``` sh
-curl --silent https://raw.github.com/gwarf/dotfiles/master/install.sh | sh
+URL='git://github.com/gwarf/dotfiles'
+git clone "$URL" ~/.dotfiles && cd ~/.dotfiles && ./install
 ```
+
+[dotbot]: https://github.com/anishathalye/dotbot/
