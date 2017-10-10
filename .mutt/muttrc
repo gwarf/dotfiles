@@ -1,8 +1,5 @@
 # https://pbrisbin.com/posts/mutt_gmail_offlineimap/
 
-set mbox_type = Maildir
-set folder = ~/Mail
-
 # Caching
 set header_cache = ~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies
@@ -11,23 +8,25 @@ set certificate_file = ~/.mutt/certificates
 set tmpdir = '~/tmp'
 
 set editor = 'vim'
-
 set shell = "/bin/zsh"
-set history = 1000  # number of input lines for prompts to remember
+
+# number of input lines for prompts to remember
+set history = 1000
 set history_file = "~/.mutt/history"
 set save_history = 1000
 
+# SMIME / PGP
 set crypt_use_gpgme = yes
 set smime_is_default = yes
-
 set crypt_autosmime = yes
 set crypt_verify_sig = yes
 set crypt_autosign = yes
 set crypt_replysign = yes
 set crypt_replysignencrypted = yes
 set smime_ask_cert_label
+set forward_decrypt = yes
 
-set mailcap_path = "~/.mutt/mutt.mailcap:/etc/mailcap"
+set mailcap_path = "~/.mailcap:/etc/mailcap"
 
 # Printing
 set print = ask-yes       # ask before printing
@@ -47,33 +46,20 @@ set text_flowed = yes
 set reflow_text = yes
 set reflow_wrap = 76
 
-set collapse_unread     # collapse threads with unread mails
-
-# main options
-set realname = "Baptiste Grenier"
 set mail_check = 0
 set envelope_from
 set reverse_alias
 
-# Load the appropriate profile depending on the folder
-folder-hook Perso/* 'source ~/.mutt/profile.perso'
-folder-hook Gmail/* 'source ~/.mutt/profile.egi'
-folder-hook Perso 'source ~/.mutt/profile.perso'
-folder-hook Gmail 'source ~/.mutt/profile.egi'
+# Hooks
+source ~/.mutt/hooks
 
-# When replying load profile corresponding to the To:
-reply-hook "~t baptiste@bapt.name" "source ~/.mutt/profile.perso"
-reply-hook "~t baptiste.grenier@egi.eu" "source ~/.mutt/profile.egi"
-
-# When sending load profile corresponding to the To:
-send-hook @egi\\.eu$ "source ~/.mutt/profile.egi"
-
-unset move           # gmail does that
-#set move             # Move read email to All Mail folder
-set delete           # don't ask, just do
-unset confirmappend  # don't ask, just do!
-set quit             # don't ask, just do!!
-unset mark_old       # read/new is good enough for me
+# Move read email to All Mail folder
+##set move
+#unset move           # gmail does that
+#set delete           # don't ask, just do
+#unset confirmappend  # don't ask, just do!
+#set quit             # don't ask, just do!!
+unset mark_old       # read/new is good enough
 
 # sort/threading
 # Goal:
@@ -86,10 +72,13 @@ set sort = threads
 set sort_aux = reverse-last-date-received
 set sort_re
 # Ensure that INBOX is always using appropriate sorting
-folder-hook INBOX 'set sort=threads sort_aux=reverse-last-date-received sort_re'
+folder-hook Inbox 'set sort=threads sort_aux=reverse-last-date-received sort_re'
 # Threads sorted correctly but at bottom
 #set sort_aux = last-date-received
 #folder-hook INBOX 'set sort=threads sort_aux=last-date-received sort_re'
+
+# collapse threads with unread mails
+set collapse_unread
 
 # look and feel
 set pager_index_lines = 8
@@ -104,174 +93,36 @@ unset markers
 set fcc_attach
 set include
 
-set forward_decrypt = yes
 set forward_decode = yes
 
 # Forward message as attachement
 set mime_forward = ask-yes
 set mime_forward_rest = ask-yes
 
+# Forgotter Attachemnt
+source ~/.mutt/forgotten-attachment
+
 # Colors
-source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
-#source ~/.mutt/mutt-colors-solarized-dark-16.muttrc
+source ~/.mutt/colors
+source ~/.mutt/index-color
+source ~/.mutt/progress-color
 
-# Index colors
-# http://www.neomutt.org/feature/index-color/
-#color index_author default color234 '.*'
-#color index_flags default red '~F'
-#color index_collapsed default brightblue
-#color index_date green default
-#color index_label default brightgreen
-#color index_number red default
-#color index_size cyan default
-
-# Caching
-# set header_cache =~/.mutt/cache/headers
-# set message_cachedir =~/.mutt/cache/bodies
-# set certificate_file =~/.mutt/certificates
-
-bind editor <Tab> complete-query
-
-# Key bindings
-# Needed to fix handling of space in dir names
-bind editor <space> noop
-# bind pager g top
-bind pager G bottom
-bind pager j next-line
-bind pager k previous-line
-bind pager i edit
-bind pager R group-reply
-bind pager <down> next-line
-bind pager <up> previous-line
-bind pager \cd half-down
-bind pager \ce next-line
-bind pager \cf next-page
-bind pager \cm next-line
-bind pager \cn half-down
-bind pager \cn next-page
-bind pager \cp half-up
-bind pager \cu half-up
-bind pager N next-unread
-bind index,pager F flag-message
-
-# bind index g first-entry
-bind index G last-entry
-bind index H current-top
-bind index M current-middle
-bind index L current-bottom
-bind index <pagedown> next-page
-bind index <pageup> previous-page
-bind index zt current-top
-bind index zz current-middle
-bind index zb current-bottom
-bind index { top-page
-bind index } bottom-page
-bind index N toggle-new
-
-# Limit view to current thread
-# http://www.neomutt.org/feature/limit-current-thread/
-bind index <esc>L limit-current-thread
-
-# Fetching mail
-macro index \cf "<shell-escape>offlineimap -o<enter>"
-
-# default save path
-macro attach s <save-entry><bol>~/Downloads/<eol>
-macro index,pager I  <set-flag>O  "Mark as read"
-macro index,pager U  <clear-flag>O  "Mark as unread"
-
-# https://www.neomutt.org/guide/configuration.html#bind-warnings
-bind index,pager g noop
-macro index,pager gl <change-folder>?       "Go to 'Label'"
-macro index,pager gi \
-    <change-folder>=INBOX<enter> \
-    "Go to inbox"
-
-# macros to invoke a profile
-macro index <F8> ":source ~/.mutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
-macro index <F9> ":source ~/.mutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
-
-macro compose <F8> "<enter-command>source ~/.mutt/profile.egi<enter><edit-from>\
-  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\
-  set editor='chsig ~/.mutt/signature-egi'<enter><edit-headers><enter>" \
-  "Load profile: egi"
-macro compose <F9> "<enter-command>source ~/.mutt/profile.perso<enter><edit-from>\
-  <kill-line>Baptiste Grenier <baptiste@bapt.name><enter><enter-command>\
-  set editor='chsig ~/.mutt/signature-perso'<enter><edit-headers><enter>" \
-  "Load profile: perso"
-
-macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
-
-macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
-# Use Ctrl-l to list URL using urlscan
-
-#macro index D \
-#    "<save-message>+[Gmail].Bin<enter>" \
-#    "move message to the trash"
-
-# show flagged and unread mails (i.e. important)
-macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
+# Key bindings, macros
+source ~/.mutt/bindings
 
 # Spelling
 set ispell = "aspell -e -c"
 
 set send_charset = "utf-8"
 
-#set print_command="/usr/bin/muttprint %s -P A4 -p CanonMX920"
-set print_command = "/usr/bin/muttprint %s -P A4 -C lpr"
+#set print_command="muttprint %s -P A4 -p CanonMX920"
+set print_command = "muttprint %s -P A4 -C lpr"
 
 # Headers
-#set autoedit            # call editor without prompting for To: and Subject:
-set edit_hdrs         # edit all headers lines in the editor
-# first, ignore all headers
-ignore *
-# then, show only these
-unignore from: date: subject: to: cc: reply-to:
-unignore x-url x-resent organization organisation x-mailing-list:
-unignore x-mailing-list:
-unignore user-agent: x-agent: x-mailer: x-newsreader:
-unignore newsgroups: posted-to: x-also-posted-to:
-unignore sender:
-unignore priority: importance:
-unignore mail-followup-to:
-unignore message-id:
-# and in this order
-unhdr_order *
-hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To:
+source ~/.mutt/headers
 
 # MIME-Viewer
-unauto_view *
-auto_view text/html
-auto_view text/calendar application/ics
-auto_view image/x-portable
-auto_view image/x-portable-bitmap
-auto_view image/x-portable-graymap
-auto_view image/x-portable-anymap
-auto_view image/x-portable-pixmap
-auto_view application/pgp-signature
-auto_view application/pgp
-auto_view application/x-gunzip
-auto_view application/postscript
-auto_view application/x-troff-man
-auto_view application/x-troff-me
-auto_view application/x-troff
-auto_view application/x-gtar
-auto_view application/x-tar
-auto_view application/x-tar-gz
-auto_view application/x-sh
-auto_view application/x-csh
-auto_view application/x-shar
-auto_view application/x-latex
-auto_view application/x-tex
-auto_view application/x-dvi
-auto_view application/x-zip-compressed
-auto_view application/x-cpio text/richtext
-auto_view application/pgp-keys
-auto_view application/octet-stream
-auto_view text/x-vcard
-auto_view text/enriched
-
-alternative_order text/plain text/html
+source ~/.mutt/mime-view
 
 # Disaplay filter
 #set display_filter=/home/baptiste/.mutt/mutt_display_filter
@@ -282,5 +133,18 @@ alternative_order text/plain text/html
 # http://www.neomutt.org/feature/new-mail/
 set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
 
+# notmuch
+source ~/.mutt/notmuch
+
+# sidebar
+source ~/.mutt/sidebar
+
+#set mbox_type = Maildir
+#set folder = ~/Mail
+
+set realname = "Baptiste Grenier"
+
 # Source EGI profile
 source ~/.mutt/profile.egi
+
+# vim: set ft=muttrc:

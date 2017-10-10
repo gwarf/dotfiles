@@ -1,19 +1,49 @@
 # Mutt sender profile: egi
 
-set folder = ~/Mail/Gmail
+# sets up queries for virtual folders
+unvirtual-mailboxes *
+virtual-mailboxes \
+    "Inbox"         "notmuch://?query=tag:egi AND tag:inbox" \
+    "TODO"          "notmuch://?query=tag:egi AND tag:todo" \
+    "All"           "notmuch://?query=tag:egi AND tag:all" \
+    "Lists"         "notmuch://?query=tag:egi AND tag:lists" \
+    "ELITRANS"      "notmuch://?query=tag:egi AND eli" \
+    "INDIGO"        "notmuch://?query=tag:egi AND indigo" \
+    "ENVRI"         "notmuch://?query=tag:egi AND envri" \
+    "Security"      "notmuch://?query=tag:egi AND security" \
+    "ISM"           "notmuch://?query=tag:egi AND ISM" \
+    "Office"        "notmuch://?query=tag:office" \
+    "FedCloud"      "notmuch://?query=tag:lists/fedcloud-tf" \
+    "Operations"    "notmuch://?query=tag:operations" \
+    "Important"     "notmuch://?query=tag:egi AND (tag:important OR tag:starred)" \
+    "Trash"         "notmuch://?query=tag:egi AND tag:deleted" \
+    "Spam"          "notmuch://?query=tag:egi AND tag:spam" \
+    "Sent"          "notmuch://?query=tag:egi AND tag:sent"
+
+
+# Copy sent message to this folder
+
 set sendmail = "/usr/bin/msmtp -a egi"
 
+# Custom status color for this profile
 color status cyan default
 
-set spoolfile   = "+INBOX"
-set mbox        = "+[Gmail].All Mail"
-set postponed   = "+[Gmail].Drafts"
-unset record
+# set spoolfile   = "+Inbox"
+# set mbox        = "+All"
+# set postponed   = "+Drafts"
+# unset record
+# Add messages stored to the NeoMutt record (see $record in the NeoMutt docs)
+# also to notmuch DB. If you reply to an email then the new email inherits tags
+# from the original email.
+set mbox_type = Maildir
+set record = ~/Mail/EGI/Sent/
+# set nm_record = yes
+# set nm_record_tags = '-inbox,all,sent,me'
 
 # If using trash-folder-patch
-set trash="+[Gmail].Bin"
+# set trash="+Trash"
 
-mailboxes +INBOX
+# mailboxes +Inbox +All +Draft +Trash
 set from       = "baptiste.grenier@egi.eu"
 
 # Signature file
@@ -46,56 +76,46 @@ set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?
 # macro index \e4 "<save-message>+_Defer<enter>" "Save Message to _Defer"
 # macro index \e5 "<save-message>+lists<enter>" "Save Message to lists"
 
-macro index E \
-    "<change-folder>+[Gmail].All Mail<enter><limit>~B " \
-    "search everything"
+#macro index E \
+#    "<change-folder>+[Gmail].All Mail<enter><limit>~B " \
+#    "search everything"
 
-macro index,pager A \
-    '<save-message>+[Gmail].All Mail<enter>' \
-    "move message to the archive"
-macro index,pager + \
-    <save-message>+[Gmail].Important<enter><enter> \
-    "Mark as important"
-macro index S \
-    "<save-message>+[Gmail].Spam<enter>" \
-    "mark message as spam"
-macro index,pager ga \
-    "<change-folder>+[Gmail].All Mail<enter>"  \
-    "Go to all mail"
-macro index,pager gs \
-    <change-folder>+[Gmail].Starred<enter> \
-    "Go to 'Starred'"
-macro index,pager gd \
-    <change-folder>+[Gmail].Drafts<enter> \
-    "Go to 'Drafts'"
-macro index,pager gt \
-    "<change-folder>+[Gmail].Sent Mail<enter>" \
-    "Go to 'Sent Mail'"
+#macro index,pager A \
+#    '<save-message>+[Gmail].All Mail<enter>' \
+#    "move message to the archive"
+#macro index,pager + \
+#    <save-message>+[Gmail].Important<enter><enter> \
+#    "Mark as important"
+#macro index S \
+#    "<save-message>+[Gmail].Spam<enter>" \
+#    "mark message as spam"
+#macro index,pager ga \
+#    "<change-folder>+[Gmail].All Mail<enter>"  \
+#    "Go to all mail"
+#macro index,pager gs \
+#    <change-folder>+[Gmail].Starred<enter> \
+#    "Go to 'Starred'"
+#macro index,pager gd \
+#    <change-folder>+[Gmail].Drafts<enter> \
+#    "Go to 'Drafts'"
+#macro index,pager gt \
+#    "<change-folder>+[Gmail].Sent Mail<enter>" \
+#    "Go to 'Sent Mail'"
 
-folder-hook +[Gmail].Bin 'set sort=reverse-date'
-folder-hook Sent 'set sort=reverse-date-sent'
-folder-hook +[Gmail].Bin macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
-folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
+#folder-hook +[Gmail].Bin 'set sort=reverse-date'
+#folder-hook Sent 'set sort=reverse-date-sent'
+#folder-hook +[Gmail].Bin macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
+#folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
 
 # Fetching mail
-macro index \cf "<shell-escape>offlineimap -o -a Gmail<enter>"
+# XXX need to call notmuch
+macro index \cf "<shell-escape>mbsync EGI<enter>"
 
 # Querying Google contacts
 set query_command="goobook query %s"
 macro index,pager a \
   "<pipe-message>goobook --verbose add<return>!goobook reload<enter>" \
   "add sender to google contacts"
-macro index,pager gr "!goobook reload\n" "Goobook reload"
-
-# search mail (using notmuch)"
-macro index <F4> \
-      "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt --remove-dups --prompt search<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>" \
-      "notmuch: search mail"
-
-# search and reconstruct owning thread (using notmuch)"
-macro index <F5> \
-      "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt --remove-dups thread<enter><change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter><enter-command>set wait_key<enter>" \
-      "notmuch: reconstruct thread"
 
 # Mailing lists
 lists technical-support-cases-c@rt.egi.eu
@@ -117,18 +137,20 @@ subscribe envriplus-wp9@helsinki.fi
 subscribe wise@lists.wise-community.org
 
 # Save hooks
-save-hook ' ~s GGUS-Ticket-ID' =helpdesk
-save-hook ' ~s Backup' =backup
-save-hook ' ~s oss-security' =security
-save-hook ' ~e fulldisclosure-bounces@seclists.org' =security
-save-hook ' ~e operations-bounces@.*\.egi\.eu' =operations
-save-hook ' ~e office-bounces@.*\.egi\.eu' =office
-save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
-save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
-save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
-save-hook ' ~h "EGI - technical-support-cases"' =technical-support-cases
-save-hook ' ~h "EGI - report-vulnerability"' =report-vulnerability
-save-hook ' ~h indigo-wp3-lead@lists.indigo-datacloud.eu' =indigo-wp3
-save-hook ' ~h lists.wise-community.org' =wise
-save-hook ' ~C Gaizer | ~f Gaizer' =ELITRANS
-save-hook ' ~h glue-wg@ogf.org' =glue-wg
+#save-hook ' ~s GGUS-Ticket-ID' =helpdesk
+#save-hook ' ~s Backup' =backup
+#save-hook ' ~s oss-security' =security
+#save-hook ' ~e fulldisclosure-bounces@seclists.org' =security
+#save-hook ' ~e operations-bounces@.*\.egi\.eu' =operations
+#save-hook ' ~e office-bounces@.*\.egi\.eu' =office
+#save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
+#save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
+#save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
+#save-hook ' ~h "EGI - technical-support-cases"' =technical-support-cases
+#save-hook ' ~h "EGI - report-vulnerability"' =report-vulnerability
+#save-hook ' ~h indigo-wp3-lead@lists.indigo-datacloud.eu' =indigo-wp3
+#save-hook ' ~h lists.wise-community.org' =wise
+#save-hook ' ~C Gaizer | ~f Gaizer' =ELITRANS
+#save-hook ' ~h glue-wg@ogf.org' =glue-wg
+
+# :vim set ft=muttrc:
