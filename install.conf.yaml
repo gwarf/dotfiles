@@ -4,6 +4,9 @@
 
 - clean: ['~']
 
+# XXX Create parent directories
+# - ~/.config/i3
+
 - link:
     ~/.dotfiles: ''
     ~/.tmux.conf: tmux.conf
