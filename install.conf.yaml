@@ -20,6 +20,10 @@
     ~/.xinitrc: xinitrc
     ~/.xsession: xinitrc
     ~/.zshrc: zshrc
+    ~/.zshenv: zshenv
+    ~/.zprofile: zprofile
+    ~/.zlogin: zlogin
+    ~/.zlogout: zlogout
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
