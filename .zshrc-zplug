@@ -1,3 +1,6 @@
+# ~/.zshrc
+# Read by all interactive shells
+
 # https://dotfiles.github.io/
 # HTTps://github.com/zplug/zplug
 # https://github.com/unixorn/zsh-quickstart-kit
@@ -38,8 +41,8 @@ fi
 source "$ZPLUG_HOME/init.zsh"
 
 # Theme
-#zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
+# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+# zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 
 zplug "zlsun/solarized-man"
 
@@ -50,6 +53,10 @@ zplug "modules/history", from:prezto
 zplug "modules/ssh", from:prezto
 
 zplug "plugins/shrink-path", from:oh-my-zsh
+zplug "plugins/taskwarrior", from:oh-my-zsh
+# A lot of nice aliases
+#zplug "plugins/comon-aliases", from:oh-my-zsh
+zplug "themes/half-life", from:oh-my-zsh, defer:3
 
 zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
@@ -62,16 +69,22 @@ zplug "MichaelAquilina/zsh-you-should-use"
 
 zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
 
+# XXX Make a PR to zsh-completions?
+# XXX Really required?
+# zplug "aclements/notmuch", use:completion/notmuch-completion.zsh
+
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
 
 # Should be loaded after modules/utility to overwrite cd alias
 zplug "b4b4r07/enhancd", use:init.sh, defer:3
 export ENHANCD_FILTER='fzf'
-export ENHANCD_HOOK_AFTER_CD='k -h'
+export ENHANCD_HOOK_AFTER_CD='ls -lhrt'
 # export ENHANCD_COMMAND='c'
-# export ENHANCD_DISABLE_HOME=1
-# export ENHANCD_HYPHEN_ARG=_
+export ENHANCD_DISABLE_HOME=1
+export ENHANCD_DISABLE_HYPHEN=1
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_HYPHEN_ARG=_
 # Run k when entering a directory
 
 zplug "marzocchi/zsh-notify"
@@ -105,9 +118,12 @@ zplug "junegunn/fzf-bin", \
 
 zplug "so-fancy/diff-so-fancy", as:command
 
-# XXX to replace autojump
-#zplug "rupa/z", use:"*.sh"
+# Replacement for autojump
+zplug "rupa/z", use:"*.sh"
 
+# npm / nvm
+#zplug "lukechilds/zsh-nvm"
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Plugins-specific configuration required before loading them
 
@@ -171,8 +187,15 @@ setopt auto_cd
 # Hilight directories
 zstyle ':completion:*:default' list-colors ''
 
+# Rehash when completing commands
+zstyle ":completion:*:commands" rehash 1
 # Completion menu's navigation with arrows
 zstyle ':completion:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+# let's use the tag name as group name
+zstyle ':completion:*' group-name ""
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}= %d =%{$reset_color%}"
 
 # Case insensitive completion
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
@@ -199,10 +222,15 @@ bindkey -M vicmd 'j' history-substring-search-down
 bindkey -M vicmd "q" push-line
 
 # named directories
-hash -d repos=~/repos
-hash -d Downloads=~/Downloads
-hash -d Documents=~/Documents
-hash -d GoogleDrive=~/GoogleDrive
+# XXX does not play nice with enhancd
+# hash -d repos=~/repos
+# hash -d Downloads=~/Downloads
+# hash -d Documents=~/Documents
+# hash -d GoogleDrive=~/GoogleDrive
+
+export EDITOR='vim'
+#export PAGER='less'
+export SYSTEMD_PAGER='cat'
 
 #####################################################################
 ## Shell aliases and functions
@@ -224,11 +252,19 @@ else
   alias l='ls -lh'
 fi
 ## list only directories
-alias lsd='\ls -d */'
+alias lsd='ls -d */'
 ## list only files
 alias lsf="ls -rtF | grep -v '.*/'"
 
+alias lsrt='ls -rt'
+
 alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
+
+# alias vi=vim
+
+alias halt='systemctl poweroff'
+alias reboot='systemctl reboot'
+alias suspend='systemctl suspend'
 
 if command -v "hub" >/dev/null 2>&1; then
   alias git=hub
@@ -236,10 +272,13 @@ fi
 
 # Global aliases {{{
 alias -g A="| awk"
+# Color output using ccze
+# XXX ccze -A | less -R
+alias -g C="| ccze -A"
 alias -g G="| grep"
 alias -g GV="| grep -v"
 alias -g H="| head"
-alias -g L="| $PAGER"
+alias -g L='| $PAGER'
 alias -g P=' --help | less'
 alias -g R="| ruby -e"
 alias -g S="| sed"
@@ -275,6 +314,18 @@ alias -s m4a=clementine
 alias -s ogg=clementine
 # }}
 
+# noremoteglob breaks scp with filenames containing parenthesis
+unalias scp
+alias scp='noglob scp'
+
+alias yupd='yaourt -Syyu'
+
+xev() {
+  command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+}
+
+#alias xev=xeva
+
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
 if type compdef &>/dev/null; then
@@ -284,13 +335,61 @@ if type compdef &>/dev/null; then
   fi
 fi
 
+alias alot_work='alot -n ~/.notmuch-config-egi -p ~/Mail/Gmail/ -l ~/.config/alot/alot.log'
+
 drun() {
-  docker run --rm -v $(pwd):/source -it "$1"
+  command docker run --rm -v $(pwd):/source -it "$1"
 }
 
-# Archlinix command not found (needs pkgfile)
+# Colorize output using ccze
+journalctl() {
+  command journalctl $@ | ccze -A
+}
+
+last() {
+  command last $@ | ccze -A
+}
+
+free() {
+  command free $@ | ccze -A
+}
+
+activate() {
+    source $1/bin/activate
+}
+
+# Archlinux command not found (needs pkgfile)
 if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
   source /usr/share/doc/pkgfile/command-not-found.zsh
 fi
 
 [ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Display events reminders
+
+# Work-related tasks
+tw() {
+  command task +@baptiste.grenier $@
+}
+
+# Home-related tasks
+th() {
+  command task rc:~/.taskrc-home +HOME $@
+}
+
+# Display task list
+tw next
+
+# XXX currently in cron
+# XXX launch this from xinitrc/i3 to ensure that it's called only in X
+# if [ -x /usr/bin/gcalcli ]; then
+#   while true; do
+#     /usr/bin/gcalcli --calendar="davis" remind
+#     sleep 300
+#   done &
+# fi
+
+# Completion for hexo
+eval "$(hexo --completion=zsh)"
