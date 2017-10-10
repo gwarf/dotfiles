@@ -25,6 +25,8 @@
     ~/.zlogin: zlogin
     ~/.zlogout: zlogout
     ~/.Xresources: Xresources
+    ~/.config/i3/config: config/i3/config
+    ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
