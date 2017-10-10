@@ -1,0 +1,34 @@
+snippet _skel "Python skeleton" b
+#!/usr/bin/env python
+# coding=utf-8
+
+'''
+Documentation of class
+
+`!v g:snips_author` <`!v g:snips_author_email`>
+`!v strftime("%Y")` `!v g:snips_company`
+
+@package MyPackage
+'''
+
+from __future__ import print_function
+import os
+import sys
+
+$0
+
+# vim: set et ts=4 sw=4:
+endsnippet
+
+snippet header "File Header" b
+endsnippet
+
+snippet main "main function" b
+if __name__ == '__main__':
+    if len(sys.argv) < 1:
+        sys.exit('Usage: %s arg1' % sys.argv[0])
+    arg1 = sys.argv[1]
+    to_be_named(arg1)
+endsnippet
+
+# vim:ft=snippets:
