@@ -1,9 +1,9 @@
 config/neomutt/history
+vim/plugged
 .config/vimb
 .config/ranger/__pycache__/
 .config/ranger/history
 .mutt/headers
-.mutt/history
 .mutt/mutt.compte
 .pentadactyl/info/default/cache
 .pentadactyl/info/default/command-history
