@@ -13,6 +13,7 @@
     ~/.yaourtrc: yaourtrc
     ~/.gitconfig: gitconfig
     ~/.msmtprc: msmtprc
+    ~/.inputrc: inputrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
