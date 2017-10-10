@@ -12,6 +12,7 @@
     ~/.config/neomutt: config/neomutt
     ~/.yaourtrc: yaourtrc
     ~/.gitconfig: gitconfig
+    ~/.msmtprc: msmtprc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
