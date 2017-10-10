@@ -24,6 +24,7 @@
     ~/.zprofile: zprofile
     ~/.zlogin: zlogin
     ~/.zlogout: zlogout
+    ~/.Xresources: Xresources
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

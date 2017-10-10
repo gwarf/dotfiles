@@ -1,0 +1,248 @@
+!-------------------------------------------------------------------------------
+! Xft settings
+!-------------------------------------------------------------------------------
+
+!Xft.dpi:                    96
+Xft.antialias:              true
+Xft.rgba:                   rgb
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+
+! Xresources solarized
+! http://ethanschoonover.com/solarized
+
+! Common
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+
+! Dark
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+
+*background:            S_base03
+*foreground:            S_base0
+*fadeColor:             S_base03
+*cursorColor:           S_base1
+*pointerColorBackground:S_base01
+*pointerColorForeground:S_base1
+
+*color0:                S_base02
+*color1:                S_red
+*color2:                S_green
+*color3:                S_yellow
+*color4:                S_blue
+*color5:                S_magenta
+*color6:                S_cyan
+*color7:                S_base2
+*color8:                S_base03
+*color9:                S_orange
+*color10:               S_base01
+*color11:               S_base00
+*color12:               S_base0
+*color13:               S_violet
+*color14:               S_base1
+*color15:               S_base3
+
+!! XTerm
+XTerm*faceName:         xft:Monaco:style=regular:size=13
+XTerm*locale: true
+XTerm*utf8: 1
+XTerm*metaSendsEscape: true
+
+!-------------------------------------------------------------------------------
+! URxvt settings
+! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
+! More info at:
+! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
+!-------------------------------------------------------------------------------
+
+! Selecting
+! Left click and drag to select
+! Right click to extend selection
+! Triple left click to select line
+
+! Pasting
+! Middle mouse: PRIMARY selection
+! Shift+Insert: PRIMARY selection
+! Middle mouse + Meta (Alt): CLIPBOARD selection
+! Ctrl-Meta(Alt)-c: copy to CLIPBOARD selection
+! Ctrl-Meta(Alt)-v: paste from CLIPBOARD selection
+
+URxvt.depth:                32
+!URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+! URxvt.urgentOnBell:         true
+! URxvt.visualBell:           true
+URxvt.loginShell:           true
+URxvt.saveLines:            50
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+!URxvt*eightBitInput: false
+
+! If true bold means high intensity
+URxvt.intensityStyles: false
+
+! Fonts
+!URxvt.allow_bold:           false
+
+! Check with fontforge info of fonts inside /usr/share/fonts
+! Need to use single-width glyphs (font variant ending with Mono)
+! https://github.com/powerline/fonts/issues/176
+! DejaVu provides some missing glyphs like the green tick
+! Symbola (from ancient fonts) providing some missing glyphs
+! Unidings, FontAwesome, Unifont and Noto Mono can provide more if needed
+! Use rxvt-unicode-wcwidthcallback
+
+!URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:DejaVu Sans Mono:size=12,xft:FontAwesome:size=12,xft:Unifont:size=12,xft:Noto Mono:size=12,xft:Symbola:size=12,xft:Unidings:size=12,xft:Input Mono:size=12,xft:Icons:size=12
+
+! urxvt: unable to calculate font width for 'Wuncon Siji:slant=0:weight=200:pixelsize=12:minspace=True', ignoring
+URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:FontAwesome:size=12,xft:Unifont:size=10,xft:Symbola:size=12,xft:Icons:size=12,xft:icomoon:size=12,xft:Misc Stlarch:style=regular:size=12,xft:Wuncon Siji:style=siji:size=12
+
+! URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:DejaVu Sans Mono:size=12,xft:Symbola:size=12,xft:unifont:size=10,xft:Unifont:size=10,xft:Wuncon Siji:size=12
+! URxvt*imFont:  xft:Fantasque Sans Mono:size=12:style=bold,xft:DejaVu Sans Mono:size=12:style=bold,xft:Symbola:size=12:style=bold
+! URxvt*boldFont:  xft:Fantasque Sans Mono:size=12:style=bold,xft:DejaVu Sans Mono:size=12:style=bold,xft:Symbola:size=12:style=bold
+! URxvt*italicFont:  xft:Fantasque Sans Mono:size=12:style=italic,xft:DejaVu Sans Mono:size=12:style=italic,xft:Symbola:size=12:style=italic
+! URxvt*boldItalicFont:  xft:Fantasque Sans Mono:size=12:style=bold:italic,xft:DejaVu Sans Mono:size=12:style=bold:italic,xft:Symbola:size=12:style=bold:italic
+
+! Fix font space
+URxvt*letterSpace: -1
+
+! Scrollbar
+URxvt.scrollStyle:          rxvt
+URxvt.scrollBar:            false
+
+! Perl extensions
+! https://github.com/muennich/urxvt-perls/
+! URxvt.perl-ext-common: default,url-select,vtwheel,clipboard
+! URxvt.perl-ext-common: default,url-select,clipboard,selection-to-clipboard
+! URxvt.perl-ext-common: default,url-select,selection-to-clipboard
+URxvt.perl-ext-common: default,url-select,selection-to-clipboard
+! Alt-u to select URLs
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-launcher: /usr/bin/xdg-open
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
+! Mouse right click
+URxvt.matcher.button: 3
+
+! Cursor
+URxvt.cursorBlink:          false
+URxvt.cursorUnderline:      false
+
+! Pointer
+URxvt.pointerBlank:         true
+
+! Delimiters when copying/pasting
+! URxvt*.cutchars: "()*,;<>[]{}|`\"'#│"
+URxvt*.cutchars: "()*,;<>[]{}|'`\"#│"
+
+! Handle meta key usage
+! URxvt*keysym.Meta-0X0020: \302\240
+! URxvt*keysym.Meta-0X0021: \302\241
+! URxvt*keysym.Meta-0X0022: \302\242
+! URxvt*keysym.Meta-0X0023: \302\243
+! URxvt*keysym.Meta-0X0024: \302\244
+! URxvt*keysym.Meta-0X0025: \302\245
+! URxvt*keysym.Meta-0X0026: \302\246
+! URxvt*keysym.Meta-0X0027: \302\247
+! URxvt*keysym.Meta-0X0028: \302\250
+! URxvt*keysym.Meta-0X0029: \302\251
+! URxvt*keysym.Meta-0X002A: \302\252
+! URxvt*keysym.Meta-0X002B: \302\253
+! URxvt*keysym.Meta-0X002C: \302\254
+! URxvt*keysym.Meta-0X002D: \302\255
+! URxvt*keysym.Meta-0X002E: \302\256
+! URxvt*keysym.Meta-0X002F: \302\257
+! URxvt*keysym.Meta-0X0030: \302\260
+! URxvt*keysym.Meta-0X0031: \302\261
+! URxvt*keysym.Meta-0X0032: \302\262
+! URxvt*keysym.Meta-0X0033: \302\263
+! URxvt*keysym.Meta-0X0034: \302\264
+! URxvt*keysym.Meta-0X0035: \302\265
+! URxvt*keysym.Meta-0X0036: \302\266
+! URxvt*keysym.Meta-0X0037: \302\267
+! URxvt*keysym.Meta-0X0038: \302\270
+! URxvt*keysym.Meta-0X0039: \302\271
+! URxvt*keysym.Meta-0X003A: \302\272
+! URxvt*keysym.Meta-0X003B: \302\273
+! URxvt*keysym.Meta-0X003C: \302\274
+! URxvt*keysym.Meta-0X003D: \302\275
+! URxvt*keysym.Meta-0X003E: \302\276
+! URxvt*keysym.Meta-0X003F: \302\277
+! URxvt*keysym.Meta-0X0040: \303\200
+! URxvt*keysym.Meta-0X0041: \303\201
+! URxvt*keysym.Meta-0X0042: \303\202
+! URxvt*keysym.Meta-0X0043: \303\203
+! URxvt*keysym.Meta-0X0044: \303\204
+! URxvt*keysym.Meta-0X0045: \303\205
+! URxvt*keysym.Meta-0X0046: \303\206
+! URxvt*keysym.Meta-0X0047: \303\207
+! URxvt*keysym.Meta-0X0048: \303\210
+! URxvt*keysym.Meta-0X0049: \303\211
+! URxvt*keysym.Meta-0X004A: \303\212
+! URxvt*keysym.Meta-0X004B: \303\213
+! URxvt*keysym.Meta-0X004C: \303\214
+! URxvt*keysym.Meta-0X004D: \303\215
+! URxvt*keysym.Meta-0X004E: \303\216
+! URxvt*keysym.Meta-0X004F: \303\217
+! URxvt*keysym.Meta-0X0050: \303\220
+! URxvt*keysym.Meta-0X0051: \303\221
+! URxvt*keysym.Meta-0X0052: \303\222
+! URxvt*keysym.Meta-0X0053: \303\223
+! URxvt*keysym.Meta-0X0054: \303\224
+! URxvt*keysym.Meta-0X0055: \303\225
+! URxvt*keysym.Meta-0X0056: \303\226
+! URxvt*keysym.Meta-0X0057: \303\227
+! URxvt*keysym.Meta-0X0058: \303\230
+! URxvt*keysym.Meta-0X0059: \303\231
+! URxvt*keysym.Meta-0X005A: \303\232
+! URxvt*keysym.Meta-0X005B: \303\233
+! URxvt*keysym.Meta-0X005C: \303\234
+! URxvt*keysym.Meta-0X005D: \303\235
+! URxvt*keysym.Meta-0X005E: \303\236
+! URxvt*keysym.Meta-0X005F: \303\237
+! URxvt*keysym.Meta-0X0060: \303\240
+! URxvt*keysym.Meta-0X0061: \303\241
+! URxvt*keysym.Meta-0X0062: \303\242
+! URxvt*keysym.Meta-0X0063: \303\243
+! URxvt*keysym.Meta-0X0064: \303\244
+! URxvt*keysym.Meta-0X0065: \303\245
+! URxvt*keysym.Meta-0X0066: \303\246
+! URxvt*keysym.Meta-0X0067: \303\247
+! URxvt*keysym.Meta-0X0068: \303\250
+! URxvt*keysym.Meta-0X0069: \303\251
+! URxvt*keysym.Meta-0X006A: \303\252
+! URxvt*keysym.Meta-0X006B: \303\253
+! URxvt*keysym.Meta-0X006C: \303\254
+! URxvt*keysym.Meta-0X006D: \303\255
+! URxvt*keysym.Meta-0X006E: \303\256
+! URxvt*keysym.Meta-0X006F: \303\257
+! URxvt*keysym.Meta-0X0070: \303\260
+! URxvt*keysym.Meta-0X0071: \303\261
+! URxvt*keysym.Meta-0X0072: \303\262
+! URxvt*keysym.Meta-0X0073: \303\263
+! URxvt*keysym.Meta-0X0074: \303\264
+! URxvt*keysym.Meta-0X0075: \303\265
+! URxvt*keysym.Meta-0X0076: \303\266
+! URxvt*keysym.Meta-0X0077: \303\267
+! URxvt*keysym.Meta-0X0078: \303\270
+! URxvt*keysym.Meta-0X0079: \303\271
+! URxvt*keysym.Meta-0X007A: \303\272
+! URxvt*keysym.Meta-0X007B: \303\273
+! URxvt*keysym.Meta-0X007C: \303\274
+! URxvt*keysym.Meta-0X007D: \303\275
+! URxvt*keysym.Meta-0X007E: \303\276
+! URxvt*keysym.Meta-0X007F: \303\277
