@@ -16,6 +16,8 @@
     ~/.inputrc: inputrc
     ~/.mailcap: mailcap
     ~/.surfingkeys.js: surfingkeys.js
+    ~/.xinitrc: xinitrc
+    ~/.xsession: xinitrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
