@@ -107,6 +107,7 @@ Plug 'reedes/vim-litecorrect'
 Plug 'vimwiki/vimwiki'
 Plug '/teranex/vimwiki-tasks'
 Plug 'mbbill/undotree'
+Plug 'ryanoasis/vim-devicons'
 
 " All of your Plugins must be added before the following line
 call plug#end()
