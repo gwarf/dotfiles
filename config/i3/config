@@ -412,10 +412,10 @@ exec --no-startup-id redshift-gtk
 exec --no-startup-id keepassx2
 
 # Start ncmcppp for the scratchpad
-exec --no-startup-id urxvtc -name ncmpcpp -e ncmpcpp
+exec --no-startup-id termite --name ncmpcpp -e ncmpcpp
 
 # Start ranger for the scratchpad
-exec --no-startup-id urxvtc -name ranger -e ranger
+exec --no-startup-id termite --name ranger -e ranger
 
 # Start neomutt for the scratchpad
 #exec --no-startup-id urxvtc -name neomutt -e mutt
