@@ -3,6 +3,7 @@
 # sets up queries for virtual folders
 unvirtual-mailboxes *
 virtual-mailboxes \
+    "Unread"        "notmuch://?query=tag:perso AND tag:inbox AND tag:unread" \
     "Inbox"         "notmuch://?query=tag:perso AND tag:inbox" \
     "All"           "notmuch://?query=tag:perso AND tag:all" \
     "Lists"         "notmuch://?query=tag:perso AND tag:lists" \
