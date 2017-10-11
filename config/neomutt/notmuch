@@ -92,33 +92,6 @@ set nm_query_window_duration=2
 # Could also be "hour", "day", "week", "month", "year"
 set nm_query_window_timebase="week"
 
-# Replace some tags with icons
-# tag-transforms "inbox"   "i"   \
-#                "unread"  "u"   \
-#                "replied" "↻ "  \
-#                "sent"    "➥ "  \
-#                "todo"    "T"   \
-#                "deleted" "DEL" \
-#                "invites" "CAL"
-
-# The formats must start with 'G' and the entire sequence is case sensitive.
-# tag-formats tag format-string { tag format-string ...}
-# tag-formats "inbox"   "GI" \
-#              "unread"  "GU" \
-#              "replied" "GR" \
-#              "sent"    "GS" \
-#              "todo"    "Gt" \
-#              "deleted" "GD" \
-#              "invites" "Gi"
-
-# These symbols are added to the index-color feature:
-# an individual message tag, %G, uses tag name
-# this symbol uses a pattern
-color index_tag red white "inbox"
-# the transformed message tags, %g
-# this symbol does not use a pattern
-color index_tags green default
-
 # notmuch bindings
 macro index \\\\ "<vfolder-from-query>"              # looks up a hand made query
 
@@ -185,8 +158,8 @@ tag-transforms "inbox"   "i"   \
                "unread"  "u"   \
                "replied" "↻ "  \
                "sent"    "➥ "  \
-               "important"    "I"   \
-               "deleted" "D" \
+               "important" "⚔"   \
+               "deleted" "💀" \
                "invites" "C"
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
