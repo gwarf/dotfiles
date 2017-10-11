@@ -98,11 +98,15 @@ message = Tag boursorama messages
 query = tag:perso AND boursorama
 tags = +boursorama
 
-# XXX Tag ics and calendar invites
 [Filter.14]
 message = Tag calendar invites
 query = mimetype:text/calendar
 tags = +invites
+
+[Filter.15]
+message = Tag ELI/ELITRANS messags
+query = 'tag:egi AND (from:/eli-/ OR to:/eli-/ OR subject:ELI)'
+tags = +eli
 
 [ArchiveSentMailsFilter]
 sent_tag = sent
