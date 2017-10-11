@@ -1,7 +1,9 @@
 # notmuch
 
 # XXX To be clarified
+# - Sync mailbox after having sent an email
 # - search-based addressbook (instead of gobook)
+# - Index colors based on tags
 # - Updating files status from tags (like read emails)
 # - handling of deleted emails
 #   - https://github.com/neomutt/neomutt/issues/200
@@ -206,22 +208,29 @@ tag-formats "inbox"   "Gi" \
 # %n: Author realname or email if missing
 # %W: Organization
 # .G: Notmuch tags info
+#   - %GD: deleted
 #   - %GU: unread
 #   - %GR: replied
 #   - %GI: invites (calendar invitation)
 # %s: message subject
+# Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
 set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
 
 # Colors tag indicators in index
 
 # important messages
 color index_tag         color160        color234        "t"
-
 # deleted messages
 color index_tag         color235        color160        "D"
-
 # invites messages
 color index_tag         color235        color160        "I"
+# color index_tag default red 'tag:important'
+# color index_tag default red 'starred'
 
+# Colors messages based on tags
+# flagged messages
+# color index         color160        color234        "~F"
+color index         color160        color234        "important"
+color index         color160        color234        "starred"
 
 # vim: set ft=muttrc:
