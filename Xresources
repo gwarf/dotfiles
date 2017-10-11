@@ -2,11 +2,14 @@
 ! Xft settings
 !-------------------------------------------------------------------------------
 
-!Xft.dpi:                    96
+! XXX testing
+Xft.dpi:                    96
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
-Xft.hintstyle:              hintslight
+! Xft.hintstyle:              hintslight
+! XXX testing
+Xft.hintstyle:              hintfull
 
 ! Xresources solarized
 ! http://ethanschoonover.com/solarized
@@ -129,7 +132,8 @@ URxvt.scrollBar:            false
 ! URxvt.perl-ext-common: default,url-select,vtwheel,clipboard
 ! URxvt.perl-ext-common: default,url-select,clipboard,selection-to-clipboard
 ! URxvt.perl-ext-common: default,url-select,selection-to-clipboard
-URxvt.perl-ext-common: default,url-select,selection-to-clipboard
+! XXX is matcher in default?
+URxvt.perl-ext-common: default,url-select,selection-to-clipboard,matcher
 ! Alt-u to select URLs
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-launcher: /usr/bin/xdg-open
