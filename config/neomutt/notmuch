@@ -1,6 +1,7 @@
 # notmuch
 
 # XXX To be clarified
+# - Need to remove unred flag when mail has been read
 # - Sync mailbox after having sent an email
 # - search-based addressbook (instead of gobook)
 # - Index colors based on tags
@@ -41,14 +42,13 @@ set virtual_spoolfile = yes
 # XXX virtual-mailboxes are loaded from profile-related conf
 # sets up queries for virtual folders
 virtual-mailboxes \
-    "Important"     "notmuch://?query=tag:important"
- #   "Inbox"         "notmuch://?query=tag:inbox" \
- #   "All"           "notmuch://?query=tag:all" \
- #   "TODO"          "notmuch://?query=tag:todo" \
- #   "Important"     "notmuch://?query=tag:important" \
- #   "Trash"         "notmuch://?query=tag:deleted" \
- #   "Spam"          "notmuch://?query=tag:spam" \
- #   "Sent"          "notmuch://?query=tag:sent" \
+    "Inbox"         "notmuch://?query=tag:inbox" \
+    "All"           "notmuch://?query=tag:all" \
+    "TODO"          "notmuch://?query=tag:todo" \
+    "Important"     "notmuch://?query=tag:important" \
+    "Trash"         "notmuch://?query=tag:deleted" \
+    "Spam"          "notmuch://?query=tag:spam" \
+    "Sent"          "notmuch://?query=tag:sent"
 
 # set nm_hidden_tags = unread,draft,flagged,passed,replied,attachment,signed,encrypted
 
@@ -155,10 +155,14 @@ macro index I "<modify-labels>-inbox -unread<enteR>"                 # removed f
 macro index S "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>" # tag as Junk mail
 # Delete emails from the index, but NOT delete the file.
 # To be managed elsewhere (afew to move it in the Trahs folder?)
-# XXX how to recover?
 # XXX how are they hidden?
 # XXX how to flag mail as deleted/red in the UI?
-macro index,pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
+# When in index it updates tags and moves to next email
+# When in pager it updates tags but do not move to next email
+macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
+macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
+# Revovering emails marked for deletion
+macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
 # bind index,pager D quasi-delete
 
 # 'L' performs a notmuch query, showing only the results
@@ -219,18 +223,32 @@ set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GD?%GD& ? %?GU?%GU& ? %?G
 # Colors tag indicators in index
 
 # important messages
-color index_tag         color160        color234        "t"
+color index_tag    color160        color234        "t"
 # deleted messages
-color index_tag         color235        color160        "D"
+color index_tag    color235        color160        "D"
+# Error in patern
+# color index_tag    color235        color160        "~GD"
+ color index_tag    color235        color160        "GD"
+color index_tag    color235        color160        "~D"
 # invites messages
-color index_tag         color235        color160        "I"
-# color index_tag default red 'tag:important'
-# color index_tag default red 'starred'
+color index_tag    color160        color234        "important"
+color index_tag    color160        color234        "starred"
+color index_tag    color160        color234        "I"
+
+# These symbols are added to the index-color feature:
+# an individual message tag, %G, uses tag name
+# this symbol uses a pattern
+color index_tag red white "inbox"
+# the transformed message tags, %g
+# this symbol does not use a pattern
+color index_tags green default
 
 # Colors messages based on tags
 # flagged messages
 # color index         color160        color234        "~F"
-color index         color160        color234        "important"
-color index         color160        color234        "starred"
+# Not able to find an appripriate pattern for this
+# color index         color160        color234        "~G 'starred'"
+#color index         color160        color234        "~Gt"
+color index         color160        color234        "Gt"
 
 # vim: set ft=muttrc:
