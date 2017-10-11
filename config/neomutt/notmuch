@@ -165,16 +165,8 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 macro index a "<limit>all\n" "show all messages (undo limit)"
 
 # macros to invoke a profile
-macro index <F8> ":source ~/.mutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
-macro index <F9> ":source ~/.mutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
-
-# Colors messages based on tags
-#color index_tag default red 'tag:important'
-#color index_tag default red 'starred'
-# color index         color160        color234        "~F"                        # flagged messages
-
-color index         color160        color234        "important"                        # flagged messages
-color index         color160        color234        "starred"                        # flagged messages
+macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
+macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
 
 # set vfolder_format  = '%6n(%6N) %f plop'
 # Configure vfolder browser display
@@ -218,7 +210,18 @@ tag-formats "inbox"   "Gi" \
 #   - %GR: replied
 #   - %GI: invites (calendar invitation)
 # %s: message subject
-set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
-# Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
+set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
+
+# Colors tag indicators in index
+
+# important messages
+color index_tag         color160        color234        "t"
+
+# deleted messages
+color index_tag         color235        color160        "D"
+
+# invites messages
+color index_tag         color235        color160        "I"
+
 
 # vim: set ft=muttrc:
