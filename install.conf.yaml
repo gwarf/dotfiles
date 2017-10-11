@@ -31,6 +31,7 @@
     ~/.notmuch-config: notmuch-config
     ~/Mail/.notmuch/hooks: notmuch/hooks
     ~/.config/compton.conf: config/compton.conf
+    ~/.config/termite/config: config/termite/config
     ~/.surfingkeys.js: surfingkeys.js
 
 - shell:
