@@ -97,8 +97,8 @@ synchronize_flags=true
 #		NOTE: In a future build, this option will be ignored.
 #		Setting $PATH is a better approach.
 #
-[crypto]
-gpg_path=gpg
+# [crypto]
+# gpg_path=gpg
 
 # http://notmuchmail.org/vimtips/
 # <c-x><c-u> in a header field
