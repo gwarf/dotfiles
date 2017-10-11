@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'Valloric/YouCompleteMe'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/denite.nvim'
 else
   Plug 'Shougo/neocomplete'
 endif
@@ -101,6 +102,11 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'mrtazz/simplenote.vim'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
+Plug 'blindFS/vim-taskwarrior'
+Plug 'reedes/vim-litecorrect'
+Plug 'vimwiki/vimwiki'
+Plug '/teranex/vimwiki-tasks'
+Plug 'mbbill/undotree'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -378,10 +384,18 @@ let g:pad#dir = "~/GoogleDrive/notes"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Notes using vim-notes
-let g:notes_directories = ["~/notes"]
+" https://peterodding.com/code/vim/notes
+let g:notes_directories = ["~/GoogleDrive/notes"]
 let g:notes_suffix = '.txt'
 "let g:notes_suffix = '.md'
-"let g:notes_smart_quotes = 0
+" Disabling text substitutions (Like quotes)
+let g:notes_smart_quotes = 0
+" Disabling unicode characters for bullets, arrows..)
+" let g:notes_unicode_enabled = 0
+" Do not hide code block marks
+let g:notes_conceal_code = 0
+" Do not hide URL schemes
+let g:notes_conceal_url = 0
 
 " Use ranger
 let g:checkattach_filebrowser = 'ranger'
@@ -415,5 +429,44 @@ vnoremap k gk
 
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
+
+" vim-taskwarrior
+nnoremap <leader>t :tabnew <bar> :TW<CR>
+
+" Autocorrect in text and markdown files
+
+augroup litecorrect
+  autocmd!
+  autocmd FileType markdown,mkd call litecorrect#init()
+  autocmd FileType textile call litecorrect#init()
+augroup END
+" Force the top-ranked correction on the first misspelled word before the
+" cursor.
+nnoremap <C-s> [s1z=<c-o>
+inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
+
+" VimWiKi
+" <Leader>wt to start
+" <Leader>ww to start
+" ~/GoogleDrive/wiki/: work
+" ~/wiki/: perso/home
+let wiki_work = {}
+let wiki_work.path = '~/GoogleDrive/wiki/'
+let wiki_work.syntax = 'markdown'
+let wiki_work.ext = '.md'
+
+let wiki_home = {}
+let wiki_home.path = '~/Documents/wiki/'
+let wiki_work.syntax = 'markdown'
+let wiki_work.ext = '.md'
+
+let g:vimwiki_list = [wiki_work, wiki_home]
+
+" Toggle undotree panel
+nnoremap <F5> :UndotreeToggle<cr>
+if has("persistent_undo")
+  set undodir=~/.undodir/
+  set undofile
+endif
 
 " vim:set ft=vim et sw=2:
