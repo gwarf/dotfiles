@@ -7,7 +7,7 @@ virtual-mailboxes \
     "TODO"          "notmuch://?query=tag:egi AND tag:todo" \
     "All"           "notmuch://?query=tag:egi AND tag:all" \
     "Lists"         "notmuch://?query=tag:egi AND tag:lists" \
-    "ELITRANS"      "notmuch://?query=tag:egi AND eli" \
+    "ELITRANS"      "notmuch://?query=tag:egi AND tag:eli" \
     "INDIGO"        "notmuch://?query=tag:egi AND indigo" \
     "ENVRI"         "notmuch://?query=tag:egi AND envri" \
     "Security"      "notmuch://?query=tag:egi AND security" \
