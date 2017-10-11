@@ -155,7 +155,7 @@ set vfolder_format  = '%6n (%N) %f'
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
 tag-transforms "inbox"   "i"   \
-               "unread"  "u"   \
+               "unread"  "✉"   \
                "replied" "↻ "  \
                "sent"    "➥ "  \
                "important" "⚔"   \
@@ -191,9 +191,15 @@ tag-formats "inbox"   "Gi" \
 #   - %GI: invites (calendar invitation)
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
+set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?Gi?%Gi& ? %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
 
 # Colors tag indicators in index
+
+# These symbols are added to the index-color feature:
+# an individual message tag, %G, uses tag name
+# this symbol uses a pattern
+# the transformed message tags, %g
+# this symbol does not use a pattern
 
 # important messages
 color index_tag    color160        color234        "t"
@@ -207,13 +213,10 @@ color index_tag    color235        color160        "~D"
 color index_tag    color160        color234        "important"
 color index_tag    color160        color234        "starred"
 color index_tag    color160        color234        "I"
+# Inbox message
+color index_tag    color33         color234        "unbox"
 
-# These symbols are added to the index-color feature:
-# an individual message tag, %G, uses tag name
-# this symbol uses a pattern
-color index_tag red white "inbox"
-# the transformed message tags, %g
-# this symbol does not use a pattern
+# Used where/when?
 color index_tags green default
 
 # Colors messages based on tags
