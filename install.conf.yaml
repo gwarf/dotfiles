@@ -1,11 +1,9 @@
 - defaults:
     link:
       relink: true
+      create: true
 
 - clean: ['~']
-
-# XXX Create parent directories
-# - ~/.config/i3
 
 - link:
     ~/.dotfiles: ''
