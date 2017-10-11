@@ -71,6 +71,8 @@ Plug 'rking/ag.vim'
 Plug 'scrooloose/syntastic'
 " git integration
 Plug 'tpope/vim-fugitive'
+" gitk for Vim.
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " Sensible default settings
 Plug 'tpope/vim-repeat'
 if !has('nvim')
