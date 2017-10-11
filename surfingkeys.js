@@ -79,4 +79,31 @@ settings.defaultSearchEngine = 'd';
 
 // Disable for sites X
 
+// Vimium/vimperator-like settings
+// https://brookhong.github.io/2015/09/15/surfingkeys.html
+map('u', 'e');
+mapkey('p', "Open the clipboard's URL in the current tab", function() {
+    Front.getContentFromClipboard(function(response) {
+        window.location.href = response.data;
+    });
+});
+map('P', 'cc');
+map('gi', 'i');
+map('F', 'af');
+map('gf', 'w');
+map('`', '\'');
+// save default key `t` to temp key `>_t`
+map('>_t', 't');
+// create a new key `t` for default key `on`
+map('t', 'on');
+// create a new key `o` for saved temp key `>_t`
+map('o', '>_t');
+map('H', 'S');
+map('L', 'D');
+map('gt', 'R');
+map('gT', 'E');
+map('K', 'R');
+map('J', 'E');
+
+
 // vim:ft=javascript:foldmethod=marker:foldlevel=0:
