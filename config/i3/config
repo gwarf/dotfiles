@@ -53,8 +53,9 @@ floating_modifier $mod
 focus_follows_mouse no
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
-#bindsym $mod+Return exec terminology
+# bindsym $mod+Return exec urxvtc
+# bindsym $mod+Return exec terminology
+bindsym $mod+Return exec termite
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -342,9 +343,11 @@ exec --no-startup-id killall -q -w pulseaudio; pulseaudio --start --daemonize --
 # pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
 
 # Terminal
-exec --no-startup-id urxvtd --quiet --opendisplay --fork; sleep 3s; urxvtc
+exec --no-startup-id urxvtd --quiet --opendisplay --fork
 # exec --no-startup-id urxvtc
 # exec --no-startup-id terminology
+# vte should handle non standard fonts more gracefully
+exec --no-startup-id termite
 
 # Enable masquerading of VirtualBox host-only network
 exec_always --no-startup-id $HOME/bin/vbox-forward
