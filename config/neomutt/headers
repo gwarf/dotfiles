@@ -14,9 +14,9 @@ unignore priority importance
 unignore mail-followup-to
 unignore message-id:
 unignore tags
-unignore folder:
+unignore folder
 
-#unhdr_order *
-#hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To: Folder: Tags:
+unhdr_order *
+hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To: Folder: Tags:
 
 # vim: set ft=muttrc:
