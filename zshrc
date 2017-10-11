@@ -332,7 +332,7 @@ xev() {
   command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
 
-#alias xev=xeva
+alias music='urxvtc -name ncmpcpp -e ncmpcpp'
 
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
