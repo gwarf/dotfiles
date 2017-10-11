@@ -334,6 +334,14 @@ xev() {
 
 alias music='urxvtc -name ncmpcpp -e ncmpcpp'
 
+# Aliases for launching some vimwikis
+alias vimnote='vim -c VimwikiMakeDiaryNote'
+
+alias vimwiki='vim -c VimwikiUISelect'
+alias vimdiary='vim -c VimwikiDiaryIndex'
+alias vimwiki_w='vim -c VimwikiIndex 1'
+alias vimwiki_h='vim -c VimwikiIndex 2'
+
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
 if type compdef &>/dev/null; then
