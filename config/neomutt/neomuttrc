@@ -138,6 +138,6 @@ source ~/.config/neomutt/sidebar
 set realname = "Baptiste Grenier"
 
 # Source EGI profile
-source ~/.mutt/profile.egi
+source ~/.config/neomutt/profile.egi
 
 # vim: set ft=muttrc:
