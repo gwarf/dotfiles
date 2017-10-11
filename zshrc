@@ -318,7 +318,15 @@ alias -s ogg=clementine
 unalias scp
 alias scp='noglob scp'
 
-alias yupd='yaourt -Syyu'
+# Sync and update system
+alias yupd='yaourt -Syu'
+# Force sync and update system
+alias yupdf='yaourt -Syyu'
+# Remove a package and all related and unused dependencies
+alias yrs='yaourt -Rs'
+# Remove a package, its dependencies and all the packages that depend on the
+# target package - DANGEROUS
+alias yrsc='yaourt -Rsc'
 
 xev() {
   command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
