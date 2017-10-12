@@ -1,4 +1,7 @@
 # ~/.zshenv
 # Read by all shells
 
-export PATH="$HOME/bin:$PATH"
+# Warning: before reading ~/.zprofile zsh reads:
+# - /etc/zprofile that reads /etc/profile and defines a default path
+typeset -U path
+path=(~/bin $path[@])

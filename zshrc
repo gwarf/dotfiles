@@ -41,13 +41,13 @@ fi
 source "$ZPLUG_HOME/init.zsh"
 
 # Theme
-# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 # zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
 
 zplug "zlsun/solarized-man"
 
 # Aliases and color some command output
-zplug "modules/utility", from:prezto, defer:2
+zplug "modules/utility", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
 zplug "modules/ssh", from:prezto
@@ -55,8 +55,9 @@ zplug "modules/ssh", from:prezto
 zplug "plugins/shrink-path", from:oh-my-zsh
 zplug "plugins/taskwarrior", from:oh-my-zsh
 # A lot of nice aliases
-#zplug "plugins/comon-aliases", from:oh-my-zsh
-zplug "themes/half-life", from:oh-my-zsh, defer:3
+# zplug "plugins/comon-aliases", from:oh-my-zsh
+# A fun Half-Life theme
+# zplug "themes/half-life", from:oh-my-zsh, defer:3
 
 zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
@@ -64,14 +65,10 @@ zplug "zsh-users/zsh-autosuggestions"
 # To replace autosuggestions
 # zplug "hchbaw/auto-fu.zsh", at:pu, defer:1
 
-# XXX Find replaxcement allowing to disable check for some aliases
+# XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
 
 zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
-
-# XXX Make a PR to zsh-completions?
-# XXX Really required?
-# zplug "aclements/notmuch", use:completion/notmuch-completion.zsh
 
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
@@ -79,7 +76,9 @@ zplug "arzzen/calc.plugin.zsh"
 # Should be loaded after modules/utility to overwrite cd alias
 zplug "b4b4r07/enhancd", use:init.sh, defer:3
 export ENHANCD_FILTER='fzf'
-export ENHANCD_HOOK_AFTER_CD='ls -lhrt'
+# When entering a git root, do a git status, othewise do an ls
+# XXX make this work when elsewehre in the hierarch
+export ENHANCD_HOOK_AFTER_CD='[ -d .git ] && git st || ls -lhrt'
 # export ENHANCD_COMMAND='c'
 export ENHANCD_DISABLE_HOME=1
 export ENHANCD_DISABLE_HYPHEN=1
@@ -184,8 +183,10 @@ setopt prompt_subst
 # Executing directories will open them
 setopt auto_cd
 
+## Completion
+
 # Hilight directories
-zstyle ':completion:*:default' list-colors ''
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Rehash when completing commands
 zstyle ":completion:*:commands" rehash 1
@@ -196,7 +197,6 @@ zstyle ':completion:*:matches' group 'yes'
 zstyle ':completion:*' group-name ""
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}= %d =%{$reset_color%}"
-
 # Case insensitive completion
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
@@ -220,6 +220,20 @@ bindkey -M vicmd 'j' history-substring-search-down
 
 # In Vi mode use q to allow to use another command before current one
 bindkey -M vicmd "q" push-line
+
+# Push a command onto a stack allowing you to run another command first
+bindkey '^J' push-line
+
+# Allows editing the command line with an external editor
+autoload edit-command-line
+zle -N edit-command-line
+# Press Esc=v to edit command line
+bindkey -M vicmd "v" edit-command-line
+
+# Alt-S inserts sudo at the starts of the line
+insert_sudo () { zle beginning-of-line; zle -U '_ ' }
+zle -N insert-sudo insert_sudo
+bindkey 's' insert-sudo
 
 # named directories
 # XXX does not play nice with enhancd
@@ -257,10 +271,6 @@ alias lsd='ls -d */'
 alias lsf="ls -rtF | grep -v '.*/'"
 
 alias lsrt='ls -rt'
-
-alias muttperso='mutt -f "~/Mail/Perso/INBOX"'
-
-# alias vi=vim
 
 alias halt='systemctl poweroff'
 alias reboot='systemctl reboot'
@@ -342,6 +352,20 @@ alias vimdiary='vim -c VimwikiDiaryIndex'
 alias vimwiki_w='vim -c VimwikiIndex 1'
 alias vimwiki_h='vim -c VimwikiIndex 2'
 
+alias dashboard="vim -p -c TW -c 'VimwikiTabIndex 1' -c 'VimwikiTabIndex 2'"
+
+alias alot_work='alot -p ~/Mail -l ~/.config/alot/alot.log'
+
+# Cal conf
+# Start week on Monday
+cal='cal -m'
+
+# Google Calenar
+alias gcal-week='gcalcli --width 12 calw'
+alias gcal='gcalcli --width 12 calm'
+alias gcal-add='gcalcli quick'
+alias gcal-agenda='gcalcli agenda'
+
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
 if type compdef &>/dev/null; then
@@ -351,7 +375,8 @@ if type compdef &>/dev/null; then
   fi
 fi
 
-alias alot_work='alot -n ~/.notmuch-config-egi -p ~/Mail/Gmail/ -l ~/.config/alot/alot.log'
+# Completion for hexo
+eval "$(hexo --completion=zsh)"
 
 drun() {
   command docker run --rm -v $(pwd):/source -it "$1"
@@ -383,8 +408,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Display events reminders
-
 # Work-related tasks
 tw() {
   command task +@baptiste.grenier $@
@@ -395,9 +418,6 @@ th() {
   command task rc:~/.taskrc-home +HOME $@
 }
 
-# Display task list
-tw next
-
 # XXX currently in cron
 # XXX launch this from xinitrc/i3 to ensure that it's called only in X
 # if [ -x /usr/bin/gcalcli ]; then
@@ -407,5 +427,37 @@ tw next
 #   done &
 # fi
 
-# Completion for hexo
-eval "$(hexo --completion=zsh)"
+# scan the local network and list the connected devices
+lscan() {
+    local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
+    local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
+    # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
+    echo "$scanReport"
+}
+
+listdirectories() {
+    # TODO: Ignore .git, node_modules, etc
+    find -L . -type d -print -o -type l -print -o \
+        \( -path '*/\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \) -prune \
+        2> /dev/null | \
+        grep -v '^.$' | \
+        sed 's|\./||g' | \
+        fzf-tmux --ansi --multi --tac --preview-window right:50% \
+            --preview 'tree -C {} | head -$LINES'
+}
+
+project-switcher() {
+    local projects proj
+
+    projects="$(realpath ~/Projects/)"
+    proj=$(find -L "$projects" -maxdepth 1 -type d -printf "%f\n" -o -type l -printf "%f\n" -o -prune \
+        2> /dev/null | \
+        grep -v '^.$' | \
+        sed 's|\./||g' | \
+        fzf-tmux --ansi --multi --tac --preview-window right:50% \
+            --preview "echo 'Branches\n' && git -C $projects/{} rev-parse HEAD > /dev/null 2>&1 &&
+                git -C $projects/{} branch -vv --color=always &&
+                echo '\n\nCommits\n' && git -C $projects/{} l -10 | head -$LINES") || return
+
+    cd $projects/$proj
+}
