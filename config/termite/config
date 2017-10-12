@@ -15,7 +15,7 @@ dynamic_title = true
 # Hide links that are no longer valid in url select overlay mode
 filter_unmatched_urls = true
 
-font = Fantasque Sans Mono 16
+font = Fantasque Sans Mono 17
 
 # XXX Already managed by unclutter
 mouse_autohide = true
