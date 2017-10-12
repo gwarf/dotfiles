@@ -76,9 +76,8 @@ zplug "arzzen/calc.plugin.zsh"
 # Should be loaded after modules/utility to overwrite cd alias
 zplug "b4b4r07/enhancd", use:init.sh, defer:3
 export ENHANCD_FILTER='fzf'
-# When entering a git root, do a git status, othewise do an ls
-# XXX make this work when elsewehre in the hierarch
-export ENHANCD_HOOK_AFTER_CD='[ -d .git ] && git st || ls -lhrt'
+# When entering a git repo do a git status, othewise do an ls
+export ENHANCD_HOOK_AFTER_CD='([ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1) && git st || ls -lhrt'
 # export ENHANCD_COMMAND='c'
 export ENHANCD_DISABLE_HOME=1
 export ENHANCD_DISABLE_HYPHEN=1
