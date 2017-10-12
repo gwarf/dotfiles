@@ -289,6 +289,7 @@ assign [class="(?i)nautilus"] → $WS2
 assign [class="(?i)urxvtc"] → $WS1
 assign [class="terminology"] → $WS1
 assign [class="Terminator"] → $WS1
+assign [class="termite"] → $WS1
 assign [class="Pidgin"] → $WS3
 assign [class="(?i)empathy"] → $WS3
 assign [class="Clementine"] → $WS3
