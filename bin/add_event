@@ -1,0 +1,6 @@
+#!/bin/sh
+
+TERMINAL='termite --role task_dialog'
+CALENDAR='baptiste.grenier@egi.eu'
+
+$TERMINAL -e "gcalcli --detail_url=short --calendar=\"$CALENDAR\" import -v \"$1\""
