@@ -6,6 +6,7 @@ virtual-mailboxes \
     "Unread"        "notmuch://?query=tag:perso AND tag:inbox AND tag:unread" \
     "Inbox"         "notmuch://?query=tag:perso AND tag:inbox" \
     "All"           "notmuch://?query=tag:perso AND tag:all" \
+    "Neomutt"       "notmuch://?query=tag:perso AND tag:neomutt" \
     "Lists"         "notmuch://?query=tag:perso AND tag:lists" \
     "TODO"          "notmuch://?query=tag:perso AND tag:todo" \
     "Trash"         "notmuch://?query=tag:deleted" \

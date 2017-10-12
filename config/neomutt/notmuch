@@ -46,11 +46,10 @@ virtual-mailboxes \
     "All"           "notmuch://?query=tag:all" \
     "TODO"          "notmuch://?query=tag:todo" \
     "Important"     "notmuch://?query=tag:important" \
+    "Drafts"        "notmuch://?query=tag:draft" \
     "Trash"         "notmuch://?query=tag:deleted" \
     "Spam"          "notmuch://?query=tag:spam" \
     "Sent"          "notmuch://?query=tag:sent"
-
-# set nm_hidden_tags = unread,draft,flagged,passed,replied,attachment,signed,encrypted
 
 # This variable specifies notmuch query type, supported types: 'threads' and
 # 'messages'.
@@ -66,7 +65,7 @@ unset record
 # original email.
 set nm_record = no
 
-# set nm_record_tag = 
+# set nm_record_tag = ''
 # Tags that should be removed or added to the to the messages stored in the NeoMutt record.
 #
 # example:
@@ -79,7 +78,9 @@ set nm_unread_tag = unread
 
 # This variable specifies private notmuch tags which should not be printed
 # on screen (index, pager).
+# nm_hidden_tags: unknown variable
 # set nm_hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
+# set nm_hidden_tags = "passed,replied,attachment,signed,encrypted"
 
 # The messages tagged with these tags are excluded and not loaded
 # from notmuch DB to NeoMutt unless specified explicitly.
@@ -88,69 +89,17 @@ set nm_exclude_tags = ""
 # setup time window preferences
 # first setup the duration, and then the time unit of that duration
 # when set to 0 (the default) the search window feature is disabled
-set nm_query_window_duration=2
+# XXX Setting this will limit shown messages!
+set nm_query_window_duration=0
 # Could also be "hour", "day", "week", "month", "year"
 set nm_query_window_timebase="week"
 
-# notmuch bindings
-macro index \\\\ "<vfolder-from-query>"              # looks up a hand made query
-
-# open a different virtual folder
-bind index,pager X change-vfolder
-macro index c "<change-vfolder>?"
-# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
-# modify (notmuch) tags
-bind index,pager \` modify-labels
-
-# generate virtual folder from query
-bind index,pager <F4> vfolder-from-query
-bind index,pager \eX vfolder-from-query
-# generate virtual folder from query with time window
-bind index < vfolder-window-backward
-bind index > vfolder-window-forward
-
-# read entire thread of the current message
-bind index,pager + entire-thread
-bind index,pager <F5> entire-thread
-
-# tag as read and archive
-# macro index A "<modify-labels-then-hide>+all -unread -inbox<enter>"
-macro index A "<modify-labels>+all -unread -inbox<enter>"
-# tag as unread and unarchive
-macro index N "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
-# toglle important flag
-macro index F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
-# Toggle the 'todo' tag
-# macro index,pager t "<modify-labels>!todo<enter><sync-mailbox>"
-# Create a taskwarrior task using mutt2task
-macro index,pager t "<pipe-message>~/bin/mutt2task.py<enter><modify-labels>!todo<enter><sync-mailbox>"
-macro index I "<modify-labels>-inbox -unread<enteR>"                 # removed from inbox
-macro index S "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>" # tag as Junk mail
-# Delete emails from the index, but NOT delete the file.
-# To be managed elsewhere (afew to move it in the Trahs folder?)
-# XXX how are they hidden?
-# XXX how to flag mail as deleted/red in the UI?
-# When in index it updates tags and moves to next email
-# When in pager it updates tags but do not move to next email
-macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
-macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
-# Revovering emails marked for deletion
-macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
-# bind index,pager D quasi-delete
-
-# 'L' performs a notmuch query, showing only the results
-macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
-# 'a' shows all messages again (supersedes default <alias> binding)
-macro index a "<limit>all\n" "show all messages (undo limit)"
-
-# macros to invoke a profile
-macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
-macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
-
-# set vfolder_format  = '%6n(%6N) %f plop'
 # Configure vfolder browser display
 # XXX how to order folder list?
-set vfolder_format  = '%6n (%N) %f'
+# $n: number of unread messages
+# $m: number of messages
+# $N: N if mailbox has new mail
+set vfolder_format  = '%6n/%6m (%N) %f'
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
@@ -192,6 +141,114 @@ tag-formats "inbox"   "Gi" \
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
 set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?Gi?%Gi& ? %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
+
+## Macros and bindings
+
+# open a different virtual folder
+macro index,pager c "<change-vfolder>?"
+# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+# modify (notmuch) tags
+bind index,pager \` modify-labels
+
+# generate virtual folder from query
+macro index \\\\ "<vfolder-from-query>"
+bind index,pager <F4> vfolder-from-query
+bind index,pager \eX vfolder-from-query
+
+# Mive time window of virtual folder from query
+# Only works if nm_query_window_duration > 0
+bind index < vfolder-window-backward
+bind index > vfolder-window-forward
+
+# read entire thread of the current message
+bind index,pager <F5> entire-thread
+
+# 'L' performs a notmuch query, showing only the results
+macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
+# 'a' shows all messages again (supersedes default <alias> binding)
+macro index a "<limit>all\n" "show all messages (undo limit)"
+
+# macros to invoke a profile
+macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
+macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
+
+## Prefix-based bindings
+
+# [g]o to
+# Set/modify [t]ag
+# Launch [a]ction
+# Need to free the short keymap
+# https://www.neomutt.org/guide/configuration.html#bind-warnings
+bind index,pager g noop
+bind index,pager t noop
+bind index,pager a noop
+
+## Tagging emails
+
+# tag as read and archive
+# macro index A "<modify-labels-then-hide>+all -unread -inbox<enter>"
+macro index,pager A "<modify-labels>+all -unread -inbox<enter>"
+macro index,pager ta "<modify-labels>+all -unread -inbox<enter>"
+# tag as unread and unarchive
+macro index,pager N "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
+macro index,pager tu "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
+# toglle important flag
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
+macro index,pager ti "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
+macro index,pager ts "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
+# Toggle the 'todo' tag
+macro index,pager tt "<modify-labels>!todo<enter><sync-mailbox>"
+macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"
+# Mark as spam
+macro index,pager S "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>"
+macro index,pager ts "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>"
+# Mark as to waiting reply
+macro index,pager tw "<modify-labels>+waiting<enter><sync-mailbox>"
+# Delete emails from the index, but NOT delete the file.
+# To be managed elsewhere (afew to move it in the Trahs folder?)
+# XXX how are they hidden?
+# XXX how to flag mail as deleted/red in the UI?
+# When in index it updates tags and moves to next email
+# When in pager it updates tags but do not move to next email
+macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
+macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
+# Revovering emails marked for deletion
+macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
+# removed from inbox
+# bind index,pager D quasi-delete
+
+## Actions on emails
+
+# Create a taskwarrior task using mutt2task
+macro index,pager at \
+  "<pipe-message>mutt2task.py<enter><modify-labels>+todo<enter><sync-mailbox>"
+macro index,pager ag \
+  "<pipe-message>goobook --verbose add<return>!goobook reload<enter>" \
+  "add sender to google contacts"
+
+## Opening virtual folders
+
+macro index,pager gi \
+    <change-vfolder>Inbox<enter> \
+    "Go to inbox"
+macro index,pager gu \
+    <change-vfolder>Unread<enter> \
+    "Go to unread"
+macro index,pager ga \
+    <change-vfolder>All<enter> \
+    "Go to All"
+macro index,pager gt \
+    <change-vfolder>Sent<enter> \
+    "Go to Sent"
+macro index,pager gb \
+    <change-vfolder>Trash<enter> \
+    "Go to Trash Bin"
+macro index,pager gd \
+    <change-vfolder>Drafts<enter> \
+    "Go to Drafts"
+macro index,pager gs \
+    <change-vfolder>Important<enter> \
+    "Go to Important/Starred"
 
 # Colors tag indicators in index
 
