@@ -108,6 +108,10 @@ Plug 'vimwiki/vimwiki'
 Plug '/teranex/vimwiki-tasks'
 Plug 'mbbill/undotree'
 Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree'
+" Display available commands
+" https://github.com/hecal3/vim-leader-guide
+Plug 'hecal3/vim-leader-guide'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -184,7 +188,12 @@ set writebackup
 set swapfile
 set directory=$HOME/.vimswap
 
-let mapleader=","
+" Test Leader key customization
+" let mapleader=","
+let mapleader=" "
+map <Space> <Leader>
+nnoremap <Leader>x i
+set showcmd
 
 " Keys
 
@@ -452,16 +461,20 @@ inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 " ~/GoogleDrive/wiki/: work
 " ~/wiki/: perso/home
 let wiki_work = {}
-let wiki_work.path = '~/GoogleDrive/wiki/'
+let wiki_work.path = '~/Documents/wiki_work/'
 let wiki_work.syntax = 'markdown'
 let wiki_work.ext = '.md'
 
 let wiki_home = {}
 let wiki_home.path = '~/Documents/wiki/'
-let wiki_work.syntax = 'markdown'
-let wiki_work.ext = '.md'
+let wiki_home.syntax = 'markdown'
+let wiki_home.ext = '.md'
 
 let g:vimwiki_list = [wiki_work, wiki_home]
+
+" Keep using TAb for completion
+:nmap <Leader>wn <Plug>VimwikiNextLink
+:nmap <Leader>wp <Plug>VimwikiPrevLink
 
 " Toggle undotree panel
 nnoremap <F5> :UndotreeToggle<cr>
