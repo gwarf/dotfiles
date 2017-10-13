@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# FIXME no test yet
+goobook --verbose add < /dev/stdin
+
+# Message is piped on the CLI
+
+# XXX extract Name and email
+
+# XXX Ask for missing information
+
+# XXX Check if contacts already exists
+# Returns email, name and group
+# goobook query %s
+
+# XXX Add new contact
+# goobook --verbose add
+
+# XXX Update contact
+
+# XXX Do nothing
+
+# Relaod goobook
+# goobook reload
+
+

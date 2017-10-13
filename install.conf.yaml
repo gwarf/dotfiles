@@ -35,7 +35,9 @@
     ~/.config/termite/config: config/termite/config
     ~/.surfingkeys.js: surfingkeys.js
     ~/bin/add_event: bin/add_event
+    ~/bin/add_contact: bin/add_contact
     ~/.dir_colors: dircolors.256dark
+    ~/.goobookrc: goobookrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
@@ -44,3 +46,6 @@
 # - gcalcli
 #   - aur/python-vobject / aur/python2-vobject for Vcard management
 #   - community/python2-parsedatetime for date parsing
+# Security tests
+# - rights on ~/.goobook_auth.json (600)
+# - rights on ~/.ssh/id_rsa (600 or 400)
