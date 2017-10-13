@@ -33,6 +33,10 @@
     ~/Mail/.notmuch/hooks: notmuch/hooks
     ~/.config/compton.conf: config/compton.conf
     ~/.config/termite/config: config/termite/config
+    ~/.config/systemd/user/mbsync.service: config/systemd/user/mbsync.service
+    ~/.config/systemd/user/mbsync.timer: config/systemd/user/mbsync.timer
+    ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
+    ~/.config/systemd/user/resume.service: config/systemd/user/resume.service
     ~/.surfingkeys.js: surfingkeys.js
     ~/bin/add_event: bin/add_event
     ~/bin/add_contact: bin/add_contact
@@ -49,3 +53,4 @@
 # Security tests
 # - rights on ~/.goobook_auth.json (600)
 # - rights on ~/.ssh/id_rsa (600 or 400)
+# Enable mbsync timer if needed
