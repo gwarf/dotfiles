@@ -75,7 +75,8 @@ set smime_is_default
 set smime_sign_as = 0x0950B666
 
 # Include the profile name in the status line
-set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---@egi---%?V?(Filter: %V)?--%>-(%P)---"
+# TODO Align profile name on the right
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@EGI──%>─%?p?( %p postponed )?───"
 
 #folder-hook +[Gmail].Bin 'set sort=reverse-date'
 #folder-hook Sent 'set sort=reverse-date-sent'

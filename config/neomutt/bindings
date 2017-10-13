@@ -10,8 +10,8 @@ bind pager j next-line
 bind pager k previous-line
 bind pager i edit
 bind pager R group-reply
-bind pager <down> next-line
-bind pager <up> previous-line
+# bind pager <down> next-line
+# bind pager <up> previous-line
 bind pager \cd half-down
 bind pager \ce next-line
 bind pager \cf next-page
@@ -81,6 +81,7 @@ macro compose <F9> "<enter-command>source ~/.config/neomutt/profile.perso<enter>
 
 # Use Ctrl-l to list URL using urlscan
 macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+# macro pager \Cu "|urlview<enter>" "call urlview to open links"
 
 # show flagged and unread mails (i.e. important)
 #macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"

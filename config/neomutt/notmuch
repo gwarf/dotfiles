@@ -103,13 +103,14 @@ set vfolder_format  = '%6n/%6m (%N) %f'
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
-tag-transforms "inbox"   "i"   \
-               "unread"  "✉"   \
-               "replied" "↻ "  \
-               "sent"    "➥ "  \
-               "important" "⚔"   \
-               "deleted" "💀" \
-               "invites" "C"
+# XXX This chars are taking more than one cell
+tag-transforms "inbox"   ""   \
+               "unread"  "✘"   \
+               "replied" "↻"  \
+               "sent"    "✎"  \
+               "important" "★"   \
+               "deleted" "" \
+               "invites" ""
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
 # tag-formats tag format-string { tag format-string ...}
@@ -140,7 +141,7 @@ tag-formats "inbox"   "Gi" \
 #   - %GI: invites (calendar invitation)
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-set index_format='%4C %Z %[%y.%m.%d] %-18.18n %-4.4W %?Gi?%Gi& ? %?GD?%GD& ? %?GU?%GU& ? %?GR?%GR& ? %?GI?%GI& ? %s'
+set index_format='%4C %Z %[%y.%m.%d] %-18.18n %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ?  %s'
 
 ## Macros and bindings
 
@@ -223,7 +224,7 @@ macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
 macro index,pager at \
   "<pipe-message>mutt2task.py<enter><modify-labels>+todo<enter><sync-mailbox>"
 macro index,pager ag \
-  "<pipe-message>goobook --verbose add<return>!goobook reload<enter>" \
+  "<pipe-message>add_contact<enter>" \
   "add sender to google contacts"
 
 ## Opening virtual folders
