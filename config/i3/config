@@ -289,7 +289,7 @@ assign [class="(?i)nautilus"] → $WS2
 assign [class="(?i)urxvtc"] → $WS1
 assign [class="terminology"] → $WS1
 assign [class="Terminator"] → $WS1
-assign [class="termite"] → $WS1
+assign [class="(?i)termite"] → $WS1
 assign [class="Pidgin"] → $WS3
 assign [class="(?i)empathy"] → $WS3
 assign [class="Clementine"] → $WS3
@@ -420,6 +420,9 @@ exec --no-startup-id termite --name ranger -e ranger
 
 # Start neomutt for the scratchpad
 #exec --no-startup-id urxvtc -name neomutt -e mutt
+
+# Compton tray icon
+exec --no-startup-id comptray
 
 # IM
 exec --no-startup-id empathy
