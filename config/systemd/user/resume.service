@@ -1,0 +1,10 @@
+[Unit]
+Description=User resume actions
+After=suspend.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mpc toggle
+
+[Install]
+WantedBy=suspend.target
