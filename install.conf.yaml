@@ -28,6 +28,7 @@
     ~/.Xresources: Xresources
     ~/.config/i3/config: config/i3/config
     ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
+    ~/.config/polybar/config: config/polybar/config
     ~/.notmuch-config: notmuch-config
     ~/Mail/.notmuch/hooks: notmuch/hooks
     ~/.config/compton.conf: config/compton.conf
