@@ -407,16 +407,6 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Work-related tasks
-tw() {
-  command task +@baptiste.grenier $@
-}
-
-# Home-related tasks
-th() {
-  command task rc:~/.taskrc-home +HOME $@
-}
-
 # XXX currently in cron
 # XXX launch this from xinitrc/i3 to ensure that it's called only in X
 # if [ -x /usr/bin/gcalcli ]; then
