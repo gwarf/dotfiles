@@ -1,26 +1,34 @@
 #!/bin/sh
 
-# FIXME no test yet
-goobook --verbose add < /dev/stdin
+set -eu
+set -o pipefail
 
 # Message is piped on the CLI
+_from=$(awk '/^From:/ {print substr($0, index($0, $2))}' < /dev/stdin)
 
-# XXX extract Name and email
+[ -z "$_from" ] && exit 1
 
-# XXX Ask for missing information
+# extract Name and email
+# XXX What if no name?
+_name=$(printf "$_from" | perl -wlne '/(.*)\ +<(.*)>/ and print $1')
+_email=$(printf "$_from" | perl -wlne '/(.*)\ +<(.*)>/ and print $2')
 
-# XXX Check if contacts already exists
+# TODO Ask for missing information
+
+# Check if contacts already exists
 # Returns email, name and group
-# goobook query %s
+_contact=$(goobook query "$_email")
 
-# XXX Add new contact
-# goobook --verbose add
+# Add new contact
+if [ -z "$_contact" ]; then
+  goobook --verbose add "$_name" "$_email"
+  # Relaod goobook
+  goobook reload
+  printf "Added contact $_name $_email\n"
+else
+  # TODO Update existing contact
+  printf "Found existing contact:"
+  printf "$_contact\n"
+fi
 
-# XXX Update contact
-
-# XXX Do nothing
-
-# Relaod goobook
-# goobook reload
-
-
+exit 0
