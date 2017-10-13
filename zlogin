@@ -1,13 +1,13 @@
 # ~/.zlogin
 
 # display system informations
-uname -a
-uptime
+# uname -a
+# uptime
 
 # Display tasks
 if $(type task &> /dev/null); then
   printf '\n'
-  tw next
+  task due today
 fi
 
 # Display reminds
@@ -16,9 +16,14 @@ fi
 #   remind -f ~/.reminders
 # fi
 
+# Print Google calendar agenda
+if (( $+commands[gcalcli] )); then
+  gcalcli --calendar baptiste.grenier@egi.eu agenda
+fi
+
 # Print a random, hopefully interesting, adage.
 if (( $+commands[fortune] )); then
   printf '\n'
   fortune -a
-  print
+  printf '\n'
 fi
