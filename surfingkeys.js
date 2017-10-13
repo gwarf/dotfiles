@@ -4,7 +4,7 @@
 settings.hintAlign = "left";
 
 // hint characters
-Hints.characters = "asdfghjkl;";
+Hints.characters = "asdfghjkl";
 
 // intercept all error pages so Surfing keys can work on them
 settings.interceptedErrors = ["*"];
