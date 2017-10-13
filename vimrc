@@ -220,9 +220,7 @@ endif
 """"""""""""""""""""""""""""""
 
 " Mail edition for mutt
-" :help fo-table
-" autocmd BufEnter /tmp/mutt* so ~/.vim/mutt.colors
-autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell spelllang=en,fr complete+=kspell noci ft=mail et fo=tcqnaw
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set ft=mail
 
 """"""""""""""""""
 " Custom functions

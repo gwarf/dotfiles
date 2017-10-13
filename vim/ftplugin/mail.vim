@@ -1,11 +1,21 @@
 "" ============================================================================
 ""   ~/.vim/mail
 ""   Cedric Duval
+""   Baptiste Grenier
 "" ============================================================================
 
 " Setup to write mails with vim
 " To use with Mutt, just put this line your ~/.vimrc :
 "   autocmd BufRead /tmp/mutt*      :source ~/.vim/mail
+
+" Enable spell checks
+set spell
+set spelllang=en,fr
+set complete+=kspell
+" No indentation when copying
+set noci
+" Expand spaces to tabs
+set expandtab
 
 "" ----------------------------------------------------------------------------
 ""   Automatic line wrap
@@ -14,6 +24,7 @@
 set textwidth=72  " max line length
 " :help fo-table
 set formatoptions=nawrjtcq
+" set fo=tcqnaw
 set comments+=n:\|  " '|' is a quote char.
 set comments+=n:% " '%' as well.
 
@@ -108,10 +119,10 @@ function! Mail_Del_Empty_Quoted()
 endfunction
 
 "" ----------------------------------------------------------------------------
-""   Moving the cursor at the begining of the mail
+""   Moving the cursor at the beginning of the mail
 "" ----------------------------------------------------------------------------
 
-function! Mail_Begining()
+function! Mail_Beginning()
   exe "normal gg"
   if getline (line ('.')) =~ '^From: '
     " if we use edit_headers in Mutt, then go after the headers
@@ -127,4 +138,4 @@ endfunction
 
 call Mail_Erase_Sig()
 call Mail_Del_Empty_Quoted()
-call Mail_Begining()
+call Mail_Beginning()
