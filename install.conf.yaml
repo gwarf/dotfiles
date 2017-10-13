@@ -40,6 +40,7 @@
     ~/.surfingkeys.js: surfingkeys.js
     ~/bin/add_event: bin/add_event
     ~/bin/add_contact: bin/add_contact
+    ~/bin/launch_bar: bin/launch_bar
     ~/.dir_colors: dircolors.256dark
     ~/.goobookrc: goobookrc
 

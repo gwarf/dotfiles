@@ -345,7 +345,8 @@ exec_always --no-startup-id $HOME/bin/setup_kinesis_keyboard
 
 # Lock screen when hibernating/absent
 #exec --no-startup-id xss-lock -- i3lock-wrapper
-exec --no-startup-id xss-lock -- i3lock-fancy --pixelate -f Fantasque-Sans-Mono-Regular
+#exec --no-startup-id xss-lock -- i3lock-fancy --pixelate -f Fantasque-Sans-Mono-Regular
+exec --no-startup-id xss-lock -- slock
 
 # Screen dimming
 exec_always --no-startup-id redshift
@@ -365,7 +366,7 @@ exec_always --no-startup-id nitrogen --head=1 --random --set-zoom-fill --no-recu
 exec_always --no-startup-id (xrandr | grep -q 'DP-4 connected' && nitrogen --head=2 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers)
 
 # Status bar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id launch_bar
 
 # Tray icons
 
