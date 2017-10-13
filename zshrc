@@ -357,7 +357,7 @@ alias alot_work='alot -p ~/Mail -l ~/.config/alot/alot.log'
 
 # Cal conf
 # Start week on Monday
-cal='cal -m'
+alias cal='cal -m'
 
 # Google Calenar
 alias gcal-week='gcalcli --width 12 calw'
