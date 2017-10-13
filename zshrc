@@ -450,3 +450,6 @@ project-switcher() {
 
     cd $projects/$proj
 }
+
+# Home-related tasks
+alias th='task rc:~/.taskrc-home'
