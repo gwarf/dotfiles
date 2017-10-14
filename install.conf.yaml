@@ -60,3 +60,4 @@
 # yaourt -S pacaur bauerbill python3-aur reflector aria2
 # git clone https://github.com/asdf-vm/asdf.git ~/.asdf
 # asdf plugin-add nodejs git@github.com:asdf-vm/asdf-nodejs.git
+# npm -g install instant-markdown-d
