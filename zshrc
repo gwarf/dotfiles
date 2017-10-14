@@ -54,6 +54,7 @@ zplug "modules/ssh", from:prezto
 
 zplug "plugins/shrink-path", from:oh-my-zsh
 zplug "plugins/taskwarrior", from:oh-my-zsh
+zplug "plugins/asdf", from:oh-my-zsh
 # A lot of nice aliases
 # zplug "plugins/comon-aliases", from:oh-my-zsh
 # A fun Half-Life theme
@@ -341,7 +342,7 @@ xev() {
   command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
 
-alias music='urxvtc -name ncmpcpp -e ncmpcpp'
+alias music='termite --name ncmpcpp -e ncmpcpp'
 
 # Aliases for launching some vimwikis
 alias vimnote='vim -c VimwikiMakeDiaryNote'
@@ -453,3 +454,6 @@ project-switcher() {
 
 # Home-related tasks
 alias th='task rc:~/.taskrc-home'
+
+# Source secrets if existing
+[ -f ~/.secrets ] && . ~/.secrets
