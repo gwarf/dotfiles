@@ -1,0 +1,2 @@
+# Reading existing .nvmrc or .node-version
+legacy_version_file = yes

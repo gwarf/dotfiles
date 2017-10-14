@@ -43,6 +43,7 @@
     ~/bin/launch_bar: bin/launch_bar
     ~/.dir_colors: dircolors.256dark
     ~/.goobookrc: goobookrc
+    ~/.asdfrc: asdfrc
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
@@ -55,3 +56,7 @@
 # - rights on ~/.goobook_auth.json (600)
 # - rights on ~/.ssh/id_rsa (600 or 400)
 # Enable mbsync timer if needed
+# Yaourt replacment
+# yaourt -S pacaur bauerbill python3-aur reflector aria2
+# git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+# asdf plugin-add nodejs git@github.com:asdf-vm/asdf-nodejs.git
