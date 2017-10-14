@@ -1,4 +1,5 @@
 # Example: https://gist.github.com/diyan/6192878
+# https://github.com/Airblader/dotfiles-manjaro/blob/master/.i3/config
 
 # i3 config file (v4)
 #
@@ -20,8 +21,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Fantasque Sans Mono 12
-# font pango:FontAwesome 12
+font pango:Fantasque Sans Mono, FontAwesome 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -114,10 +114,8 @@ bindsym $mod+Shift+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
 # focus the child container
-# XXX not used (yet) replaced by calc/rofi
-# bindsym $mod+c focus child
+bindsym $mod+Shift+a focus parent
 
 # special laptop keys
 # XXX triggered on LID closing/opening
@@ -268,7 +266,6 @@ bindsym $mod+Shift+x mode "$mode_display"
 #     }
 # }
 
-# assign [class="Firefox" instance="Navigator"] → $WS2
 assign [class="(?i)nautilus"] → $WS2
 assign [class="(?i)urxvtc"] → $WS1
 assign [class="terminology"] → $WS1
@@ -301,6 +298,8 @@ for_window [class="(?i)nitrogen"] floating enable
 # Pop up windows
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="Preferences"] floating enable
 # for_window [class="Chromium" title="Quick-Reply"] floating enable
 
 # Put some apps in the scratchpad
@@ -328,9 +327,8 @@ exec --no-startup-id killall -q -w pulseaudio; pulseaudio --start --daemonize --
 # pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
 
 # Terminal
-exec --no-startup-id urxvtd --quiet --opendisplay --fork
+# exec --no-startup-id urxvtd --quiet --opendisplay --fork
 # exec --no-startup-id urxvtc
-# exec --no-startup-id terminology
 # vte should handle non standard fonts more gracefully
 exec --no-startup-id termite
 
@@ -345,8 +343,8 @@ exec_always --no-startup-id $HOME/bin/setup_kinesis_keyboard
 
 # Lock screen when hibernating/absent
 #exec --no-startup-id xss-lock -- i3lock-wrapper
-#exec --no-startup-id xss-lock -- i3lock-fancy --pixelate -f Fantasque-Sans-Mono-Regular
-exec --no-startup-id xss-lock -- slock
+exec --no-startup-id xss-lock -- i3lock-fancy --pixelate -f Fantasque-Sans-Mono-Regular
+# exec --no-startup-id xss-lock -- slock
 
 # Screen dimming
 exec_always --no-startup-id redshift
@@ -362,11 +360,14 @@ exec_always --no-startup-id xbacklight -set 90 -display DP-4
 # exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
 
 # Wallpaper
-exec_always --no-startup-id nitrogen --head=1 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers
-exec_always --no-startup-id (xrandr | grep -q 'DP-4 connected' && nitrogen --head=2 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers)
+# exec_always --no-startup-id nitrogen --head=1 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers
+# exec_always --no-startup-id (xrandr | grep -q 'DP-4 connected' && nitrogen --head=2 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers)
+# exec --no-startup-id livewallpaper
+# exec --no-startup-id livewallpaper-indicator
+exec --no-startup-id XDG_CURRENT_DESKTOP=i3 variety
 
 # Status bar
-exec_always --no-startup-id launch_bar
+exec_always --no-startup-id $HOME/bin/launch_bar
 
 # Tray icons
 
@@ -388,7 +389,10 @@ exec --no-startup-id pasystray
 # Files synchronization
 exec --no-startup-id insync start
 exec --no-startup-id owncloud
-#exec --no-startup-id dropbox
+exec --no-startup-id dropbox
+# XXX Required? Managed by the gtk systray?
+# exec --no-startup-id /usr/lib/hubic/hubic-service
+exec --no-startup-id hubic-gtk
 
 #exec --no-startup-id bitcoin-qt
 
@@ -412,5 +416,7 @@ exec --no-startup-id comptray
 # IM
 exec --no-startup-id empathy
 exec --no-startup-id skypeforlinux
+
+exec --no-startup-id xedgewarp -b
 
 # vim:filetype=i3
