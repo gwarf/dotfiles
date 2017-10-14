@@ -51,7 +51,7 @@ image/*                         ; mutt_bgrun sxiv %s                            
 #image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; fbi %s                            ; copiousoutput
 
-text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = chromium %s
+text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = chromium-perso %s
 
 text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
 text/x-patch                    ; cat %s | colordiff                            ;copiousoutput
