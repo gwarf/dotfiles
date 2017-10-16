@@ -266,7 +266,6 @@ bindsym $mod+Shift+x mode "$mode_display"
 #     }
 # }
 
-assign [class="(?i)nautilus"] → $WS2
 assign [class="(?i)urxvtc"] → $WS1
 assign [class="terminology"] → $WS1
 assign [class="Terminator"] → $WS1
@@ -301,12 +300,15 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_role="bubble"] floating enable
 for_window [window_role="Preferences"] floating enable
 # for_window [class="Chromium" title="Quick-Reply"] floating enable
+# XXX Fix nautilus dialogs
+# _NET_WM_WINDOW_TYPE(ATOM) = _NET_WM_WINDOW_TYPE_DIALOG
+# WM_CLASS(STRING) = "nautilus", "Nautilus"
 
 # Put some apps in the scratchpad
 for_window [class="(?i)keepassx2" window_type="normal"] move scratchpad
 for_window [instance="ncmpcpp"] move scratchpad
 for_window [instance="ranger"] move scratchpad
-for_window [instance="nautilus"] move scratchpad
+# for_window [instance="nautilus"] move scratchpad
 #for_window [instance="neomutt"] move scratchpad
 
 # start some applications
@@ -389,10 +391,10 @@ exec --no-startup-id pasystray
 # Files synchronization
 exec --no-startup-id insync start
 exec --no-startup-id owncloud
-exec --no-startup-id dropbox
+# exec --no-startup-id dropbox
 # XXX Required? Managed by the gtk systray?
 # exec --no-startup-id /usr/lib/hubic/hubic-service
-exec --no-startup-id hubic-gtk
+# exec --no-startup-id hubic-gtk
 
 #exec --no-startup-id bitcoin-qt
 
@@ -417,6 +419,20 @@ exec --no-startup-id comptray
 exec --no-startup-id empathy
 exec --no-startup-id skypeforlinux
 
-exec --no-startup-id xedgewarp -b
+# exec --no-startup-id xedgewarp -b
+exec --no-startup-id $HOME/.dotfiles/bin/monitor_me &
+
+# Unclutter - hides the mouse cursor after 5 seconds of idle
+exec --no-startup-id unclutter -root -jitter 10 &
+
+# Disable beeps
+exec --no-startup-id xset -b
+
+# Set default black background
+exec --no-startup-id xsetroot -solid '#101010'
+exec --no-startup-id xsetroot -cursor_name left_ptr
+
+# DPMS monitor setting (standby -> suspend -> off) (seconds)
+exec --no-startup-id xset dpms 600 1200 3600
 
 # vim:filetype=i3
