@@ -83,15 +83,14 @@ set sort_re
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 # Ensure that INBOX is always using appropriate sorting
 folder-hook Inbox 'set sort=threads sort_aux=reverse-last-date-received sort_re'
+folder-hook Sent 'set sort=revers-last-date'
 # Threads sorted correctly but at bottom
 #set sort_aux = last-date-received
-#folder-hook INBOX 'set sort=threads sort_aux=last-date-received sort_re'
 
 # collapse threads with unread mails
 # set collapse_unread
 # don't collapse on an unread message
 set uncollapse_jump
-
 
 # Pager View Options
 # format of the pager status bar

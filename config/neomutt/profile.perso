@@ -30,7 +30,7 @@ color status green default
 set from       = "baptiste@bapt.name"
 
 # Signature file
-set signature="sh ~/bin/createsign.sh|"
+set signature="sh ~/bin/createsign|"
 
 set envelope_from_address="baptiste@bapt.name"
 

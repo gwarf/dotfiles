@@ -33,6 +33,7 @@
     ~/Mail/.notmuch/hooks: notmuch/hooks
     ~/.config/compton.conf: config/compton.conf
     ~/.config/termite/config: config/termite/config
+    ~/.config/systemd/user/asanawarrior.service: config/systemd/user/asanawarrior.service
     ~/.config/systemd/user/mbsync.service: config/systemd/user/mbsync.service
     ~/.config/systemd/user/mbsync.timer: config/systemd/user/mbsync.timer
     ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
@@ -41,6 +42,7 @@
     ~/bin/add_event: bin/add_event
     ~/bin/add_contact: bin/add_contact
     ~/bin/launch_bar: bin/launch_bar
+    ~/bin/createsign: bin/createsign
     ~/.dir_colors: dircolors.256dark
     ~/.goobookrc: goobookrc
     ~/.asdfrc: asdfrc

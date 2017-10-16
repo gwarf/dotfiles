@@ -122,6 +122,7 @@ tag-formats "inbox"   "Gi" \
              "deleted" "GD" \
              "invites" "GI"
 
+# http://www.mutt.org/doc/manual/#index-format
 # Now instead of using '%g' in your $index_format, which lists all tags
 # in a non-deterministic order, you can something like the following which puts
 # a transformed tag name in a specific spot on the index line:
@@ -133,6 +134,7 @@ tag-formats "inbox"   "Gi" \
 #   - Tagging, flagging or information about the To/Cc...
 # %[%y.%m.%d]: Date
 # %n: Author realname or email if missing
+# %F: author name, or recipient name if the message is from you
 # %W: Organization
 # .G: Notmuch tags info
 #   - %GD: deleted
@@ -141,7 +143,7 @@ tag-formats "inbox"   "Gi" \
 #   - %GI: invites (calendar invitation)
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-set index_format='%4C %Z %[%y.%m.%d] %-18.18n %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ?  %s'
+set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ?  %s'
 
 ## Macros and bindings
 
