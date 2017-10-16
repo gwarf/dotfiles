@@ -122,7 +122,7 @@ zplug "rupa/z", use:"*.sh"
 
 # npm / nvm
 #zplug "lukechilds/zsh-nvm"
-[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+# [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Plugins-specific configuration required before loading them
 
@@ -456,4 +456,6 @@ project-switcher() {
 alias th='task rc:~/.taskrc-home'
 
 # Source secrets if existing
-[ -f ~/.secrets ] && . ~/.secrets
+[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
+
+# export SHELL='/usr/bin/zsh -l'
