@@ -38,6 +38,7 @@
     ~/.config/systemd/user/mbsync.timer: config/systemd/user/mbsync.timer
     ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
     ~/.config/systemd/user/resume.service: config/systemd/user/resume.service
+    ~/.config/pacaur/config: config/pacaur/config
     ~/.surfingkeys.js: surfingkeys.js
     ~/bin/add_event: bin/add_event
     ~/bin/add_contact: bin/add_contact
