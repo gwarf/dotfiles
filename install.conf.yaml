@@ -7,46 +7,46 @@
 
 - link:
     ~/.dotfiles: ''
-    ~/.tmux.conf: tmux.conf
-    ~/.vimrc: vimrc
-    ~/.vim: vim
-    ~/.config/neomutt: config/neomutt
-    ~/.config/afew: config/afew
-    ~/.yaourtrc: yaourtrc
-    ~/.gitconfig: gitconfig
-    ~/.msmtprc: msmtprc
-    ~/.inputrc: inputrc
-    ~/.mailcap: mailcap
-    ~/.surfingkeys.js: surfingkeys.js
-    ~/.xinitrc: xinitrc
-    ~/.xsession: xinitrc
-    ~/.zshrc: zshrc
-    ~/.zshenv: zshenv
-    ~/.zprofile: zprofile
-    ~/.zlogin: zlogin
-    ~/.zlogout: zlogout
     ~/.Xresources: Xresources
+    ~/.asdfrc: asdfrc
+    ~/.config/afew: config/afew
+    ~/.config/compton.conf: config/compton.conf
     ~/.config/i3/config: config/i3/config
     ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
+    ~/.config/neomutt: config/neomutt
+    ~/.config/pacaur/config: config/pacaur/config
     ~/.config/polybar/config: config/polybar/config
-    ~/.notmuch-config: notmuch-config
-    ~/Mail/.notmuch/hooks: notmuch/hooks
-    ~/.config/compton.conf: config/compton.conf
-    ~/.config/termite/config: config/termite/config
     ~/.config/systemd/user/asanawarrior.service: config/systemd/user/asanawarrior.service
     ~/.config/systemd/user/mbsync.service: config/systemd/user/mbsync.service
     ~/.config/systemd/user/mbsync.timer: config/systemd/user/mbsync.timer
-    ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
     ~/.config/systemd/user/resume.service: config/systemd/user/resume.service
-    ~/.config/pacaur/config: config/pacaur/config
-    ~/.surfingkeys.js: surfingkeys.js
-    ~/bin/add_event: bin/add_event
-    ~/bin/add_contact: bin/add_contact
-    ~/bin/launch_bar: bin/launch_bar
-    ~/bin/createsign: bin/createsign
+    ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
+    ~/.config/termite/config: config/termite/config
     ~/.dir_colors: dircolors.256dark
+    ~/.gitconfig: gitconfig
     ~/.goobookrc: goobookrc
-    ~/.asdfrc: asdfrc
+    ~/.inputrc: inputrc
+    ~/.mailcap: mailcap
+    ~/.msmtprc: msmtprc
+    ~/.notmuch-config: notmuch-config
+    ~/.surfingkeys.js: surfingkeys.js
+    ~/.surfingkeys.js: surfingkeys.js
+    ~/.tmux.conf: tmux.conf
+    ~/.vim: vim
+    ~/.vimrc: vimrc
+    ~/.xinitrc: xinitrc
+    ~/.xsession: xinitrc
+    ~/.yaourtrc: yaourtrc
+    ~/.zlogin: zlogin
+    ~/.zlogout: zlogout
+    ~/.zprofile: zprofile
+    ~/.zshenv: zshenv
+    ~/.zshrc: zshrc
+    ~/Mail/.notmuch/hooks: notmuch/hooks
+    ~/bin/add_contact: bin/add_contact
+    ~/bin/add_event: bin/add_event
+    ~/bin/createsign: bin/createsign
+    ~/bin/launch_bar: bin/launch_bar
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
