@@ -5,8 +5,8 @@ After=network.target network-online.target dbus.socket
 [Service]
 Type=simple
 EnvironmentFile=/home/baptiste/.secrets
-ExecStartPre=/usr/bin/echo $ENV > /home/baptiste/systemd-env.sh
-ExecStart=/usr/bin/asanawarrior -verbose -token "$ASANA_API_TOKEN " -domain "$ASANA_WORKSPACE_NAME"
+#ExecStartPre=/usr/bin/echo $ENV > /home/baptiste/systemd-env.sh
+ExecStart=/usr/bin/asanawarrior -token "$ASANA_API_TOKEN" -domain "$ASANA_WORKSPACE_NAME"
 # StandardOutput=syslog
 # StandardError=syslog
 
