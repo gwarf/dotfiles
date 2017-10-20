@@ -1,5 +1,8 @@
 " ~/.vimrc
+" XXX Move to dein to replace vim-plug?
+" https://github.com/Shougo/dein.vim
 "
+" https://github.com/junegunn/vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -33,6 +36,7 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Airline statusbar
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " CheckAttach
 Plug 'chrisbra/CheckAttach'
 " Ctrl-P for quick file/buffer access
@@ -45,7 +49,8 @@ Plug 'vimoutliner/vimoutliner'
 "Plug 'vim-pandoc/vim-pandoc-after'
 "Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'xolox/vim-notes'
+" XXX disabled, evaluating to vimwiki
+" Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 " Plug 'jceb/vim-orgmode'
@@ -113,6 +118,8 @@ Plug 'scrooloose/nerdtree'
 " Display available commands
 " https://github.com/hecal3/vim-leader-guide
 Plug 'hecal3/vim-leader-guide'
+" Buffers list in the command bar
+Plug 'bling/vim-bufferline'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -242,6 +249,7 @@ autocmd BufReadPost * silent! call s:CursorOldPosition()
 """""""""""""""""""""""
 
 " vim-airline
+let g:airline_theme='tomorrow'
 let g:airline_powerline_fonts = 1
 let g:airline_line_fonts = 1
 " Automatically displays all buffers when there's only one tab open
