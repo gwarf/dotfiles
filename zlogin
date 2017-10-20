@@ -18,7 +18,8 @@ fi
 
 # Print Google calendar agenda
 if (( $+commands[gcalcli] )); then
-  gcalcli --calendar baptiste.grenier@egi.eu agenda
+  gcalcli --cache --calendar baptiste.grenier@egi.eu agenda
+  # gcalcli --refresh --calendar baptiste.grenier@egi.eu agenda
 fi
 
 # Print a random, hopefully interesting, adage.
