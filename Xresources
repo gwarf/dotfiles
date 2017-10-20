@@ -112,7 +112,7 @@ URxvt.intensityStyles: false
 !URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:DejaVu Sans Mono:size=12,xft:FontAwesome:size=12,xft:Unifont:size=12,xft:Noto Mono:size=12,xft:Symbola:size=12,xft:Unidings:size=12,xft:Input Mono:size=12,xft:Icons:size=12
 
 ! urxvt: unable to calculate font width for 'Wuncon Siji:slant=0:weight=200:pixelsize=12:minspace=True', ignoring
-URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:FontAwesome:size=12,xft:Unifont:size=10,xft:Symbola:size=12,xft:Icons:size=12,xft:icomoon:size=12,xft:Misc Stlarch:style=regular:size=12,xft:Wuncon Siji:style=siji:size=12
+URxvt*font:  xft:FantasqueSansMono Nerd Font Mono:size=12,xft:FontAwesome:size=12,xft:Unifont:size=10,xft:Symbola:size=12,xft:Icons:size=12,xft:icomoon:size=12,xft:Misc Stlarch:style=regular:size=12,xft:Wuncon Siji:style=siji:size=12
 
 ! URxvt*font:  xft:Fantasque Sans Mono:size=12,xft:DejaVu Sans Mono:size=12,xft:Symbola:size=12,xft:unifont:size=10,xft:Unifont:size=10,xft:Wuncon Siji:size=12
 ! URxvt*imFont:  xft:Fantasque Sans Mono:size=12:style=bold,xft:DejaVu Sans Mono:size=12:style=bold,xft:Symbola:size=12:style=bold
