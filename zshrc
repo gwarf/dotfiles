@@ -50,6 +50,7 @@ zplug "zlsun/solarized-man"
 zplug "modules/utility", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
+zplug "modules/tmux", from:prezto
 zplug "modules/ssh", from:prezto
 
 zplug "plugins/shrink-path", from:oh-my-zsh
@@ -140,6 +141,12 @@ fi
 if zplug check modules/editor; then
   zstyle ':prezto:module:editor' key-bindings 'vi'
   zstyle ':prezto:module:editor' dot-expansion 'yes'
+fi
+
+if zplug check modules/tmux; then
+  zstyle ':prezto:module:tmux:auto-start' local 'yes'
+  zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+  zstyle ':prezto:module:tmux:session' name 'work'
 fi
 
 # Install plugins if there are plugins that have not been installed
@@ -376,7 +383,9 @@ if type compdef &>/dev/null; then
 fi
 
 # Completion for hexo
-eval "$(hexo --completion=zsh)"
+if (( $+commands[hexo] )); then
+  eval "$(hexo --completion=zsh)"
+fi
 
 drun() {
   command docker run --rm -v $(pwd):/source -it "$1"
@@ -459,3 +468,31 @@ alias th='task rc:~/.taskrc-home'
 [ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
 
 # export SHELL='/usr/bin/zsh -l'
+
+# https://nurdletech.com/linux-notes/agents/keyring.html
+# https://faq.i3wm.org/question/4126/sessions-environment-variables/index.html%3Fanswer=4130.html#post-id-4130
+# https://askubuntu.com/questions/138892/how-can-i-permanently-save-a-password-protected-ssh-key
+# https://faq.i3wm.org/question/2498/ssh-sessions-in-i3.1.html
+# XXX debug with systemd-alanlyze, bootchard...
+# https://wiki.archlinux.org/index.php/Improving_performance/Boot_process
+# if [ -n "$DESKTOP_SESSION" ];then
+# XXX keyring seems to be already running but without all the components
+#     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gnupg)
+#     export SSH_AUTH_SOCK
+# fi
+# Keyring started by LightDM with PAM:
+# /etc/pam.d/lightdm
+# XXX Destop files
+# /etc/xdg/autostart/gnome-keyring-*.desktop
+
+# XXX Caller is always /bin/zsh
+# LOG="$HOME/profile-invocations"
+# echo "-----" >>$LOG
+# echo "Caller 1: $0" >>$LOG
+# echo "DESKTOP_SESSION 1: $DESKTOP_SESSION" >>$LOG
+
+# if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
+if [ -n "$DESKTOP_SESSION" -a "$DESKTOP_SESSION" = "i3" ]; then
+    export $(gnome-keyring-daemon -s)
+fi
+# source ~/bin/start-gnome-keyring.sh
