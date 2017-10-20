@@ -373,6 +373,9 @@ alias gcal='gcalcli --width 12 calm'
 alias gcal-add='gcalcli quick'
 alias gcal-agenda='gcalcli agenda'
 
+# Home-related tasks
+alias th='task rc:~/.taskrc-home'
+
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
 if type compdef &>/dev/null; then
@@ -412,6 +415,12 @@ activate() {
 if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
   source /usr/share/doc/pkgfile/command-not-found.zsh
 fi
+
+# Source secrets if existing
+[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
+
+# Source local zsh conf if existing
+[ -f ~/.local.zsh ] && . ~/.local.zsh
 
 [ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
 
@@ -460,12 +469,6 @@ project-switcher() {
 
     cd $projects/$proj
 }
-
-# Home-related tasks
-alias th='task rc:~/.taskrc-home'
-
-# Source secrets if existing
-[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
 
 # export SHELL='/usr/bin/zsh -l'
 
