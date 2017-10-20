@@ -7,6 +7,10 @@ My messy dotfiles. WIP of course :)
 
 Managed using [dotbot][dotbot].
 
+## Requirements
+
+* git
+
 ## Bootstrapping
 
 ``` sh
