@@ -22,7 +22,7 @@
     ~/.config/systemd/user/resume.service: config/systemd/user/resume.service
     ~/.config/systemd/user/suspend.service: config/systemd/user/suspend.service
     ~/.config/termite/config: config/termite/config
-    ~/.dir_colors: dircolors.256dark
+    ~/.dir_colors: dircolors-solarized/dircolors.ansi-universal
     ~/.gitconfig: gitconfig
     ~/.goobookrc: goobookrc
     ~/.inputrc: inputrc
@@ -52,6 +52,8 @@
   - [git submodule update --init --recursive, Installing submodules]
 
 # Package to install on arch
+# - zsh
+# - tmux
 # - gcalcli
 #   - aur/python-vobject / aur/python2-vobject for Vcard management
 #   - community/python2-parsedatetime for date parsing
