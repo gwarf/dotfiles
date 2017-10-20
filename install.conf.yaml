@@ -48,10 +48,14 @@
     ~/bin/createsign: bin/createsign
     ~/bin/launch_bar: bin/launch_bar
 
+# XXX Should be done before trying to link dir_colors
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
 
-# Package to install on arch
+# Package to install
+# - CentOS 7: epel: yum -y install epel-release
+# - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
+# - vim-enhanced/neovim
 # - zsh
 # - tmux
 # - gcalcli
