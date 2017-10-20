@@ -283,10 +283,6 @@ alias halt='systemctl poweroff'
 alias reboot='systemctl reboot'
 alias suspend='systemctl suspend'
 
-if command -v "hub" >/dev/null 2>&1; then
-  alias git=hub
-fi
-
 # Global aliases {{{
 alias -g A="| awk"
 # Color output using ccze
@@ -345,10 +341,6 @@ alias yrs='yaourt -Rs'
 # target package - DANGEROUS
 alias yrsc='yaourt -Rsc'
 
-xev() {
-  command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
-}
-
 alias music='termite --name ncmpcpp -e ncmpcpp'
 
 # Aliases for launching some vimwikis
@@ -376,10 +368,14 @@ alias gcal-agenda='gcalcli agenda'
 # Home-related tasks
 alias th='task rc:~/.taskrc-home'
 
+if (( $+commands[hub] )); then
+  alias git=hub
+fi
+
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
-if type compdef &>/dev/null; then
-  if type VBoxManage &>/dev/null; then
+if (( $+commands[compdef] )); then
+  if (( $+commands[VBoxManage] )); then
     compdef vboxmanage=VBoxManage
     compdef vboxheadless=VBoxHeadless
   fi
@@ -389,6 +385,10 @@ fi
 if (( $+commands[hexo] )); then
   eval "$(hexo --completion=zsh)"
 fi
+
+xev() {
+  command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+}
 
 drun() {
   command docker run --rm -v $(pwd):/source -it "$1"
@@ -408,23 +408,8 @@ free() {
 }
 
 activate() {
-    source $1/bin/activate
+    . $1/bin/activate
 }
-
-# Archlinux command not found (needs pkgfile)
-if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
-  source /usr/share/doc/pkgfile/command-not-found.zsh
-fi
-
-# Source secrets if existing
-[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
-
-# Source local zsh conf if existing
-[ -f ~/.local.zsh ] && . ~/.local.zsh
-
-[ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # XXX currently in cron
 # XXX launch this from xinitrc/i3 to ensure that it's called only in X
@@ -440,7 +425,7 @@ lscan() {
     local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
     local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
     # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
-    echo "$scanReport"
+    printf "$scanReport\n"
 }
 
 listdirectories() {
@@ -499,3 +484,18 @@ if [ -n "$DESKTOP_SESSION" -a "$DESKTOP_SESSION" = "i3" ]; then
     export $(gnome-keyring-daemon -s)
 fi
 # source ~/bin/start-gnome-keyring.sh
+
+# Archlinux command not found (needs pkgfile)
+if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+  . /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
+[ -f ~/.appdb-env.sh ] && . ~/.appdb-env.sh
+
+[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+
+# Source secrets if existing
+[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
+
+# Source local zsh conf if existing
+[ -f ~/.local.zsh ] && . ~/.local.zsh
