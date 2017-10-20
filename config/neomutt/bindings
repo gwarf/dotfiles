@@ -10,8 +10,8 @@ bind pager j next-line
 bind pager k previous-line
 bind pager i edit
 bind pager R group-reply
-# bind pager <down> next-line
-# bind pager <up> previous-line
+bind pager <down> next-line
+bind pager <up> previous-line
 bind pager \cd half-down
 bind pager \ce next-line
 bind pager \cf next-page

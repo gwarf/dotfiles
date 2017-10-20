@@ -109,7 +109,9 @@ tag-transforms "inbox"   ""   \
                "replied" "↻"  \
                "sent"    "✎"  \
                "important" "★"   \
+               "waiting" ""   \
                "deleted" "" \
+               "spam" "😈" \
                "invites" ""
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
@@ -119,7 +121,9 @@ tag-formats "inbox"   "Gi" \
              "replied" "GR" \
              "sent"    "GS" \
              "important"    "Gt" \
+             "waiting"    "Gw" \
              "deleted" "GD" \
+             "spam" "GT" \
              "invites" "GI"
 
 # http://www.mutt.org/doc/manual/#index-format
@@ -137,13 +141,16 @@ tag-formats "inbox"   "Gi" \
 # %F: author name, or recipient name if the message is from you
 # %W: Organization
 # .G: Notmuch tags info
+#   - %Gi: inbox
 #   - %GD: deleted
 #   - %GU: unread
 #   - %GR: replied
 #   - %GI: invites (calendar invitation)
+#   - %GT: spam
+#   - %Gw: waiting
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ?  %s'
+set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ? %s'
 
 ## Macros and bindings
 
