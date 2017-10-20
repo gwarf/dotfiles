@@ -1,5 +1,6 @@
 [options]
-allow_bold = true
+# Colors seems a bit brighter
+allow_bold = false
 audible_bell = false
 
 # $BROWSER is used by default if set, with xdg-open as a fallback
@@ -15,7 +16,7 @@ dynamic_title = true
 # Hide links that are no longer valid in url select overlay mode
 filter_unmatched_urls = true
 
-font = Fantasque Sans Mono 17
+font = FantasqueSansMono Nerd Font Mono 17
 
 # XXX Already managed by unclutter
 mouse_autohide = true
