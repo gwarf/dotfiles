@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mbsync -a
+mbsync --verbose EGI
+notmuch new
+# afew --dry-run --move=mails

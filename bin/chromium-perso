@@ -1,0 +1,5 @@
+#!/bin/sh
+
+DATA_DIR="$HOME/.config/chromium-perso"
+
+chromium --user-data-dir="$DATA_DIR" $@
