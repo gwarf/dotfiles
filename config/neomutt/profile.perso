@@ -19,8 +19,9 @@ color status green default
 
 # set spoolfile   = "+INBOX"
 # set mbox        = "+_Read"
-# set record="+Sent"
-# set postponed="+Drafts"
+# Record sent emails
+set record="+Sent"
+set postponed="+Drafts"
 
 # If using trash-folder-patch
 # set trash="+Trash"

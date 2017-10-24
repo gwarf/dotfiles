@@ -37,8 +37,9 @@ color status cyan default
 
 # set spoolfile   = "+Inbox"
 # set mbox        = "+All"
-# set postponed   = "+Drafts"
-# unset record
+set postponed   = "+Drafts"
+# Sent emails are recorded automatically by Gmail
+unset record
 # Add messages stored to the NeoMutt record (see $record in the NeoMutt docs)
 # also to notmuch DB. If you reply to an email then the new email inherits tags
 # from the original email.

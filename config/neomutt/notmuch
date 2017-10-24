@@ -112,6 +112,7 @@ tag-transforms "inbox"   ""   \
                "waiting" ""   \
                "deleted" "" \
                "spam" "😈" \
+               "attachment" "" \
                "invites" ""
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
@@ -124,6 +125,7 @@ tag-formats "inbox"   "Gi" \
              "waiting"    "Gw" \
              "deleted" "GD" \
              "spam" "GT" \
+             "attachment" "Ga" \
              "invites" "GI"
 
 # http://www.mutt.org/doc/manual/#index-format
@@ -150,7 +152,7 @@ tag-formats "inbox"   "Gi" \
 #   - %Gw: waiting
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ? %s'
+set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
 
 ## Macros and bindings
 
