@@ -249,7 +249,7 @@ autocmd BufReadPost * silent! call s:CursorOldPosition()
 """""""""""""""""""""""
 
 " vim-airline
-let g:airline_theme='tomorrow'
+let g:airline_theme='ravenpower'
 let g:airline_powerline_fonts = 1
 let g:airline_line_fonts = 1
 " Automatically displays all buffers when there's only one tab open
