@@ -13,6 +13,7 @@
     ~/.config/compton.conf: config/compton.conf
     ~/.config/i3/config: config/i3/config
     ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
+    ~/.config/plasma-workspace/env/path.sh: config/plasma-workspace/env/path.sh
     ~/.config/neomutt: config/neomutt
     ~/.config/pacaur/config: config/pacaur/config
     ~/.config/polybar/config: config/polybar/config
@@ -29,13 +30,13 @@
     ~/.mailcap: mailcap
     ~/.msmtprc: msmtprc
     ~/.notmuch-config: notmuch-config
+    ~/.pam_environment: pam_environment
     ~/.surfingkeys.js: surfingkeys.js
     ~/.surfingkeys.js: surfingkeys.js
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim
     ~/.vimrc: vimrc
     ~/.xinitrc: xinitrc
-    ~/.xsession: xinitrc
     ~/.yaourtrc: yaourtrc
     ~/.zlogin: zlogin
     ~/.zlogout: zlogout
@@ -55,8 +56,12 @@
 # Package to install
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
+# - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
+#   - gf-plus: updated tmux
+#     http://ghettoforge.org/index.php/Usage#List_of_Available_Repositories_.26_Suggested_Usage
 # - vim-enhanced/neovim
 # - zsh
+# - tree
 # - tmux
 # - gcalcli
 #   - aur/python-vobject / aur/python2-vobject for Vcard management
