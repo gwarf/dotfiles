@@ -108,6 +108,14 @@ message = Tag ELI/ELITRANS messags
 query = 'tag:egi AND (from:/eli-/ OR to:/eli-/ OR subject:ELI)'
 tags = +eli
 
+[Filter.16]
+# XXX Need to find a way to exclude html + text emails
+# XXX And signed emails with attached signature
+# Query terms: attachment: mimetype:
+message = Tag messags with attachments
+query = attachment:*
+tags = +attachment
+
 [ArchiveSentMailsFilter]
 sent_tag = sent
 
