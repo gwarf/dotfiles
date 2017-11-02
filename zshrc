@@ -32,10 +32,10 @@
 # git support
 # Fuzzy command line completion
 
-export ZPLUG_HOME=~/repos/zplug
+export ZPLUG_HOME=~/.zplug
 
 if [ ! -d "$ZPLUG_HOME" ]; then
-  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
 fi
 
 source "$ZPLUG_HOME/init.zsh"
