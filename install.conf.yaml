@@ -18,6 +18,8 @@
     ~/.config/pacaur/config: config/pacaur/config
     ~/.config/polybar/config: config/polybar/config
     ~/.config/systemd/user/asanawarrior.service: config/systemd/user/asanawarrior.service
+    ~/.config/systemd/user/grive.service: config/systemd/user/grive.service
+    ~/.config/systemd/user/grive.timer: config/systemd/user/grive.timer
     ~/.config/systemd/user/mbsync.service: config/systemd/user/mbsync.service
     ~/.config/systemd/user/mbsync.timer: config/systemd/user/mbsync.timer
     ~/.config/systemd/user/resume.service: config/systemd/user/resume.service

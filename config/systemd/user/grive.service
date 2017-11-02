@@ -1,0 +1,10 @@
+[Unit]
+Description=Google Drive synchronization service
+After=network.target network-online.target dbus.socket
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/baptiste/GDrive/baptiste@bapt.name
+ExecStart=/usr/bin/grive
+StandardOutput=syslog
+StandardError=syslog
