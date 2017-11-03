@@ -5,8 +5,9 @@
 
 - clean: ['~']
 
+# XXX if repo checkout is not in ~/.dotfiles
+# ~/.dotfiles: ''
 - link:
-    ~/.dotfiles: ''
     ~/.Xresources: Xresources
     ~/.asdfrc: asdfrc
     ~/.config/afew: config/afew

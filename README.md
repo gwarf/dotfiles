@@ -15,7 +15,7 @@ Managed using [dotbot][dotbot].
 
 ``` sh
 URL='https://github.com/gwarf/dotfiles'
-git clone "$URL" && cd dotfiles && ./install
+git clone "$URL" ~/.dotfiles && cd ~/.dotfiles && ./install
 ```
 
 In order to push and once GitHub credentials have been confiugred it is
