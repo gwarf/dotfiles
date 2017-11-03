@@ -89,9 +89,14 @@
 #   - the_silver_searcher
 #   - rsync
 #   - task asanawarrior-git
-# - Systemd user unit
+#   - pkgfile
+#   - alsa-utils pavucontrol paprefs alsa-tools
+#   - cups cups-pdf
+#   - msmtp isync
+# - Systemd
 #   - systemctl --user daemon-reload
 #   - systemctl --user enable --now asanawarrior.service
+#   - systemctl enable --now cups-browsed.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
