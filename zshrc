@@ -182,7 +182,7 @@ if zplug check caiogondim/bullet-train.zsh; then
 fi
 
 if zplug "MichaelAquilina/zsh-you-should-use"; then
-  export YSU_HARDCORE=1
+  export YSU_HARDCORE=0
 fi
 
 # ZSH options
