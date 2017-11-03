@@ -80,6 +80,8 @@
 #   - telepathy
 #   - libreoffice-fresh
 #   - neomutt notmuch
+#   - keepassxc
+#   - the_silver_searcher
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
