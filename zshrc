@@ -346,6 +346,7 @@ alias yrsc='yaourt -Rsc'
 
 alias music='termite --name ncmpcpp -e ncmpcpp'
 
+alias vim=nvim
 # Aliases for launching some vimwikis
 alias vimnote='vim -c VimwikiMakeDiaryNote'
 
