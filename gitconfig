@@ -67,7 +67,6 @@
   ls = ls-files
   me = merge --no-ff --no-commit
   nvgc = !ionice -n7 nice -n20 git vgc
-  publish = push publish
   push-head = !git push origin `git symbolic-ref HEAD`
   pushall = !git remote | xargs -n1 git push
   pushalltags = !git remote | xargs -n1 git push --tags
