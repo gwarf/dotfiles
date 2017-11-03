@@ -61,6 +61,7 @@
 # - Archlinux
 #   - /etc/pacman.conf: uncomment Color line
 #   - base base-devel
+#   - bash-completion
 #   - grub-efi-x86_64 efibootmgr
 #   - dialog
 #   - wpa_supplicant
@@ -69,6 +70,7 @@
 #   - cower: git clone https://aur.archlinux.org/cower.git (makepkg -is)
 #   - pacaur: git clone https://aur.archlinux.org/pacaur.git (makepkg -is)
 #   - zsh vim neovim
+#   - openssh
 #   - nerd-fonts-complete
 #   - termite
 #   - skypeforlinux-bin
@@ -83,6 +85,8 @@
 #   - neomutt notmuch
 #   - keepassxc
 #   - the_silver_searcher
+#   - rsync
+#   - task
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
