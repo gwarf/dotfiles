@@ -41,6 +41,7 @@
     ~/.vim: config/nvim
     ~/.vimrc: config/nvim/init.vim
     ~/.xinitrc: xinitrc
+    ~/.taskrc: taskrc
     ~/.yaourtrc: yaourtrc
     ~/.zlogin: zlogin
     ~/.zlogout: zlogout
