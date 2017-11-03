@@ -87,7 +87,10 @@
 #   - keepassxc
 #   - the_silver_searcher
 #   - rsync
-#   - task
+#   - task asanawarrior-git
+# - Systemd user unit
+#   - systemctl --user daemon-reload
+#   - systemctl --user enable --now asanawarrior.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
