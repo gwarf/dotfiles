@@ -37,8 +37,9 @@
     ~/.surfingkeys.js: surfingkeys.js
     ~/.surfingkeys.js: surfingkeys.js
     ~/.tmux.conf: tmux.conf
-    ~/.vim: vim
-    ~/.vimrc: vimrc
+    ~/.config/nvim: config/nvim
+    ~/.vim: config/nvim
+    ~/.vimrc: config/nvim/init.vim
     ~/.xinitrc: xinitrc
     ~/.yaourtrc: yaourtrc
     ~/.zlogin: zlogin
