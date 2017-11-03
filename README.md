@@ -14,8 +14,16 @@ Managed using [dotbot][dotbot].
 ## Bootstrapping
 
 ``` sh
-URL='git://github.com/gwarf/dotfiles'
+URL='https://github.com/gwarf/dotfiles'
 git clone "$URL" && cd dotfiles && ./install
+```
+
+In order to push and once GitHub credentials have been confiugred it is
+required to update the URL in the ```.git/config``` file:
+
+```
+[remote "origin"]
+  url = git@github.com:gwarf/dotfiles.git
 ```
 
 [dotbot]: https://github.com/anishathalye/dotbot/
