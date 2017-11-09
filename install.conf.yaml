@@ -15,6 +15,7 @@
     ~/.config/i3/config: config/i3/config
     ~/.config/i3/kinesis_custom.xkb: config/i3/kinesis_custom.xkb
     ~/.config/plasma-workspace/env/path.sh: config/plasma-workspace/env/path.sh
+    ~/.config/mpd/mpd.conf: config/mpd/mpd.conf
     ~/.config/neomutt: config/neomutt
     ~/.config/pacaur/config: config/pacaur/config
     ~/.config/polybar/config: config/polybar/config
@@ -54,6 +55,7 @@
     ~/bin/add_event: bin/add_event
     ~/bin/createsign: bin/createsign
     ~/bin/launch_bar: bin/launch_bar
+    ~/bin/gnomekeyring-helpers.py: bin/gnomekeyring-helpers.py
 
 # XXX Should be done before trying to link dir_colors
 - shell:
@@ -71,7 +73,7 @@
 #   - git
 #   - cower: git clone https://aur.archlinux.org/cower.git (makepkg -is)
 #   - pacaur: git clone https://aur.archlinux.org/pacaur.git (makepkg -is)
-#   - zsh vim neovim
+#   - zsh vim neovim pyton-neovim tree
 #   - openssh
 #   - nerd-fonts-complete
 #   - termite
@@ -84,7 +86,9 @@
 #   - texlive-most
 #   - telepathy
 #   - libreoffice-fresh
-#   - neomutt notmuch
+#   - neomutt notmuch afew isync msmtp
+#   - ranger highlight atool w3m transmission-cli mediainfo perl-image-exiftool cpio lha p7zip unace unrar
+#   - mpd mpc ncmpcpp mpdscribble
 #   - keepassxc
 #   - the_silver_searcher
 #   - rsync
@@ -92,10 +96,14 @@
 #   - pkgfile
 #   - alsa-utils pavucontrol paprefs alsa-tools
 #   - cups cups-pdf
-#   - msmtp isync
+#   - chrome-gnome-shell-git gnome-tweak-tool
+#   - lshw dmidecode mesa-demos
+#   - nvidia libxnvctrl nvidia-settings nvidia-utils opencl-nvidia
+#   - python2-gnomekeyring
 # - Systemd
 #   - systemctl --user daemon-reload
 #   - systemctl --user enable --now asanawarrior.service
+#   - systemctl --user start --now mbsync.timer
 #   - systemctl enable --now cups-browsed.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
