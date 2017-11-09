@@ -104,6 +104,8 @@
 #   - systemctl --user daemon-reload
 #   - systemctl --user enable --now asanawarrior.service
 #   - systemctl --user start --now mbsync.timer
+#   - systemctl --user start --now mpd.service
+#   - systemctl --user start --now mpdscribble.service
 #   - systemctl enable --now cups-browsed.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
