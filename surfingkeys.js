@@ -105,5 +105,10 @@ map('gT', 'E');
 map('K', 'R');
 map('J', 'E');
 
+// Disabling SurfkingKeys on https://app.asana.com
+"blacklist": {
+    "https://github.com": 1,
+    "https://app.asana.com": 1
+},
 
 // vim:ft=javascript:foldmethod=marker:foldlevel=0:
