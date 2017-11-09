@@ -22,7 +22,7 @@ import sys, os.path, optparse, getpass
 
 try:
     import gnomekeyring as gk
-except importerror:
+except ImportError:
     print("""Unable to import gnome keyring module""")
     sys.exit(-1)
 
