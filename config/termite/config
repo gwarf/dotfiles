@@ -31,13 +31,18 @@ size_hints = false
 
 urgent_on_bell = true
 
-# Solarized
+# Solarized dark color scheme
+# https://github.com/alpha-omega/termite-colors-solarized
+
 [colors]
 foreground = #839496
 foreground_bold = #eee8d5
-foreground_dim = #888888
+#foreground_dim = #888888
 background = #002b36
 cursor = #93a1a1
+
+# if unset, will reverse foreground and background
+#highlight = #839496
 
 # colors from color0 to color254 can be set
 color0 = #073642
