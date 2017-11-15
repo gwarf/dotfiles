@@ -41,7 +41,8 @@ fi
 source "$ZPLUG_HOME/init.zsh"
 
 # Zplug auto update
-zplug "gwarf/09afddb8741a7ea478ce53aafe20b777", from:gist
+# XXX Disable to validate if it breaks "special" zplugs such as prezto
+# zplug "gwarf/09afddb8741a7ea478ce53aafe20b777", from:gist
 
 # Theme
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
