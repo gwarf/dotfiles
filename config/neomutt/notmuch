@@ -224,6 +224,7 @@ macro index,pager tw "<modify-labels>+waiting<enter><sync-mailbox>"
 # When in pager it updates tags but do not move to next email
 macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
 macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
+# TODO Need to manage delete-thread Ctrl-d and Undelete Thread Ctrl-u
 # Revovering emails marked for deletion
 macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
 # removed from inbox
