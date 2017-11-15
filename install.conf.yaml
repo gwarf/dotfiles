@@ -56,6 +56,7 @@
     ~/bin/createsign: bin/createsign
     ~/bin/launch_bar: bin/launch_bar
     ~/bin/gnomekeyring-helpers.py: bin/gnomekeyring-helpers.py
+    ~/bin/dual-screen: bin/dual-screen
 
 # XXX Should be done before trying to link dir_colors
 - shell:
@@ -64,6 +65,7 @@
 # Package to install
 # - Archlinux
 #   - /etc/pacman.conf: uncomment Color line
+#   - /etc/makepkg.conf: uncomment/configure MAKEFLAGS -j8
 #   - base base-devel
 #   - bash-completion
 #   - grub-efi-x86_64 efibootmgr
@@ -71,25 +73,34 @@
 #   - wpa_supplicant
 #   - btrfs-progs
 #   - git
-#   - cower: git clone https://aur.archlinux.org/cower.git (makepkg -is)
+#   - cower: git cone https://aur.archlinux.org/cower.git (makepkg -is)
 #   - pacaur: git clone https://aur.archlinux.org/pacaur.git (makepkg -is)
-#   - zsh vim neovim pyton-neovim tree
+#   - zsh vim neovim pyton-neovim tree ccze
 #   - openssh
-#   - nerd-fonts-complete
 #   - termite
 #   - skypeforlinux-bin
 #   - rambox
 #   - powerline-fonts awesome-terminal-fonts powerline
-#   - insync insync-nautilus
+#   - ttf-fantasque-sans-mono siji-git nerd-fonts-complete ttf-hack
+#   - insync insync-nautilus owncloud-client
+#   - syncthing-gtk
+#   - urbackup2-client
 #   - vmware-workstation
 #   - grive
 #   - texlive-most
 #   - telepathy
 #   - libreoffice-fresh
-#   - neomutt notmuch afew isync msmtp
+#   - neomutt notmuch afew isync msmtp goobook-git
 #   - ranger highlight atool w3m transmission-cli mediainfo perl-image-exiftool cpio lha p7zip unace unrar
 #   - mpd mpc ncmpcpp mpdscribble
 #   - keepassxc
+#   - htop lsof strace pydf
+#   - lxrandr
+#   - i3-gaps-next-git i3lock-fancy-git polybar rofi compton xinit-xsession
+#   - scrot redshift udiskie pasystray paman pavumeter unclutter numlockx xinit
+#   - i3blocks i3lock i3status acpi playerctl sysstat xss-lock
+#   - networkmanager-openvpn network-manager-applet
+#   - lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 #   - the_silver_searcher
 #   - rsync
 #   - task asanawarrior-git
@@ -99,14 +110,20 @@
 #   - chrome-gnome-shell-git gnome-tweak-tool
 #   - lshw dmidecode mesa-demos
 #   - nvidia libxnvctrl nvidia-settings nvidia-utils opencl-nvidia
+#   - intel-ucode
+#   - lib32-nvidia-utils lib32-libvdpau lib32-opencl-nvidia lib32-virtualgl
 #   - python2-gnomekeyring
+#   # KDE Plasma
+#   - plasma-meta kde-applications-meta packagekit-qt5 kdepim-addons kdemultimedia telepathy-kde sddm
 # - Systemd
 #   - systemctl --user daemon-reload
 #   - systemctl --user enable --now asanawarrior.service
-#   - systemctl --user start --now mbsync.timer
-#   - systemctl --user start --now mpd.service
-#   - systemctl --user start --now mpdscribble.service
+#   - systemctl --user enable --now mbsync.timer
+#   - systemctl --user enable --now mpd.service
+#   - systemctl --user enable --now mpdscribble.service
+#   - systemctl --user enable --now syncthing.service
 #   - systemctl enable --now cups-browsed.service
+#   - systemctl enable --now lightdm.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
