@@ -32,6 +32,7 @@ if has('nvim')
 else
   Plug 'altercation/vim-colors-solarized'
 endif
+" Plug 'rakr/vim-one'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Airline statusbar
@@ -68,7 +69,10 @@ Plug 'mv/mv-vim-puppet'
 " Ansible support
 Plug 'pearofducks/ansible-vim'
 " Markdown support
+" Should come after tabular
 Plug 'plasticboy/vim-markdown'
+" Instant markdown preview
+" Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
 " SilverSearcy plugin
@@ -101,8 +105,6 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vimperator/vimperator.vim'
-Plug 'vimwiki/vimwiki'
-Plug 'suan/vim-instant-markdown'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'mrtazz/simplenote.vim'
@@ -111,7 +113,7 @@ Plug 'neomutt/neomutt.vim'
 Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
 Plug 'vimwiki/vimwiki'
-Plug '/teranex/vimwiki-tasks'
+Plug 'teranex/vimwiki-tasks'
 Plug 'mbbill/undotree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
@@ -130,11 +132,35 @@ if !has('nvim')
 endif
 
 " Theme
+
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+" if (empty($TMUX))
+"   if (has("nvim"))
+"   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+"   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"   endif
+"   "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+"   "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+"   " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+"   if (has("termguicolors"))
+"     set termguicolors
+"   endif
+" endif
+
+set background=dark
 if has('nvim')
-  colorscheme solarized8_dark
+  " Use true colors
+  " https://www.cyfyifanchen.com/neovim-true-color/
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  " set termguicolors
+  let g:solarized_use16 = 1
+  colorscheme solarized8_flat
+  " colorscheme one
 else
   colorscheme solarized
-  set background=dark
 endif
 
 " Create new window below current one.
@@ -440,10 +466,6 @@ vnoremap k gk
 :iab brb Best regards,<enter>Baptiste
 :iab cb Cheers,<enter>Baptiste
 
-" vimWiki
-" No folder suppor, 'path_html': '~/public_html/'t
-"let g:vimwiki_list = [{'path': '~/GoogleDrive/wiki/'}]
-
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
 
@@ -463,18 +485,27 @@ nnoremap <C-s> [s1z=<c-o>
 inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 " VimWiKi
+" https://github.com/vimwiki/vimwiki/issues/95
+" Do not use vimwiki type globally on all .md files
+let g:vimwiki_global_ext = 0
+let g:vimwiki_folding = ''
+" Do not conceal links
+let g:vimwiki_url_maxsave = 0
+
 " <Leader>wt to start
 " <Leader>ww to start
 " ~/GoogleDrive/wiki/: work
 " ~/wiki/: perso/home
 let wiki_work = {}
-let wiki_work.path = '~/Documents/wiki_work/'
+let wiki_work.path = '~/wiki_work/'
 let wiki_work.syntax = 'markdown'
+let wiki_work.index = 'README'
 let wiki_work.ext = '.md'
 
 let wiki_home = {}
-let wiki_home.path = '~/Documents/wiki/'
+let wiki_home.path = '~/repos/wiki/'
 let wiki_home.syntax = 'markdown'
+let wiki_home.index = 'README'
 let wiki_home.ext = '.md'
 
 let g:vimwiki_list = [wiki_work, wiki_home]
@@ -489,5 +520,10 @@ if has("persistent_undo")
   set undodir=~/.undodir/
   set undofile
 endif
+
+" vim-markdown
+" Disable folding
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 2
 
 " vim:set ft=vim et sw=2:
