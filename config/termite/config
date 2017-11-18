@@ -21,6 +21,7 @@ font = FantasqueSansMono Nerd Font Mono 17
 # XXX Already managed by unclutter
 mouse_autohide = true
 
+scrollback_lines = 0
 scroll_on_output = false
 scroll_on_keystroke = true
 
