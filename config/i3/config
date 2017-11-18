@@ -289,8 +289,9 @@ for_window [class="Clementine"] layout tabbed
 #for_window [class="okular"] layout tabbed
 #for_window [class="Pcmanfm"] floating enable
 #for_window [class="Thunar"] floating enable
-for_window [class="Pidgin"] layout tabbed
+for_window [class="Pidgin"] layouttabbed
 for_window [class="Pinentry"] floating enable
+for_window [class="(?i)lxappearance"] floating enable
 for_window [class="(?i)skypeforlinux"] layout tabbed
 for_window [class="(?i)Skype Preview"] layout tabbed
 for_window [class="(?i)Skype"] layout tabbed
@@ -345,7 +346,7 @@ exec_always --no-startup-id $HOME/bin/vbox-forward
 exec_always --no-startup-id $HOME/bin/dual-screen
 
 # Load keybaord configu
-# exec_always --no-startup-id $HOME/bin/setup_kinesis_keyboard
+exec_always --no-startup-id $HOME/bin/setup_kinesis_keyboard
 
 # Lock screen when hibernating/absent
 exec --no-startup-id xss-lock -- i3lock-fancy --pixelate -f Fantasque-Sans-Mono-Regular
@@ -367,9 +368,10 @@ exec_always --no-startup-id xbacklight -set 90 -display DP-4
 # Wallpaper
 # exec_always --no-startup-id nitrogen --head=1 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers
 # exec_always --no-startup-id (xrandr | grep -q 'DP-4 connected' && nitrogen --head=2 --random --set-zoom-fill --no-recurse $HOME/Pictures/Wallpapers)
+exec --no-startup-id nitrogen --restore
 # exec --no-startup-id livewallpaper
 # exec --no-startup-id livewallpaper-indicator
-# Wayt too much mooving :)
+# Way too much mooooving :)
 # exec --no-startup-id XDG_CURRENT_DESKTOP=i3 variety
 
 # Status bar
@@ -441,6 +443,12 @@ exec --no-startup-id xsetroot -cursor_name left_ptr
 
 # DPMS monitor setting (standby -> suspend -> off) (seconds)
 exec --no-startup-id xset dpms 600 1200 3600
+
+# Enable touchpad tap to click
+# xinput list
+# xinput list-props <device id>
+# xinput set-prop <device id> <property id> 1
+exec --no-startup-id xinput set-prop 15 307 1
 
 # exec deja-dup --backup
 
