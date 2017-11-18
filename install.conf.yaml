@@ -57,6 +57,8 @@
     ~/bin/launch_bar: bin/launch_bar
     ~/bin/gnomekeyring-helpers.py: bin/gnomekeyring-helpers.py
     ~/bin/dual-screen: bin/dual-screen
+    ~/bin/setup_kinesis_keyboard: bin/setup_kinesis_keyboard
+    ~/.Xmodmap-kinesis: Xmodmap-kinesis
 
 # XXX Should be done before trying to link dir_colors
 - shell:
@@ -95,7 +97,7 @@
 #   - mpd mpc ncmpcpp mpdscribble
 #   - keepassxc
 #   - htop lsof strace pydf
-#   - lxrandr
+#   - lxrandr lxappearance
 #   - i3-gaps-next-git i3lock-fancy-git polybar rofi compton xinit-xsession
 #   - scrot redshift udiskie pasystray paman pavumeter unclutter numlockx xinit
 #   - i3blocks i3lock i3status acpi playerctl sysstat xss-lock
@@ -107,12 +109,15 @@
 #   - pkgfile
 #   - alsa-utils pavucontrol paprefs alsa-tools
 #   - cups cups-pdf
+#   - foomatic-db foomatic-db-engine foomatic-db-ppds foomatic-db-gutenprint-ppds foomatic-db-nonfree foomatic-db-nonfree-ppds gutenprint
 #   - chrome-gnome-shell-git gnome-tweak-tool
 #   - lshw dmidecode mesa-demos
 #   - nvidia libxnvctrl nvidia-settings nvidia-utils opencl-nvidia
 #   - intel-ucode
 #   - lib32-nvidia-utils lib32-libvdpau lib32-opencl-nvidia lib32-virtualgl
 #   - python2-gnomekeyring
+#   - arch-wiki-man arch-wiki-docs arch-wiki-lite
+#   - mpv youtube-dl
 #   # KDE Plasma
 #   - plasma-meta kde-applications-meta packagekit-qt5 kdepim-addons kdemultimedia telepathy-kde sddm
 # - Systemd
