@@ -79,7 +79,7 @@
 #   - git
 #   - cower: git cone https://aur.archlinux.org/cower.git (makepkg -is)
 #   - pacaur: git clone https://aur.archlinux.org/pacaur.git (makepkg -is)
-#   - zsh vim neovim pyton-neovim tree ccze
+#   - zsh vim neovim pyton-neovim python2-neovim tree ccze
 #   - openssh
 #   - termite
 #   - skypeforlinux-bin
@@ -95,6 +95,7 @@
 #   - telepathy
 #   - libreoffice-fresh
 #   - neomutt notmuch afew isync msmtp goobook-git
+#   - fortune-mod fortune-mod-bofh-excuses fortune-tontons-flingueurs-fr fortune-mod-vimtips
 #   - ranger highlight atool w3m transmission-cli mediainfo perl-image-exiftool cpio lha p7zip unace unrar
 #   - mpd mpc ncmpcpp mpdscribble
 #   - keepassxc
