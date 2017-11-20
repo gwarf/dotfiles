@@ -16,7 +16,7 @@ call plug#begin('~/.vim/plugged')
 " SuperTab
 " Plug 'ervandew/supertab'
 " Snippets
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Completion
 if has('nvim')	
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -366,7 +366,11 @@ let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 " Goal
 " depolete: use tab/s-tab or c-n/c-p to navigate options
 " UltiSnips: use tab to trigger snippet
-"let g:UltiSnipsExpandTrigger       ="<tab>"
+let g:UltiSnipsExpandTrigger       ="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<cr>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsListSnippets="<c-e>"
 
 "function! g:UltiSnips_Complete()
 "    call UltiSnips#ExpandSnippet()
@@ -385,8 +389,6 @@ let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 "
 ""au BufEnter,BufRead,BufNewFile,Buf * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 "au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"let g:UltiSnipsJumpForwardTrigger="<cr>"
-"let g:UltiSnipsListSnippets="<c-e>"
 "" this mapping Enter key to <C-y> to chose the current highlight item
 "" and close the selection list, same as other IDEs.
 "" CONFLICT with some plugins like tpope/Endwise
