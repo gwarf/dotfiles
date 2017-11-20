@@ -59,6 +59,8 @@
     ~/bin/dual-screen: bin/dual-screen
     ~/bin/setup_kinesis_keyboard: bin/setup_kinesis_keyboard
     ~/.Xmodmap-kinesis: Xmodmap-kinesis
+    ~/.ncmpcpp/config: ncmpcpp/config
+    ~/.ncmpcpp/bindings: ncmpcpp/bindings
 
 # XXX Should be done before trying to link dir_colors
 - shell:
