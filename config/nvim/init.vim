@@ -274,6 +274,7 @@ autocmd BufReadPost * silent! call s:CursorOldPosition()
 " Plugins configuration
 """""""""""""""""""""""
 
+let g:powerline_pycmd='py3'
 " vim-airline
 let g:airline_theme='ravenpower'
 let g:airline_powerline_fonts = 1
