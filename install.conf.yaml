@@ -107,6 +107,7 @@
 #   - networkmanager-openvpn network-manager-applet
 #   - lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 #   - the_silver_searcher
+#   - docker
 #   - rsync
 #   - task asanawarrior-git
 #   - pkgfile
@@ -121,6 +122,10 @@
 #   - python2-gnomekeyring
 #   - arch-wiki-man arch-wiki-docs arch-wiki-lite
 #   - mpv youtube-dl
+#   - rpmextract
+#   - crashplan-pro
+#   - icedtea-web jre8-openjdk jre8-openjdk-headless
+#   - steam steam-native-runtime steam-fonts lib32-libpulse lib32-libsamplerate lib32-speex
 #   # KDE Plasma
 #   - plasma-meta kde-applications-meta packagekit-qt5 kdepim-addons kdemultimedia telepathy-kde sddm
 # - Systemd
@@ -132,6 +137,7 @@
 #   - systemctl --user enable --now syncthing.service
 #   - systemctl enable --now cups-browsed.service
 #   - systemctl enable --now lightdm.service
+#   - systemctl enable --now docker.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)
