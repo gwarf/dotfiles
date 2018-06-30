@@ -1,0 +1,7 @@
+mpd_music_dir = ~/Music
+autocenter_mode = yes
+centered_cursor = no
+user_interface = alternative
+playlist_show_remaining_time = yes
+playlist_separate_albums = yes
+jump_to_now_playing_song_at_start = yes

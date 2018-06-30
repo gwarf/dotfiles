@@ -57,11 +57,18 @@ zplug "modules/utility", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
 zplug "modules/tmux", from:prezto
-zplug "modules/ssh", from:prezto
+# XXX not needed
+# zplug "modules/ssh", from:prezto
 
 zplug "plugins/shrink-path", from:oh-my-zsh
 zplug "plugins/taskwarrior", from:oh-my-zsh
-zplug "plugins/asdf", from:oh-my-zsh
+# git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+# asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+# asdf plugin list-all python
+# export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
+# asdf plugin install python 2.7
+# zplug "plugins/asdf", from:oh-my-zsh
+
 # A lot of nice aliases
 # zplug "plugins/comon-aliases", from:oh-my-zsh
 # A fun Half-Life theme
@@ -259,6 +266,11 @@ export EDITOR='vim'
 #export PAGER='less'
 export SYSTEMD_PAGER='cat'
 
+#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
+#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
+export WORKON_HOME=~/.virtualenvs
+source /usr/bin/virtualenvwrapper.sh
+
 #####################################################################
 ## Shell aliases and functions
 #####################################################################
@@ -273,7 +285,6 @@ alias chgrp='chgrp --preserve-root'
 
 # k or long listing by default
 if command -v "k" >/dev/null 2>&1; then
-  alias l='k -h'
   alias l='k -h'
 else
   alias l='ls -lh'
@@ -486,9 +497,11 @@ project-switcher() {
 # echo "Caller 1: $0" >>$LOG
 # echo "DESKTOP_SESSION 1: $DESKTOP_SESSION" >>$LOG
 
-# if [ "$0" = "/usr/sbin/lightdm-session" -a "$DESKTOP_SESSION" = "i3" ]; then
-if [ -n "$DESKTOP_SESSION" -a "$DESKTOP_SESSION" = "i3" ]; then
+# Ensure that appropriate env var are set for gnome-keyring SSH agent
+if [ -n "$DESKTOP_SESSION" ]; then
+  if [ "$DESKTOP_SESSION" = "i3" -o "$DESKTOP_SESSION" = 'xinitrc' ]; then
     export $(gnome-keyring-daemon -s)
+  fi
 fi
 # source ~/bin/start-gnome-keyring.sh
 

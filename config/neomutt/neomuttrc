@@ -8,7 +8,7 @@ set certificate_file = ~/.mutt/certificates
 
 set tmpdir = '~/tmp'
 
-set editor = 'vim'
+set editor = 'nvim'
 set shell = "/bin/zsh"
 
 # number of input lines for prompts to remember

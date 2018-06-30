@@ -59,6 +59,8 @@
     ~/bin/dual-screen: bin/dual-screen
     ~/bin/setup_kinesis_keyboard: bin/setup_kinesis_keyboard
     ~/.Xmodmap-kinesis: Xmodmap-kinesis
+    ~/.ncmpcpp/config: ncmpcpp/config
+    ~/.ncmpcpp/bindings: ncmpcpp/bindings
 
 # XXX Should be done before trying to link dir_colors
 - shell:
@@ -77,7 +79,7 @@
 #   - git
 #   - cower: git cone https://aur.archlinux.org/cower.git (makepkg -is)
 #   - pacaur: git clone https://aur.archlinux.org/pacaur.git (makepkg -is)
-#   - zsh vim neovim pyton-neovim tree ccze
+#   - zsh vim neovim pyton-neovim python2-neovim tree ccze
 #   - openssh
 #   - termite
 #   - skypeforlinux-bin
@@ -93,6 +95,7 @@
 #   - telepathy
 #   - libreoffice-fresh
 #   - neomutt notmuch afew isync msmtp goobook-git
+#   - fortune-mod fortune-mod-bofh-excuses fortune-tontons-flingueurs-fr fortune-mod-vimtips
 #   - ranger highlight atool w3m transmission-cli mediainfo perl-image-exiftool cpio lha p7zip unace unrar
 #   - mpd mpc ncmpcpp mpdscribble
 #   - keepassxc
@@ -104,6 +107,7 @@
 #   - networkmanager-openvpn network-manager-applet
 #   - lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
 #   - the_silver_searcher
+#   - docker
 #   - rsync
 #   - task asanawarrior-git
 #   - pkgfile
@@ -118,6 +122,10 @@
 #   - python2-gnomekeyring
 #   - arch-wiki-man arch-wiki-docs arch-wiki-lite
 #   - mpv youtube-dl
+#   - rpmextract
+#   - crashplan-pro
+#   - icedtea-web jre8-openjdk jre8-openjdk-headless
+#   - steam steam-native-runtime steam-fonts lib32-libpulse lib32-libsamplerate lib32-speex
 #   # KDE Plasma
 #   - plasma-meta kde-applications-meta packagekit-qt5 kdepim-addons kdemultimedia telepathy-kde sddm
 # - Systemd
@@ -129,6 +137,7 @@
 #   - systemctl --user enable --now syncthing.service
 #   - systemctl enable --now cups-browsed.service
 #   - systemctl enable --now lightdm.service
+#   - systemctl enable --now docker.service
 # - CentOS 7: epel: yum -y install epel-release
 # - CentOS 7: http://copr.fedoraproject.org/coprs/dperson/neovim/
 # - CentOS 7:  http://ghettoforge.org/index.php/Main_Page (be cautious)

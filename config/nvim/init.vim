@@ -16,14 +16,15 @@ call plug#begin('~/.vim/plugged')
 " SuperTab
 " Plug 'ervandew/supertab'
 " Snippets
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Completion
-"Plug 'Valloric/YouCompleteMe'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim'
+if has('nvim')	
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
 else
-  Plug 'Shougo/neocomplete'
+  Plug 'Shougodeoplete.nvim'
+  Plug 'roxma/vim-yarp'
+  Plug 'roxma/im-hug-neovim-rpc'
 endif
 " Theme
 " Colorscheme
@@ -196,7 +197,8 @@ set shiftwidth=2    " taille de l'indentation.
 set tabstop=2       " Taille des tabulations
 
 "set mouse-=a
-"set mouse=
+" Disable mouse support
+set mouse=
 
 " Highlight problematic whitespace
 set list
@@ -363,20 +365,14 @@ let g:UltiSnipsEditSplit="vertical"
 " Custom snippets
 let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 
-" No more user tab/s-tab with youcompleteme to allow to use tab for UltiSnips
-"let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
-"let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
-
-" Working
-" Not using <tab> with https://github.com/Valloric/YouCompleteMe.
-" YouCompleteMe: use tab/s-tab or c-n/c-p to navigate options
-" UltiSnips: use c-j to trigger snippet
-"let g:UltiSnipsExpandTrigger       ="<c-j>"
-
 " Goal
-" YouCompleteMe: use tab/s-tab or c-n/c-p to navigate options
+" depolete: use tab/s-tab or c-n/c-p to navigate options
 " UltiSnips: use tab to trigger snippet
-"let g:UltiSnipsExpandTrigger       ="<tab>"
+let g:UltiSnipsExpandTrigger       ="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<cr>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsListSnippets="<c-e>"
 
 "function! g:UltiSnips_Complete()
 "    call UltiSnips#ExpandSnippet()
@@ -395,25 +391,31 @@ let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 "
 ""au BufEnter,BufRead,BufNewFile,Buf * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 "au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"let g:UltiSnipsJumpForwardTrigger="<cr>"
-"let g:UltiSnipsListSnippets="<c-e>"
 "" this mapping Enter key to <C-y> to chose the current highlight item
 "" and close the selection list, same as other IDEs.
 "" CONFLICT with some plugins like tpope/Endwise
 "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-let g:ycm_collect_identifiers_from_tags_files = 1
+" Use deoplete
+" Debug run :CheckHealth
+let g:deoplete#enable_at_startup = 1
+" https://www.gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
+" if !exists('g:deoplete#omni#input_patterns')
+"   let g:deoplete#omni#input_patterns = {}
+" endif
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-"let g:SuperTabDefaultCompletionType = '<C-n>'
+" <C-h>, <BS>: close popup and delete backword char
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-else
-  let g:neocomplete#enable_at_startup = 1
-endif
+" <CR>: close popup and save indent
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . "\<CR>"
+endfunction
+
+" <TAB>: completion
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " better key bindings for UltiSnipsExpandTrigger
 " let g:UltiSnipsExpandTrigger = "<tab>"
@@ -423,9 +425,6 @@ endif
 " Notes using vim-pad
 let g:pad#dir = "~/GoogleDrive/notes"
 "let g:pad#local_dir = "notes"
-
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Notes using vim-notes
 " https://peterodding.com/code/vim/notes
