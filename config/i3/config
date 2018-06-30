@@ -340,10 +340,10 @@ exec --no-startup-id killall -q -w pulseaudio; pulseaudio --start --daemonize --
 exec --no-startup-id termite
 
 # Enable masquerading of VirtualBox host-only network
-exec_always --no-startup-id $HOME/bin/vbox-forward
+# exec_always --no-startup-id $HOME/bin/vbox-forward
 
 # Load xrandr conf
-exec_always --no-startup-id $HOME/bin/dual-screen
+exec_always $HOME/bin/dual-screen
 
 # Load keybaord configu
 exec_always --no-startup-id $HOME/bin/setup_kinesis_keyboard
@@ -396,7 +396,7 @@ exec --no-startup-id pasystray
 
 # Files synchronization
 exec --no-startup-id insync start
-exec --no-startup-id owncloud
+# exec --no-startup-id owncloud
 # exec --no-startup-id dropbox
 # XXX Required? Managed by the gtk systray?
 # exec --no-startup-id /usr/lib/hubic/hubic-service
@@ -442,14 +442,18 @@ exec --no-startup-id xsetroot -solid '#101010'
 exec --no-startup-id xsetroot -cursor_name left_ptr
 
 # DPMS monitor setting (standby -> suspend -> off) (seconds)
-exec --no-startup-id xset dpms 600 1200 3600
+# exec --no-startup-id xset dpms 600 1200 3600
 
 # Enable touchpad tap to click
 # xinput list
 # xinput list-props <device id>
 # xinput set-prop <device id> <property id> 1
-exec --no-startup-id xinput set-prop 15 307 1
+exec --no-startup-id xinput set-prop $(xinput list --id-only 'SynPS/2 Synaptics TouchPad') $(xinput list-props $(xinput list --id-only 'SynPS/2 Synaptics TouchPad') | awk '/Tapping Enabled \(/ {print $(NF-1)}' | sed -e 's/[^0-9]*//g') 1
 
 # exec deja-dup --backup
+
+# MOC
+exec --no-startup-id mocp -S -m ~/Music
+exec --no-startup-id mocp-scrobbler.py -d
 
 # vim:filetype=i3
