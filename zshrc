@@ -1,6 +1,8 @@
 # ~/.zshrc
 # Read by all interactive shells
 
+export LANG="en_US.UTF-8"
+
 # https://dotfiles.github.io/
 # HTTps://github.com/zplug/zplug
 # https://github.com/unixorn/zsh-quickstart-kit
@@ -148,8 +150,8 @@ if zplug check modules/editor; then
 fi
 
 if zplug check modules/tmux; then
-  zstyle ':prezto:module:tmux:auto-start' local 'yes'
-  zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+  zstyle ':prezto:module:tmux:auto-start' local 'no'
+  zstyle ':prezto:module:tmux:auto-start' remote 'no'
   zstyle ':prezto:module:tmux:session' name 'work'
 fi
 
