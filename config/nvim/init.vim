@@ -197,7 +197,8 @@ set shiftwidth=2    " taille de l'indentation.
 set tabstop=2       " Taille des tabulations
 
 "set mouse-=a
-"set mouse=
+" Disable mouse support
+set mouse=
 
 " Highlight problematic whitespace
 set list
