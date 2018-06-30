@@ -97,10 +97,10 @@ font-2 = FontAwesome:size=14;0
 ; separator =
 
 ; modules-left = i3 xworkspaces
-modules-left = i3 xwindow
-modules-center = mpd
+modules-left = i3 mpd
+modules-center = xwindow date
 # Disabled: xbacklight powermenu memory cpu wlan eth
-modules-right = filesystem temperature battery volume date
+modules-right = filesystem temperature battery volume
 
 tray-position = right
 tray-padding = 2
