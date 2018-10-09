@@ -27,10 +27,14 @@
   autocrlf = input
   eol = lf
 
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+
 [merge]
+  tool = fugitive
   #tool = diffuse
   #tool = vimdiff
-  tool = meld
+  #tool = meld
 
 #[sendemail]
 #  smtpserver = mail.jukie.net
