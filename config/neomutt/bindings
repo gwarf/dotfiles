@@ -80,8 +80,8 @@ macro compose <F9> "<enter-command>source ~/.config/neomutt/profile.perso<enter>
 # macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
 # Use Ctrl-l to list URL using urlscan
-macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
-# macro pager \Cu "|urlview<enter>" "call urlview to open links"
+# macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
+macro pager \Cl "|urlview<enter>" "call urlview to open links"
 
 # show flagged and unread mails (i.e. important)
 #macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
