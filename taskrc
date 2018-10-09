@@ -9,7 +9,7 @@
 data.location=~/.task
 
 # Color theme
-include /usr/share/doc/task/rc/solarized-dark-256.theme
+#include /usr/share/doc/task/rc/solarized-dark-256.theme
 
 # Reports
 rc.report.next.filter=status:pending,+UNBLOCKED,+@baptiste.grenier
