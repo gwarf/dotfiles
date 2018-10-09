@@ -17,7 +17,6 @@ set history_file = "~/.config/neomutt/history"
 set save_history = 1000
 
 # SMIME / PGP
-set crypt_use_gpgme = yes
 set smime_is_default = yes
 set crypt_autosmime = yes
 set crypt_verify_sig = yes
@@ -151,13 +150,10 @@ source ~/.config/neomutt/mime-view
 #set wrapmargin=60
 
 # http://www.neomutt.org/feature/new-mail/
-set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
+# set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
 
 # Maildir
 source ~/.config/neomutt/maildir
-
-# notmuch
-source ~/.config/neomutt/notmuch
 
 # sidebar
 source ~/.config/neomutt/sidebar
