@@ -20,10 +20,12 @@ call plug#begin('~/.vim/plugged')
 " Completion
 "Plug 'Valloric/YouCompleteMe'
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
 else
-  Plug 'Shougo/neocomplete'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 " Theme
 " Colorscheme
@@ -32,11 +34,12 @@ if has('nvim')
 else
   Plug 'altercation/vim-colors-solarized'
 endif
+" one colorscheme
 " Plug 'rakr/vim-one'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Airline statusbar
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " CheckAttach
 Plug 'chrisbra/CheckAttach'
@@ -46,9 +49,9 @@ Plug 'editorconfig/editorconfig-vim'
 " Notes taking
 " Plug 'fmoralesc/vim-pad'
 Plug 'vimoutliner/vimoutliner'
-"Plug 'vim-pandoc/vim-pandoc'
-"Plug 'vim-pandoc/vim-pandoc-after'
-"Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-after'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'dhruvasagar/vim-table-mode'
 " XXX disabled, evaluating to vimwiki
 " Plug 'xolox/vim-notes'
@@ -75,12 +78,13 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
-" SilverSearcy plugin
+" SilverSearch plugin
 Plug 'rking/ag.vim'
 " Syntax validation
 Plug 'scrooloose/syntastic'
 " git integration
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " gitk for Vim.
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " Sensible default settings
@@ -91,6 +95,7 @@ endif
 Plug 'tpope/vim-speeddating'
 " Easy change of surrounding stuff (tags, quotes...)
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 " Hilight utf8-related trolls
 Plug 'vim-utils/vim-troll-stopper'
 Plug 'vim-scripts/utl.vim'
@@ -98,25 +103,34 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim'
-"Plug 'vim-scripts/AutoClose'
+Plug 'vim-scripts/AutoClose'
 Plug 'vim-scripts/spec.vim'
 Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vimperator/vimperator.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'mrtazz/simplenote.vim'
+Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
 Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
-Plug 'vimwiki/vimwiki'
-Plug 'teranex/vimwiki-tasks'
 Plug 'mbbill/undotree'
+" Could break airline bar if no proper font is configured
+" Works with nerd fonts
+" brew tap caskroom/fonts
+" brew install font-hack-nerd-font
+" or font-meslo-nerd-font font-sourcecodepro-nerd-font
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Fancy start screen
+Plug 'mhinz/vim-startify'
 " Display available commands
 " https://github.com/hecal3/vim-leader-guide
 Plug 'hecal3/vim-leader-guide'
@@ -132,6 +146,28 @@ if !has('nvim')
 endif
 
 " Theme
+set background=dark
+if has('nvim')
+  " Use true colors
+  " https://www.cyfyifanchen.com/neovim-true-color/
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  "set termguicolors
+  let g:solarized_use16 = 1
+  colorscheme solarized8_flat
+  " colorscheme one
+else
+  colorscheme solarized
+endif
+
+if !has('nvim')
+  " For devicons on vim
+  set encoding=UTF-8
+endif
+
+" Pyenv with neovim on Mac OS X
+" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv
+let g:python_host_prog = '/Users/baptistegrenier/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/baptistegrenier/.pyenv/versions/neovim3/bin/python'
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -149,19 +185,6 @@ endif
 "     set termguicolors
 "   endif
 " endif
-
-set background=dark
-if has('nvim')
-  " Use true colors
-  " https://www.cyfyifanchen.com/neovim-true-color/
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  " set termguicolors
-  let g:solarized_use16 = 1
-  colorscheme solarized8_flat
-  " colorscheme one
-else
-  colorscheme solarized
-endif
 
 " Create new window below current one.
 set splitbelow
@@ -254,7 +277,8 @@ endif
 """"""""""""""""""""""""""""""
 
 " Mail edition for mutt
-autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set ft=mail
+" :help fo-table
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell spelllang=en,fr complete+=kspell noci ft=mail et fo=tcqnaw
 
 """"""""""""""""""
 " Custom functions
@@ -273,6 +297,17 @@ autocmd BufReadPost * silent! call s:CursorOldPosition()
 """""""""""""""""""""""
 " Plugins configuration
 """""""""""""""""""""""
+
+" Auto start nedtree and startify
+" https://github.com/scrooloose/nerdtree
+" autocmd vimenter * NERDTree
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   NERDTree
+            \ |   wincmd w
+            \ | endif
+map <C-n> :NERDTreeToggle<CR>
 
 " vim-airline
 let g:airline_theme='ravenpower'
@@ -299,12 +334,12 @@ let g:fzf_action = {
 " Syntastic
 " https://github.com/scrooloose/syntastic
 " Always populate location list with errors
-"let g:syntastic_always_populate_loc_list = 1
-" Automatically close error window
-"let g:syntastic_auto_loc_list = 2
+let g:syntastic_always_populate_loc_list = 1
+" Automatically close error window when no errors are left
+let g:syntastic_auto_loc_list = 1
 " Jump to the first error detected
-"let g:syntastic_auto_jump = 2
-"let g:syntastic_check_on_open = 0
+let g:syntastic_auto_jump = 1
+let g:syntastic_check_on_open = 1
 "let g:syntastic_puppet_puppetlint_quiet_messages = { "regex": "line has more than 80 characters" }
 "let g:syntastic_puppet_puppetlint_args = "--no-class_inherits_from_params_class-check"
 
@@ -315,7 +350,7 @@ let g:fzf_action = {
 " https://github.com/liamcurry/py3kwarn
 " https://docs.python.org/3/whatsnew/3.0.html
 " https://docs.python.org/2.6/library/2to3.html#fixers
-"let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_checkers=['flake8']
 "let g:syntastic_python_checkers=['flake8', 'py3kwarn']
 
 " The Silver Searcher
@@ -408,11 +443,8 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 "let g:SuperTabDefaultCompletionType = '<C-n>'
 
-if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-else
-  let g:neocomplete#enable_at_startup = 1
-endif
+" Use deoplete
+let g:deoplete#enable_at_startup = 1
 
 " better key bindings for UltiSnipsExpandTrigger
 " let g:UltiSnipsExpandTrigger = "<tab>"
@@ -446,6 +478,9 @@ let g:checkattach_once = 'y'
 
 " Said required to fix editorconfig with Fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" Vertical diff
+set diffopt+=vertical
 
 source ~/.simplenoterc
 
