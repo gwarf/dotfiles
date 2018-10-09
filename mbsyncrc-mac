@@ -1,0 +1,66 @@
+# https://roylez.info/2016-02-10-mutt-multi-imap-accounts/
+# EGI Gmail Account
+IMAPAccount EGI
+Host imap.gmail.com
+User baptiste.grenier@egi.eu
+# https://support.google.com/accounts/answer/185833?hl=en
+# Set passwod on OSX: security add-generic-password -a baptiste.grenier@egi.eu -s imap.gmail.com -w
+PassCmd "security find-generic-password -s imap.gmail.com -a baptiste.grenier@egi.eu -w"
+SSLType IMAPS
+AuthMechs LOGIN
+CertificateFile /usr/local/etc/openssl/cert.pem
+
+# Remote EGI IMAP
+IMAPStore EGI_gmail
+Account EGI
+
+# Local EGI Maildir
+MaildirStore EGI_local
+Path ~/Mail/EGI/
+Inbox ~/Mail/EGI/Inbox
+
+# Connect remote IMAP to local Folders
+
+Channel EGI-default
+Master :EGI_gmail:"INBOX"
+Slave :EGI_local:Inbox
+
+Channel EGI-sent
+Master :EGI_gmail:"[Gmail]/Sent Mail"
+slave  :EGI_local:Sent
+
+Channel EGI-starred
+Master :EGI_gmail:"[Gmail]/Starred"
+slave  :EGI_local:Starred
+
+Channel EGI-trash
+Master :EGI_gmail:"[Gmail]/Bin"
+slave  :EGI_local:Trash
+
+Channel EGI-archive
+Master :EGI_gmail:"[Gmail]/All Mail"
+slave  :EGI_local:All
+
+Channel EGI-drafts
+Master :EGI_gmail:"[Gmail]/Drafts"
+slave  :EGI_local:Drafts
+
+Channel EGI-spam
+Master :EGI_gmail:"[Gmail]/Spam"
+slave  :EGI_local:Spam
+
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+# Automatically delete messages on either side if they are found deleted on the other
+Expunge Both
+
+Group EGI
+Channel EGI-default
+Channel EGI-sent
+Channel EGI-starred
+Channel EGI-trash
+Channel EGI-archive
+Channel EGI-drafts
+Channel EGI-spam
