@@ -68,6 +68,7 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys
 source /usr/local/Cellar/neomutt/20180716/share/doc/neomutt/samples/smime.rc
 
+set crypt_use_gpgme = no
 set smime_is_default
 set smime_sign_as = 61a167d5.0
 
@@ -82,6 +83,10 @@ set smime_import_cert_command="/usr/local/Cellar/neomutt/20180716/libexec/neomut
 
 # Extract PGP or S/MIME keys
 bind index,pager \ck extract-keys
+
+# Include the profile name in the status line
+# TODO Align profile name on the right
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@EGI──%>─%?p?( %p postponed )?───"
 
 # Fetching mail
 macro index \cf "<shell-escape>mbsync -a<enter>"
