@@ -56,7 +56,8 @@ ENABLE_CORRECTION="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # tmux conf
-export ZSH_TMUX_AUTOSTART=true
+# XXX disabled as it breaks launchin neovim for Oni
+export ZSH_TMUX_AUTOSTART=false
 # export ZSH_TMUX_ITERM2=true
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
