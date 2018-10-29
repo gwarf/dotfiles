@@ -59,6 +59,7 @@ ENABLE_CORRECTION="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # tmux conf
+# XXX disabled as it breaks launchin neovim for Oni
 export ZSH_TMUX_AUTOSTART=false
 # export ZSH_TMUX_ITERM2=true
 
