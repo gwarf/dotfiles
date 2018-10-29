@@ -114,7 +114,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'mrtazz/simplenote.vim'
+"Plug 'mrtazz/simplenote.vim'
 Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
@@ -486,7 +486,7 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " Vertical diff
 set diffopt+=vertical
 
-source ~/.simplenoterc
+" source ~/.simplenoterc
 
 " Fix arrow keys with 256 color term
 set t_ku=OA
