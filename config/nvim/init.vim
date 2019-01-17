@@ -15,10 +15,7 @@ call plug#begin('~/.vim/plugged')
 
 " SuperTab
 " Plug 'ervandew/supertab'
-" Snippets
-Plug 'SirVer/ultisnips'
 " Completion
-"Plug 'Valloric/YouCompleteMe'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
@@ -27,6 +24,9 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+" Snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 " Theme
 " Colorscheme
 if has('nvim')
@@ -38,6 +38,8 @@ endif
 " Plug 'rakr/vim-one'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+" Snippets
+Plug 'honza/vim-snippets'
 " Airline statusbar
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -60,8 +62,6 @@ Plug 'xolox/vim-shell'
 " Plug 'jceb/vim-orgmode'
 " Tabular alignement
 Plug 'godlygeek/tabular'
-" Snippets for UltiSnipps
-Plug 'honza/vim-snippets'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Preview registers
@@ -166,8 +166,8 @@ endif
 
 " Pyenv with neovim on Mac OS X
 " https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv
-let g:python_host_prog = '/Users/baptistegrenier/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/baptistegrenier/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = '/Users/baptiste/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/baptiste/.pyenv/versions/neovim3/bin/python'
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -277,9 +277,18 @@ endif
 " *-(specific|related) options
 """"""""""""""""""""""""""""""
 
+" Set spell language
+set spelllang=en,fr
+" Enable completion of spell
+set complete+=kspell
+
 " Mail edition for mutt
 " :help fo-table
-autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell spelllang=en,fr complete+=kspell noci ft=mail et fo=tcqnaw
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell noci ft=mail et fo=tcqnaw
+
+" Spelling for markdown and ReStructuredText
+" XXX testing using ftplugin for this
+" autocmd FileType markdown,rst set spell spelllang=en,fr complete+=kspell
 
 """"""""""""""""""
 " Custom functions
@@ -341,6 +350,8 @@ let g:syntastic_auto_loc_list = 1
 " Jump to the first error detected
 let g:syntastic_auto_jump = 1
 let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
 "let g:syntastic_puppet_puppetlint_quiet_messages = { "regex": "line has more than 80 characters" }
 "let g:syntastic_puppet_puppetlint_args = "--no-class_inherits_from_params_class-check"
 
@@ -393,70 +404,47 @@ let g:snips_email='baptiste.grenier@egi.eu'
 let g:snips_author='Baptiste Grenier'
 let g:snips_author_initials='BG'
 let g:snips_company='EGI Foundation'
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-" Custom snippets
-let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 
-" Goal
 " depolete: use tab/s-tab or c-n/c-p to navigate options
-" UltiSnips: use tab to trigger snippet
-let g:UltiSnipsExpandTrigger       ="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<cr>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"let g:UltiSnipsListSnippets="<c-e>"
-
-"function! g:UltiSnips_Complete()
-"    call UltiSnips#ExpandSnippet()
-"    if g:ulti_expand_res == 0
-"        if pumvisible()
-"            return "\<C-n>"
-"        else
-"            call UltiSnips#JumpForwards()
-"            if g:ulti_jump_forwards_res == 0
-"               return "\<TAB>"
-"            endif
-"        endif
-"    endif
-"    return ""
-"endfunction
-"
-""au BufEnter,BufRead,BufNewFile,Buf * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"" this mapping Enter key to <C-y> to chose the current highlight item
-"" and close the selection list, same as other IDEs.
-"" CONFLICT with some plugins like tpope/Endwise
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use deoplete
-" Debug run :CheckHealth
+" Debug run :checkhealth
 let g:deoplete#enable_at_startup = 1
-" https://www.gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
-" if !exists('g:deoplete#omni#input_patterns')
-"   let g:deoplete#omni#input_patterns = {}
-" endif
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 " <C-h>, <BS>: close popup and delete backword char
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" <TAB>: completion
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" Taken from https://github.com/Shougo/shougo-s-github/blob/84071518e4238cc8b816cdb97ebc00c2aedda69f/vim/rc/plugins/deoplete.rc.vim
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" <S-TAB>: completion back
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <expr><C-g>       deoplete#refresh()
+inoremap <expr><C-e>       deoplete#cancel_popup()
+inoremap <silent><expr><C-l>       deoplete#complete_common_string()
 
 " <CR>: close popup and save indent
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
+  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
 endfunction
-
-" Use deoplete
-let g:deoplete#enable_at_startup = 1
-
-" <TAB>: completion
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Notes using vim-pad
 let g:pad#dir = "~/GoogleDrive/notes"
