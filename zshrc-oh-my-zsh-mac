@@ -146,8 +146,5 @@ export LDFLAGS="-L$(brew --prefix openssl)/lib"
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-# added by travis gem
-[ -f /Users/baptiste/.travis/travis.sh ] && source /Users/baptiste/.travis/travis.sh
-
 # Source secrets
 [ -f ~/.secrets ] && source ~/.secrets
