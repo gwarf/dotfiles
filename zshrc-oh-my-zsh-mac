@@ -68,7 +68,6 @@ export ZSH_TMUX_AUTOSTART=false
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-#  autoenv
   brew
   colored-man
   colorize
@@ -84,13 +83,13 @@ plugins=(
   vagrant
   vi-mode
 )
-# Breaks login
+# Breaking login
 #   asdf
 # Slowing login
-#  pyenv # not used as using manual configuration?
+#  pyenv # not used as using manual configuration
 #  autoenv
 #  virtualenv
-# virtualenvwrapper
+#  virtualenvwrapper
 
 source $ZSH/oh-my-zsh.sh
 
@@ -134,26 +133,9 @@ else
   alias vi='nvim'
 fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias stack='docker run -it --rm -v ~/.stack:~/.stack gbraad/openstack-client:centos stack'
-
-export GITHUB_TOKEN=cd3f5d3f605de79ef9f36f6ec631074316469bf2
 
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems
 # Required for building python with pyenv on Mac OS X
@@ -166,3 +148,6 @@ export LDFLAGS="-L$(brew --prefix openssl)/lib"
 
 # added by travis gem
 [ -f /Users/baptiste/.travis/travis.sh ] && source /Users/baptiste/.travis/travis.sh
+
+# Source secrets
+[ -f ~/.secrets ] && source ~/.secrets
