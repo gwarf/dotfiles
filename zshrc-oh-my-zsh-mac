@@ -101,15 +101,19 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_FIND_NO_DUPS
 
 # export MANPATH="/usr/local/man:$MANPATH"
-# https://alysivji.github.io/setting-up-pyenv-virtualenvwrapper.html
-export PROJECT_HOME="$HOME/code"
-#export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-#pyenv virtualenvwrapper_lazy
 
-# https://github.com/pyenv/pyenv-installer
+export PROJECT_HOME="$HOME/code"
+
+# pyenv configuration
+# https://alysivji.github.io/setting-up-pyenv-virtualenvwrapper.html
+# https://gist.github.com/Geoyi/f55ed54d24cc9ff1c14bd95fac21c042
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
+export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -118,6 +122,8 @@ export LANG=en_US.UTF-8
 
 typeset -U path
 path+=/usr/local/sbin
+
+export PATH="$HOME/bin:$PATH"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -145,17 +151,18 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-#source /usr/local/opt/pyenv/shims/virtualenvwrapper.sh
-
 alias stack='docker run -it --rm -v ~/.stack:~/.stack gbraad/openstack-client:centos stack'
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 export GITHUB_TOKEN=cd3f5d3f605de79ef9f36f6ec631074316469bf2
 
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems
-export CFLAGS="-O2 -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include"
+# Required for building python with pyenv on Mac OS X
+export CFLAGS="-I$(brew --prefix openssl)/include"
 export LDFLAGS="-L$(brew --prefix openssl)/lib"
+# PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+# added by travis gem
+[ -f /Users/baptiste/.travis/travis.sh ] && source /Users/baptiste/.travis/travis.sh
