@@ -36,7 +36,6 @@
     ~/.notmuch-config: notmuch-config
     ~/.pam_environment: pam_environment
     ~/.surfingkeys.js: surfingkeys.js
-    ~/.surfingkeys.js: surfingkeys.js
     ~/.tmux.conf: tmux.conf
     ~/.config/nvim: config/nvim
     ~/.vim: config/nvim
@@ -64,7 +63,7 @@
 
 # XXX Should be done before trying to link dir_colors
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
+    - [git submodule update --init --recursive, Installing submodules]
 
 # Package to install
 # - Archlinux
