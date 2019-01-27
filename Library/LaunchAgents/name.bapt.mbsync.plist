@@ -14,11 +14,15 @@
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/baptiste</string>
+    <!--
     <key>StandardOutPath</key>
     <string>/Users/baptiste/Mail/.mbsync-agent.log</string>
     <key>StandardErrorPath</key>
     <string>/Users/baptiste/Mail/.mbsync-agent.log</string>
+    -->
+    <key>RunAtLoad</key>
+    <true/>
     <key>StartInterval</key>
-    <integer>60</integer>
+    <integer>120</integer>
   </dict>
 </plist>
