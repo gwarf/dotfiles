@@ -81,7 +81,8 @@ Plug 'plasticboy/vim-markdown'
 " SilverSearch plugin
 Plug 'rking/ag.vim'
 " Syntax validation
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 " git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -365,6 +366,7 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_python_checkers=['flake8']
 "let g:syntastic_python_checkers=['flake8', 'py3kwarn']
 let g:syntastic_rst_checkers = ['rstcheck']
+let g:syntastic_yaml_checkers = ['yamllint']
 
 " ruby version
 let g:ruby_host_prog = 'rvm ruby-2.6.0@neovim do neovim-ruby-host'
