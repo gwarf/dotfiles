@@ -6,7 +6,13 @@ mailboxes Inbox
 
 # Copy sent message to this folder
 
-set sendmail = "/usr/local/bin/msmtp -a egi"
+# Send directly using msmtp
+#set sendmail = "/usr/local/bin/msmtp -a egi"
+# Queue mail if offline
+# /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
+set sendmail = "msptpq"
+# Wait for retrun code
+set sendmail_wait = -1
 # Using neomutt's SMTP feature
 # set smtp_authenticators = 'gssapi:login'
 # set smtp_url = "smtp://baptiste.grenier@egi.eu@smtp.gmail.com:587/"
@@ -92,7 +98,7 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 macro index \cf "<shell-escape>mbsync -a<enter>"
 
 # Querying Google contacts
-set query_command="goobook query %s"
+set query_command="lbdbq %s"
 
 # Google-like key bindings
 macro index,pager A "<save-message>+All<enter>" "move message to the archive"
