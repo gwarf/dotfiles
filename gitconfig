@@ -63,7 +63,6 @@
   l = log -n 1 -p
   last = cat-file commit HEAD
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lgn = "!f() { git log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only ; } ; f"
   log1 = log --pretty=oneline --abbrev-commit --decorate
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
