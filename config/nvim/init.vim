@@ -423,6 +423,15 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
+" enmable email completeion
+call deoplete#custom#source('omni', 'functions', {
+  \ 'mail': 'mailcomplete#Complete',
+  \})
+
+call deoplete#custom#var('omni', 'input_patterns', {
+   \ 'mail': '\w+',
+   \})
+
 " <C-h>, <BS>: close popup and delete backword char
 "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 "inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
