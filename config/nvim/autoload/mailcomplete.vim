@@ -16,11 +16,6 @@ function! mailcomplete#Complete(findstart, base)
     else
         let trim="sed '/^$/d' | cut -f1,2"
         let fmt='awk ''BEGIN{FS=OFS="\t"}{printf "%s <%s>\n", $2, $1}'''
-        if exists("g:goobookrc")
-            let goobook="goobook -c " . g:goobookrc
-        else
-            let goobook="goobook"
-        endif
-        return split(system(goobook . ' query ' . a:base . '|' . trim . '|' . fmt ), '\n')
+        return split(system('lbdbq ' .  a:base . '|' . trim . '|' . fmt ), '\n')
     endif
 endfunc
