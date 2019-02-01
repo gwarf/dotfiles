@@ -4,7 +4,7 @@ After=network.target network-online.target dbus.socket
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/baptiste/GDrive/baptiste@bapt.name
+WorkingDirectory=/home/baptiste/GDrive
 ExecStart=/usr/bin/grive
 StandardOutput=syslog
 StandardError=syslog
