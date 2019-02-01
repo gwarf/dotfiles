@@ -1,0 +1,19 @@
+defaults
+logfile ~/.msmtp.log
+auth on
+tls on
+tls_starttls on
+# From openssl from homebrew
+tls_trust_file /usr/local/etc/openssl/cert.pem
+
+account egi
+host smtp.gmail.com
+port 587
+protocol smtp
+from baptiste.grenier@egi.eu
+user baptiste.grenier@egi.eu
+# https://support.google.com/accounts/answer/185833?hl=en
+# Set passwod on OSX: security add-generic-password -a baptiste.grenier@egi.eu -s smtp.gmail.com -w
+passwordeval security find-generic-password -w -s smtp.gmail.com -a baptiste.grenier@egi.eu
+
+account default : egi

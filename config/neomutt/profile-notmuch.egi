@@ -1,4 +1,7 @@
-# Mutt sender profile: egi
+# Mutt sender profile: egi + notmuch
+
+# notmuch
+# source ~/.config/neomutt/notmuch
 
 # Filter email waiting an answer and missing it
 # A special nofeedback or answered tag might be added by afew for this

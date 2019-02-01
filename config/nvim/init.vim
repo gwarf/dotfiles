@@ -15,17 +15,18 @@ call plug#begin('~/.vim/plugged')
 
 " SuperTab
 " Plug 'ervandew/supertab'
-" Snippets
-Plug 'SirVer/ultisnips'
 " Completion
-if has('nvim')	
+if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
 else
-  Plug 'Shougodeoplete.nvim'
-  Plug 'roxma/vim-yarp'
-  Plug 'roxma/im-hug-neovim-rpc'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
+" Snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 " Theme
 " Colorscheme
 if has('nvim')
@@ -33,11 +34,14 @@ if has('nvim')
 else
   Plug 'altercation/vim-colors-solarized'
 endif
+" one colorscheme
 " Plug 'rakr/vim-one'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+" Snippets
+Plug 'honza/vim-snippets'
 " Airline statusbar
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " CheckAttach
 Plug 'chrisbra/CheckAttach'
@@ -47,9 +51,9 @@ Plug 'editorconfig/editorconfig-vim'
 " Notes taking
 " Plug 'fmoralesc/vim-pad'
 Plug 'vimoutliner/vimoutliner'
-"Plug 'vim-pandoc/vim-pandoc'
-"Plug 'vim-pandoc/vim-pandoc-after'
-"Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-after'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'dhruvasagar/vim-table-mode'
 " XXX disabled, evaluating to vimwiki
 " Plug 'xolox/vim-notes'
@@ -58,8 +62,6 @@ Plug 'xolox/vim-shell'
 " Plug 'jceb/vim-orgmode'
 " Tabular alignement
 Plug 'godlygeek/tabular'
-" Snippets for UltiSnipps
-Plug 'honza/vim-snippets'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Preview registers
@@ -76,12 +78,14 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
-" SilverSearcy plugin
+" SilverSearch plugin
 Plug 'rking/ag.vim'
 " Syntax validation
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 " git integration
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 " gitk for Vim.
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 " Sensible default settings
@@ -92,6 +96,7 @@ endif
 Plug 'tpope/vim-speeddating'
 " Easy change of surrounding stuff (tags, quotes...)
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 " Hilight utf8-related trolls
 Plug 'vim-utils/vim-troll-stopper'
 Plug 'vim-scripts/utl.vim'
@@ -99,25 +104,34 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim'
-"Plug 'vim-scripts/AutoClose'
+Plug 'vim-scripts/AutoClose'
 Plug 'vim-scripts/spec.vim'
 Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vimperator/vimperator.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'mrtazz/simplenote.vim'
+"Plug 'mrtazz/simplenote.vim'
+Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
 Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
-Plug 'vimwiki/vimwiki'
-Plug 'teranex/vimwiki-tasks'
 Plug 'mbbill/undotree'
+" Could break airline bar if no proper font is configured
+" Works with nerd fonts
+" brew tap caskroom/fonts
+" brew install font-hack-nerd-font
+" or font-meslo-nerd-font font-sourcecodepro-nerd-font
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Fancy start screen
+Plug 'mhinz/vim-startify'
 " Display available commands
 " https://github.com/hecal3/vim-leader-guide
 Plug 'hecal3/vim-leader-guide'
@@ -133,6 +147,28 @@ if !has('nvim')
 endif
 
 " Theme
+set background=dark
+if has('nvim')
+  " Use true colors
+  " https://www.cyfyifanchen.com/neovim-true-color/
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  "set termguicolors
+  let g:solarized_use16 = 1
+  colorscheme solarized8_flat
+  " colorscheme one
+else
+  colorscheme solarized
+endif
+
+if !has('nvim')
+  " For devicons on vim
+  set encoding=UTF-8
+endif
+
+" Pyenv with neovim on Mac OS X
+" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv
+let g:python_host_prog = '/Users/baptiste/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/baptiste/.pyenv/versions/neovim3/bin/python'
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -150,19 +186,6 @@ endif
 "     set termguicolors
 "   endif
 " endif
-
-set background=dark
-if has('nvim')
-  " Use true colors
-  " https://www.cyfyifanchen.com/neovim-true-color/
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  " set termguicolors
-  let g:solarized_use16 = 1
-  colorscheme solarized8_flat
-  " colorscheme one
-else
-  colorscheme solarized
-endif
 
 " Create new window below current one.
 set splitbelow
@@ -255,8 +278,18 @@ endif
 " *-(specific|related) options
 """"""""""""""""""""""""""""""
 
+" Set spell language
+set spelllang=en,fr
+" Enable completion of spell
+set complete+=kspell
+
 " Mail edition for mutt
-autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set ft=mail
+" :help fo-table
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell noci ft=mail et fo=tcqnaw
+
+" Spelling for markdown and ReStructuredText
+" XXX testing using ftplugin for this
+" autocmd FileType markdown,rst set spell spelllang=en,fr complete+=kspell
 
 """"""""""""""""""
 " Custom functions
@@ -276,7 +309,17 @@ autocmd BufReadPost * silent! call s:CursorOldPosition()
 " Plugins configuration
 """""""""""""""""""""""
 
-let g:powerline_pycmd='py3'
+" Auto start nedtree and startify
+" https://github.com/scrooloose/nerdtree
+" autocmd vimenter * NERDTree
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   NERDTree
+            \ |   wincmd w
+            \ | endif
+map <C-n> :NERDTreeToggle<CR>
+
 " vim-airline
 let g:airline_theme='ravenpower'
 let g:airline_powerline_fonts = 1
@@ -302,24 +345,31 @@ let g:fzf_action = {
 " Syntastic
 " https://github.com/scrooloose/syntastic
 " Always populate location list with errors
-"let g:syntastic_always_populate_loc_list = 1
-" Automatically close error window
-"let g:syntastic_auto_loc_list = 2
+let g:syntastic_always_populate_loc_list = 1
+" Automatically close error window when no errors are left
+let g:syntastic_auto_loc_list = 1
 " Jump to the first error detected
-"let g:syntastic_auto_jump = 2
-"let g:syntastic_check_on_open = 0
+let g:syntastic_auto_jump = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
 "let g:syntastic_puppet_puppetlint_quiet_messages = { "regex": "line has more than 80 characters" }
 "let g:syntastic_puppet_puppetlint_args = "--no-class_inherits_from_params_class-check"
 
-" Let's code with python 2
 " Use virtualenv for installing/conifugring python stuff
 "let g:syntastic_python_python_exec = '/usr/bin/python2'
 "let g:syntastic_python_flake8_exec = 'flake8-python2'
 " https://github.com/liamcurry/py3kwarn
 " https://docs.python.org/3/whatsnew/3.0.html
 " https://docs.python.org/2.6/library/2to3.html#fixers
-"let g:syntastic_python_checkers=['flake8']
+" To be installed using pip in python venv used by neovim
+let g:syntastic_python_checkers=['flake8']
 "let g:syntastic_python_checkers=['flake8', 'py3kwarn']
+let g:syntastic_rst_checkers = ['rstcheck']
+let g:syntastic_yaml_checkers = ['yamllint']
+
+" ruby version
+let g:ruby_host_prog = 'rvm ruby-2.6.0@neovim do neovim-ruby-host'
 
 " The Silver Searcher
 " http://robots.thoughtbot.com/faster-grepping-in-vim
@@ -360,67 +410,56 @@ let g:snips_email='baptiste.grenier@egi.eu'
 let g:snips_author='Baptiste Grenier'
 let g:snips_author_initials='BG'
 let g:snips_company='EGI Foundation'
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-" Custom snippets
-let g:UltiSnipsSnippetsDir        = '~/.vim/UltiSnips/'
 
-" Goal
 " depolete: use tab/s-tab or c-n/c-p to navigate options
-" UltiSnips: use tab to trigger snippet
-let g:UltiSnipsExpandTrigger       ="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<cr>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"let g:UltiSnipsListSnippets="<c-e>"
-
-"function! g:UltiSnips_Complete()
-"    call UltiSnips#ExpandSnippet()
-"    if g:ulti_expand_res == 0
-"        if pumvisible()
-"            return "\<C-n>"
-"        else
-"            call UltiSnips#JumpForwards()
-"            if g:ulti_jump_forwards_res == 0
-"               return "\<TAB>"
-"            endif
-"        endif
-"    endif
-"    return ""
-"endfunction
-"
-""au BufEnter,BufRead,BufNewFile,Buf * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"au InsertEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-"" this mapping Enter key to <C-y> to chose the current highlight item
-"" and close the selection list, same as other IDEs.
-"" CONFLICT with some plugins like tpope/Endwise
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use deoplete
-" Debug run :CheckHealth
+" Debug run :checkhealth
 let g:deoplete#enable_at_startup = 1
-" https://www.gregjs.com/vim/2016/configuring-the-deoplete-asynchronous-keyword-completion-plugin-with-tern-for-vim/
-" if !exists('g:deoplete#omni#input_patterns')
-"   let g:deoplete#omni#input_patterns = {}
-" endif
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+" enmable email completeion
+call deoplete#custom#source('omni', 'functions', {
+  \ 'mail': 'mailcomplete#Complete',
+  \})
+
+call deoplete#custom#var('omni', 'input_patterns', {
+   \ 'mail': '\w+',
+   \})
 
 " <C-h>, <BS>: close popup and delete backword char
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" <TAB>: completion
+" inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" Taken from https://github.com/Shougo/shougo-s-github/blob/84071518e4238cc8b816cdb97ebc00c2aedda69f/vim/rc/plugins/deoplete.rc.vim
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" <S-TAB>: completion back
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <expr><C-g>       deoplete#refresh()
+inoremap <expr><C-e>       deoplete#cancel_popup()
+inoremap <silent><expr><C-l>       deoplete#complete_common_string()
 
 " <CR>: close popup and save indent
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
+  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
 endfunction
-
-" <TAB>: completion
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Notes using vim-pad
 let g:pad#dir = "~/GoogleDrive/notes"
@@ -447,7 +486,10 @@ let g:checkattach_once = 'y'
 " Said required to fix editorconfig with Fugitive
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
-source ~/.simplenoterc
+" Vertical diff
+set diffopt+=vertical
+
+" source ~/.simplenoterc
 
 " Fix arrow keys with 256 color term
 set t_ku=OA

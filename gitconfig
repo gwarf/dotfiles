@@ -26,11 +26,16 @@
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol,space-before-tab
   autocrlf = input
   eol = lf
+  excludesfile = ~/.gitignore
+
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 
 [merge]
+  tool = fugitive
   #tool = diffuse
   #tool = vimdiff
-  tool = meld
+  #tool = meld
 
 #[sendemail]
 #  smtpserver = mail.jukie.net
@@ -39,7 +44,6 @@
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
   amend = commit --amend -C HEAD
   br = branch
-  case = !sh -c 'exec /home/oxygen/bart/work/git-case/git-case.git/git-case-$0 ${0+"$@"}'
   cat = -p cat-file -p
   cds = !git ds --cached
   checkoutnext = !git checkout `git findnext`
@@ -58,7 +62,6 @@
   fp = format-patch
   l = log -n 1 -p
   last = cat-file commit HEAD
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   lgn = "!f() { git log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --date=relative $@ | git name-rev --stdin --name-only ; } ; f"
   log1 = log --pretty=oneline --abbrev-commit --decorate
