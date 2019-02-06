@@ -1,0 +1,9 @@
+document/pdf; ~/.config/neomutt/view_attachment %s -
+application/octet-stream; ~/.config/neomutt/view_attachment %s -
+mime_lookup application/octet-stream
+video/*; ~/.config/neomutt/view_attachment %s -
+image/*; ~/.config/neomutt/view_attachment %s -
+application/*; ~/.config/neomutt/view_attachment %s -
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/calendar; ~/.config/neomutt/dump-ical.py %s; copiousoutput;
+# text/html; ~/.config/neomutt/view_attachment %s html
