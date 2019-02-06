@@ -90,8 +90,7 @@
   mergeoptions = --no-commit
 
 [push]
-  default = simple
-  #default = tracking
+  default = current
 
 [pack]
   threads = 4
