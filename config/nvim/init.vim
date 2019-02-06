@@ -24,6 +24,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'SevereOverfl0w/deoplete-github'
 " Snippets
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -432,6 +433,13 @@ call deoplete#custom#var('omni', 'input_patterns', {
    \ 'mail': '\w+',
    \})
 
+let g:deoplete#sources = {}
+let g:deoplete#sources.gitcommit=['github']
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.gitcommit = '.+'
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.gitcommit = '.+'
+
 " <C-h>, <BS>: close popup and delete backword char
 "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 "inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
@@ -460,6 +468,16 @@ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
   return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
 endfunction
+
+" ale
+let g:ale_completion_enabled = 1
+" let g:ale_fix_on_save = 1
+
+let g:ale_fixers = {
+\   'json': ['prettier'],
+\   'markdown': ['prettier'],
+\   'yaml': ['prettier'],
+\}
 
 " Notes using vim-pad
 let g:pad#dir = "~/GoogleDrive/notes"
