@@ -10,7 +10,7 @@ mailboxes Inbox
 #set sendmail = "/usr/local/bin/msmtp -a egi"
 # Queue mail if offline
 # /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
-set sendmail = "msptpq"
+set sendmail = "msmtpq"
 # Wait for retrun code
 set sendmail_wait = -1
 # Using neomutt's SMTP feature
