@@ -30,6 +30,6 @@ auto_view application/octet-stream
 auto_view text/x-vcard
 auto_view text/enriched
 
-alternative_order text/plain text/enriched text/html
+alternative_order text/calendar text/plain text/enriched text/html
 
 # vim: syntax=neomuttrc:
