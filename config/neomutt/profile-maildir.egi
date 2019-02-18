@@ -65,13 +65,14 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys init
 # Import DigiCert root
 # /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
-# Import certificate, key and DigiCert intermediate certificate
 # Export cert from p12
 # openssl pkcs12 -in path.p12 -out usercert.pem -clcerts -nokeys
 # Export key from p12
 # openssl pkcs12 -in path.p12 -out userkey.pem -nocerts
 # Export passwordless key from p12
 # openssl pkcs12 -in path.p12 -out userkey-nopass.pem -nocerts -nodes
+# Import certificate, key and DigiCert intermediate certificate
+# TODO check smime_keys add_p12 to use the p12 directly
 # /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userkey.pem-new usercert.pem-new baptiste_grenier/DigiCertCA.crt
 
 # To be configured according to
