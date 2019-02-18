@@ -4,6 +4,7 @@ mime_lookup application/octet-stream
 video/*; ~/.config/neomutt/view_attachment %s -
 image/*; ~/.config/neomutt/view_attachment %s -
 application/*; ~/.config/neomutt/view_attachment %s -
-text/html; w3m -I %{charset} -T text/html; copiousoutput;
+# View file in W3M, use print to view them in default browser
+text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = open %s
 text/calendar; ~/.config/neomutt/dump-ical.py %s; copiousoutput;
 # text/html; ~/.config/neomutt/view_attachment %s html
