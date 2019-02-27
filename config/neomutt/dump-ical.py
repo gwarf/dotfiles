@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# https://github.com/simonjbeaumont/.dotfiles/blob/ce081a65/mutt/dump-ical.py
 
 import sys
 import warnings
@@ -17,12 +18,16 @@ def get_invitation_from_path(path):
 
 
 def person_string(c):
-    return "%s %s" % (c.params['CN'][0], "<%s>" % c.value.split(':')[1])
+    if 'CN' in c.params:
+        person = "%s %s" % (c.params['CN'][0], "<%s>" % c.value.split(':')[1])
+    else:
+        person = "<%s>" % c.value.split(':')[1]
+    return person
 
 
 def when_str_of_start_end(s, e):
     date_format = "%a, %d %b %Y at %H:%M"
-    until_format = "%H:%M" if s.date() == e.date() else date_format
+    until_format = "%H:%M" if s == e else date_format
     return "%s -- %s" % (s.strftime(date_format), e.strftime(until_format))
 
 
@@ -38,14 +43,14 @@ def pretty_print_invitation(invitation):
     print("="*70)
     print("MEETING INVITATION".center(70))
     print("="*70)
-    print("Event:\n\t%s" % title.encode('utf-8'))
-    print("Organiser:\n\t%s" % person_string(org).encode('utf-8'))
+    print("Event:\n\t%s" % title)
+    print("Organiser:\n\t%s" % person_string(org))
     print("Invitees:")
     for i in invitees:
-        print("\t%s" % person_string(i).encode('utf-8'))
-    print("When:\n\t%s" % when_str_of_start_end(start, end).encode('utf-8'))
-    print("Location:\n\t%s" % location.encode('utf-8'))
-    print("---\n%s---" % description.encode('utf-8'))
+        print("\t%s" % person_string(i))
+    print("When:\n\t%s" % when_str_of_start_end(start, end))
+    print("Location:\n\t%s" % location)
+    print("---\n%s---" % description)
 
 
 if __name__ == "__main__":
