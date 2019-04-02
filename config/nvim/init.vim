@@ -4,14 +4,14 @@
 "
 " https://github.com/junegunn/vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 filetype off " required for vundle setup
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " SuperTab
 " Plug 'ervandew/supertab'
@@ -19,6 +19,8 @@ call plug#begin('~/.vim/plugged')
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
+  " Possible replacement for deoplete
+  " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -120,7 +122,7 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
-Plug 'blindFS/vim-taskwarrior'
+" Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
 Plug 'mbbill/undotree'
 " Could break airline bar if no proper font is configured
@@ -530,7 +532,7 @@ vnoremap k gk
 let g:is_posix=1
 
 " vim-taskwarrior
-nnoremap <leader>t :tabnew <bar> :TW<CR>
+" nnoremap <leader>t :tabnew <bar> :TW<CR>
 
 " Autocorrect in text and markdown files
 
