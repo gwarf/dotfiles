@@ -106,6 +106,8 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 
 # Querying Google contacts
 set query_command="lbdbq %s"
+set alias_file = "~/.config/neomutt/aliases"
+# source "~/.config/neomutt/aliases"
 
 # Google-like key bindings
 macro index,pager A "<save-message>+All<enter>" "move message to the archive"
