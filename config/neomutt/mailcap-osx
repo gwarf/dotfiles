@@ -8,3 +8,4 @@ application/*; ~/.config/neomutt/view_attachment %s -
 text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = open %s
 text/calendar; ~/.config/neomutt/dump-ical.py %s; copiousoutput;
 # text/html; ~/.config/neomutt/view_attachment %s html
+text/csv       ; cat %s                                        ; copiousoutput

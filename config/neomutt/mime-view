@@ -29,6 +29,7 @@ auto_view application/pgp-keys
 auto_view application/octet-stream
 auto_view text/x-vcard
 auto_view text/enriched
+auto_view text/csv
 
 alternative_order text/calendar text/plain text/enriched text/html
 
