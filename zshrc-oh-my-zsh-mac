@@ -69,7 +69,7 @@ export ZSH_TMUX_AUTOSTART=false
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   brew
-  colored-man
+  colored-man-pages
   colorize
   common-aliases
   docker
