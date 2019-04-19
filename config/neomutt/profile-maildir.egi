@@ -105,8 +105,14 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 macro index \cf "<shell-escape>mbsync -a<enter>"
 
 # Querying Google contacts
-set query_command="lbdbq %s"
-set alias_file = "~/.config/neomutt/aliases"
+# set query_command="lbdbq %s"
+# Query email addreses in the notmuch database
+set query_command = "notmuch address from:%s"
+set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+
+source ~/.config/neomutt/notmuch
+
+# set alias_file = "~/.config/neomutt/aliases"
 # source "~/.config/neomutt/aliases"
 
 # Google-like key bindings
