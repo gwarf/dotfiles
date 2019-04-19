@@ -117,5 +117,11 @@
 [hub]
   protocol = ssh
 
+[commit]
+    gpgsign = false
+
+[gpg]
+    program = gpg
+
 [include]
     path = .gitconfig.user
