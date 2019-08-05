@@ -11,8 +11,8 @@ mailboxes Inbox
 # Queue mail if offline
 # /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
 set sendmail = "msmtpq"
-# Wait for retrun code
-set sendmail_wait = -1
+# Don't wait for retrun code
+# set sendmail_wait = -1
 # Using neomutt's SMTP feature
 # set smtp_authenticators = 'gssapi:login'
 # set smtp_url = "smtp://baptiste.grenier@egi.eu@smtp.gmail.com:587/"
@@ -79,7 +79,7 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # /usr/local/Cellar/neomutt/20180716/etc
 # and used with
 # /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys
-source /usr/local/Cellar/neomutt/20180716/share/doc/neomutt/samples/smime.rc
+source /usr/local/Cellar/neomutt/20180716_1/share/doc/neomutt/samples/smime.rc
 
 set crypt_use_gpgme = no
 set smime_is_default
@@ -107,9 +107,17 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 # Querying Google contacts
 # set query_command="lbdbq %s"
 # Query email addreses in the notmuch database
-set query_command = "notmuch address from:%s"
-set query_format="%4c %t %-70.70a %-70.70n %?e?(%e)?"
+#set query_command = "notmuch address from:%s"
+# All addresses matching the string, way to large
+# set query_command = "notmuch address %s | grep -i %s"
+# People that I've alrady written to, may contain non related people
+# set query_command = "notmuch address --output sender from:baptiste.grenier@egi.eu to:*%s* | grep -i %s"
+# People that wrote to me
+# set query_command = "notmuch address --output sender from:*%s* to:baptiste.grenier@egi.eu"
+set query_command = "echo && notmuch address --output sender to:baptiste.grenier@egi.eu from:'*%s*' or --output recipients to:'*%s*' from:baptiste.grenier@egi.eu"
+set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
 
+# XXX disabled while testing mutt
 source ~/.config/neomutt/notmuch
 
 # set alias_file = "~/.config/neomutt/aliases"
