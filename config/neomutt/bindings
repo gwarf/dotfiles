@@ -36,13 +36,15 @@ bind index zb current-bottom
 bind index { top-page
 bind index } bottom-page
 bind index N toggle-new
+bind index <Right> display-message
 
 bind index,pager \t  next-unread
 bind index,pager ,\t previous-unread
 
 # Limit view to current thread
 # http://www.neomutt.org/feature/limit-current-thread/
-bind index <esc>L limit-current-thread
+# XXX Disabled whiled testing mutt
+# bind index <esc>L limit-current-thread
 
 # Fetching mail
 # macro index \cf "<shell-escape>offlineimap -o<enter>"
