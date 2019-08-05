@@ -1,9 +1,10 @@
 #
-# sample mime.types
+# mime.types
 #
 
 application/andrew-inset	ez
 application/excel		xls
+application/json			json
 application/octet-stream	bin
 application/oda			oda
 application/pdf			pdf
@@ -109,4 +110,4 @@ video/x-msvideo			avi
 video/x-sgi-movie		movie
 
 x-world/x-vrml			vrm vrml wrl
-application/vnd.openxmlformats-officedocument.presentationml.presentation pptx
+application/vnd.openxmlformats-officedocument.presentationml.presentation			pptx
