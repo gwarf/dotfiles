@@ -145,6 +145,9 @@ source ~/.config/neomutt/headers
 
 # MIME-Viewer
 source ~/.config/neomutt/mime-view
+# XXX Configure automatic querying of mime types
+# set mime_type_query_command = "file --mime-type --brief"
+# set mime_type_query_first = no
 
 # Disaplay filter
 #set display_filter=/home/baptiste/.mutt/mutt_display_filter
