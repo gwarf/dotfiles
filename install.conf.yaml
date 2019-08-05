@@ -44,11 +44,11 @@
     ~/.mbsyncrc: mbsyncrc
     ~/.taskrc: taskrc
     ~/.yaourtrc: yaourtrc
-    ~/.zlogin: zlogin
-    ~/.zlogout: zlogout
-    ~/.zprofile: zprofile
-    ~/.zshenv: zshenv
-    ~/.zshrc: zshrc
+    ~/.zlogin: zsh/zlogin
+    ~/.zlogout: zsh/zlogout
+    ~/.zprofile: zsh/zprofile
+    ~/.zshenv: zsh/zshenv
+    ~/.zshrc: zsh/zshrc
     ~/Mail/.notmuch/hooks: notmuch/hooks
     ~/bin/add_contact: bin/add_contact
     ~/bin/add_event: bin/add_event
