@@ -52,14 +52,16 @@ zplug "zdharma/fast-syntax-highlighting"
 # https://github.com/supercrabtree/k
 zplug "supercrabtree/k"
 
-# Load theme file
-# zplug 'dracula/zsh', as:theme
-# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-
 # Async for zsh, used by pure
 zplug "mafredri/zsh-async", from:github, defer:0
-# Pure theme
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+# Load theme file
+# Powerlevel9k: https://github.com/Powerlevel9k/powerlevel9k
+# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+# Bullet train: https://github.com/caiogondim/bullet-train.zsh
+zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
+# Pure theme: https://github.com/sindresorhus/pure
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 zplug "zlsun/solarized-man"
 
@@ -187,6 +189,7 @@ fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=128"
 
 # Make sure prompt is able to be generated properly.
+# Required for themes like bullet-train
 setopt prompt_subst
 
 # Executing directories will open them
