@@ -114,7 +114,8 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 # set query_command = "notmuch address --output sender from:baptiste.grenier@egi.eu to:*%s* | grep -i %s"
 # People that wrote to me
 # set query_command = "notmuch address --output sender from:*%s* to:baptiste.grenier@egi.eu"
-set query_command = "echo && notmuch address --output sender to:baptiste.grenier@egi.eu from:'*%s*' or --output recipients to:'*%s*' from:baptiste.grenier@egi.eu"
+# set query_command = "echo && notmuch address --output sender to:baptiste.grenier@egi.eu from:'*%s*' or --output recipients to:'*%s*' from:baptiste.grenier@egi.eu"
+set query_command = "echo && notmuch address --output sender from:'*%s*' or --output recipients to:'*%s*'"
 set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
 
 # XXX disabled while testing mutt
