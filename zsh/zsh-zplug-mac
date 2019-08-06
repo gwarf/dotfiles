@@ -73,6 +73,9 @@ zplug "modules/history", from:prezto
 # https://github.com/sorin-ionescu/prezto/tree/master/modules/tmux
 zplug "modules/tmux", from:prezto
 
+# Add hub wrapper
+zplug "plugins/github", from:oh-my-zsh
+
 zplug "plugins/shrink-path", from:oh-my-zsh
 
 zplug "zsh-users/zsh-history-substring-search", defer:2
