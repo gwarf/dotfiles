@@ -59,7 +59,6 @@ ENABLE_CORRECTION="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # tmux conf
-# XXX disabled as it breaks launchin neovim for Oni
 export ZSH_TMUX_AUTOSTART=true
 # export ZSH_TMUX_ITERM2=true
 
@@ -129,8 +128,7 @@ eval "$(pyenv virtualenv-init - zsh)"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 pyenv virtualenvwrapper_lazy
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Manually set your language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
