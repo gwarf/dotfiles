@@ -41,6 +41,10 @@ else
 endif
 " one colorscheme
 " Plug 'rakr/vim-one'
+" Nord colorscheme
+Plug 'arcticicestudio/nord-vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'morhetz/gruvbox'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Snippets
@@ -158,19 +162,40 @@ if !has('nvim')
   runtime plugin/sensible.vim
 endif
 
+" Use true colors
+if (has('termguicolors'))
+  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set t_8f=[38;2;%lu;%lu;%lum
+  set t_8b=[48;2;%lu;%lu;%lum
+  set termguicolors
+endif
+if has('nvim')
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
 " Theme
 set background=dark
-if has('nvim')
-  " Use true colors
-  " https://www.cyfyifanchen.com/neovim-true-color/
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  "set termguicolors
-  let g:solarized_use16 = 1
-  colorscheme solarized8_flat
-  " colorscheme one
-else
-  colorscheme solarized
-endif
+
+colorscheme nord
+" colorscheme one
+" Works nicely with Nord palette
+" colorscheme gruvbox
+" if has('nvim')
+  " let g:solarized_use16 = 1
+  " colorscheme solarized8
+" else
+  " colorscheme solarized
+" endif
+
+" Use a specific colorscheme for vimdiff
+" if &diff
+"   colorscheme evening
+" endif
+
+" Highlight current line
+set cursorline
 
 if !has('nvim')
   " For devicons on vim
@@ -339,7 +364,7 @@ autocmd VimEnter *
 map <C-n> :NERDTreeToggle<CR>
 
 " vim-airline
-let g:airline_theme='ravenpower'
+" let g:airline_theme='ravenpower'
 let g:airline_powerline_fonts = 1
 let g:airline_line_fonts = 1
 " Automatically displays all buffers when there's only one tab open
