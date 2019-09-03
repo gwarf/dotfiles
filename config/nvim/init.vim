@@ -93,7 +93,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'rking/ag.vim'
 " Syntax validation
 " Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 " git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -131,7 +131,6 @@ Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
 "Plug 'mrtazz/simplenote.vim'
-Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
 " Plug 'blindFS/vim-taskwarrior'
@@ -512,13 +511,35 @@ let g:snips_company='EGI Foundation'
 "endfunction
 
 " ale
-let g:ale_completion_enabled = 1
-" let g:ale_fix_on_save = 1
+" Not only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 0
+let g:ale_sign_column_always = 1
+let g:ale_completion_enabled = 0
+let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_on_insert_leave = 1
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 1
+" Show 5 lines of errors (default: 10)
+let g:ale_list_window_size = 5
+
+let g:ale_linters = {
+\   'bash': ['bashate'],
+\}
 
 let g:ale_fixers = {
+\   'javascript': ['eslint'],
 \   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'yaml': ['prettier'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \}
 
 " coc.nvim
@@ -674,10 +695,12 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-" Some useful abreviations
+" Some useful abbreviations
 
 :iab brb Best regards,<enter>Baptiste
 :iab cb Cheers,<enter>Baptiste
+" XXX doesn't seem to work
+:iab cl ---------8<--------8<-------------8<------------8<------------8<----------
 
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
