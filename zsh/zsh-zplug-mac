@@ -156,7 +156,16 @@ zplug "rupa/z", use:"*.sh"
 # Virtualen environement management
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
-# https://github.com/b2arn/zsh-pyenv
+
+zplug 'pyenv/pyenv', as:"command", use:"bin/*"
+
+zplug "pyenv/pyenv-virtualenv", \
+    on:'pyenv/pyenv', \
+    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
+
+zplug "pyenv/pyenv-virtualenvwrapper", \
+    on:'pyenv/pyenv-virtualenv', \
+    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
 
 # asdf: https://github.com/asdf-vm/asdf
 # https://github.com/kiurchv/asdf.plugin.zsh
@@ -167,7 +176,7 @@ zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 # https://github.com/cxreg/smartcd
 # https://github.com/anyenv/anyenv
 
-# prezto configuration 
+# prezto configuration
 
 # prezto/utility
 if zplug check modules/utility; then
@@ -207,9 +216,15 @@ zplug load
 typeset -U path
 path+=/usr/local/sbin
 
-export PATH="$HOME/bin:$PATH"
+PATH="$HOME/bin:$PATH"
+
 # Use coreutils GNU utilities
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+# Manually built neomutt
+PATH="/usr/local/neomutt/20190905_1/bin/:$PATH"
+
+export PATH
 
 # Plugins-specific configuration required after loading them
 
@@ -235,6 +250,11 @@ fi
 if zplug check "romkatv/powerlevel10k"; then
   # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
   [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+fi
+
+if zplug check "pyenv/pyenv"; then
+  export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
+  eval "$(pyenv init -)"
 fi
 
 # ZSH options
@@ -326,4 +346,3 @@ export MAKEOPS='j6'
 if [[ "$OSTYPE" == "darwin"* ]]; then
   stty discard undef
 fi
-
