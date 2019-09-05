@@ -177,6 +177,10 @@ endif
 " Theme
 set background=dark
 
+let g:nord_italic=1
+let g:nord_italic_comments=1
+let g:nord_underline=1
+let g:nord_cursor_line_number_background=0
 colorscheme nord
 " colorscheme one
 " Works nicely with Nord palette
@@ -526,7 +530,7 @@ let g:ale_lint_on_enter = 1
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 1
+let g:ale_keep_list_window_open = 0
 " Show 5 lines of errors (default: 10)
 let g:ale_list_window_size = 5
 
