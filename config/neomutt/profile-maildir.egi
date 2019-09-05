@@ -118,9 +118,6 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 set query_command = "echo && notmuch address --output sender from:'*%s*' or --output recipients to:'*%s*'"
 set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
 
-# XXX disabled while testing mutt
-source ~/.config/neomutt/notmuch
-
 # set alias_file = "~/.config/neomutt/aliases"
 # source "~/.config/neomutt/aliases"
 
