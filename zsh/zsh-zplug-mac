@@ -14,11 +14,6 @@ fi
 # https://github.com/unixorn/awesome-zsh-plugins
 # https://gitlab.yuribugelli.it/yuri/dotfiles/blob/master/zsh/zplug.zsh
 
-# Clashing with forgit, not sure if useful
-# Git aliases
-# zplug "plugins/git",   from:oh-my-zsh
-# https://github.com/unixorn/git-extra-commands
-zplug "unixorn/git-extra-commands"
 
 # Load completion library for those sweet [tab] squares
 # zplug "lib/completion", from:oh-my-zsh
@@ -136,9 +131,14 @@ zplug "junegunn/fzf-bin", \
 
 zplug "so-fancy/diff-so-fancy", as:command
 
+# Clashing with forgit, not sure if useful
+# Git aliases
+# zplug "plugins/git",   from:oh-my-zsh
+# https://github.com/unixorn/git-extra-commands
+zplug "unixorn/git-extra-commands"
+
 # Add hub wrapper
 zplug "plugins/github", from:oh-my-zsh
-zplug "glidenote/hub-zsh-completion"
 # Git completion
 zplug "plugins/gitfast",   from:oh-my-zsh
 
