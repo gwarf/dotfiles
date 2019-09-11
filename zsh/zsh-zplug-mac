@@ -220,11 +220,13 @@ PATH="$HOME/bin:$PATH"
 
 # Use coreutils GNU utilities
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # Manually built neomutt
-PATH="/usr/local/neomutt/20190905_1/bin/:$PATH"
+# XXX broken, very slow movement in the UI
+# PATH="/usr/local/neomutt/20190905_1/bin/:$PATH"
 
-export PATH
+export PATH MANPATH
 
 # Plugins-specific configuration required after loading them
 
