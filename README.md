@@ -5,7 +5,9 @@ dotfiles
 
 My messy dotfiles. WIP of course :)
 
-Managed using [dotbot][dotbot].
+Started to be managed using [dotbot][dotbot], but no mainly managed manually.
+
+Some files or configuration part are Mac OS X specific.
 
 ## Requirements
 
