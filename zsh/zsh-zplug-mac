@@ -226,7 +226,10 @@ MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 # XXX broken, very slow movement in the UI
 # PATH="/usr/local/neomutt/20190905_1/bin/:$PATH"
 
-export PATH MANPATH
+# To allow mu to find mails
+MAILDIR=~/Mail
+
+export PATH MANPATH MAILDIR
 
 # Plugins-specific configuration required after loading them
 
@@ -348,3 +351,5 @@ export MAKEOPS='j6'
 if [[ "$OSTYPE" == "darwin"* ]]; then
   stty discard undef
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

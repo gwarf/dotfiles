@@ -75,6 +75,7 @@ Plug 'robertbasic/vim-hugo-helper'
 Plug 'godlygeek/tabular'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Preview registers
 " Seems to break tabular and completion
 "Plug 'junegunn/vim-peekaboo'
@@ -152,6 +153,8 @@ Plug 'bling/vim-bufferline'
 Plug 'tpope/vim-obsession'
 " Zoom windows using <C-w>-m instead of <c-w>-|, <c-w>-_, and <c-w>-=
 Plug 'dhruvasagar/vim-zoom'
+" mu integration when editing emails in mutt
+Plug 'dbeniamine/vim-mail'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -289,13 +292,15 @@ set directory=$HOME/.vimswap
 
 " Leader key customization
 let mapleader=" "
-let g:maplocalleader = ' '
 map <Space> <Leader>
 " Leader for mappings local to a buffer
 " could be useful to have per-file-type keys like
 " In a ~/.vim/after/ftplugin/{file extension}.vim
 " nnoremap <buffer> <silent> <LocalLeader>b :update|make
+" , is by default for backward seach on line
 let g:maplocalleader = ','
+" \ is safer but less convenient
+"let g:maplocalleader = '\'
 
 nnoremap <Leader>x i
 set showcmd
@@ -447,7 +452,7 @@ nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
 "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
+" nnoremap \ :Ag<SPACE>
 
 " UltiSnips
 let g:snips_author_email='baptiste.grenier@egi.eu'
@@ -538,6 +543,8 @@ let g:ale_linters = {
 \   'bash': ['bashate'],
 \}
 
+" XXX Don't want to remove trailing spaces in emails!
+" See mail ftplugin
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'json': ['prettier'],
@@ -750,7 +757,7 @@ let wiki_home.ext = '.md'
 
 let g:vimwiki_list = [wiki_work, wiki_home]
 
-" Keep using TAb for completion
+" Keep using Tab for completion
 :nmap <Leader>wn <Plug>VimwikiNextLink
 :nmap <Leader>wp <Plug>VimwikiPrevLink
 
@@ -765,5 +772,8 @@ endif
 " Disable folding
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 2
+
+" Complete emails address in every files
+set completefunc=vimmail#contacts#CompleteAddr
 
 " vim:set ft=vim et sw=2:

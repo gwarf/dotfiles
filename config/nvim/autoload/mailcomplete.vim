@@ -16,6 +16,9 @@ function! mailcomplete#Complete(findstart, base)
     else
         let trim="sed '/^$/d' | cut -f1,2"
         let fmt='awk ''BEGIN{FS=OFS="\t"}{printf "%s <%s>\n", $2, $1}'''
-        return split(system('lbdbq ' .  a:base . '|' . trim . '|' . fmt ), '\n')
+        " Using lbdq
+        " return split(system('lbdbq ' .  a:base . '|' . trim . '|' . fmt ), '\n')
+        " Using mu
+        return split(system('mu cfind --format=mutt-ab ' .  a:base . '|' . trim . '|' . fmt ), '\n')
     endif
 endfunc
