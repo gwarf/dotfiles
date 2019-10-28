@@ -17,5 +17,8 @@ fi
 # Retreive emails
 mbsync -aV
 
-# Index them
+# Index them with Notmuch
 notmuch new
+
+# Index them with mu
+mu index
