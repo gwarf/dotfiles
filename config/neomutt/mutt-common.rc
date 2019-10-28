@@ -163,6 +163,9 @@ source ~/.config/neomutt/maildir
 # sidebar
 source ~/.config/neomutt/sidebar
 
+# Source mu configuration
+source ~/.config/neomutt/mu
+
 set realname = "Baptiste Grenier"
 
 # Source EGI profile

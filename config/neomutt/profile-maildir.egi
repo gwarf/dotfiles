@@ -62,9 +62,9 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # gpgsm --import ~/GoogleDrive/Personal\ information/baptiste-grenier-certificate-2017-04-14.p12
 # On Mac OS X
 # Initialize smime store
-# /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys init
+# /usr/local/opt/neomutt/libexec/neomutt/smime_keys init
 # Import DigiCert root
-# /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
+# /usr/local/opt/neomutt/libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
 # Export cert from p12
 # openssl pkcs12 -in path.p12 -out usercert.pem -clcerts -nokeys
 # Export key from p12
@@ -73,13 +73,11 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 # openssl pkcs12 -in path.p12 -out userkey-nopass.pem -nocerts -nodes
 # Import certificate, key and DigiCert intermediate certificate
 # TODO check smime_keys add_p12 to use the p12 directly
-# /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userkey.pem-new usercert.pem-new baptiste_grenier/DigiCertCA.crt
+# /usr/local/opt/neomutt/libexec/neomutt/smime_keys add_chain userkey.pem-new usercert.pem-new baptiste_grenier/DigiCertCA.crt
 
-# To be configured according to
-# /usr/local/Cellar/neomutt/20180716/etc
-# and used with
-# /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys
-source /usr/local/Cellar/neomutt/20180716_1/share/doc/neomutt/samples/smime.rc
+# To be configured according to # /usr/local/opt/neomutt/etc
+# and used with # /usr/local/opt/neomutt/libexec/neomutt/smime_keys
+source /usr/local/opt/neomutt/share/doc/neomutt/samples/smime.rc
 
 set crypt_use_gpgme = no
 set smime_is_default
@@ -115,8 +113,12 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 # People that wrote to me
 # set query_command = "notmuch address --output sender from:*%s* to:baptiste.grenier@egi.eu"
 # set query_command = "echo && notmuch address --output sender to:baptiste.grenier@egi.eu from:'*%s*' or --output recipients to:'*%s*' from:baptiste.grenier@egi.eu"
-set query_command = "echo && notmuch address --output sender from:'*%s*' or --output recipients to:'*%s*'"
+# set query_command = "echo && notmuch address --output sender from:'*%s*' or --output recipients to:'*%s*'"
+
 set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
+
+# looking up addresses with mu cfind
+set query_command="mu cfind --format=mutt-ab '%s'"
 
 # set alias_file = "~/.config/neomutt/aliases"
 # source "~/.config/neomutt/aliases"
