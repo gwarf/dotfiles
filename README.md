@@ -5,9 +5,9 @@ dotfiles
 
 My messy dotfiles. WIP of course :)
 
-Started to be managed using [dotbot][dotbot], but no mainly managed manually.
+Used to be managed using [dotbot][dotbot], but now mainly managed manually.
 
-Some files or configuration part are Mac OS X specific.
+Some files or configuration parts are Mac OS X specific.
 
 ## Requirements
 
@@ -27,5 +27,7 @@ required to update the URL in the ```.git/config``` file:
 [remote "origin"]
   url = git@github.com:gwarf/dotfiles.git
 ```
+
+## References
 
 [dotbot]: https://github.com/anishathalye/dotbot/
