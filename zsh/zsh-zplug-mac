@@ -115,7 +115,8 @@ export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_HYPHEN_ARG=_
 # Run k when entering a directory
-export ENHANCD_HOOK_AFTER_CD=k
+# XXX k is too slow, fallback to ls
+export ENHANCD_HOOK_AFTER_CD=ls
 
 zplug "marzocchi/zsh-notify"
 
