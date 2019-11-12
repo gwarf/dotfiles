@@ -47,6 +47,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'mechatroner/rainbow_csv'
 " Snippets
 Plug 'honza/vim-snippets'
 " Airline statusbar
