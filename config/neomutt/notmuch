@@ -181,8 +181,8 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 macro index a "<limit>all\n" "show all messages (undo limit)"
 
 # macros to invoke a profile
-macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
-macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
+macro index <F8> ":source ~/.config/neomutt/profile-maildir.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
+macro index <F9> ":source ~/.config/neomutt/profile-maildir.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
 
 ## Prefix-based bindings
 
