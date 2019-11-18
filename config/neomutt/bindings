@@ -70,14 +70,14 @@ bind index,pager g noop
 # macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
 # macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
 
-# macro compose <F8> "<enter-command>source ~/.config/neomutt/profile.egi<enter><edit-from>\
-#   <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\
-#   set editor='chsig ~/.config/neomutt/signature-egi'<enter><edit-headers><enter>" \
-#   "Load profile: egi"
-# macro compose <F9> "<enter-command>source ~/.config/neomutt/profile.perso<enter><edit-from>\
-#   <kill-line>Baptiste Grenier <baptiste@bapt.name><enter><enter-command>\
-#   set editor='chsig ~/.config/neomutt/signature-perso'<enter><edit-headers><enter>" \
-#   "Load profile: perso"
+macro compose <F8> "<enter-command>source ~/.config/neomutt/profile-maildir.egi<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\
+  set editor='chsig ~/.config/neomutt/signature-egi'<enter><edit-headers><enter>" \
+  "Load profile: egi"
+macro compose <F9> "<enter-command>source ~/.config/neomutt/profile-maildir.perso<enter><edit-from>\
+  <kill-line>Baptiste Grenier <baptiste@bapt.name><enter><enter-command>\
+  set editor='chsig ~/.config/neomutt/signature-perso'<enter><edit-headers><enter>" \
+  "Load profile: perso"
 
 # macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
