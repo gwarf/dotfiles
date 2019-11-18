@@ -5,7 +5,7 @@
 IMAPAccount Perso
 Host mail.bapt.name
 User baptiste@bapt.name
-PassCmd "~/bin/gnomekeyring-helpers.py -g -u baptiste@bapt.name -p imaps -a mbsync -e mail.bapt.name"
+PassCmd "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
 # AuthMechs PLAIN
 SSLType IMAPS
 AuthMechs LOGIN
