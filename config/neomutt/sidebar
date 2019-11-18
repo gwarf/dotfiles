@@ -6,7 +6,7 @@ set sidebar_format  = " %B%* "
 # Order of the mailboxes command
 set sidebar_sort_method = 'unsorted'
 # set to "no" to disable sidebar view at startup
-set sidebar_visible = yes
+set sidebar_visible = no
 set sidebar_width   = 20
 
 set mail_check_stats
