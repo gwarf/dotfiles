@@ -1,0 +1,145 @@
+apt update && apt full-upgrade
+sudo apt update && sudo apt full-upgrade
+su -
+sudo apt update && sudo apt full-upgrade
+sudo apt search gnome
+sudo apt install gnome/sdtable
+sudo apt install gnome/stable
+sudo vim /etc/apt/apt.conf
+sudo vim /etc/apt/apt.conf.d/disable-recommends
+sudo apt update && sudo apt upgrade
+sudo apt install gnome/stable
+sudo apt install gdm
+sudo apt install gdm3
+mutter 
+sudo apt search xwayland
+sudo apt install xwayland
+sudo apt install xorg
+sudo apt install xorg mesa-utils x11-xfs-utils firmware-amd-graphics firmware-misc-nonfree 
+sudo systemctl start gdm3
+g diff
+git diff
+g st
+git status
+git ci home/.chezmoidata/packages.yaml -m 'Install some packages on Linux (debian for now)'
+g st
+vim home/.chezmoidata/packages.yaml 
+vim home/run_onchange_install-packages.sh.tmpl 
+vim home/.chezmoidata/packages.yaml 
+git diff
+git status
+git ci home/run_onchange_install-packages.sh.tmpl -m 'Install packages on linux'
+curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
+sudo apt install ./keybase_amd64.deb
+sudo apt install keybase
+keybase
+mount
+cd /run/user/1000/keybase/kbfs
+ls
+cd private/gwarf
+ls
+cd gpg
+ls
+car README.md 
+cat README.md 
+ls
+ls new/
+cd new/
+ls
+gpg --allow-secret-key --import 1F1C21E2-secret-subkey-laptop.asc
+sudo nvim /etc/apt/apt.conf
+sudo nvim /etc/apt/sources.list
+sudo apt update
+sudo apt install -t testing git-delta
+sudo nvim /etc/apt/sources.list
+sudo apt update
+sudo apt install -t testing git-delta
+sudo apt install git-delta
+sudo apt update
+sudo apt upgrade
+sudo apt upgrade --verbose
+sudo apt upgrade -v
+sudo apt upgrade -d
+sudo nvim /etc/apt/sources.list
+sudo apt update
+sudo apt upgrade
+cat /etc/apt/sources.list.d/keybase.list 
+apt search obsidian
+snap search obsidian
+cd ~/Downloads/
+ls
+sudo apt install git-delta_0.18.0_amd64.deb 
+sudo apt install ./git-delta_0.18.0_amd64.deb 
+delta
+chezmoi cd
+fg
+chezmoi cd
+fg
+chezmoi 
+chezmoi pull
+chezmoi 
+chezmoi cd
+git pull
+git diff
+git status
+vim home/.chezmoiignore 
+git status
+git restore home/.chezmoiignore 
+git status
+git pull
+chezmoi diff
+vim home/.chezmoidata/packages.yaml 
+zh
+chezmoi apply
+apt --help
+apt help list
+man apt
+apt install -h
+apt install --help
+apt install 
+vim home/.chezmoidata/packages.yaml 
+vim home/run_onchange_install-packages.sh.tmpl 
+apt install 
+vim home/run_onchange_install-packages.sh.tmpl 
+chezmoi apply
+fish
+vim home/.chezmoidata/packages.yaml 
+chezmoi apply
+fish
+sudo apt update && sudo apt full-upgrade
+apt search keybase
+git status
+rm keybase_amd64.deb 
+apt search delta
+apt search lazygit
+vim home/.chezmoidata/packages.yaml 
+chezmoi apply
+vim home/run_onchange_install-packages.sh.tmpl 
+vim home/.chezmoidata/packages.yaml 
+chezmoi apply
+snap
+snap help install
+vim home/.chezmoidata/packages.yaml 
+vim home/run_onchange_install-packages.sh.tmpl 
+chezmoi apply
+vim home/.chezmoidata/packages.yaml 
+chezmoi apply
+man 8 apt-key
+vim home/.chezmoidata/packages.yaml 
+git ci home/.chezmoidata/packages.yaml -m 'Install debian packages'
+git status
+git diff
+git ci -am 'Install debian packages and snaps'
+git push
+vim home/.chezmoidata/packages.yaml 
+chezmoi apply
+sudo snap install --edge starship
+sudo snap install obsidian
+sudo snap search obsidian
+sudo snap install obsidian --classic
+chezmoi apply
+chezmoi init
+chezmoi apply
+fish
+tmux
+echo $'\uf115'

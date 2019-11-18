@@ -1,0 +1,75 @@
+echo brutal > /etc/hostname 
+echo -e '127.0.1.1\tbrutal' >> /etc/hosts
+echo -e '127.0.1.1\tYOURHOSTNAME' >> /etc/hosts
+vim /etc/hosts
+vi /etc/hosts
+ip addr
+vi /etc/network/interfaces
+vi /etc/network/interfaces.d/enp5s0
+vi /etc/apt/sources.list
+apt install -y console-setup cryptsetup curl dosfstools efibootmgr keyboard-configuration locales sudo vim 
+apt install -y openssh-server
+dpkg-reconfigure tzdata
+dpkg-reconfigure locales
+dpkg-reconfigure console-setup
+setupcon
+dpkg-reconfigure keyboard-configuration
+passwd
+adduser baptiste
+echo $EFI_DISK
+mkfs.vfat -F32 $EFI_DISK
+echo "swap /dev/disk/by-partlabel/swap /dev/urandom swap,offset=2048,cipher=aes-xts-plain64,size=512" >> /etc/crypttab
+cat << EOF > /etc/fstab
+> $( blkid | grep "$EFI_DISK" | cut -d ' ' -f 2 ) /boot/efi vfat defaults 0 0
+> /dev/mapper/swap none swap defaults 0 0
+> proc /proc proc defaults 0 0
+> EOF
+vim /etc/fstab 
+
+
+cat << EOF > /etc/fstab
+$( blkid | grep "$EFI_DISK" | cut -d ' ' -f 2 ) /boot/efi vfat defaults 0 0
+/dev/mapper/swap none swap defaults 0 0
+proc /proc proc defaults 0 0
+EOF
+
+vim /etc/fstab 
+mkdir -p /boot/efi
+mount /boot/efi
+apt install -y linux-headers-amd64 linux-image-amd64 zfs-initramfs dosfstools
+echo "REMAKE_INITRD=yes" > /etc/dkms/zfs.conf
+apt install -y linux-headers-amd64 linux-image-amd64 zfs-initramfs dosfstools
+apt update
+apt install -y linux-headers-amd64 linux-image-amd64 zfs-initramfs dosfstools
+echo "REMAKE_INITRD=yes" > /etc/dkms/zfs.conf
+systemctl enable zfs.target
+systemctl enable zfs-import-cache
+systemctl enable zfs-mount
+systemctl enable zfs-import.target
+echo "UMASK=0077" > /etc/initramfs-tools/conf.d/umask.conf
+update-initramfs -c -k all
+zfs set org.zfsbootmenu:commandline="quiet loglevel=4" zroot/ROOT
+zfs set org.zfsbootmenu:keysource="zroot/ROOT/${ID}" zroot
+zpool set cachefile=/etc/zfs/zpool.cache zroot
+mkdir -p /boot/efi/EFI/ZBM
+curl -o /boot/efi/EFI/ZBM/VMLINUZ.EFI -L https://get.zfsbootmenu.org/efi
+cp /boot/efi/EFI/ZBM/VMLINUZ.EFI /boot/efi/EFI/ZBM/VMLINUZ-BACKUP.EFI
+mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+efibootmgr -c -d "$EFI_DISK" -p "$EFI_PART" -L "ZFSBootMenu (Backup)" -l '\EFI\ZBM\VMLINUZ-BACKUP.EFI'
+efibootmgr -c -d "$EFI_DISK" -p "$EFI_PART" -L "ZFSBootMenu" -l '\EFI\ZBM\VMLINUZ.EFI'
+mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+ls /sys/firmware/
+modprobe efivarfs
+mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+cat /sys/firmware/efi/fw_platform_size
+ls /boot/efi/
+mount /boot/efi
+ls /boot/efi/
+ls /boot/efi/EFI/
+ls /boot/efi/EFI/ZBM/
+mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+efibootmgr -c -d "$EFI_DISK" -p "$EFI_PART" -L "ZFSBootMenu (Backup)" -l '\EFI\ZBM\VMLINUZ-BACKUP.EFI'
+efibootmgr -c -d "$EFI_DISK" -p "$EFI_PART" -L "ZFSBootMenu" -l '\EFI\ZBM\VMLINUZ.EFI'
+exit
+visudo 
+vim /etc/group

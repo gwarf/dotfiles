@@ -1,0 +1,308 @@
+- cmd: su -
+- cmd: sudo apt search gnome
+- cmd: sudo apt install gnome/sdtable
+- cmd: sudo vim /etc/apt/apt.conf.d/disable-recommends
+- cmd: sudo apt update && sudo apt upgrade
+- cmd: sudo apt install gnome/stable
+- cmd: sudo apt install gdm
+- cmd: sudo apt install gdm3
+- cmd: mutter
+- cmd: sudo apt search xwayland
+- cmd: sudo apt install xwayland
+- cmd: sudo apt install xorg
+- cmd: sudo apt install xorg mesa-utils x11-xfs-utils firmware-amd-graphics firmware-misc-nonfree
+- cmd: sudo systemctl start gdm3
+- cmd: chsh -s /usr/bin/fish
+  paths:
+    - /usr/bin/fish
+- cmd: git ci -am 'More'
+- cmd: fzf --fish
+- cmd: apt search bat
+- cmd: apt install bat
+- cmd: sudo apt install bat
+- cmd: dpkg -L bat
+- cmd: batcat
+- cmd: uname
+- cmd: uname -m
+- cmd: uname -h
+- cmd: uname --help
+- cmd: uname -n
+- cmd: uname -a
+- cmd: uname -o
+- cmd: nvim
+- cmd: apt show neovim
+- cmd: apt searcdh neovim
+- cmd: apt search neovim
+- cmd: snap search neovim
+- cmd: nvim home/.chezmoidata/packages.yaml
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: fg
+- cmd: snap install nvim
+- cmd: snap install nvim --classic
+- cmd: dpkg -L fzf
+- cmd: sudo vim /etc/apt/apt.conf
+- cmd: sudo vim /etc/apt/sources.list
+  paths:
+    - /etc/apt/sources.list
+- cmd: apt update && apt full-upgrade
+- cmd: ps auxf
+- cmd: sudo apt update && sudo apt full-upgrade
+- cmd: sudo apt autoremove
+- cmd: sudo reboot
+- cmd: sudo apt install git-delta
+- cmd: sudo snap list
+  paths:
+    - snap
+- cmd: ls -la ~/.config/tmux/tmux.conf
+  paths:
+    - ~/.config/tmux/tmux.conf
+- cmd: chezmoi setattr +template ~/.config/tmux/tmux.conf
+  paths:
+    - ~/.config/tmux/tmux.conf
+- cmd: chezmoi chattr +template ~/.config/tmux/tmux.conf
+  paths:
+    - ~/.config/tmux/tmux.conf
+- cmd: chezmoi edit ~/.config/tmux/tmux.conf
+  paths:
+    - ~/.config/tmux/tmux.conf
+- cmd: apt search git-delta
+- cmd: alias
+- cmd: apt search chezmoi
+- cmd: apt search doggo
+- cmd: apt search dust
+- cmd: apt install dust
+- cmd: sudo apt install dust
+- cmd: sudo apt install languagetool
+- cmd: sudo apt install lazygit
+- cmd: sudo apt show neovim
+- cmd: sudo apt search obsidian
+- cmd: sudo apt search testssl
+- cmd: sudo snap remove testssl
+- cmd: sudo apt search starship
+- cmd: sudo apt search yaml-language
+- cmd: sudo apt search yazi
+- cmd: sudo snap search yazi
+- cmd: sudo apt search treesitter
+- cmd: sudo apt search tree-sitter
+- cmd: sudo apt install tree-sitter
+- cmd: sudo apt search stylua
+- cmd: sudo apt search ripgrep
+- cmd: sudo apt search rbw
+- cmd: sudo snap search rbw
+- cmd: sudo snap search pstree
+- cmd: sudo apt search pstree
+- cmd: sudo apt search prettier
+- cmd: sudo snap search prettier
+- cmd: sudo snap search markdownlint
+- cmd: sudo apt search markdownlint
+- cmd: sudo apt search lua-language-server
+- cmd: sudo snap search lua-language-server
+- cmd: sudo apt search lsusb
+- cmd: sudo apt search ltex
+- cmd: sudo snap search ltex
+- cmd: sudo apt search gpgme
+- cmd: sudo apt search fd-utils
+- cmd: sudo apt search fd
+- cmd: sudo apt search fd | grep find
+- cmd: sudo apt search checkma
+- cmd: sudo apt search checkmaake
+- cmd: sudo apt search checkmake
+- cmd: sudo snap search checkmake
+- cmd: sudo snap search bitwarden
+- cmd: sudo apt search bitwarden
+- cmd: sudo apt search ansible
+- cmd: sudo snap search ansible
+- cmd: git ci home/.chezmoidata/packages.yaml -m 'Update packages for debian testing'
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: git diff home/private_dot_config/private_fish/config.fish.tmpl
+  paths:
+    - home/private_dot_config/private_fish/config.fish.tmpl
+- cmd: apt show tmux
+- cmd: apt show fzf
+- cmd: git ci home/private_dot_config/private_fish/config.fish.tmpl -m 'Fix fzf init'
+  paths:
+    - home/private_dot_config/private_fish/config.fish.tmpl
+- cmd: git add
+- cmd: git add home/private_dot_config/tmux/tmux.conf.tmpl
+  paths:
+    - home/private_dot_config/tmux/tmux.conf.tmpl
+- cmd: git ci -am 'Make tmux.conf a template and fix fish path on linux'
+- cmd: git push
+- cmd: apt search hack
+- cmd: apt search hack | grep font
+- cmd: apt search fonts-hack
+- cmd: bat
+- cmd: ln -s /usr/bin/batcat ~/bin/bat
+  paths:
+    - /usr/bin/batcat
+- cmd: test -x ~/bin
+  paths:
+    - ~/bin
+- cmd: test -e ~/bin
+  paths:
+    - ~/bin
+- cmd: man test
+- cmd: sudo snap install --edge prettier
+- cmd: .sd
+- cmd: echo $PATH
+- cmd: chezmoi apply ~/.config/fish/config.fish
+  paths:
+    - ~/.config/fish/config.fish
+- cmd: chezmoi edit ~/.config/fish/config.fish
+  paths:
+    - ~/.config/fish/config.fish
+- cmd: kitty
+- cmd: ks
+- cmd: cat ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: apt search nerd | grep font
+- cmd: mkdir -p ~/.local/share/fonts
+- cmd: cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+  paths:
+    - ~/.local/share/fonts
+- cmd: apt search nerd-font
+- cmd: snap search nerd-font
+- cmd: tmux a
+- cmd: vim ~/.config/tmux/tmux.conf
+  paths:
+    - ~/.config/tmux/tmux.conf
+- cmd: bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+- cmd: apt search fonts | bat
+- cmd: apt search fonts
+- cmd: apt search fonts | less
+- cmd: sudo apt update
+- cmd: sudo apt install fonts-symbola
+- cmd: fc-cache -f
+- cmd: bash
+- cmd: snap search nerds
+- cmd: apt search nerds
+- cmd: apt search nerd
+- cmd: apt show fonts-anonymous-pro
+- cmd: apt show fonts-font-awesome
+- cmd: sudo apt install fonts-font-awesome
+- cmd: sudo apt install fonts-material-design-icons-iconfont
+- cmd: tmux
+- cmd: rm NerdFontsSymbolsOnly.zip
+  paths:
+    - NerdFontsSymbolsOnly.zip
+- cmd: vim fonts.sh
+- cmd: mv fonts.sh nerd-fonts.sh
+  paths:
+    - fonts.sh
+- cmd: chmod +x nerd-fonts.sh
+  paths:
+    - nerd-fonts.sh
+- cmd: sdd
+- cmd: fc-cache -fv
+- cmd: fc-cache -fr
+- cmd: qls -la .local/share/fonts
+  paths:
+    - .local/share/fonts
+- cmd: ls -la .local/share/fonts
+  paths:
+    - .local/share/fonts
+- cmd: rm .local/share/fonts/JetBrainsMono.zip
+  paths:
+    - .local/share/fonts/JetBrainsMono.zip
+- cmd: rm -rf ~/.local/share/fonts
+  paths:
+    - ~/.local/share/fonts
+- cmd: chezmoi diff
+- cmd: chezmoi apply
+- cmd: vim ./nerd-fonts.sh
+- cmd: nvim ./nerd-fonts.sh
+- cmd: vim nerd-fonts.sh
+  paths:
+    - nerd-fonts.sh
+- cmd: ./nerd-fonts.sh
+- cmd: mv nerd-fonts.sh ~/bin/
+  paths:
+    - nerd-fonts.sh
+    - ~/bin/
+- cmd: chezmoi add ~/bin/nerd-fonts.sh
+  paths:
+    - ~/bin/nerd-fonts.sh
+- cmd: lsd
+- cmd: fc-cache -frv
+- cmd: ls /home/baptiste/.local/share/fonts
+  paths:
+    - /home/baptiste/.local/share/fonts
+- cmd: apt search jetbrains
+- cmd: apt remove fonts-jetbrains-mono
+- cmd: sudo apt remove fonts-jetbrains-mono
+- cmd: dpkg -l jetb
+- cmd: dpkg -l '*jetb*'
+- cmd: dpkg -l '*font*'
+- cmd: sudo apt remove fonts-symbola fonts-hack
+- cmd: dpkg -l '*font*' | grep ^ii
+- cmd: vim ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: chezmoi chattr +template ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: chezmoi edit ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: chezmoi diff ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: chezmoi apply ~/.config/kitty/kitty.conf
+  paths:
+    - ~/.config/kitty/kitty.conf
+- cmd: apt search starship
+- cmd: snap search starship
+- cmd: vim
+- cmd: vim https://starship.rs/install.sh
+- cmd: curl -sS https://starship.rs/install.sh | bash
+- cmd: curl -sS https://starship.rs/install.sh | sh
+- cmd: git statsu
+- cmd: git ci home/.chezmoidata/packages.yaml
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: vim home/.chezmoidata/packages.yaml
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: git diff home/.chezmoidata/packages.yaml
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: git ci home/.chezmoidata/packages.yaml -m 'More packages for debian testing'
+  paths:
+    - home/.chezmoidata/packages.yaml
+- cmd: git add home/bin/executable_nerd-fonts.sh
+  paths:
+    - home/bin/executable_nerd-fonts.sh
+- cmd: git ci home/bin/executable_nerd-fonts.sh -m 'Add scripts to install nerd fonts'
+  paths:
+    - home/bin/executable_nerd-fonts.sh
+- cmd: git add home/private_dot_config/kitty/kitty.conf.tmpl
+  paths:
+    - home/private_dot_config/kitty/kitty.conf.tmpl
+- cmd: git ci home/private_dot_config/private_fish/config.fish.tmpl
+  paths:
+    - home/private_dot_config/private_fish/config.fish.tmpl
+- cmd: git st
+- cmd: git ci -am 'Make tmux a template'
+- cmd: echo $EDITOR
+- cmd: ls
+- cmd: cd
+- cmd: vim ~/.gitconfig
+  paths:
+    - ~/.gitconfig
+- cmd: chezmoi edit ~/.gitconfig
+  paths:
+    - ~/.gitconfig
+- cmd: git status
+- cmd: chezmoi cd
+- cmd: git diff
+- cmd: git ci -am 'Git: commit with nvim'
+- cmd: git push
+- cmd: grep gpg ~/.bash_history
+  paths:
+    - ~/.bash_history
+- cmd: grep -B4 gpg ~/.bash_history
+  paths:
+    - ~/.bash_history
