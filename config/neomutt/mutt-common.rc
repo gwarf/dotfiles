@@ -1,0 +1,174 @@
+# http://stevelosh.com/blog/2012/10/the-homely-mutt
+# https://pbrisbin.com/posts/mutt_gmail_offlineimap/
+
+# Caching
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+
+set tmpdir = '~/tmp'
+
+set editor = 'nvim'
+set shell = "/bin/zsh"
+
+# number of input lines for prompts to remember
+set history = 1000
+set history_file = "~/.config/neomutt/history"
+set save_history = 1000
+
+# SMIME / PGP
+set smime_is_default = yes
+set crypt_autosmime = yes
+set crypt_verify_sig = yes
+set crypt_autosign = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+set smime_ask_cert_label
+set forward_decrypt = yes
+
+set mailcap_path = "~/.mailcap:/etc/mailcap"
+
+# Printing
+set print = ask-yes       # ask before printing
+# set print_command="muttprint %s -P A4 -p CanonMX920"
+set print_command = "muttprint %s -P A4 -C lpr"
+
+# skip to compose when replying
+set fast_reply
+# ask for CC:
+set askcc
+
+set folder_format = "%3C %t %N %f"
+
+# set index_format = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
+# Display sender instead of subscrived maling list
+set index_format = "%4C %Z %{%b %d} %-20.19F (%?l?%4l&%4c?) %s"
+
+# Status bar
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Quotations
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+
+set attribution = "Le %(%d/%m/%y) à %(%H:%M), %n téléscripta :"
+
+# Send flowed emails
+set text_flowed = yes
+# Wrap received flowed emails
+set reflow_text = yes
+set reflow_wrap = 76
+
+set mail_check = 0
+set envelope_from
+# reply as whomever it was to
+set reverse_alias
+# set reverse_name
+
+# Hooks
+source ~/.config/neomutt/hooks
+
+set quit             # don't ask, just do!!
+unset mark_old       # read/new is good enough
+
+# sort/threading
+# Goal:
+# * sort by threads, most recent at the top
+# * within threads: oldest message at the top, oldest to newest in descending order
+# Default sorting
+# Set by threads, most recent on top, but sometimes weird inside threads
+# Most of the time from oldest to neweset, but sometims some are mixed
+set sort = threads
+set sort_aux = reverse-last-date-received
+# thread based on regex
+set sort_re
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+# Ensure that INBOX is always using appropriate sorting
+folder-hook Inbox 'set sort=threads sort_aux=reverse-last-date-received sort_re'
+folder-hook Sent 'set sort=reverse-last-date'
+# Threads sorted correctly but at bottom
+#set sort_aux = last-date-received
+
+# collapse threads with unread mails
+# set collapse_unread
+# don't collapse on an unread message
+set uncollapse_jump
+
+# Pager View Options
+# format of the pager status bar
+spam "X-Spam-Score: ([0-9\\.]+).*" "SA: %1"
+set pager_format = "──[%[%y.%m.%d %H:%M]]──[%.20F]─[%s]%*─%?H?─[%H] ?"
+
+# number of index lines to show
+set pager_index_lines = 10
+# number of context lines to show
+set pager_context = 5
+# don't go to next message automatically
+set pager_stop
+# scroll in menus
+set menu_scroll
+set smart_wrap
+# show tildes like in vim
+set tilde
+# no ugly plus signs
+unset markers
+
+# composing
+# save attachments with the body
+set fcc_attach
+set include
+
+set forward_decode = yes
+
+# Forward message as attachement
+set mime_forward = ask-yes
+set mime_forward_rest = ask-yes
+
+# Forgotter Attachemnt
+source ~/.config/neomutt/forgotten-attachment
+
+# Colors
+source ~/.config/neomutt/colors
+source ~/.config/neomutt/index-color
+
+# Key bindings, macros
+source ~/.config/neomutt/bindings
+
+# Spelling
+set ispell = "aspell -e -c"
+
+set send_charset = "utf-8"
+
+# Headers
+source ~/.config/neomutt/headers
+
+# MIME-Viewer
+source ~/.config/neomutt/mime-view
+# XXX Configure automatic querying of mime types
+# set mime_type_query_command = "file --mime-type --brief"
+# set mime_type_query_first = no
+
+# Disaplay filter
+#set display_filter=/home/baptiste/.mutt/mutt_display_filter
+#set display_filter=/home/baptiste/.mutt/test_display_filter
+#set display_filter='par 72gqr'
+#set wrapmargin=60
+
+# http://www.neomutt.org/feature/new-mail/
+# set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
+
+# Maildir
+source ~/.config/neomutt/maildir
+
+# sidebar
+source ~/.config/neomutt/sidebar
+
+# Source mu configuration
+source ~/.config/neomutt/mu
+
+set realname = "Baptiste Grenier"
+
+# Source EGI profile
+source ~/.config/neomutt/profile-maildir.egi
+
+# vim: set ft=muttrc:

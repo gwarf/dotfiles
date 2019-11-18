@@ -59,8 +59,7 @@ ENABLE_CORRECTION="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # tmux conf
-# XXX disabled as it breaks launchin neovim for Oni
-export ZSH_TMUX_AUTOSTART=false
+export ZSH_TMUX_AUTOSTART=true
 # export ZSH_TMUX_ITERM2=true
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
@@ -69,17 +68,22 @@ export ZSH_TMUX_AUTOSTART=false
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   brew
-  colored-man
+  colored-man-pages
   colorize
+  common-aliases
   docker
   fzf
   git
   github
+  golang
+  gpg-agent
   history-substring-search
   osx
   pip
   python
   rvm
+  terraform
+  thefuck
   tmux
   vagrant
   vi-mode
@@ -102,21 +106,29 @@ setopt HIST_FIND_NO_DUPS
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# Enable zmv
+autoload -U zmv
+
 export PROJECT_HOME="$HOME/code"
 
-# pyenv configuration
+# The python virtualenv world
+# https://stackoverflow.com/a/41573588
+
+# pyenv manual configuration replacing pyenv plugin
 # https://alysivji.github.io/setting-up-pyenv-virtualenvwrapper.html
 # https://gist.github.com/Geoyi/f55ed54d24cc9ff1c14bd95fac21c042
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# XXX warning: this is dramatically slowing shell creation
+# https://github.com/pyenv/pyenv/issues/784
+# https://github.com/pyenv/pyenv-virtualenv/issues/42
+export PATH="$PATH:/user/local/opt/pyenv/bin"
+eval "$(pyenv init --no-rehash - zsh)"
+eval "$(pyenv virtualenv-init - zsh)"
 
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+# Set tup pyenv-virtualenvwrapper
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+pyenv virtualenvwrapper_lazy
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Manually set your language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -140,9 +152,13 @@ alias stack='docker run -it --rm -v ~/.stack:~/.stack gbraad/openstack-client:ce
 
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems
 # Required for building python with pyenv on Mac OS X
-export CFLAGS="-I$(brew --prefix openssl)/include"
-export LDFLAGS="-L$(brew --prefix openssl)/lib"
+export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+# Speeding up build
+export CFLAGS="-O2 $CFLAGS"
 # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+
+export MAKEOPS='j6'
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
@@ -150,5 +166,16 @@ export LDFLAGS="-L$(brew --prefix openssl)/lib"
 # Source secrets
 [ -f ~/.secrets ] && source ~/.secrets
 
+export PATH="$HOME/.local/bin:$PATH"  # added by Invenio Bootcamp script
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
+# To prevent ctrl-o being discared by the terminal driver
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  stty discard undef
+fi

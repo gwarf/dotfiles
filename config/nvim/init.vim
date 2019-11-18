@@ -3,27 +3,32 @@
 " https://github.com/Shougo/dein.vim
 "
 " https://github.com/junegunn/vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
 filetype off " required for vundle setup
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " SuperTab
 " Plug 'ervandew/supertab'
 " Completion
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'Shougo/denite.nvim'
+  " Possible replacement for deoplete
+  " https://github.com/neoclide/coc.nvim
+  " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+"Plug 'SevereOverfl0w/deoplete-github'
 " Snippets
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -36,6 +41,10 @@ else
 endif
 " one colorscheme
 " Plug 'rakr/vim-one'
+" Nord colorscheme
+Plug 'arcticicestudio/nord-vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'morhetz/gruvbox'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 " Snippets
@@ -59,11 +68,14 @@ Plug 'dhruvasagar/vim-table-mode'
 " Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
+Plug 'cespare/vim-toml'
+Plug 'robertbasic/vim-hugo-helper'
 " Plug 'jceb/vim-orgmode'
 " Tabular alignement
 Plug 'godlygeek/tabular'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " Preview registers
 " Seems to break tabular and completion
 "Plug 'junegunn/vim-peekaboo'
@@ -82,7 +94,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'rking/ag.vim'
 " Syntax validation
 " Plug 'scrooloose/syntastic'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 " git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -104,7 +116,11 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim'
-Plug 'vim-scripts/AutoClose'
+" Conflicts with some mappint for coc.nvim
+"Plug 'vim-scripts/AutoClose'
+" Seems OK
+" Plug 'Raimondi/delimitMate'
+Plug 'cohama/lexima.vim'
 Plug 'vim-scripts/spec.vim'
 Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -116,10 +132,9 @@ Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 Plug 'tmux-plugins/vim-tmux'
 "Plug 'mrtazz/simplenote.vim'
-Plug 'w0rp/ale'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
-Plug 'blindFS/vim-taskwarrior'
+" Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
 Plug 'mbbill/undotree'
 " Could break airline bar if no proper font is configured
@@ -132,11 +147,14 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Fancy start screen
 Plug 'mhinz/vim-startify'
-" Display available commands
-" https://github.com/hecal3/vim-leader-guide
-Plug 'hecal3/vim-leader-guide'
 " Buffers list in the command bar
 Plug 'bling/vim-bufferline'
+" Save sessions
+Plug 'tpope/vim-obsession'
+" Zoom windows using <C-w>-m instead of <c-w>-|, <c-w>-_, and <c-w>-=
+Plug 'dhruvasagar/vim-zoom'
+" mu integration when editing emails in mutt
+Plug 'dbeniamine/vim-mail'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -146,19 +164,44 @@ if !has('nvim')
   runtime plugin/sensible.vim
 endif
 
+" Use true colors
+if (has('termguicolors'))
+  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set t_8f=[38;2;%lu;%lu;%lum
+  set t_8b=[48;2;%lu;%lu;%lum
+  set termguicolors
+endif
+if has('nvim')
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
 " Theme
 set background=dark
-if has('nvim')
-  " Use true colors
-  " https://www.cyfyifanchen.com/neovim-true-color/
-  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  "set termguicolors
-  let g:solarized_use16 = 1
-  colorscheme solarized8_flat
-  " colorscheme one
-else
-  colorscheme solarized
-endif
+
+let g:nord_italic=1
+let g:nord_italic_comments=1
+let g:nord_underline=1
+let g:nord_cursor_line_number_background=0
+colorscheme nord
+" colorscheme one
+" Works nicely with Nord palette
+" colorscheme gruvbox
+" if has('nvim')
+  " let g:solarized_use16 = 1
+  " colorscheme solarized8
+" else
+  " colorscheme solarized
+" endif
+
+" Use a specific colorscheme for vimdiff
+" if &diff
+"   colorscheme evening
+" endif
+
+" Highlight current line
+set cursorline
 
 if !has('nvim')
   " For devicons on vim
@@ -256,10 +299,18 @@ set writebackup
 set swapfile
 set directory=$HOME/.vimswap
 
-" Test Leader key customization
-" let mapleader=","
+" Leader key customization
 let mapleader=" "
 map <Space> <Leader>
+" Leader for mappings local to a buffer
+" could be useful to have per-file-type keys like
+" In a ~/.vim/after/ftplugin/{file extension}.vim
+" nnoremap <buffer> <silent> <LocalLeader>b :update|make
+" , is by default for backward seach on line
+let g:maplocalleader = ','
+" \ is safer but less convenient
+"let g:maplocalleader = '\'
+
 nnoremap <Leader>x i
 set showcmd
 
@@ -330,7 +381,7 @@ autocmd VimEnter *
 map <C-n> :NERDTreeToggle<CR>
 
 " vim-airline
-let g:airline_theme='ravenpower'
+" let g:airline_theme='ravenpower'
 let g:airline_powerline_fonts = 1
 let g:airline_line_fonts = 1
 " Automatically displays all buffers when there's only one tab open
@@ -407,7 +458,7 @@ nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
 "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
+" nnoremap \ :Ag<SPACE>
 
 " UltiSnips
 let g:snips_author_email='baptiste.grenier@egi.eu'
@@ -421,22 +472,29 @@ let g:snips_company='EGI Foundation'
 
 " Use deoplete
 " Debug run :checkhealth
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
+" let g:neosnippet#enable_snipmate_compatibility = 1
 
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+" let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 " enmable email completeion
-call deoplete#custom#source('omni', 'functions', {
-  \ 'mail': 'mailcomplete#Complete',
-  \})
+"call deoplete#custom#source('omni', 'functions', {
+"  \ 'mail': 'mailcomplete#Complete',
+"  \})
 
-call deoplete#custom#var('omni', 'input_patterns', {
-   \ 'mail': '\w+',
-   \})
+"call deoplete#custom#var('omni', 'input_patterns', {
+"   \ 'mail': '\w+',
+"   \})
+
+" let g:deoplete#sources = {}
+" let g:deoplete#sources.gitcommit=['github']
+" let g:deoplete#keyword_patterns = {}
+" let g:deoplete#keyword_patterns.gitcommit = '.+'
+" let g:deoplete#omni#input_patterns = {}
+" let g:deoplete#omni#input_patterns.gitcommit = '.+'
 
 " <C-h>, <BS>: close popup and delete backword char
 "inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -445,27 +503,172 @@ call deoplete#custom#var('omni', 'input_patterns', {
 " <TAB>: completion
 " inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " Taken from https://github.com/Shougo/shougo-s-github/blob/84071518e4238cc8b816cdb97ebc00c2aedda69f/vim/rc/plugins/deoplete.rc.vim
+"inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ deoplete#manual_complete()
+"function! s:check_back_space() abort
+"  let col = col('.') - 1
+"  return !col || getline('.')[col - 1]  =~ '\s'
+"endfunction
+
+" <S-TAB>: completion back
+"inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+
+"inoremap <expr><C-g>       deoplete#refresh()
+"inoremap <expr><C-e>       deoplete#cancel_popup()
+"inoremap <silent><expr><C-l>       deoplete#complete_common_string()
+
+" <CR>: close popup and save indent
+"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"function! s:my_cr_function() abort
+"  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
+"endfunction
+
+" ale
+" Not only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 0
+let g:ale_sign_column_always = 1
+let g:ale_completion_enabled = 0
+let g:ale_fix_on_save = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_on_insert_leave = 1
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 0
+" Show 5 lines of errors (default: 10)
+let g:ale_list_window_size = 5
+
+let g:ale_linters = {
+\   'bash': ['bashate'],
+\}
+
+" XXX Don't want to remove trailing spaces in emails!
+" See mail ftplugin
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'json': ['prettier'],
+\   'markdown': ['prettier'],
+\   'yaml': ['prettier'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
+
+" coc.nvim
+" https://github.com/neoclide/coc.nvim
+
+" Better display for messages
+set cmdheight=2
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" <S-TAB>: completion back
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
-inoremap <expr><C-g>       deoplete#refresh()
-inoremap <expr><C-e>       deoplete#cancel_popup()
-inoremap <silent><expr><C-l>       deoplete#complete_common_string()
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" <CR>: close popup and save indent
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" end of coc.nvim config
 
 " Notes using vim-pad
 let g:pad#dir = "~/GoogleDrive/notes"
@@ -509,16 +712,18 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-" Some useful abreviations
+" Some useful abbreviations
 
 :iab brb Best regards,<enter>Baptiste
 :iab cb Cheers,<enter>Baptiste
+" XXX doesn't seem to work
+:iab cl ---------8<--------8<-------------8<------------8<------------8<----------
 
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
 
 " vim-taskwarrior
-nnoremap <leader>t :tabnew <bar> :TW<CR>
+" nnoremap <leader>t :tabnew <bar> :TW<CR>
 
 " Autocorrect in text and markdown files
 
@@ -558,7 +763,7 @@ let wiki_home.ext = '.md'
 
 let g:vimwiki_list = [wiki_work, wiki_home]
 
-" Keep using TAb for completion
+" Keep using Tab for completion
 :nmap <Leader>wn <Plug>VimwikiNextLink
 :nmap <Leader>wp <Plug>VimwikiPrevLink
 
@@ -573,5 +778,8 @@ endif
 " Disable folding
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 2
+
+" Complete emails address in every files
+set completefunc=vimmail#contacts#CompleteAddr
 
 " vim:set ft=vim et sw=2:

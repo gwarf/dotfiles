@@ -41,10 +41,8 @@
 # - m_vcf        search a vcard (according to RFC2426) file.
 # - m_khard      search a CardDAV address book via khard
 
-METHODS="m_inmail m_passwd m_finger"
-
-#METHODS="m_muttalias m_osx_addressbook"
-METHODS="m_osx_addressbook"
+METHODS="m_muttalias m_osx_addressbook"
+#METHODS="m_osx_addressbook"
 
 
 # If it isn't possible to find out the correct mail domain name of

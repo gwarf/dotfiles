@@ -10,7 +10,8 @@
 
 " Enable spell checks
 set spell
-set spelllang=en,fr
+" XXX replaced by dbeniamine/vim-mail?
+" set spelllang=en,fr
 set complete+=kspell
 " No indentation when copying
 set noci
@@ -28,7 +29,7 @@ set formatoptions=nawrjtcq
 set comments+=n:\|  " '|' is a quote char.
 set comments+=n:% " '%' as well.
 
-set omnifunc=mailcomplete#Complete
+"set omnifunc=mailcomplete#Complete
 
 " * <F1> to re-format the current paragraph correctly
 " * <F2> to format a line which is too long, and go to the next line
@@ -136,6 +137,39 @@ endfunction
 ""
 "" ----------------------------------------------------------------------------
 
-call Mail_Erase_Sig()
-call Mail_Del_Empty_Quoted()
-call Mail_Beginning()
+" XXX Disable dwhile testing dbeniamine/vim-mail
+" call Mail_Erase_Sig()
+" call Mail_Del_Empty_Quoted()
+" call Mail_Beginning()
+
+" https://github.com/dbeniamine/vim-mail/
+let g:VimMailDoNotFold=1
+
+let g:VimMailSpellLangs=['en', 'fr']
+
+" Remove quoted signature is killing mine due to flow automatic formatting
+"let g:VimMailStartFlags={'reply' :"boir" }
+
+let g:VimMailStartFlags={
+    \'blank': 'TAi',
+    \'nosubject': 'SAi',
+    \'default' : 'bOi'}
+
+" Use mu
+let g:VimMailContactsProvider=['mu']
+let g:VimMailContactsCommands={'mu' :
+        \{ 'query' : "mu cfind",
+            \'sync': "mu index",
+            \'config': {
+                \'default': {
+                    \'home': '$HOME/.mu',
+                    \'maildir': '$HOME/Mail',
+                \}
+            \}
+        \}
+    \}
+
+
+" XXX Don't want to remove trailing spaces in emails!
+let g:ale_fix_on_save = 0
+

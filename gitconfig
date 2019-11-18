@@ -90,8 +90,7 @@
   mergeoptions = --no-commit
 
 [push]
-  default = simple
-  #default = tracking
+  default = current
 
 [pack]
   threads = 4
@@ -117,6 +116,12 @@
 
 [hub]
   protocol = ssh
+
+[commit]
+    gpgsign = false
+
+[gpg]
+    program = gpg
 
 [include]
     path = .gitconfig.user
