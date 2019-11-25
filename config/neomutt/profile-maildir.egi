@@ -2,8 +2,6 @@
 
 set folder = ~/Mail/EGI
 
-mailboxes Inbox
-
 # Copy sent message to this folder
 
 # Send directly using msmtp
@@ -39,7 +37,7 @@ set record = +Sent
 # If using trash-folder-patch
 set trash="+Trash"
 
-mailboxes +Inbox +All +Draft +Trash +Starred +Spam +Sent
+mailboxes +Inbox +All +Drafts +Trash +Starred +Spam +Sent
 set from       = "baptiste.grenier@egi.eu"
 
 # Signature file
