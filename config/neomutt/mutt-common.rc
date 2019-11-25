@@ -168,7 +168,8 @@ source ~/.config/neomutt/mu
 
 set realname = "Baptiste Grenier"
 
-# Source EGI profile
-source ~/.config/neomutt/profile-maildir.egi
+# Source default profile
+# XXX need to manually link it
+source ~/.config/neomutt/default-profile
 
 # vim: set ft=muttrc:
