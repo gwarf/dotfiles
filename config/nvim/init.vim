@@ -213,10 +213,19 @@ if !has('nvim')
   set encoding=UTF-8
 endif
 
-" Pyenv with neovim on Mac OS X
-" https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv
-let g:python_host_prog = '/Users/baptiste/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/baptiste/.pyenv/versions/neovim3/bin/python'
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    " Pyenv with neovim on Mac OS X
+    " https://github.com/tweekmonster/nvim-python-doctor/wiki/Advanced:-Using-pyenv
+    let g:python_host_prog = '/home/baptiste/.pyenv/versions/neovim2/bin/python'
+    let g:python3_host_prog = '/home/baptiste/.pyenv/versions/neovim3/bin/python'
+    " ruby version
+    let g:ruby_host_prog = 'rvm ruby-2.6.0@neovim do neovim-ruby-host'
+   " else
+   "   let g:powerline_pycmd = "py3"
+  endif
+endif
 
 "Credit joshdick
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -423,9 +432,6 @@ let g:syntastic_python_checkers=['flake8']
 "let g:syntastic_python_checkers=['flake8', 'py3kwarn']
 let g:syntastic_rst_checkers = ['rstcheck']
 let g:syntastic_yaml_checkers = ['yamllint']
-
-" ruby version
-let g:ruby_host_prog = 'rvm ruby-2.6.0@neovim do neovim-ruby-host'
 
 " The Silver Searcher
 " http://robots.thoughtbot.com/faster-grepping-in-vim
