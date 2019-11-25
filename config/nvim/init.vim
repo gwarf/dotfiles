@@ -47,7 +47,6 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
-Plug 'mechatroner/rainbow_csv'
 " Snippets
 Plug 'honza/vim-snippets'
 " Airline statusbar
@@ -69,7 +68,6 @@ Plug 'dhruvasagar/vim-table-mode'
 " Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
-Plug 'cespare/vim-toml'
 Plug 'robertbasic/vim-hugo-helper'
 " Plug 'jceb/vim-orgmode'
 " Tabular alignement
@@ -77,20 +75,28 @@ Plug 'godlygeek/tabular'
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" Fuzzy finding + clap
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+Plug 'liuchengxu/vim-clap'
 " Preview registers
 " Seems to break tabular and completion
 "Plug 'junegunn/vim-peekaboo'
-" Puppet-related stuff
-Plug 'mv/mv-vim-puppet'
-" Ansible support
-Plug 'pearofducks/ansible-vim'
-" Markdown support
-" Should come after tabular
-Plug 'plasticboy/vim-markdown'
+
+" Languages' support
+Plug 'sheerun/vim-polyglot'
+" Plug 'pearofducks/ansible-vim'
+" Plug 'mv/mv-vim-puppet'
+" Plug 'PotatoesMaster/i3-vim-syntax'
+" Plug 'mechatroner/rainbow_csv'
+" Plug 'cespare/vim-toml'
+" Plug 'tmux-plugins/vim-tmux'
+" Markdown support should come after tabular
+" Plug 'plasticboy/vim-markdown'
 " Instant markdown preview
 " Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
+"
 " SilverSearch plugin
 Plug 'rking/ag.vim'
 " Syntax validation
@@ -126,12 +132,10 @@ Plug 'vim-scripts/spec.vim'
 Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
-Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'vimperator/vimperator.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
-Plug 'tmux-plugins/vim-tmux'
 "Plug 'mrtazz/simplenote.vim'
 Plug 'dag/vim-fish'
 Plug 'neomutt/neomutt.vim'
