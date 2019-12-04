@@ -33,7 +33,8 @@ zplug "b4b4r07/emoji-cli", \
 
 # Improved directory listing
 # https://github.com/supercrabtree/k
-zplug "supercrabtree/k"
+#zplug "supercrabtree/k"
+zplug "DarrinTisdale/zsh-aliases-exa"
 
 zplug "chrissicool/zsh-256color"
 
@@ -71,7 +72,7 @@ zplug "zdharma/fast-syntax-highlighting"
 
 # Aliases and color some command output
 # Ensure that ls always add some indicators
-alias ls='ls -F'
+# alias ls='ls -F'
 zplug "modules/utility", from:prezto
 
 zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
@@ -330,6 +331,7 @@ export LANG=en_US.UTF-8
 
 # list only directories
 alias lsd='ls -d */'
+alias l='ls -l'
 
 # https://github.com/pyenv/pyenv/wiki/Common-build-problems
 # Required for building python with pyenv on Mac OS X
