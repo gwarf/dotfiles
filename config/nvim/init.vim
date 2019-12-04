@@ -29,9 +29,11 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "Plug 'SevereOverfl0w/deoplete-github'
+"
 " Snippets
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+
 " Theme
 " Colorscheme
 if has('nvim')
@@ -39,24 +41,37 @@ if has('nvim')
 else
   Plug 'altercation/vim-colors-solarized'
 endif
-" one colorscheme
-" Plug 'rakr/vim-one'
-" Nord colorscheme
+
+" Colorscheme
 Plug 'arcticicestudio/nord-vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'morhetz/gruvbox'
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-" Snippets
-Plug 'honza/vim-snippets'
+" Plug 'rakr/vim-one'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'morhetz/gruvbox'
+
 " Airline statusbar
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" CheckAttach
-Plug 'chrisbra/CheckAttach'
+
+" Could break airline bar if no proper font is configured
+" Works with nerd fonts
+" brew tap caskroom/fonts
+" brew install font-hack-nerd-font
+" or font-meslo-nerd-font font-sourcecodepro-nerd-font
+Plug 'ryanoasis/vim-devicons'
+
+" Buffers list in the command bar
+Plug 'bling/vim-bufferline'
+
+" Snippets
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
+
 " Ctrl-P for quick file/buffer access
 Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'editorconfig/editorconfig-vim'
+
 " Notes taking
 " Plug 'fmoralesc/vim-pad'
 Plug 'vimoutliner/vimoutliner'
@@ -70,14 +85,19 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'robertbasic/vim-hugo-helper'
 " Plug 'jceb/vim-orgmode'
+
 " Tabular alignement
 Plug 'godlygeek/tabular'
+
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Fuzzy finding + clap
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 Plug 'liuchengxu/vim-clap'
+" SilverSearch plugin
+Plug 'rking/ag.vim'
+
 " Preview registers
 " Seems to break tabular and completion
 "Plug 'junegunn/vim-peekaboo'
@@ -96,22 +116,24 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
-"
-" SilverSearch plugin
-Plug 'rking/ag.vim'
+
 " Syntax validation
 " Plug 'scrooloose/syntastic'
 Plug 'dense-analysis/ale'
+
 " git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " gitk for Vim.
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'mattn/gist-vim'
+
 " Sensible default settings
 Plug 'tpope/vim-repeat'
-if !has('nvim')
-  Plug 'tpope/vim-sensible'
-endif
+Plug 'tpope/vim-sensible'
+" Automatic indentation autoconfiguration
+Plug 'tpope/vim-sleuth'
+
 Plug 'tpope/vim-speeddating'
 " Easy change of surrounding stuff (tags, quotes...)
 Plug 'tpope/vim-surround'
@@ -122,7 +144,6 @@ Plug 'vim-scripts/utl.vim'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim'
 " Conflicts with some mappint for coc.nvim
 "Plug 'vim-scripts/AutoClose'
 " Seems OK
@@ -138,28 +159,26 @@ Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 "Plug 'mrtazz/simplenote.vim'
 Plug 'dag/vim-fish'
-Plug 'neomutt/neomutt.vim'
 " Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
 Plug 'mbbill/undotree'
-" Could break airline bar if no proper font is configured
-" Works with nerd fonts
-" brew tap caskroom/fonts
-" brew install font-hack-nerd-font
-" or font-meslo-nerd-font font-sourcecodepro-nerd-font
-Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 " Fancy start screen
 Plug 'mhinz/vim-startify'
-" Buffers list in the command bar
-Plug 'bling/vim-bufferline'
+
 " Save sessions
 Plug 'tpope/vim-obsession'
+
 " Zoom windows using <C-w>-m instead of <c-w>-|, <c-w>-_, and <c-w>-=
 Plug 'dhruvasagar/vim-zoom'
+
+" Mail support
 " mu integration when editing emails in mutt
 Plug 'dbeniamine/vim-mail'
+Plug 'neomutt/neomutt.vim'
+Plug 'chrisbra/CheckAttach'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -721,7 +740,7 @@ vnoremap k gk
 
 :iab brb Best regards,<enter>Baptiste
 :iab cb Cheers,<enter>Baptiste
-" XXX doesn't seem to work
+" XXX find a better abbreviation
 :iab cl ---------8<--------8<-------------8<------------8<------------8<----------
 
 " https://github.com/tpope/vim-sensible/pull/127
