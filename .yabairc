@@ -1,0 +1,71 @@
+#!/usr/bin/env sh
+
+# bar settings
+yabai -m config status_bar                   on
+yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
+yabai -m config status_bar_icon_font         "FontAwesome:Regular:12.0"
+yabai -m config status_bar_background_color  0xff202020
+yabai -m config status_bar_foreground_color  0xffa8a8a8
+yabai -m config status_bar_space_icon_strip  I II III IV V VI VII VIII IX X
+yabai -m config status_bar_power_icon_strip   
+yabai -m config status_bar_space_icon        
+yabai -m config status_bar_clock_icon        
+
+# global settings
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          autoraise
+yabai -m config window_placement             second_child
+
+# floating windows are always on top (default: off)
+yabai -m config window_topmost               on
+yabai -m config window_opacity               off
+
+# modify window shadows (default: on, options: on, off, float)
+yabai -m config window_shadow                float
+yabai -m config window_border                on
+yabai -m config window_border_width          4
+
+# window border (default: off)
+# - width has unit 1pt
+# - colors for borders are in the format AARRGGBB (alpha, red, green, blue)
+#    as a hexadecimal value
+# - active means focused window, normal means unfocused window,
+#    insert means selected window
+yabai -m config active_window_border_color   0xff8E83B8
+yabai -m config normal_window_border_color   0xff51425C
+yabai -m config insert_window_border_color   0xff8E83B8
+# yabai -m config active_window_border_color   0xff775759
+# yabai -m config normal_window_border_color   0xff505050
+# yabai -m config insert_window_border_color   0xffd75f5f
+yabai -m config active_window_opacity        1.0
+yabai -m config normal_window_opacity        0.90
+yabai -m config split_ratio                  0.50
+yabai -m config auto_balance                 on
+yabai -m config mouse_modifier               fn
+yabai -m config mouse_action1                move
+yabai -m config mouse_action2                resize
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   10
+
+# global settings
+# yabai -m config window_opacity_duration      0.0
+# yabai -m config window_border_placement      inset
+# yabai -m config window_border_radius         -1.0
+
+# Identifying windows
+# yabai -m query --windows --space 1 | jq
+
+# float system preoferences
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Stickies$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add title="^About$" manage=off
+yabai -m rule --add title="^Preview$" manage=off
+
+echo "yabai configuration loaded.."
