@@ -171,5 +171,7 @@ let g:VimMailContactsCommands={'mu' :
 
 
 " XXX Don't want to remove trailing spaces in emails!
-let g:ale_fix_on_save = 0
-
+" XXX disabled while testing lessspace.vim
+" let g:ale_fix_on_save = 0
+" Disable LessSpace for emails
+let g:lessspace_enabled = 0
