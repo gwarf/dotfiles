@@ -224,10 +224,6 @@ PATH="$HOME/bin:$PATH"
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# Manually built neomutt
-# XXX broken, very slow movement in the UI
-# PATH="/usr/local/neomutt/20190905_1/bin/:$PATH"
-
 # To allow mu to find mails
 MAILDIR=~/Mail
 
