@@ -89,6 +89,9 @@ Plug 'robertbasic/vim-hugo-helper'
 " Tabular alignement
 Plug 'godlygeek/tabular'
 
+" Clean spaces at EOL
+Plug 'thirtythreeforty/lessspace.vim'
+
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -573,6 +576,8 @@ let g:ale_linters = {
 \   'bash': ['bashate'],
 \}
 
+" XXX disabled while testing lessspace.vim
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
 " XXX Don't want to remove trailing spaces in emails!
 " See mail ftplugin
 let g:ale_fixers = {
@@ -580,7 +585,7 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'yaml': ['prettier'],
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   '*': ['remove_trailing_lines'],
 \}
 
 " coc.nvim
