@@ -54,17 +54,24 @@ my_hdr X-URL: https://egi.eu
 my_hdr From: Baptiste Grenier <baptiste.grenier@egi.eu>
 my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 
+# Use GPGME to simplify GPG and S/MIME configuration
+set crypt_use_gpgme = yes
+set crypt_replyencrypt=yes
+set crypt_replysign=yes
+set crypt_autosign
+set crypt_verify_sig=yes
+
 # Pretty Good Privacy (PGP):
-# unset smime_is_default
+# PGP using gpgme (simplified conf)
+#set crypt_use_gpgme = no
 set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
 set nopgp_autoencrypt           # Default (enc))
 set nopgp_autosign              # Default (sign))
 
-# S/MIME using gpgme
-# http://wiki.netbsd.org/users/wiz/mutt-smime/
-# gpgsm --import ~/GoogleDrive/dutchgrid.pem
-# gpgsm --import ~/GoogleDrive/Personal\ information/baptiste-grenier-certificate-2017-04-14.p12
-# On Mac OS X
+# S/MIME using "manual" configuration
+# set crypt_use_gpgme = no
+# From /usr/local/opt/neomutt/share/doc/neomutt/samples/smime.rc
+# source /usr/local/opt/neomutt/share/doc/neomutt/samples/smime.rc
 # Initialize smime store
 # /usr/local/opt/neomutt/libexec/neomutt/smime_keys init
 # Import DigiCert root
@@ -81,20 +88,22 @@ set nopgp_autosign              # Default (sign))
 
 # To be configured according to # /usr/local/opt/neomutt/etc
 # and used with # /usr/local/opt/neomutt/libexec/neomutt/smime_keys
-source /usr/local/opt/neomutt/share/doc/neomutt/samples/smime.rc
+# Add a certificate to the database using smime_keys.
+#set smime_import_cert_command="/usr/local/opt/neomutt/libexec/neomutt/smime_keys add_cert %f"
+#set smime_sign_as = 95430e67.0
 
-set crypt_use_gpgme = no
+# S/MIME using gpgme (simplified conf)
+# http://wiki.netbsd.org/users/wiz/mutt-smime/
+# gpgsm --import TrustedRoot.crt
+# gpgsm --import DigiCertCA.crt
+# gpgsm --import baptiste_grenier_until_2021_02.p12
+# gpgsm --list-keys
 set smime_is_default
-set smime_sign_as = 95430e67.0
-
+set smime_sign_as = 0x6D26CF94
 # Set labels for certificates you add.
 set smime_ask_cert_label
-
 # Passphrase expiration
 set smime_timeout=30000
-
-# Add a certificate to the database using smime_keys.
-set smime_import_cert_command="/usr/local/opt/neomutt/libexec/neomutt/smime_keys add_cert %f"
 
 # Extract PGP or S/MIME keys
 bind index,pager \ck extract-keys
