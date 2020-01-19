@@ -88,7 +88,7 @@ set smime_ask_cert_label
 set smime_timeout=30000
 
 # Add a certificate to the database using smime_keys.
-set smime_import_cert_command="/usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_cert %f"
+set smime_import_cert_command="/usr/local/opt/neomutt/libexec/neomutt/smime_keys add_cert %f"
 
 # Extract PGP or S/MIME keys
 bind index,pager \ck extract-keys
