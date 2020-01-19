@@ -45,7 +45,7 @@ my_hdr OpenPGP: id=2762EBA1\; url=https://keys.bapt.name/pubkey.asc\; preference
 
 # Pretty Good Privacy (PGP):
 unset smime_is_default
-set pgp_sign_as="0x2762EBA1"    # UserID/KeyID for signing
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
 set nopgp_autoencrypt           # Default (enc))
 set pgp_autosign              # Default (sign))
 
