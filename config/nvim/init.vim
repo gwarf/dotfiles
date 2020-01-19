@@ -181,7 +181,8 @@ Plug 'dhruvasagar/vim-zoom'
 " mu integration when editing emails in mutt
 Plug 'dbeniamine/vim-mail'
 Plug 'neomutt/neomutt.vim'
-Plug 'chrisbra/CheckAttach'
+" Doesn't work with my Mac setup
+" Plug 'chrisbra/CheckAttach'
 
 " All of your Plugins must be added before the following line
 call plug#end()
