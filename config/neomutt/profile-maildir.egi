@@ -54,6 +54,12 @@ my_hdr X-URL: https://egi.eu
 my_hdr From: Baptiste Grenier <baptiste.grenier@egi.eu>
 my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 
+# Pretty Good Privacy (PGP):
+# unset smime_is_default
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
+set nopgp_autoencrypt           # Default (enc))
+set nopgp_autosign              # Default (sign))
+
 # S/MIME using gpgme
 # http://wiki.netbsd.org/users/wiz/mutt-smime/
 # gpgsm --import ~/GoogleDrive/dutchgrid.pem
