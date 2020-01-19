@@ -64,10 +64,11 @@ set crypt_replysignencrypted=yes
 
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
-#set crypt_use_gpgme = no
 set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
 set nopgp_autoencrypt           # Default (enc))
 set nopgp_autosign              # Default (sign))
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
+my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
 
 # S/MIME using "manual" configuration
 # set crypt_use_gpgme = no
