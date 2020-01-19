@@ -56,10 +56,11 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 
 # Use GPGME to simplify GPG and S/MIME configuration
 set crypt_use_gpgme = yes
-set crypt_replyencrypt=yes
-set crypt_replysign=yes
 set crypt_autosign
 set crypt_verify_sig=yes
+set crypt_replyencrypt=yes
+set crypt_replysign=yes
+set crypt_replysignencrypted=yes
 
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
