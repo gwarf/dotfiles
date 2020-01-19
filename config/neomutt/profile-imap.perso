@@ -73,6 +73,9 @@ bind index,pager \ck extract-keys
 # TODO Align profile name on the right
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@Perso──%>─%?p?( %p postponed )?───"
 
+# Contacts from khard and vdirsyncer
+set query_command= "khard email --parsable --search-in-source-files %s"
+
 # Fetching mail
 # macro index \cf "<shell-escape>mbsync -a<enter>"
 
