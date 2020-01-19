@@ -48,14 +48,23 @@ unmy_hdr *                      # remove all extra headers first.
 
 my_hdr From: Baptiste Grenier <baptiste@bapt.name>
 my_hdr Reply-To: Baptiste Grenier <baptiste@bapt.name>
-my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
-my_hdr OpenPGP: id=2762EBA1\; url=https://keys.bapt.name/pubkey.asc\; preference\=signencrypt
+
+# Use GPGME to simplify GPG and S/MIME configuration
+set crypt_use_gpgme = yes
+set crypt_autosign
+set crypt_verify_sig=yes
+set crypt_replyencrypt=yes
+set crypt_replysign=yes
+set crypt_replysignencrypted=yes
 
 # Pretty Good Privacy (PGP):
+# PGP using gpgme (simplified conf)
 unset smime_is_default
-set pgp_sign_as="0x2762EBA1"    # UserID/KeyID for signing
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
 set nopgp_autoencrypt           # Default (enc))
-set nopgp_autosign              # Default (sign))
+set pgp_autosign              # Default (sign))
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
+my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
 
 # Extract PGP or S/MIME keys
 bind index,pager \ck extract-keys
