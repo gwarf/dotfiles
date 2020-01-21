@@ -38,12 +38,12 @@ unset record
 set trash="+Trash"
 
 mailboxes +Inbox +All +Drafts +Trash +Starred +Spam +Sent
+
 set from       = "baptiste.grenier@egi.eu"
+set envelope_from_address="baptiste.grenier@egi.eu"
 
 # Signature file
 set signature='~/.config/neomutt/signature-egi'
-
-set envelope_from_address="baptiste.grenier@egi.eu"
 
 # Customized headers
 unmy_hdr *                      # remove all extra headers first.
@@ -56,7 +56,7 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
 
 # Use GPGME to simplify GPG and S/MIME configuration
 set crypt_use_gpgme = yes
-set crypt_autosign
+set crypt_autosign = yes
 set crypt_verify_sig=yes
 set crypt_replyencrypt=yes
 set crypt_replysign=yes
@@ -65,8 +65,9 @@ set crypt_replysignencrypted=yes
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
 set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
-set nopgp_autoencrypt           # Default (enc))
-set nopgp_autosign              # Default (sign))
+# Use S/MIME by default instead of PGP
+# set pgp_autoencrypt           # Default (enc))
+# set pgp_autosign              # Default (sign))
 my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
 my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
 
@@ -101,6 +102,7 @@ my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference
 # gpgsm --import baptiste_grenier_until_2021_02.p12
 # gpgsm --list-keys
 set smime_is_default
+set crypt_autosmime = yes
 set smime_sign_as = 0x6D26CF94
 # Set labels for certificates you add.
 set smime_ask_cert_label
