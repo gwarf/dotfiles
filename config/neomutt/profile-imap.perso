@@ -35,7 +35,7 @@ set trash="+Trash"
 # Check all folders
 set imap_check_subscribed
 
-set use_from = yes
+#set use_from = yes
 set from       = "baptiste@bapt.name"
 
 # Signature file
@@ -60,7 +60,7 @@ set crypt_replysignencrypted=yes
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
 unset smime_is_default
-set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
+set pgp_sign_as = "0xCDA18F02"    # UserID/KeyID for signing
 set nopgp_autoencrypt           # Default (enc))
 set pgp_autosign              # Default (sign))
 my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
