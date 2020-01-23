@@ -7,8 +7,8 @@
 # folder-hook Gmail 'source ~/.config/neomutt/profile.egi'
 
 # When replying load profile corresponding to the To:
-reply-hook "~t baptiste@bapt.name" "source ~/.config/neomutt/profile-maildir.perso"
-reply-hook "~t baptiste.grenier@egi.eu" "source ~/.config/neomutt/profile-maildir.egi"
+# reply-hook "~t baptiste@bapt.name" "source ~/.config/neomutt/profile-imap.perso"
+# reply-hook "~t baptiste.grenier@egi.eu" "source ~/.config/neomutt/profile-maildir.egi"
 
 # When sending load profile corresponding to the To:
 # send-hook @egi\\.eu$ "source ~/.config/neomutt/profile.egi"
