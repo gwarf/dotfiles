@@ -496,6 +496,10 @@ project-switcher() {
 # echo "-----" >>$LOG
 # echo "Caller 1: $0" >>$LOG
 # echo "DESKTOP_SESSION 1: $DESKTOP_SESSION" >>$LOG
+#
+if [ -d $HOME/bin ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
 if [ -n "$DESKTOP_SESSION" ]; then
