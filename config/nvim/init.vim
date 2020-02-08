@@ -89,6 +89,9 @@ Plug 'robertbasic/vim-hugo-helper'
 " Tabular alignement
 Plug 'godlygeek/tabular'
 
+" Clean spaces at EOL
+Plug 'thirtythreeforty/lessspace.vim'
+
 " Fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -178,7 +181,8 @@ Plug 'dhruvasagar/vim-zoom'
 " mu integration when editing emails in mutt
 Plug 'dbeniamine/vim-mail'
 Plug 'neomutt/neomutt.vim'
-Plug 'chrisbra/CheckAttach'
+" Doesn't work with my Mac setup
+" Plug 'chrisbra/CheckAttach'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -573,6 +577,8 @@ let g:ale_linters = {
 \   'bash': ['bashate'],
 \}
 
+" XXX disabled while testing lessspace.vim
+"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
 " XXX Don't want to remove trailing spaces in emails!
 " See mail ftplugin
 let g:ale_fixers = {
@@ -580,7 +586,7 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'yaml': ['prettier'],
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   '*': ['remove_trailing_lines'],
 \}
 
 " coc.nvim

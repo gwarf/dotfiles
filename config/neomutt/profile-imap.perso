@@ -1,39 +1,41 @@
 # Mutt sender profile: perso
 
-set mbox_type = Maildir
-set folder = ~/Mail/Perso
+# IMAP configuration
+set folder=imaps://mail.bapt.name/
+source imap
+set imap_user=$my_user
+set imap_pass=$my_pass
 
-# Copy sent message to this folder
+# Allow Mutt to open a new IMAP connection automatically.
+unset imap_passive
 
-# Send directly using msmtp
-#set sendmail = "/usr/local/bin/msmtp -a egi"
-# Queue mail if offline
-# /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
-set sendmail = "msmtp"
-# Wait for retrun code
-set sendmail_wait = -1
+# Keep the IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+set mail_check=90
+set timeout=15
+
+# SMTP configuration
+set smtp_url=smtps://$my_user:$my_pass@mail.bapt.name
+set ssl_force_tls = yes
 
 # Custom status color for this profile
 color status cyan default
 
-unset confirmappend
-set spoolfile   = "+Inbox"
 set move = no  # Stop asking to "move read messages to mbox"!
-#set mbox        = "+All"
+unset confirmappend
+set spoolfile   = "+INBOX"
 set postponed   = "+Drafts"
-# Sent emails are recorded automatically by Gmail
-# unset record
-# Add messages stored to the NeoMutt record (see $record in the NeoMutt docs)
-# also to notmuch DB. If you reply to an email then the new email inherits tags
-# from the original email.
-# set mbox_type = Maildir
 set record = "+Sent"
-
 # If using trash-folder-patch
 set trash="+Trash"
 
-mailboxes +Archive +Drafts +Trash +Junk +Sent
+# Allow to select list of folders to check
+# mailboxes +Archive +Drafts +Trash +Junk +Sent
+# Check all folders
+set imap_check_subscribed
 
+set use_from = yes
 set from       = "baptiste@bapt.name"
 
 # Signature file
@@ -71,8 +73,11 @@ bind index,pager \ck extract-keys
 # TODO Align profile name on the right
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@Perso──%>─%?p?( %p postponed )?───"
 
+# Contacts from khard and vdirsyncer
+set query_command= "khard email --parsable --search-in-source-files %s"
+
 # Fetching mail
-macro index \cf "<shell-escape>mbsync -a<enter>"
+# macro index \cf "<shell-escape>mbsync -a<enter>"
 
 # Google-like key bindings
 macro index,pager A "<save-message>+Archive<enter>" "move message to the archive"
