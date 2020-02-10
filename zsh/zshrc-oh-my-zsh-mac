@@ -137,14 +137,10 @@ path+=/usr/local/sbin
 
 export PATH="$HOME/bin:$PATH"
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-  alias vim='nvim'
-  alias vi='nvim'
-fi
+# Preferred editor
+export EDITOR='nvim'
+alias vim='nvim'
+alias vi='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
