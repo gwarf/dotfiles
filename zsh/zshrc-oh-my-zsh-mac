@@ -120,13 +120,17 @@ export PROJECT_HOME="$HOME/code"
 # XXX warning: this is dramatically slowing shell creation
 # https://github.com/pyenv/pyenv/issues/784
 # https://github.com/pyenv/pyenv-virtualenv/issues/42
-export PATH="$PATH:/user/local/opt/pyenv/bin"
-eval "$(pyenv init --no-rehash - zsh)"
-eval "$(pyenv virtualenv-init - zsh)"
+if [ -e /user/local/opt/pyenv/bin ]; then
+  export PATH="$PATH:/user/local/opt/pyenv/bin"
+fi
+if command -v "pyenv" >/dev/null 2>&1; then
+  eval "$(pyenv init --no-rehash - zsh)"
+  eval "$(pyenv virtualenv-init - zsh)"
 
-# Set tup pyenv-virtualenvwrapper
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-pyenv virtualenvwrapper_lazy
+  # Set tup pyenv-virtualenvwrapper
+  export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+  pyenv virtualenvwrapper_lazy
+fi
 
 # Manually set your language environment
 export LC_ALL=en_US.UTF-8
@@ -138,9 +142,15 @@ path+=/usr/local/sbin
 export PATH="$HOME/bin:$PATH"
 
 # Preferred editor
-export EDITOR='nvim'
-alias vim='nvim'
-alias vi='nvim'
+if command -v "nvim" >/dev/null 2>&1; then
+  export EDITOR='nvim'
+  alias vim='nvim'
+  alias vi='nvim'
+else
+  export EDITOR='vim'
+  alias vim='vim'
+  alias vi='vim'
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
