@@ -175,3 +175,5 @@ let g:VimMailContactsCommands={'mu' :
 " let g:ale_fix_on_save = 0
 " Disable LessSpace for emails
 let g:lessspace_enabled = 0
+" Disable automatic indent for emails
+let b:sleuth_automatic = 0
