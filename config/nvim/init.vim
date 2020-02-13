@@ -89,7 +89,7 @@ Plug 'robertbasic/vim-hugo-helper'
 " Tabular alignement
 Plug 'godlygeek/tabular'
 
-" Clean spaces at EOL
+" Clean spaces at EOL for lines that are edited
 Plug 'thirtythreeforty/lessspace.vim'
 
 " Fuzzy finder
@@ -134,6 +134,7 @@ Plug 'mattn/gist-vim'
 " Sensible default settings
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
+
 " Automatic indentation autoconfiguration
 Plug 'tpope/vim-sleuth'
 
@@ -811,5 +812,8 @@ let g:vim_markdown_new_list_item_indent = 2
 
 " Complete emails address in every files
 set completefunc=vimmail#contacts#CompleteAddr
+
+" Don't mess with whitespaces in those files
+let g:lessspace_blacklist = ['diff']
 
 " vim:set ft=vim et sw=2:
