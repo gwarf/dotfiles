@@ -1,3 +1,4 @@
+# Setup: https://vdirsyncer.pimutils.org/en/stable/config.html#google
 [general]
 status_path = "~/.vdirsyncer/status/"
 
