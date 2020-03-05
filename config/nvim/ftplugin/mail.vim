@@ -156,19 +156,20 @@ let g:VimMailStartFlags={
     \'default' : 'bOi'}
 
 " Use mu
-let g:VimMailContactsProvider=['mu']
-let g:VimMailContactsCommands={'mu' :
-        \{ 'query' : "mu cfind",
-            \'sync': "mu index",
-            \'config': {
-                \'default': {
-                    \'home': '$HOME/.mu',
-                    \'maildir': '$HOME/Mail',
-                \}
-            \}
-        \}
-    \}
+" let g:VimMailContactsProvider=['mu']
+" let g:VimMailContactsCommands={'mu' :
+"         \{ 'query' : "mu cfind",
+"             \'sync': "mu index",
+"             \'config': {
+"                 \'default': {
+"                     \'home': '$HOME/.mu',
+"                     \'maildir': '$HOME/Mail',
+"                 \}
+"             \}
+"         \}
+"     \}
 
+let g:VimMailContactsProvider=['khard']
 
 " XXX Don't want to remove trailing spaces in emails!
 " XXX disabled while testing lessspace.vim
