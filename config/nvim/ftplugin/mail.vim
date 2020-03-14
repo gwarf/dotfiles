@@ -156,22 +156,25 @@ let g:VimMailStartFlags={
     \'default' : 'bOi'}
 
 " Use mu
-let g:VimMailContactsProvider=['mu']
-let g:VimMailContactsCommands={'mu' :
-        \{ 'query' : "mu cfind",
-            \'sync': "mu index",
-            \'config': {
-                \'default': {
-                    \'home': '$HOME/.mu',
-                    \'maildir': '$HOME/Mail',
-                \}
-            \}
-        \}
-    \}
+" let g:VimMailContactsProvider=['mu']
+" let g:VimMailContactsCommands={'mu' :
+"         \{ 'query' : "mu cfind",
+"             \'sync': "mu index",
+"             \'config': {
+"                 \'default': {
+"                     \'home': '$HOME/.mu',
+"                     \'maildir': '$HOME/Mail',
+"                 \}
+"             \}
+"         \}
+"     \}
 
+let g:VimMailContactsProvider=['khard']
 
 " XXX Don't want to remove trailing spaces in emails!
 " XXX disabled while testing lessspace.vim
 " let g:ale_fix_on_save = 0
 " Disable LessSpace for emails
 let g:lessspace_enabled = 0
+" Disable automatic indent for emails
+let b:sleuth_automatic = 0
