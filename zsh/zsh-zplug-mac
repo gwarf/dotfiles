@@ -352,3 +352,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# CLI for Google admin
+# https://github.com/jay0lee/GAM
+gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
