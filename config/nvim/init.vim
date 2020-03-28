@@ -119,6 +119,7 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'suan/vim-instant-markdown'
 "Plug 'tpope/vim-markdown'
 "Plug 'gabrielelana/vim-markdown'
+Plug 'Yggdroot/indentLine'
 
 " Syntax validation
 " Plug 'scrooloose/syntastic'
