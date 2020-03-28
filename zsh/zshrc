@@ -157,7 +157,7 @@ if zplug check modules/editor; then
 fi
 
 if zplug check modules/tmux; then
-  zstyle ':prezto:module:tmux:auto-start' local 'no'
+  zstyle ':prezto:module:tmux:auto-start' local 'yes'
   zstyle ':prezto:module:tmux:auto-start' remote 'no'
   zstyle ':prezto:module:tmux:session' name 'work'
 fi
@@ -397,6 +397,11 @@ if (( $+commands[compdef] )); then
     compdef vboxmanage=VBoxManage
     compdef vboxheadless=VBoxHeadless
   fi
+fi
+
+# Use pydf if available
+if (( $+commands[pydf] )); then
+  alias df=pydf
 fi
 
 # Completion for hexo
