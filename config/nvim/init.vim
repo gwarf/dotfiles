@@ -113,13 +113,11 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'mechatroner/rainbow_csv'
 " Plug 'cespare/vim-toml'
 " Plug 'tmux-plugins/vim-tmux'
-" Markdown support should come after tabular
-" Plug 'plasticboy/vim-markdown'
-" Instant markdown preview
-" Plug 'suan/vim-instant-markdown'
-"Plug 'tpope/vim-markdown'
-"Plug 'gabrielelana/vim-markdown'
 Plug 'Yggdroot/indentLine'
+
+" Load locally available config files
+" For per-project settings
+Plug 'embear/vim-localvimrc'
 
 " Syntax validation
 " Plug 'scrooloose/syntastic'
@@ -758,12 +756,12 @@ let g:is_posix=1
 " nnoremap <leader>t :tabnew <bar> :TW<CR>
 
 " Autocorrect in text and markdown files
-
 augroup litecorrect
   autocmd!
   autocmd FileType markdown,mkd call litecorrect#init()
   autocmd FileType textile call litecorrect#init()
 augroup END
+
 " Force the top-ranked correction on the first misspelled word before the
 " cursor.
 nnoremap <C-s> [s1z=<c-o>
@@ -806,15 +804,22 @@ if has("persistent_undo")
   set undofile
 endif
 
-" vim-markdown
+" vim-markdown (from vim-polyglot)
 " Disable folding
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 2
+" Disable concealing
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 " Complete emails address in every files
 set completefunc=vimmail#contacts#CompleteAddr
 
 " Don't mess with whitespaces in those files
 let g:lessspace_blacklist = ['diff']
+
+" localvimrc
+" Store and restore all decisions.
+let g:localvimrc_persistent = 2
 
 " vim:set ft=vim et sw=2:
