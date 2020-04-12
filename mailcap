@@ -4,10 +4,10 @@
 # */*; xdg-open "%s"
 
 application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
-application/ghostview           ; print=pdftotext %s -; mutt_bgrun okular %s    ; copiousoutput
-application/pdf                 ; print=pdftotext %s -; mutt_bgrun okular %s    ; copiousoutput
-application/x-pdf               ; print=pdftotext %s -; mutt_bgrun okular %s    ; copiousoutput
-application/postscript          ; print=pdftotext %s -; mutt_bgrun okular %s    ; copiousoutput
+application/ghostview           ; pdftotext -layout %s -; xdg-open %s    ; copiousoutput
+application/pdf                 ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
+application/x-pdf               ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
+application/postscript          ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
 application/x-bzip2             ; bzip2 -dc %s                         ; copiousoutput
 application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
 application/x-csh               ; cat %s                                        ; copiousoutput
