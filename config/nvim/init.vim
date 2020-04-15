@@ -62,6 +62,9 @@ Plug 'ryanoasis/vim-devicons'
 " Buffers list in the command bar
 Plug 'bling/vim-bufferline'
 
+" Line numbering
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 " Snippets
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -100,6 +103,9 @@ Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 Plug 'liuchengxu/vim-clap'
 " SilverSearch plugin
 Plug 'rking/ag.vim'
+
+" Fuzzy finder for files/buffers and so on
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Preview registers
 " Seems to break tabular and completion
@@ -821,5 +827,11 @@ let g:lessspace_blacklist = ['diff']
 " localvimrc
 " Store and restore all decisions.
 let g:localvimrc_persistent = 2
+
+" https://github.com/Yggdroot/LeaderF
+let g:Lf_ShortcutF = "<leader>ff"
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
 
 " vim:set ft=vim et sw=2:
