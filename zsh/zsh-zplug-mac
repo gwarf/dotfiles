@@ -142,7 +142,7 @@ zplug "unixorn/git-extra-commands"
 # Add hub wrapper
 zplug "plugins/github", from:oh-my-zsh
 # Git completion
-zplug "plugins/gitfast",   from:oh-my-zsh
+zplug "plugins/gitfast", from:oh-my-zsh
 
 # Git + fzf
 # https://github.com/wfxr/forgit
@@ -154,6 +154,13 @@ zplug "hschne/fzf-git"
 
 # Replacement for autojump
 zplug "rupa/z", use:"*.sh"
+
+# Replacement for find
+zplug "sharkdp/fd", \
+      from:gh-r, \
+      as:command, \
+      use:"*${(L)$(uname -s)}*", \
+      rename-to:fd
 
 # Virtualen environement management
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
