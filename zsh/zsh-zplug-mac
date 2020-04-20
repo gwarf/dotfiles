@@ -363,3 +363,10 @@ fi
 # CLI for Google admin
 # https://github.com/jay0lee/GAM
 gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # tail-like of postfix logs on MacOS X
+  postfile_log() {
+    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
+  }
+fi
