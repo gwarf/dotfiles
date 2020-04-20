@@ -8,7 +8,8 @@ set folder = ~/Mail/EGI
 #set sendmail = "/usr/local/bin/msmtp -a egi"
 # Queue mail if offline
 # /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
-set sendmail = "msmtpq"
+# set sendmail = "$HOME/bin/msmtpq"
+set smtp_url = "smtp://127.0.0.1:25/"
 # Don't wait for retrun code
 # set sendmail_wait = -1
 # Using neomutt's SMTP feature
