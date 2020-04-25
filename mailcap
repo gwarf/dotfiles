@@ -1,13 +1,13 @@
 # mailcap file for usage with mutt.
 
 # Try to use xdg-open for everything
-*/*; xdg-open "%s"
+# */*; xdg-open "%s"
 
 application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
-application/ghostview           ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
-application/pdf                 ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
-application/x-pdf               ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
-application/postscript          ; mutt_bgrun okular %s    ; print=pdftotext %s -; copiousoutput
+application/ghostview           ; pdftotext -layout %s -; xdg-open %s    ; copiousoutput
+application/pdf                 ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
+application/x-pdf               ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
+application/postscript          ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
 application/x-bzip2             ; bzip2 -dc %s                         ; copiousoutput
 application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
 application/x-csh               ; cat %s                                        ; copiousoutput

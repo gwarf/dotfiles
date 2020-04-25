@@ -1,0 +1,37 @@
+# Setup: https://vdirsyncer.pimutils.org/en/stable/config.html#google
+[general]
+status_path = "~/.vdirsyncer/status/"
+
+[pair calendar]
+a = "google_calendar"
+b = "local_calendar"
+collections = ["from a", "from b"]
+metadata = ["color"]
+
+[storage local_calendar]
+type = "filesystem"
+path = "~/.calendars/"
+fileext = ".ics"
+
+[storage google_calendar]
+type = "google_calendar"
+token_file = "~/.vdirsyncer/google/google_calendar_token"
+client_id = "XXXX"
+client_secret = "XXXX"
+
+[pair contacts]
+a = "google_contacts"
+b = "local_contacts"
+collections = ["from a", "from b"]
+metadata = ["color"]
+
+[storage local_contacts]
+type = "filesystem"
+path = "~/.contacts/"
+fileext = ".vcf"
+
+[storage google_contacts]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/google/google_contacts_token"
+client_id = "XXXX"
+client_secret = "XXXX"

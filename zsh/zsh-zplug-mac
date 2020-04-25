@@ -142,7 +142,7 @@ zplug "unixorn/git-extra-commands"
 # Add hub wrapper
 zplug "plugins/github", from:oh-my-zsh
 # Git completion
-zplug "plugins/gitfast",   from:oh-my-zsh
+zplug "plugins/gitfast", from:oh-my-zsh
 
 # Git + fzf
 # https://github.com/wfxr/forgit
@@ -154,6 +154,13 @@ zplug "hschne/fzf-git"
 
 # Replacement for autojump
 zplug "rupa/z", use:"*.sh"
+
+# Replacement for find
+zplug "sharkdp/fd", \
+      from:gh-r, \
+      as:command, \
+      use:"*${(L)$(uname -s)}*", \
+      rename-to:fd
 
 # Virtualen environement management
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
@@ -352,3 +359,14 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# CLI for Google admin
+# https://github.com/jay0lee/GAM
+gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # tail-like of postfix logs on MacOS X
+  postfile_log() {
+    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
+  }
+fi

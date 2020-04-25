@@ -8,7 +8,8 @@ set folder = ~/Mail/EGI
 #set sendmail = "/usr/local/bin/msmtp -a egi"
 # Queue mail if offline
 # /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
-set sendmail = "msmtpq"
+# set sendmail = "$HOME/bin/msmtpq"
+set smtp_url = "smtp://127.0.0.1:25/"
 # Don't wait for retrun code
 # set sendmail_wait = -1
 # Using neomutt's SMTP feature
@@ -132,10 +133,15 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 # set query_command = "echo && notmuch address --output sender to:baptiste.grenier@egi.eu from:'*%s*' or --output recipients to:'*%s*' from:baptiste.grenier@egi.eu"
 # set query_command = "echo && notmuch address --output sender from:'*%s*' or --output recipients to:'*%s*'"
 
-set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
+# set query_format = "%4c %t %-70.70a %-70.70n %?e?(%e)?"
 
 # looking up addresses with mu cfind
-set query_command="mu cfind --format=mutt-ab '%s'"
+# set query_command="mu cfind --format=mutt-ab '%s'"
+
+# Contacts from Google contacts
+# Syncronised with vdirsyncer
+# Accessed via khard
+set query_command= "khard email --parsable %s"
 
 # set alias_file = "~/.config/neomutt/aliases"
 # source "~/.config/neomutt/aliases"

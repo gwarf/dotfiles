@@ -83,7 +83,11 @@ bind index,pager g noop
 
 # Use Ctrl-l to list URL using urlscan
 # macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
-macro pager \Cl "<pipe-entry>urlview<enter>" "call urlview to open links"
+# macro pager \Cl "<pipe-entry>urlview<enter>" "call urlview to open links"
+macro index,pager \cl "\
+ <enter-command> unset pipe_decode<enter> \
+ <pipe-message>extract_url<enter>" \
+ "get URLs with extract_url"
 
 # show flagged and unread mails (i.e. important)
 #macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"

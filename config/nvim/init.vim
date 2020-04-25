@@ -62,6 +62,9 @@ Plug 'ryanoasis/vim-devicons'
 " Buffers list in the command bar
 Plug 'bling/vim-bufferline'
 
+" Line numbering
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
 " Snippets
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -89,7 +92,7 @@ Plug 'robertbasic/vim-hugo-helper'
 " Tabular alignement
 Plug 'godlygeek/tabular'
 
-" Clean spaces at EOL
+" Clean spaces at EOL for lines that are edited
 Plug 'thirtythreeforty/lessspace.vim'
 
 " Fuzzy finder
@@ -100,6 +103,9 @@ Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 Plug 'liuchengxu/vim-clap'
 " SilverSearch plugin
 Plug 'rking/ag.vim'
+
+" Fuzzy finder for files/buffers and so on
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " Preview registers
 " Seems to break tabular and completion
@@ -113,12 +119,11 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'mechatroner/rainbow_csv'
 " Plug 'cespare/vim-toml'
 " Plug 'tmux-plugins/vim-tmux'
-" Markdown support should come after tabular
-" Plug 'plasticboy/vim-markdown'
-" Instant markdown preview
-" Plug 'suan/vim-instant-markdown'
-"Plug 'tpope/vim-markdown'
-"Plug 'gabrielelana/vim-markdown'
+Plug 'Yggdroot/indentLine'
+
+" Load locally available config files
+" For per-project settings
+Plug 'embear/vim-localvimrc'
 
 " Syntax validation
 " Plug 'scrooloose/syntastic'
@@ -134,6 +139,7 @@ Plug 'mattn/gist-vim'
 " Sensible default settings
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
+
 " Automatic indentation autoconfiguration
 Plug 'tpope/vim-sleuth'
 
@@ -756,12 +762,12 @@ let g:is_posix=1
 " nnoremap <leader>t :tabnew <bar> :TW<CR>
 
 " Autocorrect in text and markdown files
-
 augroup litecorrect
   autocmd!
   autocmd FileType markdown,mkd call litecorrect#init()
   autocmd FileType textile call litecorrect#init()
 augroup END
+
 " Force the top-ranked correction on the first misspelled word before the
 " cursor.
 nnoremap <C-s> [s1z=<c-o>
@@ -804,12 +810,28 @@ if has("persistent_undo")
   set undofile
 endif
 
-" vim-markdown
+" vim-markdown (from vim-polyglot)
 " Disable folding
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_new_list_item_indent = 2
+" Disable concealing
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 
 " Complete emails address in every files
 set completefunc=vimmail#contacts#CompleteAddr
+
+" Don't mess with whitespaces in those files
+let g:lessspace_blacklist = ['diff']
+
+" localvimrc
+" Store and restore all decisions.
+let g:localvimrc_persistent = 2
+
+" https://github.com/Yggdroot/LeaderF
+let g:Lf_ShortcutF = "<leader>ff"
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
 
 " vim:set ft=vim et sw=2:
