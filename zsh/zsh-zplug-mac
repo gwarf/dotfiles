@@ -166,15 +166,16 @@ zplug "sharkdp/fd", \
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
-zplug 'pyenv/pyenv', as:"command", use:"bin/*"
-
-zplug "pyenv/pyenv-virtualenv", \
-    on:'pyenv/pyenv', \
-    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
-
-zplug "pyenv/pyenv-virtualenvwrapper", \
-    on:'pyenv/pyenv-virtualenv', \
-    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
+# XXX disable pyenv as being unused those days.
+# zplug 'pyenv/pyenv', as:"command", use:"bin/*"
+#
+# zplug "pyenv/pyenv-virtualenv", \
+#     on:'pyenv/pyenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
+#
+# zplug "pyenv/pyenv-virtualenvwrapper", \
+#     on:'pyenv/pyenv-virtualenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
 
 # asdf: https://github.com/asdf-vm/asdf
 # https://github.com/kiurchv/asdf.plugin.zsh
