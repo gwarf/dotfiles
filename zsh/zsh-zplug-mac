@@ -258,7 +258,7 @@ path+=/usr/local/sbin
 PATH="$HOME/bin:$PATH"
 
 # Use coreutils GNU utilities
-if [ -f /usr/local/opt/coreutils/libexec/gnubin ]; then
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
   MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
@@ -344,12 +344,21 @@ bindkey 's' insert-sudo
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='nvim'
-  alias vim='nvim'
-  alias vi='nvim'
+  if (( $+commands[nvim] )); then
+    export EDITOR='nvim'
+    alias vim='nvim'
+    alias vi='nvim'
+  fi
 fi
 
-# Manually set your language environment
+if (( $+commands[bat] )); then
+  export SYSTEMD_PAGER='bat'
+  export PAGER='bat'
+else
+  export SYSTEMD_PAGER='cat'
+fi
+
+# Manually set language environment
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -370,7 +379,8 @@ export MAKEOPS='j6'
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-# Source secrets
+# Source secrets if existing
+[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
 [ -f ~/.secrets ] && source ~/.secrets
 
 # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
