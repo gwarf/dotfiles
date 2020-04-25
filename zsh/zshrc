@@ -1,8 +1,6 @@
 # ~/.zshrc
 # Read by all interactive shells
 
-export LANG="en_US.UTF-8"
-
 # https://dotfiles.github.io/
 # HTTps://github.com/zplug/zplug
 # https://github.com/unixorn/zsh-quickstart-kit
@@ -255,26 +253,40 @@ insert_sudo () { zle beginning-of-line; zle -U '_ ' }
 zle -N insert-sudo insert_sudo
 bindkey 's' insert-sudo
 
-# named directories
-# XXX does not play nice with enhancd
-# hash -d repos=~/repos
-# hash -d Downloads=~/Downloads
-# hash -d Documents=~/Documents
-# hash -d GoogleDrive=~/GoogleDrive
+# Misc
 
-export EDITOR='vim'
-#export PAGER='less'
-export SYSTEMD_PAGER='cat'
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+  alias vim='nvim'
+  alias vi='nvim'
+fi
+
+if (( $+commands[bat] )); then
+  export SYSTEMD_PAGER='bat'
+  export PAGER='bat'
+else
+  export SYSTEMD_PAGER='cat'
+fi
+
+# Manually set language environment
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 #export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
 #export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
 export WORKON_HOME=~/.virtualenvs
-source /usr/bin/virtualenvwrapper.sh
+if [ -f /usr/bin/virtualenvwrapper.sh ]; then
+  source /usr/bin/virtualenvwrapper.sh
+fi
 
 #####################################################################
 ## Shell aliases and functions
 #####################################################################
 
+# XXX Check if not already defined by plugin
 # do not delete / or prompt if deleting more than 3 files at a time
 alias rm='rm -I --preserve-root'
 
@@ -300,7 +312,7 @@ alias halt='systemctl poweroff'
 alias reboot='systemctl reboot'
 alias suspend='systemctl suspend'
 
-# Global aliases {{{
+# Global aliases
 alias -g A="| awk"
 # Color output using ccze
 # XXX ccze -A | less -R
@@ -316,9 +328,8 @@ alias -g T="| tail"
 alias -g V="| vim -R -"
 alias -g U=' --help | head'
 alias -g W="| wc"
-# }}}
 
-# Suffix aliases {{{
+# Suffix aliases
 alias -s zip=zipinfo
 alias -s tgz=gzcat
 alias -s gz=gzcat
@@ -342,33 +353,17 @@ alias -s bmp=sxiv
 alias -s mp3=clementine
 alias -s m4a=clementine
 alias -s ogg=clementine
-# }}
 
 # noremoteglob breaks scp with filenames containing parenthesis
 unalias scp
 alias scp='noglob scp'
 
-# Sync and update system
-alias yupd='yaourt -Syu'
-# Force sync and update system
-alias yupdf='yaourt -Syyu'
-# Remove a package and all related and unused dependencies
-alias yrs='yaourt -Rs'
-# Remove a package, its dependencies and all the packages that depend on the
-# target package - DANGEROUS
-alias yrsc='yaourt -Rsc'
-
-alias music='termite --name ncmpcpp -e ncmpcpp'
-
-alias vim=nvim
 # Aliases for launching some vimwikis
 alias vimnote='vim -c VimwikiMakeDiaryNote'
-
 alias vimwiki='vim -c VimwikiUISelect'
 alias vimdiary='vim -c VimwikiDiaryIndex'
 alias vimwiki_w='vim -c VimwikiIndex 1'
 alias vimwiki_h='vim -c VimwikiIndex 2'
-
 alias dashboard="vim -p -c TW -c 'VimwikiTabIndex 1' -c 'VimwikiTabIndex 2'"
 
 alias alot_work='alot -p ~/Mail -l ~/.config/alot/alot.log'
@@ -386,6 +381,7 @@ alias gcal-agenda='gcalcli agenda'
 # Home-related tasks
 alias th='task rc:~/.taskrc-home'
 
+# XXX check if not already done by plugin
 if (( $+commands[hub] )); then
   alias git=hub
 fi
@@ -402,11 +398,6 @@ fi
 # Use pydf if available
 if (( $+commands[pydf] )); then
   alias df=pydf
-fi
-
-# Completion for hexo
-if (( $+commands[hexo] )); then
-  eval "$(hexo --completion=zsh)"
 fi
 
 xev() {
@@ -431,54 +422,43 @@ free() {
 }
 
 activate() {
-    . $1/bin/activate
+  . $1/bin/activate
 }
-
-# XXX currently in cron
-# XXX launch this from xinitrc/i3 to ensure that it's called only in X
-# if [ -x /usr/bin/gcalcli ]; then
-#   while true; do
-#     /usr/bin/gcalcli --calendar="davis" remind
-#     sleep 300
-#   done &
-# fi
 
 # scan the local network and list the connected devices
 lscan() {
-    local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
-    local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
-    # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
-    printf "$scanReport\n"
+  local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
+  local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
+  # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
+  printf "$scanReport\n"
 }
 
 listdirectories() {
-    # TODO: Ignore .git, node_modules, etc
-    find -L . -type d -print -o -type l -print -o \
-        \( -path '*/\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \) -prune \
-        2> /dev/null | \
-        grep -v '^.$' | \
-        sed 's|\./||g' | \
-        fzf-tmux --ansi --multi --tac --preview-window right:50% \
-            --preview 'tree -C {} | head -$LINES'
+  # TODO: Ignore .git, node_modules, etc
+  find -L . -type d -print -o -type l -print -o \
+      \( -path '*/\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \) -prune \
+      2> /dev/null | \
+      grep -v '^.$' | \
+      sed 's|\./||g' | \
+      fzf-tmux --ansi --multi --tac --preview-window right:50% \
+          --preview 'tree -C {} | head -$LINES'
 }
 
 project-switcher() {
-    local projects proj
+  local projects proj
 
-    projects="$(realpath ~/Projects/)"
-    proj=$(find -L "$projects" -maxdepth 1 -type d -printf "%f\n" -o -type l -printf "%f\n" -o -prune \
-        2> /dev/null | \
-        grep -v '^.$' | \
-        sed 's|\./||g' | \
-        fzf-tmux --ansi --multi --tac --preview-window right:50% \
-            --preview "echo 'Branches\n' && git -C $projects/{} rev-parse HEAD > /dev/null 2>&1 &&
-                git -C $projects/{} branch -vv --color=always &&
-                echo '\n\nCommits\n' && git -C $projects/{} l -10 | head -$LINES") || return
+  projects="$(realpath ~/Projects/)"
+  proj=$(find -L "$projects" -maxdepth 1 -type d -printf "%f\n" -o -type l -printf "%f\n" -o -prune \
+      2> /dev/null | \
+      grep -v '^.$' | \
+      sed 's|\./||g' | \
+      fzf-tmux --ansi --multi --tac --preview-window right:50% \
+          --preview "echo 'Branches\n' && git -C $projects/{} rev-parse HEAD > /dev/null 2>&1 &&
+              git -C $projects/{} branch -vv --color=always &&
+              echo '\n\nCommits\n' && git -C $projects/{} l -10 | head -$LINES") || return
 
-    cd $projects/$proj
+  cd $projects/$proj
 }
-
-# export SHELL='/usr/bin/zsh -l'
 
 # https://nurdletech.com/linux-notes/agents/keyring.html
 # https://faq.i3wm.org/question/4126/sessions-environment-variables/index.html%3Fanswer=4130.html#post-id-4130
@@ -519,12 +499,33 @@ if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
   . /usr/share/doc/pkgfile/command-not-found.zsh
 fi
 
-[ -f ~/.appdb-env.sh ] && . ~/.appdb-env.sh
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-[ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+[ -f ~/.appdb-env.sh ] && . ~/.appdb-env.sh
 
 # Source secrets if existing
 [ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
+[ -f ~/.secrets ] && source ~/.secrets
 
 # Source local zsh conf if existing
 [ -f ~/.local.zsh ] && . ~/.local.zsh
+
+# https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
+# To prevent ctrl-o being discared by the terminal driver
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  stty discard undef
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# CLI for Google admin
+# https://github.com/jay0lee/GAM
+gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # tail-like of postfix logs on MacOS X
+  postfile_log() {
+    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
+  }
+fi
