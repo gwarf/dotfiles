@@ -368,13 +368,15 @@ export LANG=en_US.UTF-8
 alias lsd='ls -d */'
 alias l='ls -l'
 
-# https://github.com/pyenv/pyenv/wiki/Common-build-problems
-# Required for building python with pyenv on Mac OS X
-export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-# Speeding up build
-export CFLAGS="-O2 $CFLAGS"
-# PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+  # Required for building python with pyenv on Mac OS X
+  export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+  export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+  # Speeding up build
+  export CFLAGS="-O2 $CFLAGS"
+  # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+fi
 
 export MAKEOPS='j6'
 
