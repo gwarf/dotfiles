@@ -1,10 +1,49 @@
+# ~/.zshrc
+# Read by all interactive shells
+
+# References
+# https://dotfiles.github.io/
+# HTTps://github.com/zplug/zplug
+# https://github.com/unixorn/zsh-quickstart-kit
+# http://awesomeawesome.party/awesome-zsh-plugins
+# http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
+# Ideas: https://github.com/mika/zsh-pony
+# Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
+
+# Requirements
+# Incremental search
+# l, ls, hub, docker, df/pydf and other useful aliases
+# tip on existing alias
+# syntax highlighting
+# Case insensitive directories completion
+# Shrunk path in prompt
+# completion (vboxmanage and all other)
+# Fuzzy command line completion
+# autosuggestions
+# improved history
+# vim mode
+# push-line to use another command before current command
+# colored directories
+# colored man pages
+# auto cd
+# ls after cd
+# ssh key management
+# simple calc
+# 256 color / true color
+# git support
+# python venv
+
 export ZPLUG_HOME=~/.zplug
 
 if [ ! -d "$ZPLUG_HOME" ]; then
   git clone https://github.com/zplug/zplug $ZPLUG_HOME
 fi
 
-source $ZPLUG_HOME/init.zsh
+source "$ZPLUG_HOME/init.zsh"
+
+# Zplug auto update
+# XXX Disable to validate if it breaks "special" zplugs such as prezto
+# zplug "gwarf/09afddb8741a7ea478ce53aafe20b777", from:gist
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Use coreutils GNU utilities
@@ -13,7 +52,6 @@ fi
 
 # https://github.com/unixorn/awesome-zsh-plugins
 # https://gitlab.yuribugelli.it/yuri/dotfiles/blob/master/zsh/zplug.zsh
-
 
 # Load completion library for those sweet [tab] squares
 # zplug "lib/completion", from:oh-my-zsh
@@ -43,60 +81,52 @@ zplug "chrissicool/zsh-256color"
 # https://github.com/tonsky/FiraCode
 
 # Theme
-# Powerlevel9k: https://github.com/Powerlevel9k/powerlevel9k
-# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
 # Powerlevel10k: https://github.com/romkatv/powerlevel10k
 zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
-# Bullet train: https://github.com/caiogondim/bullet-train.zsh
-# zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
-# Pure theme: https://github.com/sindresorhus/pure
-# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-# zplug "mafredri/zsh-async", from:github, defer:0, on:"sindresorhus/pure"
-# Spacechip - https://denysdovhan.com/spaceship-prompt/
-# zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 
 # dircolors comes from brew/coreutils on Mac OS X
 # Download repo so that we can use it's content
-zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
+zplug "zlsun/solarized-man"
+
 # eval $(dircolors $ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-universal)
 # Alternative dircolors configuration
 # https://github.com/arcticicestudio/nord-dircolors
 zplug "arcticicestudio/nord-dircolors", ignore:"*", as:plugin
 eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors)
 
-zplug "zlsun/solarized-man"
-
 # Replacement for zsh-users/zsh-syntax-highlighting
 # Theme management: fsh-alias -h
 zplug "zdharma/fast-syntax-highlighting"
+# Ctrl-R to search multi word with AND
+zplug "zdharma/history-search-multi-word"
 
+# Modules from prezto
 # Aliases and color some command output
+# https://github.com/sorin-ionescu/prezto/tree/master/modules
 # Ensure that ls always add some indicators
 # alias ls='ls -F'
 zplug "modules/utility", from:prezto
+zplug "modules/editor", from:prezto
+zplug "modules/history", from:prezto
+zplug "modules/tmux", from:prezto
+
+# Modules from oh-my-zsh
+zplug "plugins/shrink-path", from:oh-my-zsh
+zplug "plugins/taskwarrior", from:oh-my-zsh
+# Hub wrapper
+zplug "plugins/github", from:oh-my-zsh
+# Git completion
+zplug "plugins/gitfast", from:oh-my-zsh
 
 zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
-
-zplug "modules/editor", from:prezto
-
-zplug "modules/history", from:prezto
-# Ctrl-R to search multi word with AND
-zplug "zdharma/history-search-multi-word"
-zplug "zsh-users/zsh-history-substring-search", defer:2
 
 # Load after modute/editor to enable VI bindings
 zplug "sharat87/zsh-vim-mode", defer:3
 
-# Use TMUX plugin from zpresto
-# https://github.com/sorin-ionescu/prezto/tree/master/modules/tmux
-zplug "modules/tmux", from:prezto
-
-# Shrink path in prompt
-zplug "plugins/shrink-path", from:oh-my-zsh
-
-# Completions and autosuggestions
+# Modules from zsh-usesr
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search", defer:2
 
 # XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
@@ -119,6 +149,7 @@ export ENHANCD_HYPHEN_ARG=_
 # XXX k is too slow, fallback to ls
 export ENHANCD_HOOK_AFTER_CD=ls
 
+# XXX No more needed? Was for one theme?
 zplug "marzocchi/zsh-notify"
 
 # Fuzzy command line completion: Ctrl-T
@@ -130,6 +161,12 @@ zplug "junegunn/fzf-bin", \
     as:command, \
     rename-to:fzf, \
     use:"*${(L)$(uname -s)}*amd64*"
+# https://github.com/hschne/fzf-git
+# use git <command> **
+zplug "hschne/fzf-git"
+# Git + fzf
+# https://github.com/wfxr/forgit
+zplug 'wfxr/forgit'
 
 zplug "so-fancy/diff-so-fancy", as:command
 
@@ -138,19 +175,6 @@ zplug "so-fancy/diff-so-fancy", as:command
 # zplug "plugins/git",   from:oh-my-zsh
 # https://github.com/unixorn/git-extra-commands
 zplug "unixorn/git-extra-commands"
-
-# Add hub wrapper
-zplug "plugins/github", from:oh-my-zsh
-# Git completion
-zplug "plugins/gitfast", from:oh-my-zsh
-
-# Git + fzf
-# https://github.com/wfxr/forgit
-zplug 'wfxr/forgit'
-
-# https://github.com/hschne/fzf-git
-# use git <command> **
-zplug "hschne/fzf-git"
 
 # Replacement for autojump
 zplug "rupa/z", use:"*.sh"
@@ -162,29 +186,37 @@ zplug "sharkdp/fd", \
       use:"*${(L)$(uname -s)}*", \
       rename-to:fd
 
+# Python virtualenv management
+
 # Virtualen environement management
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
-# XXX disable pyenv as being unused those days.
-# zplug 'pyenv/pyenv', as:"command", use:"bin/*"
-#
-# zplug "pyenv/pyenv-virtualenv", \
-#     on:'pyenv/pyenv', \
-#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
-#
-# zplug "pyenv/pyenv-virtualenvwrapper", \
-#     on:'pyenv/pyenv-virtualenv', \
-#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
-
-# asdf: https://github.com/asdf-vm/asdf
-# https://github.com/kiurchv/asdf.plugin.zsh
-# zplug "kiurchv/asdf.plugin.zsh", defer:2
-# zplug "plugins/asdf, from:oh-my-zsh
-
 # Potentially lighter than pyenv
 # https://github.com/cxreg/smartcd
 # https://github.com/anyenv/anyenv
+
+# asdf
+# git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+# asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+# asdf plugin list-all python
+# export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
+# asdf plugin install python 2.7
+# zplug "plugins/asdf", from:oh-my-zsh
+# asdf: https://github.com/asdf-vm/asdf
+# https://github.com/kiurchv/asdf.plugin.zsh
+# zplug "kiurchv/asdf.plugin.zsh", defer:2
+
+# pyenv
+# XXX Disabled as it slowing down shell opening drastically
+# XXX Ideally it should be enabled dynamically when doing python development
+# zplug 'pyenv/pyenv', as:"command", use:"bin/*"
+# zplug "pyenv/pyenv-virtualenv", \
+#     on:'pyenv/pyenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
+# zplug "pyenv/pyenv-virtualenvwrapper", \
+#     on:'pyenv/pyenv-virtualenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
 
 # prezto configuration
 
@@ -195,13 +227,11 @@ if zplug check modules/utility; then
   # Color output (auto set to 'no' on dumb terminals).
   zstyle ':prezto:*:*' color 'yes'
 fi
-
 # prezto/editor
 if zplug check modules/editor; then
   zstyle ':prezto:module:editor' key-bindings 'vi'
   zstyle ':prezto:module:editor' dot-expansion 'yes'
 fi
-
 if zplug check modules/tmux; then
   zstyle ':prezto:module:tmux:auto-start' local 'no'
   zstyle ':prezto:module:tmux:auto-start' remote 'yes'
@@ -220,17 +250,18 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-# zplug load --verbose
 zplug load
 
+# Path management
 typeset -U path
 path+=/usr/local/sbin
-
 PATH="$HOME/bin:$PATH"
 
 # Use coreutils GNU utilities
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+if [ -f /usr/local/opt/coreutils/libexec/gnubin ]; then
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+fi
 
 # To allow mu to find mails
 MAILDIR=~/Mail
@@ -238,17 +269,6 @@ MAILDIR=~/Mail
 export PATH MANPATH MAILDIR
 
 # Plugins-specific configuration required after loading them
-
-if zplug check caiogondim/bullet-train.zsh; then
-  BULLETTRAIN_STATUS_EXIT_SHOW=true
-  # bullettrain promt: disable nvm and go, show path using custom segment
-  BULLETTRAIN_PROMPT_ORDER=(time status context custom perl ruby virtualenv git hg cmd_exec_time)
-  # Display shunk path in custom prompt segement
-  BULLETTRAIN_CUSTOM_MSG='$(shrink_path -f "$PWD")'
-  BULLETTRAIN_CUSTOM_BG=blue
-  BULLETTRAIN_CUSTOM_FG=white
-  BULLETTRAIN_CONTEXT_DEFAULT_USER='baptiste'
-fi
 
 if zplug "MichaelAquilina/zsh-you-should-use"; then
   export YSU_HARDCORE=0
