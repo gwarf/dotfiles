@@ -1,0 +1,59 @@
+
+# Allow nested tmux sessions by making "C-b b" possible for sending a control
+# sequence to a nested session
+bind-key b send-prefix
+
+# Shortcut for resizing panes
+bind up resize-pane -U 5
+bind down resize-pane -D 5
+bind left resize-pane -L 5
+bind right resize-pane -R 5
+
+# pane movement
+bind-key @ command-prompt -p "create pane from:"  "join-pane -s '%%'"
+bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
+
+# window movement / renumbering like in screen's :number
+bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
+bind-key . command-prompt "move-window -r -t '%%'"
+
+# Use zsh (login shell)
+# Use ZSH from homebrew on MacOS X
+if-shell "uname | grep -q Darwin" "set -g default-command '/usr/local/bin/zsh -l'" "set -g default-command '/bin/zsh -l'"
+
+# Tmux continuum
+set -g @continuum-restore 'on'
+
+# Managing plugins using TPM
+# prefix+I to install
+# prefix+U to update
+
+# Logging
+# Screenshot: prefix + alt + p
+# Save complete history: prefix + alt + shift + p
+# Unable to get some special char working
+#set -g @almost-sensible 'off'
+set -g @tpm_plugins '                     \
+    arcticicestudio/nord-tmux             \
+    tmux-plugins/tmux-sensible            \
+    tmux-plugins/tmux-resurrect           \
+    tmux-plugins/tmux-continuum           \
+    tmux-plugins/tmux-yank                \
+    tmux-plugins/tmux-pain-control        \
+    tmux-plugins/tmux-copycat             \
+    tmux-plugins/tmux-open                \
+    tmux-plugins/tmux-prefix-highlight    \
+    tmux-plugins/tmux-sessionist          \
+    tmux-plugins/tmux-logging             \
+    tmux-plugins/tpm                      \
+'
+
+# Bootstrap tpm if needed
+if "test ! -d ~/.tmux/plugins/tpm" \
+   "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
+
+# Initialize TMUX plugin manager
+run '~/.tmux/plugins/tpm/tpm'
+
+# Source local configuration if any
+if '[ -f ~/.tmux.local.conf ]' 'run ~/.tmux.local.conf'
