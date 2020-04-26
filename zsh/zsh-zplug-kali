@@ -1,0 +1,373 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+export ZPLUG_HOME=~/.zplug
+
+if [ ! -d "$ZPLUG_HOME" ]; then
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+fi
+
+source $ZPLUG_HOME/init.zsh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Use coreutils GNU utilities
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
+# https://github.com/unixorn/awesome-zsh-plugins
+# https://gitlab.yuribugelli.it/yuri/dotfiles/blob/master/zsh/zplug.zsh
+
+
+# Load completion library for those sweet [tab] squares
+# zplug "lib/completion", from:oh-my-zsh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Load if "if" tag returns true
+  zplug "lib/clipboard", from:oh-my-zsh
+fi
+
+# Load "emoji-cli" if "jq" is installed
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
+zplug "b4b4r07/emoji-cli", \
+    on:"stedolan/jq"
+
+# Improved directory listing
+# https://github.com/supercrabtree/k
+zplug "supercrabtree/k"
+# XXX requires exa
+# zplug "DarrinTisdale/zsh-aliases-exa"
+
+zplug "chrissicool/zsh-256color"
+
+# Fonts
+# Hack Regular Nerd Font Complete
+# https://github.com/tonsky/FiraCode
+
+# Theme
+# Powerlevel9k: https://github.com/Powerlevel9k/powerlevel9k
+# zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+# Powerlevel10k: https://github.com/romkatv/powerlevel10k
+zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
+# Bullet train: https://github.com/caiogondim/bullet-train.zsh
+# zplug "caiogondim/bullet-train.zsh", use:bullet-train.zsh-theme, defer:3
+# Pure theme: https://github.com/sindresorhus/pure
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+# zplug "mafredri/zsh-async", from:github, defer:0, on:"sindresorhus/pure"
+# Spacechip - https://denysdovhan.com/spaceship-prompt/
+# zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+
+# dircolors comes from brew/coreutils on Mac OS X
+# Download repo so that we can use it's content
+zplug "seebi/dircolors-solarized", ignore:"*", as:plugin
+# eval $(dircolors $ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-universal)
+# Alternative dircolors configuration
+# https://github.com/arcticicestudio/nord-dircolors
+zplug "arcticicestudio/nord-dircolors", ignore:"*", as:plugin
+eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors)
+
+zplug "zlsun/solarized-man"
+
+# Replacement for zsh-users/zsh-syntax-highlighting
+# Theme management: fsh-alias -h
+zplug "zdharma/fast-syntax-highlighting"
+
+# Aliases and color some command output
+# Ensure that ls always add some indicators
+# alias ls='ls -F'
+zplug "modules/utility", from:prezto
+
+zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
+
+zplug "modules/editor", from:prezto
+
+zplug "modules/history", from:prezto
+# Ctrl-R to search multi word with AND
+zplug "zdharma/history-search-multi-word"
+zplug "zsh-users/zsh-history-substring-search", defer:2
+
+# Load after modute/editor to enable VI bindings
+zplug "sharat87/zsh-vim-mode", defer:3
+
+# Use TMUX plugin from zpresto
+# https://github.com/sorin-ionescu/prezto/tree/master/modules/tmux
+zplug "modules/tmux", from:prezto
+
+# Shrink path in prompt
+zplug "plugins/shrink-path", from:oh-my-zsh
+
+# Completions and autosuggestions
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+
+# XXX Find replacement allowing to disable check for some aliases
+zplug "MichaelAquilina/zsh-you-should-use"
+
+# Usage: = 2+2
+zplug "arzzen/calc.plugin.zsh"
+
+# Should be loaded after modules/utility to overwrite cd alias
+# https://github.com/b4b4r07/enhancd
+zplug "b4b4r07/enhancd", use:init.sh, defer:3
+export ENHANCD_FILTER='fzf'
+# When entering a git repo do a git status, othewise do an ls
+export ENHANCD_HOOK_AFTER_CD='([ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1) && git st || ls -lhrt'
+# export ENHANCD_COMMAND='c'
+export ENHANCD_DISABLE_HOME=1
+export ENHANCD_DISABLE_HYPHEN=1
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_HYPHEN_ARG=_
+# Run k when entering a directory
+# XXX k is too slow, fallback to ls
+export ENHANCD_HOOK_AFTER_CD=ls
+
+zplug "marzocchi/zsh-notify"
+
+# Fuzzy command line completion: Ctrl-T
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+# Grab binaries from GitHub Releases
+# and rename with the "rename-to:" tag
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*${(L)$(uname -s)}*amd64*"
+
+zplug "so-fancy/diff-so-fancy", as:command
+
+# Clashing with forgit, not sure if useful
+# Git aliases
+# zplug "plugins/git",   from:oh-my-zsh
+# https://github.com/unixorn/git-extra-commands
+zplug "unixorn/git-extra-commands"
+
+# Add hub wrapper
+zplug "plugins/github", from:oh-my-zsh
+# Git completion
+zplug "plugins/gitfast", from:oh-my-zsh
+
+# Git + fzf
+# https://github.com/wfxr/forgit
+zplug 'wfxr/forgit'
+
+# https://github.com/hschne/fzf-git
+# use git <command> **
+zplug "hschne/fzf-git"
+
+# Replacement for autojump
+zplug "rupa/z", use:"*.sh"
+
+# Replacement for find
+zplug "sharkdp/fd", \
+      from:gh-r, \
+      as:command, \
+      use:"*${(L)$(uname -s)}*", \
+      rename-to:fd
+
+# Virtualen environement management
+# https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
+zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
+
+zplug 'pyenv/pyenv', as:"command", use:"bin/*"
+
+zplug "pyenv/pyenv-virtualenv", \
+    on:'pyenv/pyenv', \
+    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
+
+zplug "pyenv/pyenv-virtualenvwrapper", \
+    on:'pyenv/pyenv-virtualenv', \
+    hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
+
+# asdf: https://github.com/asdf-vm/asdf
+# https://github.com/kiurchv/asdf.plugin.zsh
+# zplug "kiurchv/asdf.plugin.zsh", defer:2
+# zplug "plugins/asdf, from:oh-my-zsh
+
+# Potentially lighter than pyenv
+# https://github.com/cxreg/smartcd
+# https://github.com/anyenv/anyenv
+
+# prezto configuration
+
+# prezto/utility
+if zplug check modules/utility; then
+  # Use safe operations by default
+  zstyle ':prezto:module:utility' safe-ops 'yes'
+  # Color output (auto set to 'no' on dumb terminals).
+  zstyle ':prezto:*:*' color 'yes'
+fi
+
+# prezto/editor
+if zplug check modules/editor; then
+  zstyle ':prezto:module:editor' key-bindings 'vi'
+  zstyle ':prezto:module:editor' dot-expansion 'yes'
+fi
+
+if zplug check modules/tmux; then
+  zstyle ':prezto:module:tmux:auto-start' local 'no'
+  zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+  zstyle ':prezto:module:tmux:session' name 'work'
+  zstyle ':prezto:module:tmux:iterm' integrate 'no'
+fi
+
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+# zplug load --verbose
+zplug load
+
+typeset -U path
+path+=/usr/local/sbin
+
+PATH="$HOME/bin:$PATH"
+
+# Use coreutils GNU utilities
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+# To allow mu to find mails
+MAILDIR=~/Mail
+
+export PATH MANPATH MAILDIR
+
+# Plugins-specific configuration required after loading them
+
+if zplug check caiogondim/bullet-train.zsh; then
+  BULLETTRAIN_STATUS_EXIT_SHOW=true
+  # bullettrain promt: disable nvm and go, show path using custom segment
+  BULLETTRAIN_PROMPT_ORDER=(time status context custom perl ruby virtualenv git hg cmd_exec_time)
+  # Display shunk path in custom prompt segement
+  BULLETTRAIN_CUSTOM_MSG='$(shrink_path -f "$PWD")'
+  BULLETTRAIN_CUSTOM_BG=blue
+  BULLETTRAIN_CUSTOM_FG=white
+  BULLETTRAIN_CONTEXT_DEFAULT_USER='baptiste'
+fi
+
+if zplug "MichaelAquilina/zsh-you-should-use"; then
+  export YSU_HARDCORE=0
+fi
+
+if zplug check "zsh-users/zsh-completions"; then
+  ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
+fi
+
+if zplug check "romkatv/powerlevel10k"; then
+  # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+  [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+fi
+
+if zplug check "pyenv/pyenv"; then
+  export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
+  eval "$(pyenv init -)"
+fi
+
+# ZSH options
+
+# Make sure prompt is able to be generated properly.
+# Required for themes like bullet-train
+setopt prompt_subst
+
+# Executing directories will open them
+setopt auto_cd
+
+## Completion
+
+# Hilight directories and use colors in ZSH completion
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
+
+# Rehash when completing commands
+zstyle ":completion:*:commands" rehash 1
+# Completion menu's navigation with arrows
+zstyle ':completion:*' menu select
+zstyle ':completion:*:matches' group 'yes'
+# let's use the tag name as group name
+zstyle ':completion:*' group-name ""
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}= %d =%{$reset_color%}"
+# Case insensitive completion
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+
+# Always use substring search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+bindkey -M vicmd 'j' history-substring-search-down
+
+# In Vi mode use q to allow to use another command before current one
+bindkey -M vicmd "q" push-line
+
+# Push a command onto a stack allowing you to run another command first
+bindkey '^J' push-line
+
+# Allows editing the command line with an external editor
+autoload edit-command-line
+zle -N edit-command-line
+# Press Esc=v to edit command line
+bindkey -M vicmd "v" edit-command-line
+
+# Alt-S inserts sudo at the starts of the line
+insert_sudo () { zle beginning-of-line; zle -U '_ ' }
+zle -N insert-sudo insert_sudo
+bindkey 's' insert-sudo
+
+# Misc
+
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+  alias vim='nvim'
+  alias vi='nvim'
+fi
+
+# Manually set your language environment
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# list only directories
+alias lsd='ls -d */'
+alias l='ls -l'
+
+# https://github.com/pyenv/pyenv/wiki/Common-build-problems
+# Required for building python with pyenv on Mac OS X
+export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+# Speeding up build
+export CFLAGS="-O2 $CFLAGS"
+# PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+
+export MAKEOPS='j6'
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+# Source secrets
+[ -f ~/.secrets ] && source ~/.secrets
+
+# https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
+# To prevent ctrl-o being discared by the terminal driver
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  stty discard undef
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# CLI for Google admin
+# https://github.com/jay0lee/GAM
+gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
