@@ -36,11 +36,11 @@ Plug 'Shougo/neosnippet-snippets'
 
 " Theme
 " Colorscheme
-if has('nvim')
-  Plug 'lifepillar/vim-solarized8'
-else
-  Plug 'altercation/vim-colors-solarized'
-endif
+" if has('nvim')
+"   Plug 'lifepillar/vim-solarized8'
+" else
+"   Plug 'altercation/vim-colors-solarized'
+" endif
 
 " Colorscheme
 Plug 'arcticicestudio/nord-vim'
