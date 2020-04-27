@@ -10,6 +10,17 @@
 # Ideas: https://github.com/mika/zsh-pony
 # Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
 
+# Dependencies
+# - bat: cat/less replacement
+# - exa: ls replacement
+# - fd: find replacement
+# - pydf: df replacement
+# - jq: json formatting/queryring
+# - taskwarrior: task management
+# - fzf: fuzzyfinder
+# - nvim: vim replacement
+# - gam: CLI for G Suite
+
 # Requirements
 # Incremental search
 # l, ls, hub, docker, df/pydf and other useful aliases
@@ -93,12 +104,8 @@ zplug "chrissicool/zsh-256color"
 # Powerlevel10k: https://github.com/romkatv/powerlevel10k
 zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
 
-# dircolors comes from brew/coreutils on Mac OS X
-# Download repo so that we can use it's content
-zplug "zlsun/solarized-man"
-
-# eval $(dircolors $ZPLUG_HOME/repos/seebi/dircolors-solarized/dircolors.ansi-universal)
-# Alternative dircolors configuration
+# XXX dircolors comes from brew/coreutils on Mac OS X
+# Nordic dircolors configuration
 # https://github.com/arcticicestudio/nord-dircolors
 zplug "arcticicestudio/nord-dircolors", ignore:"*", as:plugin
 eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors)
@@ -157,9 +164,6 @@ export ENHANCD_HYPHEN_ARG=_
 # Run k when entering a directory
 # XXX k is too slow, fallback to ls
 export ENHANCD_HOOK_AFTER_CD=ls
-
-# XXX No more needed? Was for one theme?
-zplug "marzocchi/zsh-notify"
 
 # Fuzzy command line completion: Ctrl-T
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
@@ -358,6 +362,8 @@ fi
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
   export PAGER='bat'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export BAT_THEME='nord'
 else
   export SYSTEMD_PAGER='cat'
 fi
@@ -399,9 +405,11 @@ export MAKEOPS='j6'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# CLI for Google admin
-# https://github.com/jay0lee/GAM
-gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
+if [ -x "$HOME/bin/gam/gam" ]; then
+  # CLI for Google admin
+  # https://github.com/jay0lee/GAM
+  gam() { "$HOME/bin/gam/gam" "$@" ; }
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # tail-like of postfix logs on MacOS X
