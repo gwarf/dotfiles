@@ -19,6 +19,7 @@
 # - fzf: fuzzyfinder
 # - nvim: vim replacement
 # - gam: CLI for G Suite
+# - hub: git replacement
 
 # Requirements
 # Incremental search
