@@ -12,7 +12,6 @@
 
 # Dependencies
 # - bat: cat/less replacement
-# - exa: ls replacement
 # - fd: find replacement
 # - pydf: df replacement
 # - jq: json formatting/queryring
@@ -91,7 +90,7 @@ zplug "b4b4r07/emoji-cli", \
 # https://github.com/supercrabtree/k
 #zplug "supercrabtree/k"
 if (( $+commands[exa] )); then
-  zplug "DarrinTisdale/zsh-aliases-exa"
+  zplug "DarrinTisdale/zsh-aliases-exa", use:zsh-aliases-exa.plugin.zsh
 fi
 
 zplug "chrissicool/zsh-256color"
