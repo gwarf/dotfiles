@@ -33,9 +33,6 @@ LFC
 kinesis
 ergodox
 massdrop
-jrevillard
-sgaspard
-bgrenier
 gnúbila
 LFN
 lfn
@@ -46,19 +43,13 @@ gitlab
 PostgreSQL
 GeeksPhone
 tarball
-Mugnier
 Cunlhat
-Joakim
 DataCloud
 FedCloud
 OpenStack
 OPIE
-Giacinto
 e-infrastructure
 Gergely
-Tamás
-Tiziana
-Vincenzo
 middleware
 OpenNebula
 Ubuntu
@@ -71,10 +62,8 @@ versioned
 EGI
 OCCI
 webinar
-Thierry
 ENVRI
 EUDAT
-Álvaro
 GitHub
 udocker
 Onedata
@@ -112,7 +101,6 @@ DockerHub
 NGI
 CLIs
 APIs
-Zhiming
 BitDefender
 smartphones
 centralement
@@ -128,7 +116,6 @@ Zdenek
 OpenVPN
 OCCI-based
 cloudkeeper
-Yannick
 Boursorama
 FZF
 Rollout
@@ -164,7 +151,6 @@ EOSC-hub
 psychometrician
 Terraform
 libvirt
-Zdeněk
 Ansible
 testinfra
 eduTEAMS
@@ -190,7 +176,6 @@ B2HANDLE
 B2FIND
 WP6
 comanage
-hexaa
 perun
 AARC
 CLARIN
@@ -234,7 +219,6 @@ egi
 v2
 v3
 vo
-Enol's
 openstack
 Kubernetes
 admins
@@ -256,7 +240,6 @@ C34H890
 workshop
 FAIRsFAIR
 SPG
-Marie-Louise
 Logitech
 Snipe-it
 KPIs
@@ -264,7 +247,6 @@ eiscat
 D10
 EOSC-related
 on-boarding
-Jeffeny
 CSIRT
 EGEE
 ENISA
@@ -287,7 +269,6 @@ TCS
 Terena
 Globus
 eduroam
-téléscripta
 INFRAEOSC-07-A1
 IEC
 gwarf
@@ -297,8 +278,6 @@ MyDrive
 CoCo
 AHM
 AUP
-Lukasz
-Dutka
 Fairphone
 Xiaomi
 workplan
@@ -317,3 +296,9 @@ Coronavirus
 misconfigured
 digicert
 Sysadmin
+iPhone
+VESPA-Cloud
+eosc-dih
+RDM
+WS-PGRADE
+GOCB
