@@ -120,10 +120,8 @@ zplug "zdharma/fast-syntax-highlighting"
 zplug "zdharma/history-search-multi-word"
 
 # Modules from prezto
-# Aliases and color some command output
 # https://github.com/sorin-ionescu/prezto/tree/master/modules
-# Ensure that ls always add some indicators
-# alias ls='ls -F'
+# Aliases and color some command output
 zplug "modules/utility", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
@@ -152,6 +150,8 @@ zplug "sharat87/zsh-vim-mode", defer:3
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search", defer:2
+# To replace autosuggestions
+# zplug "hchbaw/auto-fu.zsh", at:pu, defer:1
 
 # XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
@@ -173,6 +173,9 @@ export ENHANCD_HYPHEN_ARG=_
 # Run k when entering a directory
 # XXX k is too slow, fallback to ls
 export ENHANCD_HOOK_AFTER_CD=ls
+
+zplug "zpm-zsh/mysql-colorize"
+
 
 # Fuzzy command line completion: Ctrl-T
 # Grab binaries from GitHub Releases
@@ -210,6 +213,10 @@ zplug "sharkdp/fd", \
       use:"*${(L)$(uname -s)}*", \
       rename-to:fd
 
+# npm / nvm
+#zplug "lukechilds/zsh-nvm"
+# [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+
 # Python virtualenv management
 
 # Virtualen environement management
@@ -230,7 +237,7 @@ zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 # asdf: https://github.com/asdf-vm/asdf
 # https://github.com/kiurchv/asdf.plugin.zsh
 # zplug "kiurchv/asdf.plugin.zsh", defer:2
-
+#
 # pyenv
 # XXX Disabled as it slowing down shell opening drastically
 # XXX Ideally it should be enabled dynamically when doing python development
@@ -272,7 +279,9 @@ zplug load
 # Path management
 typeset -U path
 path+=/usr/local/sbin
-PATH="$HOME/bin:$PATH"
+if [ -d $HOME/bin ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
 
 # Use coreutils GNU utilities
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
@@ -297,6 +306,10 @@ if zplug check "pyenv/pyenv"; then
   export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
   eval "$(pyenv init -)"
 fi
+
+activate() {
+  . $1/bin/activate
+}
 
 # ZSH options
 
@@ -372,9 +385,78 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export WORKON_HOME=~/.virtualenvs
+if [ -f /usr/bin/virtualenvwrapper.sh ]; then
+  source /usr/bin/virtualenvwrapper.sh
+fi
+
+
 # list only directories
 alias lsd='ls -d */'
+# list only files
+alias lsf="ls -rtF | grep -v '.*/'"
 alias l='ls -l'
+
+# Global aliases
+alias -g A="| awk"
+# Color output using ccze
+# XXX ccze -A | less -R
+alias -g C="| ccze -A"
+alias -g G="| grep"
+alias -g GV="| grep -v"
+alias -g H="| head"
+alias -g L='| $PAGER'
+alias -g P=' --help | less'
+alias -g R="| ruby -e"
+alias -g S="| sed"
+alias -g T="| tail"
+alias -g V="| vim -R -"
+alias -g U=' --help | head'
+alias -g W="| wc"
+
+# Suffix aliases
+alias -s zip=zipinfo
+alias -s tgz=gzcat
+alias -s gz=gzcat
+alias -s tbz=bzcat
+alias -s bz2=bzcat
+alias -s java=vim
+alias -s c=vim
+alias -s h=vim
+alias -s C=vim
+alias -s cpp=vim
+alias -s txt=vim
+alias -s xml=vim
+alias -s html=chromium
+alias -s xhtml=chromium
+alias -s pdf=okular
+alias -s gif=sxiv
+alias -s jpg=sxiv
+alias -s jpeg=sxiv
+alias -s png=sxiv
+alias -s bmp=sxiv
+alias -s mp3=clementine
+alias -s m4a=clementine
+alias -s ogg=clementine
+
+# noremoteglob breaks scp with filenames containing parenthesis
+unalias scp
+alias scp='noglob scp'
+
+# Aliases for launching some vimwikis
+alias vimnote='vim -c VimwikiMakeDiaryNote'
+alias vimwiki='vim -c VimwikiUISelect'
+alias vimdiary='vim -c VimwikiDiaryIndex'
+alias vimwiki_w='vim -c VimwikiIndex 1'
+alias vimwiki_h='vim -c VimwikiIndex 2'
+alias dashboard="vim -p -c TW -c 'VimwikiTabIndex 1' -c 'VimwikiTabIndex 2'"
+
+# Cal conf
+# Start week on Monday
+alias cal='cal -m'
+
+# Home-related tasks
+alias th='task rc:~/.taskrc-home'
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # https://github.com/pyenv/pyenv/wiki/Common-build-problems
@@ -386,10 +468,69 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 fi
 
+# TODO check that vboxmanage completion is available
+# /usr/share/zsh/site-functions/_virtualbox
+if (( $+commands[compdef] )); then
+  if (( $+commands[VBoxManage] )); then
+    compdef vboxmanage=VBoxManage
+    compdef vboxheadless=VBoxHeadless
+  fi
+fi
+
+# Use pydf if available
+if (( $+commands[pydf] )); then
+  alias df=pydf
+fi
+
+xev() {
+  command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+}
+    command free $@ | ccze -A
+
+drun() {
+  command docker run --rm -v $(pwd):/source -it "$1"
+}
+
+# Colorize output using ccze
+if (( $+commands[ccze] )); then
+  journalctl() {
+    command journalctl $@ | ccze -A
+  }
+
+  last() {
+    command last $@ | ccze -A
+  }
+
+  free() {
+  }
+fi
+
+# scan the local network and list the connected devices
+lscan() {
+  local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
+  local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
+  # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
+  printf "$scanReport\n"
+}
+
 export MAKEOPS='j6'
+
+# Ensure that appropriate env var are set for gnome-keyring SSH agent
+if [ -n "$DESKTOP_SESSION" ]; then
+  if [ "$DESKTOP_SESSION" = "i3" -o "$DESKTOP_SESSION" = 'xinitrc' ]; then
+    export $(gnome-keyring-daemon -s)
+  fi
+fi
+
+# Archlinux command not found (needs pkgfile)
+if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
+  . /usr/share/doc/pkgfile/command-not-found.zsh
+fi
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+
+[ -f ~/.appdb-env.sh ] && . ~/.appdb-env.sh
 
 # Source secrets if existing
 [ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
@@ -418,5 +559,3 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
