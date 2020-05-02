@@ -176,6 +176,7 @@ export ENHANCD_HOOK_AFTER_CD=ls
 
 zplug "zpm-zsh/mysql-colorize"
 
+# XXX Check if required
 # XXX Check how to use forward-word with autosuggestions
 # Load after modute/editor to enable VI bindings
 zplug "sharat87/zsh-vim-mode", defer:3
@@ -303,7 +304,7 @@ export PATH MANPATH MAILDIR
 export YSU_HARDCORE=0
 
 # For zsh-users/zsh-completions
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
 bindkey '^ ' autosuggest-accept
 
 if zplug check "pyenv/pyenv"; then
@@ -394,11 +395,11 @@ if [ -f /usr/bin/virtualenvwrapper.sh ]; then
   source /usr/bin/virtualenvwrapper.sh
 fi
 
-# XXX Check if not already defined by plugin
+# --preserver-root is for GNU versions
 # do not delete / or prompt if deleting more than 3 files at a time
-alias rm='rm -I --preserve-root'
+alias rm='nocorrect rm -i --preserve-root'
 
-# Parenting changing perms on /
+# Preventing changing perms on /
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'

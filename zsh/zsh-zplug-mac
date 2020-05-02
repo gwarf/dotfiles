@@ -176,6 +176,10 @@ export ENHANCD_HOOK_AFTER_CD=ls
 
 zplug "zpm-zsh/mysql-colorize"
 
+# XXX Check if required
+# XXX Check how to use forward-word with autosuggestions
+# Load after modute/editor to enable VI bindings
+zplug "sharat87/zsh-vim-mode", defer:3
 
 # Fuzzy command line completion: Ctrl-T
 # Grab binaries from GitHub Releases
@@ -300,7 +304,8 @@ export PATH MANPATH MAILDIR
 export YSU_HARDCORE=0
 
 # For zsh-users/zsh-completions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
+bindkey '^ ' autosuggest-accept
 
 if zplug check "pyenv/pyenv"; then
   export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
@@ -390,6 +395,14 @@ if [ -f /usr/bin/virtualenvwrapper.sh ]; then
   source /usr/bin/virtualenvwrapper.sh
 fi
 
+# --preserver-root is for GNU versions
+# do not delete / or prompt if deleting more than 3 files at a time
+alias rm='nocorrect rm -i --preserve-root'
+
+# Preventing changing perms on /
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
 
 # list only directories
 alias lsd='ls -d */'
@@ -401,7 +414,9 @@ alias l='ls -l'
 alias -g A="| awk"
 # Color output using ccze
 # XXX ccze -A | less -R
-alias -g C="| ccze -A"
+if (( $+commands[ccze] )); then
+  alias -g C="| ccze -A"
+fi
 alias -g G="| grep"
 alias -g GV="| grep -v"
 alias -g H="| head"
@@ -485,7 +500,6 @@ fi
 xev() {
   command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
-    command free $@ | ccze -A
 
 drun() {
   command docker run --rm -v $(pwd):/source -it "$1"
@@ -502,6 +516,7 @@ if (( $+commands[ccze] )); then
   }
 
   free() {
+    command free $@ | ccze -A
   }
 fi
 
