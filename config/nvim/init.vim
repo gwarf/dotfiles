@@ -465,4 +465,32 @@ if has("persistent_undo")
   set undofile
 endif
 
+" vim-markdown (from vim-polyglot)
+" Disable folding
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 2
+" Disable concealing
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+" Folding with markers
+set foldmethod=marker
+nnoremap <space> za
+
+" Complete emails address in every files
+set completefunc=vimmail#contacts#CompleteAddr
+
+" Don't mess with whitespaces in those files
+let g:lessspace_blacklist = ['diff']
+
+" localvimrc
+" Store and restore all decisions.
+let g:localvimrc_persistent = 2
+
+" https://github.com/Yggdroot/LeaderF
+let g:Lf_ShortcutF = "<leader>ff"
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+
 " vim:set ft=vim et sw=2:
