@@ -1,6 +1,7 @@
 # ~/.zshrc
 # Read by all interactive shells
 
+# References
 # https://dotfiles.github.io/
 # HTTps://github.com/zplug/zplug
 # https://github.com/unixorn/zsh-quickstart-kit
@@ -8,6 +9,18 @@
 # http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
 # Ideas: https://github.com/mika/zsh-pony
 # Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
+
+# Dependencies
+# - bat: cat/less replacement
+# - gam: CLI for G Suite
+# - git
+# - hub: git on steroids
+# - nvim: vim replacement
+# - pydf: df replacement
+# - taskwarrior: task management
+# - fd: find replacement (installed by zplug)
+# - jq: json formatting/queryring (installed by zplug)
+# - fzf: fuzzyfinder (installed by zplug)
 
 # Requirements
 # Incremental search
@@ -17,6 +30,7 @@
 # Case insensitive directories completion
 # Shrunk path in prompt
 # completion (vboxmanage and all other)
+# Fuzzy command line completion
 # autosuggestions
 # improved history
 # vim mode
@@ -27,10 +41,9 @@
 # ls after cd
 # ssh key management
 # simple calc
-# 256 color
-# python venv
+# 256 color / true color
 # git support
-# Fuzzy command line completion
+# python venv
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -51,49 +64,103 @@ source "$ZPLUG_HOME/init.zsh"
 # XXX Disable to validate if it breaks "special" zplugs such as prezto
 # zplug "gwarf/09afddb8741a7ea478ce53aafe20b777", from:gist
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Use coreutils GNU utilities
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
+# https://github.com/unixorn/awesome-zsh-plugins
+# https://gitlab.yuribugelli.it/yuri/dotfiles/blob/master/zsh/zplug.zsh
+
+# Load completion library for those sweet [tab] squares
+# zplug "lib/completion", from:oh-my-zsh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Load if "if" tag returns true
+  zplug "lib/clipboard", from:oh-my-zsh
+fi
+
+# Load "emoji-cli" if "jq" is installed
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
+zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
+
+# Improved directory listing
+# https://github.com/supercrabtree/k
+#zplug "supercrabtree/k"
+if (( $+commands[exa] )); then
+  zplug "DarrinTisdale/zsh-aliases-exa", use:zsh-aliases-exa.plugin.zsh
+fi
+
+# XXX required?
+# zplug "chrissicool/zsh-256color"
+
+# Fonts
+# Hack Regular Nerd Font Complete
+# https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack
+# A font with ligatures
+# https://github.com/tonsky/FiraCode
+
 # Theme
 # Powerlevel10k: https://github.com/romkatv/powerlevel10k
 zplug romkatv/powerlevel10k, use:powerlevel10k.zsh-theme
 
-zplug "zlsun/solarized-man"
+# XXX dircolors comes from brew/coreutils on Mac OS X
+# Nordic dircolors configuration
+# https://github.com/arcticicestudio/nord-dircolors
+zplug "arcticicestudio/nord-dircolors", ignore:"*", as:plugin
+eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors)
 
+# Replacement for zsh-users/zsh-syntax-highlighting
+# Theme management: fsh-alias -h
+zplug "zdharma/fast-syntax-highlighting"
+# Ctrl-R to search multi word with AND
+zplug "zdharma/history-search-multi-word"
+
+# Modules from prezto
+# https://github.com/sorin-ionescu/prezto/tree/master/modules
 # Aliases and color some command output
 zplug "modules/utility", from:prezto
 zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
-zplug "modules/tmux", from:prezto
-# XXX not needed
-# zplug "modules/ssh", from:prezto
+if (( $+commands[tmux] )); then
+  zplug "modules/tmux", from:prezto
+fi
 
+# Modules from oh-my-zsh
 zplug "plugins/shrink-path", from:oh-my-zsh
-zplug "plugins/taskwarrior", from:oh-my-zsh
-# git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-# asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
-# asdf plugin list-all python
-# export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
-# asdf plugin install python 2.7
-# zplug "plugins/asdf", from:oh-my-zsh
+if (( $+commands[task] )); then
+  zplug "plugins/taskwarrior", from:oh-my-zsh
+fi
+# Hub wrapper
+if (( $+commands[hub] )); then
+  zplug "plugins/github", from:oh-my-zsh
+fi
+# Git completion
+zplug "plugins/gitfast", from:oh-my-zsh
 
-# A lot of nice aliases
-# zplug "plugins/comon-aliases", from:oh-my-zsh
-# A fun Half-Life theme
-# zplug "themes/half-life", from:oh-my-zsh, defer:3
+zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
 
-zplug "zsh-users/zsh-history-substring-search", defer:2
+# Load after modute/editor to enable VI bindings
+zplug "sharat87/zsh-vim-mode", defer:3
+
+# Modules from zsh-usesr
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search", defer:2
 # To replace autosuggestions
 # zplug "hchbaw/auto-fu.zsh", at:pu, defer:1
 
 # XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
 
-zplug "webyneter/docker-aliases", use:docker-aliases.plugin.zsh
-
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
 
 # Should be loaded after modules/utility to overwrite cd alias
+# https://github.com/b4b4r07/enhancd
 zplug "b4b4r07/enhancd", use:init.sh, defer:3
 export ENHANCD_FILTER='fzf'
 # When entering a git repo do a git status, othewise do an ls
@@ -104,14 +171,8 @@ export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_HYPHEN_ARG=_
 # Run k when entering a directory
-
-zplug "marzocchi/zsh-notify"
-
-zplug "supercrabtree/k"
-
-zplug "djui/alias-tips"
-
-zplug "chrissicool/zsh-256color"
+# XXX k is too slow, fallback to ls
+export ENHANCD_HOOK_AFTER_CD=ls
 
 zplug "zpm-zsh/mysql-colorize"
 
@@ -119,53 +180,93 @@ zplug "zpm-zsh/mysql-colorize"
 # Load after modute/editor to enable VI bindings
 zplug "sharat87/zsh-vim-mode", defer:3
 
-zplug "zdharma/fast-syntax-highlighting"
-# Ctrl-R to search multi word with AND
-zplug "zdharma/history-search-multi-word"
-
 # Fuzzy command line completion: Ctrl-T
-zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
-# Download a binary for FZF if not available locally
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
 zplug "junegunn/fzf-bin", \
     from:gh-r, \
     as:command, \
     rename-to:fzf, \
-    use:"*linux*amd64*"
+    use:"*${(L)$(uname -s)}*amd64*"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2, on:"junegunn/fzf-bin"
+
+# https://github.com/hschne/fzf-git
+# use git <command> **
+zplug "hschne/fzf-git"
+
+# Git + fzf
+# https://github.com/wfxr/forgit
+zplug 'wfxr/forgit'
 
 zplug "so-fancy/diff-so-fancy", as:command
 
+# Clashing with forgit, not sure if useful
+# Git aliases
+# zplug "plugins/git",   from:oh-my-zsh
+# https://github.com/unixorn/git-extra-commands
+zplug "unixorn/git-extra-commands"
+
 # Replacement for autojump
 zplug "rupa/z", use:"*.sh"
+
+# Replacement for find
+zplug "sharkdp/fd", \
+      from:gh-r, \
+      as:command, \
+      use:"*${(L)$(uname -s)}*", \
+      rename-to:fd
 
 # npm / nvm
 #zplug "lukechilds/zsh-nvm"
 # [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
-# Plugins-specific configuration required before loading them
+# Python virtualenv management
 
-# prezto
+# Virtualen environement management
+# https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
+zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
+
+# Potentially lighter than pyenv
+# https://github.com/cxreg/smartcd
+# https://github.com/anyenv/anyenv
+
+# asdf
+# git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+# asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+# asdf plugin list-all python
+# export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
+# asdf plugin install python 2.7
+# zplug "plugins/asdf", from:oh-my-zsh
+# asdf: https://github.com/asdf-vm/asdf
+# https://github.com/kiurchv/asdf.plugin.zsh
+# zplug "kiurchv/asdf.plugin.zsh", defer:2
+#
+# pyenv
+# XXX Disabled as it slowing down shell opening drastically
+# XXX Ideally it should be enabled dynamically when doing python development
+# zplug 'pyenv/pyenv', as:"command", use:"bin/*"
+# zplug "pyenv/pyenv-virtualenv", \
+#     on:'pyenv/pyenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
+# zplug "pyenv/pyenv-virtualenvwrapper", \
+#     on:'pyenv/pyenv-virtualenv', \
+#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
+
+# prezto configuration
+# prezto/utility
+# Use safe operations by default
+zstyle ':prezto:module:utility' safe-ops 'yes'
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
-
-# prezto/utility
-if zplug check modules/utility; then
-  # Use safe operations by default
-  zstyle ':prezto:module:utility' safe-ops 'yes'
-fi
-
 # prezto/editor
-if zplug check modules/editor; then
-  zstyle ':prezto:module:editor' key-bindings 'vi'
-  zstyle ':prezto:module:editor' dot-expansion 'yes'
-fi
+zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' dot-expansion 'yes'
+zstyle ':prezto:module:tmux:auto-start' local 'no'
+zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+zstyle ':prezto:module:tmux:session' name 'work'
+zstyle ':prezto:module:tmux:iterm' integrate 'no'
 
-if zplug check modules/tmux; then
-  zstyle ':prezto:module:tmux:auto-start' local 'no'
-  zstyle ':prezto:module:tmux:auto-start' remote 'no'
-  zstyle ':prezto:module:tmux:session' name 'work'
-fi
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -176,33 +277,48 @@ if ! zplug check --verbose; then
 fi
 
 # Then, source plugins and add commands to $PATH
-# zplug load --verbose
 zplug load
+
+# Path management
+typeset -U path
+path+=/usr/local/sbin
+if [ -d $HOME/bin ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
+# Use coreutils GNU utilities
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+fi
+
+# To allow mu to find mails
+MAILDIR=~/Mail
+
+export PATH MANPATH MAILDIR
 
 # Plugins-specific configuration required after loading them
 
-if zplug check zsh-users/zsh-autosuggestions; then
-  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-  bindkey '^ ' autosuggest-accept
+# For MichaelAquilina/zsh-you-should-use
+export YSU_HARDCORE=0
+
+# For zsh-users/zsh-completions
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+bindkey '^ ' autosuggest-accept
+
+if zplug check "pyenv/pyenv"; then
+  export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
+  eval "$(pyenv init -)"
 fi
 
-if zplug check caiogondim/bullet-train.zsh; then
-  BULLETTRAIN_STATUS_EXIT_SHOW=true
-  # bullettrain promt: disable nvm and go, show path using custom segment
-  BULLETTRAIN_PROMPT_ORDER=(time status context custom perl ruby aws elixir virtualenv git hg cmd_exec_time)
-  # Display shunk path in custom prompt segement
-  BULLETTRAIN_CUSTOM_MSG='$(shrink_path -f "$PWD")'
-  BULLETTRAIN_CUSTOM_BG=blue
-  BULLETTRAIN_CUSTOM_FG=white
-fi
-
-if zplug "MichaelAquilina/zsh-you-should-use"; then
-  export YSU_HARDCORE=0
-fi
+activate() {
+  . $1/bin/activate
+}
 
 # ZSH options
 
 # Make sure prompt is able to be generated properly.
+# Required for themes like bullet-train
 setopt prompt_subst
 
 # Executing directories will open them
@@ -210,7 +326,7 @@ setopt auto_cd
 
 ## Completion
 
-# Hilight directories
+# Hilight directories and use colors in ZSH completion
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
 
 # Rehash when completing commands
@@ -225,17 +341,6 @@ zstyle ':completion:*:descriptions' format "%{${fg_bold[magenta]}%}= %d =%{$rese
 # Case insensitive completion
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-
-#unsetopt correct_all
-#setopt menu_complete
-#unsetopt flowcontrol
-#setopt auto_pushd
-#setopt pushd_ignore_dups
-#setopt auto_menu
-#setopt interactive_comments
-#setopt complete_in_word
-#setopt promptpercent
 
 # Always use substring search
 bindkey '^[[A' history-substring-search-up
@@ -263,17 +368,19 @@ bindkey 's' insert-sudo
 # Misc
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
+if (( $+commands[nvim] )); then
   export EDITOR='nvim'
   alias vim='nvim'
   alias vi='nvim'
+else
+  export EDITOR='vim'
 fi
 
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
   export PAGER='bat'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export BAT_THEME='nord'
 else
   export SYSTEMD_PAGER='cat'
 fi
@@ -282,16 +389,10 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python2.7
-#export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv2
 export WORKON_HOME=~/.virtualenvs
 if [ -f /usr/bin/virtualenvwrapper.sh ]; then
   source /usr/bin/virtualenvwrapper.sh
 fi
-
-#####################################################################
-## Shell aliases and functions
-#####################################################################
 
 # XXX Check if not already defined by plugin
 # do not delete / or prompt if deleting more than 3 files at a time
@@ -302,28 +403,19 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# k or long listing by default
-if command -v "k" >/dev/null 2>&1; then
-  alias l='k -h'
-else
-  alias l='ls -lh'
-fi
-## list only directories
+# list only directories
 alias lsd='ls -d */'
-## list only files
+# list only files
 alias lsf="ls -rtF | grep -v '.*/'"
-
-alias lsrt='ls -rt'
-
-alias halt='systemctl poweroff'
-alias reboot='systemctl reboot'
-alias suspend='systemctl suspend'
+alias l='ls -l'
 
 # Global aliases
 alias -g A="| awk"
 # Color output using ccze
 # XXX ccze -A | less -R
-alias -g C="| ccze -A"
+if (( $+commands[ccze] )); then
+  alias -g C="| ccze -A"
+fi
 alias -g G="| grep"
 alias -g GV="| grep -v"
 alias -g H="| head"
@@ -373,24 +465,21 @@ alias vimwiki_w='vim -c VimwikiIndex 1'
 alias vimwiki_h='vim -c VimwikiIndex 2'
 alias dashboard="vim -p -c TW -c 'VimwikiTabIndex 1' -c 'VimwikiTabIndex 2'"
 
-alias alot_work='alot -p ~/Mail -l ~/.config/alot/alot.log'
-
 # Cal conf
 # Start week on Monday
 alias cal='cal -m'
 
-# Google Calenar
-alias gcal-week='gcalcli --width 12 calw'
-alias gcal='gcalcli --width 12 calm'
-alias gcal-add='gcalcli quick'
-alias gcal-agenda='gcalcli agenda'
-
 # Home-related tasks
 alias th='task rc:~/.taskrc-home'
 
-# XXX check if not already done by plugin
-if (( $+commands[hub] )); then
-  alias git=hub
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+  # Required for building python with pyenv on Mac OS X
+  export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+  export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+  # Speeding up build
+  export CFLAGS="-O2 $CFLAGS"
+  # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 fi
 
 # TODO check that vboxmanage completion is available
@@ -416,21 +505,19 @@ drun() {
 }
 
 # Colorize output using ccze
-journalctl() {
-  command journalctl $@ | ccze -A
-}
+if (( $+commands[ccze] )); then
+  journalctl() {
+    command journalctl $@ | ccze -A
+  }
 
-last() {
-  command last $@ | ccze -A
-}
+  last() {
+    command last $@ | ccze -A
+  }
 
-free() {
-  command free $@ | ccze -A
-}
-
-activate() {
-  . $1/bin/activate
-}
+  free() {
+    command free $@ | ccze -A
+  }
+fi
 
 # scan the local network and list the connected devices
 lscan() {
@@ -440,58 +527,7 @@ lscan() {
   printf "$scanReport\n"
 }
 
-listdirectories() {
-  # TODO: Ignore .git, node_modules, etc
-  find -L . -type d -print -o -type l -print -o \
-      \( -path '*/\.*' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \) -prune \
-      2> /dev/null | \
-      grep -v '^.$' | \
-      sed 's|\./||g' | \
-      fzf-tmux --ansi --multi --tac --preview-window right:50% \
-          --preview 'tree -C {} | head -$LINES'
-}
-
-project-switcher() {
-  local projects proj
-
-  projects="$(realpath ~/Projects/)"
-  proj=$(find -L "$projects" -maxdepth 1 -type d -printf "%f\n" -o -type l -printf "%f\n" -o -prune \
-      2> /dev/null | \
-      grep -v '^.$' | \
-      sed 's|\./||g' | \
-      fzf-tmux --ansi --multi --tac --preview-window right:50% \
-          --preview "echo 'Branches\n' && git -C $projects/{} rev-parse HEAD > /dev/null 2>&1 &&
-              git -C $projects/{} branch -vv --color=always &&
-              echo '\n\nCommits\n' && git -C $projects/{} l -10 | head -$LINES") || return
-
-  cd $projects/$proj
-}
-
-# https://nurdletech.com/linux-notes/agents/keyring.html
-# https://faq.i3wm.org/question/4126/sessions-environment-variables/index.html%3Fanswer=4130.html#post-id-4130
-# https://askubuntu.com/questions/138892/how-can-i-permanently-save-a-password-protected-ssh-key
-# https://faq.i3wm.org/question/2498/ssh-sessions-in-i3.1.html
-# XXX debug with systemd-alanlyze, bootchard...
-# https://wiki.archlinux.org/index.php/Improving_performance/Boot_process
-# if [ -n "$DESKTOP_SESSION" ];then
-# XXX keyring seems to be already running but without all the components
-#     eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gnupg)
-#     export SSH_AUTH_SOCK
-# fi
-# Keyring started by LightDM with PAM:
-# /etc/pam.d/lightdm
-# XXX Destop files
-# /etc/xdg/autostart/gnome-keyring-*.desktop
-
-# XXX Caller is always /bin/zsh
-# LOG="$HOME/profile-invocations"
-# echo "-----" >>$LOG
-# echo "Caller 1: $0" >>$LOG
-# echo "DESKTOP_SESSION 1: $DESKTOP_SESSION" >>$LOG
-#
-if [ -d $HOME/bin ]; then
-  export PATH="$HOME/bin:$PATH"
-fi
+export MAKEOPS='j6'
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
 if [ -n "$DESKTOP_SESSION" ]; then
@@ -499,7 +535,6 @@ if [ -n "$DESKTOP_SESSION" ]; then
     export $(gnome-keyring-daemon -s)
   fi
 fi
-# source ~/bin/start-gnome-keyring.sh
 
 # Archlinux command not found (needs pkgfile)
 if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
@@ -515,20 +550,19 @@ fi
 [ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
 [ -f ~/.secrets ] && source ~/.secrets
 
-# Source local zsh conf if existing
-[ -f ~/.local.zsh ] && . ~/.local.zsh
-
+# XXX returning error with updated conf
+# stty: 'standard input': Operation not supported by device
 # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
 # To prevent ctrl-o being discared by the terminal driver
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  stty discard undef
+# if [[ "$OSTYPE" == "darwin"* ]]; then
+#   stty discard undef
+# fi
+
+if [ -x "$HOME/bin/gam/gam" ]; then
+  # CLI for Google admin
+  # https://github.com/jay0lee/GAM
+  gam() { "$HOME/bin/gam/gam" "$@" ; }
 fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# CLI for Google admin
-# https://github.com/jay0lee/GAM
-gam() { "/Users/baptiste/bin/gam/gam" "$@" ; }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # tail-like of postfix logs on MacOS X
