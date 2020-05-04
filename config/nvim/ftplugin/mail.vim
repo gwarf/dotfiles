@@ -11,8 +11,6 @@
 " Enable spell checks
 set spell
 " XXX replaced by dbeniamine/vim-mail?
-" set spelllang=en,fr
-set complete+=kspell
 " No indentation when copying
 set noci
 " Expand spaces to tabs
