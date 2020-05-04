@@ -67,6 +67,10 @@ source "$ZPLUG_HOME/init.zsh"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Use coreutils GNU utilities
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  # Use openjdk from brew
+  export PATH="/usr/local/opt/openjdk/bin:$PATH"
+  # XXX may not be needed
+  # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 fi
 
 # https://github.com/unixorn/awesome-zsh-plugins
@@ -567,7 +571,7 @@ fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # tail-like of postfix logs on MacOS X
-  postfile_log() {
+  postfix_log() {
     log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
   }
 fi
