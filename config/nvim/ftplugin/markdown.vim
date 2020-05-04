@@ -1,1 +1,2 @@
+" Check spell
 setlocal spell

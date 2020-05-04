@@ -121,6 +121,17 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'tmux-plugins/vim-tmux'
 Plug 'Yggdroot/indentLine'
 
+" Grammar/language checking
+" https://www.vimfromscratch.com/articles/spell-and-grammar-vim/
+" If LanguageTool is installed, ALE will use it for text, md and mails
+" https://github.com/dense-analysis/ale/blob/36e5337e30095afb10d02ef2ae362c8d6055e70d/doc/ale.txt#L2215
+" XXX write-good to be checked
+" https://github.com/btford/write-good
+" LanguageTool-based solutions
+" https://github.com/rhysd/vim-grammarous
+" https://github.com/vigoux/LanguageTool.nvim
+" https://github.com/dpelle/vim-LanguageTool
+
 " Load locally available config files
 " For per-project settings
 Plug 'embear/vim-localvimrc'
@@ -376,6 +387,11 @@ endif
 set spelllang=en,fr
 " Enable completion of spell
 set complete+=kspell
+" https://stackoverflow.com/questions/18196399/exclude-capitalized-words-from-vim-spell-check
+" Disable spell for capital letters
+syn match myExCapitalWords +\<\w*[A-Z]\S*\>+ contains=@NoSpell
+" Disalbe spell for 's
+" syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
 
 " Mail edition for mutt
 " :help fo-table
@@ -413,13 +429,6 @@ autocmd VimEnter *
             \ |   wincmd w
             \ | endif
 map <C-n> :NERDTreeToggle<CR>
-
-" vim-airline
-" let g:airline_theme='ravenpower'
-let g:airline_powerline_fonts = 1
-let g:airline_line_fonts = 1
-" Automatically displays all buffers when there's only one tab open
-let g:airline#extensions#tabline#enabled = 1
 
 " CtrlP
 " Fix ctrl-p's mixed mode https://github.com/kien/ctrlp.vim/issues/556
@@ -558,42 +567,6 @@ let g:snips_company='EGI Foundation'
 "function! s:my_cr_function() abort
 "  return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
 "endfunction
-
-" ale
-" Not only run linters named in ale_linters settings.
-let g:ale_linters_explicit = 0
-let g:ale_sign_column_always = 1
-let g:ale_completion_enabled = 0
-let g:ale_fix_on_save = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_lint_on_text_changed = 'always'
-let g:ale_lint_on_insert_leave = 1
-" You can disable this option too
-" if you don't want linters to run on opening a file
-let g:ale_lint_on_enter = 1
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 0
-" Show 5 lines of errors (default: 10)
-let g:ale_list_window_size = 5
-
-let g:ale_linters = {
-\   'bash': ['bashate'],
-\}
-
-" XXX disabled while testing lessspace.vim
-"\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" XXX Don't want to remove trailing spaces in emails!
-" See mail ftplugin
-let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'json': ['prettier'],
-\   'markdown': ['prettier'],
-\   'yaml': ['prettier'],
-\   '*': ['remove_trailing_lines'],
-\}
 
 " coc.nvim
 " https://github.com/neoclide/coc.nvim
