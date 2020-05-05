@@ -19,9 +19,6 @@ let g:ale_echo_msg_format = '%code: %%s [%linter%] [%severity%]'
 " Show 5 lines of errors (default: 10)
 let g:ale_list_window_size = 5
 
-" Alwasys lint on text changes
-let g:ale_lint_on_text_changed = 'always'
-
 " Fix files when saving
 let g:ale_fix_on_save = 1
 
