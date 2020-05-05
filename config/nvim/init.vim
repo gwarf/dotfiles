@@ -387,11 +387,9 @@ endif
 set spelllang=en,fr
 " Enable completion of spell
 set complete+=kspell
-" https://stackoverflow.com/questions/18196399/exclude-capitalized-words-from-vim-spell-check
 " Disable spell for capital letters
-syn match myExCapitalWords +\<\w*[A-Z]\S*\>+ contains=@NoSpell
-" Disalbe spell for 's
-" syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
+" https://stackoverflow.com/questions/18196399/exclude-capitalized-words-from-vim-spell-check
+syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
 
 " Mail edition for mutt
 " :help fo-table
