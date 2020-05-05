@@ -1,2 +1,2 @@
-" Check spell
+" Enable spell checks
 setlocal spell
