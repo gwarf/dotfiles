@@ -1,10 +1,7 @@
 # Colors
 
-source ~/.config/neomutt/mutt-colors-solarized-dark-256.muttrc
+source ~/.config/neomutt/colors-solarized-dark-256.muttrc
 # source ~/.config/neomutt/colors-nord-16.muttrc
-# source ~/.config/neomutt/base16-gruvbox.dark.256.muttrc
-# source ~/.config/neomutt/dracula.muttrc
-# source ~/.config/neomutt/colors-gruvbox-shuber.muttrc
-# source ~/.config/neomutt/colors-gruvbox-shuber-extended.muttrc
+# source ~/.config/neomutt/colors-dracula.muttrc
 
 # vim: set ft=muttrc:
