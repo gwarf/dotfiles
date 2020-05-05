@@ -109,6 +109,7 @@ endfunction
 
 "" ----------------------------------------------------------------------------
 ""   Replacing empty quoted lines (e.g. "> $") with empty lines
+
 ""   (convenient to automatically reformat one paragraph)
 "" ----------------------------------------------------------------------------
 
@@ -157,6 +158,7 @@ let g:VimMailStartFlags={
 " let g:VimMailContactsProvider=['mu']
 " let g:VimMailContactsCommands={'mu' :
 "         \{ 'query' : "mu cfind",
+
 "             \'sync': "mu index",
 "             \'config': {
 "                 \'default': {
@@ -172,6 +174,9 @@ let g:VimMailContactsProvider=['khard']
 " XXX Don't want to remove trailing spaces in emails!
 " XXX disabled while testing lessspace.vim
 " let g:ale_fix_on_save = 0
+
+let g:ale_languagetool_options='--autoDetect --disable WORD_CONTAINS_UNDERSCORE,DASH_RULE'
+
 " Disable LessSpace for emails
 let g:lessspace_enabled = 0
 " Disable automatic indent for emails
