@@ -547,11 +547,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
   }
 
-  # XXX returning error with updated conf
-  # stty: 'standard input': Operation not supported by device
   # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
   # To prevent ctrl-o in vim being discared by the terminal driver
-  stty discard undef
+  # XXX returning error with updated conf
+  # stty: 'standard input': Operation not supported by device
+  # stty discard undef
 fi
 
 # TODO check that vboxmanage completion is available
