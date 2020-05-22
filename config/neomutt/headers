@@ -1,18 +1,18 @@
 # Headers
 
-#set autoedit            # call editor without prompting for To: and Subject:
-set edit_hdrs         # edit all headers lines in the editor
+# edit all headers lines in the editor
+set edit_hdrs
 
 ignore *
 unignore from date subject to cc reply-to
-unignore x-url x-resent organization x-mailing-list
-unignore x-mailing-list
+unignore x-url x-resent organization
+unignore x-mailing-list list-id list-unsubscribe
 unignore user-agent x-agent x-mailer x-newsreader
 unignore newsgroups posted-to x-also-posted-to
-unignore sender
+unignore sender x-original-sender
 unignore priority importance
-unignore mail-followup-to
-unignore message-id:
+unignore mail-followup-to in-reply-to references
+unignore message-id
 unignore tags
 unignore folder
 
