@@ -12,7 +12,7 @@ unignore newsgroups posted-to x-also-posted-to
 unignore sender x-original-sender
 unignore priority importance
 unignore mail-followup-to in-reply-to references
-unignore message-id
+unignore message-id content-type
 unignore tags
 unignore folder
 
