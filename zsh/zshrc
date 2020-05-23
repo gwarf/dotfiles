@@ -525,6 +525,9 @@ alias vimwiki_w='vim -c VimwikiIndex 1'
 alias vimwiki_h='vim -c VimwikiIndex 2'
 alias dashboard="vim -p -c TW -c 'VimwikiTabIndex 1' -c 'VimwikiTabIndex 2'"
 
+# Color iproute2 output
+alias ip='ip -color=auto'
+
 # Cal conf
 # Start week on Monday
 alias cal='cal -m'
