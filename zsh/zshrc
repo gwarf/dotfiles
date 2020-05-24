@@ -263,15 +263,7 @@ zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 # zplug "kiurchv/asdf.plugin.zsh", defer:2
 #
 # pyenv
-# XXX Disabled as it slowing down shell opening drastically
-# XXX Ideally it should be enabled dynamically when doing python development
-# zplug 'pyenv/pyenv', as:"command", use:"bin/*"
-# zplug "pyenv/pyenv-virtualenv", \
-#     on:'pyenv/pyenv', \
-#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenv $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenv"
-# zplug "pyenv/pyenv-virtualenvwrapper", \
-#     on:'pyenv/pyenv-virtualenv', \
-#     hook-build:"ln -s $ZPLUG_HOME/repos/pyenv/pyenv-virtualenvwrapper $ZPLUG_HOME/repos/pyenv/pyenv/plugins/pyenv-virtualenvwrapper"
+zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 # https://stackoverflow.com/a/41573588
 # pyenv manual configuration replacing pyenv plugin
 # https://alysivji.github.io/setting-up-pyenv-virtualenvwrapper.html
@@ -281,14 +273,6 @@ zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 # https://github.com/pyenv/pyenv-virtualenv/issues/42
 # if [ -e /user/local/opt/pyenv/bin ]; then
 #   export PATH="$PATH:/user/local/opt/pyenv/bin"
-# fi
-# if command -v "pyenv" >/dev/null 2>&1; then
-#   eval "$(pyenv init --no-rehash - zsh)"
-#   eval "$(pyenv virtualenv-init - zsh)"
-#
-#   # Set tup pyenv-virtualenvwrapper
-#   export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-#   pyenv virtualenvwrapper_lazy
 # fi
 
 # prezto configuration
@@ -330,16 +314,16 @@ fi
 if [ -d $HOME/.yarn/bin ]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
+# Use coreutils GNU utilities
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+fi
 if [ -d $HOME/.rvm/bin ]; then
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
   PATH="$PATH:$HOME/.rvm/bin"
   # Load RVM into a shell session *as a function*
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-fi
-# Use coreutils GNU utilities
-if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
 # To allow mu to find mails
@@ -358,9 +342,18 @@ export YSU_HARDCORE=0
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
 bindkey '^ ' autosuggest-accept
 
-if zplug check "pyenv/pyenv"; then
+if (( $+commands[pyenv] )); then
   export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
-  eval "$(pyenv init -)"
+  if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
+  fi
+  if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenvwrapper ]; then
+    git clone https://github.com/pyenv/pyenv-virtualenvwrapper.git $PYENV_ROOT/plugins/pyenv-virtualenvwrapper
+  fi
+  eval "$(pyenv init --no-rehash - zsh)"
+  eval "$(pyenv virtualenv-init - zsh)"
+  export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+  pyenv virtualenvwrapper_lazy
 fi
 
 # ZSH options
