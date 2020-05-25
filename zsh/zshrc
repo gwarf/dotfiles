@@ -624,9 +624,9 @@ fi
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 # Source secrets if existing
-[ -f ~/.secrets.zsh ] && . ~/.secrets.zsh
+[ -f ~/.secrets.zsh ] && source ~/.secrets.zsh
 [ -f ~/.secrets ] && source ~/.secrets
-[ -f ~/.appdb-env.sh ] && . ~/.appdb-env.sh
+[ -f ~/.appdb-env.sh ] && source ~/.appdb-env.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
