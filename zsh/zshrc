@@ -65,9 +65,12 @@ source "$ZPLUG_HOME/init.zsh"
 # zplug "gwarf/09afddb8741a7ea478ce53aafe20b777", from:gist
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # Use coreutils GNU utilities
+  # Use gnused - brew install gnu-sed
+  PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+  # Use coreutils GNU utilities - brew install coreutils
   PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  # Use openjdk from brew
+  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+  # Use openjdk from brew - brew install openjdk
   PATH="/usr/local/opt/openjdk/bin:$PATH"
   # XXX may not be needed
   # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
@@ -313,11 +316,6 @@ if [ -d $HOME/.local/bin ]; then
 fi
 if [ -d $HOME/.yarn/bin ]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-# Use coreutils GNU utilities
-if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 if [ -d $HOME/.rvm/bin ]; then
   # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
