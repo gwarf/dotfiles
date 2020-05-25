@@ -371,6 +371,7 @@ setopt prompt_subst
 
 # Executing directories will open them
 setopt auto_cd
+# Automatically fill the directory stack
 setopt auto_pushd pushd_silent pushd_ignore_dups
 
 ## Completion
