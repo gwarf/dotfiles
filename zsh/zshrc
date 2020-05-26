@@ -313,14 +313,7 @@ fi
 if [ -d $HOME/.yarn/bin ]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
-if [ -d $HOME/.rvm/bin ]; then
-  # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-  PATH="$PATH:$HOME/.rvm/bin"
-  # Load RVM into a shell session *as a function*
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-fi
 
-# To allow mu to find mails
 MAILDIR=~/Mail
 
 PROJECT_HOME="$HOME/code"
@@ -439,9 +432,6 @@ export LC_ALL LANG
 export MAKEOPS='j6'
 
 export WORKON_HOME=~/.virtualenvs
-if [ -f /usr/bin/virtualenvwrapper.sh ]; then
-  source /usr/bin/virtualenvwrapper.sh
-fi
 
 # --preserver-root is for GNU versions
 # do not delete / or prompt if deleting more than 3 files at a time
@@ -559,11 +549,6 @@ fi
 if (( $+commands[pydf] )); then
   alias df=pydf
 fi
-
-# For python virtualenvs
-activate() {
-  . $1/bin/activate
-}
 
 xev() {
   command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
