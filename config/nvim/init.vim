@@ -390,17 +390,10 @@ endif
 set spelllang=en,fr
 " Enable completion of spell
 set complete+=kspell
-" Disable spell for capital letters
-" https://stackoverflow.com/questions/18196399/exclude-capitalized-words-from-vim-spell-check
-syn match myExCapitalWords +\<\w*[A-Z]\K*\>\|'s+ contains=@NoSpell
 
 " Mail edition for mutt
-" :help fo-table
-autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set spell noci ft=mail et fo=tcqnaw
-
-" Spelling for markdown and ReStructuredText
-" XXX testing using ftplugin for this
-" autocmd FileType markdown,rst set spell spelllang=en,fr complete+=kspell
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set ft=mail
+autocmd BufEnter,BufNewFile,BufRead ~/tmp/neomutt* set ft=mail
 
 """"""""""""""""""
 " Custom functions
