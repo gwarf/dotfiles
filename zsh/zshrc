@@ -241,6 +241,12 @@ zplug "sharkdp/fd", \
       use:"*${(L)$(uname -s)}*", \
       rename-to:fd
 
+# Completion for OpenStack
+# mirror of https://gist.github.com/philipsd6/aea968e80342973fd8d3aeeda343dae5
+zplug "gwarf/a18dbeaa01d6cf14a95c31a1c7036f61", \
+    from:gist, \
+    as:plugin
+
 # npm / nvm
 # zplug "lukechilds/zsh-nvm"
 # [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
