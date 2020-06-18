@@ -1,5 +1,7 @@
 # Colors
 
+# Nord-inspired theme, but not perfect
+# source ~/.config/neomutt/colors-oxubax
 source ~/.config/neomutt/colors-solarized-dark-256.muttrc
 # source ~/.config/neomutt/colors-nord-16.muttrc
 # source ~/.config/neomutt/colors-dracula.muttrc
