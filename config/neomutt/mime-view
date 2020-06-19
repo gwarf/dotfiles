@@ -7,8 +7,6 @@ auto_view image/x-portable-bitmap
 auto_view image/x-portable-graymap
 auto_view image/x-portable-anymap
 auto_view image/x-portable-pixmap
-auto_view application/pdf
-auto_view document/pdf
 auto_view application/pgp-signature
 auto_view application/pgp
 auto_view application/x-gunzip
