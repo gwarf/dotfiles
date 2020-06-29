@@ -426,6 +426,7 @@ if (( $+commands[bat] )); then
   export PAGER='bat'
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
   export BAT_THEME='Nord'
+  alias cat='bat --style=grid'
 else
   export SYSTEMD_PAGER='cat'
 fi
