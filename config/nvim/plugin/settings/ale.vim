@@ -9,7 +9,7 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Error list window
-let g:ale_open_list = 0
+let g:ale_open_list = 1
 
 " Customize echo message
 let g:ale_echo_msg_error_str = 'E'
