@@ -45,7 +45,7 @@ Plug 'Shougo/neosnippet-snippets'
 " Colorscheme
 Plug 'arcticicestudio/nord-vim'
 " Plug 'rakr/vim-one'
-" Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'morhetz/gruvbox'
 
 " Airline statusbar
@@ -229,7 +229,8 @@ let g:nord_italic=1
 let g:nord_italic_comments=1
 let g:nord_underline=1
 let g:nord_cursor_line_number_background=0
-colorscheme nord
+" colorscheme nord
+colorscheme dracula
 " colorscheme one
 " Works nicely with Nord palette
 " colorscheme gruvbox
