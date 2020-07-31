@@ -537,6 +537,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # XXX returning error with updated conf
   # stty: 'standard input': Operation not supported by device
   # stty discard undef
+
+  # cd into whatever is the forefront Finder window.
+  cdf() {  # short for cdfinder
+    cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
+  }
 fi
 
 # TODO check that vboxmanage completion is available
