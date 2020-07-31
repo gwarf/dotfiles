@@ -1,3 +1,9 @@
+# Configuration file for readline
+# Used by bash and various other applications to manage interactive commands
+# Not used by zsh that is using ZLE
+
+# Nice/clean dotfile: https://github.com/paulirish/dotfiles/blob/master/.inputrc
+
 # FIXME breaks ctrl-a and ctrl-e: Use A and I
 # http://www.catonmat.net/blog/bash-vi-editing-mode-cheat-sheet/
 set editing-mode vi
