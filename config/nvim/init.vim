@@ -89,7 +89,7 @@ Plug 'xolox/vim-shell'
 Plug 'robertbasic/vim-hugo-helper'
 " Plug 'jceb/vim-orgmode'
 
-" Tabular alignement
+" Tabular alignment
 Plug 'godlygeek/tabular'
 
 " Clean spaces at EOL for lines that are edited
@@ -174,8 +174,8 @@ Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
 Plug 'vimperator/vimperator.vim'
-Plug 'vimwiki/vimwiki'
-Plug 'teranex/vimwiki-tasks'
+" Plug 'vimwiki/vimwiki'
+" Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
 "Plug 'mrtazz/simplenote.vim'
 Plug 'dag/vim-fish'
