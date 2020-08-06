@@ -24,6 +24,7 @@ let g:ale_fix_on_save = 1
 
 let g:ale_linters = {
 \   'bash': ['bashate'],
+\   'markdown': ['prettier'],
 \}
 
 " XXX disabled while testing lessspace.vim
