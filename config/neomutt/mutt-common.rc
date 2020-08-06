@@ -26,6 +26,12 @@ set crypt_replysignencrypted = yes
 set smime_ask_cert_label
 set forward_decrypt = yes
 
+# Mailing lists management
+# https://neomutt.org/guide/advancedusage.html#using-lists
+# Automatically detect subscribed lists by looking at List-Post header
+# Lists can be excluded using unsubscribe and unlist
+set auto_subscribe
+
 set mailcap_path = "~/.mailcap:/etc/mailcap"
 
 # Printing

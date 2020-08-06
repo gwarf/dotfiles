@@ -1,9 +1,9 @@
 # Requirements
 
-* neomutt
-* neovim / vim
-* mbsync (isync)
-* msmtp
+- neomutt
+- neovim / vim
+- mbsync (isync)
+- msmtp
 
 ## Fetching emails / IMAP sync
 
@@ -15,7 +15,18 @@ msmtp
 
 ## S/MIME signing
 
-### On Mac OS X
+### On Mac OS X using gpgme (simplified conf)
+
+See http://wiki.netbsd.org/users/wiz/mutt-smime/
+
+```sh
+gpgsm --import TrustedRoot.crt
+gpgsm --import DigiCertCA.crt
+gpgsm --import baptiste_grenier_until_2021_02.p12
+gpgsm --list-keys
+```
+
+### On Mac OS X using mutt/neomutt smime_keyes feature
 
 Initialize smime store
 
