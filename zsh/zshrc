@@ -415,17 +415,22 @@ bindkey 's' insert-sudo
 # Preferred editor for local and remote sessions
 if (( $+commands[nvim] )); then
   export EDITOR='nvim'
+  export MANPAGER='nvim +Man!'
   alias vim='nvim'
   alias vi='nvim'
 else
   export EDITOR='vim'
 fi
 
+# https://github.com/sharkdp/bat
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
   export PAGER='bat'
-  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-  export BAT_THEME='Nord'
+  # Fallback as man pager
+  if [ -z "$MANPAGER" ]; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  fi
+  export BAT_THEME='Dracula'
   alias cat='bat --style=grid'
 else
   export SYSTEMD_PAGER='cat'
