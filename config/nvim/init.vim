@@ -191,6 +191,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'mhinz/vim-startify'
 
 " Browsing RFC
+" depends on nokogiri
+" rvm ruby-2.7.0@neovim do gem install nokogiri
 Plug 'mhinz/vim-rfc'
 
 " Save sessions
