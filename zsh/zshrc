@@ -260,14 +260,22 @@ zplug "gwarf/a18dbeaa01d6cf14a95c31a1c7036f61", \
 # https://gist.github.com/Geoyi/f55ed54d24cc9ff1c14bd95fac21c042
 # https://github.com/pyenv/pyenv/issues/784
 # https://github.com/pyenv/pyenv-virtualenv/issues/42
+# XXX not using pyenv-virtualenv as I want virtualenvs under ~/.virtualenvs
 zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
+# virtualenvs are stored in ~/.virtualenvs
+# Default autoswitchvirtualenv
+# export AUTOSWITCH_DEFAULTENV="defaultenv"
+# Choosing python version
+# use mkvenv --python /usr/bin/python2
+# use mkvenv --python /usr/bin/python3
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
 # Potentially lighter than pyenv
 # https://github.com/cxreg/smartcd
 # https://github.com/anyenv/anyenv
+# https://varrette.gforge.uni.lu/blog/2019/09/10/using-pyenv-virtualenv-direnv/
 #
 # asdf
 # git clone https://github.com/asdf-vm/asdf.git ~/.asdf
@@ -337,16 +345,7 @@ bindkey '^ ' autosuggest-accept
 
 if (( $+commands[pyenv] )); then
   export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
-  if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
-    git clone https://github.com/pyenv/pyenv-virtualenv.git $PYENV_ROOT/plugins/pyenv-virtualenv
-  fi
-  if [ ! -d $PYENV_ROOT/plugins/pyenv-virtualenvwrapper ]; then
-    git clone https://github.com/pyenv/pyenv-virtualenvwrapper.git $PYENV_ROOT/plugins/pyenv-virtualenvwrapper
-  fi
   eval "$(pyenv init --no-rehash - zsh)"
-  eval "$(pyenv virtualenv-init - zsh)"
-  export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-  pyenv virtualenvwrapper_lazy
 fi
 
 # ZSH options
@@ -442,8 +441,6 @@ LANG=en_US.UTF-8
 export LC_ALL LANG
 
 export MAKEOPS='j6'
-
-export WORKON_HOME=~/.virtualenvs
 
 # --preserver-root is for GNU versions
 # do not delete / or prompt if deleting more than 3 files at a time
