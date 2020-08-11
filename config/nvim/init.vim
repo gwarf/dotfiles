@@ -193,6 +193,7 @@ Plug 'mhinz/vim-startify'
 " Browsing RFC
 " depends on nokogiri
 " rvm ruby-2.7.0@neovim do gem install nokogiri
+" FIXME index file is empty (not downloaded?)
 Plug 'mhinz/vim-rfc'
 
 " Save sessions
@@ -200,6 +201,10 @@ Plug 'tpope/vim-obsession'
 
 " Zoom windows using <C-w>-m instead of <c-w>-|, <c-w>-_, and <c-w>-=
 Plug 'dhruvasagar/vim-zoom'
+
+" Easy movements
+" https://github.com/easymotion/vim-easymotion
+Plug 'easymotion/vim-easymotion'
 
 " Mail support
 " mu integration when editing emails in mutt
