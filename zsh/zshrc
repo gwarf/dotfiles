@@ -98,6 +98,11 @@ if (( $+commands[exa] )); then
   zplug "DarrinTisdale/zsh-aliases-exa", use:zsh-aliases-exa.plugin.zsh
 fi
 
+# Fortune
+if (( $+commands[fortune] )); then
+  zplug "plugins/chucknorris", from:oh-my-zsh
+fi
+
 # XXX required?
 # zplug "chrissicool/zsh-256color"
 
@@ -343,6 +348,7 @@ export YSU_HARDCORE=0
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
 bindkey '^ ' autosuggest-accept
 
+# XXX Slowing doing the prompt
 if (( $+commands[pyenv] )); then
   export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
   eval "$(pyenv init --no-rehash - zsh)"
@@ -628,3 +634,11 @@ fi
 [ -d $HOME/.rvm/bin ]; export PATH="$PATH:$HOME/.rvm/bin"
 # Load RVM into a shell session *as a function*
 [ -s "$HOME/.rvm/scripts/rvm" ] && . "$HOME/.rvm/scripts/rvm"
+
+if (( $+commands[fortune] )); then
+  if (( $+commands[cowsay] )); then
+    fortune -o | cowsay
+  else
+    fortune -o
+  fi
+fi
