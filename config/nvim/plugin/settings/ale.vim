@@ -23,7 +23,7 @@ let g:ale_list_window_size = 5
 let g:ale_fix_on_save = 1
 
 let g:ale_linters = {
-\   'bash': ['bashate'],
+\   'bash': ['bashate', 'shellcheck'],
 \   'markdown': ['prettier'],
 \}
 
@@ -38,3 +38,8 @@ let g:ale_fixers = {
 \   'yaml': ['prettier'],
 \   '*': ['remove_trailing_lines'],
 \}
+
+let g:ale_languagetool_options='--autoDetect --disable WORD_CONTAINS_UNDERSCORE,DASH_RULE,WHITESPACE_RULE,EN_QUOTES'
+
+" bashate: we don't want indent to be multiple of 4 spaces
+let g:ale_sh_bashate_options = '-i E003'
