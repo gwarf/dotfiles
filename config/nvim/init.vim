@@ -1,7 +1,8 @@
 " ~/.vimrc
-" XXX Move to dein to replace vim-plug?
-" https://github.com/Shougo/dein.vim
-"
+
+" Interesting readings
+" About text objects: https://yanpritzker.com/learn-to-speak-vim-verbs-nouns-and-modifiers-d7bfed1f6b2d
+
 " https://github.com/junegunn/vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
   silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
