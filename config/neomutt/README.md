@@ -5,6 +5,13 @@
 - mbsync (isync)
 - msmtp
 
+
+## Accessing documentation
+
+```sh
+neomutt -O -Q smart_wrap
+```
+
 ## Fetching emails / IMAP sync
 
 mbsync from isync package.
