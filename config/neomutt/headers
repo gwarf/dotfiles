@@ -1,7 +1,7 @@
 # Headers
 
 # edit all headers lines in the editor
-set edit_hdrs
+set edit_headers
 
 ignore *
 unignore from date subject to cc reply-to
