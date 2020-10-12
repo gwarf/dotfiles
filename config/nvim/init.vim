@@ -165,7 +165,7 @@ Plug 'vim-scripts/utl.vim'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
-" Conflicts with some mappint for coc.nvim
+" Conflicts with some mappings for coc.nvim
 "Plug 'vim-scripts/AutoClose'
 " Seems OK
 " Plug 'Raimondi/delimitMate'
@@ -185,8 +185,9 @@ Plug 'reedes/vim-litecorrect'
 Plug 'mbbill/undotree'
 " NERDTree (navigation) menu
 Plug 'scrooloose/nerdtree'
-
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Fancy start screen
 Plug 'mhinz/vim-startify'
