@@ -21,6 +21,7 @@ let g:ale_list_window_size = 5
 
 " Fix files when saving
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 1
 
 let g:ale_linters = {
 \   'bash': ['bashate', 'shellcheck'],
@@ -38,6 +39,8 @@ let g:ale_fixers = {
 \   'yaml': ['prettier'],
 \   '*': ['remove_trailing_lines'],
 \}
+
+let g:ale_javascript_prettier_options = '--prose-wrap always --print-width 80 --tab-width 2'
 
 let g:ale_languagetool_options='--autoDetect --disable WORD_CONTAINS_UNDERSCORE,DASH_RULE,WHITESPACE_RULE,EN_QUOTES'
 
