@@ -32,8 +32,9 @@ endif
 "Plug 'SevereOverfl0w/deoplete-github'
 "
 " Snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" XXX trying to replace by https://github.com/neoclide/coc-snippets
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 
 " Theme
 " Colorscheme
@@ -144,8 +145,8 @@ Plug 'dense-analysis/ale'
 " git integration
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" gitk for Vim.
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
+" git commit browser
+Plug 'junegunn/gv.vim'
 Plug 'mattn/gist-vim'
 
 " Sensible default settings
