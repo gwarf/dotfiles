@@ -147,7 +147,6 @@ fi
 # docker
 # fzf
 # git
-# golang
 # gpg-agent
 # history-substring-search
 # osx
@@ -253,7 +252,7 @@ zplug "gwarf/a18dbeaa01d6cf14a95c31a1c7036f61", \
     as:plugin
 
 # npm / nvm
-# zplug "lukechilds/zsh-nvm"
+zplug "lukechilds/zsh-nvm"
 # [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Python virtualenv management
@@ -270,11 +269,18 @@ zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 # virtualenvs are stored in ~/.virtualenvs
+#
 # Default autoswitchvirtualenv
 # export AUTOSWITCH_DEFAULTENV="defaultenv"
+#
 # Choosing python version
 # use mkvenv --python /usr/bin/python2
 # use mkvenv --python /usr/bin/python3
+#
+# Creating a venv manually
+# python3 -m venv ~/.virtualenvs/impact-report
+# source ~/.virtualenvs/impact-report/bin/activate
+# echo 'impact-report' .venv
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
 # Potentially lighter than pyenv
@@ -629,6 +635,17 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add go to the path
+if [ -d "$HOME/go" ]; then
+  export GOPATH="$HOME/go"
+  export GOBIN="$GOPATH/bin"
+  export GOROOT=/usr/local/opt/go/libexec
+  export PATH="$PATH:$GOBIN"
+  export PATH="$PATH:$GOROOT/bin"
+  # For github.com/raviqqe/liche
+  export GO111MODULE=on
+fi
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 [ -d $HOME/.rvm/bin ]; export PATH="$PATH:$HOME/.rvm/bin"
