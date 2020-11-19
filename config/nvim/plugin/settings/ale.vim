@@ -1,15 +1,21 @@
 " ale settings
 " https://github.com/dense-analysis/ale
 
-" Always show status columnd
+" Always show status column
 let g:ale_sign_column_always = 1
+
+" Use quickfix list instead of location list to not interfer with Coc
+" https://github.com/dense-analysis/ale/issues/1482
+" https://github.com/dense-analysis/ale/issues/1945
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+" Error list window
+let g:ale_open_list = 1
 
 " Moving between errors/warnings with Ctrl-k/j
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Error list window
-let g:ale_open_list = 1
 
 " Customize echo message
 let g:ale_echo_msg_error_str = 'E'
@@ -25,6 +31,7 @@ let g:ale_lint_on_save = 1
 
 let g:ale_linters = {
 \   'bash': ['bashate', 'shellcheck'],
+\   'python': ['flake8'],
 \   'markdown': ['prettier'],
 \}
 
@@ -37,12 +44,17 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \   'markdown': ['prettier'],
 \   'yaml': ['prettier'],
+\   'python': ['black', 'isort', 'trim_whitespace'],
 \   '*': ['remove_trailing_lines'],
 \}
 
 let g:ale_javascript_prettier_options = '--prose-wrap always --print-width 80 --tab-width 2'
 
 let g:ale_languagetool_options='--autoDetect --disable WORD_CONTAINS_UNDERSCORE,DASH_RULE,WHITESPACE_RULE,EN_QUOTES'
+
+" Configure flake8 to comply with black
+" https://black.readthedocs.io/en/stable/compatible_configs.html#flake8
+let g:ale_python_flake8_options='--extend-ignore=E203,W503 --max-line-length=88'
 
 " bashate: we don't want indent to be multiple of 4 spaces
 let g:ale_sh_bashate_options = '-i E003'

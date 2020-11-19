@@ -1,2 +1,10 @@
 {
+  "python.venvPath": ["~/.virtualenvs"],
+  "python.linting.enabled": false,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--extend-ignore=E203,W503",
+    "--max-line-length=88"
+  ]
 }
