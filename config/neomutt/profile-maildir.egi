@@ -78,6 +78,7 @@ my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference
 # gpgsm --import DigiCertCA.crt
 # gpgsm --import baptiste_grenier_until_2021_02.p12
 # gpgsm --list-keys
+# gpgsm --list-secret-keys
 set smime_is_default
 set crypt_autosmime = yes
 # TCS DigiCert certificate
@@ -86,6 +87,8 @@ set crypt_autosmime = yes
 set smime_sign_as = 0x3F4B1003
 # Passphrase expiration
 set smime_timeout=30000
+# Pinentry program is taken from ~/.gnupg/gpg-agent.conf
+# XXX gpg-agent running from mac os X? Keychain? Keybase?
 
 # Extract PGP or S/MIME keys
 bind index,pager \ck extract-keys
