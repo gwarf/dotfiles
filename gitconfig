@@ -1,3 +1,5 @@
+# Cleanign git branches
+# https://devconnected.com/how-to-clean-up-git-branches/
 [color]
   ui = true
   interactive = auto
@@ -108,9 +110,6 @@
   format = man
   autocorrect  = -1
 
-[achievement]
-  upload = true
-
 [branch]
   autosetuprebase = always
 
@@ -118,10 +117,21 @@
   protocol = ssh
 
 [commit]
-    gpgsign = false
+  gpgsign = false
+
+[fetch]
+  # Clean up remote-tracking branches while fetching
+  prune = true
 
 [gpg]
-    program = gpg
+  program = gpg
+
+[filter "lfs"]
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
 
 [include]
-    path = .gitconfig.user
+  # Include user-specific configuration
+  path = .gitconfig.user
