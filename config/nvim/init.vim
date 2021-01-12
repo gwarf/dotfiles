@@ -113,8 +113,9 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " Seems to break tabular and completion
 "Plug 'junegunn/vim-peekaboo'
 
-" Languages' support
+" File types' support
 Plug 'sheerun/vim-polyglot'
+Plug 'darfink/vim-plist'
 " Plug 'pearofducks/ansible-vim'
 " Plug 'mv/mv-vim-puppet'
 " Plug 'PotatoesMaster/i3-vim-syntax'
