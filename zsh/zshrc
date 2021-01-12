@@ -239,11 +239,7 @@ zplug "unixorn/git-extra-commands"
 zplug "rupa/z", use:"*.sh"
 
 # Replacement for find
-zplug "sharkdp/fd", \
-      from:gh-r, \
-      as:command, \
-      use:"*${(L)$(uname -s)}*", \
-      rename-to:fd
+zplug "sharkdp/fd"
 
 # Completion for OpenStack
 # mirror of https://gist.github.com/philipsd6/aea968e80342973fd8d3aeeda343dae5
