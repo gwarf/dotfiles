@@ -90,7 +90,7 @@ macro index,pager \cl "\
  "get URLs with extract_url"
 
 # show flagged and unread mails (i.e. important)
-#macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
+macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 
 # Create a taskwarrior task using mutt2task
 # macro index,pager t "<pipe-message>mutt2task.py<enter>"
