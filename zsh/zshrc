@@ -432,7 +432,6 @@ fi
 # https://github.com/sharkdp/bat
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
-  export PAGER='bat'
   # Fallback as man pager
   if [ -z "$MANPAGER" ]; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
