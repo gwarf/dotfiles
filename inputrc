@@ -13,8 +13,9 @@ $if mode=vi
   set keymap vi-command
   "gg": beginning-of-history
   "G": end-of-history
-  # notice how the "jj" movement is
   set keymap vi-insert
+  set keymap vi-insert
+  # notice how the "jj" movement is
   # after 'set keymap vi-insert'?
   "jj": vi-movement-mode
   "\C-w": backward-kill-word
