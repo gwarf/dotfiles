@@ -23,10 +23,9 @@ Flatten .
 
 # Mirror everything locally without changing folders names
 Channel Perso
-Master :Perso_imap:
-Slave :Perso_local:
+Far :Perso_imap:
+Near :Perso_local:
 Patterns *
-
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
 # Save the synchronization state files in the relevant directory
