@@ -278,17 +278,8 @@ if has("unix")
   let g:ruby_host_prog = 'rvm ruby-2.7.0@neovim do neovim-ruby-host'
   " Pyenv with neovim
   " https://gist.github.com/gwarf/42a0a13ff2bf32a0e79d347e43831cae
-  let s:uname = system("uname")
-  if s:uname == "Darwin\n"
-    " No more using pyenv-virtualenv
-    let g:python_host_prog = $HOME . '/.virtualenvs/neovim2/bin/python'
-    let g:python3_host_prog = $HOME . '/.virtualenvs/neovim3/bin/python'
-  endif
-  if s:uname == "Linux\n"
-    " Still using pyenv-virtualenv
-    let g:python_host_prog = $PYENV_ROOT . '/versions/neovim2/bin/python'
-    let g:python3_host_prog = $PYENV_ROOT . '/versions/neovim3/bin/python'
-  endif
+  let g:python_host_prog = $HOME . '/.virtualenvs/neovim2/bin/python'
+  let g:python3_host_prog = $HOME . '/.virtualenvs/neovim3/bin/python'
 endif
 
 "Credit joshdick
