@@ -269,14 +269,17 @@ zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 # Default autoswitchvirtualenv
 # export AUTOSWITCH_DEFAULTENV="defaultenv"
 #
-# Choosing python version
-# use mkvenv --python /usr/bin/python2
-# use mkvenv --python /usr/bin/python3
+# Checking installed python version
+# pyenv versions
 #
 # Creating a venv manually
 # python3 -m venv ~/.virtualenvs/impact-report
 # source ~/.virtualenvs/impact-report/bin/activate
-# echo 'impact-report' .venv
+# echo 'impact-report' > .venv
+#
+# Deprecated?
+# mkvenv --python /usr/bin/python2
+# mkvenv --python /usr/bin/python3
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
 # Potentially lighter than pyenv
