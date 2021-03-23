@@ -446,7 +446,7 @@ else
 fi
 
 if (( $+commands[msfconsole] )); then
-  alias msfconsole="msfconsole --quiet -x \"db_connect msf@msf\""
+  alias msfconsole='msfconsole --quiet'
 fi
 
 # Manually set language environment
