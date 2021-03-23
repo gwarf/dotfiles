@@ -376,7 +376,9 @@ set showcmd
 
 " Keys
 
-" Use :w!! to write to a read only file by calling sudo
+" Use W to write a file as root using sudo
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+" Alternate: Use :w!! to write to a read only file by calling sudo
 cmap w!! %!sudo tee > /dev/null %
 
 " Use Ctrl-a to access begining of line in command mode
