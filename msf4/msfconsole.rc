@@ -1,1 +1,0 @@
-db_connect -y ~/.msf4/database.yml
