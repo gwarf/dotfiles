@@ -76,6 +76,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
 
   zplug "lib/clipboard", from:oh-my-zsh
+
+  export HOMEBREW_CASK_OPTS='--no-quarantine'
 fi
 
 # https://github.com/unixorn/awesome-zsh-plugins
