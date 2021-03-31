@@ -91,7 +91,7 @@ set sort_re
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 # Ensure that INBOX is always using appropriate sorting
 folder-hook Inbox 'set sort=threads sort_aux=reverse-last-date-received sort_re'
-folder-hook Sent 'set sort=reverse-last-date'
+folder-hook Sent 'set sort=reverse-date-sent'
 # Threads sorted correctly but at bottom
 #set sort_aux = last-date-received
 
