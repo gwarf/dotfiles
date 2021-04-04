@@ -564,11 +564,9 @@ fi
 
 # TODO check that vboxmanage completion is available
 # /usr/share/zsh/site-functions/_virtualbox
-if (( $+commands[compdef] )); then
-  if (( $+commands[VBoxManage] )); then
-    compdef vboxmanage=VBoxManage
-    compdef vboxheadless=VBoxHeadless
-  fi
+if (( $+commands[VBoxManage] )); then
+  compdef vboxmanage=VBoxManage vboxheadless=VBoxHeadless
+  compdef VBoxManage=vboxmanage VBoxHeadless=vboxheadless
 fi
 
 # Use pydf if available
