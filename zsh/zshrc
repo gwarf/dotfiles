@@ -661,3 +661,5 @@ if (( $+commands[fortune] )); then
     fortune -o
   fi
 fi
+
+alias listener="sudo rlwrap nc -lvnp 443"
