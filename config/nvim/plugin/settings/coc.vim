@@ -24,10 +24,13 @@ set cmdheight=2
 " coc-snippets configuration
 " https://github.com/neoclide/coc-snippets
 "
+" Edit custom snippets for the current file
+" :CocCommand snippets.editSnippets
+"
 " c-n: next snippet
 " c-p: previous snippet
 " c-j: select snippet
-"
+
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 
