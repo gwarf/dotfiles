@@ -38,6 +38,7 @@
     ~/.surfingkeys.js: surfingkeys.js
     ~/.tmux.conf: tmux.conf
     ~/.config/nvim: config/nvim
+    ~/.config/coc/ultisnips: config/coc/ultisnips
     ~/.vim: config/nvim
     ~/.vimrc: config/nvim/init.vim
     ~/.xinitrc: xinitrc
