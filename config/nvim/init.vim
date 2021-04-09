@@ -32,20 +32,13 @@ endif
 "Plug 'SevereOverfl0w/deoplete-github'
 "
 " Snippets
-" XXX trying to replace by https://github.com/neoclide/coc-snippets
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-
-" Theme
-" Colorscheme
-" if has('nvim')
-"   Plug 'lifepillar/vim-solarized8'
-" else
-"   Plug 'altercation/vim-colors-solarized'
-" endif
+" XXX Replaced by https://github.com/neoclide/coc-snippets
+"Plug 'Shougo/neosnippet'
+"Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
 
 " Colorscheme
-Plug 'arcticicestudio/nord-vim'
+" Plug 'arcticicestudio/nord-vim'
 " Plug 'rakr/vim-one'
 Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'morhetz/gruvbox'
@@ -66,11 +59,6 @@ Plug 'bling/vim-bufferline'
 
 " Line numbering
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-
-" Snippets
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-Plug 'honza/vim-snippets'
 
 " Ctrl-P for quick file/buffer access
 Plug 'ctrlpvim/ctrlp.vim'
