@@ -135,3 +135,6 @@
 [include]
   # Include user-specific configuration
   path = .gitconfig.user
+
+[init]
+	defaultBranch = main
