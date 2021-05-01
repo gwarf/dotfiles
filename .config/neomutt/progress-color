@@ -1,0 +1,9 @@
+# The 'progress' feature provides clear visual feedback for
+# slow tasks, such as indexing a large folder over the net.
+
+# Set the color of the progress bar
+# White text on a red background
+# color progress white red
+color progress color234        color136
+
+# vim: set ft=muttrc:
