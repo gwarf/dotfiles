@@ -424,6 +424,11 @@ bindkey 's' insert-sudo
 
 # Misc
 
+# Preferred terminal
+if (( $+commands[kitty] )); then
+  export TERMINAL='kitty'
+fi
+
 # Preferred editor for local and remote sessions
 if (( $+commands[nvim] )); then
   export EDITOR='nvim'
