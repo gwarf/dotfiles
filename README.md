@@ -12,6 +12,7 @@ Some files or configuration parts are for GNU/Linux and some other are for MacOS
 ## Requirements
 
 * git
+* yadm
 
 ## Using
 
