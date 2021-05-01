@@ -1,0 +1,73 @@
+#!/bin/sh
+
+# Keyboard layout setting
+# Ctrl+Alt+Backspace kills X
+#setxkbmap us,gb -option 'compose:rctrl' -option 'terminate:ctrl_alt_bksp' -option 'grp:shift_shift_toggle'
+# Checking: setxkbmap -query
+# Cleaning: setxkbmap -option
+
+# caps:swapescape to have caps lock on escape
+# setxkbmap us -option 'compose:rctrl' -option 'terminate:ctrl_alt_bksp,caps:escape'
+
+# For Kinesis keyboard
+# lsusb
+# Bus 001 Device 005: ID 05f3:0007 PI Engineering, Inc. Kinesis Advantage PRO MPC/USB Keyboar
+# xinput
+#  setxkbmap -print -verbose 10
+#  xinput list-props 10 G 'Device Node'
+#  udevadm info --query=property --name=/dev/input/event16 G 'VENDOR='
+# Integrated
+#  AT Translated Set 2 keyboard              id=14   [slave  keyboard (3)]
+# Kinesis
+#  HID 05f3:0007                             id=10   [slave  keyboard (3)]
+#  HID 05f3:0007                             id=11   [slave  keyboard (3)]
+# Use right windows as Compose key
+# setxkbmap -device 10 us -option 'compose:rwin,terminate:ctrl_alt_bksp'
+
+# https://unix.stackexchange.com/questions/58117/determine-xinput-device-manufacturer-and-model
+# https://www.charvolant.org/doug/xkb/html/index.html
+# https://gist.github.com/zoqaeski/3880640
+# http://hack.org/mc/writings/xkb.html
+# http://madduck.net/docs/extending-xkb/
+# http://linuxfr.org/users/mildred/journaux/remplacer-votre-xmodmap
+# http://pascal.tsu.ru/en/xkb/
+# https://superuser.com/questions/760602/how-to-remap-keys-under-linux-for-a-specific-keyboard-only
+# https://www.x.org/releases/current/doc/xorg-docs/input/XKB-Enhancing.html
+# http://wiki.linuxquestions.org/wiki/List_of_Keysyms_Recognised_by_Xmodmap
+
+printf 'Setting up keyboard\n'
+
+# Load Kinesis modmap if keyboard is connected
+if xinput list | grep -q '05f3:0007'; then
+  printf 'Found a Kinesis keyboard\n'
+  # XXX keep only the first value as kinesis have two devices...
+  remote_id=$(
+      xinput list \ | sed -n 's/.*05f3:0007.*id=\([0-9]*\).*keyboard.*/\1/p' \
+      | head -1
+  )
+  if [ -z "$remote_id" -o -z "$DISPLAY" ]; then
+    printf "remote_id: $remote_id\n"
+    printf "DISPLAY: $DISPLAY\n"
+    # Fallback to Xmodmap
+    # printf "remote_id or DISPLAY are missing, fallback to Xmodmap\n"
+    # Xmodmap ~/.Xmodmap-kinesis
+    # Fallback to setxkbmap
+    printf "remote_id or DISPLAY are missing, fallback to setxkbmap\n"
+    setxkbmap us -option 'compose:rctrl' -option 'terminate:ctrl_alt_bksp,caps:escape'
+  else
+
+    # https://wiki.archlinux.org/index.php/Keyboard_configuration_in_Xorg#Workaround
+    # setxkbmap -device $remote_id us -option 'compose:rwin,caps:escape,terminate:ctrl_alt_bksp'
+    # xkbcomp -xkb $DISPLAY ~/.config/i3/kinesis_custom.xkb
+    # Edit ~/.config/i3/kinesis_custom.xkb to map RCTL to Mod4
+    # Setup a fallback for DISPLAY?
+    # DISPLAY=${DISPLAY:=0}
+    # XXX use synch?
+    # XXX remote_id seems to prevent using it
+    # xkbcomp -i $remote_id -w 0 ~/.config/i3/kinesis_custom.xkb $DISPLAY
+    printf "Loading ~/.config/i3/kinesis_custom.xkb on $DISPLAY\n"
+    xkbcomp -w 0 ~/.config/i3/kinesis_custom.xkb $DISPLAY
+  fi
+else
+  printf 'No kinesis keybaord found\n'
+fi
