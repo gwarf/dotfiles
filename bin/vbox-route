@@ -1,3 +1,0 @@
-#!/bin/sh
-sudo ip l s vboxnet0 up
-sudo ip a add 192.168.56.1/24 dev vboxnet0

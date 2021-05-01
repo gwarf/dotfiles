@@ -1,1 +1,0 @@
-set editor="sh -c 'vim $0 && echo -en \"\\033\]0;mutt\\a"' "

@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# https://github.com/sourcegraph/thyme
-
-while true; do thyme track -o ~/thyme.json; sleep 30s; done;
-
-# thyme show -i thyme.json -w stats > thyme.html
-

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-DATA_DIR="$HOME/.config/chromium-vikings"
-
-chromium --user-data-dir="$DATA_DIR"
