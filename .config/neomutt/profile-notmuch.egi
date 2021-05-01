@@ -1,0 +1,134 @@
+# Mutt sender profile: egi + notmuch
+
+# notmuch
+# source ~/.config/neomutt/notmuch
+
+# Filter email waiting an answer and missing it
+# A special nofeedback or answered tag might be added by afew for this
+# "Waiting"       "notmuch://?query=tag:egi AND tag:waiting AND tag:nofeedback" \
+# sets up queries for virtual folders
+unvirtual-mailboxes *
+virtual-mailboxes \
+    "Unread"        "notmuch://?query=tag:egi AND tag:inbox AND tag:unread" \
+    "Inbox"         "notmuch://?query=tag:egi AND tag:inbox" \
+    "TODO"          "notmuch://?query=tag:egi AND tag:todo" \
+    "All"           "notmuch://?query=tag:egi AND tag:all" \
+    "Lists"         "notmuch://?query=tag:egi AND tag:lists" \
+    "ELITRANS"      "notmuch://?query=tag:egi AND tag:eli" \
+    "INDIGO"        "notmuch://?query=tag:egi AND indigo" \
+    "ENVRI"         "notmuch://?query=tag:egi AND envri" \
+    "GLUE"          "notmuch://?query=tag:egi AND glue" \
+    "Security"      "notmuch://?query=tag:egi AND security" \
+    "ISM"           "notmuch://?query=tag:egi AND ISM" \
+    "Office"        "notmuch://?query=tag:office" \
+    "FedCloud"      "notmuch://?query=tag:lists/fedcloud-tf" \
+    "Operations"    "notmuch://?query=tag:operations" \
+    "Important"     "notmuch://?query=tag:egi AND (tag:important OR tag:starred)" \
+    "Waiting"       "notmuch://?query=tag:egi AND tag:waiting" \
+    "Invites"       "notmuch://?query=tag:egi AND tag:invites" \
+    "Drafts"        "notmuch://?query=tag:egi AND tag:draft" \
+    "Trash"         "notmuch://?query=tag:egi AND tag:deleted" \
+    "Spam"          "notmuch://?query=tag:egi AND tag:spam" \
+    "Sent"          "notmuch://?query=tag:egi AND tag:sent"
+
+# Copy sent message to this folder
+
+set sendmail = "/usr/bin/msmtp -a egi"
+
+# Custom status color for this profile
+color status cyan default
+
+# set spoolfile   = "+Inbox"
+# set mbox        = "+All"
+set postponed   = "+Drafts"
+# Sent emails are recorded automatically by Gmail
+unset record
+# Add messages stored to the NeoMutt record (see $record in the NeoMutt docs)
+# also to notmuch DB. If you reply to an email then the new email inherits tags
+# from the original email.
+# set mbox_type = Maildir
+# set record = ~/Mail/EGI/Sent/
+# set nm_record = yes
+# set nm_record_tags = '-inbox,all,sent,me'
+
+# If using trash-folder-patch
+# set trash="+Trash"
+
+# mailboxes +Inbox +All +Draft +Trash
+set from       = "baptiste.grenier@egi.eu"
+
+# Signature file
+set signature='~/.config/neomutt/signature-egi'
+
+set envelope_from_address="baptiste.grenier@egi.eu"
+
+# Customized headers
+unmy_hdr *                      # remove all extra headers first.
+
+my_hdr Organization: EGI Foundation
+my_hdr X-URL: https://egi.eu
+
+my_hdr From: Baptiste Grenier <baptiste.grenier@egi.eu>
+my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@egi.eu>
+
+# S/MIME using gpgme
+# http://wiki.netbsd.org/users/wiz/mutt-smime/
+# gpgsm --import ~/GoogleDrive/dutchgrid.pem
+# gpgsm --import ~/GoogleDrive/Personal\ information/baptiste-grenier-certificate-2017-04-14.p12
+set smime_is_default
+set smime_sign_as = 0x0950B666
+
+# Include the profile name in the status line
+# TODO Align profile name on the right
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@EGI──%>─%?p?( %p postponed )?───"
+
+#folder-hook +[Gmail].Bin 'set sort=reverse-date'
+#folder-hook Sent 'set sort=reverse-date-sent'
+#folder-hook +[Gmail].Bin macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
+#folder-hook +[Gmail].Starred bind  index,pager y flag-message #"Toggle star"
+
+# Fetching mail
+# XXX need to call notmuch
+macro index \cf "<shell-escape>mbsync EGI<enter>"
+
+# Querying Google contacts
+# XXX Study possibility to query notmuch to find contacts
+set query_command="goobook query %s"
+
+# Mailing lists
+lists technical-support-cases-c@rt.egi.eu
+subscribe operations@egi.eu
+subscribe office@mailman.egi.eu
+subscribe indigo-all@lists.indigo-datacloud.eu
+subscribe indigo-announce@lists.indigo-datacloud.eu
+subscribe indigo-datacloud-ea@lists.indigo-datacloud.eu
+subscribe indigo-datacloud-spb@lists.indigo-datacloud.eu
+subscribe indigo-emt@lists.indigo-datacloud.eu
+subscribe indigo-integration-pilot@lists.indigo-datacloud.eu
+subscribe indigo-wp2@lists.indigo-datacloud.eu
+subscribe indigo-wp3@lists.indigo-datacloud.eu
+subscribe indigo-wp3-lead@lists.indigo-datacloud.eu
+subscribe indigo-wp4@lists.indigo-datacloud.eu
+subscribe indigo-wp5@lists.indigo-datacloud.eu
+subscribe onedata-test@lists.indigo-datacloud.eu
+subscribe envriplus-wp9@helsinki.fi
+subscribe wise@lists.wise-community.org
+
+# Save hooks
+#save-hook ' ~s GGUS-Ticket-ID' =helpdesk
+#save-hook ' ~s Backup' =backup
+#save-hook ' ~s oss-security' =security
+#save-hook ' ~e fulldisclosure-bounces@seclists.org' =security
+#save-hook ' ~e operations-bounces@.*\.egi\.eu' =operations
+#save-hook ' ~e office-bounces@.*\.egi\.eu' =office
+#save-hook ' ~e noc-managers-bounces@mailman.egi.eu' =noc-managers
+#save-hook ' ~e indigo-datacloud-ea@lists.indigo-datacloud.eu' =indigo-datacloud-ea
+#save-hook ' ~e envriplus-wp9@helsinki.fi' =ENVRIPlus
+#save-hook ' ~h "EGI - technical-support-cases"' =technical-support-cases
+#save-hook ' ~h "EGI - report-vulnerability"' =report-vulnerability
+#save-hook ' ~h indigo-wp3-lead@lists.indigo-datacloud.eu' =indigo-wp3
+#save-hook ' ~h lists.wise-community.org' =wise
+#save-hook ' ~C Gaizer | ~f Gaizer' =ELITRANS
+#save-hook ' ~h glue-wg@ogf.org' =glue-wg
+
+# :vim set ft=muttrc:

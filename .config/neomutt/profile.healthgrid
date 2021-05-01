@@ -1,0 +1,25 @@
+# Mutt sender profile: healthgrid
+
+# Signature file
+set signature="~/.mutt/signature-healthgrid"
+
+set envelope_from_address="baptiste.grenier@healthgrid.org"
+
+# Customized headers
+unmy_hdr *                      # remove all extra headers first.
+
+my_hdr Return-Path: <baptiste.grenier@healthgrid.org>
+my_hdr From: Baptiste Grenier <baptiste.grenier@healthgrid.org>
+my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@healthgrid.org>
+my_hdr Organization: HealthGrid
+my_hdr X-URL: http://healthgrid.org
+my_hdr X-PGP-Key: https://keys.bapt.name/hgpubkey.asc
+
+# Pretty Good Privacy (PGP):
+unset smime_is_default
+set pgp_sign_as="0x069112E2"    # UserID/KeyID for signing
+unset pgp_autoencrypt           # Default (enc))
+set pgp_autosign                # Default (sign))
+
+# Include the profile name in the status line
+set status_format="%v: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---@healthgrid---%?V?(Filter: %V)?--%>-(%P)---"

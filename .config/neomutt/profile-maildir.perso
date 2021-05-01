@@ -1,0 +1,86 @@
+# Mutt sender profile: perso
+
+set mbox_type = Maildir
+set folder = ~/Mail/Perso
+
+# Copy sent message to this folder
+
+# Send directly using msmtp
+#set sendmail = "/usr/local/bin/msmtp -a egi"
+# Queue mail if offline
+# /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
+set sendmail = "msmtp"
+# Wait for retrun code
+set sendmail_wait = -1
+
+# Custom status color for this profile
+color status cyan default
+
+unset confirmappend
+set spoolfile   = "+Inbox"
+set move = no  # Stop asking to "move read messages to mbox"!
+#set mbox        = "+All"
+set postponed   = "+Drafts"
+# Sent emails are recorded automatically by Gmail
+# unset record
+# Add messages stored to the NeoMutt record (see $record in the NeoMutt docs)
+# also to notmuch DB. If you reply to an email then the new email inherits tags
+# from the original email.
+# set mbox_type = Maildir
+set record = "+Sent"
+
+# If using trash-folder-patch
+set trash="+Trash"
+
+mailboxes +Archive +Drafts +Trash +Junk +Sent
+
+set from       = "baptiste@bapt.name"
+
+# Signature file
+set signature='~/.config/neomutt/signature-perso'
+
+set envelope_from_address="baptiste@bapt.name"
+
+# Customized headers
+unmy_hdr *                      # remove all extra headers first.
+
+my_hdr From: Baptiste Grenier <baptiste@bapt.name>
+my_hdr Reply-To: Baptiste Grenier <baptiste@bapt.name>
+
+# Use GPGME to simplify GPG and S/MIME configuration
+set crypt_use_gpgme = yes
+set crypt_autosign
+set crypt_verify_sig=yes
+set crypt_replyencrypt=yes
+set crypt_replysign=yes
+set crypt_replysignencrypted=yes
+
+# Pretty Good Privacy (PGP):
+# PGP using gpgme (simplified conf)
+unset smime_is_default
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
+set nopgp_autoencrypt           # Default (enc))
+set pgp_autosign              # Default (sign))
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
+my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
+
+# Extract PGP or S/MIME keys
+bind index,pager \ck extract-keys
+
+# Include the profile name in the status line
+# TODO Align profile name on the right
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@Perso──%>─%?p?( %p postponed )?───"
+
+# Contacts from khard and vdirsyncer
+set query_command= "khard email --parsable --search-in-source-files %s"
+
+# Fetching mail
+macro index \cf "<shell-escape>mbsync -a<enter>"
+
+# Google-like key bindings
+macro index,pager A "<save-message>+Archive<enter>" "move message to the archive"
+
+# Mailing lists
+subscribe debiocidons-bureau@framalistes.org
+subscribe debiocidons-ca@framalistes.org
+subscribe debiocidons@framalistes.org
