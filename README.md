@@ -5,29 +5,23 @@ dotfiles
 
 My messy dotfiles. WIP of course :)
 
-Used to be managed using [dotbot][dotbot], but now mainly managed manually.
+Managed using https://yadm.io
 
-Some files or configuration parts are Mac OS X specific.
+Some files or configuration parts are for GNU/Linux and some other are for MacOS X.
 
 ## Requirements
 
 * git
 
-## Bootstrapping
+## Using
 
 ``` sh
-URL='https://github.com/gwarf/dotfiles'
-git clone "$URL" ~/.dotfiles && cd ~/.dotfiles && ./install
+# Bootstrap
+yadm clone git@github.com:gwarf/dotfiles.git
+yadm status
+# Add a file
+yadm add .my-conf-file
+yadm commit .my-conf-file -m 'add .my-conf-file'
+# Push to remote repository
+yadm push
 ```
-
-In order to push and once GitHub credentials have been confiugred it is
-required to update the URL in the ```.git/config``` file:
-
-```
-[remote "origin"]
-  url = git@github.com:gwarf/dotfiles.git
-```
-
-## References
-
-[dotbot]: https://github.com/anishathalye/dotbot/
