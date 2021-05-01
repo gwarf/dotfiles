@@ -1,0 +1,34 @@
+# [Created by task 2.5.1 10/9/2017 17:09:37]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-color',
+# 'man task-sync' or 'man taskrc'
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+
+# Color theme
+#include /usr/share/doc/task/rc/solarized-dark-256.theme
+
+# Reports
+rc.report.next.filter=status:pending,+UNBLOCKED,+@baptiste.grenier
+report.next.sort=status-,start-,priority-,project+,due+
+
+# Calendar
+calendar.details=full
+calendar.holidays=sparse
+
+# https://taskwarrior.org/docs/workflow.html
+
+# Hooks
+# - warn when no project
+# - git hook to commit changes?
+# - Color EGI tasks
+# - start and stop to indicate what I am currently working on, so I can remember where to pick up the next day
+uda.reviewed.type=date
+uda.reviewed.label=Reviewed
+report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
+report._reviewed.columns=uuid
+report._reviewed.sort=reviewed+,modified+
+report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )

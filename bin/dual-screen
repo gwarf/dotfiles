@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# XXX Ideas for automatic monitor conf
+# XXX check https://github.com/beanaroo/display-visor
+# XXX https://github.com/codingtony/udev-monitor-hotplug
+# XXX https://stackoverflow.com/questions/5469828/how-to-create-a-callback-for-monitor-plugged-on-an-intel-graphics
+
+#xrandr --setprovideroutputsource modesetting NVIDIA-0
+#xrandr --setprovideroutputsource Intel NVIDIA-0
+#xrandr --auto
+
+xrandr \
+  | grep -q DP-1 \
+  && xrandr \
+    --output DP-4 --auto \
+    --output DP-1 --auto --left-of DP-4
+
+# Wait a second to get things rady
+sleep 1s
