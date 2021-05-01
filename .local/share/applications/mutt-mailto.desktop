@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Mutt Mailto Handler
-GenericName=MUA
-Comment=Supposedly sucks less.
-Exec=/home/baptiste/bin/mutt-mailto.sh
-Terminal=true
-MimeType=x-scheme-handler/mailto
-NoDisplay=true

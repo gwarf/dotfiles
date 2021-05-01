@@ -1,6 +1,0 @@
-#!/bin/sh
-# https://gist.github.com/manolomartinez/7082024
-
-urxvt -e ranger --choosefile=/tmp/muttattach
-
-cat > "$(cat /tmp/muttattach)"

@@ -1,3 +1,0 @@
-#!/usr/bin/xdotool
-search --onlyvisible --classname $1
-windowraise %@

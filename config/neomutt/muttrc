@@ -1,7 +1,0 @@
-# Source Mutt legacy configuration
-source ~/.config/neomutt/mutt-common.rc
-
-# Notmuch support without patched mutt
-source ~/.config/neomutt/notmuch-mutt.rc
-
-# vim: set ft=muttrc:
