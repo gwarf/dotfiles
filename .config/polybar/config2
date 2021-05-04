@@ -1,0 +1,312 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[config]
+dpi = 192
+
+# bar position, apply globally
+; width = 100%
+; height = 5%
+offset-x = 0%
+offset-y = 0%
+; radius = 0.0
+
+fixed-center = true
+override-redirect = false
+
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[colors]
+nord7 = #8FBCBB
+nord8 = #2bcec2
+success = #50fa7b
+notice = #f1fa8c
+warning = #ff5555
+
+background = #8c000000
+foreground = #ffffff
+background-alt = #444
+foreground-alt = #555
+
+[bar/primary]
+enable-ipc = true
+width = 100%
+height = 27
+bottom = false
+;offset-x = 1%
+;offset-y = 1%
+radius = 0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+; border-size = 4
+; border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = MacGrande:pixelsize=15;4
+font-1 = FontAwesome5Free:style=Solid:pixelsize=15;3
+font-2 = FontAwesome5Brands:pixelsize=15;3
+font-3 = Weather Icons:pixelsize=15;2
+font-4 = Source Han Sans CN:pixelsize=15;4
+font-5 = DejaVuSansMono Nerd Font Mono:pixelsize=15;2
+font-6 = twemoji:scale=4;2
+
+
+#modules-left = terminal bspwm  weather
+modules-left = terminal bspwm
+modules-center = title
+modules-right = pulseaudio memory cpu cputemp battery date
+tray-position = right
+tray-padding = 2
+tray-maxsize = 60
+; tray-background = #0063ff
+
+wm-restack = bspwm
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; monitor = ${env:MONITOR:eDP}
+; monitor = DP-1
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = 
+label-focused-foreground = ${colors.notice}
+label-focused-padding = 1
+
+label-occupied = %index%
+label-occupied-padding = 1
+
+label-urgent = 
+label-urgent-background = ${colors.warning}
+label-urgent-foreground = ${colors.notice}
+label-urgent-padding = 1
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+; Separator in between workspaces
+; label-separator = |
+
+[module/title]
+type = internal/xwindow
+format-foreground = #FFFDFD
+;format-underline = #721ADF
+format-padding = 0
+
+label-maxlen = 20
+label-empty = Desktop
+
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+
+format = <ramp-load> <label>
+
+ramp-load-0 = 
+ramp-load-0-foreground = ${colors.success}
+
+ramp-load-1 = 
+ramp-load-1-foreground = ${colors.notice}
+
+ramp-load-2 = 
+ramp-load-2-foreground = ${colors.warning}
+
+
+[module/memory]
+type = internal/memory
+interval = 3
+
+format = <ramp-used> <label>
+
+label = %gb_used%/%gb_total%
+
+ramp-used-0 = 
+ramp-used-0-foreground = ${colors.success}
+
+ramp-used-1 = 
+ramp-used-1-foreground = ${colors.notice}
+
+ramp-used-2 = 
+ramp-used-2-foreground = ${colors.warning}
+
+
+[module/date]
+type = internal/date
+interval = 1.0
+; See "http://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+
+date =
+date-alt = %Y-%m-%d%
+
+time = %H:%M (%a)
+time-alt = %H:%M:%S (%a)
+
+format = <label>
+label = %date% %time%
+label-margin = 1
+; label-underline = ${colors.nord8}
+
+[module/alsa]
+type = internal/alsa
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Master
+
+; Format
+format-volume = <ramp-volume> <label-volume>
+
+label-muted =  muted
+label-muted-foreground = ${colors.warning}
+
+ramp-volume-0 = 
+ramp-volume-0-foreground = ${colors.success}
+ramp-volume-1 = 
+ramp-volume-1-foreground = ${colors.notice}
+ramp-volume-2 = 
+ramp-volume-2-foreground = ${colors.warning}
+
+ramp-headphones-0 = 
+
+ramp-volume-foreground = ${colors.nord7}
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <ramp-volume> <label-volume>
+
+label-muted =  muted
+label-muted-foreground = #666
+
+ramp-volume-0 = 
+ramp-volume-0-foreground = ${colors.success}
+ramp-volume-1 = 
+ramp-volume-1-foreground = ${colors.notice}
+ramp-volume-2 = 
+ramp-volume-2-foreground = ${colors.notice}
+ramp-volume-3 = 
+ramp-volume-3-foreground = ${colors.warning}
+
+ramp-volume-foreground = ${colors.nord7}
+
+
+[module/battery]
+type = internal/battery
+
+full-at = 100
+battery = BAT0
+adapter = ADP0
+
+format-charging = <animation-charging> <label-charging>
+; format-charging-underline = ${colors.foreground}
+format-charging-foreground = ${colors.nord8}
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+format-discharging = <ramp-capacity> <label-discharging>
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+label-full = 
+label-full-foreground = ${colors.success}
+
+format-charging-font = 6
+format-discharging-font = 6
+label-full-font = 6
+
+[module/cputemp]
+type = internal/temperature
+
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
+thermal-zone = 0
+
+base-temperature = 20
+
+warn-temperature = 80
+
+; Format
+format = <ramp> <label>
+format-warn = <label-warn>
+
+label-warn =  %temperature-c%
+label-warn-padding = 1
+label-warn-foreground = ${colors.warning}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+
+ramp-0-foreground = ${colors.nord8}
+ramp-1-foreground = ${colors.nord8}
+ramp-2-foreground = ${colors.success}
+ramp-3-foreground = ${colors.success}
+ramp-4-foreground = ${colors.warning}
+
+[module/weather]
+type = custom/script
+exec = ~/scripts/polybar/getweather.sh
+interval = 600
+label-font = 4
+
+[module/terminal]
+type = custom/text
+content = "   😈"
+content-foreground = #fff
+content-padding =
+click-left = ~/scripts/bspwm/scratchpad.sh &
+
+[settings]
+screenchange-reload = true
+; compositing-background = xor
+; compositing-background = screen
+; compositing-foreground = source
+; compositing-border = over
+; pseudo-transparency = false
+
+
+; vim:ft=dosini
