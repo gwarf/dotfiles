@@ -1,31 +1,84 @@
 #!/usr/bin/env bash
 
-# this is a simple config for herbstluftwm
+function run {
+  if ! pgrep $1 ;
+  then
+    $@&
+  fi
+}
 
+#change your keyboard if you need it
+#setxkbmap -layout be
+
+# Autostart applications
+pkill -u $USER '^compton$'
+compton  --config $HOME/.config/herbstluftwm/compton.conf &
+# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+xsetroot -solid '#000000'
+xsetroot -cursor_name left_ptr &
+
+#keybindings are in config of sxhkd - interchangeable with other TWM
+# run sxhkd -c $HOME/.config/herbstluftwm/sxhkd/sxhkdrc &
+# wal -nRa 90 &
+# feh --bg-scale ~/.config/herbstluftwm/wall.png &
+$HOME/.fehbg &
+run conky -c $HOME/.conkyrc &
+# run mpd &
+#run variety &
+# run nm-applet &
+#pamac-tray &
+# xinput set-prop 13 302 1 &
+# run redshift-gtk
+# run syncthing-gtk -m &
+#xfce4-power-manager &
+# run dunst &
+# numlockx on &
+# run blueberry-tray &
+#xfsettingsd &
+# nitrogen --restore &
+# caffeine &
+# vivaldi-stable &
+# firefox &
+# thunar &
+# dropbox &
+# run insync start &
+# discord &
+# spotify &
+# atom &
+
+#herbstluftwm start
 hc() {
-    herbstclient "$@"
+  herbstclient "$@"
 }
 
 hc emit_hook reload
 
-xsetroot -solid '#222222'
-picom --shadow-opactiy 0.25 &
+# KEYBINDINGS
 
 # remove all existing keybindings
 hc keyunbind --all
 
-# keybindings
 # if you have a super key you will be much happier with Mod set to Mod4
-#Mod=Mod1    # Use alt as the main modifier
+#Mod=Mod1  # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
 
-hc keybind $Mod-Shift-q quit
+hc keybind $Mod-Shift-x quit
 hc keybind $Mod-Shift-r reload
-hc keybind $Mod-Shift-c close
+hc keybind $Mod-Shift-q close
+hc keybind $Mod-q close
+
 hc keybind $Mod-Return spawn "${TERMINAL:-kitty}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-m spawn rofi -show run
 
-# basic movement in tiling and floating mode
+#Most of the keybindings have been set in sxhkd config file
+#you can set them also here
+
+#reload sxhkd:
+# hc keybind $Mod-Shift-s  pkill -USR1 -x sxhkd
+
+# MOVEMENTS
+
 # focusing clients
 hc keybind $Mod-Left  focus left
 hc keybind $Mod-Down  focus down
@@ -36,7 +89,7 @@ hc keybind $Mod-j     focus down
 hc keybind $Mod-k     focus up
 hc keybind $Mod-l     focus right
 
-# moving clients in tiling and floating mode
+# moving clients to ... on single Monitor
 hc keybind $Mod-Shift-Left  shift left
 hc keybind $Mod-Shift-Down  shift down
 hc keybind $Mod-Shift-Up    shift up
@@ -46,15 +99,28 @@ hc keybind $Mod-Shift-j     shift down
 hc keybind $Mod-Shift-k     shift up
 hc keybind $Mod-Shift-l     shift right
 
-# splitting frames
+# moving clients to ... on dual monitor
+# hc keybind $Mod-Shift-h chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
+# hc keybind $Mod-Shift-Left chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
+# hc keybind $Mod-Shift-j chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
+# hc keybind $Mod-Shift-Down chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
+# hc keybind $Mod-Shift-k chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
+# hc keybind $Mod-Shift-Up chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
+# hc keybind $Mod-Shift-l chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
+# hc keybind $Mod-Shift-Right chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
+
+# FRAMES
+
 # create an empty frame at the specified direction
 hc keybind $Mod-u       split   bottom  0.5
 hc keybind $Mod-o       split   right   0.5
 # let the current frame explode into subframes
 hc keybind $Mod-Control-space split explode
+# remove frame
+hc keybind $Mod-r remove
 
-# resizing frames and floating clients
-resizestep=0.02
+# resizing frames
+resizestep=0.05
 hc keybind $Mod-Control-h       resize left +$resizestep
 hc keybind $Mod-Control-j       resize down +$resizestep
 hc keybind $Mod-Control-k       resize up +$resizestep
@@ -64,44 +130,48 @@ hc keybind $Mod-Control-Down    resize down +$resizestep
 hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
-# tags
-tag_names=( {1..9} )
-tag_keys=( {1..9} 0 )
+# TAGS or WORKSPACES
+
+#names to display in menu
+tag_names=( {1..10} )
+#tag_names=("www" "text" "gimp" "meld" "vlc" "mail" "vb" "image" "code" "chat")
+#tag_names=("I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
+#tag_names=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
+
+#keys to press to get to the tags
+#Qwerty
+#tag_keys=( {1..10} 0 )
+tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
+
+#Belgian azerty
+#tag_keys=( ampersand eacute quotedbl apostrophe parenleft section egrave exclam ccedilla agrave )
+
+#French azerty
+#tag_keys=( ampersand eacute quotedbl apostrophe parenleft minus egrave underscore ccedilla agrave )
 
 hc rename default "${tag_names[0]}" || true
-for i in "${!tag_names[@]}" ; do
+for i in ${!tag_names[@]} ; do
     hc add "${tag_names[$i]}"
+    # horizontal tiling as standard
+    hc set_layout horizontal
+    hc set default_frame_layout 1
     key="${tag_keys[$i]}"
     if ! [ -z "$key" ] ; then
         hc keybind "$Mod-$key" use_index "$i"
-        hc keybind "$Mod-Shift-$key" move_index "$i"
+        hc keybind "$Mod-Shift-$key" chain , move_index "$i" , use_index "$i"
     fi
 done
 
-# cycle through tags
-hc keybind $Mod-period use_index +1 --skip-visible
-hc keybind $Mod-comma  use_index -1 --skip-visible
-
 # layouting
-hc keybind $Mod-r remove
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
-hc keybind $Mod-Shift-f set_attr clients.focus.floating toggle
-hc keybind $Mod-Shift-m set_attr clients.focus.minimized true
-# restore all minimized windows of the focused tag
-hc keybind $Mod-Ctrl-m foreach CLIENT clients. \
-     sprintf MINATT "%c.minimized" CLIENT \
-     sprintf TAGATT "%c.tag" CLIENT and \
-       , compare MINATT "=" "true" \
-       , substitute FOCUS "tags.focus.name" compare TAGATT "=" FOCUS \
-       , set_attr MINATT false
 hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
 hc keybind $Mod-space                                                           \
             or , and . compare tags.focus.curframe_wcount = 2                   \
-                     . cycle_layout +1 vertical horizontal max vertical grid    \
+                     . cycle_layout +1 vertical horizontal max grid    \
                , cycle_layout +1
 
 # mouse
@@ -110,88 +180,93 @@ hc mousebind $Mod-Button1 move
 hc mousebind $Mod-Button2 zoom
 hc mousebind $Mod-Button3 resize
 
-# focus
+# focus on ...
 hc keybind $Mod-BackSpace   cycle_monitor
-hc keybind $Mod-Tab         cycle_all +1
-hc keybind $Mod-Shift-Tab   cycle_all -1
-hc keybind $Mod-c cycle
+hc keybind $Mod-Tab         use_index +1 --skip-visible
+hc keybind $Mod-Shift-Tab   use_index -1 --skip-visible
+hc keybind Control-Mod1-Left    focus left
+hc keybind Control-Mod1-Up      focus up
+hc keybind Control-Mod1-Right   focus right
+hc keybind Control-Mod1-Down    focus down
+hc keybind Mod1-Tab         use_index +1 --skip-visible
+hc keybind Mod1-Shift-Tab   use_index -1 --skip-visible
+#hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto urgent
 
-# theme
-hc attr theme.tiling.reset 1
-hc attr theme.floating.reset 1
+#reset prior to setting the theme
+hc attr theme.reset 1
 
+# Attribute
+hc attr theme.active.color '#FFFFFF'
+hc attr theme.active.inner_color '#4c566a'
+hc attr theme.active.outer_color '#FFFFFF'
+hc attr theme.background_color '#4c566a'
+hc attr theme.border_width 5
+hc attr theme.floating.border_width 5
+hc attr theme.floating.outer_width 1
+hc attr theme.floating.outer_color black
+hc attr theme.inner_color black
+hc attr theme.inner_width 1
+hc attr theme.normal.color '#4c566a'
+hc attr theme.urgent.color orange
 
-hc set frame_border_active_color '#222222'
-hc set frame_border_normal_color '#101010'
-hc set frame_border_width 0
-hc set always_show_frame 0
+# Set
+hc set always_show_frame 1
+hc set focus_follows_mouse 1
+hc set frame_border_active_color '#ffffff'
+hc set frame_border_normal_color '#4c566a'
+hc set frame_bg_normal_color '#4c566a'
+hc set frame_bg_active_color '#ffffff'
+hc set frame_border_width 5
 hc set frame_bg_transparent 1
 hc set frame_transparent_width 0
-hc set frame_gap 4
-hc set focus_follows_mouse 1
-
-hc attr theme.title_height 0
-hc attr theme.title_font 'JetBrains Mono:pixelsize=0'  # example using Xft
-# hc attr theme.title_font '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*'
-hc attr theme.padding_top 2  # space below the title's baseline (i.e. text depth)
-hc attr theme.active.color '#d8dee9'
-hc attr theme.normal.color '#5e81ac'
-hc attr theme.urgent.color '#5e81ac'
-hc attr theme.inner_width 0
-hc attr theme.inner_color '#4c566a'
-hc attr theme.border_width 3
-hc attr theme.floating.border_width 0
-hc attr theme.floating.outer_width 0
-hc attr theme.floating.outer_color '#000000'
-hc attr theme.active.inner_color '#434c5e'
-hc attr theme.active.outer_color '#2e3440'
-hc attr theme.background_color '#2e3440'
-
-#Floating
-hc attr theme.floating.padding_top 20
-
-hc set window_gap 4
-hc set frame_padding 4
-hc set smart_window_surroundings off
-hc set smart_frame_surroundings off
+hc set frame_gap 8
+hc set frame_padding 0
 hc set mouse_recenter_gap 0
+hc set smart_frame_surroundings 1
+hc set smart_window_surroundings 0
+hc set tree_style '╾│ ├└╼─┐'
+hc set window_gap 10
 
-# rules
+# RULES
 hc unrule -F
-#hc rule class=XTerm tag=3 # move all xterms to tag 3
 hc rule focus=on # normally focus new clients
-hc rule floatplacement=smaront
 #hc rule focus=off # normally do not focus new clients
+
+#assign applications to workspaces or tags
+hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome)' tag=1  focus=on
+hc rule class~'(Subl3|code-oss)' tag=2 focus=on
+hc rule class=Gimp tag=5
+hc rule class=krita tag=5
+# hc rule class~'(Meld|ristretto|Nitrogen)' tag=5
+hc rule class=vlc tag=4 focus=on
+hc rule class=qBittorrent tag=7 focus=on
+hc rule class=discord tag=9 focus=on
+hc rule class=TelegramDesktop tag=9 focus=on
+# hc rule class~'(VirtualBox Manager|Vmplayer)' tag=7
+# hc rule class~'(Thunar|Nemo|Caja|Nautilus)' tag=8
+# hc rule class~'(Evolution|Geary)' tag=9
+# hc rule class=Spotify tag=10
+
 # give focus to most common terminals
-#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
+#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on pseudotile=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-
-hc set tree_style '╾│ ├└╼─┐'
+hc rule class=Oblogout fullscreen=on
+hc rule class=Insync pseudotile=on
+hc rule class=VirtualBox fullscreen=on
 
 # unlock, just to be sure
 hc unlock
 
-# do multi monitor setup here, e.g.:
-# hc set_monitors 1280x1024+0+0 1280x1024+1280+0
-# or simply:
 hc detect_monitors
 
-hc set tree_style '╾│ ├└╼─┐'
+# single polybar at top
+hc pad 0 40
 
-#lemonbar.sh | lemonbar -n bar -B \#2e3440 -F \#d8dee9 -f 'JetBrains Mono:size=10.8' -f 'Caskaydia Cove Nerd Font:size=10.8' -p  | sh &
-#lemonbar.sh | lemonbar -n bar -B \#2e3440 -F \#d8dee9 -f 'SF Mono:size=10.8' -f 'JetBrains Mono:style=Italic:size=10.8' -f 'Victor Mono:style=SemiBold Italic:size=10.8' -f 'Noto Sans JP:size=10.8' -f 'mplus Nerd Font:style=Italic:size=10.8' -p -g 1920x30+0+0 | sh &
-~/bin/lemonbar.sh | lemonbar -n bar -B \#2e3440 -F \#d8dee9 -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid' -f 'Caskaydia Cove Nerd Font' -p | sh &
-
-# find the panel
-# panel=~/.config/herbstluftwm/panel.sh
-# [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-# for monitor in $(hc list_monitors | cut -d: -f1) ; do
-#     # start it on each monitor
-#     "$panel" "$monitor" &
-# done
+# Launch polybar
+[ -x ~/.config/polybar/launch.sh ] && ~/.config/polybar/launch.sh
 
 # Autostart applications
 [ -x ~/bin/autostart.sh ] && ~/bin/autostart.sh

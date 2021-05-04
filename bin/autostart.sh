@@ -52,8 +52,8 @@ run_once dunst
 # Misc
 run_once kitty
 run_once firefox
-run_once redshift
-run_once redshift-gtk
+# run_once redshift
+# run_once redshift-gtk
 run_once rofi "-key mod1+tab -terminal kitty"
 
 # Disabled
@@ -80,4 +80,3 @@ run_once rofi "-key mod1+tab -terminal kitty"
 #/usr/libexec/gnome-settings-daemon &
 #gnome-volume-manager &
 #x11vnc -ncache 10 -many -q -bg -rfbauth .vnc/passwd
-
