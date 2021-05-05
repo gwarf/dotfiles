@@ -678,3 +678,6 @@ if (( $+commands[fortune] )); then
     fortune -o
   fi
 fi
+
+(cat ~/.cache/wal/sequences &)
+clear && freshfetch

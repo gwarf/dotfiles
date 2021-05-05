@@ -12,7 +12,8 @@ function run {
 
 # Autostart applications
 pkill -u $USER '^compton$'
-compton  --config $HOME/.config/herbstluftwm/compton.conf &
+compton --config $HOME/.config/herbstluftwm/compton.conf &
+# compton --config /home/baptiste/.config/compton.conf &
 # /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 xsetroot -solid '#000000'
@@ -20,8 +21,9 @@ xsetroot -cursor_name left_ptr &
 
 #keybindings are in config of sxhkd - interchangeable with other TWM
 # run sxhkd -c $HOME/.config/herbstluftwm/sxhkd/sxhkdrc &
-# wal -nRa 90 &
-# feh --bg-scale ~/.config/herbstluftwm/wall.png &
+# wal -i ~/.config/herbstluftwm/fantasy-landscape2.jpg
+wal -nRa 90 &
+# feh --bg-scale ~/.config/herbstluftwm/fantasy-landscape2.jpg &
 $HOME/.fehbg &
 run conky -c $HOME/.conkyrc &
 # run mpd &
