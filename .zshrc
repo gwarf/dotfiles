@@ -679,5 +679,5 @@ if (( $+commands[fortune] )); then
   fi
 fi
 
-(cat ~/.cache/wal/sequences &)
+# (cat ~/.cache/wal/sequences &)
 clear && freshfetch
