@@ -26,6 +26,7 @@ wal -nRa 90 &
 # feh --bg-scale ~/.config/herbstluftwm/fantasy-landscape2.jpg &
 $HOME/.fehbg &
 run conky -c $HOME/.conkyrc &
+albert &
 # run mpd &
 #run variety &
 # run nm-applet &
@@ -71,7 +72,9 @@ hc keybind $Mod-Shift-q close
 hc keybind $Mod-q close
 
 hc keybind $Mod-Return spawn "${TERMINAL:-kitty}" # use your $TERMINAL with xterm as fallback
-hc keybind $Mod-m spawn rofi -show run
+# hc keybind $Mod-m spawn rofi -show run
+# Albert is launched and uses it's own key
+# hc keybind $Mod-m spawn albert
 
 #Most of the keybindings have been set in sxhkd config file
 #you can set them also here
@@ -91,7 +94,7 @@ hc keybind $Mod-j     focus down
 hc keybind $Mod-k     focus up
 hc keybind $Mod-l     focus right
 
-# moving clients to ... on single Monitor
+# moving clients
 hc keybind $Mod-Shift-Left  shift left
 hc keybind $Mod-Shift-Down  shift down
 hc keybind $Mod-Shift-Up    shift up
@@ -101,17 +104,7 @@ hc keybind $Mod-Shift-j     shift down
 hc keybind $Mod-Shift-k     shift up
 hc keybind $Mod-Shift-l     shift right
 
-# moving clients to ... on dual monitor
-# hc keybind $Mod-Shift-h chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-# hc keybind $Mod-Shift-Left chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-# hc keybind $Mod-Shift-j chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-# hc keybind $Mod-Shift-Down chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
-# hc keybind $Mod-Shift-k chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-# hc keybind $Mod-Shift-Up chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-# hc keybind $Mod-Shift-l chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-# hc keybind $Mod-Shift-Right chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-
-# FRAMES
+# Frames
 
 # create an empty frame at the specified direction
 hc keybind $Mod-u       split   bottom  0.5
@@ -136,20 +129,7 @@ hc keybind $Mod-Control-Right   resize right +$resizestep
 
 #names to display in menu
 tag_names=( {1..10} )
-#tag_names=("www" "text" "gimp" "meld" "vlc" "mail" "vb" "image" "code" "chat")
-#tag_names=("I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" "X")
-#tag_names=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
-
-#keys to press to get to the tags
-#Qwerty
-#tag_keys=( {1..10} 0 )
-tag_keys=( "1" "2" "3" "4" "5" "6" "7" "8" "9" "0" )
-
-#Belgian azerty
-#tag_keys=( ampersand eacute quotedbl apostrophe parenleft section egrave exclam ccedilla agrave )
-
-#French azerty
-#tag_keys=( ampersand eacute quotedbl apostrophe parenleft minus egrave underscore ccedilla agrave )
+tag_keys=( {1..9} 0 )
 
 hc rename default "${tag_names[0]}" || true
 for i in ${!tag_names[@]} ; do
@@ -164,9 +144,22 @@ for i in ${!tag_names[@]} ; do
     fi
 done
 
+# cycle through tags
+hc keybind $Mod-period use_index +1 --skip-visible
+hc keybind $Mod-comma  use_index -1 --skip-visible
+
 # layouting
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
+hc keybind $Mod-Shift-f set_attr clients.focus.floating toggle
+hc keybind $Mod-Shift-m set_attr clients.focus.minimized true
+# restore all minimized windows of the focused tag
+hc keybind $Mod-Ctrl-m foreach CLIENT clients. \
+     sprintf MINATT "%c.minimized" CLIENT \
+     sprintf TAGATT "%c.tag" CLIENT and \
+       , compare MINATT "=" "true" \
+       , substitute FOCUS "tags.focus.name" compare TAGATT "=" FOCUS \
+       , set_attr MINATT false
 hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
@@ -184,15 +177,9 @@ hc mousebind $Mod-Button3 resize
 
 # focus on ...
 hc keybind $Mod-BackSpace   cycle_monitor
-hc keybind $Mod-Tab         use_index +1 --skip-visible
-hc keybind $Mod-Shift-Tab   use_index -1 --skip-visible
-hc keybind Control-Mod1-Left    focus left
-hc keybind Control-Mod1-Up      focus up
-hc keybind Control-Mod1-Right   focus right
-hc keybind Control-Mod1-Down    focus down
-hc keybind Mod1-Tab         use_index +1 --skip-visible
-hc keybind Mod1-Shift-Tab   use_index -1 --skip-visible
-#hc keybind $Mod-c cycle
+hc keybind $Mod-Tab         cycle_all +1
+hc keybind $Mod-Shift-Tab   cycle_all -1
+hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto urgent
 
 #reset prior to setting the theme
@@ -230,28 +217,27 @@ hc set smart_window_surroundings 0
 hc set tree_style '╾│ ├└╼─┐'
 hc set window_gap 10
 
-# RULES
+# Rules
 hc unrule -F
 hc rule focus=on # normally focus new clients
-#hc rule focus=off # normally do not focus new clients
+hc rule floatplacement=smaront
 
-#assign applications to workspaces or tags
-hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome)' tag=1  focus=on
-hc rule class~'(Subl3|code-oss)' tag=2 focus=on
-hc rule class=Gimp tag=5
-hc rule class=krita tag=5
+# assign applications to workspaces or tags
+# hc rule class~'(firefox|Vivaldi-stable|Vivaldi-snapshot|Chromium|Google-chrome)' tag=1  focus=on
+# hc rule class~'(Subl3|code-oss)' tag=2 focus=on
+# hc rule class=Gimp tag=5
+# hc rule class=krita tag=5
 # hc rule class~'(Meld|ristretto|Nitrogen)' tag=5
-hc rule class=vlc tag=4 focus=on
-hc rule class=qBittorrent tag=7 focus=on
-hc rule class=discord tag=9 focus=on
-hc rule class=TelegramDesktop tag=9 focus=on
+# hc rule class=vlc tag=4 focus=on
+# hc rule class=qBittorrent tag=7 focus=on
+# hc rule class=discord tag=9 focus=on
+# hc rule class=TelegramDesktop tag=9 focus=on
 # hc rule class~'(VirtualBox Manager|Vmplayer)' tag=7
 # hc rule class~'(Thunar|Nemo|Caja|Nautilus)' tag=8
 # hc rule class~'(Evolution|Geary)' tag=9
 # hc rule class=Spotify tag=10
 
 # give focus to most common terminals
-#hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on pseudotile=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
