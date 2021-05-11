@@ -610,17 +610,11 @@ lscan() {
   printf "$scanReport\n"
 }
 
-if [ -x "$HOME/bin/gam/gam" ]; then
-  # CLI for Google admin
-  # https://github.com/jay0lee/GAM
-  gam() { "$HOME/bin/gam/gam" "$@" ; }
-fi
-
 if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
   # CLI for Google admin, updated GAM
   # https://github.com/taers232c/GAMADV-XTD3
-  # gam3() { "$HOME/bin/gam/gam" "$@" ; }
-  alias gam3="$HOME/bin/gamadv-xtd3/gam"
+  # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
+  alias gam="$HOME/bin/gamadv-xtd3/gam"
 fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
