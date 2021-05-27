@@ -357,8 +357,9 @@ bindkey '^ ' autosuggest-accept
 
 # XXX Slowing doing the prompt
 if (( $+commands[pyenv] )); then
-  export PYENV_ROOT="${ZPLUG_HOME}/repos/pyenv/pyenv"
-  eval "$(pyenv init --no-rehash - zsh)"
+  # Configuration also done in ~/.zprofile
+  # eval "$(pyenv init --no-rehash - zsh)"
+  eval "$(pyenv init -)"
 fi
 
 # ZSH options
@@ -614,7 +615,10 @@ if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
   # CLI for Google admin, updated GAM
   # https://github.com/taers232c/GAMADV-XTD3
   # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
-  alias gam="$HOME/bin/gamadv-xtd3/gam"
+  export PATH="$HOME/bin/gamadv-xtd3/:$PATH"
+  #alias gam="$HOME/bin/gamadv-xtd3/gam"
+
+  #gam3() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
 fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
@@ -667,3 +671,5 @@ if (( $+commands[fortune] )); then
     fortune -o
   fi
 fi
+
+alias gam="/Users/baptiste/bin/gamadv-xtd3/gam"
