@@ -93,13 +93,6 @@ zplug "stedolan/jq", \
     rename-to:jq
 zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
 
-# Improved directory listing
-# https://github.com/supercrabtree/k
-#zplug "supercrabtree/k"
-if (( $+commands[exa] )); then
-  zplug "DarrinTisdale/zsh-aliases-exa", use:zsh-aliases-exa.plugin.zsh
-fi
-
 # Fortune
 if (( $+commands[fortune] )); then
   zplug "plugins/chucknorris", from:oh-my-zsh
@@ -237,9 +230,6 @@ zplug "so-fancy/diff-so-fancy", as:command
 # https://github.com/unixorn/git-extra-commands
 zplug "unixorn/git-extra-commands"
 
-# Replacement for autojump
-zplug "rupa/z", use:"*.sh"
-
 # Replacement for find
 zplug "sharkdp/fd"
 
@@ -355,6 +345,11 @@ export YSU_HARDCORE=0
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
 bindkey '^ ' autosuggest-accept
 
+# A smarter cd command
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
+
 # XXX Slowing doing the prompt
 if (( $+commands[pyenv] )); then
   # Configuration also done in ~/.zprofile
@@ -467,11 +462,18 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# list only directories
-alias lsd='ls -d */'
-# list only files
-alias lsf="ls -rtF | grep -v '.*/'"
+# Alias lsd to ls: https://github.com/Peltoche/lsd
+if (( $+commands[lsd] )); then
+  alias ls='lsd --group-dirs first'
+  alias lt='ls --tree'
+fi
 alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+# list only directories
+ alias lsdir='ls -d */'
+# list only files
+alias lsfiles="ls -rtF | grep -v '.*/'"
 
 # Global aliases
 alias -g A="| awk"
