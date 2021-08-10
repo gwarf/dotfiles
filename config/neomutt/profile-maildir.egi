@@ -81,10 +81,8 @@ my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference
 # gpgsm --list-secret-keys
 set smime_is_default
 set crypt_autosmime = yes
-# TCS DigiCert certificate
-# set smime_sign_as = 0x6D26CF94
-# TCS Sectigo ceritificate
-set smime_sign_as = 0x3F4B1003
+# TCS Sectigo ceritificate August 2021
+set smime_sign_as = 0x0EBD819F
 # Passphrase expiration
 set smime_timeout=30000
 # Pinentry program is taken from ~/.gnupg/gpg-agent.conf
