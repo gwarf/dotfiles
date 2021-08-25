@@ -30,7 +30,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "Plug 'SevereOverfl0w/deoplete-github'
-"
+
 " Snippets
 " XXX Replaced by https://github.com/neoclide/coc-snippets
 "Plug 'Shougo/neosnippet'
@@ -38,10 +38,7 @@ endif
 Plug 'honza/vim-snippets'
 
 " Colorscheme
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'rakr/vim-one'
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'morhetz/gruvbox'
 
 " Airline statusbar
 Plug 'vim-airline/vim-airline'
