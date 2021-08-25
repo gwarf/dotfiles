@@ -138,17 +138,26 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 Plug 'mattn/gist-vim'
 
-" Sensible default settings
+" Enable repeating in supported plugin maps using "."
 Plug 'tpope/vim-repeat'
+
+" Sensible default settings
 Plug 'tpope/vim-sensible'
 
 " Automatic indentation autoconfiguration
 Plug 'tpope/vim-sleuth'
 
+" Correctly increment/decrement dates/times
 Plug 'tpope/vim-speeddating'
+
 " Easy change of surrounding stuff (tags, quotes...)
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
+" Test alternative to vim-surround
+Plug 'machakann/vim-sandwich'
+
+" Pairs of handy bracket mappings
 Plug 'tpope/vim-unimpaired'
+
 " Hilight utf8-related trolls
 Plug 'vim-utils/vim-troll-stopper'
 Plug 'vim-scripts/utl.vim'
