@@ -149,7 +149,13 @@ Plug 'tpope/vim-speeddating'
 
 " Easy change of surrounding stuff (tags, quotes...)
 " Plug 'tpope/vim-surround'
-" Test alternative to vim-surround
+" Test sandwich as alternative to vim-surround
+" sa: sandwich add + text object + text
+" saw`: surround word with `
+" sd: sandwich delete
+" sdt: delete surrounding tag
+" sr: sandwich replace
+" sr_`: replace _ by `
 Plug 'machakann/vim-sandwich'
 
 " Pairs of handy bracket mappings
