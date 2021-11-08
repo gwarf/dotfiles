@@ -401,7 +401,7 @@ endif
 """"""""""""""""""""""""""""""
 
 " Set spell language
-set spelllang=en,fr
+set spelllang=en_gb,fr
 " Enable completion of spell
 set complete+=kspell
 

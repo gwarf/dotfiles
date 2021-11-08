@@ -26,7 +26,7 @@ let b:sleuth_automatic = 0
 " https://github.com/dbeniamine/vim-mail/
 "
 let g:VimMailDoNotFold=1
-let g:VimMailSpellLangs=['en', 'fr']
+let g:VimMailSpellLangs=['en_gb', 'fr']
 " Remove quoted signature is killing mine due to flow automatic formatting
 "let g:VimMailStartFlags={'reply' :"boir" }
 let g:VimMailStartFlags={
