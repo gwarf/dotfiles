@@ -12,5 +12,6 @@ text/calendar; ~/.config/neomutt/dump-ical.py %s; copiousoutput;
 # text/html; ~/.config/neomutt/view_attachment %s html
 text/csv       ; bat %s                                        ; copiousoutput
 application/json       ; bat %s; print = open %s
+application/x-pkcs7-signature ; openssl smime -pk7out -inform DER | openssl pkcs7 -print_certs -text -noout ; nametemplate=%s.p7s ; copiousoutput
 # XXX not sure if used
 application/*; ~/.config/neomutt/view_attachment %s -
