@@ -12,6 +12,7 @@ unignore newsgroups posted-to x-also-posted-to
 unignore sender x-original-sender
 unignore priority importance
 unignore mail-followup-to in-reply-to
+unignore priority x-priority importance
 # useful to debug smtp path but too verbose
 # unignore references
 # unignore content-type
