@@ -119,9 +119,9 @@ eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors
 
 # Replacement for zsh-users/zsh-syntax-highlighting
 # Theme management: fsh-alias -h
-zplug "zdharma/fast-syntax-highlighting"
+zplug "zdharma-continuum/fast-syntax-highlighting"
 # Ctrl-R to search multi word with AND
-zplug "zdharma/history-search-multi-word"
+zplug "zdharma-continuum/history-search-multi-word"
 
 # Modules from prezto
 # https://github.com/sorin-ionescu/prezto/tree/master/modules
@@ -227,8 +227,6 @@ zplug "so-fancy/diff-so-fancy", as:command
 # Clashing with forgit, not sure if useful
 # Git aliases
 # zplug "plugins/git",   from:oh-my-zsh
-# https://github.com/unixorn/git-extra-commands
-zplug "unixorn/git-extra-commands"
 
 # Replacement for find
 zplug "sharkdp/fd"
