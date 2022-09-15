@@ -132,6 +132,9 @@ zplug "modules/history", from:prezto
 if (( $+commands[tmux] )); then
   zplug "modules/tmux", from:prezto
 fi
+if (( $+commands[vagrant] )); then
+  zplug "modules/vagrant", from:prezto
+fi
 
 # Modules from oh-my-zsh
 # XXX potentially interesting modules

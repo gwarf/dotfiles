@@ -69,7 +69,8 @@ set crypt_replysignencrypted=yes
 
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
-set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing
+# In order to sign with a sub key, only the subkey should be available locally
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing - main key ID
 # Use S/MIME by default instead of PGP
 # set pgp_autoencrypt           # Default (enc))
 # set pgp_autosign              # Default (sign))
@@ -93,6 +94,8 @@ set smime_timeout=30000
 # XXX gpg-agent running from mac os X? Keychain? Keybase?
 
 # Extract PGP or S/MIME keys
+# To be done before trying to send an encrypted message
+# Known keys can be displayed using gpgsm --list-keys
 bind index,pager \ck extract-keys
 
 # Include the profile name in the status line
