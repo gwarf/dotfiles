@@ -32,6 +32,8 @@ endif
 "Plug 'SevereOverfl0w/deoplete-github'
 
 " Snippets
+" "Editing snippets for current filetype
+" :CocCommand snippets.editSnippets
 " XXX Replaced by https://github.com/neoclide/coc-snippets
 "Plug 'Shougo/neosnippet'
 "Plug 'Shougo/neosnippet-snippets'
@@ -437,13 +439,6 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-
-" Some useful abbreviations
-
-:iab brb Best regards,<enter>Baptiste
-:iab cb Cheers,<enter>Baptiste
-" XXX find a better abbreviation
-:iab cl ---------8<--------8<-------------8<------------8<------------8<----------
 
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
