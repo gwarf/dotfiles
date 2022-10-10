@@ -87,11 +87,12 @@ fi
 # zplug "lib/completion", from:oh-my-zsh
 
 # Load "emoji-cli" if "jq" is installed
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
+# zplug "stedolan/jq", \
+#     from:gh-r, \
+#     as:command, \
+#     use:"*osx-amd64*", \
+#     rename-to:jq
+# zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
 
 # Fortune
 if (( $+commands[fortune] )); then
@@ -210,12 +211,10 @@ zplug "sharat87/zsh-vim-mode", defer:3
 # Fuzzy command line completion: Ctrl-T
 # Grab binaries from GitHub Releases
 # and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*${(L)$(uname -s)}*amd64*"
-zplug "junegunn/fzf", use:"shell/*.zsh", defer:2, on:"junegunn/fzf-bin"
+# zplug "junegunn/fzf", \
+#     from:gh-r, \
+#     as:command, \
+#     use:"*darwin_amd64*"
 
 # https://github.com/hschne/fzf-git
 # use git <command> **
@@ -262,17 +261,24 @@ zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 # Default autoswitchvirtualenv
 # export AUTOSWITCH_DEFAULTENV="defaultenv"
 #
-# Checking installed python version
+# Checking available python versions
+# pyenv install -l
+# Checking installed python versions
 # pyenv versions
+# Installing a python version
+# pyenv install 3.10.7
+# Checking current python version
+# pyenv version
+# Setting default version
+# pyenv global 2.7.18 3.10.7
+# Setting directory specific version
+# pyenv local 3.10.7
 #
 # Creating a venv manually
+# pyenv local 3.10.7
 # python3 -m venv ~/.virtualenvs/impact-report
 # source ~/.virtualenvs/impact-report/bin/activate
 # echo 'impact-report' > .venv
-#
-# Deprecated?
-# mkvenv --python /usr/bin/python2
-# mkvenv --python /usr/bin/python3
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
 # Potentially lighter than pyenv
@@ -676,3 +682,10 @@ if (( $+commands[fortune] )); then
 fi
 
 alias gam="/Users/baptiste/bin/gamadv-xtd3/gam"
+
+# XXX to be tested/documented
+if (( $+commands[oidc-agent-service] )); then
+  eval `oidc-agent-service use`
+  # for fedcloudclient, once egi account got created
+  export OIDC_AGENT_ACCOUNT=egi
+fi
