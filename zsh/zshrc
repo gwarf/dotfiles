@@ -182,6 +182,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:2
 
 # XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
+export YSU_MESSAGE_POSITION="after"
 
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
@@ -489,17 +490,11 @@ alias -g A="| awk"
 if (( $+commands[ccze] )); then
   alias -g C="| ccze -A"
 fi
-alias -g G="| grep"
-alias -g GV="| grep -v"
-alias -g H="| head"
 alias -g L='| $PAGER'
 alias -g P=' --help | less'
 alias -g R="| ruby -e"
-alias -g S="| sed"
-alias -g T="| tail"
 alias -g V="| vim -R -"
 alias -g U=' --help | head'
-alias -g W="| wc"
 
 # Suffix aliases
 alias -s zip=zipinfo
@@ -685,7 +680,7 @@ alias gam="/Users/baptiste/bin/gamadv-xtd3/gam"
 
 # XXX to be tested/documented
 if (( $+commands[oidc-agent-service] )); then
-  eval `oidc-agent-service use`
+  eval $(oidc-agent-service use)
   # for fedcloudclient, once egi account got created
   export OIDC_AGENT_ACCOUNT=egi
 fi
