@@ -243,25 +243,11 @@ endif
 " Theme
 set background=dark
 
-let g:nord_italic=1
-let g:nord_italic_comments=1
-let g:nord_underline=1
-let g:nord_cursor_line_number_background=0
-" colorscheme nord
-colorscheme dracula
-" colorscheme one
-" Works nicely with Nord palette
-" colorscheme gruvbox
-" if has('nvim')
-  " let g:solarized_use16 = 1
-  " colorscheme solarized8
-" else
-  " colorscheme solarized
-" endif
-
 " Use a specific colorscheme for vimdiff
 " if &diff
-"   colorscheme evening
+"   colorscheme industry
+" else
+colorscheme dracula
 " endif
 
 " Highlight current line
