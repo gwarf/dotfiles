@@ -86,13 +86,6 @@ fi
 # Load completion library for those sweet [tab] squares
 # zplug "lib/completion", from:oh-my-zsh
 
-# Load "emoji-cli" if "jq" is installed
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", on:"stedolan/jq"
-
 # Improved directory listing
 # https://github.com/supercrabtree/k
 #zplug "supercrabtree/k"
