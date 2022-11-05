@@ -16,7 +16,7 @@
 
 " Auto install required extensions
 " Update usinsg CocUpdate
-let g:coc_global_extensions = [ 'coc-json', 'coc-git', 'coc-python', 'coc-spell-checker', 'coc-snippets' ]
+let g:coc_global_extensions = [ 'coc-json', 'coc-git', 'coc-pyright', 'coc-spell-checker', 'coc-snippets' ]
 
 " Better display for messages
 set cmdheight=2
