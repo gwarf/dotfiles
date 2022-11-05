@@ -30,18 +30,17 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "Plug 'SevereOverfl0w/deoplete-github'
-"
+
 " Snippets
+" "Editing snippets for current filetype
+" :CocCommand snippets.editSnippets
 " XXX Replaced by https://github.com/neoclide/coc-snippets
 "Plug 'Shougo/neosnippet'
 "Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
 " Colorscheme
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'rakr/vim-one'
 Plug 'dracula/vim', { 'as': 'dracula' }
-" Plug 'morhetz/gruvbox'
 
 " Airline statusbar
 Plug 'vim-airline/vim-airline'
@@ -138,17 +137,30 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 Plug 'mattn/gist-vim'
 
-" Sensible default settings
+" Enable repeating in supported plugin maps using "."
 Plug 'tpope/vim-repeat'
+
+" Sensible default settings
 Plug 'tpope/vim-sensible'
 
 " Automatic indentation autoconfiguration
 Plug 'tpope/vim-sleuth'
 
+" Correctly increment/decrement dates/times
 Plug 'tpope/vim-speeddating'
+
 " Easy change of surrounding stuff (tags, quotes...)
-Plug 'tpope/vim-surround'
+" sa: sandwich add + text object + text
+" saw`: surround word with `
+" sd: sandwich delete
+" sdt: delete surrounding tag
+" sr: sandwich replace
+" sr_`: replace _ by `
+Plug 'machakann/vim-sandwich'
+
+" Pairs of handy bracket mappings
 Plug 'tpope/vim-unimpaired'
+
 " Hilight utf8-related trolls
 Plug 'vim-utils/vim-troll-stopper'
 Plug 'vim-scripts/utl.vim'
@@ -229,25 +241,11 @@ endif
 " Theme
 set background=dark
 
-let g:nord_italic=1
-let g:nord_italic_comments=1
-let g:nord_underline=1
-let g:nord_cursor_line_number_background=0
-" colorscheme nord
-colorscheme dracula
-" colorscheme one
-" Works nicely with Nord palette
-" colorscheme gruvbox
-" if has('nvim')
-  " let g:solarized_use16 = 1
-  " colorscheme solarized8
-" else
-  " colorscheme solarized
-" endif
-
 " Use a specific colorscheme for vimdiff
 " if &diff
-"   colorscheme evening
+"   colorscheme industry
+" else
+colorscheme dracula
 " endif
 
 " Highlight current line
@@ -389,7 +387,7 @@ endif
 """"""""""""""""""""""""""""""
 
 " Set spell language
-set spelllang=en,fr
+set spelllang=en_gb,fr
 " Enable completion of spell
 set complete+=kspell
 
@@ -425,13 +423,6 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-
-" Some useful abbreviations
-
-:iab brb Best regards,<enter>Baptiste
-:iab cb Cheers,<enter>Baptiste
-" XXX find a better abbreviation
-:iab cl ---------8<--------8<-------------8<------------8<------------8<----------
 
 " https://github.com/tpope/vim-sensible/pull/127
 let g:is_posix=1
