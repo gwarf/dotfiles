@@ -260,3 +260,5 @@ hc pad 0 40
 [ -x ~/bin/autostart.sh ] && ~/bin/autostart.sh
 # XXX this seems necessary as load from .xinitrc seems uneffective
 [ -r ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+# Use right control as compose key
+setxkbmap -option compose:rctrl
