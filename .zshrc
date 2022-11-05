@@ -126,9 +126,9 @@ eval $(dircolors $ZPLUG_HOME/repos/arcticicestudio/nord-dircolors/src/dir_colors
 
 # Replacement for zsh-users/zsh-syntax-highlighting
 # Theme management: fsh-alias -h
-zplug "zdharma/fast-syntax-highlighting"
+zplug "zdharma-continuum/fast-syntax-highlighting"
 # Ctrl-R to search multi word with AND
-zplug "zdharma/history-search-multi-word"
+zplug "zdharma-continuum/history-search-multi-word"
 
 # Modules from prezto
 # https://github.com/sorin-ionescu/prezto/tree/master/modules
@@ -138,6 +138,9 @@ zplug "modules/editor", from:prezto
 zplug "modules/history", from:prezto
 if (( $+commands[tmux] )); then
   zplug "modules/tmux", from:prezto
+fi
+if (( $+commands[vagrant] )); then
+  zplug "modules/vagrant", from:prezto
 fi
 
 # Modules from oh-my-zsh
@@ -185,6 +188,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:2
 
 # XXX Find replacement allowing to disable check for some aliases
 zplug "MichaelAquilina/zsh-you-should-use"
+export YSU_MESSAGE_POSITION="after"
 
 # Usage: = 2+2
 zplug "arzzen/calc.plugin.zsh"
@@ -213,12 +217,10 @@ zplug "sharat87/zsh-vim-mode", defer:3
 
 # Fuzzy command line completion: Ctrl-T
 # Grab binaries from GitHub Releases
-# and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*${(L)$(uname -s)}*amd64*"
+# zplug "junegunn/fzf", \
+#     from:gh-r, \
+#     as:command, \
+#     use:"*${(L)$(uname -s)}*amd64*"
 zplug "junegunn/fzf", use:"shell/*.zsh", defer:2, on:"junegunn/fzf-bin"
 
 # https://github.com/hschne/fzf-git
@@ -271,17 +273,24 @@ zplug 'pyenv/pyenv', as:"command", use:"bin/*"
 # Default autoswitchvirtualenv
 # export AUTOSWITCH_DEFAULTENV="defaultenv"
 #
-# Checking installed python version
+# Checking available python versions
+# pyenv install -l
+# Checking installed python versions
 # pyenv versions
+# Installing a python version
+# pyenv install 3.10.7
+# Checking current python version
+# pyenv version
+# Setting default version
+# pyenv global 2.7.18 3.10.7
+# Setting directory specific version
+# pyenv local 3.10.7
 #
 # Creating a venv manually
+# pyenv local 3.10.7
 # python3 -m venv ~/.virtualenvs/impact-report
 # source ~/.virtualenvs/impact-report/bin/activate
 # echo 'impact-report' > .venv
-#
-# Deprecated?
-# mkvenv --python /usr/bin/python2
-# mkvenv --python /usr/bin/python3
 zplug "MichaelAquilina/zsh-autoswitch-virtualenv"
 
 # Potentially lighter than pyenv
@@ -354,6 +363,11 @@ export YSU_HARDCORE=0
 # For zsh-users/zsh-completions
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=60,bold"
 bindkey '^ ' autosuggest-accept
+
+# A smarter cd command
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh)"
+fi
 
 # XXX Slowing doing the prompt
 if (( $+commands[pyenv] )); then
@@ -435,6 +449,7 @@ if (( $+commands[nvim] )); then
   export MANPAGER='nvim +Man!'
   alias vim='nvim'
   alias vi='nvim'
+  alias vimdiff='nvim -d'
 else
   export EDITOR='vim'
 fi
@@ -471,11 +486,18 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# list only directories
-alias lsd='ls -d */'
-# list only files
-alias lsf="ls -rtF | grep -v '.*/'"
+# Alias lsd to ls: https://github.com/Peltoche/lsd
+if (( $+commands[lsd] )); then
+  alias ls='lsd --group-dirs first'
+  alias lt='ls --tree'
+fi
 alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+# list only directories
+ alias lsdir='ls -d */'
+# list only files
+alias lsfiles="ls -rtF | grep -v '.*/'"
 
 # Global aliases
 alias -g A="| awk"
@@ -484,17 +506,11 @@ alias -g A="| awk"
 if (( $+commands[ccze] )); then
   alias -g C="| ccze -A"
 fi
-alias -g G="| grep"
-alias -g GV="| grep -v"
-alias -g H="| head"
 alias -g L='| $PAGER'
 alias -g P=' --help | less'
 alias -g R="| ruby -e"
-alias -g S="| sed"
-alias -g T="| tail"
 alias -g V="| vim -R -"
 alias -g U=' --help | head'
-alias -g W="| wc"
 
 # Suffix aliases
 alias -s zip=zipinfo
@@ -615,17 +631,14 @@ lscan() {
   printf "$scanReport\n"
 }
 
-if [ -x "$HOME/bin/gam/gam" ]; then
-  # CLI for Google admin
-  # https://github.com/jay0lee/GAM
-  gam() { "$HOME/bin/gam/gam" "$@" ; }
-fi
-
 if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
   # CLI for Google admin, updated GAM
   # https://github.com/taers232c/GAMADV-XTD3
-  # gam3() { "$HOME/bin/gam/gam" "$@" ; }
-  alias gam3="$HOME/bin/gamadv-xtd3/gam"
+  # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
+  export PATH="$HOME/bin/gamadv-xtd3/:$PATH"
+  #alias gam="$HOME/bin/gamadv-xtd3/gam"
+
+  #gam3() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
 fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
@@ -679,5 +692,11 @@ if (( $+commands[fortune] )); then
   fi
 fi
 
-# (cat ~/.cache/wal/sequences &)
-clear && freshfetch
+alias gam="/Users/baptiste/bin/gamadv-xtd3/gam"
+
+# XXX to be tested/documented
+if (( $+commands[oidc-agent-service] )); then
+  eval $(oidc-agent-service use)
+  # for fedcloudclient, once egi account got created
+  export OIDC_AGENT_ACCOUNT=egi
+fi
