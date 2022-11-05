@@ -150,8 +150,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 
 " Easy change of surrounding stuff (tags, quotes...)
-" Plug 'tpope/vim-surround'
-" Test sandwich as alternative to vim-surround
 " sa: sandwich add + text object + text
 " saw`: surround word with `
 " sd: sandwich delete
