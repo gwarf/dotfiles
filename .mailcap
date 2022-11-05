@@ -5,9 +5,9 @@
 
 application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
 application/ghostview           ; pdftotext -layout %s -; xdg-open %s    ; copiousoutput
-application/pdf                 ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
-application/x-pdf               ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
-application/postscript          ; pdftotext -layout %s -; print=mutt_bgrun xdg-open %s    ; copiousoutput
+application/pdf                 ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
+application/x-pdf               ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
+application/postscript          ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
 application/x-bzip2             ; bzip2 -dc %s                         ; copiousoutput
 application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
 application/x-csh               ; cat %s                                        ; copiousoutput
@@ -47,7 +47,7 @@ audio/*                         ; mutt_bgrun mplayer %s                         
 #image/*                         ; mutt_bgrun sxiv -bf %s \; reset
 #image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
 image/x-eps                     ; gv %s                              ; test=test -n "$DISPLAY" > /dev/null
-image/*                         ; sxiv %s                             ; test=test -n "$DISPLAY" > /dev/null
+image/*                         ; mutt_bgrun sxiv %s                             ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
 #image/*                         ; fbi %s                            ; copiousoutput
 
