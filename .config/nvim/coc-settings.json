@@ -1,4 +1,5 @@
 {
+  "cSpell.language": "en-GB",
   "python.venvPath": ["~/.virtualenvs"],
   "python.linting.enabled": false,
   "python.linting.pylintEnabled": false,
