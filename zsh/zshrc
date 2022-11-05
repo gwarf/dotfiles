@@ -434,6 +434,7 @@ if (( $+commands[nvim] )); then
   export MANPAGER='nvim +Man!'
   alias vim='nvim'
   alias vi='nvim'
+  alias vimdiff='nvim -d'
 else
   export EDITOR='vim'
 fi
