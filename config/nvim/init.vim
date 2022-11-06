@@ -59,9 +59,6 @@ Plug 'bling/vim-bufferline'
 " Line numbering
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
-" Ctrl-P for quick file/buffer access
-Plug 'ctrlpvim/ctrlp.vim'
-
 Plug 'editorconfig/editorconfig-vim'
 
 " Notes taking
@@ -84,14 +81,17 @@ Plug 'godlygeek/tabular'
 " Clean spaces at EOL for lines that are edited
 Plug 'thirtythreeforty/lessspace.vim'
 
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-" Fuzzy finding + clap
-Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-Plug 'liuchengxu/vim-clap'
 " SilverSearch plugin
 Plug 'rking/ag.vim'
+" Fuzzy finding using FZF
+" Use :Files, :GFiles, Buffers, Ag:, Lines:, :History, :Snippets, :Commits...
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+nmap <C-P> :Files<CR>
+" Alternative fuzzy finding
+" Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+" Use :Clap files, :Clap buffers, :Clap commits,...
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 " Fuzzy finder for files/buffers and so on
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -103,6 +103,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " File types' support
 Plug 'sheerun/vim-polyglot'
 Plug 'darfink/vim-plist'
+Plug 'zdharma-continuum/zinit-vim-syntax'
 " Plug 'pearofducks/ansible-vim'
 " Plug 'mv/mv-vim-puppet'
 " Plug 'PotatoesMaster/i3-vim-syntax'
@@ -257,6 +258,7 @@ if !has('nvim')
 endif
 
 if has("unix")
+  " See env set up in ~/.config/nvim
   " ruby integration via a rvm virualenv and gemset
   " rvm install 2.7.0
   " rvm ruby-2.7.0 do rvm gemset create neovim
@@ -314,8 +316,8 @@ set hlsearch
 
 " Default indentation: 2 space
 set expandtab
-set shiftwidth=2    " taille de l'indentation.
-set tabstop=2       " Taille des tabulations
+set shiftwidth=2
+set tabstop=2
 
 "set mouse-=a
 " Disable mouse support
@@ -446,32 +448,8 @@ if has("persistent_undo")
   set undofile
 endif
 
-" vim-markdown (from vim-polyglot)
-" Disable folding
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_new_list_item_indent = 2
-" Disable concealing
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_conceal_code_blocks = 0
-
 " Folding with markers
 set foldmethod=marker
 nnoremap <space> za
-
-" Complete emails address in every files
-set completefunc=vimmail#contacts#CompleteAddr
-
-" Don't mess with whitespaces in those files
-let g:lessspace_blacklist = ['diff']
-
-" localvimrc
-" Store and restore all decisions.
-let g:localvimrc_persistent = 2
-
-" https://github.com/Yggdroot/LeaderF
-let g:Lf_ShortcutF = "<leader>ff"
-" popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
 
 " vim:set ft=vim et sw=2:
