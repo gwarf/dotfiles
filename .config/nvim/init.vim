@@ -103,6 +103,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " File types' support
 Plug 'sheerun/vim-polyglot'
 Plug 'darfink/vim-plist'
+Plug 'zdharma-continuum/zinit-vim-syntax'
 " Plug 'pearofducks/ansible-vim'
 " Plug 'mv/mv-vim-puppet'
 " Plug 'PotatoesMaster/i3-vim-syntax'
