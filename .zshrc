@@ -106,9 +106,23 @@ zinit light romkatv/powerlevel10k
 zinit light chrissicool/zsh-256color
 
 # XXX dircolors comes from brew/coreutils on Mac OS X
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-        atpull"%atclone" pick"clrs.zsh" nocompile'!'
-zinit light trapd00r/LS_COLORS
+# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#         atpull"%atclone" pick"clrs.zsh" nocompile'!'
+# zinit light trapd00r/LS_COLORS
+
+# Nordic dircolors configuration
+# https://github.com/arcticicestudio/nord-dircolors
+# zinit ice atclone"dircolors -b src/dir_colors > c.zsh" \
+#             atpull'%atclone' \
+#             pick"c.zsh" \
+#             nocompile'!'
+# zinit light arcticicestudio/nord-dircolors
+
+zinit ice atclone"dircolors -b .dircolors > c.zsh" \
+            atpull'%atclone' \
+            pick"c.zsh" \
+            nocompile'!'
+zinit light dracula/dircolors
 # }}}
 
 # Modules from prezto {{{
@@ -274,7 +288,7 @@ function custom_chpwd() {
   if [[ -d ".git" ]] || git rev-parse --git-dir > /dev/null 2>&1; then
     git st
   fi
-  ls
+  lsd --icon always --color always
 }
 add-zsh-hook chpwd custom_chpwd
 
