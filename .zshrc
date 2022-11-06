@@ -1,42 +1,7 @@
 # ~/.zshrc
 # Read by all interactive shells
 
-# References
-# https://dotfiles.github.io/
-# https://github.com/unixorn/zsh-quickstart-kit
-# https://zdharma-continuum.github.io/zinit/wiki/Example-Oh-My-Zsh-setup/
-# http://awesomeawesome.party/awesome-zsh-plugins
-# https://github.com/unixorn/awesome-zsh-plugins
-# http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
-# Ideas: https://github.com/mika/zsh-pony
-# Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
-# https://zdharma-continuum.github.io/zinit/wiki/GALLERY/
-
-# ZSH plugin framework: zinit https://github.com/zdharma-continuum/zinit
-# https://zdharma-continuum.github.io/zinit/wiki
-# Cleaning everything
-# zi delete --all --yes; unset $_comps
-# rm -rf ~/.local/share/zinit; exec zsh -l
-
-# Dependencies
-# - bat: cat/less replacement
-# - gam: CLI for G Suite
-# - git
-# - cli: GitHub CLI
-# - nvim: vim replacement
-# - pydf: df replacement (optional)
-# - taskwarrior: task management (optional)
-# - fd: find replacement (installed automatically)
-# - jq: json formatting/queryring (installed automatically)
-# - fzf: fuzzyfinder (installed automatically)
-
-# Fonts
-# Hack Regular Nerd Font Complete
-# https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack
-# A font with ligatures
-# https://github.com/tonsky/FiraCode
-
-# Requirements
+# Requirements {{{
 # Incremental search
 # l, ls, gh, docker, df/pydf and other useful aliases
 # syntax highlighting
@@ -56,15 +21,49 @@
 # 256 color / true color
 # git support
 # python venv
+# }}}
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# References {{{
+# https://dotfiles.github.io/
+# https://github.com/unixorn/zsh-quickstart-kit
+# https://zdharma-continuum.github.io/zinit/wiki/Example-Oh-My-Zsh-setup/
+# http://awesomeawesome.party/awesome-zsh-plugins
+# https://github.com/unixorn/awesome-zsh-plugins
+# http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/
+# Ideas: https://github.com/mika/zsh-pony
+# Testing YADR: http://www.akitaonrails.com/2017/01/10/arch-linux-best-distro-ever
+# https://zdharma-continuum.github.io/zinit/wiki/GALLERY/
+
+# ZSH plugin framework: zinit https://github.com/zdharma-continuum/zinit
+# https://zdharma-continuum.github.io/zinit/wiki
+# Cleaning everything
+# zi delete --all --yes; unset $_comps
+# rm -rf ~/.local/share/zinit; exec zsh -l
+# }}}
+
+# Dependencies {{{
+# - bat: cat/less replacement
+# - gam: CLI for G Suite
+# - git
+# - cli: GitHub CLI (installed automatically)
+# - nvim: vim replacement
+# - pydf: df replacement (optional)
+# - taskwarrior: task management (optional)
+# - fd: find replacement (installed automatically)
+# - jq: json formatting/queryring (installed automatically)
+# - fzf: fuzzyfinder (installed automatically)
+# }}}
+
+# Enable Powerlevel10k instant prompt. {{{
+# Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+# }}}
 
-### Added by Zinit's installer
+### Added by Zinit's installer {{{
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
@@ -86,8 +85,14 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
+# }}}
 
-# Theme
+# Style {{{
+# Fonts
+# Hack Regular Nerd Font Complete
+# https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack
+# A font with ligatures
+# https://github.com/tonsky/FiraCode
 # Powerlevel10k: https://github.com/romkatv/powerlevel10k
 # Load powerlevel10k theme
 # git clone depth
@@ -97,21 +102,40 @@ zinit light romkatv/powerlevel10k
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Modules from prezto
+# Enable multicolor terminal, if available
+zinit light chrissicool/zsh-256color
+
+# XXX dircolors comes from brew/coreutils on Mac OS X
+zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+        atpull"%atclone" pick"clrs.zsh" nocompile'!'
+zinit light trapd00r/LS_COLORS
+# }}}
+
+# Modules from prezto {{{
 # https://github.com/sorin-ionescu/prezto/
+zinit snippet PZTM::environment
+# Provides interactive use of GNU utilities on BSD systems
+zinit snippet PZTM::gnu-utility
+# Provides an easier use of GPG by setting up gpg-agent.
+zinit snippet PZTM::gpg
+# Sets directory options and defines directory aliases.
+zinit snippet PZTM::directory
 # Completion
 zinit snippet PZTM::completion
 # Rehash when completing commands
 zstyle ":completion:*:commands" rehash 1
 # Aliases and color some command output
-zinit snippet PZTM::editor
-# zstyle ':prezto:module:editor' key-bindings 'vi'
+zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
+zstyle ':prezto:module:editor' ps-context 'yes'
+zinit snippet PZTM::editor
 zinit snippet PZTM::utility
 # Use safe operations by default
 zstyle ':prezto:module:utility' safe-ops 'yes'
 # Manage history configuration
 zinit snippet PZTM::history
+zinit snippet PZT::modules/terminal/init.zsh
+zstyle ':prezto:module:terminal' auto-title 'yes'
 if (( $+commands[tmux] )); then
   zinit snippet PZTM::tmux
   zstyle ':prezto:module:tmux:auto-start' local 'no'
@@ -124,8 +148,9 @@ if (( $+commands[vagrant] )); then
 fi
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
+# }}}
 
-# Modules from oh-my-zsh
+# Modules from oh-my-zsh {{{
 # https://zdharma-continuum.github.io/zinit/wiki/Example-Oh-My-Zsh-setup/
 # System clipboard integration
 zinit snippet OMZL::clipboard.zsh
@@ -134,6 +159,7 @@ if (( $+commands[task] )); then
   # Home-related tasks
   alias th='task rc:~/.taskrc-home'
 fi
+# }}}
 
 # Completion definitions
 zinit ice wait'0' blockf lucid
@@ -141,38 +167,28 @@ zinit light zsh-users/zsh-completions
 
 # Install fzf, fd, jq, bat, lsd and diff-so-fancy
 zinit from"gh-r" as"program" lucid for \
-  sbin"bat-*/bat -> bat" @sharkdp/bat \
+  sbin"**/bat -> bat" @sharkdp/bat \
   sbin"jq* -> jq" stedolan/jq \
   sbin"diff-so-fancy -> diff-so-fancy" so-fancy/diff-so-fancy \
-  sbin"fd/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
+  sbin"**/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
   sbin'**/lsd -> lsd' atclone'cp -vf **/autocomplete/_lsd _lsd' Peltoche/lsd \
   sbin"**/bin/gh -> gh" cli/cli \
   junegunn/fzf
 
+# FZF {{{
 # Fuzzy command line completion: Ctrl-T
 # Fuzzy command line history search: Ctrl-R
-# Grab binaries from GitHub Releases junegunn/fzf
-# Source initialisation files and get fzf-tmux
+# Grab initialisation files and get fzf-tmux from GitHub repo
 zinit ice lucid wait"0" as'program' id-as"junegunn/fzf-extras" \
   multisrc"shell/{completion,key-bindings}.zsh" \
   pick"bin/fzf-tmux"
 zinit light junegunn/fzf
 
-# Alernative way to source initialisation files
-# zinit snippet 'https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh'
-# zinit snippet 'https://github.com/junegunn/fzf/blob/master/shell/completion.zsh'
-
-# Completion for OpenStack
-# mirror of https://gist.github.com/philipsd6/aea968e80342973fd8d3aeeda343dae5
-# zplug "gwarf/a18dbeaa01d6cf14a95c31a1c7036f61", \
-#     from:gist, \
-#     as:plugin
-# TODO check that vboxmanage completion is available
-# /usr/share/zsh/site-functions/_virtualbox
-# if (( $+commands[VBoxManage] )); then
-#   compdef vboxmanage=VBoxManage vboxheadless=VBoxHeadless
-#   compdef VBoxManage=vboxmanage VBoxHeadless=vboxheadless
-# fi
+# Completion for openstack, docker and terraform
+zinit wait'1' as"completion" lucid for \
+  https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
+  https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform \
+  https://gist.github.com/gwarf/a18dbeaa01d6cf14a95c31a1c7036f61/raw
 
 # tab completion using fzf
 # https://github.com/Aloxaf/fzf-tab
@@ -187,11 +203,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd --oneline --icon always --color
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
-# XXX dircolors comes from brew/coreutils on Mac OS X
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-        atpull"%atclone" pick"clrs.zsh" nocompile'!'
-zinit light trapd00r/LS_COLORS
-
 # https://github.com/hschne/fzf-git
 # use git <command> **
 zinit light hschne/fzf-git
@@ -199,61 +210,7 @@ zinit light hschne/fzf-git
 # Git + fzf
 # https://github.com/wfxr/forgit
 zinit light wfxr/forgit
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # Use gnused - brew install gnu-sed
-  PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-  # Use coreutils GNU utilities - brew install coreutils
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-  # Use openjdk from brew - brew install openjdk
-  PATH="/usr/local/opt/openjdk/bin:$PATH"
-  # XXX may not be needed
-  # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
-  # export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
-
-  export HOMEBREW_CASK_OPTS='--no-quarantine'
-  export HOMEBREW_NO_ANALYTICS=1
-
-# Add go to the path
-  if [ -d "$HOME/go" ]; then
-    export GOPATH="$HOME/go"
-    export GOBIN="$GOPATH/bin"
-    export GOROOT=/usr/local/opt/go/libexec
-    # For github.com/raviqqe/liche
-    export GO111MODULE=on
-    export PATH="$PATH:$GOBIN"
-    export PATH="$PATH:$GOROOT/bin"
-  fi
-
-  # https://github.com/pyenv/pyenv/wiki/Common-build-problems
-  # Required for building python with pyenv on Mac OS X
-  CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-  LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-  # Speeding up build
-  CFLAGS="-O2 $CFLAGS"
-  export CFLAGS LDFLAGS
-  # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
-
-  # tail-like of postfix logs on MacOS X
-  postfix_log() {
-    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
-  }
-
-  # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
-  # To prevent ctrl-o in vim being discared by the terminal driver
-  # XXX returning error with updated conf
-  # stty: 'standard input': Operation not supported by device
-  # stty discard undef
-
-  # cd into whatever is the forefront Finder window.
-  cdf() {  # short for cdfinder
-    cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
-  }
-fi
-
-# Enable multicolor terminal, if available
-zinit light chrissicool/zsh-256color
+# }}}
 
 # fast-syntax-highlighting and autosuggestions
 # Theme management: fsh-alias -h
@@ -282,6 +239,17 @@ bindkey -M emacs '^N' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+if (( $+commands[mysql] )); then
+  zinit light "zpm-zsh/mysql-colorize"
+fi
+
+# npm / nvm
+# export NVM_COMPLETION=true
+export NVM_LAZY_LOAD=true
+export NVM_NO_USE=false
+zinit ice wait lucid
+zinit light lukechilds/zsh-nvm
+
 # A smarter cd command
 # XXX feature for chpwd hook is not yet released as of 2022-11-06
 # FIXME install from master/cargo
@@ -301,26 +269,7 @@ function custom_chpwd() {
 }
 add-zsh-hook chpwd custom_chpwd
 
-autoload -Uz compinit
-
-if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
-  compinit;
-else
-  compinit -C;
-fi
-
-if (( $+commands[mysql] )); then
-  zinit light "zpm-zsh/mysql-colorize"
-fi
-
-# npm / nvm
-# export NVM_COMPLETION=true
-export NVM_LAZY_LOAD=true
-export NVM_NO_USE=false
-zinit ice wait lucid
-zinit light lukechilds/zsh-nvm
-
-# Python virtualenv management
+# Python virtualenv management {{{
 #
 # pyenv
 #
@@ -352,6 +301,7 @@ zinit as'null' lucid  atinit'export PYENV_ROOT="$PWD"' \
 # source ~/.virtualenvs/impact-report/bin/activate
 # echo 'impact-report' > .venv
 zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+# }}}
 
 # asdf: https://github.com/asdf-vm/asdf
 # git clone https://github.com/asdf-vm/asdf.git ~/.asdf
@@ -362,7 +312,21 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 # https://github.com/kiurchv/asdf.plugin.zsh
 # zplug "kiurchv/asdf.plugin.zsh", defer:2
 
-# ZSH options
+# ZSH options {{{
+
+autoload -Uz compinit
+
+if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+  compinit;
+else
+  compinit -C;
+fi
+
+# -q is for quiet; actually run all the `compdef's saved before `compinit` call
+# (`compinit' declares the `compdef' function, so it cannot be used until
+# `compinit' is ran; Zinit solves this via intercepting the `compdef'-calls and
+# storing them for later use with `zinit cdreplay')
+zinit cdreplay -q
 
 # Enable zmv
 autoload -U zmv
@@ -370,11 +334,6 @@ autoload -U zmv
 # Make sure prompt is able to be generated properly.
 # Required for themes like bullet-train
 setopt prompt_subst
-
-# Executing directories will open them
-setopt auto_cd
-# Automatically fill the directory stack
-setopt auto_pushd pushd_silent pushd_ignore_dups
 
 # In Vi mode use q to allow to use another command before current one
 bindkey -M vicmd "q" push-line
@@ -392,6 +351,7 @@ bindkey -M vicmd "v" edit-command-line
 insert_sudo () { zle beginning-of-line; zle -U '_ ' }
 zle -N insert-sudo insert_sudo
 bindkey 's' insert-sudo
+# }}}
 
 # Preferred editor for local and remote sessions
 if (( $+commands[nvim] )); then
@@ -404,6 +364,7 @@ else
   export EDITOR='vim'
 fi
 
+# Aliases and functions {{{
 if (( $+commands[msfconsole] )); then
   alias msfconsole='msfconsole --quiet'
 fi
@@ -498,9 +459,10 @@ if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
   # CLI for Google admin, updated GAM
   # https://github.com/taers232c/GAMADV-XTD3
   # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
-  export PATH="$HOME/bin/gamadv-xtd3/:$PATH"
+  PATH="$HOME/bin/gamadv-xtd3/:$PATH"
   alias gam="$HOME/bin/gamadv-xtd3/gam"
 fi
+# }}}
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
 if [ -n "$DESKTOP_SESSION" ]; then
@@ -540,7 +502,59 @@ if (( $+commands[fortune] )); then
   fi
 fi
 
-# Env variables
+# Env variables {{{
+# macOS conf
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Use gnused - brew install gnu-sed
+  PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+  # Use coreutils GNU utilities - brew install coreutils
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+  # Use openjdk from brew - brew install openjdk
+  PATH="/usr/local/opt/openjdk/bin:$PATH"
+  # XXX may not be needed
+  # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
+  # export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
+
+  export HOMEBREW_CASK_OPTS='--no-quarantine'
+  export HOMEBREW_NO_ANALYTICS=1
+
+# Add go to the path
+  if [ -d "$HOME/go" ]; then
+    export GOPATH="$HOME/go"
+    export GOBIN="$GOPATH/bin"
+    export GOROOT=/usr/local/opt/go/libexec
+    # For github.com/raviqqe/liche
+    export GO111MODULE=on
+    export PATH="$PATH:$GOBIN"
+    export PATH="$PATH:$GOROOT/bin"
+  fi
+
+  # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+  # Required for building python with pyenv on Mac OS X
+  CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+  LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+  # Speeding up build
+  CFLAGS="-O2 $CFLAGS"
+  export CFLAGS LDFLAGS
+  # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+
+  # tail-like of postfix logs on MacOS X
+  postfix_log() {
+    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
+  }
+
+  # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
+  # To prevent ctrl-o in vim being discared by the terminal driver
+  # XXX returning error with updated conf
+  # stty: 'standard input': Operation not supported by device
+  # stty discard undef
+
+  # cd into whatever is the forefront Finder window.
+  cdf() {  # short for cdfinder
+    cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
+  }
+fi
 
 export MAKEOPS='j6'
 
@@ -594,3 +608,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd -t d ."
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || bat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+# }}}
+
+# vim:foldlevel=0 foldmethod=marker
