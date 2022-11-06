@@ -165,15 +165,18 @@ fi
 zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
-# Install fzf, fd, jq, bat, lsd and diff-so-fancy
+# Install various tools from GitHub {{{
+# fzf, fd, jq, bat, lsd and diff-so-fancy
 zinit from"gh-r" as"program" lucid for \
   sbin"**/bat -> bat" @sharkdp/bat \
   sbin"jq* -> jq" stedolan/jq \
   sbin"diff-so-fancy -> diff-so-fancy" so-fancy/diff-so-fancy \
   sbin"**/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
   sbin'**/lsd -> lsd' atclone'cp -vf **/autocomplete/_lsd _lsd' Peltoche/lsd \
+  sbin'**/delta -> delta' dandavison/delta \
   sbin"**/bin/gh -> gh" cli/cli \
   junegunn/fzf
+# }}}
 
 # FZF {{{
 # Fuzzy command line completion: Ctrl-T
@@ -203,20 +206,26 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsd --oneline --icon always --color
 # switch group using `,` and `.`
 zstyle ':fzf-tab:*' switch-group ',' '.'
 
-# https://github.com/hschne/fzf-git
+# fzf-marks: manage marks with mark
+# Add a mark in fzf using Ctrl-g, jump to a match using ctrl-y
+# toggle for deletion using ctrl-t delete using ctrl-d
 # use git <command> **
-zinit light hschne/fzf-git
-
-# Git + fzf
 # https://github.com/wfxr/forgit
-zinit light wfxr/forgit
+zinit wait lucid blockf for \
+  urbainvaes/fzf-marks \
+  wfxr/forgit
 # }}}
+
+# https://github.com/jeffreytse/zsh-vi-mode
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
 
 # fast-syntax-highlighting and autosuggestions
 # Theme management: fsh-alias -h
 zinit wait lucid for \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
-  atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting
+  atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting \
+  hlissner/zsh-autopair
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Accept autosuggestion using Ctrl-space
 bindkey '^ ' autosuggest-accept
@@ -561,18 +570,18 @@ export MAKEOPS='j6'
 # Path management
 typeset -U path
 path+=/usr/local/sbin
-if [ -d $HOME/bin ]; then
+if [ -d "$HOME/bin" ]; then
   PATH="$HOME/bin:$PATH"
 fi
-if [ -d $HOME/.local/bin ]; then
+if [ -d "$HOME/.local/bin" ]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
-if [ -d $HOME/.yarn/bin ]; then
+if [ -d "$HOME/.yarn/bin" ]; then
   PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-if [ -d $HOME/.rvm/bin ]; then
-  PATH="$PATH:$HOME/.rvm/bin"
+if [ -d "$HOME/.rvm/bin" ]; then
+  PATH="$HOME/.rvm/bin:$PATH"
 fi
 export PATH
 
