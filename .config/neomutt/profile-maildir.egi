@@ -1,5 +1,6 @@
 # Mutt sender profile: egi
 
+set editor = "subl -n -w"
 set folder = ~/Mail/EGI
 
 # Copy sent message to this folder
