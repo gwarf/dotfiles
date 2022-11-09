@@ -5,6 +5,12 @@
 - mbsync (isync)
 - msmtp
 
+## Setting up default profile
+
+```shell
+# Need to set a default profile
+$ ln -s ~/.config/neomutt/profile-maildir.egi ~/.config/neomutt/default-profile
+```
 
 ## Accessing documentation
 
