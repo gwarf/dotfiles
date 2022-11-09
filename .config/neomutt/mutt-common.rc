@@ -10,11 +10,12 @@ set tmpdir = '~/tmp'
 
 # set editor = 'nvim'
 # http://www.mutt.org/doc/manual/#bgedit
-# XXX only on mutt?
+# XXX only on mutt
 set background_edit
 # set editor = "alacritty -e nvim"
-set editor = "kitty -e nvim"
-#set editor = "~/bin/bgedit-screen-tmux.sh"
+# set editor = "kitty -e nvim"
+set editor = "~/.config/neomutt/launch_iterm.sh nvim"
+# set editor = "~/.config/neomutt/bgedit-screen-tmux.sh"
 set shell = "/bin/zsh"
 
 # number of input lines for prompts to remember
