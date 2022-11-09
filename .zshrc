@@ -174,6 +174,8 @@ if (( $+commands[vagrant] )); then
   zinit snippet OMZP::vagrant
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
+  # This requires having subversion installed
+  zinit ice svn
   zinit snippet OMZP::macos
 fi
 # }}}
