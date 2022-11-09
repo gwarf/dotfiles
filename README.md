@@ -26,3 +26,8 @@ yadm commit .my-conf-file -m 'add .my-conf-file'
 # Push to remote repository
 yadm push
 ```
+
+## Creating altnerate files
+
+See https://yadm.io/docs/alternates.
+It's easier to create them directly in the GitHub repository.
