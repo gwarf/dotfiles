@@ -157,9 +157,6 @@ if (( $+commands[tmux] )); then
   zstyle ':prezto:module:tmux:session' name 'work'
   zstyle ':prezto:module:tmux:iterm' integrate 'no'
 fi
-if (( $+commands[vagrant] )); then
-  zinit snippet PZTM::vagrant
-fi
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
 # }}}
@@ -172,6 +169,9 @@ if (( $+commands[task] )); then
   zinit snippet OMZP::taskwarrior
   # Home-related tasks
   alias th='task rc:~/.taskrc-home'
+fi
+if (( $+commands[vagrant] )); then
+  zinit snippet OMZP::vagrant
 fi
 # }}}
 
