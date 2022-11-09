@@ -158,7 +158,7 @@ if (( $+commands[tmux] )); then
   zstyle ':prezto:module:tmux:iterm' integrate 'no'
 fi
 if (( $+commands[vagrant] )); then
-  zinit snippet PZT::modules/vagrant/init.zsh
+  zinit snippet PZTM::vagrant
 fi
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
