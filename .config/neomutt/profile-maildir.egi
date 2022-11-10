@@ -1,6 +1,21 @@
 # Mutt sender profile: egi
 
-set editor = "subl -n -w"
+# http://www.mutt.org/doc/manual/#bgedit
+# XXX only on mutt
+set background_edit
+# Showing editor and allowing to save
+set editor = "nvim-qt"
+# set editor = "subl -n -w"
+# XXX Showing empty editor unless --nofork is used
+# set editor = "neovide --nofork --notabs"
+# Not working, no editor UI shown
+# set editor = "vimr --wait"
+# set editor = "vimr"
+# Showing empty editor
+# set editor = "~/.config/neomutt/launch_iterm.sh"
+# set editor = "~/.config/neomutt/bgedit-screen-tmux.sh ~/baptiste/.config/neomutt/launch_iterm.sh"
+# set editor = "~/.config/neomutt/bgedit-screen-tmux.sh"
+
 set folder = ~/Mail/EGI
 
 # Copy sent message to this folder
@@ -141,4 +156,4 @@ subscribe operations@egi.eu
 subscribe office@mailman.egi.eu
 subscribe wise@lists.wise-community.org
 
-# :vim set ft=muttrc:
+# vim: set ft=muttrc:
