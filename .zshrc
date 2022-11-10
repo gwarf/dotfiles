@@ -127,6 +127,10 @@ zinit light dracula/dircolors
 
 # Modules from prezto {{{
 # https://github.com/sorin-ionescu/prezto/
+# Color output (auto set to 'no' on dumb terminals).
+zstyle ':prezto:*:*' color 'yes'
+# Rehash when completing commands
+zstyle ":completion:*:commands" rehash 1
 zinit snippet PZTM::environment
 # Provides interactive use of GNU utilities on BSD systems
 zinit snippet PZTM::gnu-utility
@@ -136,29 +140,25 @@ zinit snippet PZTM::gpg
 zinit snippet PZTM::directory
 # Completion
 zinit snippet PZTM::completion
-# Rehash when completing commands
-zstyle ":completion:*:commands" rehash 1
 # Aliases and color some command output
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:editor' dot-expansion 'yes'
 zstyle ':prezto:module:editor' ps-context 'yes'
 zinit snippet PZTM::editor
-zinit snippet PZTM::utility
 # Use safe operations by default
 zstyle ':prezto:module:utility' safe-ops 'yes'
+zinit snippet PZTM::utility
 # Manage history configuration
 zinit snippet PZTM::history
 zinit snippet PZT::modules/terminal/init.zsh
 zstyle ':prezto:module:terminal' auto-title 'yes'
 if (( $+commands[tmux] )); then
-  zinit snippet PZTM::tmux
   zstyle ':prezto:module:tmux:auto-start' local 'no'
   zstyle ':prezto:module:tmux:auto-start' remote 'yes'
   zstyle ':prezto:module:tmux:session' name 'work'
   zstyle ':prezto:module:tmux:iterm' integrate 'no'
+  zinit snippet PZTM::tmux
 fi
-# Color output (auto set to 'no' on dumb terminals).
-zstyle ':prezto:*:*' color 'yes'
 # }}}
 
 # Modules from oh-my-zsh {{{
