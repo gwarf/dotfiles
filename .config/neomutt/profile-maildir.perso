@@ -1,5 +1,11 @@
 # Mutt sender profile: perso
 
+# http://www.mutt.org/doc/manual/#bgedit
+# XXX only on mutt
+set background_edit
+# set editor = "alacritty -e nvim"
+set editor = "kitty -e nvim"
+
 set mbox_type = Maildir
 set folder = ~/Mail/Perso
 
@@ -84,3 +90,5 @@ macro index,pager A "<save-message>+Archive<enter>" "move message to the archive
 subscribe debiocidons-bureau@framalistes.org
 subscribe debiocidons-ca@framalistes.org
 subscribe debiocidons@framalistes.org
+
+# vim: set ft=muttrc:
