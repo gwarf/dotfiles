@@ -1,4 +1,4 @@
-#!/usr/bin/env perl -n
+#!/usr/bin/env -S perl -n
 
 use Date::Parse;
 use POSIX;
