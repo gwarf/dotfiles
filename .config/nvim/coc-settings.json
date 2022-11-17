@@ -1,5 +1,6 @@
 {
-  "cSpell.language": "en-GB",
+  "cSpellExt.enableDictionaries": ["french-reforme"],
+  "cSpell.language": "en-GB,fr-90",
   "python.venvPath": ["~/.virtualenvs"],
   "python.linting.enabled": false,
   "python.linting.pylintEnabled": false,

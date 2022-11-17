@@ -112,17 +112,6 @@ Plug 'zdharma-continuum/zinit-vim-syntax'
 " Plug 'tmux-plugins/vim-tmux'
 Plug 'Yggdroot/indentLine'
 
-" Grammar/language checking
-" https://www.vimfromscratch.com/articles/spell-and-grammar-vim/
-" If LanguageTool is installed, ALE will use it for text, md and mails
-" https://github.com/dense-analysis/ale/blob/36e5337e30095afb10d02ef2ae362c8d6055e70d/doc/ale.txt#L2215
-" XXX write-good to be checked
-" https://github.com/btford/write-good
-" LanguageTool-based solutions
-" https://github.com/rhysd/vim-grammarous
-" https://github.com/vigoux/LanguageTool.nvim
-" https://github.com/dpelle/vim-LanguageTool
-
 " Load locally available config files
 " For per-project settings
 Plug 'embear/vim-localvimrc'
@@ -354,7 +343,7 @@ map <Space> <Leader>
 " could be useful to have per-file-type keys like
 " In a ~/.vim/after/ftplugin/{file extension}.vim
 " nnoremap <buffer> <silent> <LocalLeader>b :update|make
-" , is by default for backward seach on line
+" , is by default for backward search on line
 let g:maplocalleader = ','
 " \ is safer but less convenient
 "let g:maplocalleader = '\'
@@ -369,7 +358,7 @@ command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " Alternate: Use :w!! to write to a read only file by calling sudo
 cmap w!! %!sudo tee > /dev/null %
 
-" Use Ctrl-a to access begining of line in command mode
+" Use Ctrl-a to access beginning of line in command mode
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
 
@@ -388,10 +377,31 @@ endif
 " *-(specific|related) options
 """"""""""""""""""""""""""""""
 
+" Grammar/language checking
+"
+" Spell checking is done using coc and coc-spell-checker
+" https://github.com/iamcco/coc-spell-checker
+" Additional dicts: https://github.com/iamcco/coc-cspell-dicts
+" See ~/.config/nvim/plugin/settings/coc.vim and ~/.config/nvim/coc-settings.json
+"
+" XXX write-good to be checked
+" https://github.com/btford/write-good
+" LanguageTool-based solutions
+" https://github.com/rhysd/vim-grammarous
+" https://github.com/vigoux/LanguageTool.nvim
+" https://github.com/dpelle/vim-LanguageTool
+"
+" Native spell check is disabled
+set nospell
 " Set spell language
-set spelllang=en_gb,fr
+" set spelllang=en_gb,fr
 " Enable completion of spell
-set complete+=kspell
+" set complete+=kspell
+"
+" Force the top-ranked correction on the first misspelled word before the
+" cursor.
+" nnoremap <C-s> [s1z=<c-o>
+" inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 " Mail edition for mutt
 autocmd BufEnter,BufNewFile,BufRead ~/tmp/mutt* set ft=mail
@@ -435,11 +445,6 @@ augroup litecorrect
   autocmd FileType markdown,mkd call litecorrect#init()
   autocmd FileType textile call litecorrect#init()
 augroup END
-
-" Force the top-ranked correction on the first misspelled word before the
-" cursor.
-nnoremap <C-s> [s1z=<c-o>
-inoremap <C-s> <c-g>u<Esc>[s1z=`]A<c-g>u
 
 " Toggle undotree panel
 nnoremap <F5> :UndotreeToggle<cr>
