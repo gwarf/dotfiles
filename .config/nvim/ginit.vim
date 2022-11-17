@@ -36,6 +36,6 @@ snoremap <silent><RightMouse> <C-G>:call GuiShowContextMenu()<CR>gv
 
 let OS=substitute(system('uname -s'),"\n","","")
 if (OS == "Darwin")
-  # Get binding for copy paste working
+  " Get binding for copy paste working
   source $VIMRUNTIME/macmap.vim
 endif
