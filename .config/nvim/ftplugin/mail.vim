@@ -1,7 +1,7 @@
 " Setup to write mails with vim
 
-" Enable spell checks
-setlocal spell
+" Enable spell checks using native spell checker
+" setlocal spell
 " No indentation when copying
 set nocopyindent
 " Expand spaces to tabs
@@ -26,7 +26,7 @@ let b:sleuth_automatic = 0
 " https://github.com/dbeniamine/vim-mail/
 "
 let g:VimMailDoNotFold=1
-let g:VimMailSpellLangs=['en_gb', 'fr']
+" let g:VimMailSpellLangs=['en_gb', 'fr']
 " Remove quoted signature is killing mine due to flow automatic formatting
 "let g:VimMailStartFlags={'reply' :"boir" }
 let g:VimMailStartFlags={

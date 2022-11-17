@@ -1,1 +1,3 @@
-setlocal spell textwidth=72
+" Enable spell checks using native spell checker
+" setlocal spell
+setlocal textwidth=72
