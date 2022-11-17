@@ -1,2 +1,12 @@
 # User-wide gitignore
 .DS_Store
+.config/nvim/plugged/
+.config/joplin*/resources
+.config/joplin-desktop/plugins
+.config/*/cache
+.config/*/tmp
+.config/*backup
+.config/*log
+.config/*/log*
+.config/*/*.sqlite
+.config/coc/extensions/node_modules
