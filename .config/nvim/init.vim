@@ -379,9 +379,10 @@ endif
 
 " Grammar/language checking
 "
-" Spell checking is done using coc and coc-spell-checker
+" Spell checking is done using coc with coc-spell-checker and coc-ltex
 " https://github.com/iamcco/coc-spell-checker
 " Additional dicts: https://github.com/iamcco/coc-cspell-dicts
+" https://valentjn.github.io/ltex/vscode-ltex/installation-usage-coc-ltex.html
 " See ~/.config/nvim/plugin/settings/coc.vim and ~/.config/nvim/coc-settings.json
 "
 " XXX write-good to be checked
