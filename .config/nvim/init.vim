@@ -1,6 +1,7 @@
 " ~/.vimrc
 
 " Interesting readings
+" nvim + python config: https://github.com/Optixal/neovim-init.vim
 " About text objects: https://yanpritzker.com/learn-to-speak-vim-verbs-nouns-and-modifiers-d7bfed1f6b2d
 
 " https://github.com/junegunn/vim-plug
@@ -336,7 +337,7 @@ set writebackup
 set swapfile
 set directory=$HOME/.vimswap
 
-" Leader key customization
+" Leader key customization: use <space> as leader key
 let mapleader=" "
 map <Space> <Leader>
 " Leader for mappings local to a buffer
@@ -392,6 +393,7 @@ endif
 " https://github.com/vigoux/LanguageTool.nvim
 " https://github.com/dpelle/vim-LanguageTool
 "
+" XXX use native spell as an alternative if spelling with CoC is not available
 " Native spell check is disabled
 set nospell
 " Set spell language
