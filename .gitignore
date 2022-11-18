@@ -1,6 +1,7 @@
 # User-wide gitignore
 .DS_Store
 .config/nvim/plugged/
+.config/nvim/words.txt
 .config/joplin*/resources
 .config/joplin-desktop/plugins
 .config/*/cache
