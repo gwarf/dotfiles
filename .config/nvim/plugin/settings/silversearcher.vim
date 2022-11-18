@@ -14,7 +14,7 @@ endif
 
 " bind K to grep word under cursor
 "nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <leader>K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " The Silver Searcher Ag
 " e    to open file and close the quickfix window
 " o    to open (same as enter)
