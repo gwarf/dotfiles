@@ -1,8 +1,14 @@
 " coc.nvim
 " https://github.com/neoclide/coc.nvim
 
-" Globacl configuration
+" Global configuration
 " :CocConfig
+"
+" Using actions
+" List actions available when on an error:
+" For the whole buffer: <leader>ab
+" For the current line: <leader>al
+" For the current word under the cursor: <leader>ac
 
 " Python support
 " virtual environments are configured in the :CocConfig file
@@ -16,7 +22,9 @@
 
 " Auto install required extensions
 " Update using CocUpdate
-let g:coc_global_extensions = [ 'coc-json', 'coc-git', 'coc-pyright', 'coc-spell-checker', 'coc-cspell-dicts', 'coc-snippets', 'coc-ltex' ]
+" XXX disable cSpell to test coc-ltext more
+" let g:coc_global_extensions = [ 'coc-spell-checker', 'coc-cspell-dicts' ]
+let g:coc_global_extensions = [ 'coc-json', 'coc-git', 'coc-pyright', 'coc-snippets', 'coc-ltex' ]
 
 " Better display for messages
 set cmdheight=2
@@ -83,9 +91,10 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -122,14 +131,25 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" coc-codeaction-*: List actions available
+" See :help coc-code-actions
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ab  <Plug>(coc-codeaction)
+" Apply codeAction to the current line
+nmap <leader>al  <Plug>(coc-codeaction-line)
+" Apply codeAction to the word under the cursor
+nmap <leader>ac  <Plug>(coc-codeaction-cursor)
+" Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
