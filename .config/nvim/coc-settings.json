@@ -1,7 +1,15 @@
 {
   "cSpellExt.enableDictionaries": ["french-reforme"],
   "cSpell.language": "en-GB,fr-90",
-  "python.venvPath": ["~/.virtualenvs"],
+  "ltex.language": "en-GB",
+  "ltex.additionalRules.motherTongue": "fr",
+  "ltex.completionEnabled": true,
+  "ltex.disabledRules": {
+    "en-GB": [
+      "OXFORD_SPELLING_Z_NOT_S"
+    ]
+  },
+  "python.venvPath": "~/.virtualenvs",
   "python.linting.enabled": false,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
