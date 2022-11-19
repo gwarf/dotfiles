@@ -654,4 +654,9 @@ export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # }}}
 
+# Nix
+# if [[ -f "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+#   source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+# fi
+
 # vim:foldlevel=0 foldmethod=marker
