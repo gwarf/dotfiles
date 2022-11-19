@@ -197,15 +197,16 @@ zinit ice wait'0' blockf lucid
 zinit light zsh-users/zsh-completions
 
 # Install various tools from GitHub {{{
-# fzf, fd, jq, bat, lsd and diff-so-fancy
+# fzf, ripgrep, fd, jq, bat, lsd and delta
 zinit from"gh-r" as"program" lucid for \
   sbin"**/bat -> bat" @sharkdp/bat \
   sbin"jq* -> jq" stedolan/jq \
-  sbin"diff-so-fancy -> diff-so-fancy" so-fancy/diff-so-fancy \
   sbin"**/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
   sbin'**/lsd -> lsd' atclone'cp -vf **/autocomplete/_lsd _lsd' Peltoche/lsd \
   sbin'**/delta -> delta' dandavison/delta \
   sbin"**/bin/gh -> gh" cli/cli \
+  mv"ripgrep* -> rg" pick"rg/rg" BurntSushi/ripgrep \
+  mv"delta* -> delta" pick"delta/delta" dandavison/delta \
   junegunn/fzf
 # }}}
 
