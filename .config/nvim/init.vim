@@ -169,20 +169,13 @@ Plug 'vim-scripts/utl.vim'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'vim-scripts/taglist.vim'
 Plug 'mattn/webapi-vim'
-" Conflicts with some mappings for coc.nvim
-"Plug 'vim-scripts/AutoClose'
-" Seems OK
-" Plug 'Raimondi/delimitMate'
 Plug 'cohama/lexima.vim'
 Plug 'vim-scripts/spec.vim'
 Plug 'Konfekt/FastFold'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mattn/calendar-vim'
 Plug 'vimperator/vimperator.vim'
-" Plug 'vimwiki/vimwiki'
-" Plug 'teranex/vimwiki-tasks'
 Plug 'fmoralesc/vim-tutor-mode'
-"Plug 'mrtazz/simplenote.vim'
 Plug 'dag/vim-fish'
 " Plug 'blindFS/vim-taskwarrior'
 Plug 'reedes/vim-litecorrect'
@@ -267,7 +260,11 @@ if has("unix")
   " let g:ruby_host_prog = "rvm ruby-3.1.2@neovim do neovim-ruby-host"
   " XXX install gem in default gemset
   " rvm ruby-3.1.2 do gem install neovim
-  let g:ruby_host_prog = "rvm ruby-3.1.2 do neovim-ruby-host"
+  " let g:ruby_host_prog = "rvm ruby-3.1.2 do neovim-ruby-host"
+  " Disable ruby provider
+  let g:loaded_ruby_provider = 0
+  let g:loaded_node_provider = 0
+  let g:loaded_perl_provider = 0
   " Pyenv with neovim
   " https://gist.github.com/gwarf/42a0a13ff2bf32a0e79d347e43831cae
   let g:python_host_prog = $HOME . '/.virtualenvs/neovim2/bin/python'
