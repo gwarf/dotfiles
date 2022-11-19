@@ -92,18 +92,11 @@ Plug 'rking/ag.vim'
 " Use :Files, :GFiles, Buffers, Ag:, Lines:, :History, :Snippets, :Commits...
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-nmap <C-P> :Files<CR>
-" Alternative fuzzy finding
-" Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-" Use :Clap files, :Clap buffers, :Clap commits,...
-" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-" Testing, a replacement to fzf
+" Testing, as a replacement to fzf
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
+" Use :Telescope
 Plug 'nvim-telescope/telescope.nvim'
-" XXX install is failing on arch
-" Plug 'nixprime/cpsm', { 'do': './install.sh' }
-" Plug 'nixprime/cpsm'
 
 " Fuzzy finder for files/buffers and so on
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
