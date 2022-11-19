@@ -19,25 +19,29 @@ call plug#begin('~/.config/nvim/plugged')
 " Plug 'ervandew/supertab'
 " Completion
 if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'Shougo/denite.nvim'
-  " Possible replacement for deoplete
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+  " Completion using coc
   " https://github.com/neoclide/coc.nvim
-  " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Completion for ex mode / command-line
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 else
+  Plug 'Shougo/denite.nvim'
   Plug 'Shougo/deoplete.nvim'
+  Plug 'gelguy/wilder.nvim'
+
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
-"Plug 'SevereOverfl0w/deoplete-github'
 
 " Snippets
 " "Editing snippets for current filetype
 " :CocCommand snippets.editSnippets
-" XXX Replaced by https://github.com/neoclide/coc-snippets
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
+" Snippets via https://github.com/neoclide/coc-snippets
 Plug 'honza/vim-snippets'
 
 " Colorscheme
@@ -52,7 +56,7 @@ Plug 'vim-airline/vim-airline-themes'
 " brew tap caskroom/fonts
 " brew install font-hack-nerd-font
 " or font-meslo-nerd-font font-sourcecodepro-nerd-font
-Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-tree/nvim-web-devicons'
 
 " Buffers list in the command bar
 Plug 'bling/vim-bufferline'
@@ -69,7 +73,7 @@ Plug 'vimoutliner/vimoutliner'
 " Plug 'vim-pandoc/vim-pandoc-after'
 " Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'dhruvasagar/vim-table-mode'
-" XXX disabled, evaluating to vimwiki
+" XXX disabled, alternative to vimwiki
 " Plug 'xolox/vim-notes'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
@@ -93,6 +97,8 @@ nmap <C-P> :Files<CR>
 " Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " Use :Clap files, :Clap buffers, :Clap commits,...
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Fuzzy finder for files/buffers and so on
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
