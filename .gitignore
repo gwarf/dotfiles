@@ -11,3 +11,13 @@
 .config/*/log*
 .config/*/*.sqlite
 .config/coc/extensions/node_modules
+Desktop/
+Documents/
+Downloads/
+Music/
+Pictures/
+Projects/
+code/
+.cache/
+.virtualenv/
+.config/neomutt/history
