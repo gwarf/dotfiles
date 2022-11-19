@@ -98,8 +98,12 @@ nmap <C-P> :Files<CR>
 " Use :Clap files, :Clap buffers, :Clap commits,...
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 " Testing, a replacement to fzf
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+" XXX install is failing on arch
+" Plug 'nixprime/cpsm', { 'do': './install.sh' }
+" Plug 'nixprime/cpsm'
 
 " Fuzzy finder for files/buffers and so on
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -260,7 +264,10 @@ if has("unix")
   " rvm install 3.1.2
   " rvm ruby-3.1.2 do rvm gemset create neovim
   " rvm ruby-3.1.2@neovim do gem install neovim
-  let g:ruby_host_prog = "rvm ruby-3.1.2@neovim do neovim-ruby-host"
+  " let g:ruby_host_prog = "rvm ruby-3.1.2@neovim do neovim-ruby-host"
+  " XXX install gem in default gemset
+  " rvm ruby-3.1.2 do gem install neovim
+  let g:ruby_host_prog = "rvm ruby-3.1.2 do neovim-ruby-host"
   " Pyenv with neovim
   " https://gist.github.com/gwarf/42a0a13ff2bf32a0e79d347e43831cae
   let g:python_host_prog = $HOME . '/.virtualenvs/neovim2/bin/python'
@@ -302,7 +309,7 @@ set modeline
 set wildchar=<TAB>
 
 " Competion mode for wildchar in menus
-set wildmode=list:longest,full
+" set wildmode=list:longest,full
 
 " Search
 set ignorecase
