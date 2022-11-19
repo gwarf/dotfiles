@@ -1,6 +1,7 @@
 " fzf
 
-nnoremap <c-p> :FZF<cr>
+" nnoremap <c-p> :FZF<cr>
+
 let g:fzf_action = {
   \ 'ctrl-m': 'e',
   \ 'ctrl-t': 'tabedit',
