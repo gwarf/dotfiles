@@ -627,6 +627,8 @@ fi
 
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
+  alias less=bat
+  alias more=bat
   # Fallback as man pager
   if [ -z "$MANPAGER" ]; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
