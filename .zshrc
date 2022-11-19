@@ -54,6 +54,18 @@
 # - fzf: fuzzyfinder (installed automatically)
 # }}}
 
+
+# Windows {{{
+if [[ -f "/mnt/c/WINDOWS/system32/wsl.exe" ]]; then
+  # We're in WSL, which defaults to umask 0 and causes issues with compaudit
+  umask 0022
+  if [[ "${PWD}" = "/mnt/c/Users/${USER}" ]]; then
+    # We're in a default WSL shell
+    cd "${HOME}"
+  fi
+fi
+# }}}
+
 # Enable Powerlevel10k instant prompt. {{{
 # Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
