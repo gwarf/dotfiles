@@ -628,6 +628,7 @@ fi
 if (( $+commands[bat] )); then
   export SYSTEMD_PAGER='bat'
   alias less=bat
+  alias cat='bat --paging=never'
   alias more=bat
   # Fallback as man pager
   if [ -z "$MANPAGER" ]; then
