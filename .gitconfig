@@ -24,7 +24,7 @@
   untracked = cyan
 
 [core]
-  pager = diff-so-fancy
+  pager = delta --dark
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol,space-before-tab
   autocrlf = input
   eol = lf
@@ -35,12 +35,14 @@
 
 [merge]
   tool = fugitive
-  #tool = diffuse
-  #tool = vimdiff
-  #tool = meld
+  # tool = diffuse
+  # tool = vimdiff
+  # tool = meld
+  # https://dandavison.github.io/delta/merge-conflicts.html
+  # conflictstyle = diff3
 
-#[sendemail]
-#  smtpserver = mail.jukie.net
+# [sendemail]
+#   smtpserver = mail.jukie.net
 
 [alias]
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -137,4 +139,10 @@
   path = .gitconfig.user
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
+
+# https://dandavison.github.io/delta/configuration.html
+[delta]
+  line-numbers = true
+  navigate = true    # use n and N to move between diff sections
+  theme = Dracula
