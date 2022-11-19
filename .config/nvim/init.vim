@@ -97,6 +97,7 @@ nmap <C-P> :Files<CR>
 " Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " Use :Clap files, :Clap buffers, :Clap commits,...
 " Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+" Testing, a replacement to fzf
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
