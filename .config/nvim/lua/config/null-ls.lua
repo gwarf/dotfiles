@@ -1,4 +1,6 @@
 -- https://smarttech101.com/nvim-lsp-set-up-null-ls-for-beginners/
+-- https://github.com/Clumsy-Coder/dotfiles/commit/e81edc159f3fc9ef189e0300d280461e75732a4b
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 local null_ls = require("null-ls")
 
 -- Available builtins: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
@@ -15,7 +17,9 @@ null_ls.setup({
     null_ls.builtins.formatting.stylua,
     -- diagnostics
     null_ls.builtins.diagnostics.alex,
-    null_ls.builtins.diagnostics.markdownlint,
+    null_ls.builtins.diagnostics.markdownlint.with({
+      extra_args = { "--config", vim.fn.expand("~/.config/nvim/.markdownlint.json") },
+    }),
     null_ls.builtins.diagnostics.shellcheck,
     -- null_ls.builtins.diagnostics.ansiblelint,
     -- null_ls.builtins.diagnostics.checkmake,
@@ -23,6 +27,8 @@ null_ls.setup({
     -- completion
     -- XXX spell is disabled
     -- null_ls.builtins.completion.spell,
+    -- hover
+    null_ls.builtins.hover.dictionary, -- dictionary
   },
   -- format file on save
   -- you can reuse a shared lspconfig on_attach callback here
