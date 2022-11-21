@@ -138,15 +138,55 @@ local lsp_flags = {
   -- This is the default in Nvim 0.7+
   debounce_text_changes = 150,
 }
-lspconfig["ltex"].setup({
+
+-- ltex-ls
+-- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua
+require("ltex-ls").setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  use_spellfile = true,
+  filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text" },
+  settings = {
+    ltex = {
+      checkFrequency = "save",
+      enabled = { "latex", "tex", "bib", "markdown" },
+      language = "auto",
+      diagnosticSeverity = "information",
+      additionalRules = {
+        enablePickyRules = true,
+        motherTongue = "fr",
+      },
+      disabledRules = {
+        en = { "TOO_LONG_SENTENCE" },
+        fr = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
+      },
+      dictionary = (function()
+        local files = {}
+        for _, file in ipairs(vim.api.nvim_get_runtime_file("spell/*.add", true)) do
+          local lang = vim.fn.fnamemodify(file, ":t:r:r") -- Because 'spellfile' is .{encoding}.add
+          local fullpath = vim.fs.normalize(file, ":p")
+          files[lang] = { ":" .. fullpath }
+        end
+
+        if files.default then
+          for lang, _ in pairs(files) do
+            if lang ~= "default" then
+              vim.list_extend(files[lang], files.default)
+            end
+          end
+          files.default = nil
+        end
+        return files
+      end)(),
+    },
+  },
+})
+
+lspconfig["marksman"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
 })
-require("lspconfig")["marksman"].setup({
-  on_attach = on_attach,
-  flags = lsp_flags,
-})
-require("lspconfig")["pylsp"].setup({
+lspconfig["pylsp"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
   settings = {
@@ -165,7 +205,7 @@ require("lspconfig")["pylsp"].setup({
 })
 
 if utils.executable("lua-language-server") then
-  require("lspconfig")["sumneko_lua"].setup({
+  lspconfig["sumneko_lua"].setup({
     on_attach = on_attach,
     flags = lsp_flags,
     settings = {
@@ -198,7 +238,7 @@ else
 end
 
 if utils.executable("vim-language-server") then
-  require("lspconfig")["vimls"].setup({
+  lspconfig["vimls"].setup({
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {

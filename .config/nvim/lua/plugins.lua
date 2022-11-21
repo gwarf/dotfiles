@@ -110,9 +110,6 @@ return require("packer").startup(function(use)
   -- Using ltex-ls for spellchecking
   use({
     "vigoux/ltex-ls.nvim",
-    config = function()
-      require("ltex-ls").setup({})
-    end,
     requires = "neovim/nvim-lspconfig",
   })
 
@@ -150,21 +147,20 @@ return require("packer").startup(function(use)
   })
 
   -- Easy change of surrounding stuff (tags, quotes...)
-  -- sa: sandwich add + text object + text
-  -- saw`: surround word with `
-  -- sd: sandwich delete
-  -- sdt: delete surrounding tag
-  -- sr: sandwich replace
-  -- sr_`: replace _ by `
-  -- use("machakann/vim-sandwich")
-  -- Alternative to vim-sandwich to try to get which-key working
+  -- :h nvim-surround.usage
+  -- Alternative to vim-sandwich to get which-key working
+  -- ys: You Surround + text object + text
+  -- ysiw(: surround with () with spaces
+  -- ysiw): surround with () with no spaces
+  -- ds: Delete Surround
+  -- ds)
+  -- cs: Change Surround
+  -- cs'": change quotes around a text
   use({
     "kylechui/nvim-surround",
     tag = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
+      require("nvim-surround").setup({})
     end,
   })
 
@@ -268,7 +264,7 @@ return require("packer").startup(function(use)
     "kyazdani42/nvim-tree.lua",
     config = function()
       require("nvim-tree").setup({})
-      vim.keymap.set("n", "<leader>e", "<cmd>:NvimTreeToggle<cr>", { silent = true, noremap = true })
+      vim.keymap.set("n", "<leader>T", "<cmd>NvimTreeToggle<cr>", { silent = true, noremap = true })
     end,
     requires = {
       "nvim-tree/nvim-web-devicons",
@@ -278,7 +274,7 @@ return require("packer").startup(function(use)
   --
   use({
     "akinsho/bufferline.nvim",
-    tag = "v3.*",
+    tag = "*",
     config = function()
       require("bufferline").setup({})
     end,
