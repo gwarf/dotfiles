@@ -117,6 +117,18 @@ return require("packer").startup(function(use)
     end,
   })
 
+  -- displays a popup with possible key bindings
+  use({
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup({
+        window = {
+          border = "single", -- none, single, double, shadow
+        },
+      })
+    end,
+  })
+
   -- Clean spaces at EOL for lines that are edited
   use("thirtythreeforty/lessspace.vim")
 
@@ -136,7 +148,18 @@ return require("packer").startup(function(use)
   -- sdt: delete surrounding tag
   -- sr: sandwich replace
   -- sr_`: replace _ by `
-  use("machakann/vim-sandwich")
+  -- use("machakann/vim-sandwich")
+  -- Alternative to vim-sandwich to try to get which-key working
+  use({
+    "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end,
+  })
+
   use({ "michaeljsmith/vim-indent-object", event = "VimEnter" })
 
   -- Since tmux is only available on Linux and Mac, we only enable these plugins
@@ -162,11 +185,19 @@ return require("packer").startup(function(use)
             n = { ["<c-t>"] = trouble.open_with_trouble },
           },
         },
+        extensions = {
+          yank_history = {
+            layout_strategy = "vertical",
+          },
+        },
       })
+      telescope.load_extension("yank_history")
       vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
+      vim.keymap.set("n", "<C-P>", builtin.find_files, {})
       vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
       vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
+      vim.keymap.set("n", "<leader>fy", "<cmd>:Telescope yank_history<cr>", {})
     end,
   })
   -- pretty list for showing diagnostics, references, telescope results, quickfix and location lists
@@ -216,30 +247,78 @@ return require("packer").startup(function(use)
     event = "VimEnter",
   })
 
-  -- Linting and formatting
-  -- XXX replaced by null-ls
-  -- use {
-  --   'w0rp/ale',
-  --   --   ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
-  --   cmd = 'ALEEnable',
-  -- }
-
-  -- Post-install/update hook with neovim command
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
   -- open last postiion in file
   use("farmergreg/vim-lastplace")
 
+  -- Manage undo
   use("simnalamburt/vim-mundo")
 
-  -- Post-install/update hook with call of vimscript function with argument
-  -- use { 'glacambre/firenvim', run = function() vim.fn['firenvim#install'](0) end }
+  -- netrw replacement
+  use({
+    "kyazdani42/nvim-tree.lua",
+    config = function()
+      require("nvim-tree").setup({})
+      vim.keymap.set("n", "<leader>e", "<cmd>:NvimTreeToggle<cr>", { silent = true, noremap = true })
+    end,
+    requires = {
+      "nvim-tree/nvim-web-devicons",
+    },
+  })
 
-  -- Use specific branch, dependency and run lua file after load
-  -- use {
-  --   'glepnir/galaxyline.nvim', branch = 'main', config = function() require'statusline' end,
-  --   requires = {'kyazdani42/nvim-web-devicons'}
-  -- }
+  --
+  use({
+    "akinsho/bufferline.nvim",
+    tag = "v3.*",
+    config = function()
+      require("bufferline").setup({})
+    end,
+  })
+
+  -- org-mode like
+  -- https://github.com/nvim-neorg/neorg
+  use({
+    "nvim-neorg/neorg",
+    -- tag = "*",
+    ft = "norg",
+    after = "nvim-treesitter", -- You may want to specify Telescope here as well
+    config = function()
+      require("neorg").setup({
+        load = {
+          -- Load everything
+          ["core.defaults"] = {},
+          ["core.norg.dirman"] = {
+            config = {
+              workspaces = {
+                work = "~/notes/work",
+                home = "~/notes/home",
+              },
+            },
+          },
+        },
+      })
+    end,
+  })
+
+  -- Better yank management
+  use({
+    "gbprod/yanky.nvim",
+    config = function()
+      require("yanky").setup({})
+      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+    end,
+  })
+
+  -- Automatically create missing directories on saving a file
+  use({
+    "jghauser/mkdir.nvim",
+  })
 
   -- Use dracula theme
   -- use({
@@ -292,6 +371,14 @@ return require("packer").startup(function(use)
     "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup({})
+    end,
+  })
+
+  -- Use neovim to edit textarea in browsers
+  use({
+    "glacambre/firenvim",
+    run = function()
+      vim.fn["firenvim#install"](0)
     end,
   })
 
