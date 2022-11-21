@@ -3,6 +3,7 @@
 -- https://github.com/wbthomason/dotfiles/blob/main/dot_config/nvim/init.lua
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/plugins.lua
 -- https://github.com/rockerBOO/awesome-neovim
+-- https://github.com/nanotee/nvim-lua-guide
 -- Requirements
 -- GNU/Linux: xsel
 
