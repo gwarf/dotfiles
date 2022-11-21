@@ -40,11 +40,11 @@ g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
 -- Custom mapping <leader> (see `:h mapleader` for more info)
-g.mapleader = ' '
-g.maplocalleader = ','
+g.mapleader = " "
+g.maplocalleader = ","
 
 -- Enable highlighting for lua, Python and Ruby HERE doc inside script
-g.vimsyn_embed = 'lPr'
+g.vimsyn_embed = "lPr"
 
 -- Use English as main language
 vim.cmd("language en_GB.UTF-8")
@@ -57,13 +57,13 @@ vim.cmd("language en_GB.UTF-8")
 
 -- swap
 opt.swapfile = true
-opt.directory  = vim.fn.expand('~/.local/share/nvim/backup')
+opt.directory = vim.fn.expand("~/.local/share/nvim/swapfile")
 
 -- backup
 opt.backup = true
 opt.writebackup = true
-opt.backupdir = vim.fn.expand('~/.local/share/nvim/backup')
-opt.backupskip = {"/tmp/*"}
+opt.backupdir = vim.fn.expand("~/.local/share/nvim/backup")
+opt.backupskip = { "/tmp/*" }
 
 -- Do not unload buffers on abandon (opening a new file un current buffer)
 -- Use Ctrl-o to switch back to location save in jumplist
@@ -73,7 +73,7 @@ opt.hidden = true
 opt.completeopt = "menu,menuone,noselect"
 
 -- Disable mouse
-opt.mouse = ''
+opt.mouse = ""
 
 -- Highlight current line
 opt.cursorline = true
@@ -101,7 +101,7 @@ opt.listchars = {
   tab = ">.",
   trail = ".",
   extends = "#",
-  nbsp = "."
+  nbsp = ".",
 }
 
 -- Search configuration
@@ -109,7 +109,7 @@ opt.ignorecase = true
 
 -- Undo management
 opt.undofile = true
-opt.undodir = vim.fn.expand('~/.vim/undo')
+opt.undodir = vim.fn.expand("~/.local/share/nvim/undodir")
 
 -- Folding with markers
 opt.foldmethod = "marker"
@@ -135,4 +135,4 @@ keymap.set("c", "<C-E>", "<END>")
 -- }}}
 
 -- Bootstrap packer and install plugins
-require('plugins')
+require("plugins")
