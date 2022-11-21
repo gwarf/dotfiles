@@ -1,6 +1,8 @@
 -- https://github.com/jdhao/nvim-config
 -- https://github.com/LunarVim/LunarVim/
 -- https://github.com/wbthomason/dotfiles/blob/main/dot_config/nvim/init.lua
+-- https://git.vigoux.giize.com/nvim-config/blob/master/lua/plugins.lua
+-- https://github.com/rockerBOO/awesome-neovim
 
 local g = vim.g
 local keymap = vim.keymap
@@ -100,6 +102,11 @@ opt.listchars = {
   extends = "#",
   nbsp = ".",
 }
+
+-- spell - used by ltex-ls too
+opt.spelllang = { "en", "fr" }
+opt.spellfile = table.concat(vim.api.nvim_get_runtime_file("spell/*.add", true) or {}, ",")
+opt.spelloptions = { "noplainbuffer" }
 
 -- Search configuration
 opt.ignorecase = true
