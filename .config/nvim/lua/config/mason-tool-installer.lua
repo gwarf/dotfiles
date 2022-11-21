@@ -1,4 +1,4 @@
-require('mason-tool-installer').setup {
+require("mason-tool-installer").setup({
   ensure_installed = {
     "alex",
     "stylua",
@@ -11,4 +11,4 @@ require('mason-tool-installer').setup {
   auto_update = true,
   run_on_start = true,
   tart_delay = 3000, -- 3 second delay
-}
+})

@@ -9,12 +9,12 @@ local lspconfig = require("lspconfig")
 local utils = require("utils")
 
 -- global config for diagnostic
-diagnostic.config {
+diagnostic.config({
   underline = true,
   virtual_text = true,
   signs = true,
   severity_sort = true,
-}
+})
 
 -- Change diagnostic signs.
 fn.sign_define("DiagnosticSignError", { text = "✗", texthl = "DiagnosticSignError" })
@@ -36,11 +36,10 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_pub
 
 -- To be used to display LSP diagnostic window details when on an error
 local on_attach = function(client, bufnr)
-
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true }
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+  local opts = { noremap = true, silent = true }
+  vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
   -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
   -- Enable completion triggered by <c-x><c-o>
@@ -109,20 +108,20 @@ local on_attach = function(client, bufnr)
     ]])
 
     local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    api.nvim_create_autocmd("CursorHold" , {
+    api.nvim_create_autocmd("CursorHold", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.document_highlight()
-      end
+      end,
     })
 
-    api.nvim_create_autocmd("CursorMoved" , {
+    api.nvim_create_autocmd("CursorMoved", {
       group = gid,
       buffer = bufnr,
-      callback = function ()
+      callback = function()
         lsp.buf.clear_references()
-      end
+      end,
     })
   end
 
@@ -133,110 +132,110 @@ local on_attach = function(client, bufnr)
 end
 
 -- Inform LSP server about all the capabilities of nvim-cmp
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
   debounce_text_changes = 150,
 }
-lspconfig['ltex'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-require('lspconfig')['marksman'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
+lspconfig["ltex"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+})
+require("lspconfig")["marksman"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+})
 if utils.executable("pylsp") then
-  require('lspconfig')['pylsp'].setup{
-      on_attach = on_attach,
-      flags = lsp_flags,
-      settings = {
-        pylsp = {
-          plugins = {
-            pylint = { enabled = true, executable = "pylint" },
-            pyflakes = { enabled = false },
-            pycodestyle = { enabled = false },
-            jedi_completion = { fuzzy = true },
-            pyls_isort = { enabled = true },
-            pylsp_mypy = { enabled = true },
-          },
+  require("lspconfig")["pylsp"].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    settings = {
+      pylsp = {
+        plugins = {
+          pylint = { enabled = true, executable = "pylint" },
+          pyflakes = { enabled = false },
+          pycodestyle = { enabled = false },
+          jedi_completion = { fuzzy = true },
+          pyls_isort = { enabled = true },
+          pylsp_mypy = { enabled = true },
         },
       },
-      capabilities = capabilities,
-  }
+    },
+    capabilities = capabilities,
+  })
 else
   vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 if utils.executable("lua-language-server") then
-  require('lspconfig')['sumneko_lua'].setup{
-      on_attach = on_attach,
-      flags = lsp_flags,
-      settings = {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-            version = "LuaJIT",
+  require("lspconfig")["sumneko_lua"].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    settings = {
+      Lua = {
+        runtime = {
+          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+          version = "LuaJIT",
+        },
+        diagnostics = {
+          -- Get the language server to recognize the `vim` global
+          globals = { "vim" },
+        },
+        workspace = {
+          -- Make the server aware of Neovim runtime files,
+          -- see also https://github.com/sumneko/lua-language-server/wiki/Libraries#link-to-workspace .
+          -- Lua-dev.nvim also has similar settings for sumneko lua, https://github.com/folke/lua-dev.nvim/blob/main/lua/lua-dev/sumneko.lua .
+          library = {
+            fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
+            fn.stdpath("config"),
           },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = { "vim" },
-          },
-          workspace = {
-            -- Make the server aware of Neovim runtime files,
-            -- see also https://github.com/sumneko/lua-language-server/wiki/Libraries#link-to-workspace .
-            -- Lua-dev.nvim also has similar settings for sumneko lua, https://github.com/folke/lua-dev.nvim/blob/main/lua/lua-dev/sumneko.lua .
-            library = {
-              fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
-              fn.stdpath("config"),
-            },
-            maxPreload = 2000,
-            preloadFileSize = 50000,
-          },
+          maxPreload = 2000,
+          preloadFileSize = 50000,
         },
       },
-      capabilities = capabilities,
-  }
+    },
+    capabilities = capabilities,
+  })
 else
   vim.notify("sumneko_lua not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 if utils.executable("vim-language-server") then
-  require('lspconfig')['vimls'].setup{
-      on_attach = on_attach,
-      capabilities = capabilities,
-      flags = {
-        debounce_text_changes = 500,
-      },
-  }
+  require("lspconfig")["vimls"].setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 500,
+    },
+  })
 else
   vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
 
 if utils.executable("bash-language-server") then
-  lspconfig.bashls.setup {
+  lspconfig.bashls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-  }
+  })
 end
 
 if utils.executable("ansible-language-server") then
-  lspconfig.ansiblels.setup {
+  lspconfig.ansiblels.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-  }
+  })
 end
 
 if utils.executable("clangd") then
-  lspconfig.clangd.setup {
+  lspconfig.clangd.setup({
     on_attach = custom_attach,
     capabilities = capabilities,
     filetypes = { "c", "cpp", "cc" },
     flags = {
       debounce_text_changes = 500,
     },
-  }
+  })
 else
   vim.notify("clangd not found!", vim.log.levels.WARN, { title = "Nvim-config" })
 end
