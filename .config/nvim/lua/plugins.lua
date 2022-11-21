@@ -252,7 +252,27 @@ return require("packer").startup(function(use)
     event = "VimEnter",
   })
 
+  -- fold management
+  use({
+    "kevinhwang91/nvim-ufo",
+    requires = "kevinhwang91/promise-async",
+    config = function()
+      require("ufo").setup({
+        provider_selector = function(bufnr, filetype, buftype)
+          return { "treesitter", "indent" }
+        end,
+      })
+      -- Using ufo provider need remap `zR` and `zM`.
+      vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+      vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+    end,
+  })
+
+  --  Treesitter configurations and abstraction layer for Neovim.
+  --  Tree-sitter is a parser generator tool and an incremental parsing library.
   use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+  -- Syntax aware text-objects, select, move, swap, and peek support.
+  -- use({ "nvim-treesitter/nvim-treesitter-textobjects" })
 
   -- open last postiion in file
   use("farmergreg/vim-lastplace")
@@ -272,7 +292,7 @@ return require("packer").startup(function(use)
     },
   })
 
-  --
+  -- list and switch between buffers
   use({
     "akinsho/bufferline.nvim",
     tag = "*",
