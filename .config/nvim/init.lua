@@ -3,12 +3,14 @@
 -- https://github.com/wbthomason/dotfiles/blob/main/dot_config/nvim/init.lua
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/plugins.lua
 -- https://github.com/rockerBOO/awesome-neovim
+-- Requirements
+-- GNU/Linux: xsel
 
 local g = vim.g
 local keymap = vim.keymap
 local opt = vim.opt
 
--- Missing
+-- Missing {{{
 -- * Word completion from words in all buffers
 -- * spell check using ltex, allowing to add exception to a custom file
 -- * mutt/mail setup:
@@ -16,6 +18,7 @@ local opt = vim.opt
 --   * https://github.com/soywod/himalaya
 --   * https://git.sr.ht/~soywod/himalaya-vim
 -- * Test Neorg: https://github.com/nvim-neorg/neorg
+-- }}}
 
 -- Speed up startup
 local i_installed, impatient = pcall(require, "impatient")
@@ -79,6 +82,8 @@ opt.expandtab = true
 opt.shiftwidth = 2
 opt.tabstop = 2
 opt.softtabstop = 2
+opt.smartindent = true
+opt.autoindent = true
 
 -- For devicons on vim
 opt.encoding = "UTF-8"
@@ -114,6 +119,10 @@ opt.undodir = vim.fn.expand("~/.local/share/nvim/undodir")
 
 -- Folding with markers
 opt.foldmethod = "marker"
+opt.foldcolumn = "1"
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 -- Theme
 opt.termguicolors = true
