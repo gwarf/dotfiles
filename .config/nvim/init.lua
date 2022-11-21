@@ -116,7 +116,7 @@ opt.foldmethod = "marker"
 
 -- Theme
 opt.termguicolors = true
-opt.background = dark
+opt.background = "dark"
 -- }}}
 
 -- Key mappings {{{

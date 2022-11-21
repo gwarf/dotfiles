@@ -1,8 +1,8 @@
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-      --  "ansiblels",
-      --  "bashls",
+      "ansiblels",
+      "bashls",
       -- "grammarly",
       --  "html",
       --  "jsonls",
