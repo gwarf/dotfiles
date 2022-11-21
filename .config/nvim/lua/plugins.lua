@@ -404,6 +404,15 @@ return require("packer").startup(function(use)
     event = "BufRead",
   })
 
+  -- a fast and fully programmable greeter for neovim.
+  use({
+    "goolord/alpha-nvim",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = function()
+      require("alpha").setup(require("alpha.themes.startify").config)
+    end,
+  })
+
   -- Notifications
   use("rcarriga/nvim-notify")
   -- use 'vigoux/notifier.nvim'
