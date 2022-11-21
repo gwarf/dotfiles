@@ -146,27 +146,23 @@ require("lspconfig")["marksman"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
 })
-if utils.executable("pylsp") then
-  require("lspconfig")["pylsp"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    settings = {
-      pylsp = {
-        plugins = {
-          pylint = { enabled = true, executable = "pylint" },
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-          jedi_completion = { fuzzy = true },
-          pyls_isort = { enabled = true },
-          pylsp_mypy = { enabled = true },
-        },
+require("lspconfig")["pylsp"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+  settings = {
+    pylsp = {
+      plugins = {
+        pylint = { enabled = true, executable = "pylint" },
+        pyflakes = { enabled = false },
+        pycodestyle = { enabled = false },
+        jedi_completion = { fuzzy = true },
+        pyls_isort = { enabled = true },
+        pylsp_mypy = { enabled = true },
       },
     },
-    capabilities = capabilities,
-  })
-else
-  vim.notify("pylsp not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
+  },
+  capabilities = capabilities,
+})
 
 if utils.executable("lua-language-server") then
   require("lspconfig")["sumneko_lua"].setup({
@@ -229,7 +225,7 @@ end
 
 if utils.executable("clangd") then
   lspconfig.clangd.setup({
-    on_attach = custom_attach,
+    on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { "c", "cpp", "cc" },
     flags = {
