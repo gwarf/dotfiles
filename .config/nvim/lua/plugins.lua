@@ -107,6 +107,14 @@ return require("packer").startup(function(use)
       require("config.mason-tool-installer")
     end,
   })
+  -- Using ltex-ls for spellchecking
+  use({
+    "vigoux/ltex-ls.nvim",
+    config = function()
+      require("ltex-ls").setup({})
+    end,
+    requires = "neovim/nvim-lspconfig",
+  })
 
   -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
   -- Use different binaries as sources, like prettier
