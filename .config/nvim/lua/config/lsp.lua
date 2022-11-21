@@ -39,8 +39,8 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  -- local opts = { noremap=true, silent=true }
-  -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+  local opts = { noremap=true, silent=true }
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
   -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
   -- Enable completion triggered by <c-x><c-o>
@@ -216,6 +216,13 @@ end
 
 if utils.executable("bash-language-server") then
   lspconfig.bashls.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end
+
+if utils.executable("ansible-language-server") then
+  lspconfig.ansiblels.setup {
     on_attach = on_attach,
     capabilities = capabilities,
   }

@@ -101,34 +101,18 @@ return require('packer').startup(function(use)
   }
   use { "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function ()
-      require('mason-tool-installer').setup {
-        ensure_installed = {
-          "pylint",
-        },
-        auto_update = true,
-        run_on_start = true,
-        tart_delay = 3000, -- 3 second delay
-      }
+      require("config.mason-tool-installer")
     end,
   }
 
- --  use {
- --    "jose-elias-alvarez/null-ls.nvim",
- --    config = function ()
- --      require("config.null-ls")
- --    end
- --  }
- --  use { "jayp0521/mason-null-ls.nvim",
- --     after = "null-ls.nvim",
- --    config = function ()
- --       require("config.mason-null-ls")
---        require("mason").setup()
---        require("null-ls").setup()
- --       require("mason-null-ls").setup({
- --         automatic_setup = true,
- --       })
- --    end
- --  }
+  -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
+  -- Use different binaries as sources, like prettier
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function ()
+      require("config.null-ls")
+    end
+  }
 
   -- Clean spaces at EOL for lines that are edited
   use "thirtythreeforty/lessspace.vim"
@@ -160,7 +144,59 @@ return require('packer').startup(function(use)
   -- end
 
   -- Use :Telescope
-  use 'nvim-telescope/telescope.nvim'
+  -- https://alpha2phi.medium.com/neovim-for-beginners-fuzzy-file-search-part-2-2aab95fe8cfe
+  use { 'nvim-telescope/telescope.nvim',
+    config = function()
+      require("telescope.actions")
+      local trouble = require("trouble.providers.telescope")
+      local telescope = require("telescope")
+      local builtin = require('telescope.builtin')
+      telescope.setup {
+        defaults = {
+          mappings = {
+            i = { ["<c-t>"] = trouble.open_with_trouble },
+            n = { ["<c-t>"] = trouble.open_with_trouble },
+          },
+        },
+      }
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+      vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+      vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+    end
+  }
+  -- pretty list for showing diagnostics, references, telescope results, quickfix and location lists
+  -- https://github.com/folke/trouble.nvim
+  use { "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        indent_lines = true, -- add an indent guide below the fold icons
+        auto_open = false, -- automatically open the list when you have diagnostics
+        auto_close = false, -- automatically close the list when you have no diagnostics
+        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+        auto_fold = false, -- automatically fold a file trouble list at creation
+      }
+      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xd", "<cmd>TroubleToggle document_diagnostics<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
+        {silent = true, noremap = true}
+      )
+      vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+        {silent = true, noremap = true}
+      )
+    end
+  }
 
   -- Lazy loading:
   -- Load on specific commands
@@ -177,7 +213,7 @@ return require('packer').startup(function(use)
     event = 'VimEnter'
   }
 
-  -- Lintent and formatting
+  -- Linting and formatting
   -- XXX replaced by null-ls
   -- use {
   --   'w0rp/ale',
@@ -216,8 +252,6 @@ return require('packer').startup(function(use)
       vim.cmd [[colorscheme dracula]]
     end
   }
-
-  use "kyazdani42/nvim-web-devicons"
 
   use {
     'nvim-lualine/lualine.nvim',
