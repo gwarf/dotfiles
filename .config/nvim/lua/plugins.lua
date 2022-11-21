@@ -360,6 +360,7 @@ return require("packer").startup(function(use)
     "jghauser/mkdir.nvim",
   })
 
+  -- UI, UX, look and feel good
   -- Use dracula theme
   -- use({
   --   "dracula/vim", as = "dracula",
