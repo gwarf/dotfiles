@@ -10,15 +10,12 @@ local opt = vim.opt
 
 -- Missing
 -- * Word completion from words in all buffers
--- * Syntax checking
--- * Automatic linting/formatting using prettier
 -- * spell check using ltex, allowing to add exception to a custom file
--- * Y to copy a full line
--- * mutt setup
--- * which-key to give hints on keys
--- * Mason install all LSP + linterss, like pylint
--- * Autoindent when adding new lines/codes: ie. use {"wasa/asas", ... }
--- * Fix bootstrap
+-- * mutt/mail setup:
+--   * https://opensource.com/article/20/1/vim-email-calendar
+--   * https://github.com/soywod/himalaya
+--   * https://git.sr.ht/~soywod/himalaya-vim
+-- * Test Neorg: https://github.com/nvim-neorg/neorg
 
 -- Speed up startup
 local i_installed, impatient = pcall(require, "impatient")
