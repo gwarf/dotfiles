@@ -196,14 +196,11 @@ return require("packer").startup(function(use)
         },
       })
       telescope.load_extension("yank_history")
-      -- require("telescope").extensions.projects.projects({})
       vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-      vim.keymap.set("n", "<C-P>", builtin.find_files, {})
       vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
       vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
       vim.keymap.set("n", "<leader>fy", "<cmd>:Telescope yank_history<cr>", {})
-      -- vim.keymap.set("n", "<leader>fp", "<cmd>:Telescope projects<cr>", {})
     end,
   })
   -- pretty list for showing diagnostics, references, telescope results, quickfix and location lists
@@ -312,6 +309,9 @@ return require("packer").startup(function(use)
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       })
+      require("telescope").load_extension("projects")
+      vim.keymap.set("n", "<c-p>", "<cmd>:lua require('telescope').extensions.projects.projects{}<cr>", {})
+      vim.keymap.set("n", "<leader>fp", "<cmd>:lua require('telescope').extensions.projects.projects{}<cr>", {})
     end,
   })
 
@@ -359,7 +359,7 @@ return require("packer").startup(function(use)
     "jghauser/mkdir.nvim",
   })
 
-  -- UI, UX, look and feel good
+  -- UI, UX, look and fgeel good
   -- Use dracula theme
   -- use({
   --   "dracula/vim", as = "dracula",
