@@ -74,6 +74,7 @@
 .config/libreoffice/
 .config/neomutt/history
 .config/nvim/plugged/
+.config/nvim/plugin/packer_compiled.lua
 .config/nvim/words.txt
 .config/obsidian/
 .config/pulse/
