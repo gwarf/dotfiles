@@ -1,0 +1,12 @@
+# font_family MesloLGS NF
+# font_family Hack
+# font_family Caskaydia Cove Nerd Font
+font_family Cascadia Code PL
+font_size 14
+disable_ligatures never
+
+enable_audio_bell no
+
+include dracula.conf
+
+open_url_modifiers ctrl
