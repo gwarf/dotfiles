@@ -6,6 +6,10 @@ font:
   # Normal (roman) font face
   normal:
     # Font family
-    family: Caskaydia Cove Nerd Font
+    # On GNU/Linux:
+    #   fc-list : family style
+    #   fc-match 'MesloLGS NF'
+    family: MesloLGS NF
+    style: Regular
   # Point size
   size: 14
