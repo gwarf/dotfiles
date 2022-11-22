@@ -2,6 +2,7 @@
 -- https://github.com/LunarVim/LunarVim/
 -- https://github.com/wbthomason/dotfiles/blob/main/dot_config/nvim/init.lua
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/plugins.lua
+-- https://github.com/devinschulz/dotfiles/tree/master/nvim
 -- https://github.com/rockerBOO/awesome-neovim
 -- https://github.com/nanotee/nvim-lua-guide
 -- Requirements
@@ -14,11 +15,13 @@ local opt = vim.opt
 -- Missing {{{
 -- * Word completion from words in all buffers
 -- * spell check using ltex, allowing to add exception to a custom file
+-- * Lookg for possibly duplicated keymaps
 -- * mutt/mail setup:
 --   * https://opensource.com/article/20/1/vim-email-calendar
 --   * https://github.com/soywod/himalaya
 --   * https://git.sr.ht/~soywod/himalaya-vim
 -- * Test Neorg: https://github.com/nvim-neorg/neorg
+-- * Fix rainbow brackets
 -- }}}
 
 -- Speed up startup
