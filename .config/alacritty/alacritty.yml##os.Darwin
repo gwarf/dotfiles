@@ -7,6 +7,7 @@ font:
   # Normal (roman) font face
   normal:
     # Font family
-    family: MesloLGS NF
+    # family: MesloLGS NF
+    family: Cascadia Code PL
   # Point size
   size: 18
