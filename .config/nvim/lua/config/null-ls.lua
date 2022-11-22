@@ -12,6 +12,7 @@ null_ls.setup({
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.code_actions.shellcheck,
     -- formatters
+    null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.stylua,
@@ -46,8 +47,3 @@ null_ls.setup({
     end
   end,
 })
-
--- Format file
-vim.cmd("map <Leader>lf :lua vim.lsp.buf.format(nil, 10000)<CR>")
--- Format selection
-vim.cmd("map <Leader>lF :lua vim.lsp.buf.range_formatting()<CR>")
