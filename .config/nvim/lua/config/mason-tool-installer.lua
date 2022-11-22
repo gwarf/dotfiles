@@ -1,6 +1,8 @@
 require("mason-tool-installer").setup({
   ensure_installed = {
     "alex",
+    "black",
+    "jedi-language-server",
     "stylua",
     "markdownlint",
     "pylint",
