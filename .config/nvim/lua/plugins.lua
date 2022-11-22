@@ -59,6 +59,7 @@ return require("packer").startup(function(use)
   use({ "onsails/lspkind.nvim" })
 
   -- nvim-cmp completion sources
+  -- https://github.com/topics/nvim-cmp
   -- Snippet engine and snippet template
   -- use { "SirVer/ultisnips", event = "InsertEnter" }
   -- use { "honza/vim-snippets" }
@@ -73,9 +74,12 @@ return require("packer").startup(function(use)
   use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
   use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
   use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
+  -- https://github.com/uga-rosa/cmp-dictionary
+  -- https://github.com/lukas-reineke/cmp-rg
   -- Completion for some neovim lua API
   use({ "ii14/emmylua-nvim", ft = "lua" })
-  -- use { "hrsh7th/cmp-omni", after = "nvim-cmp" }
+  -- Expecting to be able to get vimmail completion via omnifunc
+  use({ "hrsh7th/cmp-omni", after = "nvim-cmp" })
   -- use { "petertriho/cmp-git",
   --   requires = "nvim-lua/plenary.nvim",
   --   config = function() require('cmp_git').setup() end

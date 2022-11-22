@@ -52,7 +52,16 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" }, -- For luasnip users.
-    { name = "buffer" },
+    {
+      name = "buffer",
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
+    { name = "omni" },
+    { name = "emoji", insert = true },
     { name = "path" },
   }),
 })
@@ -62,7 +71,14 @@ cmp.setup.filetype("gitcommit", {
   sources = cmp.config.sources({
     { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
   }, {
-    { name = "buffer" },
+    {
+      name = "buffer",
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
     { name = "path" },
   }),
 })
@@ -71,7 +87,14 @@ cmp.setup.filetype("gitcommit", {
 cmp.setup.cmdline({ "/", "?" }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = "buffer" },
+    {
+      name = "buffer",
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
   },
 })
 
