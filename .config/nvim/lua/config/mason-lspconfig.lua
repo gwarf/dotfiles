@@ -5,7 +5,7 @@ require("mason-lspconfig").setup({
     "bashls",
     -- "grammarly",
     --  "html",
-    --  "jsonls",
+    "jsonls",
     --  "lemminx",
     "ltex",
     "marksman",
