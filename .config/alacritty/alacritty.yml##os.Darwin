@@ -8,4 +8,5 @@ font:
   normal:
     # Font family
     family: MesloLGS NF
+  # Point size
   size: 18
