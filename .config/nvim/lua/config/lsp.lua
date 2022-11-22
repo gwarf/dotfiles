@@ -216,24 +216,35 @@ lspconfig["pyright"].setup({
 })
 
 -- lspconfig["pylsp"].setup({
---     on_attach = on_attach,
---     flags = lsp_flags,
---     settings = {
---         pylsp = {
---             plugins = {
---                 -- Struggling to import pacakge from local virtualenv
---                 pylint = { enabled = false, executable = "pylint" },
---                 pyflakes = { enabled = true },
---                 pycodestyle = { enabled = false },
---                 jedi_completion = { fuzzy = true },
---                 pyls_isort = { enabled = true },
---                 pylsp_mypy = { enabled = false },
---             },
+--   on_attach = on_attach,
+--   flags = lsp_flags,
+--   settings = {
+--     pylsp = {
+--       plugins = {
+--         jedi_completion = { enabled = true },
+--         jedi_hover = { enabled = true },
+--         jedi_references = { enabled = true },
+--         jedi_signature_help = { enabled = true },
+--         jedi_symbols = { enabled = true, all_scopes = true },
+--         pycodestyle = { enabled = false },
+--         flake8 = {
+--           enabled = true,
+--           maxLineLength = 160,
 --         },
+--         mypy = { enabled = false },
+--         pylsp_mypy = { enabled = false },
+--         -- Struggling to import pacakge from local virtualenv
+--         pylint = { enabled = false },
+--         pyflakes = { enabled = false },
+--         pycodestyle = { enabled = false },
+--         jedi_completion = { fuzzy = true },
+--         pyls_isort = { enabled = true },
+--       },
 --     },
---     capabilities = capabilities,
+--   },
+--   capabilities = capabilities,
 -- })
-
+--
 -- lspconfig["jedi_language_server"].setup({
 --     on_attach = on_attach,
 --     flags = lsp_flags,
@@ -292,12 +303,10 @@ if utils.executable("bash-language-server") then
   })
 end
 
-if utils.executable("ansible-language-server") then
-  lspconfig.ansiblels.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
+lspconfig.ansiblels.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
 
 if utils.executable("clangd") then
   lspconfig.clangd.setup({
