@@ -139,14 +139,11 @@ return require("packer").startup(function(use)
   })
 
   -- displays a popup with possible key bindings
+  -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/which-key.lua
   use({
     "folke/which-key.nvim",
     config = function()
-      require("which-key").setup({
-        window = {
-          border = "single", -- none, single, double, shadow
-        },
-      })
+      require("config.which-key")
     end,
   })
 
