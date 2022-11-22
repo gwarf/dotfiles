@@ -1,0 +1,11 @@
+import:
+  # Dracula theme: https://draculatheme.com/alacritty
+  - ~/.config/alacritty/dracula.yml
+
+# Font configuration
+font:
+  # Normal (roman) font face
+  normal:
+    # Font family
+    family: MesloLGS NF
+  size: 18
