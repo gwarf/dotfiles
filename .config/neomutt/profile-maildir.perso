@@ -3,8 +3,9 @@
 # http://www.mutt.org/doc/manual/#bgedit
 # XXX only on mutt
 set background_edit
+set editor = '~/bin/bgedit-screen-tmux.sh nvim'
 # set editor = "alacritty -e nvim"
-set editor = "kitty -e nvim"
+# set editor = "kitty -e nvim"
 
 set mbox_type = Maildir
 set folder = ~/Mail/Perso
