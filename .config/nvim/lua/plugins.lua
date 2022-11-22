@@ -315,6 +315,14 @@ return require("packer").startup(function(use)
     },
   })
 
+  -- Comment management
+  use({
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end,
+  })
+
   -- list and switch between buffers
   use({
     "akinsho/bufferline.nvim",
