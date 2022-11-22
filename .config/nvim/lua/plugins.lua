@@ -280,10 +280,22 @@ return require("packer").startup(function(use)
   })
 
   --  Treesitter configurations and abstraction layer for Neovim.
-  --  Tree-sitter is a parser generator tool and an incremental parsing library.
-  use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-  -- Syntax aware text-objects, select, move, swap, and peek support.
-  -- use({ "nvim-treesitter/nvim-treesitter-textobjects" })
+  use({
+    --  Tree-sitter is a parser generator tool and an incremental parsing library.
+    "nvim-treesitter/nvim-treesitter",
+    -- Syntax aware text-objects, select, move, swap, and peek support.
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    -- A Neovim plugin for setting the commentstring option based on the cursor location in the file
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("config.treesitter")
+    end,
+    run = function()
+      local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+      ts_update()
+    end,
+  })
 
   -- open last postiion in file
   use("farmergreg/vim-lastplace")
