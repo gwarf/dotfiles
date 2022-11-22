@@ -182,33 +182,63 @@ require("ltex-ls").setup({
   },
 })
 
+lspconfig["yamlls"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+})
+
 lspconfig["jsonls"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
+  capabilities = capabilities,
 })
 
 lspconfig["marksman"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
+  capabilities = capabilities,
 })
 
-lspconfig["pylsp"].setup({
+lspconfig["pyright"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
+  capabilities = capabilities,
   settings = {
-    pylsp = {
-      plugins = {
-        pylint = { enabled = true, executable = "pylint" },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = false },
-        jedi_completion = { fuzzy = true },
-        pyls_isort = { enabled = true },
-        pylsp_mypy = { enabled = true },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true,
       },
     },
   },
-  capabilities = capabilities,
 })
+
+-- lspconfig["pylsp"].setup({
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+--     settings = {
+--         pylsp = {
+--             plugins = {
+--                 -- Struggling to import pacakge from local virtualenv
+--                 pylint = { enabled = false, executable = "pylint" },
+--                 pyflakes = { enabled = true },
+--                 pycodestyle = { enabled = false },
+--                 jedi_completion = { fuzzy = true },
+--                 pyls_isort = { enabled = true },
+--                 pylsp_mypy = { enabled = false },
+--             },
+--         },
+--     },
+--     capabilities = capabilities,
+-- })
+
+-- lspconfig["jedi_language_server"].setup({
+--     on_attach = on_attach,
+--     flags = lsp_flags,
+--     capabilities = capabilities,
+-- })
 
 if utils.executable("lua-language-server") then
   lspconfig["sumneko_lua"].setup({
