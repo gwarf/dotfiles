@@ -8,6 +8,7 @@
 -- Requirements
 -- GNU/Linux: xsel
 
+local api = vim.api
 local g = vim.g
 local keymap = vim.keymap
 local opt = vim.opt
@@ -111,7 +112,7 @@ opt.listchars = {
 
 -- spell - used by ltex-ls too
 opt.spelllang = { "en", "fr" }
-opt.spellfile = table.concat(vim.api.nvim_get_runtime_file("spell/*.add", true) or {}, ",")
+opt.spellfile = table.concat(api.nvim_get_runtime_file("spell/*.add", true) or {}, ",")
 opt.spelloptions = { "noplainbuffer" }
 
 -- Search configuration
@@ -170,12 +171,27 @@ keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 -- }}}
 
 -- Autocommand that update file type for ansible files
-vim.cmd([[
-  augroup set_ansible_ft
-    autocmd!
-    autocmd BufRead,BufNewFile *.yaml, *.yaml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
-  augroup end
-]])
+-- vim.cmd([[
+--   augroup set_ansible_ft
+--     autocmd!
+--     autocmd BufRead,BufNewFile *.yml, *.yaml if search('ansible\.\|roles:\|hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
+--   augroup end
+-- ]])
+local set_as_ansible = function(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local buffer_lines = api.nvim_buf_get_lines(bufnr, 0, -1, true)
+  for _, buffer_line in pairs(buffer_lines) do
+    if string.find(buffer_line, "ansible%..+:") then
+      opt.filetype = "yaml.ansible"
+    end
+  end
+end
+api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "*.yaml", "*.yml" },
+  callback = function()
+    set_as_ansible()
+  end,
+})
 
 -- Bootstrap packer and install plugins
 require("plugins")
