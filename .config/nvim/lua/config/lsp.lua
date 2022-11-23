@@ -28,10 +28,10 @@ lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
 })
 
 lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-  underline = false,
+  underline = true,
   virtual_text = false,
   signs = true,
-  update_in_insert = false,
+  update_in_insert = true,
 })
 
 -- To be used to display LSP diagnostic window details when on an error
@@ -40,10 +40,10 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   local opts = { noremap = true, silent = true }
   vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-  -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
   -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local map = function(mode, l, r, opts)
     opts = opts or {}
@@ -67,11 +67,6 @@ local on_attach = function(client, bufnr)
   map("n", "<space>wl", function()
     vim.inspect(lsp.buf.list_workspace_folders())
   end, { desc = "list workspace folder" })
-
-  -- Set some key bindings conditional on server capabilities
-  if client.server_capabilities.documentFormattingProvider then
-    map("n", "<space>f", lsp.buf.format, { desc = "format code" })
-  end
 
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
