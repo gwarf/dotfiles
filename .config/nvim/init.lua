@@ -14,15 +14,19 @@ local keymap = vim.keymap
 local opt = vim.opt
 
 -- Missing {{{
--- * Word completion from words in all buffers
 -- * spell check using ltex, allowing to add exception to a custom file
--- * Lookg for possibly duplicated keymaps
+-- * Look for possibly duplicated keymaps
+-- * Manage all keympas in a central place, in which-key
+-- * Test Neorg: https://github.com/nvim-neorg/neorg
+-- * Fix treesitter usage
+-- * Fix rainbow brackets
+-- * Fix highlight of yaml.ansible using ansible-language-server
 -- * mutt/mail setup:
+--   * Completion from address from khard
 --   * https://opensource.com/article/20/1/vim-email-calendar
 --   * https://github.com/soywod/himalaya
 --   * https://git.sr.ht/~soywod/himalaya-vim
--- * Test Neorg: https://github.com/nvim-neorg/neorg
--- * Fix rainbow brackets
+-- * ensure flake8 isn't run twice (from pyright and null-ls)
 -- }}}
 
 -- Speed up startup
