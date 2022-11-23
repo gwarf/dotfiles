@@ -54,6 +54,7 @@ local mappings = {
       "Colorscheme with Preview",
     },
   },
+  -- Need to add something for trouble
   -- looks like duplicated
   T = {
     name = "Treesitter",
@@ -129,6 +130,7 @@ local mappings = {
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
     C = {
+      -- Need to add something for trouble
       "<cmd>Telescope git_bcommits<cr>",
       "Checkout commit(for current file)",
     },
