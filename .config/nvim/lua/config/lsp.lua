@@ -294,12 +294,14 @@ end
 if utils.executable("bash-language-server") then
   lspconfig.bashls.setup({
     on_attach = on_attach,
+    flags = lsp_flags,
     capabilities = capabilities,
   })
 end
 
 lspconfig.ansiblels.setup({
   on_attach = on_attach,
+  flags = lsp_flags,
   capabilities = capabilities,
 })
 
