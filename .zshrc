@@ -504,6 +504,10 @@ if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
   alias gam="$HOME/bin/gamadv-xtd3/gam"
 fi
 # }}}
+#
+if (( $+commands[colordiff] )); then
+  alias diff="colordiff"
+fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
 if [ -n "$DESKTOP_SESSION" ]; then
