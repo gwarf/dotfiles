@@ -169,5 +169,13 @@ keymap.set("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 -- }}}
 
+-- Autocommand that update file type for ansible files
+vim.cmd([[
+  augroup set_ansible_ft
+    autocmd!
+    autocmd BufRead,BufNewFile *.yaml, *.yaml if search('hosts:\|tasks:', 'nw') | set ft=yaml.ansible | endif
+  augroup end
+]])
+
 -- Bootstrap packer and install plugins
 require("plugins")
