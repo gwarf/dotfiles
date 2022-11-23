@@ -12,12 +12,14 @@ null_ls.setup({
     null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.code_actions.shellcheck,
     -- formatters
-    null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.shfmt,
+    null_ls.builtins.formatting.beautysh,
     null_ls.builtins.formatting.stylua,
     -- diagnostics
+    null_ls.builtins.diagnostics.actionlint,
     null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.alex,
     null_ls.builtins.diagnostics.markdownlint.with({
@@ -25,6 +27,7 @@ null_ls.setup({
     }),
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.ansiblelint,
+    null_ls.builtins.diagnostics.zsh,
     -- null_ls.builtins.diagnostics.checkmake,
     -- null_ls.builtins.diagnostics.write_good,
     -- completion
