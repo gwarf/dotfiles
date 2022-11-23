@@ -42,6 +42,12 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
   vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
+  -- turn off formatting for some lsp, to use the ones from null-ls
+  if client.name == 'pyright' or client.name == 'jsonls' then
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
+  end
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -210,42 +216,6 @@ lspconfig["pyright"].setup({
   },
 })
 
--- lspconfig["pylsp"].setup({
---   on_attach = on_attach,
---   flags = lsp_flags,
---   settings = {
---     pylsp = {
---       plugins = {
---         jedi_completion = { enabled = true },
---         jedi_hover = { enabled = true },
---         jedi_references = { enabled = true },
---         jedi_signature_help = { enabled = true },
---         jedi_symbols = { enabled = true, all_scopes = true },
---         pycodestyle = { enabled = false },
---         flake8 = {
---           enabled = true,
---           maxLineLength = 160,
---         },
---         mypy = { enabled = false },
---         pylsp_mypy = { enabled = false },
---         -- Struggling to import pacakge from local virtualenv
---         pylint = { enabled = false },
---         pyflakes = { enabled = false },
---         pycodestyle = { enabled = false },
---         jedi_completion = { fuzzy = true },
---         pyls_isort = { enabled = true },
---       },
---     },
---   },
---   capabilities = capabilities,
--- })
---
--- lspconfig["jedi_language_server"].setup({
---     on_attach = on_attach,
---     flags = lsp_flags,
---     capabilities = capabilities,
--- })
-
 if utils.executable("lua-language-server") then
   lspconfig["sumneko_lua"].setup({
     on_attach = on_attach,
@@ -299,10 +269,20 @@ if utils.executable("bash-language-server") then
   })
 end
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/ansiblels.lua
 lspconfig.ansiblels.setup({
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
+  -- use ansible-lint only via null-ls
+  settings = {
+    ansible = {
+      ansibleLint = {
+        enabled = false
+      }
+    }
+
+  }
 })
 
 if utils.executable("clangd") then
