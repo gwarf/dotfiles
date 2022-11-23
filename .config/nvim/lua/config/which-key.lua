@@ -36,30 +36,6 @@ local mappings = {
   -- ["f"] = { require("lvim.core.telescope.custom-finders").find_project_files, "Find File" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
-  s = {
-    name = "Search",
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-    f = { "<cmd>Telescope find_files<cr>", "Find File" },
-    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
-    H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
-    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
-    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    R = { "<cmd>Telescope registers<cr>", "Registers" },
-    t = { "<cmd>Telescope live_grep<cr>", "Text" },
-    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-    C = { "<cmd>Telescope commands<cr>", "Commands" },
-    p = {
-      "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
-      "Colorscheme with Preview",
-    },
-  },
-  -- Need to add something for trouble
-  -- looks like duplicated
-  T = {
-    name = "Treesitter",
-    i = { ":TSConfigInfo<cr>", "Info" },
-  },
   b = {
     name = "Buffers",
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
@@ -102,6 +78,40 @@ local mappings = {
   --   q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
   --   U = { "<cmd>lua require'dapui'.toggle()<cr>", "Toggle UI" },
   -- },
+  s = {
+    name = "Search",
+    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+    f = { "<cmd>Telescope find_files<cr>", "Find File" },
+    h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+    H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
+    M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+    r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+    R = { "<cmd>Telescope registers<cr>", "Registers" },
+    t = { "<cmd>Telescope live_grep<cr>", "Text" },
+    k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+    C = { "<cmd>Telescope commands<cr>", "Commands" },
+    p = {
+      "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
+      "Colorscheme with Preview",
+    y = { "<cmd>Telescope yank_history<cr>", "Yank history" },
+    },
+  },
+  -- Trouble
+  t = {
+    name = "Trouble",
+    d = { ":TroubleToggle document_diagnostics<cr>", "Toogle document diagnostics" },
+    l = { ":TroubleToggle loclist<cr>", "Toogle loclist" },
+    q = { ":TroubleToggle quickfix<cr>", "Toogle quickfix" },
+    t = { ":TroubleToggle lsp_references<cr>", "Toogle LSP references" },
+    t = { ":TroubleToggle<cr>", "Toogle window" },
+    w = { ":TroubleToggle workspace_diagnostics<cr>", "Toogle workspace diagnostics" },
+  },
+  -- looks like duplicated
+  T = {
+    name = "Treesitter",
+    i = { ":TSConfigInfo<cr>", "Info" },
+  },
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
