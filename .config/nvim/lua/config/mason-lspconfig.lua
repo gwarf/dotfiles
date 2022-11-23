@@ -12,7 +12,7 @@ require("mason-lspconfig").setup({
     --  "prosemd_lsp",
     --  Struggling with plugins and pylint
     --  https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/server_configurations/pylsp/README.md
-    "pylsp",
+    -- "pylsp",
     "pyright",
     --  "ruby_ls",
     "sumneko_lua",
