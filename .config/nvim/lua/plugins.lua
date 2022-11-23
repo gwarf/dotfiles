@@ -442,7 +442,34 @@ return require("packer").startup(function(use)
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = function()
+      -- startify, dashboard
+      -- XXX shortcuts are not aligned with dashboard theme
       require("alpha").setup(require("alpha.themes.startify").config)
+    end,
+  })
+
+  -- Neovim plugin to improve the default vim.ui interfaces
+  use({
+    "stevearc/dressing.nvim",
+    config = function()
+      require("dressing").setup({})
+    end,
+  })
+
+  -- Session manager
+  use({
+    "Shatur/neovim-session-manager",
+    config = function()
+      require("session_manager").setup({})
+      local config_group = vim.api.nvim_create_augroup("MyConfigGroup", {}) -- A global group for all your config autocommands
+
+      vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "SessionLoadPost",
+        group = config_group,
+        callback = function()
+          require("nvim-tree").toggle(false, true)
+        end,
+      })
     end,
   })
 
