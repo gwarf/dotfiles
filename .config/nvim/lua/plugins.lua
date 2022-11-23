@@ -98,32 +98,21 @@ return require("packer").startup(function(use)
   -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
   use({ "williamboman/mason.nvim" })
   use({
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     "williamboman/mason-lspconfig.nvim",
     after = "mason.nvim",
     config = function()
-      require("config.mason-lspconfig")
+      require("config.mason")
     end,
     requires = { "williamboman/mason.nvim", "nvim-lspconfig" },
-  })
-  use({
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    config = function()
-      require("config.mason-tool-installer")
-    end,
   })
   -- Using ltex-ls for spellchecking
   use({
     "vigoux/ltex-ls.nvim",
-    requires = "neovim/nvim-lspconfig",
-  })
-
-  -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
-  -- Use different binaries as sources, like prettier
-  use({
+    -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
+    -- Use different binaries as sources, like prettier
     "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("config.null-ls")
-    end,
+    requires = "neovim/nvim-lspconfig",
   })
 
   -- mail helper, mainly for searching for contacts
