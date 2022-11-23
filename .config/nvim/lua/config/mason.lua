@@ -1,4 +1,5 @@
 require("mason").setup()
+
 require("mason-tool-installer").setup({
   ensure_installed = {
     "alex",
@@ -18,6 +19,7 @@ require("mason-tool-installer").setup({
   run_on_start = true,
   tart_delay = 3000, -- 3 second delay
 })
+
 require("mason-lspconfig").setup({
   ensure_installed = {
     "ansiblels",
