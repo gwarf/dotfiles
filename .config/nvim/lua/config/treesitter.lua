@@ -14,15 +14,15 @@ treesitter.setup({
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
   autotag = {
-    enable = true,
+    enable = false,
   },
   highlight = {
     -- `false` will disable the whole extension
-    enable = true,
+    enable = false,
   },
   -- Rainbow parentheses for neovim using tree-sitter.
   rainbow = {
-    enable = true,
+    enable = false,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
@@ -36,6 +36,6 @@ treesitter.setup({
   additional_vim_regex_highlighting = false,
   -- enable comment string
   context_commentstring = {
-    enable = true,
+    enable = false,
   },
 })
