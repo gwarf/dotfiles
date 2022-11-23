@@ -61,26 +61,27 @@ return require("packer").startup(function(use)
   -- nvim-cmp completion sources
   -- https://github.com/topics/nvim-cmp
   -- Snippet engine and snippet template
-  -- use { "SirVer/ultisnips", event = "InsertEnter" }
-  -- use { "honza/vim-snippets" }
-  -- use { "quangnguyen30192/cmp-nvim-ultisnips", after = { "nvim-cmp", "cmp_luasnip" } }
   -- Snippets
   use("L3MON4D3/LuaSnip")
   use({ "rafamadriz/friendly-snippets" })
   -- Autocompletion
-  use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-path", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-buffer", after = "nvim-cmp" })
-  use({ "hrsh7th/cmp-cmdline", after = "nvim-cmp" })
-  use({ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" })
   -- https://github.com/uga-rosa/cmp-dictionary
   -- https://github.com/lukas-reineke/cmp-rg
+  use({
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lua",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-cmdline",
+    -- Expecting to be able to get vimmail completion via omnifunc
+    "hrsh7th/cmp-omni",
+    "saadparwaiz1/cmp_luasnip",
+    after = "nvim-cmp"
+  })
   -- Completion for some neovim lua API
   use({ "ii14/emmylua-nvim", ft = "lua" })
-  -- Expecting to be able to get vimmail completion via omnifunc
-  use({ "hrsh7th/cmp-omni", after = "nvim-cmp" })
-  -- use { "petertriho/cmp-git",
+  -- use {
+  --   "petertriho/cmp-git",
   --   requires = "nvim-lua/plenary.nvim",
   --   config = function() require('cmp_git').setup() end
   -- }
@@ -88,31 +89,25 @@ return require("packer").startup(function(use)
     use({ "hrsh7th/cmp-emoji", after = "nvim-cmp" })
   end
   -- nvim-lsp configuration
+  -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
   use({
     "neovim/nvim-lspconfig",
-    after = { "cmp-nvim-lsp", "mason-lspconfig.nvim" },
-    config = function()
-      require("config.lsp")
-    end,
-  })
-  -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
-  use({ "williamboman/mason.nvim" })
-  use({
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    after = "mason.nvim",
     config = function()
       require("config.mason")
+      require("config.lsp")
     end,
-    requires = { "williamboman/mason.nvim", "nvim-lspconfig" },
-  })
-  -- Using ltex-ls for spellchecking
-  use({
-    "vigoux/ltex-ls.nvim",
-    -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
-    -- Use different binaries as sources, like prettier
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = "neovim/nvim-lspconfig",
+    after = { "cmp-nvim-lsp" },
+    requires = {
+      "williamboman/mason.nvim",
+      "nvim-lspconfig",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
+      -- Use different binaries as sources, like prettier
+      "jose-elias-alvarez/null-ls.nvim",
+      -- Using ltex-ls for spellchecking
+      "vigoux/ltex-ls.nvim",
+    },
   })
 
   -- mail helper, mainly for searching for contacts
