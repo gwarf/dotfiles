@@ -46,12 +46,21 @@ ts_configs.setup({
     -- `false` will disable the whole extension
     enable = true,
   },
+  -- Use treesitter to autoclose and autorename html tag
   autotag = {
+    enable = true
+  },
+  -- Set commentstring option based on the cursor location in the file
+  context_commentstring = {
     enable = false,
+  },
+  -- View treesitter information directly in Neovim!
+  playground = {
+    enable = true,
   },
   -- Rainbow parentheses for neovim using tree-sitter.
   rainbow = {
-    enable = false,
+    enable = true,
     -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
     extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
@@ -64,7 +73,4 @@ ts_configs.setup({
   -- Instead of true it can also be a list of languages
   additional_vim_regex_highlighting = false,
   -- enable comment string
-  context_commentstring = {
-    enable = false,
-  },
 })
