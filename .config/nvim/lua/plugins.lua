@@ -381,37 +381,31 @@ return require("packer").startup(function(use)
   --   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
   -- })
   use({
-    -- {"Mofiqul/dracula.nvim", as = "dracula"},
+    "Mofiqul/dracula.nvim", as = "dracula",
     -- {'embark-theme/vim', as = 'embark'},
     -- 'folke/tokyonight.nvim',
-    "rafamadriz/neon",
     -- "andersevenrud/nordic.nvim",
     -- "shaunsingh/nord.nvim",
     -- "Th3Whit3Wolf/one-nvim",
     -- "marko-cerovac/material.nvim",
     -- 'navarasu/onedark.nvim',
     config = function()
-      -- require("dracula").setup({
-      --   -- show the '~' characters after the end of buffers
-      --   show_end_of_buffer = true, -- default false
-      --   -- set italic comment
-      --   italic_comment = true, -- default false
-      -- })
-      vim.g.neon_style = "default"
-      vim.g.neon_italic_keyword = true
-      vim.g.neon_italic_function = true
-      vim.g.neon_italic_comment = true
-      vim.g.neon_transparent = true
-      vim.cmd([[colorscheme neon]])
+      require("dracula").setup({
+        -- show the '~' characters after the end of buffers
+        show_end_of_buffer = true, -- default false
+        -- set italic comment
+        italic_comment = true, -- default false
+      })
+      vim.cmd([[colorscheme dracula]])
     end,
   })
 
   use({
     "nvim-lualine/lualine.nvim",
-    after = "neon",
+    after = "dracula",
     config = function()
       require("lualine").setup({
-        options = { theme = "neon" },
+        options = { theme = "dracula" },
       })
     end,
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
