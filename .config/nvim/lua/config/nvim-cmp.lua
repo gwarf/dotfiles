@@ -1,12 +1,26 @@
 -- Set up nvim-cmp.
-local cmp = require("cmp")
-local lspkind = require("lspkind")
+local cmp_status_ok, cmp = pcall(require, "cmp")
+if not cmp_status_ok then
+  return
+end
+
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if not snip_status_ok then
+  return
+end
+
+local lspkind_status_ok, lspkind = pcall(require, "lspkind")
+if not lspkind_status_ok then
+  return
+end
+
+require("luasnip/loaders/from_vscode").lazy_load()
 
 cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+      luasnip.lsp_expand(args.body) -- For `luasnip` users.
     end,
   },
   window = {
@@ -50,7 +64,6 @@ cmp.setup({
     end,
   }),
   sources = cmp.config.sources({
-    { name = "nvim_lsp" },
     { name = "luasnip" }, -- For luasnip users.
     {
       name = "buffer",
@@ -60,9 +73,11 @@ cmp.setup({
         end,
       },
     },
-    { name = "omni" },
-    { name = "emoji", insert = true },
     { name = "path" },
+    { name = "emoji", insert = true },
+    -- XXX check if useful
+    -- { name = "omni" },
+    { name = "nvim_lsp" },
   }),
 })
 
