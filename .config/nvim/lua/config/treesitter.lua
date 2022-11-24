@@ -1,23 +1,52 @@
 -- https://github.com/devinschulz/dotfiles/blob/master/nvim/.config/nvim/lua/config/treesitter.lua
-local status_ok, treesitter = pcall(require, "nvim-treesitter.configs")
+local status_ok, ts_configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
   return
 end
 
-treesitter.setup({
-  -- A list of parser names, or "all"
-  ensure_installed = "all",
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+-- Use clang and llvm
+require("nvim-treesitter.install").compilers = { "clang" }
 
+ts_configs.setup({
+  -- A list of parser names, or "all"
+  -- ensure_installed = "all",
+  ensure_installed = {
+    "bash",
+    "c",
+    "cmake",
+    "comment",
+    "css",
+    "diff",
+    "dockerfile",
+    "git_rebase",
+    "gitignore",
+    "help",
+    "html",
+    "http",
+    "javascript",
+    "json",
+    "latex",
+    "lua",
+    "make",
+    "markdown",
+    "norg",
+    "python",
+    "regex",
+    "sql",
+    "toml",
+    "vim",
+    "yaml",
+  },
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = true,
   -- Automatically install missing parsers when entering buffer
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
-  autotag = {
-    enable = false,
-  },
   highlight = {
     -- `false` will disable the whole extension
+    enable = true,
+  },
+  autotag = {
     enable = false,
   },
   -- Rainbow parentheses for neovim using tree-sitter.
