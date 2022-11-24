@@ -248,12 +248,6 @@ return require("packer").startup(function(use)
   use({
     --  Tree-sitter is a parser generator tool and an incremental parsing library.
     "nvim-treesitter/nvim-treesitter",
-    -- "p00f/nvim-ts-rainbow",
-    -- Syntax aware text-objects, select, move, swap, and peek support.
-    -- "nvim-treesitter/nvim-treesitter-textobjects",
-    -- A Neovim plugin for setting the commentstring option based on the cursor location in the file
-    -- "JoosepAlviste/nvim-ts-context-commentstring",
-    -- "windwp/nvim-ts-autotag",
     config = function()
       require("config.treesitter")
     end,
@@ -261,6 +255,18 @@ return require("packer").startup(function(use)
       local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
       ts_update()
     end,
+    requires = {
+      -- Syntax aware text-objects, select, move, swap, and peek support.
+      { "nvim-treesitter/nvim-treesitter-textobjects", event = "BufRead" },
+      -- Rainbow parentheses for neovim using tree-sitter.
+      { "p00f/nvim-ts-rainbow", event = "BufRead" },
+      -- View treesitter information directly in Neovim!
+      { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
+      -- Set commentstring option based on the cursor location in the file
+      -- "JoosepAlviste/nvim-ts-context-commentstring",
+      -- Use treesitter to autoclose and autorename html tag
+      { "windwp/nvim-ts-autotag" },
+    }
   })
 
   -- open last postiion in file
