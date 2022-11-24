@@ -155,8 +155,8 @@ g.maplocalleader = " "
 -- Use jk as ESC for leaving insert mode
 keymap.set("i", "jk", "<Esc>")
 -- Use jk-movement between rows when soft wrapping
-keymap.set("n", "j", "gj", opts)
-keymap.set("n", "k", "gk", opts)
+keymap.set({"n", "v"}, "j", "gj", opts)
+keymap.set({"n", "v"}, "k", "gk", opts)
 -- Turn the word under cursor to upper case
 keymap.set("i", "<c-u>", "<Esc>viwUea")
 -- Turn the current word into title case
