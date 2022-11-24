@@ -22,7 +22,9 @@ let b:sleuth_automatic = 0
 
 " vim-mail
 " https://github.com/dbeniamine/vim-mail/
-"
+" Do not add custom keymaps
+" XXX some are nice to move inside the file
+let g:VimMailDoNotMap=1
 let g:VimMailDoNotFold=1
 " let g:VimMailSpellLangs=['en_gb', 'fr']
 " Remove quoted signature is killing mine due to flow automatic formatting
