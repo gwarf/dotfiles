@@ -63,6 +63,7 @@ return require("packer").startup(function(use)
       "rafamadriz/friendly-snippets",
     },
   })
+  use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
 
   -- nvim-cmp completion sources
   -- https://github.com/uga-rosa/cmp-dictionary

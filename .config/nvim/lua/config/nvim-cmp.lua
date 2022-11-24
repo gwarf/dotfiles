@@ -14,7 +14,22 @@ if not lspkind_status_ok then
   return
 end
 
+-- Load vs-code style snippets from plugins
 require("luasnip/loaders/from_vscode").lazy_load()
+
+-- Custom snippets
+-- XXX move this to a dedicated file
+local s = luasnip.snippet
+local i = luasnip.insert_node
+local t = luasnip.text_node
+luasnip.add_snippets("all", {
+  s("ternary", {
+    -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
+    i(1, "cond"), t(" ? "), i(2, "then"), t(" : "), i(3, "else")
+  }),
+  s("brb", { t({ "Best regards,", "Baptiste" })}),
+  s("cb", { t({ "Cheers,", "Baptiste" })}),
+})
 
 cmp.setup({
   snippet = {
@@ -64,7 +79,8 @@ cmp.setup({
     end,
   }),
   sources = cmp.config.sources({
-    { name = "luasnip" }, -- For luasnip users.
+    -- order matters
+    { name = "luasnip" },
     {
       name = "buffer",
       option = {
