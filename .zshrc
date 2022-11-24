@@ -576,17 +576,19 @@ if [[ "$OSTYPE" == darwin* ]]; then
   # Required for building python with pyenv on Mac OS X
   CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
   LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-  # Favor using llvm stuff from homebrew
-  CPPFLAGS="-I/usr/local/opt/llvm/include"
-  LDFLAGS="-L/usr/local/opt/llvm/lib ${LDFLAGS}"
-  LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++ ${LDFLAGS}"
-  PATH="/usr/local/opt/llvm/bin:${PATH}"
+  if [ -d "/usr/local/opt/llvm" ]; then
+    # Favor using llvm stuff from homebrew
+    CPPFLAGS="-I/usr/local/opt/llvm/include"
+    LDFLAGS="-L/usr/local/opt/llvm/lib ${LDFLAGS}"
+    LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++ ${LDFLAGS}"
+    PATH="/usr/local/opt/llvm/bin:${PATH}"
+  fi
   # Use clang
-  export CC=clang
-  export CXX=clang++
+  CC=clang
+  CXX=clang++
   # Speeding up build
   CFLAGS="-O2 ${CFLAGS}"
-  export CFLAGS LDFLAGS CPPFLAGS PATH
+  export CC CXX CFLAGS LDFLAGS CPPFLAGS
   # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 
   # tail-like of postfix logs on MacOS X
