@@ -55,18 +55,7 @@ local on_attach = function(client, bufnr)
   end
 
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  map("n", "<C-]>", lsp.buf.definition)
-  map("n", "<C-k>", lsp.buf.signature_help)
-  map("n", "<space>e", vim.diagnostic.open_float, { desc = "Open diagnostic"})
-  map("n", "<space>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
-  map("n", "<space>q", vim.diagnostic.setloclist, { desc = "Move to loclist" })
-  map("n", "<space>rn", lsp.buf.rename, { desc = "varialbe rename" })
-  map("n", "<space>wa", lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
-  map("n", "<space>wl",
-  function() vim.inspect(lsp.buf.list_workspace_folders()) end,
-  { desc = "list workspace folder" })
-  map("n", "<space>wr", lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
-  map("n", "K", lsp.buf.hover)
+  map("n", "K", lsp.buf.hover, { desc = "Hover" })
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
   map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
   map("n", "gd", lsp.buf.definition, { desc = "go to definition" })
