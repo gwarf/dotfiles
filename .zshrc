@@ -207,6 +207,7 @@ zinit from"gh-r" as"program" lucid for \
   sbin"**/bin/gh -> gh" cli/cli \
   mv"ripgrep* -> rg" pick"rg/rg" BurntSushi/ripgrep \
   mv"delta* -> delta" pick"delta/delta" dandavison/delta \
+  mv"tree-sitter* -> tree-sitter" tree-sitter/tree-sitter \
   junegunn/fzf
 # }}}
 
@@ -292,7 +293,7 @@ zinit ice wait lucid
 zinit light lukechilds/zsh-nvm
 
 # A smarter cd command
-# XXX feature for chpwd hook is not yet released as of 2022-11-06
+# XXX feature for chpwd hook is not yet released as of 2022-11-06 (0.8.3)
 # FIXME install from master/cargo
 # https://github.com/ajeetdsouza/zoxide/pull/474
 # zinit ice wait"2" as"command" from"gh-r" lucid \
@@ -549,7 +550,7 @@ fi
 
 # Env variables {{{
 # macOS conf
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == darwin* ]]; then
   # Use gnused - brew install gnu-sed
   PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
   # Use coreutils GNU utilities - brew install coreutils
@@ -557,10 +558,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
   # Use openjdk from brew - brew install openjdk
   PATH="/usr/local/opt/openjdk/bin:$PATH"
-  # XXX may not be needed
-  # export CPPFLAGS="-I/usr/local/opt/openjdk/include"
-  # export LDFLAGS="-L/usr/lib/openssl-1.0"; export CFLAGS="-I/usr/include/openssl-1.0"
-
   export HOMEBREW_CASK_OPTS='--no-quarantine'
   export HOMEBREW_NO_ANALYTICS=1
 
@@ -579,9 +576,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # Required for building python with pyenv on Mac OS X
   CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
   LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+  # Favor using llvm stuff from homebrew
+  CPPFLAGS="-I/usr/local/opt/llvm/include"
+  LDFLAGS="-L/usr/local/opt/llvm/lib ${LDFLAGS}"
+  LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++ ${LDFLAGS}"
+  PATH="/usr/local/opt/llvm/bin:${PATH}"
+  # Use clang
+  export CC=clang
+  export CXX=clang++
   # Speeding up build
-  CFLAGS="-O2 $CFLAGS"
-  export CFLAGS LDFLAGS
+  CFLAGS="-O2 ${CFLAGS}"
+  export CFLAGS LDFLAGS CPPFLAGS PATH
   # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 
   # tail-like of postfix logs on MacOS X
