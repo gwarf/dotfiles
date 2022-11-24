@@ -149,7 +149,8 @@ opt.background = "dark"
 local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 -- Custom mapping <leader> (see `:h mapleader` for more info)
--- keymap.set("", "<Space>", "<Nop>", opts)
+-- Clean mappings that may already be on <space>
+keymap.set("", "<Space>", "<Nop>", opts)
 g.mapleader = " "
 g.maplocalleader = " "
 -- Use jk as ESC for leaving insert mode
