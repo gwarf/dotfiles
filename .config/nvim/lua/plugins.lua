@@ -48,23 +48,23 @@ return require("packer").startup(function(use)
   use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
 
   -- Completion
+  -- https://github.com/topics/nvim-cmp
   use({
     "hrsh7th/nvim-cmp",
     config = function()
       require("config.nvim-cmp")
     end,
-    requires = { "L3MON4D3/LuaSnip", "onsails/lspkind.nvim" },
+    requires = {
+      -- Snippet engine
+      "L3MON4D3/LuaSnip",
+      -- Add vscode-like pictograms to neovim lsp
+      "onsails/lspkind.nvim",
+      -- Snippets
+      "rafamadriz/friendly-snippets",
+    },
   })
-  -- Add vscode-like pictograms to neovim lsp
-  use({ "onsails/lspkind.nvim" })
 
   -- nvim-cmp completion sources
-  -- https://github.com/topics/nvim-cmp
-  -- Snippet engine and snippet template
-  -- Snippets
-  use("L3MON4D3/LuaSnip")
-  use({ "rafamadriz/friendly-snippets" })
-  -- Autocompletion
   -- https://github.com/uga-rosa/cmp-dictionary
   -- https://github.com/lukas-reineke/cmp-rg
   use({
@@ -73,11 +73,11 @@ return require("packer").startup(function(use)
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
+    "hrsh7th/cmp-emoji",
+    "saadparwaiz1/cmp_luasnip",
     -- Expecting to be able to get vimmail completion via omnifunc
     -- XXX addresses are shown, but slowwing and parasiting too much mail editing
     -- "hrsh7th/cmp-omni",
-    "saadparwaiz1/cmp_luasnip",
-    after = "nvim-cmp"
   })
   -- Completion for some neovim lua API
   use({ "ii14/emmylua-nvim", ft = "lua" })
@@ -86,15 +86,13 @@ return require("packer").startup(function(use)
   --   requires = "nvim-lua/plenary.nvim",
   --   config = function() require('cmp_git').setup() end
   -- }
-  if vim.g.is_mac then
-    use({ "hrsh7th/cmp-emoji", after = "nvim-cmp" })
-  end
   -- nvim-lsp configuration
-  -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
   use({
     "neovim/nvim-lspconfig",
     config = function()
+      -- Install packages
       require("config.mason")
+      -- Manage LSP servers, DAP servers, linters, and formatters.
       require("config.lsp")
     end,
     after = { "cmp-nvim-lsp" },
@@ -179,7 +177,6 @@ return require("packer").startup(function(use)
       require("telescope.actions")
       local trouble = require("trouble.providers.telescope")
       local telescope = require("telescope")
-      local builtin = require("telescope.builtin")
       telescope.setup({
         defaults = {
           mappings = {
