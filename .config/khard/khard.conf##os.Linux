@@ -1,0 +1,22 @@
+[addressbooks]
+[[bapt.name]]
+path = ~/.config/khard/contacts/bapt.name/
+[[personal]]
+path = ~/.config/khard/contacts/personal/
+[[work]]
+path = ~/.config/khard/contacts/work/
+
+[general]
+debug = no
+default_action = list
+editor = vim
+merge_editor = vimdiff
+
+[contact table]
+display = first_name
+show_nicknames = no
+sort = last_name
+
+[vcard]
+search_in_source_files = yes
+
