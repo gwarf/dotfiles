@@ -18,6 +18,7 @@ ts_configs.setup({
     "css",
     "diff",
     "dockerfile",
+    "gitcommit",
     "git_rebase",
     "gitignore",
     "help",
