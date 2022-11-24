@@ -74,7 +74,8 @@ return require("packer").startup(function(use)
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
     -- Expecting to be able to get vimmail completion via omnifunc
-    "hrsh7th/cmp-omni",
+    -- XXX addresses are shown, but slowwing and parasiting too much mail editing
+    -- "hrsh7th/cmp-omni",
     "saadparwaiz1/cmp_luasnip",
     after = "nvim-cmp"
   })
@@ -247,11 +248,12 @@ return require("packer").startup(function(use)
   use({
     --  Tree-sitter is a parser generator tool and an incremental parsing library.
     "nvim-treesitter/nvim-treesitter",
+    -- "p00f/nvim-ts-rainbow",
     -- Syntax aware text-objects, select, move, swap, and peek support.
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    -- "nvim-treesitter/nvim-treesitter-textobjects",
     -- A Neovim plugin for setting the commentstring option based on the cursor location in the file
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    "windwp/nvim-ts-autotag",
+    -- "JoosepAlviste/nvim-ts-context-commentstring",
+    -- "windwp/nvim-ts-autotag",
     config = function()
       require("config.treesitter")
     end,
@@ -301,14 +303,13 @@ return require("packer").startup(function(use)
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup({
-        silent_chdir = false,
+        silent_chdir = true,
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       })
       require("telescope").load_extension("projects")
       vim.keymap.set("n", "<c-p>", "<cmd>:lua require('telescope').extensions.projects.projects{}<cr>", {})
-      vim.keymap.set("n", "<leader>fp", "<cmd>:lua require('telescope').extensions.projects.projects{}<cr>", {})
     end,
   })
 
@@ -324,6 +325,12 @@ return require("packer").startup(function(use)
         load = {
           -- Load everything
           ["core.defaults"] = {},
+          ["core.norg.completion"] = {
+            config = {
+              engine = "nvim-cmp",
+            }
+          },
+          ["core.norg.concealer"] = {},
           ["core.norg.dirman"] = {
             config = {
               workspaces = {
