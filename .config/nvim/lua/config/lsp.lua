@@ -6,7 +6,6 @@ local fn = vim.fn
 local keymap = vim.keymap
 local lsp = vim.lsp
 local lspconfig = require("lspconfig")
-local utils = require("utils")
 local null_ls = require("null-ls")
 
 -- global config for diagnostic
@@ -37,11 +36,6 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_pub
 
 -- To be used to display LSP diagnostic window details when on an error
 local on_attach = function(client, bufnr)
-  -- Mappings.
-  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap = true, silent = true }
-  vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
-  vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
   -- turn off formatting for some lsp, to use the ones from null-ls
   if client.name == 'pyright' or client.name == 'jsonls' then
@@ -52,6 +46,7 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
+  -- Mappings.
   local map = function(mode, l, r, opts)
     opts = opts or {}
     opts.silent = true
@@ -59,21 +54,23 @@ local on_attach = function(client, bufnr)
     keymap.set(mode, l, r, opts)
   end
 
-  map("n", "gd", lsp.buf.definition, { desc = "go to definition" })
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   map("n", "<C-]>", lsp.buf.definition)
-  map("n", "K", lsp.buf.hover)
   map("n", "<C-k>", lsp.buf.signature_help)
+  map("n", "<space>e", vim.diagnostic.open_float, { desc = "Open diagnostic"})
+  map("n", "<space>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
+  map("n", "<space>q", vim.diagnostic.setloclist, { desc = "Move to loclist" })
   map("n", "<space>rn", lsp.buf.rename, { desc = "varialbe rename" })
-  map("n", "gr", lsp.buf.references, { desc = "show references" })
+  map("n", "<space>wa", lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
+  map("n", "<space>wl",
+  function() vim.inspect(lsp.buf.list_workspace_folders()) end,
+  { desc = "list workspace folder" })
+  map("n", "<space>wr", lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
+  map("n", "K", lsp.buf.hover)
   map("n", "[d", diagnostic.goto_prev, { desc = "previous diagnostic" })
   map("n", "]d", diagnostic.goto_next, { desc = "next diagnostic" })
-  map("n", "<space>q", diagnostic.setqflist, { desc = "put diagnostic to qf" })
-  map("n", "<space>ca", lsp.buf.code_action, { desc = "LSP code action" })
-  map("n", "<space>wa", lsp.buf.add_workspace_folder, { desc = "add workspace folder" })
-  map("n", "<space>wr", lsp.buf.remove_workspace_folder, { desc = "remove workspace folder" })
-  map("n", "<space>wl", function()
-    vim.inspect(lsp.buf.list_workspace_folders())
-  end, { desc = "list workspace folder" })
+  map("n", "gd", lsp.buf.definition, { desc = "go to definition" })
+  map("n", "gr", lsp.buf.references, { desc = "show references" })
 
   api.nvim_create_autocmd("CursorHold", {
     buffer = bufnr,
@@ -133,13 +130,20 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- Inform LSP server about all the capabilities of nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- Inform LSP server about all the capabilities we have
+-- https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
+-- merge the defaults lspconfig provides with the capabilities nvim-cmp adds
+local lsp_defaults = lspconfig.util.default_config
+lsp_defaults.capabilities = vim.tbl_deep_extend(
+  'force',
+  lsp_defaults.capabilities,
+  require('cmp_nvim_lsp').default_capabilities()
+)
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
   -- debounce_text_changes = 150,
-  debounce_text_changes = 500,
+  -- debounce_text_changes = 500,
 }
 
 -- LSP servers with default configuration
@@ -148,7 +152,6 @@ for _, lsp_server in ipairs(servers) do
   lspconfig[lsp_server].setup({
     on_attach = on_attach,
     flags = lsp_flags,
-    capabilities = capabilities,
   })
 end
 
@@ -156,7 +159,6 @@ end
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua
 require("ltex-ls").setup({
   on_attach = on_attach,
-  capabilities = capabilities,
   use_spellfile = true,
   filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text" },
   settings = {
@@ -200,7 +202,6 @@ require("ltex-ls").setup({
 lspconfig.ansiblels.setup({
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
   -- use ansible-lint only via null-ls
   settings = {
     ansible = {
@@ -215,13 +216,13 @@ lspconfig.ansiblels.setup({
 -- clang server for C and C++
 lspconfig.clangd.setup({
   on_attach = on_attach,
-  capabilities = capabilities,
   filetypes = { "c", "cpp", "cc" },
   flags = lsp_flags,
 })
 
 -- lua LSP server, needed at least for neovim configuration
 lspconfig["sumneko_lua"].setup({
+  single_file_support = true,
   on_attach = on_attach,
   flags = lsp_flags,
   settings = {
@@ -247,14 +248,12 @@ lspconfig["sumneko_lua"].setup({
       },
     },
   },
-  capabilities = capabilities,
 })
 
 -- Python LSP, complemented by null_ls
 lspconfig["pyright"].setup({
   on_attach = on_attach,
   flags = lsp_flags,
-  capabilities = capabilities,
   settings = {
     python = {
       analysis = {
