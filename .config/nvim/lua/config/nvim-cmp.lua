@@ -18,6 +18,7 @@ end
 require("luasnip/loaders/from_vscode").lazy_load()
 
 -- Custom snippets
+-- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
 -- XXX move this to a dedicated file
 local s = luasnip.snippet
 local i = luasnip.insert_node
