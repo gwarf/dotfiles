@@ -77,7 +77,7 @@ opt.backupskip = { "/tmp/*" }
 opt.hidden = true
 
 -- completion
-opt.completeopt = "menu,menuone,noselect"
+opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 -- Disable mouse
 opt.mouse = ""
