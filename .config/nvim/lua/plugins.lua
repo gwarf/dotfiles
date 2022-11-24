@@ -113,15 +113,15 @@ return require("packer").startup(function(use)
 
   -- mail helper, mainly for searching for contacts
   -- https://github.com/dbeniamine/vim-mail/tags
-  -- XXX move to gitlab project
+  -- XXX moved to gitlab project
   -- https://gitlab.com/dbeniamine/vim-mail
-  use({
-    "dbeniamine/vim-mail",
-    -- Complete emails address in every files
-    config = function()
-      vim.opt.completefunc = "vimmail#contacts#CompleteAddr"
-    end,
-  })
+ use({
+   "dbeniamine/vim-mail",
+   config = function()
+     -- Complete emails address in every files
+     -- vim.opt.completefunc = "vimmail#contacts#CompleteAddr"
+   end,
+ })
 
   -- displays a popup with possible key bindings
   -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/which-key.lua
