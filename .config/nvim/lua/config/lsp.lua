@@ -138,8 +138,19 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
+  -- debounce_text_changes = 150,
+  debounce_text_changes = 500,
 }
+
+-- LSP servers with default configuration
+local servers = { "bashls", "marksman", "jsonls", "vimls", "yamlls" }
+for _, lsp_server in ipairs(servers) do
+  lspconfig[lsp_server].setup({
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities,
+  })
+end
 
 -- ltex-ls
 -- https://git.vigoux.giize.com/nvim-config/blob/master/lua/lsp_config.lua
@@ -184,92 +195,7 @@ require("ltex-ls").setup({
   },
 })
 
-lspconfig["yamlls"].setup({
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities,
-})
-
-lspconfig["jsonls"].setup({
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities,
-})
-
-lspconfig["marksman"].setup({
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities,
-})
-
-lspconfig["pyright"].setup({
-  on_attach = on_attach,
-  flags = lsp_flags,
-  capabilities = capabilities,
-  settings = {
-    python = {
-      analysis = {
-        autoSearchPaths = true,
-        diagnosticMode = "workspace",
-        useLibraryCodeForTypes = true,
-      },
-    },
-  },
-})
-
-if utils.executable("lua-language-server") then
-  lspconfig["sumneko_lua"].setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    settings = {
-      Lua = {
-        runtime = {
-          -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = { "vim" },
-        },
-        workspace = {
-          -- Make the server aware of Neovim runtime files,
-          -- see also https://github.com/sumneko/lua-language-server/wiki/Libraries#link-to-workspace .
-          -- Lua-dev.nvim also has similar settings for sumneko lua, https://github.com/folke/lua-dev.nvim/blob/main/lua/lua-dev/sumneko.lua .
-          library = {
-            fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
-            fn.stdpath("config"),
-          },
-          maxPreload = 2000,
-          preloadFileSize = 50000,
-        },
-      },
-    },
-    capabilities = capabilities,
-  })
-else
-  vim.notify("sumneko_lua not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
-
-if utils.executable("vim-language-server") then
-  lspconfig["vimls"].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 500,
-    },
-  })
-else
-  vim.notify("vim-language-server not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
-
-if utils.executable("bash-language-server") then
-  lspconfig.bashls.setup({
-    on_attach = on_attach,
-    flags = lsp_flags,
-    capabilities = capabilities,
-  })
-end
-
+-- Ansible language server, complemented by null-ls
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/ansiblels.lua
 lspconfig.ansiblels.setup({
   on_attach = on_attach,
@@ -286,26 +212,66 @@ lspconfig.ansiblels.setup({
   }
 })
 
-if utils.executable("clangd") then
-  lspconfig.clangd.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "c", "cpp", "cc" },
-    flags = {
-      debounce_text_changes = 500,
-    },
-  })
-else
-  vim.notify("clangd not found!", vim.log.levels.WARN, { title = "Nvim-config" })
-end
+-- clang server for C and C++
+lspconfig.clangd.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "c", "cpp", "cc" },
+  flags = lsp_flags,
+})
 
+-- lua LSP server, needed at least for neovim configuration
+lspconfig["sumneko_lua"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files,
+        -- see also https://github.com/sumneko/lua-language-server/wiki/Libraries#link-to-workspace .
+        -- Lua-dev.nvim also has similar settings for sumneko lua, https://github.com/folke/lua-dev.nvim/blob/main/lua/lua-dev/sumneko.lua .
+        library = {
+          fn.stdpath("data") .. "/site/pack/packer/opt/emmylua-nvim",
+          fn.stdpath("config"),
+        },
+        maxPreload = 2000,
+        preloadFileSize = 50000,
+      },
+    },
+  },
+  capabilities = capabilities,
+})
+
+-- Python LSP, complemented by null_ls
+lspconfig["pyright"].setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+})
+
+-- null_ls, special language servber allowing to use many tools
 -- https://smarttech101.com/nvim-lsp-set-up-null-ls-for-beginners/
 -- https://github.com/Clumsy-Coder/dotfiles/commit/e81edc159f3fc9ef189e0300d280461e75732a4b
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
+-- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 -- Available builtins: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
--- Check if packate is available using :echo executable("shfmt")
-
+-- Check if package is available using :echo executable("shfmt")
 null_ls.setup({
   sources = {
     -- code actions
@@ -337,6 +303,7 @@ null_ls.setup({
     null_ls.builtins.hover.dictionary, -- dictionary
   },
   diagnostics_format = "[#{c}] #{m} (#{s})",
+  -- XXX disabled due to some issues with default conf for yaml/ansible formatting
   -- format file on save
   -- you can reuse a shared lspconfig on_attach callback here
   -- on_attach = function(client, bufnr)
