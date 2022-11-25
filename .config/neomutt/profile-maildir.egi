@@ -1,20 +1,11 @@
 # Mutt sender profile: egi
 
 # http://www.mutt.org/doc/manual/#bgedit
-# XXX only on mutt
+# XXX not available on neomutt
 set background_edit
-# Showing editor and allowing to save
-set editor = "nvim-qt"
+set editor = "~/bin/bgedit-screen-tmux.sh nvim"
+# set editor = "nvim-qt"
 # set editor = "subl -n -w"
-# XXX Showing empty editor unless --nofork is used
-# set editor = "neovide --nofork --notabs"
-# Not working, no editor UI shown
-# set editor = "vimr --wait"
-# set editor = "vimr"
-# Showing empty editor
-# set editor = "~/.config/neomutt/launch_iterm.sh"
-# set editor = "~/.config/neomutt/bgedit-screen-tmux.sh ~/baptiste/.config/neomutt/launch_iterm.sh"
-# set editor = "~/.config/neomutt/bgedit-screen-tmux.sh"
 
 set folder = ~/Mail/EGI
 
