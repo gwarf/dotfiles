@@ -8,6 +8,9 @@ local lsp = vim.lsp
 local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
 
+-- Show LSP server status
+require("fidget").setup({})
+
 -- global config for diagnostic
 diagnostic.config({
   underline = true,

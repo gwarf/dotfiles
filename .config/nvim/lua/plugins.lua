@@ -110,6 +110,8 @@ return require("packer").startup(function(use)
       "jose-elias-alvarez/null-ls.nvim",
       -- Using ltex-ls for spellchecking
       "vigoux/ltex-ls.nvim",
+      -- Show LSP server status
+      "j-hui/fidget.nvim",
     },
   })
 
@@ -384,17 +386,24 @@ return require("packer").startup(function(use)
     "jghauser/mkdir.nvim",
   })
 
+  -- Session manager
+  use({
+    "Shatur/neovim-session-manager",
+    config = function()
+      require("session_manager").setup({})
+      local config_group = vim.api.nvim_create_augroup("MyConfigGroup", {}) -- A global group for all your config autocommands
+
+      vim.api.nvim_create_autocmd({ "User" }, {
+        pattern = "SessionLoadPost",
+        group = config_group,
+        callback = function()
+          require("nvim-tree").toggle(false, true)
+        end,
+      })
+    end,
+  })
+
   -- UI, UX, look and fgeel good
-  -- Use dracula theme
-  -- use({
-  --   "dracula/vim", as = "dracula",
-  --   config = function()
-  --     vim.cmd([[colorscheme dracula]])
-  --   end,
-  -- })
-  -- use({'glepnir/zephyr-nvim',
-  --   requires = { 'nvim-treesitter/nvim-treesitter', opt = true },
-  -- })
   use({
     "Mofiqul/dracula.nvim", as = "dracula",
     -- "rafamadriz/neon", -- Looks quite nice
@@ -459,32 +468,9 @@ return require("packer").startup(function(use)
     end,
   })
 
-  -- Session manager
-  use({
-    "Shatur/neovim-session-manager",
-    config = function()
-      require("session_manager").setup({})
-      local config_group = vim.api.nvim_create_augroup("MyConfigGroup", {}) -- A global group for all your config autocommands
-
-      vim.api.nvim_create_autocmd({ "User" }, {
-        pattern = "SessionLoadPost",
-        group = config_group,
-        callback = function()
-          require("nvim-tree").toggle(false, true)
-        end,
-      })
-    end,
-  })
-
   -- Notifications
   use("rcarriga/nvim-notify")
   -- use 'vigoux/notifier.nvim'
-  use({
-    "j-hui/fidget.nvim",
-    config = function()
-      require("fidget").setup({})
-    end,
-  })
 
   -- Use neovim to edit textarea in browsers
   use({
