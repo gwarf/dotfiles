@@ -348,7 +348,12 @@ return require("packer").startup(function(use)
               },
             },
           },
-          ["core.gtd.base"] = {},
+          ["core.gtd.base"] = {
+            config = {
+              workspace = "~/notes/gtd"
+
+            },
+          },
           ["core.integrations.telescope"] = {},
           ["external.kanban"] = {},
         },
