@@ -338,6 +338,8 @@ return require("packer").startup(function(use)
             }
           },
           ["core.norg.concealer"] = {},
+          ["core.norg.journal"] = {},
+          ["core.norg.qol.toc"] = {},
           ["core.norg.dirman"] = {
             config = {
               workspaces = {
@@ -346,9 +348,16 @@ return require("packer").startup(function(use)
               },
             },
           },
+          ["core.gtd.base"] = {},
+          ["core.integrations.telescope"] = {},
+          ["external.kanban"] = {},
         },
       })
     end,
+    requires = {
+      "nvim-neorg/neorg-telescope",
+    "max397574/neorg-kanban",
+  }
   })
 
   -- Better yank management
