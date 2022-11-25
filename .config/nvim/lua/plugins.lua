@@ -63,7 +63,7 @@ return require("packer").startup(function(use)
       "rafamadriz/friendly-snippets",
     },
   })
-  use({"L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*"})
+  use({"L3MON4D3/LuaSnip", tag = "v1.*"})
 
   -- nvim-cmp completion sources
   -- https://github.com/uga-rosa/cmp-dictionary
@@ -345,13 +345,13 @@ return require("packer").startup(function(use)
               workspaces = {
                 work = "~/notes/work",
                 home = "~/notes/home",
+                gtd = "~/notes/gtd",
               },
             },
           },
           ["core.gtd.base"] = {
             config = {
-              workspace = "~/notes/gtd"
-
+              workspace = "gtd",
             },
           },
           ["core.integrations.telescope"] = {},
