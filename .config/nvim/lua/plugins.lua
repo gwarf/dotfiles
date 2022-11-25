@@ -69,18 +69,21 @@ return require("packer").startup(function(use)
   -- https://github.com/uga-rosa/cmp-dictionary
   -- https://github.com/lukas-reineke/cmp-rg
   use({
+    -- Complete from LSP client
     "hrsh7th/cmp-nvim-lsp",
+    -- Complete neovim's Lua runtime API such vim.lsp
     "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-emoji",
+    -- Complete from lusasnp
     "saadparwaiz1/cmp_luasnip",
     -- Expecting to be able to get vimmail completion via omnifunc
     -- XXX addresses are shown, but slowwing and parasiting too much mail editing
     -- "hrsh7th/cmp-omni",
   })
-  -- Completion for some neovim lua API
+  -- Neovim completion library for sumneko/lua-language-server
   use({ "ii14/emmylua-nvim", ft = "lua" })
   -- use {
   --   "petertriho/cmp-git",
@@ -380,6 +383,7 @@ return require("packer").startup(function(use)
   -- })
   use({
     "Mofiqul/dracula.nvim", as = "dracula",
+    -- "rafamadriz/neon", -- Looks quite nice
     -- {'embark-theme/vim', as = 'embark'},
     -- 'folke/tokyonight.nvim',
     -- "andersevenrud/nordic.nvim",
