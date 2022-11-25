@@ -149,7 +149,7 @@ end
 require("ltex-ls").setup({
   on_attach = on_attach,
   use_spellfile = true,
-  filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text" },
+  filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text", "mail" },
   settings = {
     ltex = {
       checkFrequency = "save",
