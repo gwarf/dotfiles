@@ -1,6 +1,5 @@
 -- Setup to write mails with vim
 
-
 -- Enable spell checks using native spell checker
 -- setlocal spell
 -- No indentation when copying
@@ -17,7 +16,7 @@ vim.opt.formatoptions = "tcqwan"
 -- vim-mail
 -- https://github.com/dbeniamine/vim-mail/
 -- Use khard as a contact provider
-vim.g.VimMailContactsProvider = 'khard'
+vim.g.VimMailContactsProvider = "khard"
 -- Do not add custom keymaps
 -- XXX some are nice to move inside the file
 vim.g.VimMailDoNotMap = 1
