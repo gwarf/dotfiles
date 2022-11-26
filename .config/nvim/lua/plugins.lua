@@ -422,7 +422,7 @@ return require("packer").startup(function(use)
       vim.cmd([[colorscheme dracula]])
     end,
   })
-
+-- status line
   use({
     "nvim-lualine/lualine.nvim",
     after = "dracula",
@@ -434,6 +434,7 @@ return require("packer").startup(function(use)
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
 
+  -- Git support
   use({
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -447,6 +448,16 @@ return require("packer").startup(function(use)
     event = "BufRead",
   })
 
+  -- Neovim plugin to improve the default vim.ui interfaces
+  use({
+    "stevearc/dressing.nvim",
+    config = function()
+      require("dressing").setup({})
+    end,
+  })
+  -- Notifications
+  use("rcarriga/nvim-notify")
+  -- use 'vigoux/notifier.nvim'
   -- a fast and fully programmable greeter for neovim.
   use({
     "goolord/alpha-nvim",
@@ -457,18 +468,6 @@ return require("packer").startup(function(use)
       require("alpha").setup(require("alpha.themes.startify").config)
     end,
   })
-
-  -- Neovim plugin to improve the default vim.ui interfaces
-  use({
-    "stevearc/dressing.nvim",
-    config = function()
-      require("dressing").setup({})
-    end,
-  })
-
-  -- Notifications
-  use("rcarriga/nvim-notify")
-  -- use 'vigoux/notifier.nvim'
 
   -- Use neovim to edit textarea in browsers
   use({
