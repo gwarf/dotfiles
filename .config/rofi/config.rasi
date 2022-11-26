@@ -1,0 +1,17 @@
+configuration {
+  show-icons: true;
+  terminal: "kitty";
+  click-to-exit: true;
+  steal-focus: true;
+  display-drun: "      : ";
+  /* kb-row-up: "Up,Control+p,Control+k"; */
+  /* kb-row-down: "Down,Control+n,Control+j"; */
+  me-select-entry: "MouseDPrimary";
+  me-accept-entry: "MousePrimary";
+  filebrowser {
+    directories-first: true;
+    sorting-method:    "name";
+  }
+}
+@theme "onedarker"
+/* @theme "arthur" */
