@@ -95,6 +95,7 @@ cmp.setup({
     { name = "emoji", insert = true },
     -- XXX email address completion only working automatically for first entry
     -- { name = "omni" },
+    -- { name = "nvim_lsp_signature_help" },
     { name = "nvim_lsp" },
   }),
 })
