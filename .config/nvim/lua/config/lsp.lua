@@ -274,7 +274,11 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.beautysh,
-    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.stylua.with({
+      extra_args = {
+        "--config-path", "~/.config/nvim/stylua.toml",
+      },
+    }),
     -- diagnostics
     null_ls.builtins.diagnostics.actionlint,
     null_ls.builtins.diagnostics.flake8,
