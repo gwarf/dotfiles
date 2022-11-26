@@ -278,6 +278,7 @@ return require("packer").startup(function(use)
   -- netrw replacement
   use({
     "kyazdani42/nvim-tree.lua",
+    tag = "nightly",
     config = function()
       require("nvim-tree").setup({})
       vim.keymap.set("n", "<leader>T", "<cmd>NvimTreeToggle<cr>", { silent = true, noremap = true })
