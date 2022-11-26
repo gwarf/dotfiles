@@ -20,9 +20,11 @@ vim.opt.formatoptions = "tcqwan"
 vim.g.VimMailContactsProvider = 'khard'
 -- Do not add custom keymaps
 -- XXX some are nice to move inside the file
--- let g:VimMailDoNotMap=1
--- let g:VimMailDoNotFold=1
+vim.g.VimMailDoNotMap = 1
+vim.g.VimMailDoNotFold = 1
 -- let g:VimMailSpellLangs=['en_gb', 'fr']
+-- Complete emails address in every files
+vim.opt.completefunc = "vimmail#contacts#CompleteAddr"
 -- Remove quoted signature is killing mine due to flow automatic formatting
 -- let g:VimMailStartFlags={'reply' :"boir" }
 -- let g:VimMailStartFlags={
