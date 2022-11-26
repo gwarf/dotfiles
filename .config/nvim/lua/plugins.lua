@@ -230,6 +230,7 @@ return require("packer").startup(function(use)
 
   -- fold management
   use({
+    -- XXX to see if really needed
     "kevinhwang91/nvim-ufo",
     requires = "kevinhwang91/promise-async",
     config = function()

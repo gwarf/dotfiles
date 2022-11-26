@@ -127,7 +127,10 @@ opt.undofile = true
 opt.undodir = vim.fn.expand("~/.local/share/nvim/undodir")
 
 -- Folding with markers
-opt.foldmethod = "marker"
+-- opt.foldmethod = "indent"
+opt.foldmethod = "expr"
+-- https://www.jmaguire.tech/posts/treesitter_folding/
+opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldcolumn = "1"
 opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 opt.foldlevelstart = 99
