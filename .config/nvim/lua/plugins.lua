@@ -63,7 +63,7 @@ return require("packer").startup(function(use)
       "rafamadriz/friendly-snippets",
     },
   })
-  use({"L3MON4D3/LuaSnip", tag = "v1.*"})
+  use({ "L3MON4D3/LuaSnip", tag = "v1.*" })
 
   -- nvim-cmp completion sources
   -- https://github.com/uga-rosa/cmp-dictionary
@@ -116,13 +116,13 @@ return require("packer").startup(function(use)
   })
 
   -- mail helper, mainly for searching for contacts
- use({
-   "https://gitlab.com/dbeniamine/vim-mail",
-   config = function()
-     require("config.mail")
-   end,
-   ft = "mail",
- })
+  use({
+    "https://gitlab.com/dbeniamine/vim-mail",
+    config = function()
+      require("config.mail")
+    end,
+    ft = "mail",
+  })
 
   -- displays a popup with possible key bindings
   -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/which-key.lua
@@ -266,7 +266,7 @@ return require("packer").startup(function(use)
       -- "JoosepAlviste/nvim-ts-context-commentstring",
       -- Use treesitter to autoclose and autorename html tag
       { "windwp/nvim-ts-autotag" },
-    }
+    },
   })
 
   -- open last postiion in file
@@ -335,7 +335,7 @@ return require("packer").startup(function(use)
           ["core.norg.completion"] = {
             config = {
               engine = "nvim-cmp",
-            }
+            },
           },
           ["core.norg.concealer"] = {},
           ["core.norg.journal"] = {},
@@ -361,8 +361,8 @@ return require("packer").startup(function(use)
     end,
     requires = {
       "nvim-neorg/neorg-telescope",
-    "max397574/neorg-kanban",
-  }
+      "max397574/neorg-kanban",
+    },
   })
 
   -- Better yank management
@@ -403,7 +403,8 @@ return require("packer").startup(function(use)
 
   -- UI, UX, look and fgeel good
   use({
-    "Mofiqul/dracula.nvim", as = "dracula",
+    "Mofiqul/dracula.nvim",
+    as = "dracula",
     -- "rafamadriz/neon", -- Looks quite nice
     -- {'embark-theme/vim', as = 'embark'},
     -- 'folke/tokyonight.nvim',
@@ -422,7 +423,7 @@ return require("packer").startup(function(use)
       vim.cmd([[colorscheme dracula]])
     end,
   })
--- status line
+  -- status line
   use({
     "nvim-lualine/lualine.nvim",
     after = "dracula",
@@ -449,7 +450,7 @@ return require("packer").startup(function(use)
   })
 
   -- Add indentation guides to all lines
-  use({"lukas-reineke/indent-blankline.nvim"})
+  use({ "lukas-reineke/indent-blankline.nvim" })
   -- Neovim plugin to improve the default vim.ui interfaces
   use({
     "stevearc/dressing.nvim",
@@ -484,7 +485,7 @@ return require("packer").startup(function(use)
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
-    }
+    },
   })
   -- use 'vigoux/notifier.nvim'
   -- a fast and fully programmable greeter for neovim.
@@ -507,10 +508,13 @@ return require("packer").startup(function(use)
   })
 
   -- Spaw terminals
-  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-    require("toggleterm").setup()
-  end
-}
+  use({
+    "akinsho/toggleterm.nvim",
+    tag = "*",
+    config = function()
+      require("toggleterm").setup()
+    end,
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
