@@ -116,15 +116,12 @@ return require("packer").startup(function(use)
   })
 
   -- mail helper, mainly for searching for contacts
-  -- https://github.com/dbeniamine/vim-mail/tags
-  -- XXX moved to gitlab project
-  -- https://gitlab.com/dbeniamine/vim-mail
  use({
-   "dbeniamine/vim-mail",
+   "https://gitlab.com/dbeniamine/vim-mail",
    config = function()
-     -- Complete emails address in every files
-     -- vim.opt.completefunc = "vimmail#contacts#CompleteAddr"
+     require("config.mail")
    end,
+   ft = "mail",
  })
 
   -- displays a popup with possible key bindings
