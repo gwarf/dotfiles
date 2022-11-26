@@ -93,7 +93,7 @@ cmp.setup({
     },
     { name = "path" },
     { name = "emoji", insert = true },
-    -- XXX check if useful
+    -- XXX email address completion only working automatically for first entry
     -- { name = "omni" },
     { name = "nvim_lsp" },
   }),
