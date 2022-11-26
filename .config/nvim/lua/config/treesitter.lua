@@ -49,7 +49,7 @@ ts_configs.setup({
   },
   -- Use treesitter to autoclose and autorename html tag
   autotag = {
-    enable = true
+    enable = true,
   },
   -- Set commentstring option based on the cursor location in the file
   context_commentstring = {

@@ -7,7 +7,6 @@ which_key.setup({
   },
 })
 
-
 -- Mapping for normal mode
 local opts = {
   mode = "n", -- NORMAL mode
@@ -117,8 +116,8 @@ local mappings = {
     h = { vim.lsp.buf.signature_help, "Signature help" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>Mason<cr>", "Mason Info" },
-    j = { vim.diagnostic.goto_next, "Next Diagnostic", },
-    k = { vim.diagnostic.goto_prev, "Prev Diagnostic", },
+    j = { vim.diagnostic.goto_next, "Next Diagnostic" },
+    k = { vim.diagnostic.goto_prev, "Prev Diagnostic" },
     l = { vim.lsp.codelens.run, "CodeLens Action" },
     q = { vim.diagnostic.setloclist, "Quickfix" },
     r = { vim.lsp.buf.rename, "Rename" },
@@ -126,7 +125,7 @@ local mappings = {
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
-    w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+      w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
     },
   },
   -- Logs

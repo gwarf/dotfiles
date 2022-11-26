@@ -77,7 +77,7 @@ opt.backupskip = { "/tmp/*" }
 opt.hidden = true
 
 -- completion
-opt.completeopt = {'menu', 'menuone', 'noselect'}
+opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- Disable mouse
 opt.mouse = ""
@@ -139,7 +139,7 @@ opt.background = "dark"
 -- }}}
 
 -- Key mappings {{{
-  -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/keymappings.lua
+-- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/keymappings.lua
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -157,8 +157,8 @@ g.maplocalleader = " "
 -- Use jk as ESC for leaving insert mode
 keymap.set("i", "jk", "<Esc>")
 -- Use jk-movement between rows when soft wrapping
-keymap.set({"n", "v"}, "j", "gj", opts)
-keymap.set({"n", "v"}, "k", "gk", opts)
+keymap.set({ "n", "v" }, "j", "gj", opts)
+keymap.set({ "n", "v" }, "k", "gk", opts)
 -- Turn the word under cursor to upper case
 keymap.set("i", "<c-u>", "<Esc>viwUea")
 -- Turn the current word into title case
