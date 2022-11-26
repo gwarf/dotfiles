@@ -1,0 +1,11 @@
+dunst
+firefox
+gimp
+github-cli
+htop
+kitty
+mutt
+neovim
+podman
+rofi
+zsh
