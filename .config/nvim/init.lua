@@ -139,6 +139,7 @@ opt.background = "dark"
 -- }}}
 
 -- Key mappings {{{
+  -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/keymappings.lua
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
