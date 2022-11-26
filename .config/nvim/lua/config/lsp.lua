@@ -39,9 +39,8 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_pub
 
 -- To be used to display LSP diagnostic window details when on an error
 local on_attach = function(client, bufnr)
-
   -- turn off formatting for some lsp, to use the ones from null-ls
-  if client.name == 'pyright' or client.name == 'jsonls' then
+  if client.name == "pyright" or client.name == "jsonls" then
     client.server_capabilities.document_formatting = false
     client.server_capabilities.document_range_formatting = false
   end
@@ -80,8 +79,9 @@ local on_attach = function(client, bufnr)
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-          and #diagnostic.get() > 0
+      if
+        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+        and #diagnostic.get() > 0
       then
         diagnostic.open_float(nil, float_opts)
       end
@@ -126,11 +126,8 @@ end
 -- https://vonheikemen.github.io/devlog/tools/setup-nvim-lspconfig-plus-nvim-cmp/
 -- merge the defaults lspconfig provides with the capabilities nvim-cmp adds
 local lsp_defaults = lspconfig.util.default_config
-lsp_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lsp_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
+lsp_defaults.capabilities =
+  vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
@@ -198,11 +195,10 @@ lspconfig.ansiblels.setup({
   settings = {
     ansible = {
       ansibleLint = {
-        enabled = false
-      }
-    }
-
-  }
+        enabled = false,
+      },
+    },
+  },
 })
 
 -- clang server for C and C++
@@ -276,7 +272,10 @@ null_ls.setup({
     null_ls.builtins.formatting.beautysh,
     null_ls.builtins.formatting.stylua.with({
       extra_args = {
-        "--config-path", "~/.config/nvim/stylua.toml",
+        "--indent-type",
+        "Spaces",
+        "--indent-width",
+        "2",
       },
     }),
     -- diagnostics
