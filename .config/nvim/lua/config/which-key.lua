@@ -200,6 +200,7 @@ local mappings = {
   -- Treesitter
   T = {
     name = "Treesitter",
+    p = { "<cmd>TSConfigInfo<cr>", "Playground" },
     i = { "<cmd>TSConfigInfo<cr>", "Info" },
   },
 }
