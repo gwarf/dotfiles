@@ -147,7 +147,7 @@ zinit snippet PZTM::environment
 # Provides interactive use of GNU utilities on BSD systems
 zinit snippet PZTM::gnu-utility
 # Provides an easier use of GPG by setting up gpg-agent.
-zinit snippet PZTM::gpg
+# zinit snippet PZTM::gpg
 # Sets directory options and defines directory aliases.
 zinit snippet PZTM::directory
 # Completion
@@ -354,6 +354,10 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 # https://github.com/kiurchv/asdf.plugin.zsh
 # zplug "kiurchv/asdf.plugin.zsh", defer:2
 
+# GPG management
+zinit ice wait"1" lucid
+zinit light laggardkernel/zsh-gpg-agent
+
 # ZSH options {{{
 
 autoload -Uz compinit
@@ -540,7 +544,9 @@ if (( $+commands[oidc-agent-service] )); then
   export OIDC_AGENT_ACCOUNT=egi
 fi
 
-if (( $+commands[fortune] )); then
+if (( $+commands[misfortune] )); then
+  misfortune -o
+elif (( $+commands[fortune] )); then
   if (( $+commands[cowsay] )); then
     fortune -o | cowsay
   else
