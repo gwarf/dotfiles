@@ -1,0 +1,56 @@
+[global]
+  corner_radius = 4
+  follow = mouse
+  font = "Bitstream Vera Sans 12"
+  format = "%s\n%b"
+  frame_color = "#cccccc"
+  frame_width = 1
+  geometry = "300x5-30+40"
+  history = ctrl+grave
+  history_length = 10
+  horizontal_padding = 8
+  icon_position = left
+  max_icon_size = 28
+  #shrink = yes
+  icon_path = /usr/share/icons/gnome/48x48/status/:/usr/share/icons/gnome/48x48/devices/
+  idle_threshold = 120
+  ignore_newline = no
+  indicate_hidden = yes
+  alignment = center
+  line_height = 0
+  markup = full
+  padding = 8
+  separator_color = "#585858"
+  separator_height = 2
+  show_age_threshold = 30
+  sort = yes
+  stack_duplicates = true
+  transparency = 20
+  word_wrap = yes
+
+[urgency_low]
+  background = "#181818"
+  foreground = "#FFFFFF"
+  timeout = 5
+
+[urgency_normal]
+  background = "#181818"
+  foreground = "#FFFFFF"
+  timeout = 20
+
+[urgency_critical]
+  background = "#9b3648"
+  foreground = "#FFFFFF"
+  icon = /usr/share/icons/gnome/48x48/status/stock_dialog-warning.png
+  timeout = 0
+
+
+[shortcuts]
+   close = ctrl+space
+   close_all = ctrl+shift+space
+   history = ctrl+grave
+   context = ctrl+shift+period
+
+[stack-volumes]
+    appname = "alsa"
+    set_stack_tag = "volume"
