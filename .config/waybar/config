@@ -29,16 +29,11 @@
         "spacing": 10
     },
     "clock": {
-        // "format": "<span color='#ffffff'></span> {:%a %b %d}",
-        // "format-alt": "<span color='#ffffff'></span> {:%I:%M %p}"
-        "format": "{:%a %b %d}",
-        "format-alt": "{:%I:%M %p}"
+        "format": "<span color='#ffffff'></span> {:%a %b %d}",
+        "format-alt": "<span color='#ffffff'></span> {:%I:%M %p}"
+        // "format": "{:%a %b %d}",
+        // "format-alt": "{:%I:%M %p}"
     },
-    // "clock": {
-    //     // "timezone": "America/New_York",
-    //     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    //     "format-alt": "{:%Y-%m-%d}"
-    // },
     "backlight": {
         // "device": "acpi_video1",
         "format": "{icon} {percent}%",
@@ -47,14 +42,14 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
 
-        "format-wifi": "直 {signalStrength}%",
-        // "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-wifi": "直{essid} ({signalStrength}%)",
+        // "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
         // "format-ethernet": " {ifname}",
         // "format-ethernet": " wired",
         "format-ethernet": "",
         "format-disconnected": "睊",
         // "on-click": "nmtui"
-        // "format-wifi": "{essid} ({signalStrength}%) ",
         // "format-ethernet": "{ipaddr}/{cidr} ",
         // "tooltip-format": "{ifname} via {gwaddr} ",
         // "format-linked": "{ifname} (No IP) ",
