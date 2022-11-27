@@ -24,7 +24,15 @@ vim.g.VimMailDoNotFold = 1
 -- let g:VimMailSpellLangs=['en_gb', 'fr']
 -- Complete emails address in every files
 vim.opt.completefunc = "vimmail#contacts#CompleteAddr"
+-- Choose where to put cursor
 -- Remove quoted signature is killing mine due to flow automatic formatting
+-- b: bottom after last message
+-- o: add new line after cursor
+-- i: insert mode
+-- r: remove quoted signature from reply
+vim.g.VimMailStartFlags = {
+  reply = "boi"
+}
 -- let g:VimMailStartFlags={'reply' :"boir" }
 -- let g:VimMailStartFlags={
 -- \'blank': 'TAi',
