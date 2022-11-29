@@ -1,69 +1,19 @@
 #!/usr/bin/env bash
 
-function run {
-  if ! pgrep $1 ;
-  then
-    $@&
-  fi
-}
-
-#change your keyboard if you need it
-#setxkbmap -layout be
-
-# Autostart applications
-pkill -u $USER '^compton$'
-compton --config $HOME/.config/herbstluftwm/compton.conf &
-# compton --config /home/baptiste/.config/compton.conf &
-# /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
-xsetroot -solid '#000000'
-xsetroot -cursor_name left_ptr &
-
-#keybindings are in config of sxhkd - interchangeable with other TWM
-# run sxhkd -c $HOME/.config/herbstluftwm/sxhkd/sxhkdrc &
-# wal -i ~/.config/herbstluftwm/fantasy-landscape2.jpg
-wal -nRa 90 &
-# feh --bg-scale ~/.config/herbstluftwm/fantasy-landscape2.jpg &
-$HOME/.fehbg &
-run conky -c $HOME/.conkyrc &
-albert &
-# run mpd &
-#run variety &
-# run nm-applet &
-#pamac-tray &
-# xinput set-prop 13 302 1 &
-# run redshift-gtk
-# run syncthing-gtk -m &
-#xfce4-power-manager &
-# run dunst &
-# numlockx on &
-# run blueberry-tray &
-#xfsettingsd &
-# nitrogen --restore &
-# caffeine &
-# vivaldi-stable &
-# firefox &
-# thunar &
-# dropbox &
-# run insync start &
-# discord &
-# spotify &
-# atom &
-
-#herbstluftwm start
+# herbstluftwm start
 hc() {
   herbstclient "$@"
 }
 
 hc emit_hook reload
 
-# KEYBINDINGS
+# keybindings
 
 # remove all existing keybindings
 hc keyunbind --all
 
 # if you have a super key you will be much happier with Mod set to Mod4
-#Mod=Mod1  # Use alt as the main modifier
+# Mod=Mod1  # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
 
 hc keybind $Mod-Shift-x quit
@@ -73,17 +23,17 @@ hc keybind $Mod-q close
 
 hc keybind $Mod-Return spawn "${TERMINAL:-kitty}" # use your $TERMINAL with xterm as fallback
 hc keybind $Mod-m spawn rofi -show run -terminal "${TERMINAL:-kitty}"
+
 # Albert is launched and uses it's own key
 # hc keybind $Mod-m spawn albert
 
-#Most of the keybindings have been set in sxhkd config file
-#you can set them also here
+# If most of the keybindings have been set in sxhkd config file
+# you can set them also here
+# reload sxhkd: hc keybind $Mod-Shift-s  pkill -USR1 -x sxhkd
 
-#reload sxhkd:
-# hc keybind $Mod-Shift-s  pkill -USR1 -x sxhkd
+# Movements
 
-# MOVEMENTS
-
+# basic movement in tiling and floating mode
 # focusing clients
 hc keybind $Mod-Left  focus left
 hc keybind $Mod-Down  focus down
@@ -125,9 +75,9 @@ hc keybind $Mod-Control-Down    resize down +$resizestep
 hc keybind $Mod-Control-Up      resize up +$resizestep
 hc keybind $Mod-Control-Right   resize right +$resizestep
 
-# TAGS or WORKSPACES
+# Tags or Workspaces
 
-#names to display in menu
+# names to display in menu
 tag_names=( {1..10} )
 tag_keys=( {1..9} 0 )
 
@@ -149,6 +99,7 @@ hc keybind $Mod-period use_index +1 --skip-visible
 hc keybind $Mod-comma  use_index -1 --skip-visible
 
 # layouting
+hc keybind $Mod-r remove
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
 hc keybind $Mod-Shift-f set_attr clients.focus.floating toggle
@@ -182,8 +133,9 @@ hc keybind $Mod-Shift-Tab   cycle_all -1
 hc keybind $Mod-c cycle
 hc keybind $Mod-i jumpto urgent
 
-#reset prior to setting the theme
-hc attr theme.reset 1
+# theme
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
 
 # Attribute
 hc attr theme.active.color '#FFFFFF'
@@ -238,7 +190,8 @@ hc rule floatplacement=smaront
 # hc rule class=Spotify tag=10
 
 # give focus to most common terminals
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
+# hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
 hc rule class=Oblogout fullscreen=on
@@ -248,17 +201,35 @@ hc rule class=VirtualBox fullscreen=on
 # unlock, just to be sure
 hc unlock
 
+# do multi monitor setup here, e.g.:
+# hc set_monitors 1280x1024+0+0 1280x1024+1280+0
+# or simply:
 hc detect_monitors
 
+# room for polybar on the monitor
 # single polybar at top
 hc pad 0 40
+
+# Launch lemonbar
+# ~/bin/lemonbar.sh | lemonbar -n bar -B \#2e3440 -F \#d8dee9 -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid' -f 'Caskaydia Cove Nerd Font' -p | sh &
 
 # Launch polybar
 [ -x ~/.config/polybar/launch.sh ] && ~/.config/polybar/launch.sh
 
 # Autostart applications
 [ -x ~/bin/autostart.sh ] && ~/bin/autostart.sh
+
 # XXX this seems necessary as load from .xinitrc seems uneffective
 [ -r ~/.Xmodmap ] && xmodmap ~/.Xmodmap
+
+xsetroot -solid '#000000'
+# xsetroot -solid '#222222'
+xsetroot -cursor_name left_ptr &
+
+# Compositor
+picom --shadow-opactiy 0.25 &
+
+# Keyboard layout
+# setxkbmap -layout us
 # Use right control as compose key
 setxkbmap -option compose:rctrl
