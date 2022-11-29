@@ -1,6 +1,8 @@
 -- https://github.com/wbthomason/packer.nvim
 -- https://www.chiarulli.me/Neovim-2/03-plugins/
 
+local utils = require("utils")
+
 -- Bootstrap packer
 local ensure_packer = function()
   local fn = vim.fn
@@ -165,12 +167,10 @@ return require("packer").startup(function(use)
 
   use({ "michaeljsmith/vim-indent-object", event = "VimEnter" })
 
-  -- Since tmux is only available on Linux and Mac, we only enable these plugins
-  -- for Linux and Mac
-  -- if utils.executable("tmux") then
-  -- .tmux.conf syntax highlighting and setting check
-  use({ "tmux-plugins/vim-tmux", ft = { "tmux" } })
-  -- end
+  if utils.executable("tmux") then
+    -- .tmux.conf syntax highlighting and setting check
+    use({ "tmux-plugins/vim-tmux", ft = { "tmux" } })
+  end
 
   -- Use :Telescope
   -- https://alpha2phi.medium.com/neovim-for-beginners-fuzzy-file-search-part-2-2aab95fe8cfe
@@ -487,6 +487,10 @@ return require("packer").startup(function(use)
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
+  })
+  use({
+    "rcarriga/nvim-notify",
+    tag = "v3.*",
   })
   -- use 'vigoux/notifier.nvim'
   -- a fast and fully programmable greeter for neovim.
