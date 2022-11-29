@@ -4,7 +4,7 @@
 ;   go to https://github.com/jaagr/polybar
 ;
 ;   The README contains alot of information
-;	Themes : https://github.com/jaagr/dots/tree/master/.local/etc/themer/themes
+;   Themes : https://github.com/jaagr/dots/tree/master/.local/etc/themer/themes
 ;   https://github.com/jaagr/polybar/wiki/
 ;   https://github.com/jaagr/polybar/wiki/Configuration
 ;   https://github.com/jaagr/polybar/wiki/Formatting
@@ -18,9 +18,6 @@ margin-bottom = 0
 
 [settings]
 ;https://github.com/jaagr/polybar/wiki/Configuration#application-settings
-throttle-output = 5
-throttle-output-for = 10
-throttle-input-for = 30
 screenchange-reload = true
 compositing-background = over
 compositing-foreground = over
@@ -31,12 +28,6 @@ compositing-border = over
 ; Define fallback values used by all module formats
 format-foreground = #FF0000
 format-background = #00FF00
-format-underline =
-format-overline =
-format-spacing =
-format-padding =
-format-margin =
-format-offset =
 
 [colors]
 ; Nord theme ============
@@ -85,8 +76,7 @@ volume-max = #bf616a
 ################################################################################
 
 [bar/mainbar-herbstluftwm]
-monitor = ${env:MONITOR}
-monitor-fallback = HDMI-A-1
+monitor = ${env:MONITOR:HDMI-A-1}
 width = 90%
 height = 30
 offset-x = 0
@@ -102,7 +92,7 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #f00
 
-wm-restack = bspwm
+; wm-restack = bspwm
 override-redirect = true
 
 ; Enable support for inter-process messaging
@@ -129,10 +119,9 @@ font-2 = "Iosevka:size=15;4"
 font-3 = "Bitstream Vera Sans:style=Roman:size=15;4"
 
 # modules-left = cpu-graph xbacklight volume
-modules-left = volume
 modules-center = ewmh
 # modules-right = discord filesystem wireless-network battery date powermenu
-modules-right = filesystem wireless-network date powermenu
+modules-right = filesystem date powermenu
 
 ;tray-detached = false
 ;tray-offset-x = 0
@@ -147,8 +136,7 @@ scroll-up = herbstclient use_index -1
 scroll-down = herbstclient use_index +1
 
 [bar/mainbar-herbstluftwm-center]
-monitor = ${env:MONITOR}
-monitor-fallback = HDMI-A-1
+monitor = ${env:MONITOR:HDMI-A-1}
 width = 18%
 height = 30
 offset-x = 42%
@@ -164,7 +152,7 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #f00
 
-wm-restack = bspwm
+; wm-restack = bspwm
 override-redirect = true
 
 ; Enable support for inter-process messaging
@@ -207,8 +195,7 @@ scroll-up = herbstclient use_index -1
 scroll-down = herbstclient use_index +1
 
 [bar/mainbar-herbstluftwm-right]
-monitor = ${env:MONITOR}
-monitor-fallback = HDMI-A-1
+monitor = ${env:MONITOR:HDMI-A-1}
 width = 27%
 height = 30
 offset-x = 72%
@@ -224,7 +211,7 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #f00
 
-wm-restack = bspwm
+; wm-restack = bspwm
 override-redirect = true
 
 ; Enable support for inter-process messaging
@@ -252,7 +239,7 @@ font-3 = "Bitstream Vera Sans:style=Roman:size=15;4"
 
 modules-left = 
 modules-center = 
-modules-right = discord filesystem wireless-network battery date powermenu
+modules-right = filesystem date powermenu
 
 ;tray-detached = false
 ;tray-offset-x = 0
@@ -273,8 +260,7 @@ scroll-down = herbstclient use_index +1
 ################################################################################
 
 [bar/mainbar-herbstluftwm-extra]
-monitor = ${env:MONITOR}
-monitor-fallback = HDMI-A-1
+monitor = ${env:MONITOR:}
 width = 100%
 height = 30
 ;offset-x = 1%
@@ -290,7 +276,7 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #f00
 
-wm-restack = bspwm
+; wm-restack = bspwm
 override-redirect = true
 
 ; Enable support for inter-process messaging
@@ -520,55 +506,6 @@ animation-charging-framerate = 750
 
 ################################################################################
 
-[module/wireless-network]
-;https://github.com/jaagr/polybar/wiki/Module:-network
-type = internal/network
-interface = wlp3s0
-interval = 3.0
-label-connected = %signal%%
-
-format-connected = <label-connected>
-;format-connected = <ramp-signal> <label-connected>
-format-connected-foreground = ${colors.foreground}
-format-connected-background = ${colors.background}
-format-connected-prefix = "  "
-format-connected-prefix-foreground = ${colors.foreground}
-format-connected-prefix-background = ${colors.background}
-format-connected-underline = ${colors.foreground-alt}
-
-label-disconnected = 
-label-disconnected-foreground = ${colors.alert}
-label-disconnected-background = ${colors.background}
-
-format-disconnected = <label-disconnected>
-format-disconnected-foreground = ${colors.alert}
-format-disconnected-background = ${colors.background}
-format-disconnected-prefix = "  "
-format-disconnected-prefix-foreground = ${colors.alert}
-format-disconnected-prefix-background = ${colors.background}
-format-disconnected-underline =${colors.alert}
-
-ramp-signal-0 = ▁
-ramp-signal-1 = ▂
-ramp-signal-2 = ▃
-ramp-signal-3 = ▄
-ramp-signal-4 = ▅
-ramp-signal-5 = ▆
-ramp-signal-6 = ▇
-ramp-signal-7 = █
-;ramp-signal-foreground = #7e52c6
-ramp-signal-0-foreground = ${colors.adapta-red}
-ramp-signal-1-foreground = ${colors.adapta-red}
-ramp-signal-2-foreground = ${colors.adapta-yellow}
-ramp-signal-3-foreground = ${colors.adapta-yellow}
-ramp-signal-4-foreground = ${colors.adapta-green}
-ramp-signal-5-foreground = ${colors.adapta-lightgreen}
-ramp-signal-6-foreground = ${colors.foreground}
-ramp-signal-7-foreground = ${colors.foreground}
-
-
-################################################################################
-
 [module/date]
 ;https://github.com/jaagr/polybar/wiki/Module:-date
 type = internal/date
@@ -789,58 +726,6 @@ format-online-background = ${colors.background}
 
 ################################################################################
 
-[module/pavolume]
-type = custom/script
-tail = true
-label = %output%
-exec = ~/.config/polybar/scripts/pavolume.sh --listen
-click-right = exec pavucontrol
-click-left = ~/.config/polybar/scripts/pavolume.sh --togmute
-scroll-up = ~/.config/polybar/scripts/pavolume.sh --up
-scroll-down = ~/.config/polybar/scripts/pavolume.sh --down
-;format-underline = #3EC13F
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-
-
-################################################################################
-
-# [module/volume]
-# ;https://github.com/jaagr/polybar/wiki/Module:-volume
-# type = internal/alsa
-# format-volume = "<label-volume>  <bar-volume>"
-# format-volume-underline = ${colors.foreground-alt}
-#
-# label-volume = " "
-# label-volume-foreground = ${colors.foreground}
-#
-# label-muted = muted
-#
-# bar-volume-width = 10
-# bar-volume-foreground-0 = ${colors.third}
-# bar-volume-foreground-1 = ${colors.third}
-# bar-volume-foreground-2 = ${colors.third}
-# bar-volume-foreground-3 = ${colors.third}
-# bar-volume-foreground-4 = ${colors.third}
-# bar-volume-foreground-5 = ${colors.third}
-# bar-volume-foreground-6 = ${colors.third}
-# bar-volume-gradient = false
-# bar-volume-indicator = ━
-# bar-volume-indicator-font = 2
-# bar-volume-fill = ━
-# bar-volume-fill-font = 2
-# bar-volume-empty = ━
-# bar-volume-empty-font = 2
-# bar-volume-empty-foreground = ${colors.foreground}
-# format-volume-foreground = ${colors.foreground}
-# format-volume-background = ${colors.background}
-# format-muted-prefix = "  "
-# format-muted-prefix-foreground = "#ff0000"
-# format-muted-foreground = ${colors.foreground}
-# format-muted-background = ${colors.background}
-
-################################################################################
-
 [module/weather]
 type = custom/script
 interval = 10
@@ -916,7 +801,6 @@ menu-0-2 = 
 menu-0-2-exec = betterlockscreen -l dimblur && sleep 1 && systemctl suspend
 menu-0-3 = 
 menu-0-3-exec = systemctl poweroff
-
 
 format-background = ${colors.background}
 format-foreground = ${colors.foreground}
