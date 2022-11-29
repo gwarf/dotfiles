@@ -44,7 +44,7 @@ run_once pasystray
 # Clipboard manager
 # anamnesis, clipman, copyq, gpaste could be alternatives
 run_once clipit
-
+#
 # Start urxvt daemon
 #urxvtd -q -f -o & urxvtdpid=$!
 #urxvtd -f -o
@@ -55,7 +55,7 @@ run_once firefox
 run_once redshift
 run_once redshift-gtk
 run_once keybase
-run_once rofi "-key mod1+tab -terminal kitty"
+# run_once rofi "-key mod1+tab -terminal kitty"
 
 # Disabled
 # run_once revelation \
