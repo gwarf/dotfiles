@@ -227,7 +227,7 @@ xsetroot -solid '#000000'
 xsetroot -cursor_name left_ptr &
 
 # Compositor
-picom --shadow-opactiy 0.25 &
+# picom --shadow-opactiy 0.25 &
 
 # Keyboard layout
 # setxkbmap -layout us
