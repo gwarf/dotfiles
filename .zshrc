@@ -223,7 +223,6 @@ zinit light junegunn/fzf
 # Completion for openstack, docker and terraform
 zinit wait'1' as"completion" lucid for \
   https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
-  https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/terraform/_terraform \
   https://gist.github.com/gwarf/a18dbeaa01d6cf14a95c31a1c7036f61/raw
 
 # tab completion using fzf
