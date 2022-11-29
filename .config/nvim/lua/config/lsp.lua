@@ -175,7 +175,7 @@ require("ltex-ls").setup({
         if files.default then
           for lang, _ in pairs(files) do
             if lang ~= "default" then
-              vim.list_extend(files[lang], files.default)
+              vim.list_extend(files[lang], files.default, 1, #files.default)
             end
           end
           files.default = nil
