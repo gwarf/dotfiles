@@ -11,7 +11,7 @@ run_once() {
   [ -z "$process_name" ] && process_name="$program"
 
   if [ -z "$program_arguments" ]; then
-    pgrep -f -u "$USER" -x "$process_name" || ( "$program" & )
+    pgrep -u "$USER" -x "$process_name" || ( "$program" & )
   else
     pgrep -f -u "$USER" -x "$process_name" || ( "$program" "$program_arguments" & )
   fi
@@ -46,8 +46,9 @@ run_once clipit
 run_once kitty
 run_once firefox
 run_once keybase
-run_once redshift
-run_once redshift-gtk
+run_once nextcloud --background
+# run_once redshift
+# run_once redshift-gtk
 
 # Disabled
 # run_once workrave
@@ -96,5 +97,4 @@ run_once redshift-gtk
 
 # Set wallpaper
 # run_once nitrogen "--restore"
-# run_once feh --bg-scale ~/.config/herbstluftwm/fantasy-landscape2.jpg
-run_once feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg
+feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg &
