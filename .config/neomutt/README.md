@@ -1,9 +1,10 @@
 # Requirements
 
-- neomutt
-- neovim / vim
+- mutt (neomutt not supporting background edit as of 2022-11-28)
+- neovim ❤️ / vim
 - mbsync (isync)
-- msmtp
+- msmtp / postfix
+- perl
 
 ## Setting up default profile
 
@@ -12,10 +13,10 @@
 $ ln -s ~/.config/neomutt/profile-maildir.egi ~/.config/neomutt/default-profile
 ```
 
-## Accessing documentation
+## Accessing neomutt documentation
 
-```sh
-neomutt -O -Q smart_wrap
+```shell
+$ neomutt -O -Q smart_wrap
 ```
 
 ## Fetching emails / IMAP sync
@@ -32,11 +33,11 @@ msmtp
 
 See http://wiki.netbsd.org/users/wiz/mutt-smime/
 
-```sh
-gpgsm --import TrustedRoot.crt
-gpgsm --import DigiCertCA.crt
-gpgsm --import baptiste_grenier_until_2021_02.p12
-gpgsm --list-keys
+```shell
+$ gpgsm --import TrustedRoot.crt
+$ gpgsm --import DigiCertCA.crt
+$ gpgsm --import baptiste_grenier_until_2021_02.p12
+$ gpgsm --list-keys
 ```
 
 ### On Mac OS X using mutt/neomutt smime_keyes feature
@@ -44,9 +45,20 @@ gpgsm --list-keys
 Initialize smime store
 
 ```sh
-/usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys init
+$ /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys init
 # Import DigiCert root
-/usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
+$ /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
 # Import certificate, key and DigiCert intermediate certificate
-/usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userkey.pem-new usercert.pem-new baptiste_grenier/DigiCertCA.crt
+$ /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userkey.pem-new usercert.pem-new baptiste_grenier/DigiCertCA.crt
+```
+
+## Perl modules for Notmuch
+
+It's possible to use [perlbrew](https://perlbrew.pl) to manage perl modules.
+
+
+```shell
+# For querying mails using notmuch
+$ cpanm Mail::Box::Maildir
+$ cpanm String::ShellQuote
 ```
