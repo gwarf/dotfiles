@@ -19,6 +19,18 @@ run_once() {
 ## OSD
 run_once dunst
 
+# Clipboard manager
+# anamnesis, clipman, copyq, gpaste could be alternatives
+run_once clipit
+
+# Misc
+run_once kitty
+run_once firefox
+run_once run_keybase
+run_once nextcloud --background
+# run_once redshift
+# run_once redshift-gtk
+
 # Disable offlineimap while testing a user systemd service + timer
 # pkill offlineimap || sleep 3 && offlineimap &
 #&& offlineimap-notify &> /tmp/offlineimap-log
@@ -36,18 +48,6 @@ run_once dunst
 
 # NetworkManager
 # run_once nm-applet
-
-# Clipboard manager
-# anamnesis, clipman, copyq, gpaste could be alternatives
-run_once clipit
-
-# Misc
-run_once kitty
-run_once firefox
-run_once keybase
-run_once nextcloud --background
-# run_once redshift
-# run_once redshift-gtk
 
 # Disabled
 # run_once workrave
@@ -99,4 +99,4 @@ run_once nextcloud --background
 feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg &
 
 # Compositor
-picom --shadow-opactiy 0.25 &
+# picom --shadow-opactiy 0.25 &
