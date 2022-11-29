@@ -1,2 +1,0 @@
-#!/bin/sh
-feh --no-fehbg --bg-fill '/home/baptiste/.config/herbstluftwm/fantasy-landscape2.jpg' 
