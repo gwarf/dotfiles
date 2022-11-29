@@ -11,8 +11,7 @@ run_once() {
   [ -z "$process_name" ] && process_name="$program"
 
   if [ -z "$program_arguments" ]; then
-    pgrep -u "$USER" -x "$process_name" || ( "$program" & )
-  else
+    pgrep -u "$USER" -x "$process_name" || ( "$program" & ) else
     pgrep -f -u "$USER" -x "$process_name" || ( "$program" "$program_arguments" & )
   fi
 }
@@ -98,3 +97,6 @@ run_once nextcloud --background
 # Set wallpaper
 # run_once nitrogen "--restore"
 feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg &
+
+# Compositor
+picom --shadow-opactiy 0.25 &

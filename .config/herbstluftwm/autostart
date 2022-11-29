@@ -226,9 +226,6 @@ xsetroot -solid '#000000'
 # xsetroot -solid '#222222'
 xsetroot -cursor_name left_ptr &
 
-# Compositor
-picom --shadow-opactiy 0.25 &
-
 # Keyboard layout
 # setxkbmap -layout us
 # Use right control as compose key
