@@ -82,13 +82,13 @@ tag_names=( {1..10} )
 tag_keys=( {1..9} 0 )
 
 hc rename default "${tag_names[0]}" || true
-for i in ${!tag_names[@]} ; do
+for i in "${!tag_names[@]}" ; do
     hc add "${tag_names[$i]}"
     # horizontal tiling as standard
     hc set_layout horizontal
     hc set default_frame_layout 1
     key="${tag_keys[$i]}"
-    if ! [ -z "$key" ] ; then
+    if [ -n "$key" ] ; then
         hc keybind "$Mod-$key" use_index "$i"
         hc keybind "$Mod-Shift-$key" chain , move_index "$i" , use_index "$i"
     fi
