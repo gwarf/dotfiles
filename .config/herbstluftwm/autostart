@@ -72,7 +72,7 @@ hc keybind $Mod-Shift-q close
 hc keybind $Mod-q close
 
 hc keybind $Mod-Return spawn "${TERMINAL:-kitty}" # use your $TERMINAL with xterm as fallback
-# hc keybind $Mod-m spawn rofi -show run
+hc keybind $Mod-m spawn rofi -show run -terminal "${TERMINAL:-kitty}"
 # Albert is launched and uses it's own key
 # hc keybind $Mod-m spawn albert
 
