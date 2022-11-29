@@ -6,10 +6,10 @@
 killall -q polybar
 
 # Wait until the processes have been shut down
-while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
+while pgrep -u "$(id -u)" -x polybar > /dev/null; do sleep 1; done
 
 for m in $(polybar --list-monitors | cut -d":" -f1); do
-  MONITOR=$m polybar --reload mainbar-herbstluftwm -c ~/.config/polybar/config3 &
+  MONITOR=$m polybar --reload mainbar -c ~/.config/polybar/config.ini &
   #MONITOR=$m polybar --reload primary -c ~/.config/polybar/config2 &
   #MONITOR=$m polybar --reload example -c ~/.config/polybar/config &
 done
