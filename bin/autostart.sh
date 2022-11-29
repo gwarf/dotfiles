@@ -81,3 +81,35 @@ run_once keybase
 #/usr/libexec/gnome-settings-daemon &
 #gnome-volume-manager &
 #x11vnc -ncache 10 -many -q -bg -rfbauth .vnc/passwd
+# run conky -c $HOME/.conkyrc &
+# albert &
+# run mpd &
+#run variety &
+# run nm-applet &
+#pamac-tray &
+# xinput set-prop 13 302 1 &
+# run redshift-gtk
+# run syncthing-gtk -m &
+#xfce4-power-manager &
+# run dunst &
+# numlockx on &
+# run blueberry-tray &
+#xfsettingsd &
+# nitrogen --restore &
+# caffeine &
+# vivaldi-stable &
+# firefox &
+# thunar &
+# dropbox &
+# run insync start &
+# discord &
+# spotify &
+# atom &
+# keybindings are in config of sxhkd - interchangeable with other TWM
+# run sxhkd -c $HOME/.config/herbstluftwm/sxhkd/sxhkdrc &
+# wal -i ~/.config/herbstluftwm/fantasy-landscape2.jpg
+# wal -nRa 90 &
+
+# Set wallpaper
+# feh --bg-scale ~/.config/herbstluftwm/fantasy-landscape2.jpg &
+$HOME/.fehbg &
