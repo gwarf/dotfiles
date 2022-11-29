@@ -139,13 +139,13 @@ return require("packer").startup(function(use)
   use("thirtythreeforty/lessspace.vim")
 
   -- Autopairs
-  use({
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      require("nvim-autopairs").setup({})
-    end,
-  })
+  -- use({
+  --   "windwp/nvim-autopairs",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("nvim-autopairs").setup({})
+  --   end,
+  -- })
 
   -- Easy change of surrounding stuff (tags, quotes...)
   -- :h nvim-surround.usage
@@ -203,19 +203,12 @@ return require("packer").startup(function(use)
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup({
-        indent_lines = true, -- add an indent guide below the fold icons
-        auto_open = false, -- automatically open the list when you have diagnostics
+        auto_open = true, -- automatically open the list when you have diagnostics
         auto_close = true, -- automatically close the list when you have no diagnostics
-        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-        auto_fold = false, -- automatically fold a file trouble list at creation
       })
       vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { silent = true, noremap = true })
     end,
   })
-
-  -- Lazy loading:
-  -- Load on specific commands
-  -- use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
 
   -- highlight, navigate, and operate on sets of matching text
   -- https://github.com/andymass/vim-matchup
@@ -235,7 +228,7 @@ return require("packer").startup(function(use)
     requires = "kevinhwang91/promise-async",
     config = function()
       require("ufo").setup({
-        provider_selector = function(bufnr, filetype, buftype)
+        provider_selector = function()
           return { "treesitter", "indent" }
         end,
       })
@@ -263,8 +256,8 @@ return require("packer").startup(function(use)
       { "p00f/nvim-ts-rainbow", event = "BufRead" },
       -- View treesitter information directly in Neovim!
       { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
-      -- Set commentstring option based on the cursor location in the file
-      -- "JoosepAlviste/nvim-ts-context-commentstring",
+      -- -- Set commentstring option based on the cursor location in the file
+      "JoosepAlviste/nvim-ts-context-commentstring",
       -- Use treesitter to autoclose and autorename html tag
       { "windwp/nvim-ts-autotag" },
     },
@@ -294,15 +287,6 @@ return require("packer").startup(function(use)
     "numToStr/Comment.nvim",
     config = function()
       require("Comment").setup()
-    end,
-  })
-
-  -- list and switch between buffers
-  use({
-    "akinsho/bufferline.nvim",
-    tag = "v3.*",
-    config = function()
-      require("bufferline").setup({})
     end,
   })
 
@@ -402,38 +386,13 @@ return require("packer").startup(function(use)
     end,
   })
 
-  -- UI, UX, look and fgeel good
+  -- list and switch between buffers
   use({
-    "Mofiqul/dracula.nvim",
-    as = "dracula",
-    -- "rafamadriz/neon", -- Looks quite nice
-    -- {'embark-theme/vim', as = 'embark'},
-    -- 'folke/tokyonight.nvim',
-    -- "andersevenrud/nordic.nvim",
-    -- "shaunsingh/nord.nvim",
-    -- "Th3Whit3Wolf/one-nvim",
-    -- "marko-cerovac/material.nvim",
-    -- 'navarasu/onedark.nvim',
+    "akinsho/bufferline.nvim",
+    tag = "v3.*",
     config = function()
-      require("dracula").setup({
-        -- show the '~' characters after the end of buffers
-        show_end_of_buffer = true, -- default false
-        -- set italic comment
-        italic_comment = true, -- default false
-      })
-      vim.cmd([[colorscheme dracula]])
+      require("bufferline").setup({})
     end,
-  })
-  -- status line
-  use({
-    "nvim-lualine/lualine.nvim",
-    after = "dracula",
-    config = function()
-      require("lualine").setup({
-        options = { theme = "dracula" },
-      })
-    end,
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
 
   -- Git support
@@ -450,6 +409,31 @@ return require("packer").startup(function(use)
     event = "BufRead",
   })
 
+  -- UI, UX, look and fgeel good
+  use({
+    -- status line
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      require("config.theme")
+    end,
+    requires = {
+      -- theme
+      -- XXX matching keywords and {[], are underlined, not very nice
+      -- "Mofiqul/dracula.nvim",
+      -- "rafamadriz/neon",
+      'folke/tokyonight.nvim',
+      -- "andersevenrud/nordic.nvim",
+      -- "shaunsingh/nord.nvim",
+      -- "Th3Whit3Wolf/one-nvim",
+      -- "marko-cerovac/material.nvim",
+      -- 'navarasu/onedark.nvim',
+      -- {'embark-theme/vim', as = 'embark'},
+      -- icons
+      "kyazdani42/nvim-web-devicons",
+      opt = true,
+    },
+  })
+
   -- Add indentation guides to all lines
   use({ "lukas-reineke/indent-blankline.nvim" })
   -- Neovim plugin to improve the default vim.ui interfaces
@@ -459,6 +443,7 @@ return require("packer").startup(function(use)
       require("dressing").setup({})
     end,
   })
+
   -- Notifications, Messages, cmdline, pop up menu
   use({
     "folke/noice.nvim",
@@ -492,7 +477,7 @@ return require("packer").startup(function(use)
     "rcarriga/nvim-notify",
     tag = "v3.*",
   })
-  -- use 'vigoux/notifier.nvim'
+
   -- a fast and fully programmable greeter for neovim.
   use({
     "goolord/alpha-nvim",
