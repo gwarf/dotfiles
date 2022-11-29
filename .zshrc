@@ -354,6 +354,10 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 # https://github.com/kiurchv/asdf.plugin.zsh
 # zplug "kiurchv/asdf.plugin.zsh", defer:2
 
+# Perlbrew
+zinit ice wait"1" lucid
+zinit light tfiala/zsh-perlbrew
+
 # GPG management
 zinit ice wait"1" lucid
 zinit light laggardkernel/zsh-gpg-agent
