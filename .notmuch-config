@@ -10,8 +10,9 @@
 # Notmuch will store its database within a sub-directory of the path
 # configured here named ".notmuch".
 #
+
 [database]
-path=/home/baptiste/Mail
+path=Mail
 
 # User configuration
 #
@@ -28,10 +29,10 @@ path=/home/baptiste/Mail
 # recipient list of replies, and will set the From address based on the
 # address to which the original email was addressed.
 #
+
 [user]
 name=Baptiste Grenier
 primary_email=baptiste.grenier@egi.eu
-other_email=baptiste@bapt.name;bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.org;baptiste.grenier@healthgrid.org;baptiste.grenier@gmail.com;gwarf12@hotmail.com;bgrenier@maatg.fr;bgrenier@gnubila.fr
 
 # Configuration for "notmuch new"
 #
@@ -47,6 +48,7 @@ other_email=baptiste@bapt.name;bgrenier@maatg.com;gwarf12@gmail.com;gwarf@gwarf.
 #		names will be ignored, independent of its depth/location
 #		in the mail store.
 #
+
 [new]
 # For afew only set new (was inbox;unread)
 tags=new
@@ -61,6 +63,7 @@ ignore=
 #		search results by default.  Using an excluded tag in a
 #		query will override that exclusion.
 #
+
 [search]
 exclude_tags=deleted;spam;trash;
 
@@ -85,6 +88,7 @@ exclude_tags=deleted;spam;trash;
 #	and update tags, while the "notmuch tag" and "notmuch restore"
 #	commands will notice tag changes and update flags in filenames
 #
+
 [maildir]
 synchronize_flags=true
 
@@ -103,6 +107,7 @@ synchronize_flags=true
 # http://notmuchmail.org/vimtips/
 # <c-x><c-u> in a header field
 # notmuch_abook lookup baptiste
+
 [addressbook]
-path=/home/baptiste/.notmuch-abook.db
+path=~/.notmuch-abook.db
 backend=sqlite3
