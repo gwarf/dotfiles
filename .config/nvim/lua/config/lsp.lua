@@ -37,24 +37,42 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_pub
   update_in_insert = true,
 })
 
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
 -- To be used to display LSP diagnostic window details when on an error
 local on_attach = function(client, bufnr)
-  -- turn off formatting for some lsp, to use the ones from null-ls
-  if client.name == "pyright" or client.name == "jsonls" then
-    client.server_capabilities.document_formatting = false
-    client.server_capabilities.document_range_formatting = false
-  end
-
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- Mappings.
+  -- wrapper for creating mappings
   local map = function(mode, l, r, opts)
     opts = opts or {}
     opts.silent = true
     opts.buffer = bufnr
     keymap.set(mode, l, r, opts)
   end
+
+  -- turn off formatting for some lsp, to use the ones from null-ls
+  if client.name == "pyright" or client.name == "jsonls" then
+    client.server_capabilities.document_formatting = false
+    client.server_capabilities.document_range_formatting = false
+  end
+
+  -- XXX may be better disabled due to some issues with default conf for yaml/ansible formatting
+  -- format file on save
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+        vim.lsp.buf.format({ bufnr = bufnr })
+      end,
+    })
+  end
+
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+  -- Mappings.
 
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
   map("n", "K", lsp.buf.hover, { desc = "Hover" })
@@ -79,9 +97,8 @@ local on_attach = function(client, bufnr)
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if
-        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-        and #diagnostic.get() > 0
+      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+          and #diagnostic.get() > 0
       then
         diagnostic.open_float(nil, float_opts)
       end
@@ -127,7 +144,7 @@ end
 -- merge the defaults lspconfig provides with the capabilities nvim-cmp adds
 local lsp_defaults = lspconfig.util.default_config
 lsp_defaults.capabilities =
-  vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
@@ -154,7 +171,7 @@ require("ltex-ls").setup({
     ltex = {
       checkFrequency = "save",
       enabled = { "latex", "tex", "bib", "markdown" },
-      language = "auto",
+      language = "en-GB",
       diagnosticSeverity = "information",
       additionalRules = {
         enablePickyRules = true,
@@ -253,13 +270,16 @@ lspconfig["pyright"].setup({
   },
 })
 
--- null_ls, special language servber allowing to use many tools
+-- null_ls, special language server allowing to use many tools
 -- https://smarttech101.com/nvim-lsp-set-up-null-ls-for-beginners/
 -- https://github.com/Clumsy-Coder/dotfiles/commit/e81edc159f3fc9ef189e0300d280461e75732a4b
--- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 -- Available builtins: https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
--- Check if package is available using :echo executable("shfmt")
+-- XXX gq is broken for markdown files. gw is working
+-- prettier is not able to do range formatting with markdown
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1131
 null_ls.setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
   sources = {
     -- code actions
     null_ls.builtins.code_actions.gitsigns,
@@ -267,7 +287,16 @@ null_ls.setup({
     -- formatters
     null_ls.builtins.formatting.isort,
     null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettier.with({
+      extra_args = {
+        "--print-width",
+        "80",
+        "--prose-wrap",
+        "always",
+        "--tab-width",
+        "2",
+      },
+    }),
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.beautysh,
     null_ls.builtins.formatting.stylua.with({
@@ -297,20 +326,4 @@ null_ls.setup({
     null_ls.builtins.hover.dictionary, -- dictionary
   },
   diagnostics_format = "[#{c}] #{m} (#{s})",
-  -- XXX disabled due to some issues with default conf for yaml/ansible formatting
-  -- format file on save
-  -- you can reuse a shared lspconfig on_attach callback here
-  -- on_attach = function(client, bufnr)
-  --   if client.supports_method("textDocument/formatting") then
-  --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-  --     vim.api.nvim_create_autocmd("BufWritePre", {
-  --       group = augroup,
-  --       buffer = bufnr,
-  --       callback = function()
-  --         -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-  --         vim.lsp.buf.format({ bufnr = bufnr })
-  --       end,
-  --     })
-  --   end
-  -- end,
 })
