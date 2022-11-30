@@ -109,6 +109,8 @@ return require("packer").startup(function(use)
       "williamboman/mason-lspconfig.nvim",
       -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
       -- Use different binaries as sources, like prettier
+      -- XXX null-ls is breaking gq mapping
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1131
       "jose-elias-alvarez/null-ls.nvim",
       -- Using ltex-ls for spellchecking
       "vigoux/ltex-ls.nvim",
@@ -126,26 +128,17 @@ return require("packer").startup(function(use)
     ft = "mail",
   })
 
-  -- displays a popup with possible key bindings
-  -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/which-key.lua
-  use({
-    "folke/which-key.nvim",
-    config = function()
-      require("config.which-key")
-    end,
-  })
-
   -- Clean spaces at EOL for lines that are edited
   use("thirtythreeforty/lessspace.vim")
 
-  -- Autopairs
-  -- use({
-  --   "windwp/nvim-autopairs",
-  --   event = "InsertEnter",
-  --   config = function()
-  --     require("nvim-autopairs").setup({})
-  --   end,
-  -- })
+  -- Autopairs characters
+  use({
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup({})
+    end,
+  })
 
   -- Easy change of surrounding stuff (tags, quotes...)
   -- :h nvim-surround.usage
@@ -295,10 +288,9 @@ return require("packer").startup(function(use)
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup({
-        silent_chdir = true,
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
+        -- :ProjectRoot is required to switch project
+        manual_mode = true,
+        silent_chdir = false,
       })
       require("telescope").load_extension("projects")
       vim.keymap.set("n", "<c-p>", "<cmd>:lua require('telescope').extensions.projects.projects{}<cr>", {})
@@ -410,6 +402,16 @@ return require("packer").startup(function(use)
   })
 
   -- UI, UX, look and fgeel good
+
+  -- displays a popup with possible key bindings
+  -- https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/which-key.lua
+  use({
+    "folke/which-key.nvim",
+    config = function()
+      require("config.which-key")
+    end,
+  })
+
   use({
     -- status line
     "nvim-lualine/lualine.nvim",
@@ -421,7 +423,7 @@ return require("packer").startup(function(use)
       -- XXX matching keywords and {[], are underlined, not very nice
       -- "Mofiqul/dracula.nvim",
       -- "rafamadriz/neon",
-      'folke/tokyonight.nvim',
+      "folke/tokyonight.nvim",
       -- "andersevenrud/nordic.nvim",
       -- "shaunsingh/nord.nvim",
       -- "Th3Whit3Wolf/one-nvim",
