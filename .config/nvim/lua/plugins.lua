@@ -465,6 +465,7 @@ return require("packer").startup(function(use)
   -- Notifications, Messages, cmdline, pop up menu
   use({
     "folke/noice.nvim",
+    tag = "v1.*",
     config = function()
       require("noice").setup({
         lsp = {
