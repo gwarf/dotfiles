@@ -167,6 +167,7 @@ return require("packer").startup(function(use)
 
   -- Use :Telescope
   -- https://alpha2phi.medium.com/neovim-for-beginners-fuzzy-file-search-part-2-2aab95fe8cfe
+  -- XXX Consider https://github.com/nvim-telescope/telescope-frecency.nvim
   use({
     "nvim-telescope/telescope.nvim",
     config = function()
