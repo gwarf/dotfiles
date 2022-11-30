@@ -176,8 +176,20 @@ return require("packer").startup(function(use)
       telescope.setup({
         defaults = {
           mappings = {
+            -- XXX to be removed if not used
             i = { ["<c-t>"] = trouble.open_with_trouble },
             n = { ["<c-t>"] = trouble.open_with_trouble },
+          },
+        },
+        pickers = {
+          find_files = {
+            theme = "dropdown",
+          },
+          live_grep = {
+            theme = "dropdown",
+          },
+          oldfiles = {
+            theme = "dropdown",
           },
         },
         extensions = {
@@ -365,7 +377,10 @@ return require("packer").startup(function(use)
   use({
     "Shatur/neovim-session-manager",
     config = function()
-      require("session_manager").setup({})
+      require("session_manager").setup({
+        -- Do not autoload previous session
+        autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
+      })
       local config_group = vim.api.nvim_create_augroup("MyConfigGroup", {}) -- A global group for all your config autocommands
 
       vim.api.nvim_create_autocmd({ "User" }, {
@@ -485,9 +500,24 @@ return require("packer").startup(function(use)
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = function()
-      -- startify, dashboard
-      -- XXX shortcuts are not aligned with dashboard theme
-      require("alpha").setup(require("alpha.themes.startify").config)
+      local alpha = require("alpha")
+      local dashboard = require("alpha.themes.dashboard")
+      dashboard.section.buttons.val = {
+        dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+        dashboard.button("SPC s f", "  Find file"),
+        dashboard.button("SPC s r", "  Recently opened files"),
+        dashboard.button("SPC s t", "  Find text"),
+        dashboard.button("SPC s p", "  Jump to project"),
+        dashboard.button("SPC s s", "  Find old sessions"),
+      }
+      local handle = io.popen("fortune")
+      local fortune = handle:read("*a")
+      handle:close()
+      dashboard.section.footer.val = fortune
+      dashboard.config.opts.noautocmd = true
+      vim.cmd([[autocmd User AlphaReady echo 'ready']])
+      alpha.setup(dashboard.config)
     end,
   })
 
