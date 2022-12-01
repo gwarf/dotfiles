@@ -97,8 +97,9 @@ local on_attach = function(client, bufnr)
       end
 
       local cursor_pos = api.nvim_win_get_cursor(0)
-      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
-          and #diagnostic.get() > 0
+      if
+        (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2])
+        and #diagnostic.get() > 0
       then
         diagnostic.open_float(nil, float_opts)
       end
@@ -144,7 +145,7 @@ end
 -- merge the defaults lspconfig provides with the capabilities nvim-cmp adds
 local lsp_defaults = lspconfig.util.default_config
 lsp_defaults.capabilities =
-vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+  vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
@@ -179,26 +180,10 @@ require("ltex-ls").setup({
       },
       disabledRules = {
         en = { "TOO_LONG_SENTENCE" },
+        ["en-GB"] = { "TOO_LONG_SENTENCE", "OXFORD_SPELLING_Z_NOT_S" },
         fr = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
       },
-      dictionary = (function()
-        local files = {}
-        for _, file in ipairs(vim.api.nvim_get_runtime_file("spell/*.add", true)) do
-          local lang = vim.fn.fnamemodify(file, ":t:r:r") -- Because 'spellfile' is .{encoding}.add
-          local fullpath = vim.fs.normalize(file, ":p")
-          files[lang] = { ":" .. fullpath }
-        end
-
-        if files.default then
-          for lang, _ in pairs(files) do
-            if lang ~= "default" then
-              vim.list_extend(files[lang], files.default, 1, #files.default)
-            end
-          end
-          files.default = nil
-        end
-        return files
-      end)(),
+      dictionary = { ["en-GB"] = { ":" .. fn.stdpath("config") .. "/words.txt" } },
     },
   },
 })
