@@ -14,12 +14,8 @@ local keymap = vim.keymap
 local opt = vim.opt
 
 -- Missing {{{
--- * Spell: check using ltex, allowing to add exception to a custom file
--- * Keymaps: Look for possibly duplicated keymaps
--- * Keympas: manage all mappings centrally
+-- * Keymaps: Fix all duplicated keymaps
 -- * Test Neorg: https://github.com/nvim-neorg/neorg
--- * Fix treesitter usage
--- * LSP: show attributes list when adding parameters in a function call
 -- * mutt/mail setup:
 --   * Completion from address from khard
 --   * https://opensource.com/article/20/1/vim-email-calendar
