@@ -89,8 +89,10 @@ local mappings = {
       "Undo Stage Hunk",
     },
     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-    b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-    c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
+    -- XXX conflicts with <Plug>(comment_toggle_blockwise)
+    -- b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    -- XXX conflicts with <Plug>(comment_toggle_linewise)
+    -- c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
     C = {
       -- Need to add something for trouble
       "<cmd>Telescope git_bcommits<cr>",
@@ -122,11 +124,12 @@ local mappings = {
     q = { vim.diagnostic.setloclist, "Quickfix" },
     r = { vim.lsp.buf.rename, "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-      w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-    },
+    -- XXX Conflicting keymap
+    -- S = {
+    --   "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+    --   "Workspace Symbols",
+    --   w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+    -- },
   },
   -- Logs
   L = {
@@ -187,21 +190,17 @@ local mappings = {
     },
     y = { "<cmd>Telescope yank_history<cr>", "Yank history" },
   },
-  -- Trouble
+  -- Trouble + treesitter to avoid conflicting keymap on T
   t = {
-    name = "Trouble",
+    name = "Troubleshoot document",
     d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document diagnostics" },
+    i = { "<cmd>TSConfigInfo<cr>", "Info about Treesitter" },
     l = { "<cmd>TroubleToggle loclist<cr>", "Toogle loclist" },
-    o = { "<cmd>TroubleToggle<cr>", "Toogle window" },
+    o = { "<cmd>TroubleToggle<cr>", "Toogle Trouble" },
+    p = { "<cmd>TSConfigInfo<cr>", "Treesitter Playground" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "Toogle quickfix" },
     t = { "<cmd>TroubleToggle lsp_references<cr>", "Toogle LSP references" },
     w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace diagnostics" },
-  },
-  -- Treesitter
-  T = {
-    name = "Treesitter",
-    p = { "<cmd>TSConfigInfo<cr>", "Playground" },
-    i = { "<cmd>TSConfigInfo<cr>", "Info" },
   },
 }
 
