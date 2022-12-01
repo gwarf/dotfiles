@@ -129,7 +129,13 @@ return require("packer").startup(function(use)
   })
 
   -- Clean spaces at EOL for lines that are edited
-  use("thirtythreeforty/lessspace.vim")
+  -- XXX try to find a lua-powered alternative
+  use({
+    "thirtythreeforty/lessspace.vim",
+    config = function()
+      vim.g.lessspace_blacklist = { "diff", "mail" }
+    end,
+  })
 
   -- Autopairs characters
   use({
@@ -209,8 +215,9 @@ return require("packer").startup(function(use)
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup({
-        auto_open = true, -- automatically open the list when you have diagnostics
-        auto_close = true, -- automatically close the list when you have no diagnostics
+        -- XXX currently disabled, causing too many errors
+        auto_open = false, -- automatically open the list when you have diagnostics
+        auto_close = false, -- automatically close the list when you have no diagnostics
       })
       vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { silent = true, noremap = true })
     end,
