@@ -31,7 +31,7 @@
   {
     # `nix-darwin` configs
     darwinConfigurations = rec {
-      work = darwinSystem {
+      Baptistes-MBP = darwinSystem {
         system = "x86_64-darwin";
         modules = [
           # Main `nix-darwin` config
