@@ -18,6 +18,7 @@
 *.autosave
 *.status
 *_history
+*.swp
 *~
 .*/cache/
 .dotfiles/
