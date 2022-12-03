@@ -33,6 +33,7 @@
     bat
     exa
     du-dust
+    thefuck
 
     # Dev stuff
     jq
