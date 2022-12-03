@@ -30,6 +30,9 @@
     mutt
     fortune
     tmux
+    bat
+    exa
+    du-dust
 
     # Dev stuff
     jq
@@ -37,6 +40,7 @@
 
     # Useful graphical tools
     firefox
+    keybase
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
