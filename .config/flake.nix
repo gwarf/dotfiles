@@ -20,10 +20,11 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # flake-utils
-    flake-utils.url = "github:numtide/flake-utils";
+    # flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, flake-utils, ... }@inputs:
+  # outputs = { self, darwin, nixpkgs, home-manager, flake-utils, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
   let
 
     inherit (darwin.lib) darwinSystem;
@@ -44,12 +45,12 @@
     # }
 
     # `nixos` configs
-    nixosConfigurations = rec {
-      brutal = nixpkgs.lib.nixosSystem {
+    nixosConfigurations = {
+      brutal = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Main config
-          ./configuration.nix
+          ./configuration-brutal.nix
 
           # `home-manager` module
           home-manager.nixosModules.home-manager
@@ -61,6 +62,7 @@
             home-manager.users.baptiste = import ./home.nix;
           }
         ];
+	specialArgs = { inherit inputs; };
       };
     };
 
