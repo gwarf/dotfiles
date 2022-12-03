@@ -30,23 +30,23 @@
 
   # Change the style of italic font variants
   programs.kitty.extraConfig = ''
-    font_features PragmataProMonoLiga-Italic +ss06
-    font_features PragmataProMonoLiga-BoldItalic +ss07
+    # font_features PragmataProMonoLiga-Italic +ss06
+    # font_features PragmataProMonoLiga-BoldItalic +ss07
     modify_font underline_thickness 400%
     modify_font underline_position 2
   '';
 
-  # programs.kitty.extras.useSymbolsFromNerdFont = "JetBrainsMono Nerd Font";
+  programs.kitty.extras.useSymbolsFromNerdFont = "JetBrainsMono Nerd Font";
   # }}}
 
   # Colors config ------------------------------------------------------------------------------ {{{
-  # programs.kitty.extras.colors = {
-  #   enable = true;
+  programs.kitty.extras.colors = {
+    enable = true;
 
-  #   # Background dependent colors
-  #   dark = config.colors.solarized-dark.pkgThemes.kitty;
-  #   light = config.colors.solarized-light.pkgThemes.kitty;
-  # };
+    # Background dependent colors
+    dark = config.colors.solarized-dark.pkgThemes.kitty;
+    light = config.colors.solarized-light.pkgThemes.kitty;
+  };
 
   programs.fish.functions.set-term-colors = {
     body = "term-background $term_background";
