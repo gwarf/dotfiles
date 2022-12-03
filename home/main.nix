@@ -1,11 +1,9 @@
-## Todo
-# - zsh as default shell
-# - zsh config
+## TODO
 # - keybase
 # - nextcloud
 # - i3 config: minimal: cpu temp in bar
-# - firefox: disable password saving
 # - access email (mutt, isync, notmuch)
+# - firefox: disable password saving
 { config, pkgs, lib, ... }:
 
 {
@@ -52,6 +50,8 @@
     xz
     dracula-theme
     tree
+    keybase
+    nextcloud-client
 
     # Dev stuff
     jq
