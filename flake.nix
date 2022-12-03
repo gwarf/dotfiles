@@ -20,6 +20,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # flake-utils
     # flake-utils.url = "github:numtide/flake-utils";
+
+    # Colors for various apps
+    # XXX errors when trying to use
+    # nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
@@ -60,6 +64,8 @@
 
      # Custom modules from gh:malob
      colors = import ./modules/home/colors;
+     # https://github.com/RichardYan314/dotfiles-nix/tree/c18de97ad9e7ae1ff46c806be2f0f91c43d5956e/users/colorschemes
+     colorscheme = import ./modules/home/colorschemes;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      home-user-info = { lib, ... }: {
@@ -96,11 +102,10 @@
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
            };
+           # extraSpecialArgs = { inherit nix-colors; };
           }
         ];
-        # inherit homeStateVersion;
-        # homeModules = attrValues self.homeManagerModules;
-	specialArgs = { inherit inputs; };
+	      specialArgs = { inherit inputs; };
       };
     };
 

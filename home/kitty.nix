@@ -1,13 +1,21 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, colorscheme, ... }:
 
 {
+  # For colors
+  # imports = [
+  #   nix-colors.homeManagerModule
+  # ];
+
   # Kitty terminal
   # https://sw.kovidgoyal.net/kitty/conf.html
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.kitty.enable
   programs.kitty.enable = true;
 
-  # General config ----------------------------------------------------------------------------- {{{
+  # Colors config ------------------------------------------------------------------------------ {{{
+  # colorScheme = nix-colors.colorSchemes.dracula;
+  # }}}
 
+  # General config ----------------------------------------------------------------------------- {{{
   programs.kitty.settings = {
     font_family = "Cascadia Code PL";
     font_size = "14.0";
@@ -25,12 +33,32 @@
     active_tab_font_style = "bold";
     inactive_tab_font_style = "normal";
     tab_activity_symbol = "";
+
+    # Colors
+    # foreground = "#${config.colorScheme.colors.base05}";
+    # background = "#${config.colorScheme.colors.base00}";
+    foreground = "${colorscheme.fg-primary}";
+    background = "${colorscheme.bg-primary}";
+    color0 = "${colorscheme.black}";
+    color1 = "${colorscheme.red}";
+    color2 = "${colorscheme.green}";
+    color3 = "${colorscheme.yellow}";
+    color4 = "${colorscheme.blue}";
+    color5 = "${colorscheme.magenta}";
+    color6 = "${colorscheme.cyan}";
+    color7 = "${colorscheme.white}";
+    color8 = "${colorscheme.bright-black}";
+    color9 = "${colorscheme.bright-red}";
+    color10 = "${colorscheme.bright-green}";
+    color11 = "${colorscheme.bright-yellow}";
+    color12 = "${colorscheme.bright-blue}";
+    color13 = "${colorscheme.bright-magenta}";
+    color14 = "${colorscheme.bright-cyan}";
+    color15 = "${colorscheme.bright-white}";
   };
 
   # Change the style of italic font variants
   programs.kitty.extraConfig = ''
-    # font_features PragmataProMonoLiga-Italic +ss06
-    # font_features PragmataProMonoLiga-BoldItalic +ss07
     modify_font underline_thickness 400%
     modify_font underline_position 2
   '';
@@ -38,23 +66,5 @@
   programs.kitty.extras.useSymbolsFromNerdFont = "JetBrainsMono Nerd Font";
   # }}}
 
-  # Colors config ------------------------------------------------------------------------------ {{{
-  programs.kitty.extras.colors = {
-    enable = true;
-
-    # Background dependent colors
-    dark = config.colors.solarized-dark.pkgThemes.kitty;
-    light = config.colors.solarized-light.pkgThemes.kitty;
-  };
-
-  programs.fish.functions.set-term-colors = {
-    body = "term-background $term_background";
-    onVariable = "term_background";
-  };
-  programs.fish.interactiveShellInit = ''
-    # Set term colors based on value of `$term_backdround` when shell starts up.
-    set-term-colors
-  '';
-  # }}}
 }
 # vim: foldmethod=marker
