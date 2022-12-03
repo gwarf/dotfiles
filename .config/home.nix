@@ -1,8 +1,15 @@
 { config, pkgs, lib, ... }:
 
 {
-  # XXX may be needed, but added fo flake.nix
   home.stateVersion = "22.11";
+
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  # home.username = "baptiste";
+  # home.homeDirectory = "/home/baptiste";
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   # Direnv, load and unload environment variables depending on the current directory.
   # https://direnv.net
@@ -17,20 +24,24 @@
 
   home.packages = with pkgs; [
     # Some basics
+    # XXX may be specific to darwin
     coreutils
     curl
     wget
+    neovim
+    gnupg
+    mutt
+
+    # Cool stuff
+    fortune
 
     # Dev stuff
-    # (agda.withPackages (p: [ p.standard-library ]))
     jq
-    nodejs
+    # nodejs
 
-    # Useful nix related tools
-    # cachix # adding/managing alternative binary caches hosted by Cachix
-    # comma # run software from without installing it
-    # niv # easy dependency management for nix projects
-    # nodePackages.node2nix
+    # Useful graphical tools
+    firefox
+    kitty
 
   ] ++ lib.optionals stdenv.isDarwin [
     # cocoapods
