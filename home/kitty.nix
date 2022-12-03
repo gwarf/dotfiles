@@ -48,10 +48,11 @@
   #   light = config.colors.solarized-light.pkgThemes.kitty;
   # };
 
-  # programs.fish.functions.set-term-colors = {
-  #   body = "term-background $term_background";
-  #   onVariable = "term_background";
-  # };
+  programs.fish.functions.set-term-colors = {
+    body = "term-background $term_background";
+    onVariable = "term_background";
+  };
+
   # programs.fish.interactiveShellInit = ''
   #   # Set term colors based on value of `$term_backdround` when shell starts up.
   #   set-term-colors
