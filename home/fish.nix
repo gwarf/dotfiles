@@ -11,7 +11,7 @@ in
   programs.fish.enable = true;
 
   # Add Fish plugins
-  home.packages = [ pkgs.fishPlugins.done ];
+  home.packages = [ pkgs.fishPlugins.done pkgs.sqlite ];
 
   # Fish configuration ------------------------------------------------------------------------- {{{
 
@@ -83,7 +83,7 @@ in
     set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate solarized-$term_background)
 
     # Use correct theme for `bat`.
-    set -xg BAT_THEME "Solarized dark"
+    set -xg BAT_THEME "Solarized (dark)"
   '';
   # }}}
 }
