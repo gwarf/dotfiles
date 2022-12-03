@@ -20,10 +20,11 @@ nix build ".#nixosConfigurations.brutal.config.system.build.toplevel"
 sudo result/bin/switch-to-configuration switch
 # XXX not working
 # nix build ".#nixosConfigurations.brutal.system"
-# XXX not needed?
-# nixos-rebuild build --flake '.#brutal'
-home-manager switch
 ```
+
+## Searching for a package
+
+https://search.nixos.org/packages
 
 ## References
 
@@ -32,6 +33,8 @@ home-manager switch
 https://github.com/gvolpe/nix-config
 https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
 https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
+https://github.com/wvhulle/nixosConfigurations
+https://github.com/ArdanaLabs/ArdanaTenant
 
 ### Home manager
 
