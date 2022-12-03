@@ -45,6 +45,7 @@
   in
   {
    systemModules = {
+     my-bootstrap = import ./modules/system/bootstrap.nix;
      users-primaryUser = import ./modules/system/users.nix;
    };
    homeManagerModules = {
