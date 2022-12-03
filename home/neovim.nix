@@ -153,7 +153,8 @@ in
     { use = vim-polyglot; config = requireConf vim-polyglot; }
 
     # Editor behavior
-    { use = comment-nvim; config = "require'comment'.setup()"; }
+    # Apparently broken
+    # { use = comment-nvim; config = "require'comment'.setup()"; }
     { use = editorconfig-vim; setup = "vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*' }"; }
     { use = tabular; vscode = true; }
     { use = vim-surround; vscode = true; }
