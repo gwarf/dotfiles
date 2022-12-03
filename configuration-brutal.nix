@@ -8,8 +8,8 @@
 
   # Use system-boot
   boot.loader.systemd-boot.enable = true;
-  # boot.loader.systemd-boot.consoleMode = "max";
-  boot.loader.systemd-boot.consoleMode = "keep";
+  boot.loader.systemd-boot.consoleMode = "max";
+  # boot.loader.systemd-boot.consoleMode = "keep";
   networking.hostName = "brutal"; # Define your hostname.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
@@ -23,9 +23,7 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
   services.xserver.windowManager.i3.enable = true;
   # services.xserver.windowManager.herbstluftwm.enable = true;
   services.xserver.displayManager.defaultSession = "none+i3";
@@ -125,12 +123,6 @@
     wget
   ];
 
-  # https://github.com/nix-community/home-manager/issues/423
-  # environment.variables = {
-  #   TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
-  # };
-  # programs.nix-index.enable = true;
-
   # Fonts
   fonts.fontDir.enable = true;
   # https://github.com/lightdiscord/nix-nerd-fonts-overlay
@@ -143,7 +135,4 @@
   # Keyboard
   # system.keyboard.enableKeyMapping = true;
   # system.keyboard.remapCapsLockToEscape = true;
-
-  # Add ability to used TouchID for sudo authentication
-  # security.pam.enableSudoTouchIdAuth = true;
 }
