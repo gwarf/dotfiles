@@ -3,7 +3,6 @@
 # - nextcloud
 # - i3 config: minimal: cpu temp in bar
 # - access email (mutt, isync, notmuch)
-# - firefox: disable password saving
 { config, pkgs, lib, ... }:
 
 {
