@@ -1,5 +1,4 @@
 ## Todo
-# - kitty config
 # - neovim config: minimal: colors for nix
 # - zsh as default shell
 # - zsh config
@@ -37,7 +36,6 @@
     # Some basics
     curl
     wget
-    neovim
     gnupg
     mutt
 
