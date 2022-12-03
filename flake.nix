@@ -36,20 +36,30 @@
       config = { allowUnfree = true; };
     };
 
-     primaryUserDefaults = {
-        username = "baptiste";
-        fullName = "Baptiste Grenier";
-        email = "baptiste@bapt.name";
-        nixConfigDirectory = "/home/baptiste/repos/dotfiles/";
-      };
+    primaryUserDefaults = {
+       username = "baptiste";
+       fullName = "Baptiste Grenier";
+       email = "baptiste@bapt.name";
+       nixConfigDirectory = "/home/baptiste/repos/dotfiles/";
+     };
   in
   {
+   systemModules = {
+     users-primaryUser = import ./modules/system/users.nix;
+   };
    homeManagerModules = {
      # https://github.com/malob/nixpkgs
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
+     my-neovim = import ./home/neovim.nix;
      my-main = import ./home.nix;
+
+     # Custom modules from gh:malob
      colors = import ./modules/home/colors;
+     programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
+     home-user-info = { lib, ... }: {
+          options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
+        };
    };
     # `home-manager` configs, for systems not running Nix OS
     # homemManagerConfigurations = {
