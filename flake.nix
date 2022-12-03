@@ -57,6 +57,7 @@
      # Custom modules from gh:malob
      colors = import ./modules/home/colors;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
+     programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      home-user-info = { lib, ... }: {
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
@@ -87,6 +88,11 @@
             home-manager.useUserPackages = true;
             home-manager.users.baptiste = {
              imports = attrValues self.homeManagerModules;
+             home.stateVersion = homeStateVersion;
+             home.user-info = primaryUserDefaults;
+             # home.user-info = { lib, ... }: {
+             #    options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
+             # };
            };
           }
         ];
