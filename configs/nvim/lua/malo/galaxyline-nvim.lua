@@ -36,7 +36,7 @@ gl.section.left = {
     FileIcon = {
       condition = condition.buffer_not_empty,
       provider = function ()
-        vim.cmd('hi GalaxyFileIcon guifg='..require'galaxyline.providers.fileinfo'.get_file_icon_color()..' guibg='..require'lush_theme.malo'.StatusLine.bg.hex)
+        vim.cmd('hi GalaxyFileIcon guifg='..require'galaxyline.providers.fileinfo'.get_file_icon_color()..' guibg=#1f2335')
         return require'galaxyline.providers.fileinfo'.get_file_icon() .. ' '
       end,
       highlight = {},

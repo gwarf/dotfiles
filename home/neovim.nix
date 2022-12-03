@@ -91,8 +91,9 @@ in
   # Put neovim configuration located in this repository into place in a way that edits to the
   # configuration don't require rebuilding the `home-manager` environment to take effect.
   xdg.configFile."nvim/lua".source = mkOutOfStoreSymlink "${nixConfigDirectory}/configs/nvim/lua";
-  xdg.configFile."nvim/colors".source =
-    mkOutOfStoreSymlink "${nixConfigDirectory}/configs/nvim/colors";
+  # xdg.configFile."nvim/lua".source = mkOutOfStoreSymlink "${nixConfigDirectory}/.config/nvim/lua";
+  # xdg.configFile."nvim/colors".source =
+  #   mkOutOfStoreSymlink "${nixConfigDirectory}/configs/nvim/colors";
 
   # Load the `init` module from the above configs
   programs.neovim.extraConfig = "lua require('init')";
@@ -110,7 +111,7 @@ in
       deps = [ nvim-web-devicons scope-nvim ];
       config = requireConf bufferline-nvim;
     }
-    { use = galaxyline-nvim; deps = [ nvim-web-devicons ]; config = requireConf galaxyline-nvim; }
+    { use = lualine-nvim; deps = [ nvim-web-devicons tokyonight-nvim ]; config = requireConf tokyonight-nvim; opt = true; }
     { use = gitsigns-nvim; config = requireConf gitsigns-nvim; }
     { use = goyo-vim; }
     { use = indent-blankline-nvim; config = requireConf indent-blankline-nvim; }
