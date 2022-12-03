@@ -49,9 +49,6 @@
   users.users.baptiste = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    # packages = with pkgs; [
-    #   firefox
-    # ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -117,9 +114,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    firefox
     git
-    kitty
     lm_sensors
     mcelog
     vim
