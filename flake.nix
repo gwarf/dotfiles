@@ -65,7 +65,6 @@
      # Custom modules from gh:malob
      colors = import ./modules/home/colors;
      # https://github.com/RichardYan314/dotfiles-nix/tree/c18de97ad9e7ae1ff46c806be2f0f91c43d5956e/users/colorschemes
-     colorscheme = import ./modules/home/colorschemes;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      home-user-info = { lib, ... }: {
@@ -101,7 +100,11 @@
              imports = attrValues self.homeManagerModules;
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
-           };
+             # theme = {
+             #  name = "Dracula";
+             #    package = self.pkgs.dracula-theme;
+             #  };
+             };
            # extraSpecialArgs = { inherit nix-colors; };
           }
         ];

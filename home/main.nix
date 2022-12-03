@@ -53,6 +53,7 @@
     thefuck
     xz
     dracula-theme
+    tree
 
     # Dev stuff
     jq
