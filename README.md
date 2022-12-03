@@ -1,6 +1,8 @@
 dotfiles
 --------
 
+> Repository being converted to management using nix home-manager
+
 ## About
 
 My messy dotfiles. WIP of course :)
