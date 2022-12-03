@@ -52,7 +52,7 @@
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
      my-neovim = import ./home/neovim.nix;
-     my-main = import ./home.nix;
+     my-main = import ./home/main.nix;
 
      # Custom modules from gh:malob
      colors = import ./modules/home/colors;
