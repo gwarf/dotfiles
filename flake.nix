@@ -53,6 +53,8 @@
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
      my-fish = import ./home/fish.nix;
+     my-starship = import ./home/starship.nix;
+     my-starship-symbols = import ./home/starship-symbols.nix;
      my-neovim = import ./home/neovim.nix;
      my-main = import ./home/main.nix;
 
