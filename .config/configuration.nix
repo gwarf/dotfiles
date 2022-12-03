@@ -30,7 +30,12 @@
   # Issue: https://github.com/nix-community/home-manager/issues/1341
   environment.systemPackages = with pkgs; [
     kitty
-    terminal-notifier
+    # XXX only needed for darwin
+    # terminal-notifier
+    git
+    wget
+    vim
+    firefox
   ];
 
   # https://github.com/nix-community/home-manager/issues/423
