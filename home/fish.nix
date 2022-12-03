@@ -28,6 +28,8 @@ in
     ns = "nix search";
 
     # Other
+    vim = "nvim";
+    vimdiff = "nvim -d";
     ".." = "cd ..";
     ":q" = "exit";
     cat = "${bat}/bin/bat";
