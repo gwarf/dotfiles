@@ -58,6 +58,7 @@
             nixpkgs = nixpkgsConfig;
             # `home-manager` config
             home-manager.useGlobalPkgs = true;
+            # install packages to /etc/profiles
             home-manager.useUserPackages = true;
             home-manager.users.baptiste = import ./home.nix;
           }
