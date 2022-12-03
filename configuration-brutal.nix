@@ -49,6 +49,7 @@
   users.users.baptiste = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
