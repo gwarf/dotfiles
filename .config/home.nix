@@ -2,7 +2,7 @@
 
 {
   # XXX may be needed, but added fo flake.nix
-  # home.stateVersion = "22.11";
+  home.stateVersion = "22.11";
 
   # Direnv, load and unload environment variables depending on the current directory.
   # https://direnv.net
