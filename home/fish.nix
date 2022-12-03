@@ -43,9 +43,13 @@ in
   # Configuration that should be above `loginShellInit` and `interactiveShellInit`.
   programs.fish.shellInit = ''
     set -U fish_term24bit 1
+  '';
+
+  programs.fish.interactiveShellInit = ''
+    set -g fish_greeting ""
+    ${pkgs.thefuck}/bin/thefuck --alias | source
+
     set -U term_background dark
-    # Set LS_COLORS
-    set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate solarized-$term_background)
 
     # Set color variables
     set emphasized_text  brcyan   # base1
@@ -54,26 +58,6 @@ in
     set background_light black    # base02
     set background       brblack  # base03
 
-    # Set Fish colors that change when background changes
-    set -g fish_color_command                    $emphasized_text --bold  # color of commands
-    set -g fish_color_param                      $normal_text             # color of regular command parameters
-    set -g fish_color_comment                    $secondary_text          # color of comments
-    set -g fish_color_autosuggestion             $secondary_text          # color of autosuggestions
-    set -g fish_pager_color_prefix               $emphasized_text --bold  # color of the pager prefix string
-    set -g fish_pager_color_description          $selection_text          # color of the completion description
-    set -g fish_pager_color_selected_prefix      $background
-    set -g fish_pager_color_selected_completion  $background
-    set -g fish_pager_color_selected_description $background
-
-    # Use correct theme for `bat`.
-    set -xg BAT_THEME "Solarized dark"
-  '';
-
-  programs.fish.interactiveShellInit = ''
-    set -g fish_greeting ""
-    ${pkgs.thefuck}/bin/thefuck --alias | source
-
-    # Set Fish colors that aren't dependant the `$term_background`.
     set -g fish_color_quote        cyan      # color of commands
     set -g fish_color_redirection  brmagenta # color of IO redirections
     set -g fish_color_end          blue      # color of process separators like ';' and '&'
@@ -84,6 +68,22 @@ in
     set -g fish_color_operator     green     # color of parameter expansion operators like '*' and '~'
     set -g fish_color_escape       red       # color of character escapes like '\n' and and '\x70'
     set -g fish_color_cancel       red       # color of the '^C' indicator on a canceled command
+
+    set -g fish_color_command                    $emphasized_text --bold  # color of commands
+    set -g fish_color_param                      $normal_text             # color of regular command parameters
+    set -g fish_color_comment                    $secondary_text          # color of comments
+    set -g fish_color_autosuggestion             $secondary_text          # color of autosuggestions
+    set -g fish_pager_color_prefix               $emphasized_text --bold  # color of the pager prefix string
+    set -g fish_pager_color_description          $selection_text          # color of the completion description
+    set -g fish_pager_color_selected_prefix      $background
+    set -g fish_pager_color_selected_completion  $background
+    set -g fish_pager_color_selected_description $background
+
+    # Set LS_COLORS
+    set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate solarized-$term_background)
+
+    # Use correct theme for `bat`.
+    set -xg BAT_THEME "Solarized dark"
   '';
   # }}}
 }
