@@ -60,6 +60,7 @@
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-neovim = import ./home/neovim.nix;
+     my-tmux = import ./home/tmux.nix;
      my-main = import ./home/main.nix;
 
      # Custom modules from gh:malob
