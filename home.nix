@@ -1,11 +1,12 @@
 ## Todo
-# - install github cli
 # - kitty config
-# - neovim config
-# - nextcloud
-# - i3 config
+# - neovim config: minimal: colors for nix
 # - zsh as default shell
 # - zsh config
+# - keybase
+# - nextcloud
+# - tmux config
+# - i3 config: minimal: cpu temp in bar
 # - firefox: disable password saving
 # - access email (mutt, isync, notmuch)
 { config, pkgs, lib, ... }:
@@ -43,6 +44,7 @@
     # Cool stuff
     fortune
     gh
+    tmux
 
     # Dev stuff
     jq
@@ -50,25 +52,11 @@
 
     # Useful graphical tools
     firefox
-    kitty
-
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
   ];
 
   # Misc configuration files --------------------------------------------------------------------{{{
-
-  # https://docs.haskellstack.org/en/stable/yaml_configuration/#non-project-specific-config
-  # home.file.".stack/config.yaml".text = lib.generators.toYAML {} {
-  #   templates = {
-  #     scm-init = "git";
-  #     params = {
-  #       author-name = "Your Name"; # config.programs.git.userName;
-  #       author-email = "youremail@example.com"; # config.programs.git.userEmail;
-  #       github-username = "yourusername";
-  #     };
-  #   };
-  #   nix.enable = true;
-  # };
+  # {{{
 }
