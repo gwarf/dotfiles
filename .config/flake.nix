@@ -1,23 +1,29 @@
 {
-  description = "Baptiste's darwin system";
+  # Inspirations
+  # - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
+  description = "Baptiste's systems";
 
   inputs = {
     # Package sets
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
+    # XXX This is only for darwin, what about nixos systems?
+    # nixpkgs.url = (if pkgs.stdenv.isDarwn then "github:nixos/nixpkgs/nixpkgs-22.11-darwin" else "github:nixos/nixpkgs/nixos-22.11");
+    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    # Environment/system management
+    # macOS system configuration
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
+
+    # home-manager
+    home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Other sources
-    # comma = { url = github:Shopify/comma; flake = false; };
-
+    # flake-utils
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, flake-utils, ... }@inputs:
   let
 
     inherit (darwin.lib) darwinSystem;
@@ -29,6 +35,35 @@
     };
   in
   {
+    # `home-manager` configs, for systems not running Nix OS
+    # homemManagerConfigurations = {
+    #    import ./home-conf.nix {
+    #      inherit (inputs) nixpkgs home-manager;
+    #      nixosConfigs = inputs.self.nixosConfigurations;
+    #    }
+    # }
+
+    # `nixos` configs
+    nixosConfigurations = {
+      brutal = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          # Main config
+          ./configuration.nix
+
+          # `home-manager` module
+          home-manager.nixosModules.home-manager
+          {
+            nixpkgs = nixpkgsConfig;
+            # `home-manager` config
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.baptiste = import ./home.nix;
+          }
+        ];
+      };
+    };
+
     # `nix-darwin` configs
     darwinConfigurations = rec {
       Baptistes-MBP = darwinSystem {
@@ -36,6 +71,7 @@
         modules = [
           # Main `nix-darwin` config
           ./configuration.nix
+
           # `home-manager` module
           home-manager.darwinModules.home-manager
           {
