@@ -1,3 +1,13 @@
+## Todo
+# - install github cli
+# - kitty config
+# - neovim config
+# - nextcloud
+# - i3 config
+# - zsh as default shell
+# - zsh config
+# - firefox: disable password saving
+# - access email (mutt, isync, notmuch)
 { config, pkgs, lib, ... }:
 
 {
@@ -24,8 +34,6 @@
 
   home.packages = with pkgs; [
     # Some basics
-    # XXX may be specific to darwin
-    coreutils
     curl
     wget
     neovim
@@ -34,6 +42,7 @@
 
     # Cool stuff
     fortune
+    gh
 
     # Dev stuff
     jq
@@ -44,7 +53,7 @@
     kitty
 
   ] ++ lib.optionals stdenv.isDarwin [
-    # cocoapods
+    coreutils
     m-cli # useful macOS CLI commands
   ];
 
