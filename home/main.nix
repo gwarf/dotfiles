@@ -51,7 +51,6 @@
     du-dust
     tealdeer
     thefuck
-    command-not-found
     xz
 
     # Dev stuff
