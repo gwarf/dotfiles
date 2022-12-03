@@ -140,4 +140,4 @@ VirtualBox VMs
 code/
 go/
 tmp/
-.config/result
+result
