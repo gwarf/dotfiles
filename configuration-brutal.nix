@@ -114,7 +114,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # Some basics
+    curl
     git
+    gh
     lm_sensors
     mcelog
     vim
@@ -133,7 +136,7 @@
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
   fonts.fonts = with pkgs; [
      recursive
-     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
    ];
 
   # Keyboard

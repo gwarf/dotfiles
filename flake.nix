@@ -62,6 +62,7 @@
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
    };
+
     # `home-manager` configs, for systems not running Nix OS
     # homemManagerConfigurations = {
     #    import ./home-conf.nix {
@@ -90,9 +91,6 @@
              imports = attrValues self.homeManagerModules;
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
-             # home.user-info = { lib, ... }: {
-             #    options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
-             # };
            };
           }
         ];

@@ -1,5 +1,4 @@
 ## Todo
-# - neovim config: minimal: colors for nix
 # - zsh as default shell
 # - zsh config
 # - keybase
@@ -11,13 +10,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  home.stateVersion = "22.11";
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  # home.username = "baptiste";
-  # home.homeDirectory = "/home/baptiste";
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -33,20 +25,15 @@
   programs.htop.settings.show_program_path = true;
 
   home.packages = with pkgs; [
-    # Some basics
-    curl
-    wget
+    # Cool stuff
     gnupg
     mutt
-
-    # Cool stuff
     fortune
-    gh
     tmux
 
     # Dev stuff
     jq
-    # nodejs
+    nodejs
 
     # Useful graphical tools
     firefox
@@ -54,7 +41,4 @@
     coreutils
     m-cli # useful macOS CLI commands
   ];
-
-  # Misc configuration files --------------------------------------------------------------------{{{
-  # {{{
 }
