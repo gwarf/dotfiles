@@ -45,7 +45,7 @@
 
     # `nixos` configs
     nixosConfigurations = {
-      brutal = nixpkgs.lib.nixosSystem {
+      brutal = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
           # Main config
