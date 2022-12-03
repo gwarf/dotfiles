@@ -50,7 +50,6 @@
     xz
     dracula-theme
     tree
-    keybase
     nextcloud-client
 
     # Dev stuff

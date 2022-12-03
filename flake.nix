@@ -61,6 +61,7 @@
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-neovim = import ./home/neovim.nix;
      my-tmux = import ./home/tmux.nix;
+     my-keybase = import ./home/keybase.nix;
      my-main = import ./home/main.nix;
 
      # Custom modules from gh:malob
