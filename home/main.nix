@@ -52,6 +52,7 @@
     tealdeer
     thefuck
     xz
+    dracula-theme
 
     # Dev stuff
     jq
