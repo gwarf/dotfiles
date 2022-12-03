@@ -3,7 +3,6 @@
 # - zsh config
 # - keybase
 # - nextcloud
-# - tmux config
 # - i3 config: minimal: cpu temp in bar
 # - firefox: disable password saving
 # - access email (mutt, isync, notmuch)
@@ -43,7 +42,6 @@
     gnupg
     mutt
     fortune
-    tmux
     bat
     exa
     fd
