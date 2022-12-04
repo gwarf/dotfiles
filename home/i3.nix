@@ -88,32 +88,31 @@ in {
        theme = "dracula";
        icons = "awesome5";
        blocks = [
-         # XXX add a custom block for liquidctl
          {
            block = "custom";
-           command = "$(uname) $(uname -r)";
+           command = "echo $(uname) $(uname -r)";
            interval = "once";
          }
          {block = "cpu";}
          {
-           block = "custom";
-           command = "echo CPU: $(sensors k10temp-pci-00c3 | awk '/^Tdie/ {print $2}')";
-         }
-         {
-           block = "custom";
-           command = "echo Coolant: $(sensors d5next-hid-3-8 | awk '/^Coolant/ {print $3}')";
-         }
-         {
            block = "temperature";
            collapsed = false;
            chip = "k10temp-pci-00c3";
+           format = "CPU: {min} min, {max} max, {average} avg"
            interval = 10;
          }
          {
            block = "temperature";
            collapsed = false;
            chip = "d5next-hid-3-8";
+           format = "Coolant: {average}"
            interval = 10;
+         }
+         # Custom block for liquidctl
+         {
+           block = "custom";
+           command = ''' liquidctl --match 'NZXT Kraken X' status | grep -e speed -e temp | awk '{printf "%s ", substr($0, 28,4)}' | awk '{printf " %s %s /%s", substr($0,0,4), substr($0,5,5), substr($0,10,6)}' ''';
+           interval = 5;
          }
          {block = "memory";}
          {
