@@ -411,4 +411,16 @@ in
       set splitright
     '';
   };
+
+  # Load LSP servers
+  nvimLSP.lua = rec {
+    package = pkgs.sumneko-lua-language-server;
+  }
+  nvimLSP.rnix = rec {
+    package = pkgs.rnix-lsp;
+  };
+  nvimLSP.yamlls = rec {
+    package = pkgs.nodePackages.yaml-language-server;
+  };
+  nvimLSP.pyright = pkgs.nodePackages.pyright;
 }

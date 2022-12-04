@@ -84,6 +84,7 @@
     sumneko-lua-language-server
     # vim-language-server
     yaml-language-server
+    rnix-lsp
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
