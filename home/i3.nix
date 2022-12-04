@@ -98,7 +98,7 @@ in {
                 border = "#FF5555";
                 text = "#F8F8F2";
               };
-            }
+            };
           fonts = {
             names = ["JetBrainsMono Nerd Font"];
             size = 12.0;
