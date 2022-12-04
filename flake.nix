@@ -12,15 +12,24 @@
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # macOS system configuration
-    darwin.url = "github:lnl7/nix-darwin/master";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # home-manager
+    home-manager = {
+      url = "github:nix-community/home-manager/release-22.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # neovim nightly
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins";
 
-    # home-manager
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Nix User Repository
+    nur.url = "github:nix-community/NUR";
+
     # flake-utils
     # flake-utils.url = "github:numtide/flake-utils";
 
@@ -29,7 +38,7 @@
     # nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, vim-extra-plugins, ... }@inputs:
   let
 
     # inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -42,6 +51,25 @@
     nixpkgsConfig = {
       config = { allowUnfree = true; };
     };
+
+    pkgs = import nixpkgs {
+      overlays = [ vim-extra-plugins.overlays.default ];
+    };
+
+    # XXX not used yet, to be used with flake-utils?
+    # from DPD-
+    machines = [
+      {
+        host = "brutal";
+        system = "x86_64-linux";
+        users = [ "baptiste" ];
+      }
+      {
+        host = "Baptiste-MBP";
+        system = "x86_64-darwin";
+        users = [ "baptiste" ];
+      }
+    ];
 
     primaryUserDefaults = {
        username = "baptiste";
@@ -63,6 +91,7 @@
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-neovim = import ./home/neovim.nix;
+     my-git = import ./home/git.nix;
      my-tmux = import ./home/tmux.nix;
      my-keybase = import ./home/keybase.nix;
      my-firefox = import ./home/firefox.nix;
@@ -88,7 +117,7 @@
 
     # `nixos` configs
     nixosConfigurations = {
-      brutal = inputs.nixpkgs.lib.nixosSystem {
+      brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           # Main config
