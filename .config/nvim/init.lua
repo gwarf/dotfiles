@@ -97,7 +97,7 @@ opt.encoding = "UTF-8"
 opt.number = true
 opt.relativenumber = true
 
--- Create new window below current one.
+-- Create new window below current one, and on the right
 opt.splitbelow = true
 opt.splitright = true
 
