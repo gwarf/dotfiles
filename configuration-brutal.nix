@@ -1,31 +1,46 @@
 { pkgs, lib, ... }:
 {
-  # Conf that was previously in /etc/nixos/configuration.nix
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration-brutal.nix
     ];
 
   # Use system-boot
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.consoleMode = "max";
+  boot = {
+    # Enable magic sysrql (Alt+PrtSc) keys for recovery
+    kernel.sysctl = { "kernel.sysrq" = 1; };
+    kernelPackages = pkgs.linuxPackages_latest;
+    cleanTmpDir = true;
+    # plymouth.enable = true;
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.consoleMode = "max";
+    loader.efi.canTouchEfiVariables = true;
+  };
+
   # boot.loader.systemd-boot.consoleMode = "keep";
-  networking.hostName = "brutal"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "brutal"; # Define your hostname.
+    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    # Open ports in the firewall.
+    # firewall.allowedTCPPorts = [ ... ];
+    # firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # firewall.enable = false;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.UTF-8";
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+    supportedLocales = [ "fr_FR/UTF-8" "en_GB.UTF-8" "en_US.UTF-8/UTF-8" ];
+  };
 
-  # Enable the X11 windowing system.
+  # Manage graphical environment
   services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.windowManager.i3.enable = true;
-  # services.xserver.windowManager.herbstluftwm.enable = true;
   services.xserver.displayManager.defaultSession = "none+i3";
 
   # Configure keymap in X11
@@ -40,34 +55,12 @@
   # sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baptiste = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -104,14 +97,9 @@
     experimental-features = nix-command flakes
   '';
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;
-
   # Apps
-  # `home-manager` currently has issues adding them to `~/Applications`
-  # Issue: https://github.com/nix-community/home-manager/issues/1341
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  programs.zsh.enable = true;
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     # Some basics
     curl
@@ -129,12 +117,18 @@
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
   # https://github.com/JonathanReeve/dotfiles/blob/master/dotfiles/configuration.nix#L61
   fonts.fonts = with pkgs; [
-     recursive
-     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
-     font-awesome_5
+    fantasque-sans-mono
+    font-awesome_5
+    # Only pick selected fonts
+    (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    fira-coode
+    fira-code-symbols
+    libertine
+    victor-mono
+    kochi-substitute
+    recursive
    ];
-
-  # Keyboard
-  # system.keyboard.enableKeyMapping = true;
-  # system.keyboard.remapCapsLockToEscape = true;
 }
