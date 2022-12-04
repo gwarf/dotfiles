@@ -124,7 +124,7 @@
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
-    fira-coode
+    fira-code
     fira-code-symbols
     libertine
     victor-mono
