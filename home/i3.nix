@@ -111,7 +111,7 @@ in {
          # Custom block for liquidctl
          {
            block = "custom";
-           command = ''' liquidctl --match 'NZXT Kraken X' status | grep -e speed -e temp | awk '{printf "%s ", substr($0, 28,4)}' | awk '{printf " %s %s /%s", substr($0,0,4), substr($0,5,5), substr($0,10,6)}' ''';
+           command = "echo $(liquidctl --match 'D5 Next' status | grep -e speed -e temp | awk '{printf \"%s \", substr($0, 28,4)}' | awk '{printf \" %s %s /%s\", substr($0,0,4), substr($0,5,5), substr($0,10,6)}')";
            interval = 5;
          }
          {block = "memory";}
