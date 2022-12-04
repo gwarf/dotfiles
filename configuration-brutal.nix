@@ -51,6 +51,19 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
+  # Allow access to watercooling devices
+  services.udev.extraRules = ''
+    # https://github.com/liquidctl/liquidctl/blob/main/extra/linux/71-liquidctl.rules
+    # Aquacomputer D5 Next
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f00e", TAG+="uaccess"
+    # Aquacomputer Farbwerk 360
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f010", TAG+="uaccess"
+    # Aquacomputer Octo
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f011", TAG+="uaccess"
+    # Aquacomputer Quadro
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f00d", TAG+="uaccess"
+  '';
+
   # Enable sound.
   # sound.enable = true;
   hardware.pulseaudio.enable = true;
