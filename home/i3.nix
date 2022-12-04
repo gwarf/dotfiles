@@ -98,14 +98,14 @@ in {
            block = "temperature";
            collapsed = false;
            chip = "k10temp-pci-00c3";
-           format = "CPU: {min} min, {max} max, {average} avg"
+           format = "CPU: {min} min, {max} max, {average} avg";
            interval = 10;
          }
          {
            block = "temperature";
            collapsed = false;
            chip = "d5next-hid-3-8";
-           format = "Coolant: {average}"
+           format = "Coolant: {average}";
            interval = 10;
          }
          # Custom block for liquidctl
