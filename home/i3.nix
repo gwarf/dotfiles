@@ -46,18 +46,33 @@ in {
        # theme = (import ../gruvbox.nix).i3status-rust;
        icons = "awesome5";
        blocks = [
+         # XXX add a custom block for liquidctl
+         {
+           block = "custom";
+           command = "echo $(uname) $(uname -r)"
+           interval = "once"
+         }
          {block = "cpu";}
+         {
+           block = "custom";
+           command = '''sensors k10temp-pci-00c3 | awk '/^Tdie/ {print $2}''''
+         }
          {block = "temperature";}
          {block = "memory";}
-         {block = "disk_space";}
+         {
+           block = "disk_space";
+           format = "{icon} {used}/{total} ({available} free)";
+         }
+         {block = "load";}
+         {block = "net";}
          {
            block = "networkmanager";
-           device_format = "{icon}{ap}";
+           device_format = "{icon}{ap}{ips}";
            on_click = "${pkgs.kitty}/bin/kitty -e nmtui";
          }
          {
            block = "time";
-           format = "%F %a %R";
+           format = "%F %A %R";
            timezone = "Europe/Paris";
            locale = "fr_FR";
          }
