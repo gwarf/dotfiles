@@ -15,6 +15,9 @@
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # neovim nightly
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     # home-manager
     home-manager.url = "github:nix-community/home-manager/release-22.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -99,24 +102,20 @@
             home-manager.useGlobalPkgs = true;
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
              imports = attrValues self.homeManagerModules;
+             # XXX Unused, to be removed?
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
-             # theme = {
-             #  name = "Dracula";
-             #    package = self.pkgs.dracula-theme;
-             #  };
              };
-           # extraSpecialArgs = { inherit nix-colors; };
           }
         ];
-	      specialArgs = { inherit inputs; };
       };
     };
 
     # `nix-darwin` configs
-    darwinConfigurations = rec {
+    darwinConfigurations = {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         modules = [
