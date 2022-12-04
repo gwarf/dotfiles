@@ -24,6 +24,14 @@ sudo result/bin/switch-to-configuration switch
 sudo nixos-rebuild switch --flake .
 ```
 
+## Deleting old generations
+
+```shell
+nix-env -p /nix/var/nix/profiles/system --list-generations
+sudo nix-collect-garbage -d
+sudo nixos-rebuild switch --flake .
+```
+
 ## Searching for a package
 
 - https://search.nixos.org/packages
