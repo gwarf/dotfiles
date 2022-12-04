@@ -30,7 +30,7 @@ in
           colorscheme tokyonight
           '';
       }
-      { 
+      {
         plugin = lessspace-vim;
         config = "let g:lessspace_blacklist = ['diff', 'mail']";
       }
@@ -265,8 +265,31 @@ in
       }
       nvim-cmp
       cmp-nvim-lsp
+      cmp-nvim-lua
+      cmp-path
+      cmp-buffer
+      cmp-cmdline
+      cmp-emoji
       cmp_luasnip
-      luasnip
+      # {
+      #   plugin = (pkgs.vimUtils.buildVimPlugin {
+      #     # Neovim completion library for sumneko/lua-language-server
+      #     name = "emmylua-nvim";
+      #     src = pkgs.fetchFromGitHub {
+      #       owner = "ii14";
+      #       repo = "emmylua-nvim";
+      #       rev = "a220650fd6ef6490a787eb7efcab24b4bf13dab8";
+      #       # sha256 = "J/j7pyvqdSfQUkcXw0krvw303N+FlgDN+wH0bAefOYw=";
+      #     };
+      #   });
+      # }
+      friendly-snippets
+      {
+        plugin = pkgs.nur.repos.m15a.vimExtraPlugins.lspkind-nvim;
+      }
+      {
+        plugin = pkgs.nur.repos.m15a.vimExtraPlugins.LuaSnip;
+      }
       {
         plugin = nvim-lspconfig;
         type = "lua";
@@ -314,8 +337,18 @@ in
               end
             },
             sources = {
+              { name = "luasnip" },
+              {
+                name = "buffer",
+                option = {
+                  get_bufnrs = function()
+                    return vim.api.nvim_list_bufs()
+                  end,
+                },
+              },
+              { name = "path" },
+              { name = "emoji", insert = true },
               { name = "nvim_lsp" },
-              { name = "luasnip" }
             }
           }
         '';
