@@ -105,8 +105,6 @@
     curl
     git
     gh
-    lm_sensors
-    mcelog
     vim
     wget
   ];
