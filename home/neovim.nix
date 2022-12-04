@@ -101,15 +101,17 @@ in
         plugin = camelcasemotion;
         config = "let g:camelcasemotion_key = '\\'";
       }
-      (vimUtils.buildVimPlugin {
-        name = "vim-fanfingtastic";
-        src = fetchFromGitHub {
-          owner = "dahu";
-          repo = "vim-fanfingtastic";
-          rev = "6d0fea6dafbf3383dbab1463dbfb3b3d1b94b209";
-          sha256 = "wmiKxuNjazkOWFcuMvDJzdPp2HhDu8CNL0rxu+8hrKs=";
-        };
-      })
+      # {
+      #   plugin = (vimUtils.buildVimPlugin {
+      #     name = "vim-fanfingtastic";
+      #     src = fetchFromGitHub {
+      #       owner = "dahu";
+      #       repo = "vim-fanfingtastic";
+      #       rev = "6d0fea6dafbf3383dbab1463dbfb3b3d1b94b209";
+      #       sha256 = "wmiKxuNjazkOWFcuMvDJzdPp2HhDu8CNL0rxu+8hrKs=";
+      #     };
+      #   });
+      # }
       {
         plugin = suda-vim;
         config = "let g:suda_smart_edit = 1";
