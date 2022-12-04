@@ -4,6 +4,7 @@ let
   mod = "Mod1";
 in {
   # https://github.com/srid/nix-config/blob/705a70c094da53aa50cf560179b973529617eb31/nix/home/i3.nix#L11
+      # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -12,7 +13,7 @@ in {
         names = ["JetBrainsMono Nerd Font"];
         size = 12.0;
       };
-      # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config.colors
+      # https://github.com/dracula/i3/blob/master/.config/i3/config
       colors = {
         background = "#F8F8F2";
         focused = {
@@ -68,8 +69,37 @@ in {
         "${mod}+Shift+l" = "move right";
       };
       bars = [{
+          colors {
+              background = "#282A36";
+              statusline = "#F8F8F2";
+              separator = "#44475A";
+              focusedWorkspace = {
+                background = "#44475A";
+                border = "#44475A";
+                text = "#F8F8F2";
+              };
+              activeWorkspace = {
+                background = "#44475A";
+                border = "#282A36";
+                text = "#F8F8F2";
+              };
+              inactiveWorkspace = {
+                background = "#282A36";
+                border = "#282A36";
+                text = "#BFBFBF";
+              };
+              urgentWorkspace = {
+                background = "#FF5555";
+                border = "#FF5555";
+                text = "#F8F8F2";
+              };
+              bindingMode = {
+                background = "#FF5555";
+                border = "#FF5555";
+                text = "#F8F8F2";
+              };
+            }
           fonts = {
-            # names = ["JetBrainsMono Nerd Font"];
             names = ["JetBrainsMono Nerd Font"];
             size = 12.0;
           };
@@ -84,7 +114,6 @@ in {
    enable = true;
    bars = {
      bottom = {
-       # theme = "nord-dark";
        theme = "dracula";
        icons = "awesome5";
        blocks = [
