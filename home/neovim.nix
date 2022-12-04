@@ -1,21 +1,19 @@
 # https://srid.ca/cli/neovim/install
-{  pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 let
   neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
+  # nur = inputs.nur.;
 in
 {
   programs.neovim = {
     enable = true;
     package = neovim-nightly;
+
+    # use nvim by default
     vimAlias = true;
     vimdiffAlias = true;
     viAlias = true;
-    # XXX does not exist?
-    # defaultEditor = true;
-
-    extraPackages = [
-    ];
 
     plugins = with pkgs.vimPlugins; [
       plenary-nvim
@@ -31,10 +29,7 @@ in
       }
       { 
         plugin = lessspace-vim;
-        type = "lua";
-        config = ''
-          vim.g.lessspace_blacklist = { "diff", "mail" }
-        '';
+        config = "let g:lessspace_blacklist = ['diff', 'mail']";
       }
       {
         plugin = nvim-autopairs;
@@ -100,7 +95,7 @@ in
       {
         plugin = neoscroll-nvim;
         type = "lua";
-        config = ''require"neoscroll".setup{}'';
+        config = ''require("neoscroll").setup({})'';
       }
       editorconfig-nvim
       vim-sleuth
@@ -117,7 +112,7 @@ in
         plugin = nvim-treesitter.withPlugins (p: pkgs.tree-sitter.allGrammars);
         type = "lua";
         config = ''
-          require"nvim-treesitter.configs".setup {
+          require("nvim-treesitter.configs").setup({
             highlight = {
               enable = true,
               disable = { "latex" },
@@ -131,17 +126,17 @@ in
               extended_mode = true, -- Also highlight non-bracket delimiters
               max_file_lines = nil
             }
-          }
+          })
         '';
       }
       {
         plugin = nvim-colorizer-lua;
         type = "lua";
-        config = ''require"colorizer".setup{}'';
+        config = ''require("colorizer").setup({})'';
       }
       # Manage undo
-      # undotree
-      vim-mundo
+      undotree
+      # vim-mundo
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
       telescope-symbols-nvim
@@ -150,7 +145,7 @@ in
         plugin = telescope-nvim;
         type = "lua";
         config = ''
-          local telescope = require "telescope"
+          local telescope = require("telescope")
           telescope.load_extension("file_browser")
           telescope.load_extension("projects")
           telescope.load_extension("fzf")
@@ -160,7 +155,7 @@ in
       {
         plugin = gitsigns-nvim;
         type = "lua";
-        config = ''require"gitsigns".setup()'';
+        config = ''require("gitsigns").setup({})'';
       }
       # open last position in file
       vim-lastplace
@@ -175,6 +170,83 @@ in
           })
         '';
       }
+      # {
+      #   # Catalyze Fenced Markdown Code-block editing!
+      #   # plugin = nur.repos.m15a.vimExtraPlugins.nvim-FeMaco-lua;
+      #   plugin = pkgs.vimExtraPlugins.nvim-FeMaco-lua;
+      #   type = "lua";
+      #   config = ''require("femaco").setup({})'';
+      # }
+      {
+        plugin = which-key-nvim;
+        type = "lua";
+        config = ''
+          local wk = require("which-key")
+          wk.setup {
+            spelling = {
+              enabled = true,
+              suggestions = 10
+            },
+            window = {
+              margin = {0, 0, 0, 0},
+              padding = {1, 0, 1, 0,}
+            }
+          }
+          local map = function (from, to, ...)
+            return {
+              from, to, ...,
+              noremap = true,
+              silent = true
+            }
+          end
+          wk.register (
+            {
+              f = {
+                name = "Find",
+                r = map ("<cmd>Telescope resume<cr>", "Resume saerch"),
+                f = map ("<cmd>Telescope find_files<cr>", "Files"),
+                g = map ("<cmd>Telescope live_grep<cr>", "Grep"),
+                b = map ("<cmd>Telescope buffers<cr>", "Buffers"),
+                h = map ("<cmd>Telescope help_tags<cr>", "Help"),
+                p = map ("<cmd>Telescope projects<cr>", "Projects"),
+                e = map ("<cmd>Telescope file_browser<cr>", "Explore"),
+                t = map ("<cmd>NvimTreeToggle<cr>", "File tree"),
+                -- ["\\"] = map ("<cmd>Telescope termfinder find<cr>", "Terminals"),
+                [":"] = map ("<cmd>Telescope commands<cr>", "Commands"),
+                a = map ("<cmd>Telescope<cr>", "All telescopes"),
+              },
+              c = {
+                name = "Code",
+                e = map ("<cmd>FeMaco<cr>", "Edit fenced block"),
+              },
+              g = {
+                name = "Git",
+                g = map ("<cmd>Lazygit<cr>", "Lazygit"),
+              },
+              r = {
+                name = "Reload",
+                r = map ("<cmd>e<cr>", "File"),
+                c = map ("<cmd>source ~/.config/nvim/init.vim<cr>", "Config"),
+              },
+              t = {
+                name = "Table",
+                m = "Toggle table mode",
+                t = "To table"
+              },
+              u = map ("<cmd>UndotreeToggle<cr>", "Undo tree"),
+            },
+            { prefix = "<leader>" }
+          )
+          wk.register {
+            ["]b"] = map ("<cmd>BufferLineCycleNext<cr>", "Next buffer"),
+            ["]B"] = map ("<cmd>BufferLineMoveNext<cr>", "Move buffer right"),
+            ["[b"] = map ("<cmd>BufferLineCyclePrev<cr>", "Previous buffer"),
+            ["[B"] = map ("<cmd>BufferLineMovePrev<cr>", "Move buffer left"),
+            gb = map ("<cmd>BufferLinePick<cr>", "Go to buffer"),
+            gB = map ("<cmd>BufferLinePickClose<cr>", "Close picked buffer"),
+          }
+        '';
+      }
       {
         plugin = nvim-tree-lua;
         type = "lua";
@@ -187,7 +259,7 @@ in
       {
         plugin = lsp_signature-nvim;
         type = "lua";
-        config = ''require"lsp_signature".setup{}'';
+        config = ''require"lsp_signature".setup({})'';
       }
       nvim-cmp
       cmp-nvim-lsp
@@ -197,8 +269,8 @@ in
         plugin = nvim-lspconfig;
         type = "lua";
         config = ''
-          local cmp = require "cmp"
-          local luasnip = require "luasnip"
+          local cmp = require("cmp")
+          local luasnip = require("luasnip")
           cmp.setup {
             snippet = {
               expand = function (args)
@@ -277,7 +349,7 @@ in
       " use return to enter command mode
       nnoremap <cr> :
       vnoremap <cr> :
-      set mouse=a     " Enable mouse
+      set mouse=      " Disable mouse
       set lazyredraw  " Use lazy redraw
       set undofile    " Enable persistent undo
       set hidden      " Allow buffers in background
@@ -296,10 +368,9 @@ in
       " Highlight problematic whitespace
       set list
       set listchars="tab:>.,trial:.,exteands:#,nbsp:."
-      # Create new window below current one, and on the right
+      " Create new window below current one, and on the right
       set splitbelow
       set splitright
-}
     '';
   };
 }
