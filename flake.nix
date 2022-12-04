@@ -29,11 +29,13 @@
     # Nix User Repository
     nur.url = "github:nix-community/NUR";
 
+    nix2lua.url = "git+https://git.pleshevski.ru/mynix/nix2lua";
+
     # flake-utils
     # flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, nur, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
   let
 
     # inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
