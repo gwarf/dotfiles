@@ -18,6 +18,7 @@ in
 
     plugins = with pkgs.vimPlugins; [
       plenary-nvim
+      popup-nvim
       nvim-web-devicons
       vim-numbertoggle
       {
@@ -27,6 +28,20 @@ in
           colorscheme tokyonight
           '';
       }
+      { 
+        plugin = lessspace-vim;
+        type = "lua";
+        config = ''
+          vim.g.lessspace_blacklist = { "diff", "mail" }
+        '';
+      }
+      {
+        plugin = nvim-autopairs;
+        type = "lua";
+        config = ''
+          require("nvim-autopairs").setup({})
+        '';
+      }
       lualine-lsp-progress
       {
         plugin = lualine-nvim;
@@ -35,14 +50,6 @@ in
           require("lualine").setup({
             options = {
               theme = "tokyonight",
-              section_separators = {
-                left = "",
-                right = ""
-              },
-              component_separators = {
-                 left = "|",
-                 right = "|"
-              },
             },
             sections = {
               lualine_c = {
@@ -52,13 +59,6 @@ in
               lualine_x = {
                 "encoding",
                 "fileformat",
-                function ()
-                  if vim.o.expandtab then
-                    return vim.o.shiftwidth .. " ␣"
-                  else
-                    return vim.o.tabstop .. " ↹"
-                  end
-                end,
                 "filetype"
               }
             }
@@ -68,8 +68,10 @@ in
       {
         plugin = bufferline-nvim;
         type = "lua";
+        # XXX find a way to specify a specific plugin version
+        # tag = "v3.*";
         config = ''
-          require("bufferline").setup {
+          require("bufferline").setup({
             options = {
               show_close_icon = false,
               custom_filter = function(buf, buf_nums)
@@ -83,7 +85,11 @@ in
                 }
               }
             }
-          }
+          })
+          -- Navigate buffers
+          local opts = { noremap = true, silent = true }
+          vim.keymap.set("n", "<S-l>", ":bnext<CR>", opts)
+          vim.keymap.set("n", "<S-h>", ":bprevious<CR>", opts)
         '';
       }
       {
@@ -101,17 +107,6 @@ in
         plugin = camelcasemotion;
         config = "let g:camelcasemotion_key = '\\'";
       }
-      # {
-      #   plugin = (vimUtils.buildVimPlugin {
-      #     name = "vim-fanfingtastic";
-      #     src = fetchFromGitHub {
-      #       owner = "dahu";
-      #       repo = "vim-fanfingtastic";
-      #       rev = "6d0fea6dafbf3383dbab1463dbfb3b3d1b94b209";
-      #       sha256 = "wmiKxuNjazkOWFcuMvDJzdPp2HhDu8CNL0rxu+8hrKs=";
-      #     };
-      #   });
-      # }
       {
         plugin = suda-vim;
         config = "let g:suda_smart_edit = 1";
@@ -143,7 +138,9 @@ in
         type = "lua";
         config = ''require"colorizer".setup{}'';
       }
-      undotree
+      # Manage undo
+      # undotree
+      vim-mundo
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
       telescope-symbols-nvim
@@ -164,10 +161,27 @@ in
         type = "lua";
         config = ''require"gitsigns".setup()'';
       }
+      # open last position in file
+      vim-lastplace
       {
         plugin = project-nvim;
         type = "lua";
-        config = ''require"project_nvim".setup()'';
+        config = ''
+          require("project_nvim").setup({
+              -- :ProjectRoot is required to switch project
+              manual_mode = true,
+              silent_chdir = false,
+          })
+        '';
+      }
+      {
+        plugin = nvim-tree-lua;
+        type = "lua";
+        # tag = "nightly";
+        config = ''
+          require("nvim-tree").setup({})
+          vim.keymap.set("n", "<leader>T", "<cmd>NvimTreeToggle<cr>", { silent = true, noremap = true })
+        '';
       }
       {
         plugin = lsp_signature-nvim;
@@ -258,6 +272,8 @@ in
       set foldmethod=indent  " Set 'indent' folding method
       set nofoldenable       " Start with folds opened
       let g:mapleader = ' '
+      let g:maplocalleader = ' '
+      " use return to enter command mode
       nnoremap <cr> :
       vnoremap <cr> :
       set mouse=a     " Enable mouse
@@ -274,7 +290,15 @@ in
       set spelllang=en,fr     " Define spelling dictionaries
       set complete+=kspell    " Add spellcheck options for autocomplete
       set spelloptions=camel  " Treat parts of camelCase words as separate words
-      set completeopt=menuone,noselect
+      set completeopt=menu,menuone,noselect
+      " XXX when adding a quote there, it's autopaired, which is useless as we are in vimscript, and it's the comment
+      " Highlight problematic whitespace
+      set list
+      set listchars="tab:>.,trial:.,exteands:#,nbsp:."
+      # Create new window below current one, and on the right
+      set splitbelow
+      set splitright
+}
     '';
   };
 }
