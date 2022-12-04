@@ -93,25 +93,16 @@ in {
            command = "echo $(uname) $(uname -r)";
            interval = "once";
          }
-         {block = "cpu";}
          {
            block = "temperature";
            collapsed = false;
            chip = "k10temp-pci-00c3";
-           format = "CPU: {min} min, {max} max, {average} avg";
+           format = "CPU: {average} avg, {max} max";
            interval = 10;
          }
-         {
-           block = "temperature";
-           collapsed = false;
-           chip = "d5next-hid-3-8";
-           format = "Coolant: {average}";
-           interval = 10;
-         }
-         # Custom block for liquidctl
          {
            block = "custom";
-           command = "echo $(liquidctl --match 'D5 Next' status | grep -e speed -e temp | awk '{printf \"%s \", substr($0, 28,4)}' | awk '{printf \" %s %s /%s\", substr($0,0,4), substr($0,5,5), substr($0,10,6)}')";
+           command = "echo $(liquidctl --match 'D5 Next' status | grep -e speed -e temp | awk '{printf \"%s \", substr($0, 28,4)}' | awk '{printf \" %s %s\", substr($0,0,4), substr($0,5,5)}')";
            interval = 5;
          }
          {block = "memory";}
@@ -120,6 +111,7 @@ in {
            format = "{icon} {used}/{total} ({available} free)";
          }
          {block = "load";}
+         {block = "cpu";}
          {block = "net";}
          {
            block = "networkmanager";
