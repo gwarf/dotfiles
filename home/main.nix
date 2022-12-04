@@ -55,6 +55,34 @@
     # Dev stuff
     jq
     nodejs
+    # XXX not available
+    # alex
+    actionlint
+    black
+    beautysh
+    isort
+    stylua
+    # XXX not available
+    # markdownlint
+    pylint
+    # XXX not available
+    # prettier
+    shellcheck
+    shfmt
+    # LSP servers
+    # XXX not available
+    # ansible-language-server
+    # bash-language-server
+    # json-lsp
+    ltex-ls
+    # XXX not available
+    # marksman
+    pyright
+    # XXX not available
+    # lua-language-server
+    # vim-language-server
+    yaml-language-server
+
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
