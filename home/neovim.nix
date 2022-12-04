@@ -28,7 +28,7 @@ in
         config = ''
           set background=dark
           colorscheme tokyonight
-          '';
+        '';
       }
       {
         plugin = lessspace-vim;
@@ -413,9 +413,6 @@ in
   };
 
   # Load LSP servers
-  nvimLSP.lua = rec {
-    package = pkgs.sumneko-lua-language-server;
-  };
   nvimLSP.rnix = rec {
     package = pkgs.rnix-lsp;
   };
@@ -423,4 +420,20 @@ in
     package = pkgs.nodePackages.yaml-language-server;
   };
   nvimLSP.pyright = pkgs.nodePackages.pyright;
+  nvimLSP.sumneko_lua = rec {
+    package = pkgs.sumneko-lua-language-server;
+    config = {
+      settings = {
+        Lua = {
+          runtime = {
+            version = "LuaJIT";
+          };
+          diagnostics = {
+            # Get the language server to recognize the `vim` global
+            globals = [ "vim" ];
+          };
+        };
+      };
+    };
+  };
 }
