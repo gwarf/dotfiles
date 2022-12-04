@@ -3,7 +3,6 @@
 
 let
   neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-  # nur = inputs.nur.;
 in
 {
   programs.neovim = {
@@ -38,7 +37,6 @@ in
           require("nvim-autopairs").setup({})
         '';
       }
-      lualine-lsp-progress
       {
         plugin = lualine-nvim;
         type = "lua";
@@ -176,6 +174,7 @@ in
         type = "lua";
         config = ''require("femaco").setup({})'';
       }
+      lualine-lsp-progress
       {
         plugin = which-key-nvim;
         type = "lua";
@@ -329,7 +328,6 @@ in
       set number          " Show line numbers
       set relativenumber  " Show relative line numbers
       set numberwidth=1   " Minimum number width
-      set conceallevel=2
       set noshowmode
       set whichwrap=b,s,h,l,<,>,[,] " Allow moving along lines when the start/end is reached
       set clipboard=unnamedplus     " Sync yank register with system clipboard
