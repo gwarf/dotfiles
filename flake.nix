@@ -89,6 +89,7 @@
      my-tmux = import ./home/tmux.nix;
      my-keybase = import ./home/keybase.nix;
      my-firefox = import ./home/firefox.nix;
+     my-i3 = import ./home/i3.nix;
      my-main = import ./home/main.nix;
 
      # Custom modules from gh:malob
