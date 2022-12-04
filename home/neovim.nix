@@ -9,6 +9,7 @@ in
     enable = true;
     package = neovim-nightly;
     vimAlias = true;
+    vimdiffAlias = true;
     viAlias = true;
     # XXX does not exist?
     # defaultEditor = true;
