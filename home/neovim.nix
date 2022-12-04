@@ -170,13 +170,12 @@ in
           })
         '';
       }
-      # {
-      #   # Catalyze Fenced Markdown Code-block editing!
-      #   # plugin = nur.repos.m15a.vimExtraPlugins.nvim-FeMaco-lua;
-      #   plugin = pkgs.vimExtraPlugins.nvim-FeMaco-lua;
-      #   type = "lua";
-      #   config = ''require("femaco").setup({})'';
-      # }
+      {
+        # Catalyze Fenced Markdown Code-block editing!
+        plugin = pkgs.nur.repos.m15a.vimExtraPlugins.nvim-FeMaco-lua;
+        type = "lua";
+        config = ''require("femaco").setup({})'';
+      }
       {
         plugin = which-key-nvim;
         type = "lua";
