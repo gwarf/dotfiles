@@ -34,7 +34,7 @@
   # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_GB.UTF-8";
-    supportedLocales = [ "fr_FR/UTF-8" "en_GB.UTF-8" "en_US.UTF-8/UTF-8" ];
+    supportedLocales = [ "fr_FR.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" ];
   };
 
   # Manage graphical environment
