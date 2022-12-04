@@ -69,7 +69,7 @@ in {
         "${mod}+Shift+l" = "move right";
       };
       bars = [{
-          colors {
+          colors = {
               background = "#282A36";
               statusline = "#F8F8F2";
               separator = "#44475A";
