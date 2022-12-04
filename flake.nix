@@ -25,20 +25,15 @@
 
     # neovim nightly
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    vim-extra-plugins.url = "github:m15a/nixpkgs-vim-extra-plugins";
 
     # Nix User Repository
     nur.url = "github:nix-community/NUR";
 
     # flake-utils
     # flake-utils.url = "github:numtide/flake-utils";
-
-    # Colors for various apps
-    # XXX errors when trying to use
-    # nix-colors.url = "github:misterio77/nix-colors";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, vim-extra-plugins, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, home-manager, nur, ... }@inputs:
   let
 
     # inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
@@ -50,10 +45,6 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-    };
-
-    pkgs = import nixpkgs {
-      overlays = [ vim-extra-plugins.overlays.default ];
     };
 
     # XXX not used yet, to be used with flake-utils?
@@ -71,6 +62,7 @@
       }
     ];
 
+    # Used for some modules
     primaryUserDefaults = {
        username = "baptiste";
        fullName = "Baptiste Grenier";
@@ -119,6 +111,10 @@
     nixosConfigurations = {
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [ inputs.nur.overlay ];
+        };
         modules = [
           # Main config
           ./configuration-brutal.nix
