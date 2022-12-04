@@ -111,6 +111,7 @@
     nixosConfigurations = {
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        # https://github.com/jules-goose/nixcfg/blob/0db16d98d049c1eb7c11f31c5ddbbcd2146e4f15/flake.nix#L22
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           overlays = [ inputs.nur.overlay ];
