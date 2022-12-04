@@ -36,4 +36,3 @@ in
     terminal = "screen-256color";
   };
 }
-
