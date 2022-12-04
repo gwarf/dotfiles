@@ -56,14 +56,14 @@
     jq
     nodejs
     # XXX not available
-    # alex
+    nodePackages.alex
     actionlint
     black
     beautysh
     isort
     stylua
     # XXX not available
-    # markdownlint
+    nodePackages.markdownlint-cli
     pylint
     # XXX not available
     # prettier
@@ -78,8 +78,7 @@
     # XXX not available
     # marksman
     pyright
-    # XXX not available
-    # lua-language-server
+    sumneko-lua-language-server
     # vim-language-server
     yaml-language-server
 
