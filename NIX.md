@@ -30,6 +30,10 @@ sudo nixos-rebuild switch --flake .
 
 ## References
 
+# Very good
+
+- https://dpdmancul.gitlab.io/dotfiles/index.html
+
 ### Conf files
 
 - https://github.com/gvolpe/nix-config
