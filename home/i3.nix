@@ -50,20 +50,6 @@ in {
           indicator = "#282A36";
           text = "#F8F8F2";
         };
-       # https://github.com/dracula/i3/blob/05ba49e6de572c037c0b9967d2dfc03186154fda/.config/i3/config
-       # bar {
-       #   colors {
-       #     background #282A36
-       #     statusline #F8F8F2
-       #     separator  #44475A
-
-       #     focused_workspace  #44475A #44475A #F8F8F2
-       #     active_workspace   #282A36 #44475A #F8F8F2
-       #     inactive_workspace #282A36 #282A36 #BFBFBF
-       #     urgent_workspace   #FF5555 #FF5555 #F8F8F2
-       #     binding_mode       #FF5555 #FF5555 #F8F8F2
-       #   }
-       # }
       };
       keybindings = lib.mkOptionDefault {
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
@@ -83,6 +69,7 @@ in {
       };
       bars = [{
           fonts = {
+            # names = ["JetBrainsMono Nerd Font"];
             names = ["JetBrainsMono Nerd Font"];
             size = 12.0;
           };
@@ -92,11 +79,11 @@ in {
     };
   };
 
+  # https://github.com/greshake/i3status-rust
   programs.i3status-rust = {
    enable = true;
    bars = {
      bottom = {
-       # https://github.com/greshake/i3status-rust/blob/master/doc/themes.md#available-themes
        # theme = "nord-dark";
        theme = "dracula";
        icons = "awesome5";
@@ -113,9 +100,19 @@ in {
            command = "echo CPU: $(sensors k10temp-pci-00c3 | awk '/^Tdie/ {print $2}')";
          }
          {
+           block = "custom";
+           command = "echo Coolant: $(sensors d5next-hid-3-8 | awk '/^Coolant/ {print $3}')";
+         }
+         {
            block = "temperature";
            collapsed = false;
-           # chip = "k10temp-pci-00c3";
+           chip = "k10temp-pci-00c3";
+           interval = 10;
+         }
+         {
+           block = "temperature";
+           collapsed = false;
+           chip = "d5next-hid-3-8";
            interval = 10;
          }
          {block = "memory";}
