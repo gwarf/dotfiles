@@ -180,6 +180,11 @@ in
       }
       lualine-lsp-progress
       {
+        plugin = fidget-nvim;
+        type = "lua";
+        config = ''require("fidget").setup({})'';
+      }
+      {
         plugin = which-key-nvim;
         type = "lua";
         config = ''
