@@ -28,8 +28,6 @@ in
     ns = "nix search";
 
     # Other
-    # vim = "nvim";
-    # vimdiff = "nvim -d";
     ".." = "cd ..";
     ":q" = "exit";
     cat = "${bat}/bin/bat";
@@ -49,7 +47,7 @@ in
     set -g fish_greeting ""
     ${pkgs.thefuck}/bin/thefuck --alias | source
 
-    set -U term_background dark
+    set EDITOR nvim
 
     # Set color variables
     set emphasized_text  brcyan   # base1
