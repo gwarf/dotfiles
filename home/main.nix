@@ -50,6 +50,7 @@
     dracula-theme
     tree
     nextcloud-client
+    silver-searcher
 
     # Dev stuff
     jq
