@@ -415,7 +415,7 @@ in
   # Load LSP servers
   nvimLSP.lua = rec {
     package = pkgs.sumneko-lua-language-server;
-  }
+  };
   nvimLSP.rnix = rec {
     package = pkgs.rnix-lsp;
   };
