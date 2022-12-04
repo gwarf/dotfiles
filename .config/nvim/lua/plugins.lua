@@ -276,7 +276,7 @@ return require("packer").startup(function(use)
     },
   })
 
-  -- open last postiion in file
+  -- open last position in file
   use("farmergreg/vim-lastplace")
 
   -- Manage undo
