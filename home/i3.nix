@@ -43,7 +43,9 @@ in {
    enable = true;
    bars = {
      bottom = {
-       # theme = (import ../gruvbox.nix).i3status-rust;
+       # https://github.com/greshake/i3status-rust/blob/master/doc/themes.md#available-themes
+       # theme = "nord-dark";
+       theme = "dracula";
        icons = "awesome5";
        blocks = [
          # XXX add a custom block for liquidctl
