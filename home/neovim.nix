@@ -138,6 +138,12 @@ in
       }
       # Manage undo
       undotree
+      # Comment
+      {
+        plugin = pkgs.nur.repos.m15a.vimExtraPlugins.Comment-nvim;
+        type = "lua";
+        config = ''require("Comment").setup({})'';
+      }
       # vim-mundo
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
@@ -414,6 +420,10 @@ in
       " Create new window below current one, and on the right
       set splitbelow
       set splitright
+      vnoremap j gj
+      vnoremap k gk
+      nnoremap j gj
+      nnoremap k gk
     '';
   };
 
