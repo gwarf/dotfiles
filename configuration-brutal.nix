@@ -65,6 +65,12 @@
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f00d", TAG+="uaccess"
   '';
 
+  # gnome-keyring-daemon is correctly started in user session
+  # but apparently SSH_AUTH_SOCK is missing :/
+  security.pam.services.lightdm.enableGnomeKeyring = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.polkit.enable = true;
+
   # hardware logging
   hardware.rasdaemon.enable = true;
 
