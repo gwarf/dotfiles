@@ -84,6 +84,7 @@
      my-fish = import ./home/fish.nix;
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
+     my-mail = import ./home/mail.nix;
      my-neovim = import ./home/neovim.nix;
      my-git = import ./home/git.nix;
      my-tmux = import ./home/tmux.nix;
