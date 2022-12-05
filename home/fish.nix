@@ -79,9 +79,6 @@ in
 
     # Set LS_COLORS
     set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate solarized-$term_background)
-
-    # Use correct theme for `bat`.
-    set -xg BAT_THEME "Solarized (dark)"
   '';
   # }}}
 }
