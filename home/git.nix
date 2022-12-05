@@ -26,7 +26,7 @@
         features = "interactive";
         wrap-max-lines = "unlimited";
         max-line-length = 2048;
-        syntax-theme = "dracula";
+        syntax-theme = "Dracula";
       };
     };
     lfs.enable = true;
