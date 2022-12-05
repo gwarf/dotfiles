@@ -79,6 +79,8 @@ in
 
     # Set LS_COLORS
     set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate solarized-$term_background)
+
+    [ -e $HOME/fish.env ]; and source $HOME/fish.env
   '';
   # }}}
 }
