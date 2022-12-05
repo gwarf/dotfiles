@@ -54,3 +54,7 @@ sudo nixos-rebuild switch --flake .
 
 - https://nixos.wiki/wiki/Home_Manager
 - https://ghedam.at/24353/tutorial-getting-started-with-home-manager-for-nix
+- https://github.com/gmarmstrong/dotfiles
+
+> Debugging: looking at the test modules for home-manager
+> https://github.com/nix-community/home-manager/blob/master/tests/modules/programs
