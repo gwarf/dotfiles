@@ -51,7 +51,6 @@
     tree
     nextcloud-client
     silver-searcher
-    mcelog
     lm_sensors
     liquidctl
 
