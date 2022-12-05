@@ -15,6 +15,7 @@
   programs.bat.enable = true;
   programs.bat.config = {
     style = "plain";
+    theme = "Dracula";
   };
 
   # Zoxide, a faster way to navigate the filesystem
