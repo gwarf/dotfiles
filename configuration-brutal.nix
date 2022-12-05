@@ -10,6 +10,7 @@
     # Enable magic sysrql (Alt+PrtSc) keys for recovery
     kernel.sysctl = { "kernel.sysrq" = 1; };
     kernelPackages = pkgs.linuxPackages_latest;
+    # kernelModules = [ "edac_mce_amd" ];
     cleanTmpDir = true;
     # plymouth.enable = true;
     loader.systemd-boot.enable = true;
@@ -63,6 +64,9 @@
     # Aquacomputer Quadro
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0c70", ATTRS{idProduct}=="f00d", TAG+="uaccess"
   '';
+
+  # hardware logging
+  hardware.rasdaemon.enable = true;
 
   # Enable sound.
   # sound.enable = true;
