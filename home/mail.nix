@@ -90,52 +90,45 @@ in
   #   };
   # };
   programs = {
-    # aerc = {
-    #   enable = true;
-    #   extraAccounts = {
-    #     Perso = {
-    #       source = "maildir://~/Maildir/${username}";
-    #       outgoing = "sendmail";
-    #       from = "${fullName} <${email}>";
-    #       enable-folders-sort = true;
-    #       # folders = [ "INBOX" "Sent" "Junk" ];
-    #       };
-    #   };
-    #   # extraBinds = { messages = { d = ":move Trash<Enter>"; }; };
-    #   extraBinds = {
-    #     global = {
-    #       "<C-p>" = ":prev-tab<Enter>";
-    #       "<C-n>" = ":next-tab<Enter>";
-    #       "<C-t>" = ":term<Enter>";
-    #     };
-    #     messages = {
-    #       q = ":quit<Enter>";
-    #       j = ":next<Enter>";
-    #     };
-    #     "compose::editor" = {
-    #       "$noinherit" = "true";
-    #       "$ex" = "<C-x>";
-    #       "<C-k>" = ":prev-field<Enter>";
-    #     };
-    #   };
-    #   extraConfig = {
-    #     general.unsafe-accounts-conf = true;
-    #     ui = {
-    #       index-format = null;
-    #       sort = "-r date";
-    #       # spinner = [ true 2 3.4 "5" ];
-    #       # sidebar-width = 42;
-    #       # mouse-enabled = false;
-    #       # test-float = 1337.42;
-    #     };
-    #   };
-    # };
+    # basic features working
+    aerc = {
+      enable = true;
+      extraBinds = {
+        global = {
+          "<C-p>" = ":prev-tab<Enter>";
+          "<C-n>" = ":next-tab<Enter>";
+          "<C-t>" = ":term<Enter>";
+        };
+        messages = {
+          q = ":quit<Enter>";
+          j = ":next<Enter>";
+        };
+        "compose::editor" = {
+          "$noinherit" = "true";
+          "$ex" = "<C-x>";
+          "<C-k>" = ":prev-field<Enter>";
+        };
+      };
+      extraConfig = {
+        general.unsafe-accounts-conf = true;
+        ui = {
+          # index-format = null;
+          enable-folders-sort = true;
+          sort = "-r date";
+          spinner = [ true 2 3.4 "5" ];
+          sidebar-width = 42;
+          mouse-enabled = false;
+          test-float = 1337.42;
+        };
+      };
+    };
     # thunderbird.enable = true;
     # himalaya = {
     #   enable = true;
     #   # backend = "maildir";
     #   # sender = "smtp";
     # };
+    # basic configuration working
     neomutt.enable = true;
     mbsync.enable = true;
     msmtp.enable = true;
