@@ -17,10 +17,12 @@ This is very early work, some important tasks are pending:
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to flakes.
 - [ ] Manage upgrades.
 - [ ] Consolidate macOS and NixOS configuration.
+- [ ] Test and document bootstrap in clean NixOS.
+- [ ] Test and document bootstrap in clean macOS.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
 - [ ] Support home-manager conf on non-NisOS GNU/Linux systems.
 - [ ] Look into GitHub actions.
-- [ ] Clean static documentation.
+- [ ] Clean static config files.
 
 ### On NixOS
 
