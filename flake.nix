@@ -130,7 +130,7 @@
         inputs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
         modules = [
           # Main `nix-darwin` config
-          ./configuration.nix
+          ./configuration-Baptistes-MBP.nix
 
           # `home-manager` module
           home-manager.darwinModules.home-manager
