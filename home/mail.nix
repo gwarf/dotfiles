@@ -288,7 +288,6 @@ in
           color indicator     black        brightblue
           # arrow in threads
           color tree          brightblue        black
-
           # basic monocolor screen
           mono  bold          bold
           mono  underline     underline
@@ -329,22 +328,17 @@ in
           #color index         color64         black        "~S"                       # superseded messages
           color index         color160        black        "~T"                       # tagged messages
           #color index         color166        color160        "~="                       # duplicated messages
-
           # message headers ------------------------------------------------------
-
           #color header        color240        black        "^"
           color hdrdefault    color240        black
           color header        color33        black        "^(From)"
           color header        color33         black        "^(Subject)"
-
           # body -----------------------------------------------------------------
-
           color quoted        color33         black
           color quoted1       brightmagenta         black
           color quoted2       brightblue        black
           color quoted3       color160        black
           color quoted4       color166        black
-
           color signature     color240        black
           color bold          color235        black
           color underline     color235        black
@@ -357,9 +351,7 @@ in
                                                                |IRL|RTFM|ROTFL|ROFL|YMMV)[*]?"
           color body          color245        black        "[ ][*][^*]*[*][ ]?" # more emoticon?
           color body          color245        black        "[ ]?[*][^*]*[*][ ]" # more emoticon?
-
           ## pgp
-
           color body          color160        black        "(BAD signature)"
           color body          brightmagenta         black        "(Good signature)"
           color body          black        color234        "^gpg: Good signature .*"
@@ -367,12 +359,10 @@ in
           color body          cyan        color160        "^gpg: BAD signature from.*"
           mono  body          bold                            "^gpg: Good signature"
           mono  body          bold                            "^gpg: BAD signature from.*"
-
           # yes, an insance URL regex
           color body          color160        black        "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
           # and a heavy handed email regex
           color body          color160        black        "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
-
           # Various smilies and the like
           #color body          color230        black        "<[Gg]>"                            # <g>
           #color body          color230        black        "<[Bb][Gg]>"                        # <bg>
@@ -386,14 +376,11 @@ in
           # /italic/  (Sometimes gets directory names)
           color body         color33         black        "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"
           mono body          underline                       "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"
-
           # Border lines.
           #color body          color33         black        "( *[-+=#*~_]){6,}"
-
           #folder-hook .                  "color status        J_black         J_status        "
           #folder-hook gmail/inbox        "color status        J_black         brightblue        "
           #folder-hook gmail/important    "color status        J_black         brightblue        "
-
           # patch/diff
           color body green      default "^diff \-.*"
           color body green      default "^index [a-f0-9].*"
