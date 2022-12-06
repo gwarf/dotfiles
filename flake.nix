@@ -7,6 +7,10 @@
     # Conf using unstable, nixos and nix darwin
     # https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
     # https://github.com/vhsconnect/nixos-config/blob/08f47336b280e21fe360567bfd9c663bd5f1844c/flake.nix#L3
+    # https://github.com/Thrimbda/charles/blob/08bb883cff19b01c66bbe25c62c06545ccf40a1c/flake.nix
+    # https://github.com/ttak0422/ENV/blob/1478ba70e1a3eddd4dab1b65c191cc320e5b6cf1/flake.nix
+    # https://github.com/voidcontext/nix-config/blob/695668066e358be43298eab796f16232a09ba24e/flake.nix
+    # https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343/3
     # Package sets
     # XXX decide what to track (stable, master, unstable...)
     # XXX should we use master as nixpkgs on all systems?
