@@ -7,14 +7,19 @@
     # Package sets
     # XXX use a system-dependant nixpkgs repo
     # nixpkgs.url = if pkgs.stdenv.isDariwn then "github:nixos/nixpkgs/nixpkgs-22.11-darwin" else "github:nixos/nixpkgs/nixos-22.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
-    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
+    # XXX should we use master by default on all systems?
+    # nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
+    # XXX Should we use nixos-22.11 as nixpkigs by default on NixOS?
+    nixos-stable.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
 
     # macOS system configuration
     darwin = {
       url = "github:lnl7/nix-darwin/master";
-      # inputs.nixpkgs.follows = "nixpkgs-stable-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin-stable";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # home-manager
@@ -38,7 +43,7 @@
     # flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, nixpkgs-darwin-stable, home-manager, ... }@inputs:
   let
 
     inherit (nixpkgs.lib) attrValues;
@@ -122,6 +127,7 @@
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         # https://github.com/jules-goose/nixcfg/blob/0db16d98d049c1eb7c11f31c5ddbbcd2146e4f15/flake.nix#L22
+        inputs = { inherit home-manager nixpkgs; };
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           overlays = [ inputs.nur.overlay ];
@@ -154,6 +160,8 @@
     darwinConfigurations = {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
+        # https://github.com/booklearner/nixconfig
+        inputs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
         modules = [
           # Main `nix-darwin` config
           ./configuration.nix
