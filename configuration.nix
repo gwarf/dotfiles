@@ -35,7 +35,9 @@
     git
     wget
     vim
-    firefox
+    # XXX breaking nix build on Darwin
+    # error: Package ‘firefox-107.0.1’ in /nix/store/m3kyxfqm6545gb7xhwnsjrsnjj86wmsf-source/pkgs/applications/networking/browsers/firefox/wrapper.nix:404 is not supported on ‘x86_64-darwin’, refusing to evaluate.
+    # firefox
   ];
 
   # https://github.com/nix-community/home-manager/issues/423
