@@ -12,6 +12,8 @@ Currently it's mainly a few random notes and pointers to source of inspiration.
 This is very early work, some important tasks are pending:
 
 - [ ] Try to understand what I'm doing :)
+- [ ] Check https://nixos.org/guides/nix-pills/
+- [ ] Read https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
 - [ ] decide what to track (stable, master, unstable...).
 - [ ] clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to flakes.
@@ -94,6 +96,10 @@ sudo nixos-rebuild switch --flake .
 
 - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
 
+### Videos
+
+- https://youtu.be/AGVXJ-TIv3Y
+
 #### Home manager
 
 - https://nixos.wiki/wiki/Home_Manager
@@ -103,6 +109,8 @@ sudo nixos-rebuild switch --flake .
 #### Real world flakes from other users
 
 - Conf using unstable, nixos and nix darwin
+  - https://github.com/Baitinq/nixos-config
+  - https://github.com/jonringer/nixpkgs-config
   - https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
   - https://github.com/vhsconnect/nixos-config/blob/08f47336b280e21fe360567bfd9c663bd5f1844c/flake.nix#L3
   - https://github.com/Thrimbda/charles/blob/08bb883cff19b01c66bbe25c62c06545ccf40a1c/flake.nix
@@ -121,6 +129,7 @@ sudo nixos-rebuild switch --flake .
 - https://github.com/wvhulle/nixosConfigurations
 - https://github.com/ArdanaLabs/ArdanaTenant
 - Dracula colorscheme: https://github.com/RichardYan314/dotfiles-nix
+- https://github.com/Misterio77/nix-starter-configs
 
 ## yadm
 
