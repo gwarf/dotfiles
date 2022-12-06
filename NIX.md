@@ -28,7 +28,7 @@ sudo nixos-rebuild switch --flake .
 
 ```shell
 nix build ".#nixosConfigurations.Baptistes-MBP.system'
-sudo result/bin/switch-to-configuration switch
+./result/sw/bin/darwin-rebuild switch --flake .
 ```
 
 ## Deleting old generations
