@@ -150,6 +150,18 @@ in
       };
     };
     # thunderbird.enable = true;
+    thunderbird = {
+      enable = true;
+      profiles = {
+        Perso = {
+          isDefault = true;
+          withExternalGnupg = true;
+        };
+      };
+      settings = {
+        "privacy.donottrackheader.enabled" = true;
+      };
+    };
     # failing to build tomly cofniguration
     # himalaya.enable = true;
     # basic configuration working
@@ -262,7 +274,10 @@ in
       # Configure some clients
       aerc.enable = true;
       himalaya.enable = true;
-      # thunderbird.enable = true;
+      thunderbird = {
+        enable = true;
+        profiles = [ "Perso" ];
+      };
       neomutt = {
         enable = true;
         extraConfig = ''
