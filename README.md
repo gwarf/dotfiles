@@ -23,10 +23,11 @@ This is very early work, some important tasks are pending:
 - [ ] Check https://nixos.org/guides/nix-pills/
 - [ ] Read
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
-- [ ] Decide what to track (stable, master, unstable...).
+- [ ] Decide what to track (stable, master, unstable...) or
+      [mix](https://github.com/nix-community/home-manager/issues/1538).
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
-      flakes.
+      flakes. Unless it makes sense to keep this to do system conf?
 - [ ] Manage upgrades.
 - [ ] Consolidate macOS and NixOS configuration.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
@@ -99,17 +100,28 @@ sudo nix-collect-garbage -d
 sudo nixos-rebuild switch --flake .
 ```
 
-### Searching for a package
-
-- https://search.nixos.org/packages
-
 ### References
 
-- https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
+#### Searching for a package, an option,...
 
-### Videos
+- [Home Manager Manual](https://nix-community.github.io/home-manager/)
+- [Home Manager Options](https://nix-community.github.io/home-manager/options.html)
+- [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
+- [Nix packages search](https://search.nixos.org/packages)
+- [Nix options seardch](https://search.nixos.org/options)
+
+#### Videos
 
 - https://youtu.be/AGVXJ-TIv3Y
+
+#### Flakes
+
+- [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
+- https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
+
+#### Nix Darwin
+
+- [Declarative macOS Configuration Using nix-darwin And home-manager](https://xyno.space/post/nix-darwin-introduction)
 
 #### Home manager
 
@@ -120,6 +132,7 @@ sudo nixos-rebuild switch --flake .
 #### Real world flakes from other users
 
 - Conf using unstable, nixos and nix darwin
+  - https://github.com/water-sucks/nixed/blob/main/home/profiles/apps/kitty/default.nix
   - https://github.com/Baitinq/nixos-config
   - https://github.com/jonringer/nixpkgs-config
   - https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
@@ -128,6 +141,7 @@ sudo nixos-rebuild switch --flake .
   - https://github.com/ttak0422/ENV/blob/1478ba70e1a3eddd4dab1b65c191cc320e5b6cf1/flake.nix
   - https://github.com/voidcontext/nix-config/blob/695668066e358be43298eab796f16232a09ba24e/flake.nix
   - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343/3
+- [mystrio NixOS configuration](https://sr.ht/~misterio/nix-config/)
 - https://dpdmancul.gitlab.io/dotfiles/index.html: fully documented
 - https://github.com/jules-goose/nixcfg
 - https://github.com/booklearner/nixconfig
@@ -141,6 +155,8 @@ sudo nixos-rebuild switch --flake .
 - https://github.com/ArdanaLabs/ArdanaTenant
 - Dracula colorscheme: https://github.com/RichardYan314/dotfiles-nix
 - https://github.com/Misterio77/nix-starter-configs
+- [NisOS on WSL](https://github.com/nix-community/NixOS-WSL)
+- [NixOS on SoYouStart](https://web.archive.org/web/20160829180041/http://aborsu.github.io/2015/09/26/Install%20NixOS%20on%20So%20You%20Start%20dedicated%20server/)
 
 ## yadm
 
