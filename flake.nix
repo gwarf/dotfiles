@@ -4,15 +4,18 @@
   description = "Baptiste's systems";
 
   inputs = {
+    # Conf using unstable, nixos and nix darwin
+    # https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
+    # https://github.com/vhsconnect/nixos-config/blob/08f47336b280e21fe360567bfd9c663bd5f1844c/flake.nix#L3
     # Package sets
-    # XXX use a system-dependant nixpkgs repo
-    # nixpkgs.url = if pkgs.stdenv.isDariwn then "github:nixos/nixpkgs/nixpkgs-22.11-darwin" else "github:nixos/nixpkgs/nixos-22.11";
-    # XXX should we use master by default on all systems?
+    # XXX decide what to track (stable, master, unstable...)
+    # XXX should we use master as nixpkgs on all systems?
     # nixpkgs.url = "github:NixOS/nixpkgs/master";
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
-    # XXX Should we use nixos-22.11 as nixpkigs by default on NixOS?
+    # XXX Should we use nixos-22.11 as nixpkigs on NixOS?
     nixos-stable.url = "github:nixos/nixpkgs/nixos-22.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # XXX should we use darwin as nixpkgs on darwin?
     nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
 
     # macOS system configuration
@@ -26,8 +29,7 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
-      # XXX to be fixed
-      # https://github.com/vhsconnect/nixos-config/blob/08f47336b280e21fe360567bfd9c663bd5f1844c/flake.nix#L3
+      # XXX should we use nixpkgs-stable-darwin on darwin?
       # inputs.nixpkgs.follows = "nixpkgs-stable-darwin";
     };
 
@@ -53,7 +55,6 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = with inputs; {
       config = { allowUnfree = true; };
-      # https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
       # overlays = [
       #   inputs.neovim-nightly-overlay.overlay
       #   inputs.nur.overlay
@@ -96,6 +97,7 @@
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-mail = import ./home/mail.nix;
+     # XXX look at https://github.com/gvolpe/neovim-flake
      my-neovim = import ./home/neovim.nix;
      my-git = import ./home/git.nix;
      my-tmux = import ./home/tmux.nix;
@@ -113,14 +115,6 @@
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
    };
-
-    # `home-manager` configs, for systems not running Nix OS
-    # homemManagerConfigurations = {
-    #    import ./home-conf.nix {
-    #      inherit (inputs) nixpkgs home-manager;
-    #      nixosConfigs = inputs.self.nixosConfigurations;
-    #    }
-    # }
 
     # `nixos` configs
     nixosConfigurations = {
@@ -178,5 +172,13 @@
         ];
       };
     };
+
+    # `home-manager` configs, for systems not running Nix OS nor Nix Darwin
+    # homemManagerConfigurations = {
+    #    import ./home-conf.nix {
+    #      inherit (inputs) nixpkgs home-manager;
+    #      nixosConfigs = inputs.self.nixosConfigurations;
+    #    }
+    # }
  };
 }
