@@ -113,7 +113,6 @@
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
              imports = attrValues self.homeManagerModules;
-             # XXX Unused, to be removed?
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
              };
@@ -123,7 +122,7 @@
     };
 
     # `nix-darwin` configs
-    darwinConfigurations = {
+    darwinConfigurations = rec {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         # Includ darwin-sepcific inputs
@@ -138,8 +137,18 @@
             nixpkgs = nixpkgsConfig;
             # `home-manager` config
             home-manager.useGlobalPkgs = true;
+            # install packages to /etc/profiles
             home-manager.useUserPackages = true;
-            home-manager.users.baptiste = import ./home.nix;
+            home-manager.extraSpecialArgs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
+            home-manager.users.baptiste = {
+              imports = [
+                # ./home/fish.nix
+                # ./home/starship.nix
+                # ./home/starship-symbols.nix
+                ./home/main.nix
+              ];
+              home.stateVersion = homeStateVersion;
+             };
           }
         ];
       };
