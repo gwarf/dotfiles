@@ -24,6 +24,13 @@ sudo result/bin/switch-to-configuration switch
 sudo nixos-rebuild switch --flake .
 ```
 
+### On Darwin
+
+```shell
+nix build ".#nixosConfigurations.Baptistes-MBP.system'
+sudo result/bin/switch-to-configuration switch
+```
+
 ## Deleting old generations
 
 ```shell
@@ -44,7 +51,8 @@ sudo nixos-rebuild switch --flake .
 
 ### Conf files
 
-- https://github.com/gvolpe/nix-config
+- https://github.com/gvolpe/nix-config: very complete.
+  - neovim in a dedicated flake: https://github.com/gvolpe/neovim-flake
 - https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
 - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
 - https://github.com/wvhulle/nixosConfigurations
