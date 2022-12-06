@@ -5,15 +5,15 @@
 
   inputs = {
     # Package sets
-    # XXX This is only for darwin, what about nixos systems?
-    # nixpkgs.url = (if pkgs.stdenv.isDarwn then "github:nixos/nixpkgs/nixpkgs-22.11-darwin" else "github:nixos/nixpkgs/nixos-22.11");
-    # nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
+    # XXX use a system-dependant nixpkgs repo
+    # nixpkgs.url = if pkgs.stdenv.isDariwn then "github:nixos/nixpkgs/nixpkgs-22.11-darwin" else "github:nixos/nixpkgs/nixos-22.11";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-stable-darwin.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
 
     # macOS system configuration
     darwin = {
       url = "github:lnl7/nix-darwin/master";
+      # inputs.nixpkgs.follows = "nixpkgs-stable-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,6 +21,9 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
+      # XXX to be fixed
+      # https://github.com/vhsconnect/nixos-config/blob/08f47336b280e21fe360567bfd9c663bd5f1844c/flake.nix#L3
+      # inputs.nixpkgs.follows = "nixpkgs-stable-darwin";
     };
 
     # neovim nightly
@@ -38,15 +41,18 @@
   outputs = { self, darwin, nixpkgs, home-manager, ... }@inputs:
   let
 
-    # inherit (inputs.nixpkgs.lib) attrValues makeOverridable optionalAttrs singleton;
-    # inherit (self.lib) attrValues makeOverridable optionalAttrs singleton;
     inherit (nixpkgs.lib) attrValues;
 
     homeStateVersion = "22.11";
 
     # Configuration for `nixpkgs`
-    nixpkgsConfig = {
+    nixpkgsConfig = with inputs; {
       config = { allowUnfree = true; };
+      # https://github.com/fmoda3/nix-configs/blob/3d640ab43d676a8aad555bcd29527345554252d0/flake.nix#L70
+      # overlays = [
+      #   inputs.neovim-nightly-overlay.overlay
+      #   inputs.nur.overlay
+      # ];
     };
 
     # XXX not used yet, to be used with flake-utils?
