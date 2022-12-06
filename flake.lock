@@ -149,6 +149,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable-darwin": {
+      "locked": {
+        "lastModified": 1670173517,
+        "narHash": "sha256-sk9pkPsr099i2aiWYPX0ytLyYlyQqIAj1tKoFNjgBWw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "527bba34acb1235fed50eab49c627f14de15cc55",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-22.11-darwin",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1670009809,
@@ -187,6 +203,7 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix2lua": "nix2lua",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-stable-darwin": "nixpkgs-stable-darwin",
         "nur": "nur"
       }
     },
