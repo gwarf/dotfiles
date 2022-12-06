@@ -3,19 +3,31 @@
 My messy dotfiles for GNU/Linux and macos. WIP of course :)
 
 > **WIP++** This repository is being converted from [yadm](#yadm) to management
-> using [nix](#nix) and home-manager.
+> using [nix](#nix) and [home-manager](https://nix-community.github.io/home-manager/).
 
 ## Nix
 
 Currently it's mainly a few random notes and pointers to source of inspiration.
 
+This is very early work, some important tasks are pending:
+
+- [ ] Try to understand what I'm doing :)
+- [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to flakes.
+- [ ] Manage upgrades.
+- [ ] Look into GitHub actions.
+- [ ] Consolidate macOS and NixOS configuration.
+- [ ] Support home-manager conf on non-NisOS GNU/Linux systems.
+- [ ] Clean static documentation.
+
 ### On NixOS
 
 #### Managing NixOS using flake
 
-Manage conf in `~/repo/dotfiles`.
+Manage NixOS configruation in `~/repo/dotfiles`.
 
-- TODO: disable/clean `/etc/nixos/configuration.nix`.
+> [home-manager](https://nix-community.github.io/home-manager/) examples are
+> available in the
+> [test modules](https://github.com/nix-community/home-manager/blob/master/tests/modules/programs).
 
 ```shell
 # Download flake locally
@@ -75,26 +87,23 @@ sudo nixos-rebuild switch --flake .
 
 ### References
 
+#### Home manager
 
-#### Conf files
+- https://nixos.wiki/wiki/Home_Manager
+- https://nix-community.github.io/home-manager/
+- https://ghedam.at/24353/tutorial-getting-started-with-home-manager-for-nix
+
+#### Real world flakes from other users
 
 - https://dpdmancul.gitlab.io/dotfiles/index.html: fully documented
 - https://github.com/malob/nixpkgs
 - https://github.com/gvolpe/nix-config: very complete.
   - neovim in a dedicated flake: https://github.com/gvolpe/neovim-flake
+- https://github.com/gmarmstrong/dotfiles
 - https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
 - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
 - https://github.com/wvhulle/nixosConfigurations
 - https://github.com/ArdanaLabs/ArdanaTenant
-
-#### Home manager
-
-- https://nixos.wiki/wiki/Home_Manager
-- https://ghedam.at/24353/tutorial-getting-started-with-home-manager-for-nix
-- https://github.com/gmarmstrong/dotfiles
-
-> Debugging: looking at the test modules for home-manager
-> https://github.com/nix-community/home-manager/blob/master/tests/modules/programs
 
 ## yadm
 
