@@ -45,10 +45,6 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-      overlays = [
-      #   inputs.neovim-nightly-overlay.overlay
-        inputs.nur.overlay
-      ];
     };
 
     # Information about the main user
@@ -64,6 +60,7 @@
      my-bootstrap = import ./modules/system/bootstrap.nix;
      users-primaryUser = import ./modules/system/users.nix;
    };
+   # XXX Factorise and simplify like done in https://github.com/gvolpe/nix-config
    homeManagerModules = {
      # https://github.com/malob/nixpkgs
      colors = import ./modules/home/colors;
@@ -77,19 +74,33 @@
      my-tmux = import ./home/tmux.nix;
      my-main = import ./home/main.nix;
      home-user-info = { lib, ... }: {
-          # XXX fighre what this does
+          # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
    };
    homeManagerLinuxModules = {
-     # https://github.com/malob/nixpkgs
+     # XXX Only working on linux
      my-mail = import ./home/mail.nix;
      my-neovim = import ./home/neovim.nix;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      my-keybase = import ./home/keybase.nix;
      my-firefox = import ./home/firefox.nix;
      my-i3 = import ./home/i3.nix;
+     # XXX working everywhere
+     colors = import ./modules/home/colors;
+     my-colors = import ./home/colors.nix;
+     my-kitty = import ./home/kitty.nix;
      programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
+     my-fish = import ./home/fish.nix;
+     my-starship = import ./home/starship.nix;
+     my-starship-symbols = import ./home/starship-symbols.nix;
+     my-git = import ./home/git.nix;
+     my-tmux = import ./home/tmux.nix;
+     my-main = import ./home/main.nix;
+     home-user-info = { lib, ... }: {
+          # XXX figure what this does
+          options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
+        };
    };
 
     # `nixos` configs
@@ -101,8 +112,7 @@
         # XXX test if really required
         pkgs = import nixpkgs {
           system = "x86_64-linux";
-          # XXX to be tested is correctly passed globally
-          # overlays = [ inputs.nur.overlay ];
+          overlays = [ inputs.nur.overlay ];
         };
         modules = [
           # Main config
@@ -120,7 +130,7 @@
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
               # XXX to be tested
-              imports = attrValues (self.homeManagerModules ++ self.homeManagerLinuxModules);
+              imports = attrValues self.homeManagerLinuxModules;
               home.stateVersion = homeStateVersion;
               home.user-info = primaryUserDefaults;
             };
