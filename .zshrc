@@ -57,12 +57,12 @@
 
 # Windows {{{
 if [[ -f "/mnt/c/WINDOWS/system32/wsl.exe" ]]; then
-  # We're in WSL, which defaults to umask 0 and causes issues with compaudit
-  umask 0022
-  if [[ "${PWD}" = "/mnt/c/Users/${USER}" ]]; then
-    # We're in a default WSL shell
-    cd "${HOME}"
-  fi
+    # We're in WSL, which defaults to umask 0 and causes issues with compaudit
+    umask 0022
+    if [[ "${PWD}" = "/mnt/c/Users/${USER}" ]]; then
+        # We're in a default WSL shell
+        cd "${HOME}"
+    fi
 fi
 # }}}
 
@@ -71,7 +71,7 @@ fi
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 # }}}
 
@@ -119,21 +119,21 @@ zinit light chrissicool/zsh-256color
 
 # XXX dircolors comes from brew/coreutils on Mac OS X
 # zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#         atpull"%atclone" pick"clrs.zsh" nocompile'!'
+    #         atpull"%atclone" pick"clrs.zsh" nocompile'!'
 # zinit light trapd00r/LS_COLORS
 
 # Nordic dircolors configuration
 # https://github.com/arcticicestudio/nord-dircolors
 # zinit ice atclone"dircolors -b src/dir_colors > c.zsh" \
-#             atpull'%atclone' \
-#             pick"c.zsh" \
-#             nocompile'!'
+    #             atpull'%atclone' \
+    #             pick"c.zsh" \
+    #             nocompile'!'
 # zinit light arcticicestudio/nord-dircolors
 
 zinit ice atclone"dircolors -b .dircolors > c.zsh" \
-            atpull'%atclone' \
-            pick"c.zsh" \
-            nocompile'!'
+    atpull'%atclone' \
+    pick"c.zsh" \
+    nocompile'!'
 zinit light dracula/dircolors
 # }}}
 
@@ -165,11 +165,11 @@ zinit snippet PZTM::history
 zinit snippet PZT::modules/terminal/init.zsh
 zstyle ':prezto:module:terminal' auto-title 'yes'
 if (( $+commands[tmux] )); then
-  zstyle ':prezto:module:tmux:auto-start' local 'no'
-  zstyle ':prezto:module:tmux:auto-start' remote 'yes'
-  zstyle ':prezto:module:tmux:session' name 'work'
-  zstyle ':prezto:module:tmux:iterm' integrate 'no'
-  zinit snippet PZTM::tmux
+    zstyle ':prezto:module:tmux:auto-start' local 'no'
+    zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+    zstyle ':prezto:module:tmux:session' name 'work'
+    zstyle ':prezto:module:tmux:iterm' integrate 'no'
+    zinit snippet PZTM::tmux
 fi
 # }}}
 
@@ -178,17 +178,17 @@ fi
 # System clipboard integration
 zinit snippet OMZL::clipboard.zsh
 if (( $+commands[task] )); then
-  zinit snippet OMZP::taskwarrior
-  # Home-related tasks
-  alias th='task rc:~/.taskrc-home'
+    zinit snippet OMZP::taskwarrior
+    # Home-related tasks
+    alias th='task rc:~/.taskrc-home'
 fi
 if (( $+commands[vagrant] )); then
-  zinit snippet OMZP::vagrant
+    zinit snippet OMZP::vagrant
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # This requires having subversion installed
-  zinit ice svn
-  zinit snippet OMZP::macos
+    # This requires having subversion installed
+    zinit ice svn
+    zinit snippet OMZP::macos
 fi
 # }}}
 
@@ -199,16 +199,16 @@ zinit light zsh-users/zsh-completions
 # Install various tools from GitHub {{{
 # fzf, ripgrep, fd, jq, bat, lsd and delta
 zinit from"gh-r" as"program" lucid for \
-  sbin"**/bat -> bat" @sharkdp/bat \
-  sbin"jq* -> jq" stedolan/jq \
-  sbin"**/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
-  sbin'**/lsd -> lsd' atclone'cp -vf **/autocomplete/_lsd _lsd' Peltoche/lsd \
-  sbin'**/delta -> delta' dandavison/delta \
-  sbin"**/bin/gh -> gh" cli/cli \
-  mv"ripgrep* -> rg" pick"rg/rg" BurntSushi/ripgrep \
-  mv"delta* -> delta" pick"delta/delta" dandavison/delta \
-  mv"tree-sitter* -> tree-sitter" tree-sitter/tree-sitter \
-  junegunn/fzf
+    sbin"**/bat -> bat" @sharkdp/bat \
+    sbin"jq* -> jq" stedolan/jq \
+    sbin"**/fd" atclone'cp -vf **/autocomplete/_fd _fd' @sharkdp/fd \
+    sbin'**/lsd -> lsd' atclone'cp -vf **/autocomplete/_lsd _lsd' Peltoche/lsd \
+    sbin'**/delta -> delta' dandavison/delta \
+    sbin"**/bin/gh -> gh" cli/cli \
+    mv"ripgrep* -> rg" pick"rg/rg" BurntSushi/ripgrep \
+    mv"delta* -> delta" pick"delta/delta" dandavison/delta \
+    mv"tree-sitter* -> tree-sitter" tree-sitter/tree-sitter \
+    junegunn/fzf
 # }}}
 
 # FZF {{{
@@ -216,14 +216,14 @@ zinit from"gh-r" as"program" lucid for \
 # Fuzzy command line history search: Ctrl-R
 # Grab initialisation files and get fzf-tmux from GitHub repo
 zinit ice lucid wait"0" as'program' id-as"junegunn/fzf-extras" \
-  multisrc"shell/{completion,key-bindings}.zsh" \
-  pick"bin/fzf-tmux"
+    multisrc"shell/{completion,key-bindings}.zsh" \
+    pick"bin/fzf-tmux"
 zinit light junegunn/fzf
 
 # Completion for openstack, docker and terraform
 zinit wait'1' as"completion" lucid for \
-  https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
-  https://gist.github.com/gwarf/a18dbeaa01d6cf14a95c31a1c7036f61/raw
+    https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
+    https://gist.github.com/gwarf/a18dbeaa01d6cf14a95c31a1c7036f61/raw
 
 # tab completion using fzf
 # https://github.com/Aloxaf/fzf-tab
@@ -244,8 +244,8 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 # use git <command> **
 # https://github.com/wfxr/forgit
 zinit wait lucid blockf for \
-  urbainvaes/fzf-marks \
-  wfxr/forgit
+    urbainvaes/fzf-marks \
+    wfxr/forgit
 # }}}
 
 # https://github.com/jeffreytse/zsh-vi-mode
@@ -255,9 +255,9 @@ zinit light jeffreytse/zsh-vi-mode
 # fast-syntax-highlighting and autosuggestions
 # Theme management: fsh-alias -h
 zinit wait lucid for \
-  atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
-  atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting \
-  hlissner/zsh-autopair
+    atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
+    atinit"zpcompinit;zpcdreplay" zdharma-continuum/fast-syntax-highlighting \
+    hlissner/zsh-autopair
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 # Accept autosuggestion using Ctrl-space
 bindkey '^ ' autosuggest-accept
@@ -281,7 +281,7 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
 if (( $+commands[mysql] )); then
-  zinit light "zpm-zsh/mysql-colorize"
+    zinit light "zpm-zsh/mysql-colorize"
 fi
 
 # npm / nvm
@@ -296,17 +296,17 @@ zinit light lukechilds/zsh-nvm
 # FIXME install from master/cargo
 # https://github.com/ajeetdsouza/zoxide/pull/474
 # zinit ice wait"2" as"command" from"gh-r" lucid \
-#      atclone"./zoxide init zsh --cmd cd > init.zsh" \
-#      atpull"%atclone" src"init.zsh" nocompile'!'
+    #      atclone"./zoxide init zsh --cmd cd > init.zsh" \
+    #      atpull"%atclone" src"init.zsh" nocompile'!'
 # zinit light ajeetdsouza/zoxide
 
 # Run git status or ls when entering a directory
 autoload -Uz add-zsh-hook
 function custom_chpwd() {
-  if [[ -d ".git" ]] || git rev-parse --git-dir > /dev/null 2>&1; then
-    git st
-  fi
-  lsd --icon always --color always
+    if [[ -d ".git" ]] || git rev-parse --git-dir > /dev/null 2>&1; then
+        git st
+    fi
+    lsd --icon always --color always
 }
 add-zsh-hook chpwd custom_chpwd
 
@@ -366,9 +366,9 @@ zinit light laggardkernel/zsh-gpg-agent
 autoload -Uz compinit
 
 if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
-  compinit;
+    compinit;
 else
-  compinit -C;
+    compinit -C;
 fi
 
 # -q is for quiet; actually run all the `compdef's saved before `compinit` call
@@ -404,18 +404,18 @@ bindkey 's' insert-sudo
 
 # Preferred editor for local and remote sessions
 if (( $+commands[nvim] )); then
-  export EDITOR='nvim'
-  export MANPAGER='nvim +Man!'
-  alias vim='nvim'
-  alias vi='nvim'
-  alias vimdiff='nvim -d'
+    export EDITOR='nvim'
+    export MANPAGER='nvim +Man!'
+    alias vim='nvim'
+    alias vi='nvim'
+    alias vimdiff='nvim -d'
 else
-  export EDITOR='vim'
+    export EDITOR='vim'
 fi
 
 # Aliases and functions {{{
 if (( $+commands[msfconsole] )); then
-  alias msfconsole='msfconsole --quiet'
+    alias msfconsole='msfconsole --quiet'
 fi
 
 # --preserver-root is for GNU versions
@@ -454,16 +454,16 @@ alias -s html=firefox
 alias -s xhtml=firefox
 # alias -s pdf=okular
 if (( $+commands[sxiv] )); then
-  alias -s gif=sxiv
-  alias -s jpg=sxiv
-  alias -s jpeg=sxiv
-  alias -s png=sxiv
-  alias -s bmp=sxiv
+    alias -s gif=sxiv
+    alias -s jpg=sxiv
+    alias -s jpeg=sxiv
+    alias -s png=sxiv
+    alias -s bmp=sxiv
 fi
 if (( $+commands[clementine] )); then
-  alias -s mp3=clementine
-  alias -s m4a=clementine
-  alias -s ogg=clementine
+    alias -s mp3=clementine
+    alias -s m4a=clementine
+    alias -s ogg=clementine
 fi
 
 # Aliases for launching some vimwikis
@@ -479,54 +479,54 @@ alias ip='ip -color=auto'
 
 # Use pydf if available
 if (( $+commands[pydf] )); then
-  alias df=pydf
+    alias df=pydf
 fi
 
 if (( $+commands[rlwrap] )); then
-  alias listener="sudo rlwrap nc -lvnp 443"
+    alias listener="sudo rlwrap nc -lvnp 443"
 fi
 
 xev() {
-  command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+    command xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
 
 drun() {
-  command docker run --rm -v $(pwd):/source -it "$1"
+    command docker run --rm -v $(pwd):/source -it "$1"
 }
 
 alias stack='docker run -it --rm -v ~/.stack:~/.stack gbraad/openstack-client:centos stack'
 
 # scan the local network and list the connected devices
 lscan() {
-  local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
-  local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
-  # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
-  printf "$scanReport\n"
+    local ipRange=$(ip addr | grep -oE "192.168.*.*/[1-9]{2}" | awk -F '.' '{print $3}')
+    local scanReport=$(nmap -sn "192.168.$ipRange.1-254/24" | egrep "scan report")
+    # echo "$scanReport\n" | sed -r 's#Nmap scan report for (.*) \((.*)\)#\1 \2#'
+    printf "$scanReport\n"
 }
 
 if [ -x "$HOME/bin/gamadv-xtd3/gam" ]; then
-  # CLI for Google admin, updated GAM
-  # https://github.com/taers232c/GAMADV-XTD3
-  # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
-  PATH="$HOME/bin/gamadv-xtd3/:$PATH"
-  alias gam="$HOME/bin/gamadv-xtd3/gam"
+    # CLI for Google admin, updated GAM
+    # https://github.com/taers232c/GAMADV-XTD3
+    # gam() { "$HOME/bin/gamadv-xtd3/gam" "$@" ; }
+    PATH="$HOME/bin/gamadv-xtd3/:$PATH"
+    alias gam="$HOME/bin/gamadv-xtd3/gam"
 fi
 # }}}
 #
 if (( $+commands[colordiff] )); then
-  alias diff="colordiff"
+    alias diff="colordiff"
 fi
 
 # Ensure that appropriate env var are set for gnome-keyring SSH agent
 if [ -n "$DESKTOP_SESSION" ]; then
-  if [ "$DESKTOP_SESSION" = "i3" -o "$DESKTOP_SESSION" = 'xinitrc' ]; then
-    export $(gnome-keyring-daemon -s)
-  fi
+    if [ "$DESKTOP_SESSION" = "i3" -o "$DESKTOP_SESSION" = 'xinitrc' ]; then
+        export $(gnome-keyring-daemon -s)
+    fi
 fi
 
 # Archlinux command not found (needs pkgfile)
 if [ -f /usr/share/doc/pkgfile/command-not-found.zsh ]; then
-  . /usr/share/doc/pkgfile/command-not-found.zsh
+    . /usr/share/doc/pkgfile/command-not-found.zsh
 fi
 
 # added by travis gem
@@ -542,79 +542,79 @@ fi
 
 # XXX to be tested/documented
 if (( $+commands[oidc-agent-service] )); then
-  eval $(oidc-agent-service use)
-  # for fedcloudclient, once egi account got created
-  export OIDC_AGENT_ACCOUNT=egi
+    eval $(oidc-agent-service use)
+    # for fedcloudclient, once egi account got created
+    export OIDC_AGENT_ACCOUNT=egi
 fi
 
 if (( $+commands[misfortune] )); then
-  misfortune -o
+    misfortune -o
 elif (( $+commands[fortune] )); then
-  if (( $+commands[cowsay] )); then
-    fortune -o | cowsay
-  else
-    fortune -o
-  fi
+    if (( $+commands[cowsay] )); then
+        fortune | cowsay
+    else
+        fortune
+    fi
 fi
 
 # Env variables {{{
 # macOS conf
 if [[ "$OSTYPE" == darwin* ]]; then
-  # Use gnused - brew install gnu-sed
-  PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-  # Use coreutils GNU utilities - brew install coreutils
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-  # Use openjdk from brew - brew install openjdk
-  PATH="/usr/local/opt/openjdk/bin:$PATH"
-  export HOMEBREW_CASK_OPTS='--no-quarantine'
-  export HOMEBREW_NO_ANALYTICS=1
+    # Use gnused - brew install gnu-sed
+    PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    # Use coreutils GNU utilities - brew install coreutils
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    # Use openjdk from brew - brew install openjdk
+    PATH="/usr/local/opt/openjdk/bin:$PATH"
+    export HOMEBREW_CASK_OPTS='--no-quarantine'
+    export HOMEBREW_NO_ANALYTICS=1
 
-# Add go to the path
-  if [ -d "$HOME/go" ]; then
-    export GOPATH="$HOME/go"
-    export GOBIN="$GOPATH/bin"
-    export GOROOT=/usr/local/opt/go/libexec
-    # For github.com/raviqqe/liche
-    export GO111MODULE=on
-    export PATH="$PATH:$GOBIN"
-    export PATH="$PATH:$GOROOT/bin"
-  fi
+    # Add go to the path
+    if [ -d "$HOME/go" ]; then
+        export GOPATH="$HOME/go"
+        export GOBIN="$GOPATH/bin"
+        export GOROOT=/usr/local/opt/go/libexec
+        # For github.com/raviqqe/liche
+        export GO111MODULE=on
+        export PATH="$PATH:$GOBIN"
+        export PATH="$PATH:$GOROOT/bin"
+    fi
 
-  # https://github.com/pyenv/pyenv/wiki/Common-build-problems
-  # Required for building python with pyenv on Mac OS X
-  CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-  LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
-  if [ -d "/usr/local/opt/llvm" ]; then
-    # Favor using llvm stuff from homebrew
-    CPPFLAGS="-I/usr/local/opt/llvm/include"
-    LDFLAGS="-L/usr/local/opt/llvm/lib ${LDFLAGS}"
-    LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++ ${LDFLAGS}"
-    PATH="/usr/local/opt/llvm/bin:${PATH}"
-  fi
-  # Use clang
-  CC=clang
-  CXX=clang++
-  # Speeding up build
-  CFLAGS="-O2 ${CFLAGS}"
-  export CC CXX CFLAGS LDFLAGS CPPFLAGS
-  # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
+    # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+    # Required for building python with pyenv on Mac OS X
+    CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+    LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+    if [ -d "/usr/local/opt/llvm" ]; then
+        # Favor using llvm stuff from homebrew
+        CPPFLAGS="-I/usr/local/opt/llvm/include"
+        LDFLAGS="-L/usr/local/opt/llvm/lib ${LDFLAGS}"
+        LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++ ${LDFLAGS}"
+        PATH="/usr/local/opt/llvm/bin:${PATH}"
+    fi
+    # Use clang
+    CC=clang
+    CXX=clang++
+    # Speeding up build
+    CFLAGS="-O2 ${CFLAGS}"
+    export CC CXX CFLAGS LDFLAGS CPPFLAGS
+    # PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2
 
-  # tail-like of postfix logs on MacOS X
-  postfix_log() {
-    log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
-  }
+    # tail-like of postfix logs on MacOS X
+    postfix_log() {
+        log stream --predicate '(process == "smtpd") || (process == "smtp") || (process == "master")' --info
+    }
 
-  # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
-  # To prevent ctrl-o in vim being discared by the terminal driver
-  # XXX returning error with updated conf
-  # stty: 'standard input': Operation not supported by device
-  # stty discard undef
+    # https://apple.stackexchange.com/questions/3253/ctrl-o-behavior-in-terminal-app
+    # To prevent ctrl-o in vim being discared by the terminal driver
+    # XXX returning error with updated conf
+    # stty: 'standard input': Operation not supported by device
+    # stty discard undef
 
-  # cd into whatever is the forefront Finder window.
-  cdf() {  # short for cdfinder
-    cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
-  }
+    # cd into whatever is the forefront Finder window.
+    cdf() {  # short for cdfinder
+        cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
+    }
 fi
 
 export MAKEOPS='j6'
@@ -623,17 +623,17 @@ export MAKEOPS='j6'
 typeset -U path
 path+=/usr/local/sbin
 if [ -d "$HOME/bin" ]; then
-  PATH="$HOME/bin:$PATH"
+    PATH="$HOME/bin:$PATH"
 fi
 if [ -d "$HOME/.local/bin" ]; then
-  PATH="$HOME/.local/bin:$PATH"
+    PATH="$HOME/.local/bin:$PATH"
 fi
 if [ -d "$HOME/.yarn/bin" ]; then
-  PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 if [ -d "$HOME/.rvm/bin" ]; then
-  PATH="$HOME/.rvm/bin:$PATH"
+    PATH="$HOME/.rvm/bin:$PATH"
 fi
 export PATH
 
@@ -646,17 +646,17 @@ if (( $+commands[kitty] )); then
 fi
 
 if (( $+commands[bat] )); then
-  export SYSTEMD_PAGER='bat'
-  alias less=bat
-  alias cat='bat --paging=never'
-  alias more=bat
-  # Fallback as man pager
-  if [ -z "$MANPAGER" ]; then
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-  fi
-  export BAT_THEME='Dracula'
+    export SYSTEMD_PAGER='bat'
+    alias less=bat
+    alias cat='bat --paging=never'
+    alias more=bat
+    # Fallback as man pager
+    if [ -z "$MANPAGER" ]; then
+        export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    fi
+    export BAT_THEME='Dracula'
 else
-  export SYSTEMD_PAGER='cat'
+    export SYSTEMD_PAGER='cat'
 fi
 
 # Manually set language environment
