@@ -29,11 +29,10 @@
 
     # neovim nightly
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nix2lua.url = "git+https://git.pleshevski.ru/mynix/nix2lua";
 
     # Nix User Repository
     nur.url = "github:nix-community/NUR";
-
-    nix2lua.url = "git+https://git.pleshevski.ru/mynix/nix2lua";
   };
 
   outputs = { self, darwin, nixpkgs, nixpkgs-darwin-stable, home-manager, ... }@inputs:
@@ -46,10 +45,10 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
-      # overlays = [
+      overlays = [
       #   inputs.neovim-nightly-overlay.overlay
-      #   inputs.nur.overlay
-      # ];
+        inputs.nur.overlay
+      ];
     };
 
     # Information about the main user
@@ -67,36 +66,43 @@
    };
    homeManagerModules = {
      # https://github.com/malob/nixpkgs
+     colors = import ./modules/home/colors;
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
+     programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      my-fish = import ./home/fish.nix;
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
-     my-mail = import ./home/mail.nix;
-     my-neovim = import ./home/neovim.nix;
      my-git = import ./home/git.nix;
      my-tmux = import ./home/tmux.nix;
+     my-main = import ./home/main.nix;
+     home-user-info = { lib, ... }: {
+          # XXX fighre what this does
+          options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
+        };
+   };
+   homeManagerLinuxModules = {
+     # https://github.com/malob/nixpkgs
+     my-mail = import ./home/mail.nix;
+     my-neovim = import ./home/neovim.nix;
+     programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      my-keybase = import ./home/keybase.nix;
      my-firefox = import ./home/firefox.nix;
      my-i3 = import ./home/i3.nix;
-     my-main = import ./home/main.nix;
-
-     # Custom modules from gh:malob
-     colors = import ./modules/home/colors;
-     programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
-     home-user-info = { lib, ... }: {
-          options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
-        };
    };
 
     # `nixos` configs
     nixosConfigurations = {
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        # XXX test if we should/can pass nixos-stable
+        # pkgs = import nixos-stable {
+        # XXX test if really required
         pkgs = import nixpkgs {
           system = "x86_64-linux";
-          overlays = [ inputs.nur.overlay ];
+          # XXX to be tested is correctly passed globally
+          # overlays = [ inputs.nur.overlay ];
         };
         modules = [
           # Main config
@@ -110,23 +116,23 @@
             home-manager.useGlobalPkgs = true;
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
+            # pass extra args to the modules
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
-             imports = attrValues self.homeManagerModules;
-             home.stateVersion = homeStateVersion;
-             home.user-info = primaryUserDefaults;
-             };
+              # XXX to be tested
+              imports = attrValues (self.homeManagerModules ++ self.homeManagerLinuxModules);
+              home.stateVersion = homeStateVersion;
+              home.user-info = primaryUserDefaults;
+            };
           }
         ];
       };
     };
 
     # `nix-darwin` configs
-    darwinConfigurations = rec {
+    darwinConfigurations = {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
-        # Includ darwin-sepcific inputs
-        inputs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
         modules = [
           # Main `nix-darwin` config
           ./configuration-Baptistes-MBP.nix
@@ -139,27 +145,12 @@
             home-manager.useGlobalPkgs = true;
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
+            # pass extra args to the modules
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
-              imports = [
-                ./home/colors.nix
-                # ./home/kitty.nix
-                # ./home/fish.nix
-                ./home/starship.nix
-                ./home/starship-symbols.nix
-                # ./home/mail.nix
-                # ./home/neovim.nix
-                ./home/git.nix
-                ./home/tmux.nix
-                # ./home/keybase.nix
-                # ./home/firefox.nix
-                # ./home/i3.nix
-                ./home/starship.nix
-                ./home/starship-symbols.nix
-                ./home/main.nix
-                ./modules/home/colors
-              ];
-              home.stateVersion = homeStateVersion;
+            imports = attrValues self.homeManagerModules;
+             home.stateVersion = homeStateVersion;
+             home.user-info = primaryUserDefaults;
              };
           }
         ];
