@@ -1,28 +1,38 @@
 # gwarf's dotfiles
 
-My messy dotfiles for GNU/Linux and macos. WIP of course :)
+My messy **dotfiles** for GNU/Linux and macos. WIP of course :)
 
-> **WIP++** This repository is being converted from [yadm](#yadm) to management
-> using [nix](#nix) and [home-manager](https://nix-community.github.io/home-manager/).
+Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
+some others are for macOS.
+
+> **WIP++** I'm currently converting this repository from [yadm](#yadm) to
+> management using [nix](#nix) and
+> [home-manager](https://nix-community.github.io/home-manager/).
 
 ## Nix
 
-Currently it's mainly a few random notes and pointers to source of inspiration.
+Currently, it's mainly a few random notes and pointers to source of inspiration.
 
 This is very early work, some important tasks are pending:
 
 - [ ] Try to understand what I'm doing :)
+- [ ] Finalise mail configuration
+- [ ] Import zsh configuration
+- [ ] Finalise fish configuration
+- [ ] Finalise neovim configuration
 - [ ] Check https://nixos.org/guides/nix-pills/
-- [ ] Read https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
-- [ ] decide what to track (stable, master, unstable...).
-- [ ] clean packages sets in inputs.
-- [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to flakes.
+- [ ] Read
+      https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
+- [ ] Decide what to track (stable, master, unstable...).
+- [ ] Clean packages sets in inputs.
+- [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
+      flakes.
 - [ ] Manage upgrades.
 - [ ] Consolidate macOS and NixOS configuration.
-- [ ] Test and document bootstrap in clean NixOS.
-- [ ] Test and document bootstrap in clean macOS.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
 - [ ] Support home-manager conf on non-NisOS GNU/Linux systems.
+- [ ] Test and document bootstrap in clean NixOS.
+- [ ] Test and document bootstrap in clean macOS.
 - [ ] Look into GitHub actions.
 - [ ] Clean static config files.
 
@@ -65,6 +75,7 @@ sudo nixos-rebuild switch
 ### On Darwin
 
 Using `nix-darwin`, initially baesd on the video and gist from @jmatsushita:
+
 - https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 - https://youtu.be/KJgN0lnA5mk
 - https://discourse.nixos.org/t/simple-workable-config-for-m1-macbook-pro-monterey-12-0-1-with-nix-flakes-nix-darwin-and-home-manager/16834
@@ -137,16 +148,14 @@ sudo nixos-rebuild switch --flake .
 
 Managed using https://yadm.io
 
-Some files or configuration parts are for GNU/Linux and some other are for MacOS X.
-
 ## Requirements
 
-* git
-* [yadm](https://yadm.io/docs/install)
+- git
+- [yadm](https://yadm.io/docs/install)
 
 ## Using
 
-``` sh
+```sh
 # Bootstrap
 yadm clone git@github.com:gwarf/dotfiles.git
 yadm status
@@ -157,7 +166,7 @@ yadm commit .my-conf-file -m 'add .my-conf-file'
 yadm push
 ```
 
-## Creating altnerate files
+## Creating alternate files
 
-See https://yadm.io/docs/alternates.
-It's easier to create them directly in the GitHub repository.
+See https://yadm.io/docs/alternates. It's easier to create them directly in the
+GitHub repository.
