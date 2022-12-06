@@ -16,6 +16,7 @@ Currently, it's mainly a few random notes and pointers to source of inspiration.
 This is very early work, some important tasks are pending:
 
 - [ ] Try to understand what I'm doing :)
+- [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
 - [ ] Finalise mail configuration
 - [ ] Import zsh configuration
 - [ ] Finalise fish configuration
@@ -157,6 +158,8 @@ sudo nixos-rebuild switch --flake .
 - https://github.com/Misterio77/nix-starter-configs
 - [NisOS on WSL](https://github.com/nix-community/NixOS-WSL)
 - [NixOS on SoYouStart](https://web.archive.org/web/20160829180041/http://aborsu.github.io/2015/09/26/Install%20NixOS%20on%20So%20You%20Start%20dedicated%20server/)
+- [Installing NixOS on OVH dedicated servers](https://web.archive.org/web/20210125195352/https://www.srid.ca/137ae172.html)
+- https://discourse.nixos.org/t/howto-install-nixos-on-an-ovh-dedicated-server/3089/14
 
 ## yadm
 
