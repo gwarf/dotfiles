@@ -3,7 +3,7 @@
     "darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-darwin-stable"
         ]
       },
       "locked": {
@@ -133,6 +133,38 @@
         "url": "https://git.pleshevski.ru/mynix/nix2lua"
       }
     },
+    "nixos-stable": {
+      "locked": {
+        "lastModified": 1670193339,
+        "narHash": "sha256-oHTAhX4p6+uxcabq0rKL4EyKWPbDLGKec88ocPIU/2Y=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e169cf5b3b1e6cc4a25ff15087c2621605f83409",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixos-unstable": {
+      "locked": {
+        "lastModified": 1670064435,
+        "narHash": "sha256-+ELoY30UN+Pl3Yn7RWRPabykwebsVK/kYE9JsIsUMxQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "61a8a98e6d557e6dd7ed0cdb54c3a3e3bbc5e25c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1670086663,
@@ -149,7 +181,7 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable-darwin": {
+    "nixpkgs-darwin-stable": {
       "locked": {
         "lastModified": 1670173517,
         "narHash": "sha256-sk9pkPsr099i2aiWYPX0ytLyYlyQqIAj1tKoFNjgBWw=",
@@ -167,16 +199,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1670009809,
-        "narHash": "sha256-yt/dQ32Vz4WenDLu4XeHbnXFxiHbTcnU0WwiLW5Ce6c=",
-        "owner": "nixos",
+        "lastModified": 1670316022,
+        "narHash": "sha256-cRsIC0Ft5McBSia0rDdJIHy3muWqKn3rvjFx92DU2dY=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "660e7737851506374da39c0fa550c202c824a17c",
+        "rev": "6d3fc36c541ae715d43db5c1355890f39024b26f",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-22.11",
+        "owner": "NixOS",
+        "ref": "release-22.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -202,8 +234,10 @@
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix2lua": "nix2lua",
+        "nixos-stable": "nixos-stable",
+        "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-stable-darwin": "nixpkgs-stable-darwin",
+        "nixpkgs-darwin-stable": "nixpkgs-darwin-stable",
         "nur": "nur"
       }
     },
