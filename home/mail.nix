@@ -251,7 +251,7 @@ in
       };
       smtp = {
         host = "mail.bapt.name";
-        port = 465;
+        port = 587;
         tls = {
           enable = true;
           useStartTls = true;
@@ -269,8 +269,13 @@ in
         sent = "Sent";
         trash = "Trash";
       };
-      msmtp.enable = true;
       notmuch.enable = true;
+      msmtp = {
+        enable = true;
+        extraConfig = {
+          logfile = "~/.msmtp.log";
+          };
+      };
       # Configure some clients
       aerc.enable = true;
       himalaya.enable = true;
