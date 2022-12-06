@@ -149,7 +149,6 @@ in
         bar = foo;
       };
     };
-    # thunderbird.enable = true;
     thunderbird = {
       enable = true;
       profiles = {
@@ -219,6 +218,7 @@ in
   };
 
   accounts.email = {
+    #  maildirBasePath = "Mail";
     accounts.${username} = {
       address = email;
       userName = email;
