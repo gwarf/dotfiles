@@ -36,11 +36,15 @@
 
   home.packages = with pkgs; [
     # https://github.com/malob/nixpkgs/blob/d930a2e7749248a0b0af7d025d667030011fa7b8/home/packages.nix
+    # some basics
+    curl
+    wget
     # Cool stuff
     gnupg
     mutt
     fortune
     bat
+    gh
     exa
     fd
     ripgrep
@@ -48,25 +52,21 @@
     tealdeer
     thefuck
     xz
-    dracula-theme
     tree
-    nextcloud-client
     silver-searcher
-    lm_sensors
-    liquidctl
 
     # Dev stuff
     jq
     nodejs
     # XXX not available
-    nodePackages.alex
+    # nodePackages.alex
     actionlint
     black
     beautysh
     isort
     stylua
     # XXX not available
-    nodePackages.markdownlint-cli
+    # nodePackages.markdownlint-cli
     pylint
     # XXX not available
     # prettier
@@ -85,7 +85,16 @@
     # vim-language-server
     yaml-language-server
     rnix-lsp
-
+    # Useful nix related tools
+    # cachix # adding/managing alternative binary caches hosted by Cachix
+    # comma # run software from without installing it
+    niv # easy dependency management for nix projects
+    nodePackages.node2nix
+  ] ++ lib.optionals stdenv.isLinux [
+    dracula-theme
+    nextcloud-client
+    lm_sensors
+    liquidctl
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
