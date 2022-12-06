@@ -142,10 +142,22 @@
             home-manager.extraSpecialArgs = { inherit darwin home-manager nixpkgs nixpkgs-darwin-stable; };
             home-manager.users.baptiste = {
               imports = [
+                ./home/colors.nix
+                # ./home/kitty.nix
                 # ./home/fish.nix
-                # ./home/starship.nix
-                # ./home/starship-symbols.nix
+                ./home/starship.nix
+                ./home/starship-symbols.nix
+                # ./home/mail.nix
+                # ./home/neovim.nix
+                ./home/git.nix
+                ./home/tmux.nix
+                # ./home/keybase.nix
+                # ./home/firefox.nix
+                # ./home/i3.nix
+                ./home/starship.nix
+                ./home/starship-symbols.nix
                 ./home/main.nix
+                ./modules/home/colors
               ];
               home.stateVersion = homeStateVersion;
              };
