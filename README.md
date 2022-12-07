@@ -38,9 +38,9 @@ This is very early work, some important tasks are pending:
 - [ ] Look into GitHub actions.
 - [ ] Clean static config files.
 
-### On NixOS
+### NixOS setup
 
-#### Managing NixOS using flake
+#### Managing NixOS using flakes and Mome Manager
 
 Manage NixOS configruation in `~/repo/dotfiles`.
 
@@ -74,7 +74,7 @@ Manage conf in `/etc/nixos/configuration.nix`
 sudo nixos-rebuild switch
 ```
 
-### On Darwin
+### macOS AKA Darwin using flakes and Home Manager
 
 Using `nix-darwin`, initially baesd on the video and gist from @jmatsushita:
 
@@ -89,9 +89,29 @@ nix build ".#nixosConfigurations.Baptistes-MBP.system'
 ./result/sw/bin/darwin-rebuild switch --flake .
 ```
 
-### On archlinux
+### On Archlinux using Home Manager
 
 > TODO
+
+### Searching for a Nix package, an option,...
+
+```shell
+# Using new "experimental" nix search command
+nix search nixpkgs firefox
+# If experimental features are not enabled
+nix --extra-experimental-features "nix-command flakes" search nixpkgs firefox
+# Using legacy slow nix-env
+nix-env -qaP firefox
+```
+
+It is also possible to use different online services to easily search.
+
+- [NixOS Wiki: Searching packages](https://nixos.wiki/wiki/Searching_packages)
+- [Home Manager Manual](https://nix-community.github.io/home-manager/)
+- [Home Manager Options](https://nix-community.github.io/home-manager/options.html)
+- [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
+- [Nix packages search](https://search.nixos.org/packages)
+- [Nix options seardch](https://search.nixos.org/options)
 
 ### Deleting old generations
 
@@ -102,14 +122,6 @@ sudo nixos-rebuild switch --flake .
 ```
 
 ### References
-
-#### Searching for a package, an option,...
-
-- [Home Manager Manual](https://nix-community.github.io/home-manager/)
-- [Home Manager Options](https://nix-community.github.io/home-manager/options.html)
-- [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
-- [Nix packages search](https://search.nixos.org/packages)
-- [Nix options seardch](https://search.nixos.org/options)
 
 #### Videos
 
