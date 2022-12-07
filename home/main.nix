@@ -39,6 +39,7 @@
     # some basics
     curl
     wget
+
     # Cool stuff
     gnupg
     mutt
@@ -58,20 +59,19 @@
     # Dev stuff
     jq
     nodejs
-    # XXX not available
-    # nodePackages.alex
+    podman
+    nodePackages.alex
     actionlint
     black
     beautysh
     isort
     stylua
-    # XXX not available
-    # nodePackages.markdownlint-cli
+    nodePackages.markdownlint-cli
     pylint
-    # XXX not available
-    # prettier
+    nodePackages.prettier
     shellcheck
     shfmt
+
     # LSP servers
     # XXX not available
     # ansible-language-server
@@ -85,6 +85,7 @@
     # vim-language-server
     yaml-language-server
     rnix-lsp
+
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
     # comma # run software from without installing it
