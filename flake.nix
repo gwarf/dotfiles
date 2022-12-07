@@ -73,6 +73,7 @@
      my-git = import ./home/git.nix;
      my-tmux = import ./home/tmux.nix;
      my-main = import ./home/main.nix;
+     my-neovim = import ./home/neovim-nightly.nix;
      home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
