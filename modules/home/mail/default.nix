@@ -293,6 +293,16 @@ in
       neomutt = {
         enable = true;
         extraConfig = ''
+          # Forward message as attachement
+          set mime_forward = ask-yes
+          set mime_forward_rest = ask-yes
+
+          # Bindings
+          # Fetching mail
+          macro index \cf "<shell-escape>mbsync -a<enter>"
+          # Google-like key bindings
+          macro index,pager A "<save-message>+Archive<enter>" "move message to the archive"
+
           # Sorting
           set sort = threads
           set sort_aux = reverse-last-date-received
