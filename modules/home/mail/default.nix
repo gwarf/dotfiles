@@ -28,7 +28,7 @@ in
   ];
 
   # Enable static configuration files
-  home.file.".mailcap".source = ../modules/home/mail/mailcap-linux;
+  home.file.".mailcap".source = ./mailcap-linux;
   # programs = {
   #   ### GnuPG
   #   gpg = {
