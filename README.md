@@ -25,7 +25,7 @@ This is very early work, some important tasks are pending:
 - [ ] Read
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
 - [-] Decide what to track (stable, master, unstable...) or
-      [mix](https://github.com/nix-community/home-manager/issues/1538).
+  [mix](https://github.com/nix-community/home-manager/issues/1538).
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
       flakes. Unless it makes sense to keep this to do system conf?
@@ -87,7 +87,7 @@ Using `nix-darwin`, initially baesd on the video and gist from @jmatsushita:
 
 ```shell
 # Rebuild all system conf
-nix build ".#nixosConfigurations.Baptistes-MBP.system'
+nix build ".#darwinConfigurations.Baptistes-MBP.system"
 # Switch to the new conf
 ./result/sw/bin/darwin-rebuild switch --flake .
 ```
