@@ -4,8 +4,7 @@
 
   inputs = {
     # Package sets
-    # XXX should we use master as nixpkgs on all systems?
-    # nixpkgs.url = "github:NixOS/nixpkgs/master";
+    # XXX clarify differences between release-22.11 and nixos-22.11, if any
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     # XXX Should we use nixos-22.11 as nixpkigs on NixOS?
     nixos-stable.url = "github:nixos/nixpkgs/nixos-22.11";

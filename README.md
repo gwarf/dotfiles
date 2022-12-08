@@ -24,7 +24,7 @@ This is very early work, some important tasks are pending:
 - [ ] Check https://nixos.org/guides/nix-pills/
 - [ ] Read
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
-- [ ] Decide what to track (stable, master, unstable...) or
+- [-] Decide what to track (stable, master, unstable...) or
       [mix](https://github.com/nix-community/home-manager/issues/1538).
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
@@ -39,6 +39,9 @@ This is very early work, some important tasks are pending:
 - [ ] Clean static config files.
 
 ### NixOS setup
+
+> NixOS version: using the stable NixOS release, and allowing to explicitely
+> select packages from unstable.
 
 #### Managing NixOS using flakes and Mome Manager
 
