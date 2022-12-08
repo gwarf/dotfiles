@@ -70,7 +70,7 @@
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-git = import ./home/git.nix;
-     my-tmux = import ./home/tmux.nix;
+     my-tmux = import ./modules/home/tmux;
      my-main = import ./home/main.nix;
      my-neovim = import ./home/neovim-nightly.nix;
      home-user-info = { lib, ... }: {
@@ -95,7 +95,7 @@
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
      my-git = import ./home/git.nix;
-     my-tmux = import ./home/tmux.nix;
+     my-tmux = import ./modules/home/tmux;
      my-main = import ./home/main.nix;
      home-user-info = { lib, ... }: {
           # XXX figure what this does
