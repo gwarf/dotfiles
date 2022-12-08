@@ -65,7 +65,6 @@
      colors = import ./modules/home/colors;
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
-     programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      my-fish = import ./modules/home/fish;
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
@@ -90,7 +89,6 @@
      colors = import ./modules/home/colors;
      my-colors = import ./home/colors.nix;
      my-kitty = import ./home/kitty.nix;
-     programs-kitty-extras = import ./modules/home/programs/kitty/extras.nix;
      my-fish = import ./modules/home/fish;
      my-starship = import ./home/starship.nix;
      my-starship-symbols = import ./home/starship-symbols.nix;
