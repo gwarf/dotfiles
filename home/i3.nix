@@ -4,7 +4,7 @@ let
   mod = "Mod1";
 in {
   # https://github.com/srid/nix-config/blob/705a70c094da53aa50cf560179b973529617eb31/nix/home/i3.nix#L11
-      # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config
+  # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config
   xsession.windowManager.i3 = {
     enable = true;
     config = {
