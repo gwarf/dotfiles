@@ -94,7 +94,8 @@ in
   #   };
   # };
   programs = {
-    # basic features working
+
+    # aerc: basic features working
     aerc = {
       enable = true;
       extraBinds = {
@@ -125,7 +126,6 @@ in
           test-float = 1337.42;
         };
       };
-
       stylesets = {
         asLines = ''
           *.default = true
@@ -144,7 +144,6 @@ in
           "title.reverse" = "true";
         };
       };
-
       templates = rec {
         foo = ''
           X-Mailer: aerc {{version}}
@@ -153,6 +152,8 @@ in
         bar = foo;
       };
     };
+
+    # Thunderird: working with imap
     thunderbird = {
       enable = true;
       profiles = {
@@ -171,6 +172,7 @@ in
     neomutt.enable = true;
     mbsync.enable = true;
     msmtp.enable = true;
+
     notmuch = {
       enable = true;
       hooks = {
@@ -287,6 +289,7 @@ in
         enable = true;
         profiles = [ "Perso" ];
       };
+
       neomutt = {
         enable = true;
         extraConfig = ''
@@ -331,6 +334,28 @@ in
           auto_view text/enriched
           auto_view text/csv
           alternative_order text/calendar text/plain text/enriched text/html
+
+          # Headers
+          # edit all headers lines in the editor
+          set edit_headers
+          ignore *
+          unignore from date subject to cc reply-to
+          unignore x-url x-resent organization
+          unignore x-mailing-list list-id list-unsubscribe
+          unignore user-agent x-agent x-mailer x-newsreader
+          unignore newsgroups posted-to x-also-posted-to
+          unignore sender x-original-sender
+          unignore priority importance
+          unignore mail-followup-to in-reply-to
+          unignore priority x-priority importance
+          # useful to debug smtp path but too verbose
+          # unignore references
+          # unignore content-type
+          unignore message-id
+          unignore tags
+          unignore folder
+          unhdr_order *
+          hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To: Folder: Tags:
 
           # Colors
           color body          brightblue        black        "(baptiste|grenier|gwarf)"
@@ -450,6 +475,7 @@ in
           color body brightblue default "^@@ .*"
         '';
       };
+
     };
   };
 }
