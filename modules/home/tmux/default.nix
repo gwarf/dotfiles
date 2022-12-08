@@ -14,12 +14,12 @@
       {
         plugin = dracula;
         extraConfig = ''
+          set -g @dracula-show-fahrenheit false
           set -g @dracula-show-powerline true
           set -g @dracula-show-left-icon 💀
           set -g @dracula-show-left-sep 
           set -g @dracula-show-right-sep 
           # set -g @dracula-border-contrast true
-          set -g @dracula-show-fahrenheit false
         '';
       }
       {
@@ -38,12 +38,17 @@
     ];
     terminal = "screen-256color";
     extraConfig = ''
-      # Use fish
+      # Use fish as shell
       set -g default-command ${pkgs.fish}/bin/fish
       set -g default-shell ${pkgs.fish}/bin/fish
 
       # automatically renumber tmux windows
       set -g renumber-windows on
+
+      # Disable automatic changes of titles
+      set -g set-titles on
+      set-window-option -g automatic-rename on
+      set-window-option -g allow-rename on
 
       # status bar at the top of the screen
       set-option -g status-position "top"
