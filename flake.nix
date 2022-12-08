@@ -60,7 +60,7 @@
      users-primaryUser = import ./modules/system/users.nix;
    };
    # XXX Factorise and simplify like done in https://github.com/gvolpe/nix-config
-   homeManagerModules = {
+   homeManagerDarwinModules = {
      # https://github.com/malob/nixpkgs
      colors = import ./modules/home/colors;
      my-colors = import ./home/colors.nix;
@@ -158,7 +158,7 @@
             # pass extra args to the modules
             home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.baptiste = {
-            imports = attrValues self.homeManagerModules;
+            imports = attrValues self.homeManagerDarwinModules;
              home.stateVersion = homeStateVersion;
              home.user-info = primaryUserDefaults;
              };
