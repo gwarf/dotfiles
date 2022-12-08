@@ -61,40 +61,35 @@
    };
    # XXX Factorise and simplify like done in https://github.com/gvolpe/nix-config
    homeManagerDarwinModules = {
-     # https://github.com/malob/nixpkgs
-     colors = import ./modules/home/colors;
-     my-colors = import ./home/colors.nix;
-     my-kitty = import ./home/kitty.nix;
-     my-fish = import ./modules/home/fish;
-     my-starship = import ./home/starship.nix;
-     my-starship-symbols = import ./home/starship-symbols.nix;
-     my-git = import ./home/git.nix;
-     my-tmux = import ./modules/home/tmux;
-     my-main = import ./home/main.nix;
-     my-neovim = import ./home/neovim-nightly.nix;
+     kitty = import ./modules/home/kitty;
+     fish = import ./modules/home/fish;
+     starship = import ./home/starship.nix;
+     starship-symbols = import ./home/starship-symbols.nix;
+     git = import ./home/git.nix;
+     tmux = import ./modules/home/tmux;
+     main = import ./home/main.nix;
+     neovim = import ./home/neovim-nightly.nix;
      home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
         };
    };
    homeManagerLinuxModules = {
-     # XXX Only working on linux
-     my-mail = import ./modules/home/mail;
-     my-neovim = import ./home/neovim.nix;
+     # only for GNU/Linux
+     mail = import ./modules/home/mail;
+     neovim = import ./home/neovim.nix;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
-     my-keybase = import ./home/keybase.nix;
-     my-firefox = import ./home/firefox.nix;
-     my-i3 = import ./home/i3.nix;
-     # XXX working everywhere
-     colors = import ./modules/home/colors;
-     my-colors = import ./home/colors.nix;
-     my-kitty = import ./home/kitty.nix;
-     my-fish = import ./modules/home/fish;
-     my-starship = import ./home/starship.nix;
-     my-starship-symbols = import ./home/starship-symbols.nix;
-     my-git = import ./home/git.nix;
-     my-tmux = import ./modules/home/tmux;
-     my-main = import ./home/main.nix;
+     keybase = import ./home/keybase.nix;
+     firefox = import ./home/firefox.nix;
+     i3 = import ./home/i3.nix;
+
+     kitty = import ./modules/home/kitty;
+     fish = import ./modules/home/fish;
+     starship = import ./home/starship.nix;
+     starship-symbols = import ./home/starship-symbols.nix;
+     git = import ./home/git.nix;
+     tmux = import ./modules/home/tmux;
+     main = import ./home/main.nix;
      home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
@@ -105,8 +100,6 @@
     nixosConfigurations = {
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        # XXX test if we should/can pass nixos-stable
-        # pkgs = import nixos-stable {
         # XXX test if really required
         pkgs = import nixpkgs {
           system = "x86_64-linux";
