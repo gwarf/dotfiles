@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
   imports = [
-    ../../modules/home/yabai
+    ../../modules/system/yabai
   ];
   # Nix configuration ------------------------------------------------------------------------------
 
