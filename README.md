@@ -150,6 +150,7 @@ sudo nixos-rebuild switch --flake .
 #### Real world flakes from other users
 
 - Conf using unstable, nixos and nix darwin
+  - https://github.com/MatthiasBenaets/nixos-config
   - https://github.com/water-sucks/nixed/blob/main/home/profiles/apps/kitty/default.nix
   - https://github.com/Baitinq/nixos-config
   - https://github.com/jonringer/nixpkgs-config
