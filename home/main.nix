@@ -55,8 +55,11 @@
     xz
     tree
     silver-searcher
-    # Build failing on macOS
+    # XXX joplin-cli build failing on macOS
+    # joplin
     # nodePackages.joplin
+    # nodePackages_latest.joplin
+    joplin-desktop
 
     # Dev stuff
     jq
