@@ -48,6 +48,8 @@ in
     ${pkgs.thefuck}/bin/thefuck --alias | source
 
     set EDITOR nvim
+    # load vi key bindings
+    fish_vi_key_bindings
 
     # Set color variables
     set emphasized_text  brcyan   # base1
