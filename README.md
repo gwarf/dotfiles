@@ -21,6 +21,8 @@ This is very early work, some important tasks are pending:
 - [ ] Import zsh configuration
 - [ ] Finalise fish configuration
 - [ ] Finalise neovim configuration
+- [ ] Finalise neomutt/mutt configuration
+- [ ] Unlock gnome keyring on login
 - [ ] Check https://nixos.org/guides/nix-pills/
 - [ ] Read
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
