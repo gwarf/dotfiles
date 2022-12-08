@@ -1,7 +1,11 @@
 { config, lib, pkgs, ... }:
+let
+  keycodes = import ./keycodes.nix;
+in
 {
+  # XXX Yabai works, but not skhd
   services.yabai = {
-    enable = true;
+    enable = false;
     package = pkgs.yabai;
     enableScriptingAddition = true;
     config = {
@@ -36,68 +40,82 @@
     };
 
     extraConfig = ''
+        # Workspaces management
+        yabai -m space 1 --label term
+        yabai -m space 2 --label code
+        yabai -m space 3 --label www
+        yabai -m space 4 --label chat
+        yabai -m space 5 --label todo
+        yabai -m space 6 --label music
+        yabai -m space 7 --label seven
+        yabai -m space 8 --label eight
+        yabai -m space 9 --label nine
+        yabai -m space 10 --label ten
         # rules
-        yabai -m rule --add app='System Preferences' manage=off
-        # Any other arbitrary config here
+        yabai -m rule --add app='^System Preferences$' manage=off
+        yabai -m rule --add app="^App Store$" manage=off
+        yabai -m rule --add app="^Messages$" manage=off
+        yabai -m rule --add app="^Zoom$" manage=off
+        # Assign apps to spaces
+        yabai -m rule --add app="Kitty" space=term
+        yabai -m rule --add app="Microsoft Teams" space=chat
+        yabai -m rule --add app="Slack" space=chat
+        yabai -m rule --add app="Skype" space=chat
+        yabai -m rule --add app="Spotify" space=music
     '';
   };
 
+  # XXX skhd is not getting the modifiers properly
   services.skhd = {
-    enable = true;
+    enable = false;
     package = pkgs.skhd;
-    skhdConfig = ''
-      # applications
-      alt - return : ${pkgs.kitty}
-      # focus window
-      cmd - h : ${pkgs.yabai} -m window --focus west
-      cmd - j : ${pkgs.yabai} -m window --focus south
-      cmd - k : ${pkgs.yabai} -m window --focus north
-      cmd - l : ${pkgs.yabai} -m window --focus east
-      cmd + shift - h : ${pkgs.yabai} -m window --focus west
-      cmd + shift - j : ${pkgs.yabai} -m window --focus south
-      cmd + shift - k : ${pkgs.yabai} -m window --focus north
-      cmd + shift - l : ${pkgs.yabai} -m window --focus east
-      ctrl + shift - h : ${pkgs.yabai} -m window --focus west
-      ctrl + shift - j : ${pkgs.yabai} -m window --focus south
-      ctrl + shift - k : ${pkgs.yabai} -m window --focus north
-      ctrl + shift - l : ${pkgs.yabai} -m window --focus east
-      # # workspaces
-      # ctrl + alt - j : ${pkgs.yabai} -m space --focus prev
-      # ctrl + alt - k : ${pkgs.yabai} -m space --focus next
-      # cmd + alt - j : ${pkgs.yabai} -m space --focus prev
-      # cmd + alt - k : ${pkgs.yabai} -m space --focus next
-      # # send window to space and follow focus
-      # ctrl + alt - l : ${pkgs.yabai} -m window --space prev; ${pkgs.yabai} -m space --focus prev
-      # ctrl + alt - h : ${pkgs.yabai} -m window --space next; ${pkgs.yabai} -m space --focus next
-      # cmd + alt - l : ${pkgs.yabai} -m window --space prev; ${pkgs.yabai} -m space --focus prev
-      # cmd + alt - h : ${pkgs.yabai} -m window --space next; ${pkgs.yabai} -m space --focus next
-      # # focus window
-      # alt - h : ${pkgs.yabai} -m window --focus west
-      # alt - l : ${pkgs.yabai} -m window --focus east
-      # # focus window in stacked
-      # alt - j : if [ "$(${pkgs.yabai} -m query --spaces --space | jq -r '.type')" = "stack" ]; then ${pkgs.yabai} -m window --focus stack.next; else ${pkgs.yabai} -m window --focus south; fi
-      # alt - k : if [ "$(${pkgs.yabai} -m query --spaces --space | jq -r '.type')" = "stack" ]; then ${pkgs.yabai} -m window --focus stack.prev; else ${pkgs.yabai} -m window --focus north; fi
-      # # swap managed window
-      # shift + alt - h : ${pkgs.yabai} -m window --swap west
-      # shift + alt - j : ${pkgs.yabai} -m window --swap south
-      # shift + alt - k : ${pkgs.yabai} -m window --swap north
-      # shift + alt - l : ${pkgs.yabai} -m window --swap east
-      # # increase window size
-      # shift + alt - a : ${pkgs.yabai} -m window --resize left:-20:0
-      # shift + alt - s : ${pkgs.yabai} -m window --resize right:-20:0
-      # # toggle layout
-      # alt - t : ${pkgs.yabai} -m space --layout bsp
-      # alt - d : ${pkgs.yabai} -m space --layout stack
-      # # float / unfloat window and center on screen
-      # alt - n : ${pkgs.yabai} -m window --toggle float; \
-      #           ${pkgs.yabai} -m window --grid 4:4:1:1:2:2
-      # # toggle sticky(+float), topmost, picture-in-picture
-      # alt - p : ${pkgs.yabai} -m window --toggle sticky; \
-      #           ${pkgs.yabai} -m window --toggle topmost; \
-      #           ${pkgs.yabai} -m window --toggle pip
-      # reload
-      # shift + alt - r : brew services restart skhd; brew services restart yabai; brew services restart sketchybar
-      # shift + alt - r : brew services restart skhd; brew services restart yabai; brew services restart sketchybar
+    # Written to /etc/skhdrc
+    skhdConfig = let
+      # alt is option key, but is used to provide additinal chars
+      modMask = "cmd";
+      moveMask = "ctrl + cmd";
+      myTerminal = "${pkgs.kitty}/bin/kitty";
+      myEditor = "emacsclient -a '' -nc";
+      myBrowser = "open /Applications/Firefox\ Developer\ Edition.app";
+      noop = "/dev/null";
+      prefix = "${pkgs.yabai}/bin/yabai -m";
+      # prefix = "${pkgs.yabaiM1}/bin/yabai -m";
+      fstOrSnd = {fst, snd}: domain: "${prefix} ${domain} --focus ${fst} || ${prefix} ${domain} --focus ${snd}";
+      nextOrFirst = fstOrSnd { fst = "next"; snd = "first";};
+      prevOrLast = fstOrSnd { fst = "prev"; snd = "last";};
+    in ''
+      # select
+      ${modMask} - j                            : ${prefix} window --focus next || ${prefix} window --focus "$((${prefix} query --spaces --display next || ${prefix} query --spaces --display first) |${pkgs.jq}/bin/jq -re '.[] | select(.visible == 1)."first-window"')" || ${prefix} display --focus next || ${prefix} display --focus first
+      ${modMask} - k                            : ${prefix} window --focus prev || ${prefix} window --focus "$((yabai -m query --spaces --display prev || ${prefix} query --spaces --display last) | ${pkgs.jq}/bin/jq -re '.[] | select(.visible == 1)."last-window"')" || ${prefix} display --focus prev || ${prefix} display --focus last
+      # close
+      ${modMask} - ${keycodes.Delete}           : ${prefix} window --close && yabai -m window --focus prev
+      # fullscreen
+      ${modMask} - h                            : ${prefix} window --toggle zoom-fullscreen
+      # rotate
+      ${modMask} - r                            : ${prefix} window --focus smallest && yabai -m window --warp largest && yabai -m window --focus largest
+      # increase region
+      ${modMask} - ${keycodes.LeftBracket}      : ${prefix} window --resize left:-20:0
+      ${modMask} - ${keycodes.RightBracket}     : ${prefix} window --resize right:-20:0
+      # spaces ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      # switch
+      ${modMask} + alt - j                      : ${prevOrLast "space"}
+      ${modMask} + alt - k                      : ${nextOrFirst "space"}
+      # send window
+      ${modMask} + ${moveMask} - j              : ${prefix} window --space prev
+      ${modMask} + ${moveMask} - k              : ${prefix} window --space next
+      # display  ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      # focus
+      ${modMask} - left                         : ${prevOrLast "display"}
+      ${modMask} - right                        : ${nextOrFirst "display"}
+      # send window
+      ${moveMask} - right                       : ${prefix} window --display prev
+      ${moveMask} - left                        : ${prefix} window --display next
+      # apps  ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      ${modMask} - return                       : ${myTerminal}
+      ${modMask} + shift - return               : ${myEditor}
+      ${modMask} - b                            : ${myBrowser}
+      # reset  ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+      ${modMask} - q                            : pkill yabai; pkill skhd; osascript -e 'display notification "wm restarted"'
     '';
   };
 }
