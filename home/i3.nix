@@ -54,9 +54,7 @@ in {
       };
       keybindings = lib.mkOptionDefault {
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
-        # "${mod}+p" = "exec ${pkgs.dmenu}/bin/dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'";
-        # "${mod}+p" = "exec ${pkgs.rofi}/bin/rofi -show combi -combi-modes 'window,run,ssh' -modes combi -theme arthur -font 'Awesome 5' -show-icons";
-        "${mod}+p" = "exec \"${pkgs.rofi}/bin/rofi -show combi -combi-modes window,run,ssh -modes combi -theme arthur -show-icons\"";
+        "${mod}+p" = "exec \"${pkgs.rofi}/bin/rofi -show combi -combi-modes window,run,ssh -modes combi -show-icons -font 'Awesome 5' -theme arthur\"";
 
         # Focus
         "${mod}+h" = "focus left";
