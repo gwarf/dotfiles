@@ -24,7 +24,11 @@ in
     gnome.gnome-keyring
     vimPlugins.himalaya-vim
     # thunderbird
+    w3m
   ];
+
+  # Enable static configuration files
+  home.file.".mailcap".source = ../modules/home/mail/mailcap-linux;
   # programs = {
   #   ### GnuPG
   #   gpg = {
@@ -286,15 +290,50 @@ in
       neomutt = {
         enable = true;
         extraConfig = ''
-          # Default sorting
-          # Set by threads, most recent on top, but sometimes weird inside threads
-          # Most of the time from oldest to neweset, but sometims some are mixed
+          # Sorting
           set sort = threads
           set sort_aux = reverse-last-date-received
           # thread based on regex
           set sort_re
           set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-          color body          brightblue        black        "(baptiste|genier|gnubila|healthgrid|egi|boob|bgrenier|gwarf)"
+
+          # Viewing MIME
+          set mailcap_path = "~/.mailcap:/etc/mailcap"
+          unauto_view *
+          auto_view text/html
+          auto_view text/calendar application/ics
+          auto_view image/x-portable
+          auto_view image/x-portable-bitmap
+          auto_view image/x-portable-graymap
+          auto_view image/x-portable-anymap
+          auto_view image/x-portable-pixmap
+          auto_view application/pgp-signature
+          auto_view application/pgp
+          auto_view application/x-gunzip
+          auto_view application/postscript
+          auto_view application/x-troff-man
+          auto_view application/x-troff-me
+          auto_view application/x-troff
+          auto_view application/x-gtar
+          auto_view application/x-tar
+          auto_view application/x-tar-gz
+          auto_view application/x-sh
+          auto_view application/x-csh
+          auto_view application/x-shar
+          auto_view application/x-latex
+          auto_view application/x-tex
+          auto_view application/x-dvi
+          auto_view application/x-zip-compressed
+          auto_view application/x-cpio text/richtext
+          auto_view application/pgp-keys
+          auto_view application/octet-stream
+          auto_view text/x-vcard
+          auto_view text/enriched
+          auto_view text/csv
+          alternative_order text/calendar text/plain text/enriched text/html
+
+          # Colors
+          color body          brightblue        black        "(baptiste|grenier|gwarf)"
           color normal        cyan            black
           color error         color160        black
           color tilde         color235        black
