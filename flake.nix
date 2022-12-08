@@ -81,7 +81,7 @@
    };
    homeManagerLinuxModules = {
      # XXX Only working on linux
-     my-mail = import ./home/mail.nix;
+     my-mail = import ./modules/home/mail;
      my-neovim = import ./home/neovim.nix;
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      my-keybase = import ./home/keybase.nix;
