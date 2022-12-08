@@ -29,6 +29,7 @@ in
 
   # Enable static configuration files
   home.file.".mailcap".source = ./mailcap-linux;
+  home.file.".config/neomutt/colors".source = ./colors-solarized-dark-256.muttrc;
   # programs = {
   #   ### GnuPG
   #   gpg = {
@@ -367,122 +368,8 @@ in
           unhdr_order *
           hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To: Folder: Tags:
 
-          # Colors
-          color body          brightblue        black        "(baptiste|grenier|gwarf)"
-          color normal        cyan            black
-          color error         color160        black
-          color tilde         color235        black
-          color message       brightmagenta         black
-          color markers       color160        color254
-          color attachment    color254        black
-          color search        color61         black
-          #color status        J_black         J_status
-          color status        cyan        color235
-          #color status cyan default
-          color indicator     black        brightblue
-          # arrow in threads
-          color tree          brightblue        black
-          # basic monocolor screen
-          mono  bold          bold
-          mono  underline     underline
-          mono  indicator     reverse
-          mono  error         bold
-          color index         color160        black        "~A"                        # all messages
-          color index         color166        black        "~E"                        # expired messages
-          color index         color33         black        "~N"                        # new messages
-          color index         color33         black        "~O"                        # old messages
-          color index         color61         black        "~Q"                        # messages that have been replied to
-          color index         color240        black        "~R"                        # read messages
-          color index         color33         black        "~U"                        # unread messages
-          color index         color33         black        "~U~$"                      # unread, unreferenced messages
-          color index         cyan        black        "~v"                        # messages part of a collapsed thread
-          color index         cyan        black        "~P"                        # messages from me
-          color index         brightmagenta         black        "~p!~F"                     # messages to me
-          color index         brightmagenta         black        "~N~p!~F"                   # new messages to me
-          color index         brightmagenta         black        "~U~p!~F"                   # unread messages to me
-          color index         color240        black        "~R~p!~F"                   # messages to me
-          color index         color160        black        "~F"                        # flagged messages
-          color index         color160        black        "~F~p"                      # flagged messages to me
-          color index         color160        black        "~N~F"                      # new flagged messages
-          color index         color160        black        "~N~F~p"                    # new flagged messages to me
-          color index         color160        black        "~U~F~p"                    # new flagged messages to me
-          color index         color235        color160        "~D"                        # deleted messages
-          color index         color245        black        "~v~(!~N)"                  # collapsed thread with no unread
-          color index         brightblue        black        "~v~(~N)"                   # collapsed thread with some unread
-          color index         color64         black        "~N~v~(~N)"                 # collapsed thread with unread parent
-          # statusbg used to indicated flagged when foreground color shows other status
-          # for collapsed thread
-          color index         color160        color235        "~v~(~F)!~N"                # collapsed thread with flagged, no unread
-          color index         brightblue        color235        "~v~(~F~N)"                 # collapsed thread with some unread & flagged
-          color index         color64         color235        "~N~v~(~F~N)"               # collapsed thread with unread parent & flagged
-          color index         color64         color235        "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
-          color index         brightmagenta         color235        "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
-          color index         brightblue        color160        "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
-          #color index         brightblue        black        "~(~N)"                    # messages in threads with some unread
-          #color index         color64         black        "~S"                       # superseded messages
-          color index         color160        black        "~T"                       # tagged messages
-          #color index         color166        color160        "~="                       # duplicated messages
-          # message headers ------------------------------------------------------
-          #color header        color240        black        "^"
-          color hdrdefault    color240        black
-          color header        color33        black        "^(From)"
-          color header        color33         black        "^(Subject)"
-          # body -----------------------------------------------------------------
-          color quoted        color33         black
-          color quoted1       brightmagenta         black
-          color quoted2       brightblue        black
-          color quoted3       color160        black
-          color quoted4       color166        black
-          color signature     color240        black
-          color bold          color235        black
-          color underline     color235        black
-          color normal        color244        black
-          #
-          color body          color245        black        "[;:][-o][)/(|]"    # emoticons
-          color body          color245        black        "[;:][)(|]"         # emoticons
-          color body          color245        black        "[*]?((N)?ACK|CU|LOL|SCNR|BRB|BTW|CWYL|\
-                                                               |FWIW|vbg|GD&R|HTH|HTHBE|IMHO|IMNSHO|\
-                                                               |IRL|RTFM|ROTFL|ROFL|YMMV)[*]?"
-          color body          color245        black        "[ ][*][^*]*[*][ ]?" # more emoticon?
-          color body          color245        black        "[ ]?[*][^*]*[*][ ]" # more emoticon?
-          ## pgp
-          color body          color160        black        "(BAD signature)"
-          color body          brightmagenta         black        "(Good signature)"
-          color body          black        color234        "^gpg: Good signature .*"
-          color body          cyan        black        "^gpg: "
-          color body          cyan        color160        "^gpg: BAD signature from.*"
-          mono  body          bold                            "^gpg: Good signature"
-          mono  body          bold                            "^gpg: BAD signature from.*"
-          # yes, an insance URL regex
-          color body          color160        black        "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
-          # and a heavy handed email regex
-          color body          color160        black        "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
-          # Various smilies and the like
-          #color body          color230        black        "<[Gg]>"                            # <g>
-          #color body          color230        black        "<[Bb][Gg]>"                        # <bg>
-          #color body          brightblue        black        " [;:]-*[})>{(<|]"                  # :-) etc...
-          # *bold*
-          color body          color33         black        "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
-          mono  body          bold                            "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
-          # _underline_
-          color body          color33         black        "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
-          mono  body          underline                       "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
-          # /italic/  (Sometimes gets directory names)
-          color body         color33         black        "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"
-          mono body          underline                       "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"
-          # Border lines.
-          #color body          color33         black        "( *[-+=#*~_]){6,}"
-          #folder-hook .                  "color status        J_black         J_status        "
-          #folder-hook gmail/inbox        "color status        J_black         brightblue        "
-          #folder-hook gmail/important    "color status        J_black         brightblue        "
-          # patch/diff
-          color body green      default "^diff \-.*"
-          color body green      default "^index [a-f0-9].*"
-          color body green      default "^\-\-\- .*"
-          color body green      default "^[\+]{3} .*"
-          color body cyan       default "^[\+][^\+]+.*"
-          color body red        default "^\-[^\-]+.*"
-          color body brightblue default "^@@ .*"
+          # load colors
+          source ~/.config/neomutt/colors
         '';
       };
 
