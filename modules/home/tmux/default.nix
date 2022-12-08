@@ -11,18 +11,21 @@
     # shell = "${pkgs.fish}/bin/fish";
     plugins = with pkgs.tmuxPlugins; [
       cpu
-      # nord # theme
-      dracula
       {
-        plugin = resurrect;
+        plugin = dracula;
         extraConfig = ''
-          set -g @resurrect-strategy-nvim "session"
           set -g @dracula-show-powerline true
           set -g @dracula-show-left-icon 💀
           set -g @dracula-show-left-sep 
           set -g @dracula-show-right-sep 
           # set -g @dracula-border-contrast true
           set -g @dracula-show-fahrenheit false
+        '';
+      }
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim "session"
         '';
       }
       {
@@ -35,8 +38,10 @@
     ];
     terminal = "screen-256color";
     extraConfig = ''
+      # Use fish
       set -g default-command ${pkgs.fish}/bin/fish
       set -g default-shell ${pkgs.fish}/bin/fish
+
       # automatically renumber tmux windows
       set -g renumber-windows on
 
