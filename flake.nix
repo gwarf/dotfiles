@@ -117,7 +117,7 @@
         };
         modules = [
           # Main config
-          ./configuration-brutal.nix
+          ./machines/brutal/configuration-brutal.nix
 
           # `home-manager` module
           home-manager.nixosModules.home-manager
@@ -146,7 +146,7 @@
         system = "x86_64-darwin";
         modules = [
           # Main `nix-darwin` config
-          ./configuration-Baptistes-MBP.nix
+          ./machines/Baptistes-MBP/configuration-Baptistes-MBP.nix
 
           # `home-manager` module
           home-manager.darwinModules.home-manager
