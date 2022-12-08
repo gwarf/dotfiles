@@ -19,7 +19,8 @@ in
     keyMode = "vi";
     plugins = with plugins; [
       cpu
-      nord # theme
+      # nord # theme
+      dracula
       {
         plugin = resurrect;
         extraConfig = "set -g @resurrect-strategy-nvim 'session'";
