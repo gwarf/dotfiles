@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 {
+  imports = [
+    ../../modules/home/yabai
+  ];
   # Nix configuration ------------------------------------------------------------------------------
+
   nix.settings.substituters = [
     "https://cache.nixos.org/"
   ];
