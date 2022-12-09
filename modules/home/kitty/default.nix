@@ -7,6 +7,7 @@
   programs.kitty.enable = true;
 
   # General config
+  # https://sw.kovidgoyal.net/kitty/conf/
   programs.kitty.settings = {
     font_family = "Cascadia Code PL";
     font_size = "14.0";
@@ -14,7 +15,8 @@
     disable_ligatures = "cursor"; # disable ligatures when cursor is on them
 
     # Window layout
-    hide_window_decorations = "titlebar-only";
+    # hide_window_decorations = "titlebar-only";
+    hide_window_decorations = "no";
     window_padding_width = "10";
 
     # Tab bar
