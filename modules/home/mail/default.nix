@@ -12,19 +12,20 @@ in
     bitwarden-cli
     # rbw
     # pinentry-gtk2
-    pinentry-gnome
-    libsecret
-    aerc
-    himalaya
+    #aerc
+    #himalaya
+    #vimPlugins.himalaya-vim
     mutt
     neomutt
     msmtp
     isync
-    gnome.seahorse
-    gnome.gnome-keyring
-    vimPlugins.himalaya-vim
     # thunderbird
     w3m
+ ] ++ lib.optionals stdenv.isDarwin [
+    gnome.seahorse
+    gnome.gnome-keyring
+    pinentry-gnome
+    libsecret
   ];
 
   # Enable static configuration files
@@ -98,7 +99,7 @@ in
 
     # aerc: basic features working
     aerc = {
-      enable = true;
+      enable = false;
       extraBinds = {
         global = {
           "<C-p>" = ":prev-tab<Enter>";
@@ -284,8 +285,8 @@ in
           };
       };
       # Configure some clients
-      aerc.enable = true;
-      himalaya.enable = true;
+      aerc.enable = false
+      himalaya.enable = false;
       thunderbird = {
         enable = true;
         profiles = [ "Perso" ];
