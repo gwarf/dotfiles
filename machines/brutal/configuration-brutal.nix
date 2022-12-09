@@ -75,13 +75,21 @@
   hardware.rasdaemon.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
+  # https://nixos.wiki/wiki/PulseAudio
+  sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+  nixpkgs.config.pulseaudio = true;
+  hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baptiste = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "audio"
+      "wheel" # Enable ‘sudo’ for the user.
+    ];
     shell = pkgs.fish;
   };
 
