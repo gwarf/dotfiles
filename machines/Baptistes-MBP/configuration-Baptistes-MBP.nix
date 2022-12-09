@@ -69,7 +69,7 @@
   system.defaults = {
      dock = {
        autohide = true;
-       orientation = "right";
+       orientation = "left";
        showhidden = true;
        mineffect = "scale";
        launchanim = false;
@@ -89,8 +89,12 @@
      NSGlobalDomain = {
        AppleKeyboardUIMode = 3;
        ApplePressAndHoldEnabled = false;
-       InitialKeyRepeat = 7;
-       KeyRepeat = 1;
+       # https://apple.stackexchange.com/questions/261163/default-value-for-nsglobaldomain-initialkeyrepeat#288764
+      # lower is slower
+      # defaults read NSGlobalDomain KeyRepeat
+       InitialKeyRepeat = 25;
+      # lower is faster
+       KeyRepeat = 6;
        NSAutomaticCapitalizationEnabled = false;
        NSAutomaticDashSubstitutionEnabled = false;
        NSAutomaticPeriodSubstitutionEnabled = false;
