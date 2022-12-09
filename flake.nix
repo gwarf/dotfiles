@@ -136,7 +136,7 @@
         system = "x86_64-darwin";
         modules = [
           # Main `nix-darwin` config
-          ./machines/Baptistes-MBP/configuration-Baptistes-MBP.nix
+          ./machines/Baptistes-MBP
 
           # `home-manager` module
           home-manager.darwinModules.home-manager
