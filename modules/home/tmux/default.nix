@@ -11,6 +11,13 @@
     # shell = "${pkgs.fish}/bin/fish";
     plugins = with pkgs.tmuxPlugins; [
       cpu
+      yank
+      pain-control
+      copycat
+      open
+      prefix-highlight
+      sessionist
+      logging
       {
         plugin = dracula;
         extraConfig = ''
