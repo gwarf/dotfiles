@@ -15,6 +15,7 @@
     };
     extraConfig.pull = {
       ff = "only";
+      rebase = true;
     };
     extraConfig.push = {
       autoSetupRemote = true;
