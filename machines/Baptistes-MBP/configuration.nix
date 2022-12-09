@@ -72,7 +72,7 @@
        orientation = "left";
        showhidden = true;
        mineffect = "scale";
-       launchanim = false;
+       launchanim = true;
        show-process-indicators = true;
        tilesize = 48;
        static-only = true;
@@ -91,10 +91,11 @@
        ApplePressAndHoldEnabled = false;
        # https://apple.stackexchange.com/questions/261163/default-value-for-nsglobaldomain-initialkeyrepeat#288764
       # lower is slower
-      # defaults read NSGlobalDomain KeyRepeat
+      # defaults read NSGlobalDomain InitialKeyRepeat
        InitialKeyRepeat = 25;
+      # defaults read NSGlobalDomain KeyRepeat
       # lower is faster
-       KeyRepeat = 6;
+       KeyRepeat = 4;
        NSAutomaticCapitalizationEnabled = false;
        NSAutomaticDashSubstitutionEnabled = false;
        NSAutomaticPeriodSubstitutionEnabled = false;
@@ -104,4 +105,12 @@
        NSNavPanelExpandedStateForSaveMode2 = true;
      };
    };
+
+  # Exmaple on user postActivation scripts
+  # system.activationScripts.postActivation.text = ''
+  #   printf "disabling spotlight indexing... "
+  #   mdutil -i off -d / &> /dev/null
+  #   mdutil -E / &> /dev/null
+  #   echo "ok"
+  # "";
 }
