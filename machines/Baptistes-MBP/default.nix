@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   imports = [
-    ./configuration-Baptistes-MBP.nix
+    ./configuration.nix
     ../../modules/system/yabai
   ];
   homebrew = {
