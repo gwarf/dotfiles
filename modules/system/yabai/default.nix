@@ -3,6 +3,13 @@ let
   keycodes = import ./keycodes.nix;
 in
 {
+  # Interesting configurations
+  # https://bryce-s.com/yabai/
+  # https://gist.github.com/TomFaulkner/5531bde4f2955c08bcd07d6e308f6d59
+  # https://sylvaindurand.org/yabai-tiling-window-manager-for-macos/
+  # https://github.com/peel/dotfiles/blob/7c4d9a343b02387bdaa429b6b9e903c85a729a6f/modules/darwin/setup/wm.nix
+  # https://github.com/breuerfelix/dotfiles/blob/1197b1cc961588f209ef3ee7fbb0927b49a4b91a/darwin/yabai.nix
+
   # XXX Yabai works, but not skhd
   services.yabai = {
     enable = false;
@@ -67,6 +74,8 @@ in
   };
 
   # XXX skhd is not getting the modifiers properly
+  # XXX test/debug using skhd from homebrew
+  # https://www.samundra.com.np/skhd-suddenly-stopped-working-after-upgrade/1738
   services.skhd = {
     enable = false;
     package = pkgs.skhd;
