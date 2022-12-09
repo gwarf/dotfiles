@@ -21,7 +21,7 @@ in
     isync
     # thunderbird
     w3m
- ] ++ lib.optionals stdenv.isDarwin [
+ ] ++ lib.optionals stdenv.isLinux [
     gnome.seahorse
     gnome.gnome-keyring
     pinentry-gnome
