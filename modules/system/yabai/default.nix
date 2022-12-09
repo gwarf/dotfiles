@@ -7,6 +7,7 @@ in
   services.yabai = {
     enable = false;
     package = pkgs.yabai;
+    # Would require disabling security features
     enableScriptingAddition = true;
     config = {
       focus_follows_mouse          = "autoraise";
