@@ -24,5 +24,8 @@
       # XXX install from pkgs does not work
       "joplin-cli"
     ];
+    casks = [
+      "rectangle"
+    ];
 };
 }
