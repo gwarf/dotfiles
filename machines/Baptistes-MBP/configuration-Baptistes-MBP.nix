@@ -96,7 +96,7 @@
      NSGlobalDomain = {
        AppleKeyboardUIMode = 3;
        ApplePressAndHoldEnabled = false;
-       InitialKeyRepeat = 10;
+       InitialKeyRepeat = 7;
        KeyRepeat = 1;
        NSAutomaticCapitalizationEnabled = false;
        NSAutomaticDashSubstitutionEnabled = false;
