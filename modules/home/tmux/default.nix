@@ -2,6 +2,7 @@
 { config, pkgs, lib, ... }:
 
 {
+  # XXX open pane in same dir
   programs.tmux = {
     enable = true;
     aggressiveResize = true;
