@@ -285,7 +285,7 @@ in
           };
       };
       # Configure some clients
-      aerc.enable = false
+      aerc.enable = false;
       himalaya.enable = false;
       thunderbird = {
         enable = true;
