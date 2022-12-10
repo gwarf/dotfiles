@@ -95,6 +95,8 @@ in
   #     pinentry = "gnome3";
   #   };
   # };
+
+  # Manage programs
   programs = {
 
     # aerc: basic features working
@@ -171,7 +173,34 @@ in
     # failing to build tomly cofniguration
     # himalaya.enable = true;
     # basic configuration working
-    neomutt.enable = true;
+    neomutt = {
+      enable = true;
+      vimKeys = true;
+      binds = [
+        {
+          action = "complete-query";
+          key = "<Tab>";
+          map = [ "editor" ];
+        }
+        {
+        action = "sidebar-prev";
+        key = "\\Cp";
+        map = [ "index" "pager" ];
+      }
+      ];
+      macros = [
+        {
+          action = "<shell-escape>mbsync -a<enter>";
+          key = "\\Cf";
+          map = [ "index" "pager" ];
+        }
+        {
+          action = "<save-message>+Archive<enter>";
+          key = "A";
+          map = [ "index" "pager" ];
+        }
+      ];
+    };
     mbsync.enable = true;
     msmtp.enable = true;
 
@@ -220,11 +249,19 @@ in
         prefer_plaintext = true;
         ask_subject = false;
         thread_indent_replies = 2;
+        themes_dir = "${pkgs.alot}/share/alot/themes/";
         theme = "tomorrow";
       };
     };
   };
 
+  # Manage service
+  services.mbsync = {
+    enable = true;
+    verbose = true;
+  };
+
+  # Manage accounts
   accounts.email = {
     #  maildirBasePath = "Mail";
     accounts.${username} = {
@@ -295,15 +332,19 @@ in
       neomutt = {
         enable = true;
         extraConfig = ''
+          # Prefer plain text
+          alternative_order text/calendar text/plain text/enriched text/html
+
           # Forward message as attachement
           set mime_forward = ask-yes
           set mime_forward_rest = ask-yes
 
           # Bindings
           # Fetching mail
-          macro index \cf "<shell-escape>mbsync -a<enter>"
-          # Google-like key bindings
-          macro index,pager A "<save-message>+Archive<enter>" "move message to the archive"
+          # Some vim-like keys
+          # bind pager G bottom
+          # bind pager j next-line
+          # bind pager k previous-line
 
           # Sorting
           set sort = threads
@@ -311,6 +352,10 @@ in
           # thread based on regex
           set sort_re
           set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+          # Pager view options
+          # number of index lines to show
+          set pager_index_lines = 8
 
           # Viewing MIME
           set mailcap_path = "~/.mailcap:/etc/mailcap"
@@ -345,7 +390,6 @@ in
           auto_view text/x-vcard
           auto_view text/enriched
           auto_view text/csv
-          alternative_order text/calendar text/plain text/enriched text/html
 
           # Headers
           # edit all headers lines in the editor
