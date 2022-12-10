@@ -68,6 +68,18 @@ sudo result/bin/switch-to-configuration switch
 sudo nixos-rebuild switch --flake .
 ```
 
+##### Updating
+
+```shell
+# Checking satus of inputs
+nix flake info
+# Update all flake inputs and commit lock file
+nix flake update --commit-lock-file
+# Only update home-manager input
+nix flake lock --update-input home-manager
+sudo nixos-rebuild switch --flake .
+```
+
 #### Managing NixOS "centrally"
 
 > **Obsolete**
