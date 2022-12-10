@@ -102,6 +102,7 @@
     nextcloud-client
     lm_sensors
     liquidctl
+    gparted
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
