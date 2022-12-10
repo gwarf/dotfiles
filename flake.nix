@@ -4,12 +4,8 @@
 
   inputs = {
     # Package sets
-    # XXX clarify differences between release-22.11 and nixos-22.11, if any
-    nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
-    # XXX Should we use nixos-22.11 as nixpkigs on NixOS?
-    nixos-stable.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
     nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # XXX should we use darwin as nixpkgs on darwin?
     nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
 
     # macOS system configuration
@@ -22,8 +18,6 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-22.11";
       inputs.nixpkgs.follows = "nixpkgs";
-      # XXX should we use nixpkgs-stable-darwin on darwin?
-      # inputs.nixpkgs.follows = "nixpkgs-stable-darwin";
     };
 
     # neovim nightly
