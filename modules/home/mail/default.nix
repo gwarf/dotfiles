@@ -170,17 +170,99 @@ in
     # basic configuration working
     neomutt = {
       enable = true;
-      vimKeys = true;
+      # interfers with some manually configured bindings
+      vimKeys = false;
       binds = [
-        {
-          action = "complete-query";
-          key = "<Tab>";
-          map = [ "editor" ];
-        }
-        {
-        action = "sidebar-prev";
-        key = "\\Cp";
+      {
+        action = "complete-query";
+        key = "<Tab>";
+        map = [ "editor" ];
+      }
+      {
+        action = "group-reply";
+        key = "R";
+        map = [ "pager" ];
+      }
+      {
+        action = "flag-message";
+        key = "F";
         map = [ "index" "pager" ];
+      }
+      {
+        action = "half-down";
+        key = "\\Cd";
+        map = [ "pager" ];
+      }
+      {
+        action = "half-down";
+        key = "\\Cn";
+        map = [ "pager" ];
+      }
+      {
+        action = "half-up";
+        key = "\\Cp";
+        map = [ "pager" ];
+      }
+      {
+        action = "half-up";
+        key = "\\Cu";
+        map = [ "pager" ];
+      }
+      {
+        # unbind g to get gg working
+        action = "noop";
+        key = "g";
+        map = [ "attach" "browser" "index" "pager" ];
+      }
+      {
+        action = "first-entry";
+        key = "gg";
+        map = [ "index" ];
+      }
+      {
+        action = "top";
+        key = "gg";
+        map = [ "pager" ];
+      }
+      {
+        action = "bottom";
+        key = "G";
+        map = [ "pager" ];
+      }
+      {
+        action = "last-entry";
+        key = "G";
+        map = [ "index" ];
+      }
+      {
+        action = "current-top";
+        key = "zt";
+        map = [ "index" ];
+      }
+      {
+        action = "current-middle";
+        key = "zz";
+        map = [ "index" ];
+      }
+      {
+        action = "current-bottom";
+        key = "zb";
+        map = [ "index" ];
+      }
+      {
+        action = "toggle-new";
+        key = "N";
+        map = [ "index" ];
+      }
+      {
+        action = "previous-line";
+        key = "k";
+        map = [ "pager" ];
+      }
+      {
+        action = "next-line";
+        key = "j";
+        map = [ "pager" ];
       }
       ];
       macros = [
@@ -192,6 +274,23 @@ in
         {
           action = "<save-message>+Archive<enter>";
           key = "A";
+          map = [ "index" "pager" ];
+        }
+        {
+          action = "<save-entry><bol>~/Downloads/<eol>";
+          key = "s";
+          map = [ "attach" ];
+        }
+        {
+          # Show importants mails
+          action = "l(~F | ~U) ! ~D\r";
+          key = "\'";
+          map = [ "index" ];
+        }
+        {
+          # Display smime info using openssl
+          action = "<pipe-entry>openssl smime -verify -noverify -pk7out | openssl pkcs7 -print_certs |openssl x509 -subject -issuer -dates -text | less<enter>";
+          key = "\Ca";
           map = [ "index" "pager" ];
         }
       ];
