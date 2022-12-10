@@ -81,7 +81,7 @@
      programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
      keybase = import ./home/keybase.nix;
      firefox = import ./home/firefox.nix;
-     i3 = import ./home/i3.nix;
+     wm = import ./modules/home/wm;
 
      kitty = import ./modules/home/kitty;
      fish = import ./modules/home/fish;
