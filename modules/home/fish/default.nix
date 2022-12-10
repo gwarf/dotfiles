@@ -16,7 +16,7 @@ in
   # Fish configuration ------------------------------------------------------------------------- {{{
 
   # Aliases
-  programs.fish.shellAliases = with pkgs; {
+  programs.fish.shellAliases = {
     # Nix related
     drb = "darwin-rebuild build --flake ${nixConfigDirectory}";
     drs = "darwin-rebuild switch --flake ${nixConfigDirectory}";
@@ -30,12 +30,24 @@ in
     # Other
     ".." = "cd ..";
     ":q" = "exit";
-    cat = "${bat}/bin/bat";
-    du = "${du-dust}/bin/dust";
-    g = "${gitAndTools.git}/bin/git";
+    cat = "${pkgs.bat}/bin/bat --paging=never";
+    more = "${pkgs.bat}/bin/bat";
+    less = "${pkgs.bat}/bin/bat";
+    du = "${pkgs.du-dust}/bin/dust";
     la = "ll -a";
     ll = "ls -l --time-style long-iso --icons";
-    ls = "${exa}/bin/exa";
+    ls = "${pkgs.exa}/bin/exa";
+
+    # Be conservative with files
+    # --preserver-root is for GNU versions
+    # do not delete / or prompt if deleting more than 3 files at a time
+    rm = "nocorrect rm -i --preserve-root";
+    mv = "nocorrect mv -i";
+    cp = "nocorrect cp -i";
+    # Preventing changing perms on /
+    chown="chown --preserve-root";
+    chmod="chmod --preserve-root";
+    chgrp="chgrp --preserve-root";
   };
 
   # Configuration that should be above `loginShellInit` and `interactiveShellInit`.
@@ -47,8 +59,13 @@ in
     set -g fish_greeting ""
     ${pkgs.thefuck}/bin/thefuck --alias | source
 
+    # Use bat as pager
+    set PAGER '${pkgs.bat}/bin/bat'
+    set SYSTEMD_PAGER '${pkgs.bat}/bin/bat'
+    set MANPAGER='nvim +Man!'
+
+    # nvim!
     set EDITOR nvim
-    # load vi key bindings
     fish_vi_key_bindings
 
     # Set color variables
@@ -57,7 +74,6 @@ in
     set secondary_text   brgreen  # base01
     set background_light black    # base02
     set background       brblack  # base03
-
     set -g fish_color_quote        cyan      # color of commands
     set -g fish_color_redirection  brmagenta # color of IO redirections
     set -g fish_color_end          blue      # color of process separators like ';' and '&'
@@ -68,7 +84,6 @@ in
     set -g fish_color_operator     green     # color of parameter expansion operators like '*' and '~'
     set -g fish_color_escape       red       # color of character escapes like '\n' and and '\x70'
     set -g fish_color_cancel       red       # color of the '^C' indicator on a canceled command
-
     set -g fish_color_command                    $emphasized_text --bold  # color of commands
     set -g fish_color_param                      $normal_text             # color of regular command parameters
     set -g fish_color_comment                    $secondary_text          # color of comments
