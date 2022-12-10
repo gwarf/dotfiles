@@ -1,10 +1,5 @@
 { pkgs, lib, ... }:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration-brutal.nix
-    ];
-
   # Use system-boot
   boot = {
     # Enable magic sysrql (Alt+PrtSc) keys for recovery
