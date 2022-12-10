@@ -23,6 +23,16 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/arch" =
+    { device = "/dev/disk/by-label/arch";
+      fsType = "ext4";
+    };
+
+  fileSystems."/mnt/data" =
+    { device = "/dev/disk/by-label/DataLinux";
+      fsType = "ext4";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
     ];
