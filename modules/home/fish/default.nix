@@ -60,9 +60,10 @@ in
     ${pkgs.thefuck}/bin/thefuck --alias | source
 
     # Use bat as pager
-    set PAGER '${pkgs.bat}/bin/bat'
-    set SYSTEMD_PAGER '${pkgs.bat}/bin/bat'
-    set MANPAGER='nvim +Man!'
+    set PAGER "${pkgs.bat}/bin/bat"
+    # https://unix.stackexchange.com/questions/343168/can-i-prevent-service-foo-status-from-paging-its-output-through-less
+    set SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
+    set MANPAGER "nvim +Man!"
 
     # nvim!
     set EDITOR nvim
