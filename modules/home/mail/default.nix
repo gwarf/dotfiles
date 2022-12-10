@@ -283,14 +283,14 @@ in
         }
         {
           # Show importants mails
-          action = "l(~F | ~U) ! ~D\r";
-          key = "\'";
+          action = "l(~F | ~U) ! ~D\\r";
+          key = "\\'";
           map = [ "index" ];
         }
         {
           # Display smime info using openssl
           action = "<pipe-entry>openssl smime -verify -noverify -pk7out | openssl pkcs7 -print_certs |openssl x509 -subject -issuer -dates -text | less<enter>";
-          key = "\Ca";
+          key = "\\Ca";
           map = [ "index" "pager" ];
         }
       ];
