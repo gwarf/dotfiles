@@ -44,7 +44,7 @@
         '';
       }
     ];
-    terminal = "screen-256color";
+    terminal = "tmux";
     extraConfig = ''
       # Use fish as shell
       set -g default-command ${pkgs.fish}/bin/fish
