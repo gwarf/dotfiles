@@ -375,7 +375,7 @@ in
       # passwordCommand = ''bw get password --session "$BW_SESSION" '/mail/baptiste@bapt.name'';
       # passwordCommand = "bw get password /mail/baptiste@bapt.name";
       # secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
-      passwordCommand = "secret-tool lookup host mail.bapt.name service imaps user ${email}";
+      passwordCommand = "${config.home.profileDirectory}/bin/secret-tool lookup host mail.bapt.name service imaps user ${email}";
       # gpg = {
       #   key = "0xCDA18F02";
       #   encryptByDefault = false;
