@@ -128,10 +128,6 @@
     darwinConfigurations = {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
-        pkgs = import nixpkgs-darwin-stable {
-          system = "x86_64-darwin";
-          overlays = [ inputs.nur.overlay ];
-        };
         modules = [
           # Main `nix-darwin` config
           ./machines/Baptistes-MBP
