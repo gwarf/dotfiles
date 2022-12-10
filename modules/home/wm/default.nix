@@ -1,3 +1,5 @@
+# TODO
+# - automatic unlock of gnome-keyring
 { pkgs, ... }:
 {
   imports = [
