@@ -35,16 +35,17 @@ in
     less = "${pkgs.bat}/bin/bat";
     du = "${pkgs.du-dust}/bin/dust";
     g = "${pkgs.git}/bin/git";
-    la = "ll -a";
-    ll = "ls -l --time-style long-iso --icons";
     ls = "${pkgs.exa}/bin/exa";
+    ll = "ls -l --time-style long-iso --icons";
+    la = "ll -a";
+    l = "ls -l --time-style long-iso --icons";
 
     # Be conservative with files
     # --preserver-root is for GNU versions
     # do not delete / or prompt if deleting more than 3 files at a time
-    rm = "nocorrect rm -i --preserve-root";
-    mv = "nocorrect mv -i";
-    cp = "nocorrect cp -i";
+    rm = "rm -i --preserve-root";
+    mv = "mv -i";
+    cp = "cp -i";
     # Preventing changing perms on /
     chown="chown --preserve-root";
     chmod="chmod --preserve-root";
