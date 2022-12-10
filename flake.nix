@@ -5,7 +5,7 @@
   inputs = {
     # Package sets
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-22.11-darwin";
 
     # macOS system configuration
@@ -128,6 +128,10 @@
     darwinConfigurations = {
       Baptistes-MBP = darwin.lib.darwinSystem {
         system = "x86_64-darwin";
+        pkgs = import nixpkgs-darwin-stable {
+          system = "x86_64-darwin";
+          overlays = [ inputs.nur.overlay ];
+        };
         modules = [
           # Main `nix-darwin` config
           ./machines/Baptistes-MBP
