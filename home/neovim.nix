@@ -1,4 +1,7 @@
 # https://srid.ca/cli/neovim/install
+# TODO
+# - fix automatic indentation when creating block like {}: last } is not porperly aligned
+# - also indent # commented lines when doing >
 { pkgs, inputs, ... }:
 
 let
