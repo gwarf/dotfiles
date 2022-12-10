@@ -2,6 +2,7 @@
 # TODO
 # - fix automatic indentation when creating block like {}: last } is not porperly aligned
 # - also indent # commented lines when doing >
+# - completion from other buffers
 { pkgs, inputs, ... }:
 
 let

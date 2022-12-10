@@ -14,9 +14,9 @@ bind pager <down> next-line
 bind pager <up> previous-line
 bind pager \cd half-down
 bind pager \ce next-line
-bind pager \cf next-page
+# XXX overriden by mbsync call
+# bind pager \cf next-page
 bind pager \cm next-line
-bind pager \cn half-down
 bind pager \cn next-page
 bind pager \cp half-up
 bind pager \cu half-up
