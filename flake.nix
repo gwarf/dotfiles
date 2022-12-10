@@ -101,7 +101,7 @@
         };
         modules = [
           # Main config
-          ./machines/brutal/configuration-brutal.nix
+          ./machines/brutal
 
           # `home-manager` module
           home-manager.nixosModules.home-manager
