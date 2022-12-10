@@ -33,6 +33,11 @@
       fsType = "ext4";
     };
 
+  fileSystems."/mnt/old_uefi" =
+    { device = "/dev/nvme0n1p2";
+      fsType = "vfat";
+    };
+
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
     ];
