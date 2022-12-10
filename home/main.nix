@@ -12,10 +12,11 @@
   # Bat, a substitute for cat.
   # https://github.com/sharkdp/bat
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.bat.enable
-  programs.bat.enable = true;
-  programs.bat.config = {
-    style = "plain";
-    theme = "Dracula";
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "Dracula";
+    };
   };
 
   # Zoxide, a faster way to navigate the filesystem
