@@ -80,6 +80,17 @@ nix flake lock --update-input home-manager
 sudo nixos-rebuild switch --flake .
 ```
 
+##### Cleaning old generations
+
+```shell
+# Delete all generations
+nix-env --delete-generations old
+# Delete generations older than 14d
+nix-env --delete-generations 14d
+# Delete specific generations
+nix-env --delete-generations 10 11 14
+```
+
 #### Managing NixOS "centrally"
 
 > **Obsolete**
