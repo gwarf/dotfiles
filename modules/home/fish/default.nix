@@ -34,6 +34,7 @@ in
     more = "${pkgs.bat}/bin/bat";
     less = "${pkgs.bat}/bin/bat";
     du = "${pkgs.du-dust}/bin/dust";
+    g = "${pkgs.git}/bin/git";
     la = "ll -a";
     ll = "ls -l --time-style long-iso --icons";
     ls = "${pkgs.exa}/bin/exa";
