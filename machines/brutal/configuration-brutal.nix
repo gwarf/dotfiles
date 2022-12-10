@@ -70,6 +70,7 @@
   security.pam.services.lightdm.enableGnomeKeyring = true;
   services.gnome.gnome-keyring.enable = true;
   security.polkit.enable = true;
+  programs.dconf.enable = true;
 
   # hardware logging
   hardware.rasdaemon.enable = true;
