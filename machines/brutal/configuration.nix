@@ -11,6 +11,8 @@
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.systemd-boot.configurationLimit = 10;
   };
 
   # boot.loader.systemd-boot.consoleMode = "keep";
@@ -116,9 +118,12 @@
   nix.settings.trusted-users = [
     "@admin"
   ];
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 8d";
+  };
 
   # Enable experimental nix command and flakes
-  # nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     auto-optimise-store = true
     experimental-features = nix-command flakes
