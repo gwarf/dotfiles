@@ -103,6 +103,7 @@
     lm_sensors
     liquidctl
     gparted
+    arch-install-scripts
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
