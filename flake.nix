@@ -38,6 +38,7 @@
     # Configuration for `nixpkgs`
     nixpkgsConfig = {
       config = { allowUnfree = true; };
+      overlays = [ inputs.nur.overlay ];
     };
 
     # Information about the main user
@@ -94,11 +95,6 @@
     nixosConfigurations = {
       brutal = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        # XXX test if really required
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          overlays = [ inputs.nur.overlay ];
-        };
         modules = [
           # Main config
           ./machines/brutal
