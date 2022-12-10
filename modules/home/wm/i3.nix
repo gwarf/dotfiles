@@ -164,6 +164,7 @@ in {
     # rofi-pass
     rofi-rbw
     pinentry-rofi
-    gnome3.gnome-keyring
   ];
+
+  services.dunst.enable = true;
 }
