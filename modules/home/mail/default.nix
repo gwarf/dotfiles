@@ -21,11 +21,6 @@ in
     isync
     # thunderbird
     w3m
- ] ++ lib.optionals stdenv.isLinux [
-    gnome.seahorse
-    gnome.gnome-keyring
-    pinentry-gnome
-    libsecret
   ];
 
   # Enable static configuration files
