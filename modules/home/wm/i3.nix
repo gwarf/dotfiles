@@ -53,7 +53,7 @@ in {
       ];
       assigns = {
         "1" = [{ class = "^kitty$"; }];
-        "2" = [{ class = "^Firefox$"; }];
+        "2" = [{ class = "^firefox$"; }];
         "3" = [{ class = "^Keybase$"; }];
         "4" = [{ class = "^Joplin$"; }];
       };
