@@ -51,11 +51,10 @@ in {
         { class = "Pavucontrol"; }
       ];
       assigns = {
-        "1: term" = [{ class = "^kitty$"; }];
-        "2: web" = [{ class = "^Firefox$"; }];
-        "3: chat" = [{ class = "^Keybase$"; }];
-        "4: notes" = [{ class = "^Joplin$"; }];
-        "7: misc" = [{ class = "^Firefox$"; window_role = "About"; }];
+        "1" = [{ class = "^kitty$"; }];
+        "2" = [{ class = "^Firefox$"; }];
+        "3" = [{ class = "^Keybase$"; }];
+        "4" = [{ class = "^Joplin$"; }];
       };
       startup = [
         {
@@ -229,6 +228,7 @@ in {
     # rofi-pass
     rofi-rbw
     pinentry-rofi
+    i3-gaps
   ];
 
   services.dunst.enable = true;
