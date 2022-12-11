@@ -80,6 +80,9 @@
   # hardware logging
   hardware.rasdaemon.enable = true;
 
+  # nitrokey
+  hardware.nitrokey.enable = true;
+
   # Enable sound.
   # https://nixos.wiki/wiki/PulseAudio
   sound.enable = true;
@@ -95,6 +98,7 @@
     extraGroups = [
       "audio"
       "wheel" # Enable ‘sudo’ for the user.
+      "nitrokey"
     ];
     shell = pkgs.fish;
   };
@@ -128,7 +132,7 @@
     allowReboot = false;
   };
 
-  # Nix configuration ------------------------------------------------------------------------------
+  # Nix configuration
   nix.settings.substituters = [
     "https://cache.nixos.org/"
   ];
