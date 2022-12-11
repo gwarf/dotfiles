@@ -7,20 +7,21 @@ in {
   # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config
   xsession.windowManager.i3 = {
     enable = true;
-    package = pkgs.i3-gaps;
+    package = pkgs.i3;
     config = {
-      gaps = {
-        bottom = 5;
-        horizontal = 5;
-        left = 5;
-        right = 5;
-        inner = 12;
-        outer = 5;
-        top = 5;
-        vertical = 5;
-        smartBorders = "on";
-        smartGaps = true;
-      };
+      # XXX gaps got merged to main igaps, to be released in 4.22
+      # gaps = {
+      #   bottom = 5;
+      #   horizontal = 5;
+      #   left = 5;
+      #   right = 5;
+      #   inner = 12;
+      #   outer = 5;
+      #   top = 5;
+      #   vertical = 5;
+      #   smartBorders = "on";
+      #   smartGaps = true;
+      # };
       window.titlebar = false;
       fonts = {
         names = ["JetBrainsMono Nerd Font"];
@@ -64,7 +65,8 @@ in {
         }
         { command = "dunst"; notification = false; }
         { command = "kitty"; }
-        { command = "nextcloud --background"; notification = false; }
+        # XXX to be re-enabled once properly setup
+        # { command = "nextcloud --background"; notification = false; }
         { command = "firefox"; }
         { command = "joplin-desktop"; }
         { command = "keybase-gui";  }
@@ -228,7 +230,6 @@ in {
     # rofi-pass
     rofi-rbw
     pinentry-rofi
-    i3-gaps
     dunst
   ];
 
