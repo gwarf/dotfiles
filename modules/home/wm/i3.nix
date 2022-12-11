@@ -59,7 +59,7 @@ in {
       };
       startup = [
         {
-          command = "feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg &";
+          command = "feh --no-fehbg --bg-fill ~/repos/dotfiles/.config/herbstluftwm/fantasy-landscape2.jpg";
           notification = false;
           always = true;
         }
@@ -67,9 +67,9 @@ in {
         { command = "kitty"; }
         # XXX to be re-enabled once properly setup
         # { command = "nextcloud --background"; notification = false; }
-        { command = "firefox"; }
-        { command = "joplin-desktop"; }
-        { command = "keybase-gui";  }
+        # { command = "firefox"; }
+        # { command = "joplin-desktop"; }
+        # { command = "keybase-gui";  }
       ];
       # https://github.com/dracula/i3/blob/master/.config/i3/config
       colors = {
