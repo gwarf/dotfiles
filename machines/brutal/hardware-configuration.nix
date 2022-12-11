@@ -16,6 +16,9 @@
   fileSystems."/" =
     { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
+      options = [
+        "noatime"
+      ];
     };
 
   fileSystems."/boot" =
@@ -26,6 +29,9 @@
   fileSystems."/mnt/arch" =
     { device = "/dev/disk/by-label/arch";
       fsType = "ext4";
+      options = [
+        "noauto"
+      ];
     };
 
   fileSystems."/mnt/data" =
@@ -36,6 +42,9 @@
   fileSystems."/mnt/old_uefi" =
     { device = "/dev/nvme0n1p2";
       fsType = "vfat";
+      options = [
+        "noauto"
+      ];
     };
 
   swapDevices =
