@@ -7,12 +7,31 @@ in {
   # https://nix-community.github.io/home-manager/options.html#opt-xsession.windowManager.i3.config
   xsession.windowManager.i3 = {
     enable = true;
+    package = pkgs.i3-gaps;
     config = {
+      gaps = {
+        bottom = 5;
+        horizontal = 5;
+        left = 5;
+        right = 5;
+        inner = 12;
+        outer = 5;
+        top = 5;
+        vertical = 5;
+        smartBorders = "on";
+      };
       modifier = mod;
       fonts = {
         names = ["JetBrainsMono Nerd Font"];
         size = 12.0;
       };
+      startup = [
+        {
+          command = "feh --no-fehbg --bg-fill ~/.config/herbstluftwm/fantasy-landscape2.jpg &";
+          notification = false;
+          always = true;
+        }
+      ];
       # https://github.com/dracula/i3/blob/master/.config/i3/config
       colors = {
         background = "#F8F8F2";
