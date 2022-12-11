@@ -28,10 +28,11 @@
     nur.url = "github:nix-community/NUR";
   };
 
-  outputs = { self, darwin, nixpkgs, nixpkgs-darwin-stable, home-manager, ... }@inputs:
+  outputs = { self, darwin, nixpkgs, nixpkgs-unstable, nixpkgs-darwin-stable, home-manager, ... }@inputs:
   let
-
     inherit (nixpkgs.lib) attrValues;
+    # XXX not working, find how to install a iven package from unstable
+    # pkgs-unstable = nixpkgs-unstable.legacyPackages.${builtins.currentSystem};
 
     homeStateVersion = "22.11";
 
@@ -108,7 +109,7 @@
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
             # pass extra args to the modules
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs nixpkgs-unstable; };
             home-manager.users.baptiste = {
               # XXX to be tested
               imports = attrValues self.homeManagerLinuxModules;

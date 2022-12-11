@@ -3,7 +3,7 @@
 # - nextcloud
 # - i3 config: minimal: cpu temp in bar
 # - access email (mutt, isync, notmuch)
-{ config, pkgs, lib, ... }:
+{ config, pkgs, nixpkgs-unstable, lib, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -108,7 +108,8 @@
     gparted
     arch-install-scripts
     nitrokey-app
-    pynitrokey
+    # XXX not working
+    # nixpkgs-unstable.pynitrokey
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
