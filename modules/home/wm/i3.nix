@@ -19,11 +19,43 @@ in {
         top = 5;
         vertical = 5;
         smartBorders = "on";
+        smartGaps = true;
       };
-      modifier = mod;
+      window.titlebar = false;
       fonts = {
         names = ["JetBrainsMono Nerd Font"];
         size = 12.0;
+      };
+      # press two times the same workspace change to go back
+      workspaceAutoBackAndForth = true;
+      modifier = mod;
+      keybindings = lib.mkOptionDefault {
+        "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
+        "${mod}+p" = "exec \"${pkgs.rofi}/bin/rofi -show combi -combi-modes window,run,ssh -modes combi -show-icons -font 'Awesome 5' -theme arthur\"";
+
+        # Focus
+        "${mod}+h" = "focus left";
+        "${mod}+j" = "focus down";
+        "${mod}+k" = "focus up";
+        "${mod}+l" = "focus right";
+
+        # Move
+        "${mod}+Shift+h" = "move left";
+        "${mod}+Shift+j" = "move down";
+        "${mod}+Shift+k" = "move up";
+        "${mod}+Shift+l" = "move right";
+      };
+      defaultWorkspace = "1";
+      floating.criteria = [
+        { title = "Steam - Update News"; }
+        { class = "Pavucontrol"; }
+      ];
+      assigns = {
+        "1: term" = [{ class = "^kitty$"; }];
+        "2: web" = [{ class = "^Firefox$"; }];
+        "3: chat" = [{ class = "^Keybase$"; }];
+        "4: notes" = [{ class = "^Joplin$"; }];
+        "7: misc" = [{ class = "^Firefox$"; window_role = "About"; }];
       };
       startup = [
         {
@@ -31,6 +63,12 @@ in {
           notification = false;
           always = true;
         }
+        { command = "dunst"; notification = false; }
+        { command = "kitty"; }
+        { command = "nextcloud --background"; notification = false; }
+        { command = "firefox"; }
+        { command = "joplin-desktop"; }
+        { command = "keybase-gui";  }
       ];
       # https://github.com/dracula/i3/blob/master/.config/i3/config
       colors = {
@@ -71,22 +109,6 @@ in {
           text = "#F8F8F2";
         };
       };
-      keybindings = lib.mkOptionDefault {
-        "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
-        "${mod}+p" = "exec \"${pkgs.rofi}/bin/rofi -show combi -combi-modes window,run,ssh -modes combi -show-icons -font 'Awesome 5' -theme arthur\"";
-
-        # Focus
-        "${mod}+h" = "focus left";
-        "${mod}+j" = "focus down";
-        "${mod}+k" = "focus up";
-        "${mod}+l" = "focus right";
-
-        # Move
-        "${mod}+Shift+h" = "move left";
-        "${mod}+Shift+j" = "move down";
-        "${mod}+Shift+k" = "move up";
-        "${mod}+Shift+l" = "move right";
-      };
       bars = [{
           colors = {
               background = "#282A36";
@@ -126,6 +148,30 @@ in {
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-bottom.toml";
      }];
     };
+    extraConfig = ''
+      # FIXME workspace naming does not work
+      # set $ws1 "1: term"
+      # set $ws2 "2: web"
+      # set $ws3 "3: chat"
+      # set $ws4 "4: notes"
+      # set $ws5 "5: media"
+      # set $ws6 "6: vm"
+      # set $ws7 "7: misc"
+      # bindsym Mod1+1 workspace number $ws1
+      # bindsym Mod1+2 workspace number $ws2
+      # bindsym Mod1+3 workspace number $ws3
+      # bindsym Mod1+4 workspace number $ws4
+      # bindsym Mod1+5 workspace number $ws5
+      # bindsym Mod1+6 workspace number $ws6
+      # bindsym Mod1+7 workspace number $ws7
+      # bindsym Mod1+Shift+1 move container to workspace number $ws1
+      # bindsym Mod1+Shift+2 move container to workspace number $ws2
+      # bindsym Mod1+Shift+3 move container to workspace number $ws3
+      # bindsym Mod1+Shift+4 move container to workspace number $ws4
+      # bindsym Mod1+Shift+5 move container to workspace number $ws5
+      # bindsym Mod1+Shift+6 move container to workspace number $ws6
+      # bindsym Mod1+Shift+7 move container to workspace number $ws7
+    '';
   };
 
   # https://github.com/greshake/i3status-rust
