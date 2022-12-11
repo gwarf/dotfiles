@@ -21,6 +21,7 @@ in
     isync
     # thunderbird
     w3m
+    urlview
   ];
 
   # Enable static configuration files
