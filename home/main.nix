@@ -56,11 +56,14 @@
     xz
     tree
     silver-searcher
+
+    # Graphical tools
     # XXX joplin-cli build failing on macOS
     # joplin
     # nodePackages.joplin
     # nodePackages_latest.joplin
     joplin-desktop
+    libreoffice-still
 
     # Dev stuff
     jq
