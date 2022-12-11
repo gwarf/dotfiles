@@ -229,6 +229,7 @@ in {
     rofi-rbw
     pinentry-rofi
     i3-gaps
+    dunst
   ];
 
   services.dunst.enable = true;
