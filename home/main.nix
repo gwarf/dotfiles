@@ -51,7 +51,6 @@
     fd
     ripgrep
     du-dust
-    tealdeer
     thefuck
     xz
     tree
@@ -108,4 +107,16 @@
     coreutils
     m-cli # useful macOS CLI commands
   ];
+  programs.tealdeer = {
+    enable = true;
+    settings = {
+      display = {
+        compact = true;
+        use_pager = false;
+      };
+      updates = {
+        auto_update = false;
+      };
+    };
+  };
 }
