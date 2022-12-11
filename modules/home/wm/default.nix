@@ -14,4 +14,6 @@
     pinentry-gnome
     libsecret
   ];
+
+  programs.feh.enable = true;
 }
