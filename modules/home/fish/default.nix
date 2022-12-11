@@ -68,7 +68,7 @@ in
     set -Ux MANPAGER "nvim +Man!"
 
     # nvim!
-    set -Ux EDITOR nvim
+    set EDITOR nvim
     fish_vi_key_bindings
 
     # Set color variables
