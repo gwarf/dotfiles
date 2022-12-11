@@ -390,9 +390,12 @@ in
       set expandtab     " Convert tabs to spaces
       set tabstop=2     " Display 2 spaces for a tab
       set shiftwidth=2  " Use this number of spaces for indentation
-      set smartindent   " Make indenting smart
-      set autoindent    " Use auto indent
+      " XXX breaking indentation of new comments
+      " https://stackoverflow.com/questions/9333134/prevent-gvim-from-auto-indenting-comments
+      " set smartindent   " Make indenting smart
+      " set autoindent    " Use auto indent
       set breakindent   " Indent wrapped lines to match line start
+      set cindent cinkeys-=0# " Configure indentation
       set virtualedit=block
       set formatlistpat=^\\s*\\w\\+[.\)]\\s\\+\\\\|^\\s*[\\-\\+\\*]\\+\\s\\+
       set foldmethod=indent  " Set 'indent' folding method
@@ -459,3 +462,4 @@ in
     };
   };
 }
+
