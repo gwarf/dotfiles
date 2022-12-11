@@ -7,7 +7,8 @@
     kernelPackages = pkgs.linuxPackages_latest;
     # kernelModules = [ "edac_mce_amd" ];
     cleanTmpDir = true;
-    # plymouth.enable = true;
+    plymouth.enable = true;
+    plymouth.theme = "bgrt";
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
