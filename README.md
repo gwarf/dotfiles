@@ -77,7 +77,10 @@ nix flake info
 nix flake update --commit-lock-file
 # Only update home-manager input
 nix flake lock --update-input home-manager
+# Rebuild system
 sudo nixos-rebuild switch --flake .
+# upgrade nixpkgs and rebuild system
+sudo nixos-rebuild switch --upgrade --update-input nixpkgs --commit-lock-file --flake /home/baptiste/repos/dotfiles
 ```
 
 ##### Cleaning old generations
