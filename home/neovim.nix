@@ -391,7 +391,7 @@ in
       set tabstop=2     " Display 2 spaces for a tab
       set shiftwidth=2  " Use this number of spaces for indentation
       " XXX breaking indentation of new comments
-      " https://stackoverflow.com/questions/9333134/prevent-gvim-from-auto-indenting-comments
+      " https://unix.stackexchange.com/a/543571
       " set smartindent   " Make indenting smart
       " set autoindent    " Use auto indent
       set breakindent   " Indent wrapped lines to match line start
