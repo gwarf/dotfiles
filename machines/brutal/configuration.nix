@@ -110,13 +110,13 @@
   # XXX not working, need to find proper way to automatise this
   system.autoUpgrade = {
     enable = false;
-    # flags = [
-    #   "--update-input"
-    #   "nixpkgs"
-    #   "--commit-lock-file"
-    #   "--flake"
-    #   "/home/baptiste/repos/dotfiles"
-    # ];
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--commit-lock-file"
+      "--flake"
+      "/home/baptiste/repos/dotfiles"
+    ];
     allowReboot = false;
   };
 
