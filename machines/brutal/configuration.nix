@@ -7,8 +7,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
     # kernelModules = [ "edac_mce_amd" ];
     cleanTmpDir = true;
-    plymouth.enable = true;
-    plymouth.theme = "bgrt";
+    plymouth.enable = false;
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
     loader.efi.canTouchEfiVariables = true;
@@ -95,7 +94,7 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  system.copySystemConfiguration = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -106,8 +105,18 @@
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Automatic upgrade
-  system.autoUpgrade.enable = false;
-  system.autoUpgrade.allowReboot = false;
+  # XXX not working, need to find proper way to automatise this
+  system.autoUpgrade = {
+    enable = false;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--commit-lock-file"
+      "--flake"
+      "/home/baptiste/repos/dotfiles"
+    ];
+    allowReboot = false;
+  };
 
   # Nix configuration ------------------------------------------------------------------------------
   nix.settings.substituters = [
