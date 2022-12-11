@@ -47,7 +47,15 @@
   # "eurosign:e";  # map caps to escape.
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [ gutenprint cups-filters ];
+  };
+  # Help with printer auto discovery
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
 
   # Allow access to watercooling devices
   services.udev.extraRules = ''
