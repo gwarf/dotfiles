@@ -113,4 +113,16 @@
   #   mdutil -E / &> /dev/null
   #   echo "ok"
   # "";
+
+  # Dotfiles.
+  # XXX move to home-manager
+  launchd.user.agents.mbsync = {
+    # XXX not yet deployed/managed via nix
+    serviceConfig.Program = "/Users/baptiste/.config/neomutt/sync";
+    serviceConfig.RunAtLoad = true;
+    serviceConfig.StartInterval = 180;
+    serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.mailsync.log";
+    serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.mailsync.log";
+    serviceConfig.ProcessType = "Background";
+  };
 }
