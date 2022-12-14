@@ -63,7 +63,6 @@
     # nodePackages.joplin
     # nodePackages_latest.joplin
     joplin-desktop
-    libreoffice-still
 
     # Dev stuff
     jq
@@ -110,6 +109,7 @@
     nitrokey-app
     # XXX not working
     # nixpkgs-unstable.pynitrokey
+    libreoffice-still
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
