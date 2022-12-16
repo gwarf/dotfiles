@@ -86,6 +86,8 @@
     # bash-language-server
     # json-lsp
     ltex-ls
+    # Apparently required for ltex-ls usage in neovim
+    jdk11
     # XXX not available
     # marksman
     pyright
