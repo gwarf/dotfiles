@@ -56,6 +56,7 @@
     xz
     tree
     silver-searcher
+    pydf
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
