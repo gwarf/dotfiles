@@ -17,6 +17,11 @@
       epkgs.auto-complete
       epkgs.whitespace-cleanup-mode
       epkgs.web-mode
+      epkgs.nix-mode
+      epkgs.json-mode
+      epkgs.python-mode
+      epkgs.flycheck
+      epkgs.flycheck-pyflakes
       epkgs.smart-tabs-mode
     ];
   };
