@@ -86,6 +86,7 @@
      git = import ./home/git.nix;
      tmux = import ./modules/home/tmux;
      main = import ./home/main.nix;
+     emacs = import ./modules/home/emacs;
      home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
