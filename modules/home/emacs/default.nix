@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 {
+  services.emacs.enable = false;
   programs.emacs = {
     enable = true;
     extraConfig = ''
@@ -8,6 +9,11 @@
       (evil-mode 1)
       ;; Set theme
       (load-theme 'nord t)
+      ;; Enable dashboard
+      (require 'dashboard)
+      (dashboard-setup-startup-hook)
+      (when (display-graphic-p)
+        (require 'all-the-icons))
     '';
     # nix-env -f '<nixpkgs>' -qaP -A emacsPackages
     extraPackages = epkgs: [
@@ -23,6 +29,10 @@
       epkgs.flycheck
       epkgs.flycheck-pyflakes
       epkgs.smart-tabs-mode
+      epkgs.dashboard
+      epkgs.all-the-icons
+      epkgs.projectile
+      epkgs.page-break-lines
     ];
   };
 }
