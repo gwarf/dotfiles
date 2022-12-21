@@ -14,6 +14,8 @@
       (dashboard-setup-startup-hook)
       (when (display-graphic-p)
         (require 'all-the-icons))
+      (require 'doom-modeline)
+        (doom-modeline-mode 1)
     '';
     # nix-env -f '<nixpkgs>' -qaP -A emacsPackages
     extraPackages = epkgs: [
@@ -33,6 +35,8 @@
       epkgs.all-the-icons
       epkgs.projectile
       epkgs.page-break-lines
+      epkgs.doom-modeline
+      epkgs.doom-themes
     ];
   };
 }
