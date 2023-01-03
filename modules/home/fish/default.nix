@@ -67,6 +67,23 @@ in
     set -Ux SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
     set -Ux MANPAGER "nvim +Man!"
 
+    # Need clang from homebrew on macOS (for C++11 / 14 with neorg and tree-sitter)
+    if test (uname) = Darwin
+      # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+      # Required for building python with pyenv on Mac OS X
+      set -Ux CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      set -Ux LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
+      if test -d "/usr/local/opt/llvm"
+          # Favor using llvm stuff from homebrew
+          set -Ux CPPFLAGS "-I/usr/local/opt/llvm/include"
+          set -Ux LDFLAGS "-L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+          fish_add_path "/usr/local/opt/llvm/bin"
+      end
+      # Use clang
+      set -Ux CC clang
+      set -Ux CXX clang++
+    end
+
     # nvim!
     set EDITOR nvim
     fish_vi_key_bindings

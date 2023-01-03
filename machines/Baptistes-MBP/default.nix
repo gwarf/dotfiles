@@ -23,6 +23,8 @@
 
       # XXX install from pkgs does not work
       "joplin-cli"
+      # To be used for nvim/treesitter/neorg with recent C++
+      "llvm"
     ];
     casks = [
       "rectangle"
