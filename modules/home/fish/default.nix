@@ -39,6 +39,7 @@ in
     ll = "ls -l --time-style long-iso --icons";
     la = "ll -a";
     l = "ls -l --time-style long-iso --icons";
+    df = "${pkgs.pydf}/bin/pydf";
 
     # Be conservative with files
     # --preserver-root is for GNU versions
