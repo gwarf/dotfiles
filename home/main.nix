@@ -3,7 +3,7 @@
 # - nextcloud
 # - i3 config: minimal: cpu temp in bar
 # - access email (mutt, isync, notmuch)
-{ config, pkgs, nixpkgs-unstable, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -80,22 +80,22 @@
     nodePackages.prettier
     shellcheck
     shfmt
+    ansible-lint
 
     # LSP servers
-    # XXX not available
-    # ansible-language-server
-    # bash-language-server
-    # json-lsp
-    ltex-ls
-    # Apparently required for ltex-ls usage in neovim
-    jdk11
-    # XXX not available
-    # marksman
     pyright
     sumneko-lua-language-server
-    # vim-language-server
+    pkgs-unstable.ansible-language-server
     yaml-language-server
     rnix-lsp
+    ltex-ls
+    # Required for ltex-ls usage in neovim
+    jdk11
+    nodePackages.vim-language-server
+    nodePackages.bash-language-server
+    pkgs-unstable.nodePackages.vscode-json-languageserver
+    # XXX not available
+    # marksman
 
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
