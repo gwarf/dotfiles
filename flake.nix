@@ -113,7 +113,7 @@
             # pass extra args to the modules
             home-manager.extraSpecialArgs = {
               inherit inputs;
-              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-darwin"; config.allowUnfree = true; };
+              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
             };
             home-manager.users.baptiste = {
               # XXX to be tested
