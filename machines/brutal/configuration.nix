@@ -37,9 +37,11 @@
 
   # Manage graphical environment
   services.xserver.enable = true;
+  # Lightweight system
   services.xserver.displayManager.lightdm.enable = false;
   services.xserver.windowManager.i3.enable = true;
   # services.xserver.displayManager.defaultSession = "none+i3";
+  # GDM and Gnome
   services.xserver.displayManager.defaultSession = "gnome";
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -151,9 +153,12 @@
   };
 
   # Enable experimental nix command and flakes
+  # Protect against gc of nix-shell
   nix.extraOptions = ''
     auto-optimise-store = true
     experimental-features = nix-command flakes
+    keep-outputs = true
+    keep-derivations = true
   '';
 
   # Apps
