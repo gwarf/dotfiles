@@ -111,7 +111,10 @@
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
             # pass extra args to the modules
-            home-manager.extraSpecialArgs = { inherit inputs nixpkgs-unstable; };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-darwin"; config.allowUnfree = true; };
+            };
             home-manager.users.baptiste = {
               # XXX to be tested
               imports = attrValues self.homeManagerLinuxModules;
@@ -140,7 +143,10 @@
             # install packages to /etc/profiles
             home-manager.useUserPackages = true;
             # pass extra args to the modules
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = {
+              inherit inputs;
+              pkgs-unstable = import nixpkgs-unstable { system = "x86_64-darwin"; config.allowUnfree = true; };
+            };
             home-manager.users.baptiste = {
             imports = attrValues self.homeManagerDarwinModules;
              home.stateVersion = homeStateVersion;
