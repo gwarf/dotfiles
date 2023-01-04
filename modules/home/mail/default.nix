@@ -19,7 +19,6 @@ in
     neomutt
     msmtp
     isync
-    # thunderbird
     w3m
     urlview
   ];
@@ -155,7 +154,7 @@ in
 
     # Thunderird: working with imap
     thunderbird = {
-      enable = true;
+      enable = false;
       profiles = {
         Perso = {
           isDefault = true;
@@ -420,7 +419,7 @@ in
       aerc.enable = false;
       himalaya.enable = false;
       thunderbird = {
-        enable = true;
+        enable = false;
         profiles = [ "Perso" ];
       };
 
