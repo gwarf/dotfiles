@@ -70,6 +70,7 @@
     jq
     nodejs
     podman
+    qemu
     nodePackages.alex
     actionlint
     black
