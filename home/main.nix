@@ -41,6 +41,7 @@
     # some basics
     curl
     wget
+    ncurses
 
     # Cool stuff
     gnupg
