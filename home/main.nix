@@ -94,7 +94,7 @@
     nodePackages.vim-language-server
     nodePackages.bash-language-server
     pkgs-unstable.nodePackages.vscode-json-languageserver
-    # XXX not available
+    # XXX not yet available: https://github.com/NixOS/nixpkgs/pull/193682
     # marksman
 
     # Useful nix related tools

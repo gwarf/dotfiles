@@ -12,11 +12,18 @@
   ];
   nix.configureBuildUsers = true;
 
+  nix.gc = {
+    automatic = true;
+    options = "--delete-older-than 8d";
+  };
+
   # Enable experimental nix command and flakes
-  # nix.package = pkgs.nixUnstable;
+  # Protect against gc of nix-shell
   nix.extraOptions = ''
     auto-optimise-store = true
     experimental-features = nix-command flakes
+    keep-outputs = true
+    keep-derivations = true
   '';
 
   # Create /etc/bashrc that loads the nix-darwin environment.
