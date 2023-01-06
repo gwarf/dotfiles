@@ -41,7 +41,6 @@
     # some basics
     curl
     wget
-    ncurses
 
     # Cool stuff
     gnupg
@@ -67,34 +66,38 @@
     joplin-desktop
 
     # Dev stuff
+    # XXX maybe to be moved to project-specific envs
+    actionlint
+    ansible-lint
+    beautysh
+    black
+    isort
     jq
+    nodePackages.alex
+    nodePackages.markdownlint-cli
+    nodePackages.prettier
+    # XXX textlint doesn't foudn the terminology rule
+    # pkgs-unstable.nodePackages.textlint
+    # pkgs-unstable.nodePackages.textlint-rule-terminology
     nodejs
     podman
-    qemu
-    nodePackages.alex
-    actionlint
-    black
-    beautysh
-    isort
-    stylua
-    nodePackages.markdownlint-cli
     pylint
-    nodePackages.prettier
+    qemu
     shellcheck
     shfmt
-    ansible-lint
+    stylua
 
     # LSP servers
-    pyright
-    sumneko-lua-language-server
     pkgs-unstable.ansible-language-server
-    yaml-language-server
+    pyright
     rnix-lsp
+    sumneko-lua-language-server
+    yaml-language-server
     ltex-ls
     # Required for ltex-ls usage in neovim
     jdk11
-    nodePackages.vim-language-server
     nodePackages.bash-language-server
+    nodePackages.vim-language-server
     pkgs-unstable.nodePackages.vscode-json-languageserver
     # XXX not yet available: https://github.com/NixOS/nixpkgs/pull/193682
     # marksman
@@ -117,6 +120,7 @@
     libreoffice-still
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
+    ncurses
     m-cli # useful macOS CLI commands
   ];
   programs.tealdeer = {
