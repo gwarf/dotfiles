@@ -18,7 +18,6 @@ This is very early work, some important tasks are pending:
 - [ ] Try to understand what I'm doing :)
 - [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
 - [ ] Finalise mail configuration
-- [ ] Import zsh configuration
 - [ ] Finalise fish configuration
 - [ ] Finalise neovim configuration
 - [ ] Finalise neomutt/mutt configuration
@@ -26,12 +25,9 @@ This is very early work, some important tasks are pending:
 - [ ] Check https://nixos.org/guides/nix-pills/
 - [ ] Read
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
-- [-] Decide what to track (stable, master, unstable...) or
-  [mix](https://github.com/nix-community/home-manager/issues/1538).
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
       flakes. Unless it makes sense to keep this to do system conf?
-- [ ] Manage upgrades.
 - [ ] Consolidate macOS and NixOS configuration.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
 - [ ] Support home-manager conf on non-NisOS GNU/Linux systems.
@@ -42,12 +38,12 @@ This is very early work, some important tasks are pending:
 
 ### NixOS setup
 
-> NixOS version: using the stable NixOS release, and allowing to explicitely
+> NixOS version: using the stable NixOS release, and allowing to explicitly
 > select packages from unstable.
 
 #### Managing NixOS using flakes and Mome Manager
 
-Manage NixOS configruation in `~/repo/dotfiles`.
+Manage NixOS configuration in `~/repo/dotfiles`.
 
 > [home-manager](https://nix-community.github.io/home-manager/) examples are
 > available in the
@@ -86,28 +82,21 @@ sudo nixos-rebuild switch --upgrade --update-input nixpkgs --commit-lock-file --
 ##### Cleaning old generations
 
 ```shell
+# List generations
+nix-env -p /nix/var/nix/profiles/system --list-generations
 # Delete all generations
 nix-env --delete-generations old
 # Delete generations older than 14d
 nix-env --delete-generations 14d
 # Delete specific generations
 nix-env --delete-generations 10 11 14
-```
-
-#### Managing NixOS "centrally"
-
-> **Obsolete**
-
-Manage conf in `/etc/nixos/configuration.nix`
-
-```shell
-# Reaplying conf from /etc/nixos/configuration.nix
-sudo nixos-rebuild switch
+# Collect garbage
+sudo nix-collect-garbage -d
 ```
 
 ### macOS AKA Darwin using flakes and Home Manager
 
-Using `nix-darwin`, initially baesd on the video and gist from @jmatsushita:
+Using `nix-darwin`, initially based on the video and gist from @jmatsushita:
 
 - https://gist.github.com/jmatsushita/5c50ef14b4b96cb24ae5268dab613050
 - https://youtu.be/KJgN0lnA5mk
@@ -119,10 +108,6 @@ nix build ".#darwinConfigurations.Baptistes-MBP.system"
 # Switch to the new conf
 ./result/sw/bin/darwin-rebuild switch --flake .
 ```
-
-### On Archlinux using Home Manager
-
-> TODO
 
 ### Searching for a Nix package, an option,...
 
@@ -143,14 +128,6 @@ It is also possible to use different online services to easily search.
 - [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
 - [Nix packages search](https://search.nixos.org/packages)
 - [Nix options seardch](https://search.nixos.org/options)
-
-### Deleting old generations
-
-```shell
-nix-env -p /nix/var/nix/profiles/system --list-generations
-sudo nix-collect-garbage -d
-sudo nixos-rebuild switch --flake .
-```
 
 ## Managing project-specific env with nix flakes and direnv
 
@@ -222,32 +199,3 @@ Interesting approach to look into:
 - [NixOS on SoYouStart](https://web.archive.org/web/20160829180041/http://aborsu.github.io/2015/09/26/Install%20NixOS%20on%20So%20You%20Start%20dedicated%20server/)
 - [Installing NixOS on OVH dedicated servers](https://web.archive.org/web/20210125195352/https://www.srid.ca/137ae172.html)
 - https://discourse.nixos.org/t/howto-install-nixos-on-an-ovh-dedicated-server/3089/14
-
-## yadm
-
-> **DEPRECATED**
-
-Managed using https://yadm.io
-
-## Requirements
-
-- git
-- [yadm](https://yadm.io/docs/install)
-
-## Using
-
-```sh
-# Bootstrap
-yadm clone git@github.com:gwarf/dotfiles.git
-yadm status
-# Add a file
-yadm add .my-conf-file
-yadm commit .my-conf-file -m 'add .my-conf-file'
-# Push to remote repository
-yadm push
-```
-
-## Creating alternate files
-
-See https://yadm.io/docs/alternates. It's easier to create them directly in the
-GitHub repository.
