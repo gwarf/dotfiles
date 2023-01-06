@@ -44,8 +44,18 @@
         '';
       }
     ];
-    terminal = "tmux-256color";
+    # XXX required to get italics: tmux-256color or xterm-kitty
+    # tmux-256color not working fine with delta (showing error WARNING: terminal is not fully functional)
+    terminal = "xterm-kitty";
     extraConfig = ''
+      # window movement / renumbering like in screen's :number
+      bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
+      bind-key . command-prompt "move-window -r -t '%%'"
+
+      # Allow nested tmux sessions by making "C-b b" possible for sending a control
+      # sequence to a nested session
+      bind-key b send-prefix
+
       # Use fish as shell
       set -g default-command ${pkgs.fish}/bin/fish
       set -g default-shell ${pkgs.fish}/bin/fish
