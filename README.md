@@ -152,6 +152,24 @@ sudo nix-collect-garbage -d
 sudo nixos-rebuild switch --flake .
 ```
 
+## Managing project-specific env with nix flakes and direnv
+
+### For python
+
+See:
+- [NixOS Wiki: Python](https://nixos.wiki/wiki/Python)
+- [NixOS Wiki: Packaging Python](https://nixos.wiki/wiki/Packaging/Python)
+- [mach-nix](https://github.com/DavHau/mach-nix), to be replaced by [dream2nix](https://github.com/nix-community/dream2nix)
+
+Using a [Nix flake templates for easy dev envs](https://github.com/the-nix-way/dev-templates):
+```shell
+nix flake init --template github:the-nix-way/dev-templates#python
+direnv allow
+```
+
+Interesting approach to look into:
+[reddit post allowing to use requirements.txt](https://www.reddit.com/r/NixOS/comments/q71v0e/comment/hgn4sar/?utm_source=share&utm_medium=web2x&context=3)
+
 ### References
 
 #### Videos
