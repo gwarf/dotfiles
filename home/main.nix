@@ -43,20 +43,21 @@
     wget
 
     # Cool stuff
-    gnupg
-    mutt
-    fortune
     bat
-    gh
+    doggo
+    du-dust
     exa
     fd
-    ripgrep
-    du-dust
-    thefuck
-    xz
-    tree
-    silver-searcher
+    fortune
+    gh
+    gnupg
+    mutt
     pydf
+    ripgrep
+    silver-searcher
+    thefuck
+    tree
+    xz
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
