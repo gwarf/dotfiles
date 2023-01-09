@@ -36,6 +36,59 @@ This is very early work, some important tasks are pending:
 - [ ] Look into GitHub actions.
 - [ ] Clean static config files.
 
+### Searching for a Nix package, an option,...
+
+```shell
+# Using new "experimental" nix search command
+nix search nixpkgs firefox
+# If experimental features are not enabled
+nix --extra-experimental-features "nix-command flakes" search nixpkgs firefox
+# Using legacy slow nix-env
+nix-env -qaP firefox
+```
+
+It is also possible to use different online services to search in the browser:
+
+- [NixOS Wiki: Searching packages](https://nixos.wiki/wiki/Searching_packages)
+- [Home Manager Manual](https://nix-community.github.io/home-manager/)
+- [Home Manager Options](https://nix-community.github.io/home-manager/options.html)
+- [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
+- [Nix packages search](https://search.nixos.org/packages)
+- [Nix options seardch](https://search.nixos.org/options)
+
+### Updating nix flakes inputs
+
+In order to refresh the information about all flakes inputs, it's possible to
+use two commands:
+
+- [`nix flake update --commit-lock-file`](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake-update.html)
+  updates **ALL** inputs and commit the changes to the lock file.
+
+> Beware as if you are using some nighlyt or unstable inputs it could break,
+  and commit the change, making reverting a bit less easier (but still doable).
+
+- [`nix flake lock`](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake-lock.html)
+  allows to specify one more multiple inputs to update and then you will have
+  to manually commit the changes to the lock file.
+
+```shell
+# Checking satus of inputs
+nix flake info
+# Update all flake inputs and commit lock file
+nix flake update --commit-lock-file
+# Update main inputs
+nix flake lock --update-input nixpkgs \
+  --update-input nixpkgs-unstable \
+  --update-input nixpkgs-darwin-stable \
+  --update-input home-manager
+# Update neovim inputs
+nix flake lock --update-input neovim-nightly-overlay --update-input nix2lua
+# Update nix user repository input
+nix flake lock --update-input nur
+# Update home-manager input
+nix flake lock --update-input home-manager
+```
+
 ### NixOS setup
 
 > NixOS version: using the stable NixOS release, and allowing to explicitly
@@ -66,17 +119,15 @@ sudo nixos-rebuild switch --flake .
 
 ##### Updating
 
+The first thing is to update the nix flake inputs, then rebuilding the system
+using those inputs.
+
 ```shell
-# Checking satus of inputs
-nix flake info
-# Update all flake inputs and commit lock file
-nix flake update --commit-lock-file
-# Only update home-manager input
-nix flake lock --update-input home-manager
-# Rebuild system
+# Rebuilding system
 sudo nixos-rebuild switch --flake .
-# upgrade nixpkgs and rebuild system
-sudo nixos-rebuild switch --upgrade --update-input nixpkgs --commit-lock-file --flake /home/baptiste/repos/dotfiles
+# upgrade nixpkgs **only** and rebuild flake-managed system
+sudo nixos-rebuild switch --upgrade --update-input nixpkgs \
+  --commit-lock-file --flake ~/repos/dotfiles
 ```
 
 ##### Cleaning old generations
@@ -102,32 +153,14 @@ Using `nix-darwin`, initially based on the video and gist from @jmatsushita:
 - https://youtu.be/KJgN0lnA5mk
 - https://discourse.nixos.org/t/simple-workable-config-for-m1-macbook-pro-monterey-12-0-1-with-nix-flakes-nix-darwin-and-home-manager/16834
 
+The flake can be updated as for other nix anf flake-based systems.
+
 ```shell
 # Rebuild all system conf
 nix build ".#darwinConfigurations.Baptistes-MBP.system"
 # Switch to the new conf
 ./result/sw/bin/darwin-rebuild switch --flake .
 ```
-
-### Searching for a Nix package, an option,...
-
-```shell
-# Using new "experimental" nix search command
-nix search nixpkgs firefox
-# If experimental features are not enabled
-nix --extra-experimental-features "nix-command flakes" search nixpkgs firefox
-# Using legacy slow nix-env
-nix-env -qaP firefox
-```
-
-It is also possible to use different online services to easily search.
-
-- [NixOS Wiki: Searching packages](https://nixos.wiki/wiki/Searching_packages)
-- [Home Manager Manual](https://nix-community.github.io/home-manager/)
-- [Home Manager Options](https://nix-community.github.io/home-manager/options.html)
-- [Home Manager Options Search](https://mipmip.github.io/home-manager-option-search/)
-- [Nix packages search](https://search.nixos.org/packages)
-- [Nix options seardch](https://search.nixos.org/options)
 
 ## Managing project-specific env with nix flakes and direnv
 
