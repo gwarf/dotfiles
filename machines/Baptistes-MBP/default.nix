@@ -28,6 +28,7 @@
     ];
     casks = [
       "rectangle"
+      "mumble"
     ];
 };
 }
