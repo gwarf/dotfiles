@@ -121,7 +121,6 @@
     libreoffice-still
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
-    mumble
     ncurses
     m-cli # useful macOS CLI commands
   ];
