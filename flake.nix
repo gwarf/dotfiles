@@ -21,7 +21,7 @@
     };
 
     # neovim nightly
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nix2lua.url = "git+https://git.pleshevski.ru/mynix/nix2lua";
 
     # Nix User Repository
