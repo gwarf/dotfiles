@@ -3,11 +3,8 @@
 # - fix automatic indentation when creating block like {}: last } is not porperly aligned
 # - also indent # commented lines when doing >
 # - completion from other buffers
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, pkgs-unstable, ... }:
 
-let
-  neovim-nightly = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
-in
 {
   imports = [
     ./lsp.nix
@@ -15,7 +12,7 @@ in
 
   programs.neovim = {
     enable = true;
-    package = neovim-nightly;
+    # package = pkgs.neovim;
 
     # use nvim by default
     vimAlias = true;
