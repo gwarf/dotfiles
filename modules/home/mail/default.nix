@@ -440,6 +440,9 @@ in
           # bind pager j next-line
           # bind pager k previous-line
 
+          # Do not ask for confirmation when moving a message
+          unset confirmappend
+
           # Sorting
           set sort = threads
           set sort_aux = reverse-last-date-received
