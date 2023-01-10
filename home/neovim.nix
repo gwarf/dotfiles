@@ -96,6 +96,30 @@
         config = "call wilder#setup({'modes': [':', '/', '?']})";
       }
       {
+        plugin = alpha-nvim;
+        type = "lua";
+        config = ''
+          local alpha = require("alpha")
+          local dashboard = require("alpha.themes.dashboard")
+          dashboard.section.buttons.val = {
+            dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+            dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+            dashboard.button("SPC s f", "  Find file"),
+            dashboard.button("SPC s r", "  Recently opened files"),
+            dashboard.button("SPC s t", "  Find text"),
+            dashboard.button("SPC s p", "  Jump to project"),
+            dashboard.button("SPC s s", "  Find old sessions"),
+          }
+          local handle = io.popen("fortune")
+          local fortune = handle:read("*a")
+          handle:close()
+          dashboard.section.footer.val = fortune
+          dashboard.config.opts.noautocmd = true
+          vim.cmd([[autocmd User AlphaReady echo 'ready']])
+          alpha.setup(dashboard.config)
+        '';
+      }
+      {
         plugin = neoscroll-nvim;
         type = "lua";
         config = ''require("neoscroll").setup({})'';
