@@ -4,7 +4,7 @@
 {
   programs.neovim = {
     enable = true;
-    # package = pkgs.neovim;
+    package = pkgs-unstable.neovim-unwrapped;
 
     # use nvim by default
     vimAlias = true;
