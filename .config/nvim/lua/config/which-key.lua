@@ -113,7 +113,7 @@ local mappings = {
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
     e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
-    f = { "<cmd>lua vim.lsp.buf.format(nil, 10000)<cr>", "Format" },
+    f = { "<cmd>lua vim.lsp.buf.format({ timeout_ms = 2000})<cr>", "Format" },
     F = { "<cmd>lua vim.lsp.buf.range_formating()<cr>", "Format selection" },
     h = { vim.lsp.buf.signature_help, "Signature help" },
     i = { "<cmd>LspInfo<cr>", "Info" },
