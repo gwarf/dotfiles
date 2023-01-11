@@ -55,19 +55,19 @@ local on_attach = function(client, bufnr)
     client.server_capabilities.document_range_formatting = false
   end
 
-  -- XXX may be better disabled due to some issues with default conf for yaml/ansible formatting
+  -- XXX disabled due to some issues with default conf for yaml/ansible formatting
   -- format file on save
-  if client.supports_method("textDocument/formatting") then
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      group = augroup,
-      buffer = bufnr,
-      callback = function()
-        -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
-        vim.lsp.buf.format({ bufnr = bufnr })
-      end,
-    })
-  end
+  -- if client.supports_method("textDocument/formatting") then
+  --   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  --   vim.api.nvim_create_autocmd("BufWritePre", {
+  --     group = augroup,
+  --     buffer = bufnr,
+  --     callback = function()
+  --       -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+  --       vim.lsp.buf.format({ bufnr = bufnr })
+  --     end,
+  --   })
+  -- end
 
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -154,7 +154,7 @@ local lsp_flags = {
 }
 
 -- LSP servers with default configuration
-local servers = { "bashls", "marksman", "jsonls", "vimls", "yamlls" }
+local servers = { "bashls", "marksman", "jsonls", "rnix", "vimls", "yamlls" }
 for _, lsp_server in ipairs(servers) do
   lspconfig[lsp_server].setup({
     on_attach = on_attach,
@@ -167,7 +167,7 @@ end
 require("ltex-ls").setup({
   on_attach = on_attach,
   use_spellfile = true,
-  filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text", "mail" },
+  filetypes = { "latex", "tex", "bib", "markdown", "gitcommit", "text", "mail", "norg" },
   settings = {
     ltex = {
       checkFrequency = "save",
@@ -294,7 +294,11 @@ null_ls.setup({
     }),
     -- diagnostics
     null_ls.builtins.diagnostics.actionlint,
-    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.flake8.with({
+      -- Align with black
+      -- https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
+      extra_args = { "--max-line-length", "88", "--extend-ignore", "E203,W503" },
+    }),
     null_ls.builtins.diagnostics.alex,
     null_ls.builtins.diagnostics.markdownlint.with({
       extra_args = { "--config", vim.fn.expand("~/.config/nvim/.markdownlint.json") },

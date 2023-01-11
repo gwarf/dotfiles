@@ -87,8 +87,15 @@ opt.expandtab = true
 opt.shiftwidth = 2
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.smartindent = true
-opt.autoindent = true
+-- XXX breaking indentation of new comments
+-- https://unix.stackexchange.com/a/543571
+opt.smartindent = false
+opt.autoindent = false
+-- Indent wrapped lines to match line start
+opt.breakindent = true
+opt.cindent = true
+-- Fix indentation of new comments
+opt.cinkeys:remove({ "0#" })
 
 -- For devicons on vim
 opt.encoding = "UTF-8"
