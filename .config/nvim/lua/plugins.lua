@@ -38,6 +38,14 @@ packer.init({
       return require("packer.util").float({ border = "single" })
     end,
   },
+  git = {
+    subcommands = {
+      -- XXX potentil fix for https://github.com/wbthomason/packer.nvim/issues/1100,
+      -- which blocks updating the nvim-tree nightly tag
+      -- update = 'pull --ff-only --progress --rebase=false --force',
+      -- fetch = 'fetch --depth 999999 --progress --force',
+    }
+  },
 })
 
 return require("packer").startup(function(use)
