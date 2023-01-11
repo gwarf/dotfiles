@@ -175,6 +175,7 @@ Using a [Nix flake templates for easy dev envs](https://github.com/the-nix-way/d
 ```shell
 nix flake init --template github:the-nix-way/dev-templates#python
 direnv allow
+# Edit flake.nix as needed, adding packages or python packages.
 ```
 
 Interesting approach to look into:
