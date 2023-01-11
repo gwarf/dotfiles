@@ -31,6 +31,10 @@
           "wappalyzer@crunchlabz.com" = ext "wappalyzer";
           # Gnome shell integration
           # "chrome-gnome-shell@gnome.org" = ext "gnome-shell-integration";
+          "dictionnaire_francais1" = {
+            installation_mode = "force_installed";
+            install_url = "https://addons.mozilla.org/firefox/downloads/file/3581786/dictionnaire_francais1-latest.xpi";
+          };
         };
         PasswordManagerEnabled = false;
         EnableTrackingProtection = {
