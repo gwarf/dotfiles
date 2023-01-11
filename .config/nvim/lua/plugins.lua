@@ -246,6 +246,7 @@ return require("packer").startup(function(use)
         end,
       })
       -- Using ufo provider need remap `zR` and `zM`.
+      -- once zM got run it's possible to use other commands
       vim.keymap.set("n", "zR", require("ufo").openAllFolds)
       vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
     end,
@@ -324,6 +325,7 @@ return require("packer").startup(function(use)
     -- tag = "*",
     ft = "norg",
     after = "nvim-treesitter", -- You may want to specify Telescope here as well
+    run = ":Neorg sync-parsers",
     config = function()
       require("neorg").setup({
         load = {
@@ -342,23 +344,25 @@ return require("packer").startup(function(use)
               workspaces = {
                 work = "~/Documents/notes/work",
                 home = "~/Documents/notes/home",
-                gtd = "~/Documents/notes/gtd",
+                -- gtd = "~/Documents/notes/gtd",
               },
             },
           },
-          ["core.gtd.base"] = {
-            config = {
-              workspace = "gtd",
-            },
-          },
+          -- XXX https://github.com/nvim-neorg/neorg/issues/695
+          -- ["core.gtd.base"] = {
+          --   config = {
+          --     workspace = "gtd",
+          --   },
+          -- },
           ["core.integrations.telescope"] = {},
-          ["external.kanban"] = {},
+          -- ["external.kanban"] = {},
         },
       })
     end,
     requires = {
       "nvim-neorg/neorg-telescope",
-      "max397574/neorg-kanban",
+      -- Relevant to GTD that is no more supported
+      -- "max397574/neorg-kanban",
     },
   })
 
@@ -416,10 +420,11 @@ return require("packer").startup(function(use)
     config = function()
       require("gitsigns").setup({
         yadm = {
-          enable = true,
+          enable = false,
         },
       })
     end,
+    tag = "v*",
     requires = { "nvim-lua/plenary.nvim" },
     event = "BufRead",
   })
