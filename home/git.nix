@@ -81,13 +81,9 @@
     enable = true;
     settings = {
       gui = {
-        theme = {
-          selectedLineBgColor = [ "#d5c4a1" ];
-          selectedRangeBgColor = [ "#d5c4a1" ];
-        };
         showIcons = true;
       };
-      git.paging.pager = "delta --paging=never";
+      git.paging.pager = "delta --dark --paging=never";
     };
   };
 }
