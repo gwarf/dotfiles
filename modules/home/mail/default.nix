@@ -442,6 +442,8 @@ in
 
           # Do not ask for confirmation when moving a message
           unset confirmappend
+          # Ask before purging deleted messages
+          set delete=ask-yes
 
           # Sorting
           set sort = threads
