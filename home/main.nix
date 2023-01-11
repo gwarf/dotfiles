@@ -100,8 +100,8 @@
     nodePackages.bash-language-server
     nodePackages.vim-language-server
     pkgs-unstable.nodePackages.vscode-json-languageserver
-    # XXX not yet available: https://github.com/NixOS/nixpkgs/pull/193682
-    # marksman
+    # Not yet in nixpkgs: https://github.com/NixOS/nixpkgs/pull/193682
+    pkgs-unstable.marksman
 
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
