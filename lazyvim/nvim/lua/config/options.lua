@@ -13,3 +13,12 @@ opt.autoindent = false
 opt.breakindent = true
 -- Fix indentation of new comments
 opt.cinkeys:remove({ "0#" })
+
+-- Wrap long lines
+opt.wrap = true
+
+-- Set max line length
+opt.textwidth = 90
+
+-- Display column to show light length
+opt.colorcolumn = "80"
