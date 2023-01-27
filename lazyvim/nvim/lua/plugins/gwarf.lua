@@ -5,6 +5,16 @@
 -- * add extra plugins
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
+
+-- https://sbulav.github.io/vim/neovim-setting-up-luasnip/
+local snip_status_ok, luasnip = pcall(require, "luasnip")
+if not snip_status_ok then
+  return
+end
+local s = luasnip.snippet
+local i = luasnip.insert_node
+local t = luasnip.text_node
+
 return {
   -- override nvim-cmp and add cmp-emoji
   {
@@ -168,4 +178,20 @@ return {
       })
     end,
   },
+
+  -- Custom snippets
+  -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
+  -- XXX move this to a dedicated file
+  luasnip.add_snippets("all", {
+    s("ternary", {
+      -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
+      i(1, "cond"),
+      t(" ? "),
+      i(2, "then"),
+      t(" : "),
+      i(3, "else"),
+    }),
+    s("brb", { t({ "Best regards,", "Baptiste" }) }),
+    s("cb", { t({ "Cheers,", "Baptiste" }) }),
+  }),
 }
