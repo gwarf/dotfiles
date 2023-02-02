@@ -25,6 +25,9 @@
       "joplin-cli"
       # To be used for nvim/treesitter/neorg with recent C++
       "llvm"
+
+      "bitwarden-cli"
+      "fetch-crl"
     ];
     casks = [
       "rectangle"
