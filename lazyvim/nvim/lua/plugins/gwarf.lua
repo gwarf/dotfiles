@@ -68,9 +68,12 @@ return {
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         -- pyright will be automatically installed with mason and loaded with lspconfig
         pyright = {},
+        ansiblels = {},
+        bashls = {},
       },
     },
   },
@@ -145,6 +148,18 @@ return {
           end
         end, { "i", "s" }),
       })
+
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+        {
+          name = "buffer",
+          option = {
+            get_bufnrs = function()
+              return vim.api.nvim_list_bufs()
+            end,
+          },
+        },
+        { name = "emoji", insert = true },
+      }))
     end,
   },
 
