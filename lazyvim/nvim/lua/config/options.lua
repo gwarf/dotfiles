@@ -22,3 +22,6 @@ opt.textwidth = 90
 
 -- Display column to show light length
 opt.colorcolumn = "80"
+
+-- Disable mouse
+opt.mouse = ""
