@@ -7,7 +7,7 @@
   programs.kitty.enable = true;
 
   # Use a static configuration file for colors
-  home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_storm.conf
+  home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_storm.conf;
 
   # General config
   # https://sw.kovidgoyal.net/kitty/conf/
