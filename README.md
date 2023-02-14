@@ -115,6 +115,8 @@ nix build ".#nixosConfigurations.brutal.config.system.build.toplevel"
 sudo result/bin/switch-to-configuration switch
 # Build and siwtch to the new conf, updating boot menu
 sudo nixos-rebuild switch --flake .
+# In case the hostname changed (like on a VPN), it can be specified like this
+./result/sw/bin/darwin-rebuild switch --flake '.#Baptistes-MBP'
 ```
 
 ##### Updating
