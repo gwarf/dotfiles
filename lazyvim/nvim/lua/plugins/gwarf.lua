@@ -26,6 +26,16 @@ return {
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
     end,
   },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      -- colorscheme = "catppuccin-macchiato",
+      -- colorscheme = "catppuccin-frappe",
+      colorscheme = function()
+        require("tokyonight").load({ style = "storm" })
+      end,
+    },
+  },
 
   -- change some telescope options and a keymap to browse plugin files
   {
@@ -62,7 +72,7 @@ return {
     end,
   },
 
-  -- add pyright to lspconfig
+  -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
     ---@class PluginLspOpts
@@ -70,7 +80,6 @@ return {
       ---@type lspconfig.options
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
         pyright = {},
         ansiblels = {},
         bashls = {},
