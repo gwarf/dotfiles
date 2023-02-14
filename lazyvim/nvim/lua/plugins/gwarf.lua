@@ -83,6 +83,10 @@ return {
         pyright = {},
         ansiblels = {},
         bashls = {},
+        rnix = {
+          -- rnix-lsp is installed using nix
+          mason = false,
+        },
       },
     },
   },
