@@ -14,7 +14,7 @@
 
   nix.gc = {
     automatic = true;
-    options = "--delete-older-than 8d";
+    options = "--delete-older-than 60d";
   };
 
   # Enable experimental nix command and flakes
@@ -66,7 +66,7 @@
     libertine
     victor-mono
     kochi-substitute
-   ];
+  ];
 
   # Keyboard
   system.keyboard.enableKeyMapping = true;
@@ -74,44 +74,44 @@
 
   # macOS system configuration
   system.defaults = {
-     dock = {
-       autohide = true;
-       orientation = "left";
-       showhidden = true;
-       mineffect = "scale";
-       launchanim = true;
-       show-process-indicators = true;
-       tilesize = 48;
-       static-only = true;
-       mru-spaces = false;
-     };
-     finder = {
-       AppleShowAllExtensions = true;
-       FXEnableExtensionChangeWarning = false;
-     };
-     trackpad = {
-       Clicking = true;
-       TrackpadThreeFingerDrag = true;
-     };
-     NSGlobalDomain = {
-       AppleKeyboardUIMode = 3;
-       ApplePressAndHoldEnabled = false;
-       # https://apple.stackexchange.com/questions/261163/default-value-for-nsglobaldomain-initialkeyrepeat#288764
+    dock = {
+      autohide = true;
+      orientation = "left";
+      showhidden = true;
+      mineffect = "scale";
+      launchanim = true;
+      show-process-indicators = true;
+      tilesize = 48;
+      static-only = true;
+      mru-spaces = false;
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      FXEnableExtensionChangeWarning = false;
+    };
+    trackpad = {
+      Clicking = true;
+      TrackpadThreeFingerDrag = true;
+    };
+    NSGlobalDomain = {
+      AppleKeyboardUIMode = 3;
+      ApplePressAndHoldEnabled = false;
+      # https://apple.stackexchange.com/questions/261163/default-value-for-nsglobaldomain-initialkeyrepeat#288764
       # lower is slower
       # defaults read NSGlobalDomain InitialKeyRepeat
-       InitialKeyRepeat = 25;
+      InitialKeyRepeat = 25;
       # defaults read NSGlobalDomain KeyRepeat
       # lower is faster
-       KeyRepeat = 4;
-       NSAutomaticCapitalizationEnabled = false;
-       NSAutomaticDashSubstitutionEnabled = false;
-       NSAutomaticPeriodSubstitutionEnabled = false;
-       NSAutomaticQuoteSubstitutionEnabled = false;
-       NSAutomaticSpellingCorrectionEnabled = false;
-       NSNavPanelExpandedStateForSaveMode = true;
-       NSNavPanelExpandedStateForSaveMode2 = true;
-     };
-   };
+      KeyRepeat = 4;
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = false;
+      NSNavPanelExpandedStateForSaveMode = true;
+      NSNavPanelExpandedStateForSaveMode2 = true;
+    };
+  };
 
   # Exmaple on user postActivation scripts
   # system.activationScripts.postActivation.text = ''
