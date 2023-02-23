@@ -8,6 +8,7 @@
 
   # Use a static configuration file for colors
   home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_storm.conf;
+  home.file.".config/kitty/dracula.conf".source = ./dracula.conf;
 
   # General config
   # https://sw.kovidgoyal.net/kitty/conf/
@@ -32,8 +33,9 @@
   };
 
   programs.kitty.extraConfig = ''
-    # Load tokyonight_storm theme
-    include tokyonight_storm.conf
+    # Load theme
+    # include tokyonight_storm.conf
+    include dracula.conf
 
     # Change the style of italic font variants
     modify_font underline_thickness 400%
