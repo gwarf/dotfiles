@@ -26,11 +26,16 @@ return {
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
     end,
   },
+
+  -- Install treesitter-aware fork of dracula theme
+  { "Mofiqul/dracula.nvim" },
+
+  -- Override LazyVim configuration
   {
     "LazyVim/LazyVim",
     opts = {
-      -- colorscheme = "catppuccin-macchiato",
-      colorscheme = "catppuccin-frappe",
+      colorscheme = "dracula",
+      -- colorscheme = "catppuccin-frappe",
       -- colorscheme = function()
       --   require("tokyonight").load({ style = "storm" })
       -- end,
@@ -90,13 +95,6 @@ return {
       },
     },
   },
-
-  -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-  -- treesitter, mason and typescript.nvim.
-  { import = "lazyvim.plugins.extras.lang.typescript" },
-
-  -- add jsonls and schemastore ans setup treesitter for json, json5 and jsonc
-  { import = "lazyvim.plugins.extras.lang.json" },
 
   -- XXX tools are managed via nix
   -- add any tools you want to have installed below
