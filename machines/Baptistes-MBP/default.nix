@@ -28,11 +28,12 @@
 
       "bitwarden-cli"
       "fetch-crl"
+      "pyenv"
     ];
     casks = [
       "rectangle"
       "mumble"
       "podman-desktop"
     ];
-};
+  };
 }
