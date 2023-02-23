@@ -30,10 +30,10 @@ return {
     "LazyVim/LazyVim",
     opts = {
       -- colorscheme = "catppuccin-macchiato",
-      -- colorscheme = "catppuccin-frappe",
-      colorscheme = function()
-        require("tokyonight").load({ style = "storm" })
-      end,
+      colorscheme = "catppuccin-frappe",
+      -- colorscheme = function()
+      --   require("tokyonight").load({ style = "storm" })
+      -- end,
     },
   },
 
