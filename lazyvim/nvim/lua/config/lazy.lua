@@ -10,11 +10,14 @@ require("lazy").setup({
   spec = {
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    -- import extras LazyVim modules
+    -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
+    -- treesitter, mason and typescript.nvim.
+    { import = "lazyvim.plugins.extras.lang.typescript" },
+    -- add jsonls and schemastore ans setup treesitter for json, json5 and jsonc
+    { import = "lazyvim.plugins.extras.lang.json" },
     -- import/override with your plugins
     { import = "plugins" },
-    -- import any extras modules here
-    -- { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- { import = "lazyvim.plugins.extras.lang.json" },
   },
   defaults = {
     lazy = true, -- every plugin is lazy-loaded by default
