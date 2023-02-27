@@ -33,7 +33,7 @@
     casks = [
       "rectangle"
       "mumble"
-      "podman-desktop"
+      # "podman-desktop"
     ];
   };
 }
