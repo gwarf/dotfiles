@@ -84,6 +84,12 @@ in
       # Use clang
       set -Ux CC clang
       set -Ux CXX clang++
+      # Add nix dir to path
+      fish_add_path "~/.nix-profile/bin"
+      # XXX need to ensure user-specific profile is loaded
+      fish_add_path "/etc/profiles/per-user/baptiste/bin"
+      fish_add_path "/run/current-system/sw/bin"
+      fish_add_path "/nix/var/nix/profiles/default/bin"
     end
 
     # nvim!
