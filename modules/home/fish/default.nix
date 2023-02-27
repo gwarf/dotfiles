@@ -36,6 +36,7 @@ in
     du = "${pkgs.du-dust}/bin/dust";
     g = "${pkgs.git}/bin/git";
     ls = "${pkgs.exa}/bin/exa";
+    lsd = "${pkgs.exa}/bin/exa -D";
     ll = "ls -l --time-style long-iso --icons";
     la = "ll -a";
     l = "ls -l --time-style long-iso --icons";
@@ -48,9 +49,9 @@ in
     mv = "mv -i";
     cp = "cp -i";
     # Preventing changing perms on /
-    chown="chown --preserve-root";
-    chmod="chmod --preserve-root";
-    chgrp="chgrp --preserve-root";
+    chown = "chown --preserve-root";
+    chmod = "chmod --preserve-root";
+    chgrp = "chgrp --preserve-root";
   };
 
   # Configuration that should be above `loginShellInit` and `interactiveShellInit`.
