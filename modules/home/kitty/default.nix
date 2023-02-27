@@ -31,7 +31,7 @@
     inactive_tab_font_style = "normal";
     tab_activity_symbol = "";
     # Use fish as shell
-    shell = "fish";
+    shell = "${pkgs.fish}/bin/fish --interactive --login";
   };
 
   programs.kitty.extraConfig = ''
