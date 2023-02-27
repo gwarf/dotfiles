@@ -81,7 +81,7 @@
     # pkgs-unstable.nodePackages.textlint
     # pkgs-unstable.nodePackages.textlint-rule-terminology
     nodejs
-    podman
+    # podman
     pylint
     qemu
     shellcheck
