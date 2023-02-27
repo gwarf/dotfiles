@@ -42,6 +42,9 @@ return {
     },
   },
 
+  -- Install support for editing nix files
+  { "LnL7/vim-nix" },
+
   -- change some telescope options and a keymap to browse plugin files
   {
     "nvim-telescope/telescope.nvim",
@@ -80,6 +83,10 @@ return {
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
+    -- Need to run master as current tagged release is broken and not using latest lua_ls
+    -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
+    -- https://www.lazyvim.org/configuration/lazy.nvim
+    version = false,
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
