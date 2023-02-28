@@ -73,7 +73,9 @@ in
     if test (uname) = Darwin
       # https://github.com/pyenv/pyenv/wiki/Common-build-problems
       # Required for building python with pyenv on Mac OS X
-      set -Ux CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      # XXX clang-15: unknown argument -02
+      # set -Ux CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      set -Ux CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
       set -Ux LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"
       if test -d "/usr/local/opt/llvm"
           # Favor using llvm stuff from homebrew
@@ -84,10 +86,11 @@ in
       # Use clang
       set -Ux CC clang
       set -Ux CXX clang++
-      # Add nix dir to path
+      fish_add_path "/usr/local/bin"
+      # XXX Add nix directories to path that missing in current kitty config 
       fish_add_path "~/.nix-profile/bin"
       # XXX need to ensure user-specific profile is loaded
-      fish_add_path "/etc/profiles/per-user/baptiste/bin"
+      fish_add_path "/etc/profiles/per-user/$USER/bin"
       fish_add_path "/run/current-system/sw/bin"
       fish_add_path "/nix/var/nix/profiles/default/bin"
     end
