@@ -98,6 +98,12 @@ in
       set -x PYENV_ROOT $HOME/.pyenv
       fish_add_path $PYENV_ROOT/bin
       pyenv init - | source
+    
+      # Load custon pytyon3 venv for mutt + ical
+      function mutt
+        source ~/.config/neomutt/.venv/bin/activate.fish
+        /usr/local/bin/mutt
+      end
     end
 
     # nvim!
