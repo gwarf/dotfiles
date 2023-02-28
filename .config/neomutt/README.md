@@ -62,3 +62,23 @@ It's possible to use [perlbrew](https://perlbrew.pl) to manage perl modules.
 $ cpanm Mail::Box::Maildir
 $ cpanm String::ShellQuote
 ```
+
+## Python setup for reading calendar invites
+
+Requirements: pyhon3 + a virtualenv
+
+```shell
+# Get latest version at https://www.python.org/downloads/
+$ pyenv install 3.11.2
+$ pyenv local 3.11.2
+$ python -m venv .venv
+$ source .venv/bin/activate.fish
+$ pip install -r requirements.txt
+```
+
+Mutt should be started with the proper python environment:
+
+```shell
+$ source ~/.config/neomutt/.venv/bin/activate.fish
+$ mutt
+```
