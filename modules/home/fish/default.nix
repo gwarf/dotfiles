@@ -104,6 +104,13 @@ in
         source ~/.config/neomutt/.venv/bin/activate.fish
         /usr/local/bin/mutt
       end
+
+      # Start oidc-agent
+      if type -q oidc-agent-service
+        eval $(oidc-agent-service use)
+        # for fedcloudclient, once egi account got created
+        # export OIDC_AGENT_ACCOUNT=egi
+      end
     end
 
     # nvim!
