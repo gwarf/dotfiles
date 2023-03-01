@@ -58,6 +58,7 @@
     thefuck
     tree
     xz
+    inetutils
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
