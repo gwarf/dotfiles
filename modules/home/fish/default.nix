@@ -64,10 +64,10 @@ in
     ${pkgs.thefuck}/bin/thefuck --alias | source
 
     # Use bat as pager
-    set -Ux PAGER "${pkgs.bat}/bin/bat"
+    set -gx PAGER "${pkgs.bat}/bin/bat"
     # https://unix.stackexchange.com/questions/343168/can-i-prevent-service-foo-status-from-paging-its-output-through-less
-    set -Ux SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
-    set -Ux MANPAGER "nvim +Man!"
+    set -gx SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
+    set -gx MANPAGER "nvim +Man!"
 
     # Need clang from homebrew on macOS (for C++11 / 14 with neorg and tree-sitter)
     if test (uname) = Darwin
@@ -82,17 +82,17 @@ in
 
       # https://github.com/pyenv/pyenv/wiki/Common-build-problems
       # XXX clang-15: unknown argument -02
-      # set -Ux CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-      set -Ux CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      set -gx CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
 
       # Favor using llvm stuff from homebrew
-      set -Ux CPPFLAGS "-I/usr/local/opt/llvm/include"
-      set -Ux LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+      set -gx CPPFLAGS "-I/usr/local/opt/llvm/include"
+      set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
       fish_add_path "/usr/local/opt/llvm/bin"
 
       # Use clang/llvm as main compiler
-      set -Ux CC clang
-      set -Ux CXX clang++
+      set -gx CC clang
+      set -gx CXX clang++
 
       # Load pyenv
       set -x PYENV_ROOT $HOME/.pyenv
@@ -107,7 +107,7 @@ in
 
       # Start oidc-agent
       if type -q oidc-agent-service
-        eval $(oidc-agent-service use)
+        eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
         # for fedcloudclient, once egi account got created
         # export OIDC_AGENT_ACCOUNT=egi
       end
