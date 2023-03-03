@@ -19,8 +19,11 @@
 
   # Enable experimental nix command and flakes
   # Protect against gc of nix-shell
+  # XXX disable auto-optimise-store
+  # see https://github.com/NixOS/nix/issues/7273#issuecomment-1450809740
+  # 'nix store optimise' should be run manually
   nix.extraOptions = ''
-    auto-optimise-store = true
+    auto-optimise-store = false
     experimental-features = nix-command flakes
     keep-outputs = true
     keep-derivations = true
