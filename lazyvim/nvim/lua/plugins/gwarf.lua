@@ -105,9 +105,12 @@ return {
           -- rnix-lsp is installed using nix
           mason = false,
         },
+        -- use LanguageTool for spell checking
+        -- TODO: https://gist.github.com/lbiaggi/a3eb761ac2fdbff774b29c88844355b8
+        -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         ltex = {
           checkFrequency = "save",
-          enabled = { "latex", "tex", "bib", "markdown" },
+          enabled = { "latex", "tex", "bib", "markdown", "text", "mail" },
           language = "en-GB",
           diagnosticSeverity = "information",
           additionalRules = {
