@@ -30,6 +30,9 @@ return {
   -- Install treesitter-aware fork of dracula theme
   { "Mofiqul/dracula.nvim" },
 
+  -- Install ltex-ls for spellchecking
+  { "vigoux/ltex-ls.nvim" },
+
   -- Override LazyVim configuration
   {
     "LazyVim/LazyVim",
@@ -80,6 +83,9 @@ return {
     end,
   },
 
+  -- add vim-repeat to supercharge .
+  { "tpope/vim-repeat" },
+
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -98,6 +104,22 @@ return {
         rnix = {
           -- rnix-lsp is installed using nix
           mason = false,
+        },
+        ltex = {
+          checkFrequency = "save",
+          enabled = { "latex", "tex", "bib", "markdown" },
+          language = "en-GB",
+          diagnosticSeverity = "information",
+          additionalRules = {
+            enablePickyRules = true,
+            motherTongue = "fr",
+          },
+          disabledRules = {
+            en = { "TOO_LONG_SENTENCE" },
+            ["en-GB"] = { "TOO_LONG_SENTENCE", "OXFORD_SPELLING_Z_NOT_S" },
+            fr = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
+          },
+          dictionary = { ["en-GB"] = { ":" .. vim.fn.stdpath("config") .. "/words.txt" } },
         },
       },
     },
