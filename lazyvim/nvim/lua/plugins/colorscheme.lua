@@ -1,5 +1,7 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/colorscheme.lua
 return {
+  -- Install treesitter-aware fork of dracula theme
+  { "Mofiqul/dracula.nvim" },
   { "shaunsingh/oxocarbon.nvim" },
   { "ellisonleao/gruvbox.nvim" },
   { "rose-pine/neovim", name = "rose-pine" },
@@ -62,5 +64,17 @@ return {
         end,
       }
     end,
+  },
+
+  -- Override LazyVim configuration
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      -- colorscheme = "dracula",
+      -- colorscheme = "catppuccin-frappe",
+      colorscheme = function()
+        require("tokyonight").load({ style = "moon" })
+      end,
+    },
   },
 }
