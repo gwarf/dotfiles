@@ -75,7 +75,7 @@ return {
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         ltex = {
           checkFrequency = "save",
-          enabled = { "latex", "tex", "bib", "markdown", "text", "mail" },
+          enabled = { "latex", "tex", "bib", "markdown", "text", "mail", "norg" },
           language = "en-GB",
           diagnosticSeverity = "information",
           additionalRules = {
