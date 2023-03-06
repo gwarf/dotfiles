@@ -48,41 +48,6 @@ return {
   -- Install support for editing nix files
   { "LnL7/vim-nix" },
 
-  -- change some telescope options and a keymap to browse plugin files
-  {
-    "nvim-telescope/telescope.nvim",
-    keys = {
-      -- add a keymap to browse plugin files
-      -- stylua: ignore
-      {
-        "<leader>fp",
-        function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end,
-        desc = "Find Plugin File",
-      },
-    },
-    -- change some options
-    opts = {
-      defaults = {
-        layout_strategy = "horizontal",
-        layout_config = { prompt_position = "top" },
-        sorting_strategy = "ascending",
-        winblend = 0,
-      },
-    },
-  },
-
-  -- add telescope-fzf-native
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
-    -- apply the config and additionally load fzf-native
-    config = function(_, opts)
-      local telescope = require("telescope")
-      telescope.setup(opts)
-      telescope.load_extension("fzf")
-    end,
-  },
-
   -- add vim-repeat to supercharge .
   { "tpope/vim-repeat" },
 
@@ -203,37 +168,6 @@ return {
         },
         { name = "emoji", insert = true },
       }))
-    end,
-  },
-
-  -- org-mode like
-  -- https://github.com/nvim-neorg/neorg
-  {
-    "nvim-neorg/neorg",
-    -- lazy-load on filetype
-    ft = "norg",
-    -- after = "nvim-treesitter", -- You may want to specify Telescope here as well
-    -- run = ":Neorg sync-parsers",
-    config = function()
-      require("neorg").setup({
-        load = {
-          -- Load everything
-          ["core.defaults"] = {},
-          ["core.norg.concealer"] = {},
-          ["core.norg.completion"] = {
-            config = { engine = "nvim-cmp" },
-          },
-          ["core.integrations.nvim-cmp"] = {},
-          ["core.norg.dirman"] = {
-            config = {
-              workspaces = {
-                work = "~/Documents/notes/work",
-                home = "~/Documents/notes/home",
-              },
-            },
-          },
-        },
-      })
     end,
   },
 

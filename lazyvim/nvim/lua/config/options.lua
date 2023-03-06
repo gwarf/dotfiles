@@ -3,6 +3,11 @@
 -- Add any additional options here
 local opt = vim.opt
 
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevelstart = 99
+opt.foldenable = true
+opt.foldcolumn = "0"
+
 -- Default indentation: 2 spaces
 opt.softtabstop = 2
 -- XXX breaking indentation of new comments
@@ -25,3 +30,8 @@ opt.colorcolumn = "80"
 
 -- Disable mouse
 opt.mouse = ""
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
