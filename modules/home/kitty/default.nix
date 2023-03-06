@@ -8,6 +8,7 @@
 
   # Use a static configuration file for colors
   home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_storm.conf;
+  home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_moon.conf;
   home.file.".config/kitty/dracula.conf".source = ./dracula.conf;
 
   # General config
@@ -37,7 +38,8 @@
   programs.kitty.extraConfig = ''
     # Load theme
     # include tokyonight_storm.conf
-    include dracula.conf
+    include tokyonight_moon.conf
+    # include dracula.conf
 
     # Change the style of italic font variants
     modify_font underline_thickness 400%
