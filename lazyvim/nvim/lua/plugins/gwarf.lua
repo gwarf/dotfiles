@@ -27,23 +27,8 @@ return {
     end,
   },
 
-  -- Install treesitter-aware fork of dracula theme
-  { "Mofiqul/dracula.nvim" },
-
   -- Install ltex-ls for spellchecking
   { "vigoux/ltex-ls.nvim" },
-
-  -- Override LazyVim configuration
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "dracula",
-      -- colorscheme = "catppuccin-frappe",
-      -- colorscheme = function()
-      --   require("tokyonight").load({ style = "storm" })
-      -- end,
-    },
-  },
 
   -- Install support for editing nix files
   { "LnL7/vim-nix" },
@@ -129,7 +114,6 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      local luasnip = require("luasnip")
       local cmp = require("cmp")
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
