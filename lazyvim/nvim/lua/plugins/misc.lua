@@ -4,10 +4,11 @@ return {
 
   {
     "Wansmer/treesj",
-    keys = {
-      { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-    },
-    opts = { use_default_keymaps = false, max_join_length = 150 },
+    -- keys: <space>m - toggle, <space>j - join, <space>s - split
+    -- keys = {
+    --   { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+    -- },
+    -- opts = { use_default_keymaps = false, max_join_length = 150 },
   },
 
   {
