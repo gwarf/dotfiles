@@ -34,11 +34,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- Fix conceallevel for json & help files
--- vim.api.nvim_create_autocmd({ "FileType" }, {
---   pattern = { "json", "jsonc" },
---   callback = function()
---     vim.wo.spell = false
---     vim.wo.conceallevel = 0
---   end,
--- })
+-- wrap but no spell check in text filetypes
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "gitcommit", "markdown" },
+  callback = function()
+    vim.wo.wrap = true
+    vim.wo.spell = false
+    vim.wo.conceallevel = 0
+  end,
+})
