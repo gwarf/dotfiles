@@ -12,7 +12,6 @@ return {
     priority = 1000,
     opts = function()
       return {
-        style = "moon",
         sidebars = {
           "qf",
           "vista_kind",
@@ -46,7 +45,7 @@ return {
       -- colorscheme = "dracula",
       -- colorscheme = "catppuccin-frappe",
       colorscheme = function()
-        require("tokyonight").load()
+        require("tokyonight").load({ style = "storm" })
       end,
     },
   },
