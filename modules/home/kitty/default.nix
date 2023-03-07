@@ -8,14 +8,14 @@
 
   # Use a static configuration file for colors
   home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_storm.conf;
-  home.file.".config/kitty/tokyonight_storm.conf".source = ./tokyonight_moon.conf;
+  home.file.".config/kitty/tokyonight_moon.conf".source = ./tokyonight_moon.conf;
   home.file.".config/kitty/dracula.conf".source = ./dracula.conf;
 
   # General config
   # https://sw.kovidgoyal.net/kitty/conf/
   programs.kitty.settings = {
     font_family = "Cascadia Code PL";
-    font_size = "14.0";
+    font_size = "16.0";
     adjust_line_height = "140%";
     disable_ligatures = "cursor"; # disable ligatures when cursor is on them
 
