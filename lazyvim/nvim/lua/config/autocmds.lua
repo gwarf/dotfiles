@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Show LSP diagnostic on hover
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
 vim.api.nvim_create_autocmd("CursorHold", {
   buffer = bufnr,
