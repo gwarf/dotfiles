@@ -34,7 +34,9 @@ return {
     version = false,
     ---@class PluginLspOpts
     opts = {
-      ---@type lspconfig.options
+      diagnostics = {
+        virtual_text = false,
+      },
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         ansiblels = {},
@@ -43,26 +45,38 @@ return {
         -- TODO: https://gist.github.com/lbiaggi/a3eb761ac2fdbff774b29c88844355b8
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         ltex = {
+          filetypes = {
+            "bib",
+            "gitcommit",
+            "latex",
+            "mail",
+            "markdown",
+            "norg",
+            "org",
+            "pandoc",
+            "rst",
+            "text",
+          },
           settings = {
             ltex = {
               -- trace = { server = 'verbose' },
-              -- diagnosticSeverity = "information",
               -- checkFrequency = "save",
               language = "en-GB",
-              -- enabled = { "latex", "tex", "bib", "markdown", "text", "mail", "norg" },
               additionalRules = {
                 enablePickyRules = true,
                 motherTongue = "fr",
               },
+              -- https://community.languagetool.org/rule/list?lang=en
               disabledRules = {
-                en = { "TOO_LONG_SENTENCE" },
-                ["en-GB"] = { "TOO_LONG_SENTENCE", "OXFORD_SPELLING_Z_NOT_S" },
+                en = { "TOO_LONG_SENTENCE", "DASH_RULE" },
+                ["en-GB"] = { "TOO_LONG_SENTENCE", "OXFORD_SPELLING_Z_NOT_S", "DASH_RULE" },
                 fr = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
               },
-              -- XXX: not supported
+              -- XXX: Using an external dictionary file is currently not supported
               -- https://github.com/valentjn/ltex-ls/issues/124#issuecomment-984313281
               -- dictionary = { ["en-GB"] = { ":" .. vim.fn.stdpath("config") .. "/words.txt" } },
-              -- Use vim dictionry
+              -- Use vim dictionary
+              -- XXX: New words are not taken into account until ltex is reloaded
               dictionary = { ["en-GB"] = words },
             },
           },
