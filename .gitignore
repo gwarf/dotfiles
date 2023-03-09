@@ -141,3 +141,4 @@ code/
 go/
 tmp/
 result
+lazyvim/nvim/spell/
