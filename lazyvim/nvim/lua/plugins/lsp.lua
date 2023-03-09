@@ -1,6 +1,6 @@
--- Build a table from local nvim dictionary to be used by ltex
--- TODO: check https://github.com/barreiroleo/ltex_extra.nvim
-local path = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+-- TODO: Properly integrate https://github.com/barreiroleo/ltex_extra.nvim
+-- Build a table from local dictionary to be used by ltex
+local path = vim.fn.stdpath("config") .. "/spell/ltex.dictionary.en-GB.txt"
 local words = {}
 
 local f = io.open(path, "r")
@@ -25,14 +25,15 @@ return {
   --   end
   -- end),
 
+  -- Improved ltex integration, supporting code actions
+  { "barreiroleo/ltex-extra.nvim" },
+
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
-    -- Need to run master as current tagged release is broken and not using latest lua_ls
+    -- XXX: Need to run master as current tagged release is broken and not using latest lua_ls
     -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
-    -- https://www.lazyvim.org/configuration/lazy.nvim
     version = false,
-    ---@class PluginLspOpts
     opts = {
       diagnostics = {
         virtual_text = false,
@@ -42,7 +43,6 @@ return {
         ansiblels = {},
         bashls = {},
         -- use LanguageTool via ltex for spell checking
-        -- TODO: https://gist.github.com/lbiaggi/a3eb761ac2fdbff774b29c88844355b8
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         ltex = {
           filetypes = {
@@ -58,6 +58,7 @@ return {
             "text",
           },
           settings = {
+            -- https://valentjn.github.io/ltex/settings.html
             ltex = {
               -- trace = { server = 'verbose' },
               -- checkFrequency = "save",
@@ -75,8 +76,7 @@ return {
               -- XXX: Using an external dictionary file is currently not supported
               -- https://github.com/valentjn/ltex-ls/issues/124#issuecomment-984313281
               -- dictionary = { ["en-GB"] = { ":" .. vim.fn.stdpath("config") .. "/words.txt" } },
-              -- Use vim dictionary
-              -- XXX: New words are not taken into account until ltex is reloaded
+              -- FIXME: rely on list generated from dictionary built by ltex_extra
               dictionary = { ["en-GB"] = words },
             },
           },
@@ -86,6 +86,19 @@ return {
           -- rnix-lsp is installed using nix
           mason = false,
         },
+      },
+      setup = {
+        -- FIXME: try to integrate ltex_extra with lazyvom
+        -- ltex_extra fails with: Error catching ltex client
+        -- the words are added to the dict, but not loaded by ltex
+        ltex = function(_, opts)
+          require("ltex_extra").setup({
+            load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+            init_check = true, -- whether to load dictionaries on startup
+            path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+            log_level = "debug", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+          })
+        end,
       },
     },
   },
