@@ -48,10 +48,6 @@
     # tmux-256color not working fine with delta (showing error WARNING: terminal is not fully functional)
     terminal = "xterm-kitty";
     extraConfig = ''
-      # window movement / renumbering like in screen's :number
-      bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
-      bind-key . command-prompt "move-window -r -t '%%'"
-
       # Allow nested tmux sessions by making "C-b b" possible for sending a control
       # sequence to a nested session
       bind-key b send-prefix
@@ -108,6 +104,13 @@
       # Move windows
       bind-key S-Left swap-window -t -1\; select-window -t -1
       bind-key S-Right swap-window -t +1\; select-window -t +1
+
+      # Window movement / renumbering like in screen's :number
+      bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
+      bind-key . command-prompt "move-window -r -t '%%'"
+
+      # Send pane next to another one
+      bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
     '';
   };
 }
