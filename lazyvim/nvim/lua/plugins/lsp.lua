@@ -35,6 +35,16 @@ return {
     -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
     version = false,
     opts = {
+      -- add folding range to capabilities
+      capabilities = {
+        textDocument = {
+          foldingRange = {
+            dynamicRegistration = false,
+            lineFoldingOnly = true,
+          },
+        },
+      },
+      -- suppres virtual text
       diagnostics = {
         virtual_text = false,
       },
