@@ -254,6 +254,24 @@ return {
       local cmp = require("cmp")
       -- opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+      -- Custom snippets
+      -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
+      local luasnip = require("luasnip")
+      local s = luasnip.snippet
+      local i = luasnip.insert_node
+      local t = luasnip.text_node
+      luasnip.add_snippets("all", {
+        s("ternary", {
+          -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
+          i(1, "cond"),
+          t(" ? "),
+          i(2, "then"),
+          t(" : "),
+          i(3, "else"),
+        }),
+        s("brb", { t({ "Best regards,", "Baptiste" }) }),
+        s("cb", { t({ "Cheers,", "Baptiste" }) }),
+      })
     end,
   },
 }
