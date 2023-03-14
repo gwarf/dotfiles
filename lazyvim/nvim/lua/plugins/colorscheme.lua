@@ -2,7 +2,7 @@
 return {
   -- Install treesitter-aware fork of dracula theme
   { "Mofiqul/dracula.nvim" },
-  -- { "shaunsingh/oxocarbon.nvim" },
+  { "shaunsingh/oxocarbon.nvim" },
   -- { "ellisonleao/gruvbox.nvim" },
   -- { "rose-pine/neovim", name = "rose-pine" },
   -- { "drewtempelmeyer/palenight.vim" },
