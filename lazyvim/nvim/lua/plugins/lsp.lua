@@ -26,7 +26,8 @@ return {
   -- end),
 
   -- Improved ltex integration, supporting code actions
-  { "barreiroleo/ltex-extra.nvim" },
+  -- FIXME: broken, see https://github.com/LazyVim/LazyVim/discussions/403
+  -- { "barreiroleo/ltex-extra.nvim" },
 
   -- add various LSP to lspconfig
   {
@@ -102,12 +103,12 @@ return {
         -- ltex_extra fails with: Error catching ltex client
         -- the words are added to the dict, but not loaded by ltex
         ltex = function(_, opts)
-          require("ltex_extra").setup({
-            load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
-            init_check = true, -- whether to load dictionaries on startup
-            path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
-            log_level = "none", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
-          })
+          -- require("ltex_extra").setup({
+          --   load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+          --   init_check = true, -- whether to load dictionaries on startup
+          --   path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+          --   log_level = "none", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+          -- })
         end,
       },
     },
