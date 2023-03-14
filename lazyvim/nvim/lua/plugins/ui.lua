@@ -2,9 +2,11 @@
 return {
 
   -- floating winbar
+  -- FIXME: breaks vimdiff from time to time, race condition? => use main
   {
     "b0o/incline.nvim",
     event = "BufReadPre",
+    version = false,
     config = function()
       local colors = require("tokyonight.colors").setup()
       require("incline").setup({
