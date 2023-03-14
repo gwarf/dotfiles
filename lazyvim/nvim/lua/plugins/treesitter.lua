@@ -17,6 +17,8 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufReadPre",
     config = true,
+    -- Disable context when doing a file diff
+    cond = not vim.api.nvim_win_get_option(0, "diff"),
   },
 
   {
