@@ -5,6 +5,8 @@ return {
   {
     "mfussenegger/nvim-treehopper",
     keys = { { "m", mode = { "o", "x" } } },
+    -- Disable when doing a file diff
+    cond = not vim.opt.diff:get(),
     config = function()
       vim.cmd([[
         omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
@@ -18,11 +20,13 @@ return {
     event = "BufReadPre",
     config = true,
     -- Disable context when doing a file diff
-    cond = not vim.api.nvim_win_get_option(0, "diff"),
+    cond = not vim.opt.diff:get(),
   },
 
   {
     "nvim-treesitter/nvim-treesitter",
+    -- Disable when doing a file diff
+    cond = not vim.opt.diff:get(),
     opts = {
       ensure_installed = {
         "astro",
