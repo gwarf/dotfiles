@@ -73,6 +73,7 @@
     ansible-lint
     beautysh
     black
+    deno
     isort
     jq
     nodePackages.alex
