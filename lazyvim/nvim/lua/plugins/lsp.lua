@@ -1,17 +1,3 @@
--- TODO: Properly integrate https://github.com/barreiroleo/ltex_extra.nvim
--- Build a table from local dictionary to be used by ltex
-local path = vim.fn.stdpath("config") .. "/spell/ltex.dictionary.en-GB.txt"
-local words = {}
-
-local f = io.open(path, "r")
-if f ~= nil then
-  for word in f:lines() do
-    table.insert(words, word)
-  end
-else
-  print("No spell folder in ", path)
-end
-
 return {
   -- Restore 'gw' to default behavior. First, remove the 'gw' keymap set in LazyVim:
   -- vim.keymap.del({ "n", "x" }, "gw")
@@ -26,8 +12,7 @@ return {
   -- end),
 
   -- Improved ltex integration, supporting code actions
-  -- FIXME: broken, see https://github.com/LazyVim/LazyVim/discussions/403
-  -- { "barreiroleo/ltex-extra.nvim" },
+  { "barreiroleo/ltex-extra.nvim" },
 
   -- add various LSP to lspconfig
   {
@@ -84,11 +69,6 @@ return {
                 ["en-GB"] = { "TOO_LONG_SENTENCE", "OXFORD_SPELLING_Z_NOT_S", "DASH_RULE" },
                 fr = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
               },
-              -- XXX: Using an external dictionary file is currently not supported
-              -- https://github.com/valentjn/ltex-ls/issues/124#issuecomment-984313281
-              -- dictionary = { ["en-GB"] = { ":" .. vim.fn.stdpath("config") .. "/words.txt" } },
-              -- FIXME: rely on list generated from dictionary built by ltex_extra
-              dictionary = { ["en-GB"] = words },
             },
           },
         },
@@ -99,16 +79,22 @@ return {
         },
       },
       setup = {
-        -- FIXME: try to integrate ltex_extra with lazyvom
-        -- ltex_extra fails with: Error catching ltex client
-        -- the words are added to the dict, but not loaded by ltex
+        -- integrate ltex_extra with lazyvim
+        -- https://github.com/LazyVim/LazyVim/discussions/403
         ltex = function(_, opts)
-          -- require("ltex_extra").setup({
-          --   load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
-          --   init_check = true, -- whether to load dictionaries on startup
-          --   path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
-          --   log_level = "none", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
-          -- })
+          vim.api.nvim_create_autocmd("LspAttach", {
+            callback = function(args)
+              local client = vim.lsp.get_client_by_id(args.data.client_id)
+              if client.name == "ltex" then
+                require("ltex_extra").setup({
+                  load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+                  init_check = true, -- whether to load dictionaries on startup
+                  path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+                  log_level = "none", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+                })
+              end
+            end,
+          })
         end,
       },
     },
