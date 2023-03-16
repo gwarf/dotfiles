@@ -104,6 +104,7 @@ return {
         local type = vim.fn.getregtype(vim.v.register)
         ---@diagnostic disable-next-line: param-type-mismatch
         vim.fn.setreg(vim.v.register, body, regtype or "l")
+        ---@diagnostic disable-next-line: missing-parameter
         bracketed.register_put_region()
         vim.cmd(('normal! "%s%s'):format(vim.v.register, cmd:lower()))
         ---@diagnostic disable-next-line: param-type-mismatch
@@ -214,25 +215,15 @@ return {
         default = {
           augend.integer.alias.decimal,
           augend.integer.alias.hex,
+          ---@diagnostic disable-next-line: assign-type-mismatch
           augend.date.alias["%Y/%m/%d"],
+          ---@diagnostic disable-next-line: assign-type-mismatch
           augend.constant.alias.bool,
           augend.semver.alias.semver,
         },
       })
     end,
   },
-
-  -- copilot
-  -- {
-  --   "zbirenbaum/copilot.lua",
-  --   enabled = true,
-  --   cmd = "Copilot",
-  --   event = "InsertEnter",
-  --   opts = {
-  --     suggestion = { enabled = false },
-  --     panel = { enabled = false },
-  --   },
-  -- },
 
   {
     "simrat39/symbols-outline.nvim",
@@ -244,15 +235,10 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      -- {
-      --   "zbirenbaum/copilot-cmp",
-      --   opts = {},
-      -- },
     },
-    ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       local cmp = require("cmp")
-      -- opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
+      ---@diagnostic disable-next-line: missing-parameter
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
         { name = "emoji" },
         {
