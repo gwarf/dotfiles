@@ -253,7 +253,17 @@ return {
     opts = function(_, opts)
       local cmp = require("cmp")
       -- opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "copilot" }, { name = "emoji" } }))
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+        { name = "emoji" },
+        {
+          name = "buffer",
+          option = {
+            get_bufnrs = function()
+              return vim.api.nvim_list_bufs()
+            end,
+          },
+        },
+      }))
       -- Custom snippets
       -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
       local luasnip = require("luasnip")
