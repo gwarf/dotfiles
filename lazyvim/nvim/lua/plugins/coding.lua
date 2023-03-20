@@ -1,7 +1,8 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/coding.lua
 return {
   -- git integration
-  { "tpope/vim-fugitive" },
+  -- LazyGit and Gitsigns are installed by default
+  { "TimUntersberger/neogit" },
 
   -- better text objects
   {
