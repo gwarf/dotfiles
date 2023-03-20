@@ -1,3 +1,4 @@
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
 return {
   -- Restore 'gw' to default behavior. First, remove the 'gw' keymap set in LazyVim:
   -- vim.keymap.del({ "n", "x" }, "gw")
