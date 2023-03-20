@@ -100,4 +100,60 @@ return {
       },
     },
   },
+
+  -- customise null-ls
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      local utils = require("null-ls.utils")
+      local flake8_extra_args = {}
+      local root = utils.get_root()
+      local flake8_conf = root .. "/.github/linters/.flake8"
+      -- Load configuration file from super-liner, if any
+      if vim.loop.fs_stat(flake8_conf) then
+        flake8_extra_args = { "--config", flake8_conf }
+      else
+        -- Align with black
+        -- https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
+        flake8_extra_args = { "--max-line-length", "88", "--extend-ignore", "E203,W503" }
+      end
+      local custom_sources = {
+        -- Copy default sources list
+        nls.builtins.formatting.fish_indent,
+        nls.builtins.diagnostics.fish,
+        nls.builtins.formatting.stylua,
+        nls.builtins.formatting.shfmt,
+        nls.builtins.diagnostics.flake8.with({
+          extra_args = flake8_extra_args,
+        }),
+      }
+      -- XXX: Works but replaces default configuration
+      opts.sources = custom_sources
+      -- XXX: when added back flake8 is not workign
+      -- opts.sources = vim.tbl_filter(function(source)
+      --   return source.name ~= "flake8"
+      -- end, opts.sources)
+      -- vim.tbl_extend("force", opts.sources, custom_sources)
+      -- XXX: Duplicates flake8 configuration, would need a name on the source to filder
+      -- it using register/is_registered
+      -- vim.tbl_extend("error", opts.sources, custom_sources)
+      -- vim.list_extend("error", opts.sources, custom_sources)
+      -- nls.deregister({ name = "flake8" })
+      -- nls.disable({ name = "flake8" })
+      -- nls.register({
+      --   name = "flake8",
+      --   nls.builtins.diagnostics.flake8.with({
+      --     extra_args = flake8_extra_args,
+      --   }),
+      -- })
+      -- nls.enable({ name = "flake8" })
+      ---@diagnostic disable-next-line: missing-parameter
+      -- XXX: error from null-ls:
+      -- ...cal/share/nvim/lazy/null-ls.nvim/lua/null-ls/sources.lua:203: attempt to index local 'generator' (a nil value)
+      -- vim.list_extend(opts.sources, custom_sources)
+      ---@diagnostic disable-next-line: missing-parameter
+      -- opts.sources = vim.tbl_deep_extend("force", opts.sources, custom_sources)
+    end,
+  },
 }
