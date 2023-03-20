@@ -1,5 +1,8 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/coding.lua
 return {
+  -- git integration
+  { "tpope/vim-fugitive" },
+
   -- better text objects
   {
     "echasnovski/mini.ai",
@@ -16,6 +19,7 @@ return {
             return vim.notify("No treesitter parser for the current buffer", vim.log.levels.ERROR)
           end
 
+          ---@diagnostic disable-next-line: undefined-field
           local query = vim.treesitter.get_query(vim.bo.filetype, "textobjects")
           if not query then
             return vim.notify("No textobjects query for the current buffer", vim.log.levels.ERROR)
