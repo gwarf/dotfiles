@@ -8,8 +8,8 @@ in
 {
   programs.neovim = {
     enable = true;
-    # package = pkgs-unstable.neovim-unwrapped;
-    package = neovim-nightly;
+    package = pkgs-unstable.neovim-unwrapped;
+    # package = neovim-nightly;
 
     # use nvim by default
     vimAlias = true;
