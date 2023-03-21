@@ -95,7 +95,7 @@
     pyright
     rnix-lsp
     sumneko-lua-language-server
-    yaml-language-server
+    nodePackages.yaml-language-server
     ltex-ls
     # Required for ltex-ls usage in neovim
     jdk11
@@ -104,6 +104,7 @@
     pkgs-unstable.nodePackages.vscode-json-languageserver
     # Not yet in nixpkgs: https://github.com/NixOS/nixpkgs/pull/193682
     pkgs-unstable.marksman
+    nodePackages.write-good
 
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
