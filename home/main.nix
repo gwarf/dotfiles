@@ -139,3 +139,5 @@
     };
   };
 }
+
+# vim: foldmethod=marker
