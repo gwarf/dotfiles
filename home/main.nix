@@ -110,6 +110,7 @@
     niv # easy dependency management for nix projects
     nodePackages.node2nix
   ] ++ lib.optionals stdenv.isLinux [
+    checkmake
     dracula-theme
     nextcloud-client
     lm_sensors
