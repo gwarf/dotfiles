@@ -126,8 +126,8 @@ return {
         -- fish
         nls.builtins.diagnostics.fish,
         nls.builtins.formatting.fish_indent,
-        -- zsh
-        nls.builtins.diagnostics.zsh,
+        -- Shell
+        nls.builtins.formatting.shfmt,
         -- text
         nls.builtins.diagnostics.alex,
         nls.builtins.hover.dictionary,
