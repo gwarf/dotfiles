@@ -63,6 +63,7 @@
         starship-symbols = import ./home/starship-symbols.nix;
         git = import ./home/git.nix;
         tmux = import ./modules/home/tmux;
+        lbdb = import ./modules/home/lbdb;
         main = import ./home/main.nix;
         neovim = import ./home/neovim-nightly.nix;
         emacs = import ./modules/home/emacs;

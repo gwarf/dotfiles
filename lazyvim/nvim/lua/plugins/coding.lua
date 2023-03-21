@@ -1,3 +1,4 @@
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/coding.lua
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/coding.lua
 return {
   -- git integration :Neogit
@@ -249,12 +250,19 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
+      "codybuell/cmp-lbdb",
     },
     opts = function(_, opts)
       local cmp = require("cmp")
       ---@diagnostic disable-next-line: missing-parameter
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
         { name = "emoji" },
+        {
+          name = "lbdb",
+          blacklist = {
+            ".*noreply.*",
+          },
+        },
         {
           name = "buffer",
           option = {
