@@ -86,8 +86,6 @@
     # podman
     pylint
     qemu
-    shellcheck
-    shfmt
     stylua
 
     # LSP servers
