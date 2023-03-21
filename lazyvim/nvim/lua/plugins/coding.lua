@@ -1,8 +1,16 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/coding.lua
 return {
-  -- git integration
+  -- git integration :Neogit
   -- LazyGit and Gitsigns are installed by default
-  { "TimUntersberger/neogit" },
+  {
+    "TimUntersberger/neogit",
+    opts = {
+      integrations = {
+        diffview = true,
+      },
+      disable_commit_confirmation = true,
+    },
+  },
 
   -- better text objects
   {
