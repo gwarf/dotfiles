@@ -4,6 +4,7 @@ return {
   -- LazyGit and Gitsigns are installed by default
   {
     "TimUntersberger/neogit",
+    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
     opts = {
       integrations = {
         diffview = true,
