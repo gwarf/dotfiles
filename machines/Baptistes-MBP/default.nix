@@ -29,6 +29,7 @@
       "bitwarden-cli"
       "fetch-crl"
       "pyenv"
+      "checkmake"
     ];
     casks = [
       "rectangle"
