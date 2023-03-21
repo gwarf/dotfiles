@@ -128,8 +128,6 @@ return {
         nls.builtins.formatting.fish_indent,
         -- zsh
         nls.builtins.diagnostics.zsh,
-        -- shell
-        nls.builtins.formatting.shfmt,
         -- text
         nls.builtins.diagnostics.alex,
         nls.builtins.hover.dictionary,
