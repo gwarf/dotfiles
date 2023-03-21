@@ -1,17 +1,17 @@
 # gwarf's dotfiles
 
-My messy **dotfiles** for GNU/Linux and macos. WIP of course :)
+My messy **dotfiles** for GNU/Linux and macOS. WIP of course :)
 
 Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
 some others are for macOS.
 
-> **WIP++** I'm currently converting this repository from [yadm](#yadm) to
-> management using [nix](#nix) and
+> **WIP++** I'm currently converting this repository from
+> [yadm](https://github.com/TheLocehiliosan/yadm) to management using [nix](#nix) and
 > [home-manager](https://nix-community.github.io/home-manager/).
 
 ## Nix
 
-Currently, it's mainly a few random notes and pointers to source of inspiration.
+This is mainly random notes and pointers to source of inspiration.
 
 This is very early work, some important tasks are pending:
 
@@ -27,16 +27,16 @@ This is very early work, some important tasks are pending:
       https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
-      flakes. Unless it makes sense to keep this to do system conf?
+      flakes. Unless it makes sense to keep this to do system configuration?
 - [ ] Consolidate macOS and NixOS configuration.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
-- [ ] Support home-manager conf on non-NisOS GNU/Linux systems.
+- [ ] Support home-manager configuration on non-NixOS GNU/Linux systems.
 - [ ] Test and document bootstrap in clean NixOS.
 - [ ] Test and document bootstrap in clean macOS.
 - [ ] Look into GitHub actions.
 - [ ] Clean static config files.
 
-### Searching for a Nix package, an option,...
+### Searching for a Nix package, an option, …
 
 ```shell
 # Using new "experimental" nix search command
