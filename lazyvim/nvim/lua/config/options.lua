@@ -12,12 +12,12 @@ opt.foldcolumn = "0"
 opt.softtabstop = 2
 -- XXX breaking indentation of new comments
 -- https://unix.stackexchange.com/a/543571
-opt.smartindent = false
+-- opt.smartindent = false
 opt.autoindent = false
 -- Indent wrapped lines to match line start
-opt.breakindent = true
+-- opt.breakindent = true
 -- Fix indentation of new comments
-opt.cinkeys:remove({ "0#" })
+-- opt.cinkeys:remove({ "0#" })
 
 -- Wrap long lines
 opt.wrap = true
@@ -26,7 +26,7 @@ opt.wrap = true
 opt.textwidth = 90
 
 -- Display column to show light length
-opt.colorcolumn = "80"
+opt.colorcolumn = "90"
 
 -- Disable mouse
 opt.mouse = ""
@@ -38,3 +38,6 @@ vim.g.loaded_node_provider = 0
 
 -- Use a global statusline
 vim.g.laststatus = 3
+
+-- Quicker timeout for mappings, to speed up showing which-key menu
+opt.timeoutlen = 300
