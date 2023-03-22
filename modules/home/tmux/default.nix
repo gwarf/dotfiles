@@ -18,6 +18,7 @@
       open
       prefix-highlight
       sessionist
+      sensible
       logging
       {
         plugin = dracula;
