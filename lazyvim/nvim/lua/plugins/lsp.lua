@@ -6,7 +6,7 @@ return {
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
-    -- XXX: Need to run master as current tagged release is broken and not using latest lua_ls
+    -- XXX: Need to run master as tagged release is outdated and not using latest lua_ls
     -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
     version = false,
     opts = {
