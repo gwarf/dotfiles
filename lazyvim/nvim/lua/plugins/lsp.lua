@@ -66,7 +66,14 @@ return {
           -- rnix-lsp is installed using nix
           mason = false,
         },
-        yamlls = {},
+        -- https://github.com/redhat-developer/yaml-language-server
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
       },
       setup = {
         -- integrate ltex_extra with lazyvim
