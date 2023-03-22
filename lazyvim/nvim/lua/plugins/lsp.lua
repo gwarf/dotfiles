@@ -143,6 +143,8 @@ return {
         }),
         -- Injects code actions for Git operations at the current cursor position
         nls.builtins.code_actions.gitsigns,
+        -- markdown
+        nls.builtins.formatting.prettierd,
       }
     end,
   },
