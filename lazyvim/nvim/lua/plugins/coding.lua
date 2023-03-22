@@ -250,12 +250,18 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      { "codybuell/cmp-lbdb", lazy = true, ft = "mail", enabled = false },
+      -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail", enabled = false },
     },
     opts = function(_, opts)
       local cmp = require("cmp")
       ---@diagnostic disable-next-line: missing-parameter
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+      -- opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+      -- FIXME: only add emoji and overwrite buffer configuration instead of replicating
+      -- configuration
+      opts.sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "path" },
         { name = "emoji" },
         {
           name = "buffer",
@@ -265,7 +271,8 @@ return {
             end,
           },
         },
-      }))
+      })
+      -- }))
 
       -- only load lbdb completion for emails
       -- cmp.setup.filetype("mail", {
