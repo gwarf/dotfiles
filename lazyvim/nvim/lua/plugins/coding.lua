@@ -250,19 +250,13 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      "codybuell/cmp-lbdb",
+      { "codybuell/cmp-lbdb", lazy = true, ft = "mail", enabled = false },
     },
     opts = function(_, opts)
       local cmp = require("cmp")
       ---@diagnostic disable-next-line: missing-parameter
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
         { name = "emoji" },
-        {
-          name = "lbdb",
-          blacklist = {
-            ".*noreply.*",
-          },
-        },
         {
           name = "buffer",
           option = {
@@ -272,6 +266,12 @@ return {
           },
         },
       }))
+
+      -- only load lbdb completion for emails
+      -- cmp.setup.filetype("mail", {
+      --   sources = cmp.config.sources({ { name = "lbdb" } }),
+      -- })
+
       -- Custom snippets
       -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
       local luasnip = require("luasnip")
