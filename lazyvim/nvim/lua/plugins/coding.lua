@@ -246,11 +246,14 @@ return {
     config = true,
   },
 
+  -- Use forked version due to https://github.com/codybuell/cmp-lbdb/pull/3/
+  -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
+  { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
+
   {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail", enabled = false },
     },
     opts = function(_, opts)
       local cmp = require("cmp")
@@ -275,9 +278,9 @@ return {
       -- }))
 
       -- only load lbdb completion for emails
-      -- cmp.setup.filetype("mail", {
-      --   sources = cmp.config.sources({ { name = "lbdb" } }),
-      -- })
+      cmp.setup.filetype("mail", {
+        sources = cmp.config.sources({ { name = "lbdb" } }),
+      })
 
       -- Custom snippets
       -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
