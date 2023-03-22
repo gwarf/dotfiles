@@ -38,7 +38,3 @@ vim.g.loaded_node_provider = 0
 
 -- Use a global statusline
 vim.g.laststatus = 3
-
--- Create new window below current one, and on the right
--- opt.splitbelow = true
-opt.splitright = true
