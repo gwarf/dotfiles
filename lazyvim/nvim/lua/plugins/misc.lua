@@ -3,7 +3,18 @@ return {
   "folke/twilight.nvim",
 
   -- Open links without netrw using gx mapping
-  { "chrishrb/gx.nvim" },
+  {
+    "chrishrb/gx.nvim",
+    -- FIXME register existing gx mapping in which-key
+    -- config = function()
+    --   local wk = require("which-key")
+    --   wk.register({
+    --     g = {
+    --       x = "Open link",
+    --     },
+    --   })
+    -- end,
+  },
 
   {
     "Wansmer/treesj",
