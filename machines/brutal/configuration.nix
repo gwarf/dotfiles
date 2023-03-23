@@ -18,7 +18,7 @@
   # boot.loader.systemd-boot.consoleMode = "keep";
   networking = {
     hostName = "brutal"; # Define your hostname.
-    networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
     # Open ports in the firewall.
     # firewall.allowedTCPPorts = [ ... ];
     # firewall.allowedUDPPorts = [ ... ];
@@ -48,7 +48,7 @@
 
   # Configure keymap in X11
   services.xserver.layout = "us";
-  services.xserver.xkbOptions = "caps:escape";  # map caps to escape.
+  services.xserver.xkbOptions = "caps:escape"; # map caps to escape.
   # "eurosign:e";  # map caps to escape.
 
   # Enable CUPS to print documents.
@@ -149,7 +149,7 @@
   ];
   nix.gc = {
     automatic = true;
-    options = "--delete-older-than 8d";
+    options = "--delete-older-than 60d";
   };
 
   # Enable experimental nix command and flakes
@@ -161,20 +161,17 @@
     keep-derivations = true
   '';
 
-  # Apps
-  programs.zsh.enable = true;
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     # Some basics
-    curl
     git
-    gh
     vim
     wget
   ];
 
   # Fonts
   fonts.fontDir.enable = true;
+  # XXX: try to move to home/main.nix
   # https://github.com/lightdiscord/nix-nerd-fonts-overlay
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
   # https://github.com/JonathanReeve/dotfiles/blob/master/dotfiles/configuration.nix#L61
@@ -183,6 +180,9 @@
     font-awesome_5
     # Only pick selected fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
+    material-design-icons
+    material-icons
+    # pkgs-unstable.material-symbols
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -192,5 +192,5 @@
     victor-mono
     kochi-substitute
     recursive
-   ];
+  ];
 }
