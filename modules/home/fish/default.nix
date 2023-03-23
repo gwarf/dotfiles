@@ -106,6 +106,11 @@ in
       # Add path mainly used by brew
       fish_add_path "/usr/local/bin"
 
+      # https://spicetify.app
+      if test -e ~/.spicetify
+        fish_add_path ~/.spicetify/
+      end
+
       # https://github.com/pyenv/pyenv/wiki/Common-build-problems
       # XXX clang-15: unknown argument -02
       # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
