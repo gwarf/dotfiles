@@ -17,6 +17,7 @@ in
   # https://github.com/ajeetdsouza/zoxide
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zoxide.enable
   programs.zoxide.enable = true;
+  programs.zoxide.options = [ "--cmd cd" ];
   programs.zoxide.enableFishIntegration = true;
   programs.zoxide.enableBashIntegration = false;
   programs.zoxide.enableZshIntegration = false;
