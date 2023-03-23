@@ -29,38 +29,30 @@
     keep-derivations = true
   '';
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;
-
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  programs.nix-index.enable = true;
 
-  # Apps
+  # List packages installed in system profile.
   # `home-manager` currently has issues adding them to `~/Applications`
   # Issue: https://github.com/nix-community/home-manager/issues/1341
   environment.systemPackages = with pkgs; [
-    # XXX only needed for darwin
-    # terminal-notifier
+    # Some basics
     git
-    wget
     vim
-    # XXX breaking nix build on Darwin
-    # error: Package ‘firefox-107.0.1’ in /nix/store/...firefox/wrapper.nix:404
-    # is not supported on ‘x86_64-darwin’, refusing to evaluate.
-    # firefox
+    wget
   ];
-
-  programs.nix-index.enable = true;
 
   # Fonts
   fonts.fontDir.enable = true;
   # XXX: try to move to home/main.nix
   # https://github.com/lightdiscord/nix-nerd-fonts-overlay
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
+  # https://github.com/JonathanReeve/dotfiles/blob/master/dotfiles/configuration.nix#L61
   fonts.fonts = with pkgs; [
     fantasque-sans-mono
     font-awesome_5
-    recursive
+    # Only pick selected fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
     material-design-icons
     material-icons
@@ -73,6 +65,7 @@
     libertine
     victor-mono
     kochi-substitute
+    recursive
   ];
 
   # Keyboard
