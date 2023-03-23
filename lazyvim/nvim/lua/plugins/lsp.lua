@@ -130,7 +130,9 @@ return {
         -- lua
         nls.builtins.formatting.stylua,
         -- python
-        nls.builtins.formatting.isort,
+        nls.builtins.formatting.isort.with({
+          extra_args = { "--profile", "black" },
+        }),
         nls.builtins.formatting.black,
         nls.builtins.diagnostics.flake8.with({
           extra_args = flake8_extra_args,
