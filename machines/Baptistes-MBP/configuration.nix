@@ -54,6 +54,7 @@
 
   # Fonts
   fonts.fontDir.enable = true;
+  # XXX: try to move to home/main.nix
   # https://github.com/lightdiscord/nix-nerd-fonts-overlay
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
   fonts.fonts = with pkgs; [
@@ -61,6 +62,9 @@
     font-awesome_5
     recursive
     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
+    material-design-icons
+    material-icons
+    # pkgs-unstable.material-symbols
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
