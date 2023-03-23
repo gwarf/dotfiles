@@ -9,7 +9,7 @@ return {
     ft = "norg",
     opts = {
       load = {
-        -- Load everything
+        -- Load default modules
         ["core.defaults"] = {},
         ["core.norg.concealer"] = {},
         ["core.norg.completion"] = {
