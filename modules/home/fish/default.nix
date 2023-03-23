@@ -13,6 +13,31 @@ in
   # Add Fish plugins
   home.packages = [ pkgs.fishPlugins.done pkgs.sqlite ];
 
+  # Zoxide, a faster way to navigate the filesystem
+  # https://github.com/ajeetdsouza/zoxide
+  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zoxide.enable
+  programs.zoxide.enable = true;
+  programs.zoxide.enableFishIntegration = true;
+  programs.zoxide.enableBashIntegration = false;
+  programs.zoxide.enableZshIntegration = false;
+
+  # Bat, a substitute for cat.
+  # https://github.com/sharkdp/bat
+  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.bat.enable
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "Dracula";
+      style = "plain";
+    };
+  };
+
+  # Direnv, load and unload environment variables depending on the current directory.
+  # https://direnv.net
+  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.direnv.enable
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
   # Fish configuration ------------------------------------------------------------------------- {{{
 
   # Aliases
