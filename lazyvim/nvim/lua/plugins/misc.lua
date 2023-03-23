@@ -2,6 +2,9 @@
 return {
   "folke/twilight.nvim",
 
+  -- Open links without netrw using gx mapping
+  { "chrishrb/gx.nvim" },
+
   {
     "Wansmer/treesj",
     -- keys: <space>m - toggle, <space>j - join, <space>s - split
