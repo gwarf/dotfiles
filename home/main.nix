@@ -9,28 +9,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
-  # Bat, a substitute for cat.
-  # https://github.com/sharkdp/bat
-  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.bat.enable
-  programs.bat = {
-    enable = true;
-    config = {
-      theme = "Dracula";
-      style = "plain";
-    };
-  };
-
-  # Zoxide, a faster way to navigate the filesystem
-  # https://github.com/ajeetdsouza/zoxide
-  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.zoxide.enable
-  programs.zoxide.enable = true;
-
-  # Direnv, load and unload environment variables depending on the current directory.
-  # https://direnv.net
-  # https://rycee.gitlab.io/home-manager/options.html#opt-programs.direnv.enable
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
   # Htop
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
   programs.htop.enable = true;
@@ -43,7 +21,6 @@
     wget
 
     # Cool stuff
-    bat
     doggo
     du-dust
     exa
