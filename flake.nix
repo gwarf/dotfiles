@@ -58,6 +58,7 @@
       # XXX Factorise and simplify like done in https://github.com/gvolpe/nix-config
       homeManagerDarwinModules = {
         kitty = import ./modules/home/kitty;
+        wezterm = import ./modules/home/wezterm;
         fish = import ./modules/home/fish;
         starship = import ./home/starship.nix;
         starship-symbols = import ./home/starship-symbols.nix;
@@ -66,7 +67,7 @@
         lbdb = import ./modules/home/lbdb;
         main = import ./home/main.nix;
         neovim = import ./home/neovim-nightly.nix;
-        emacs = import ./modules/home/emacs;
+        # emacs = import ./modules/home/emacs;
         home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
