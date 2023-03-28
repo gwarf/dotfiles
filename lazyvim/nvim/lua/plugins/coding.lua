@@ -279,7 +279,8 @@ return {
 
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
-        sources = cmp.config.sources({ { name = "lbdb" } }),
+        ---@diagnostic disable-next-line: missing-parameter
+        sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "lbdb" } })),
       })
 
       -- Custom snippets
