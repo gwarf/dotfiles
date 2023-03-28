@@ -5,9 +5,6 @@ return {
   -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
   { "chrisgrieser/nvim-spider", lazy = true },
 
-  -- A legend for your keymaps, commands, and autocmds, with which-key.nvim integration
-  { "mrjones2014/legendary.nvim" },
-
   -- Open links without netrw using gx mapping
   {
     "chrishrb/gx.nvim",
