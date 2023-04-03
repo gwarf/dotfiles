@@ -246,19 +246,18 @@ return {
     config = true,
   },
 
-  -- Use forked version due to https://github.com/codybuell/cmp-lbdb/pull/3/
-  -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
-  { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
-
+  -- see ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua
   {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
+      -- Use forked version due to https://github.com/codybuell/cmp-lbdb/pull/3/
+      -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
+      { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
     },
     opts = function(_, opts)
       local cmp = require("cmp")
       ---@diagnostic disable-next-line: missing-parameter
-      -- opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
       -- FIXME: only add emoji and overwrite buffer configuration instead of replicating
       -- configuration
       opts.sources = cmp.config.sources({
@@ -275,7 +274,6 @@ return {
           },
         },
       })
-      -- }))
 
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
