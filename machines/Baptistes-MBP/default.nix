@@ -32,9 +32,14 @@
       "checkmake"
     ];
     casks = [
-      "rectangle"
+      # app launcher, file searcher
+      "alfred"
+      # Clipboard manager
+      "maccy"
       "mumble"
       # "podman-desktop"
+      "rectangle"
+      "stretchly"
     ];
   };
 }
