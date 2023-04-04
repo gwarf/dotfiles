@@ -334,6 +334,14 @@ return {
         }),
       })
 
+      -- `/` cmdline setup.
+      cmp.setup.cmdline("/", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer" },
+        },
+      })
+
       -- Custom snippets
       -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
       local s = luasnip.snippet
