@@ -7,6 +7,8 @@ in
 
 {
   # Fish Shell
+  # TODO: add ctrl-j alias allowign to "park" a command line to type something else
+
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.fish.enable
   programs.fish.enable = true;
 
