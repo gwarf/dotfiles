@@ -17,6 +17,10 @@ require("lazy").setup({
     -- add jsonls and schemastore ans setup treesitter for json, json5 and jsonc
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    -- copilot
+    -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
+    -- configuration and sources
+    { import = "lazyvim.plugins.extras.coding.copilot" },
     -- import/override with your plugins
     { import = "plugins" },
   },

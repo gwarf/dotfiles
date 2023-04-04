@@ -307,6 +307,7 @@ return {
         { name = "luasnip" },
         { name = "path" },
         { name = "emoji" },
+        { name = "copilot" },
         {
           name = "buffer",
           option = {
