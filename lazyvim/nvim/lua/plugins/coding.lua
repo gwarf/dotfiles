@@ -318,11 +318,25 @@ return {
         },
       })
 
+      -- Filter out copilot from some use cases, like emails to preserve privacy
+      local limited_sources = opts.sources
+      for i = #limited_sources, 1, -1 do
+        if limited_sources[i].name == "copilot" then
+          table.remove(limited_sources, i)
+        end
+      end
+
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
         ---@diagnostic disable-next-line: missing-parameter
-        sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "lbdb" } })),
+        sources = cmp.config.sources(vim.list_extend(limited_sources, { { name = "lbdb" } })),
       })
+
+      -- Do not use copliot in norg files
+      -- cmp.setup.filetype("norg", {
+      --   ---@diagnostic disable-next-line: missing-parameter
+      --   sources = cmp.config.sources(limited_sources),
+      -- })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
