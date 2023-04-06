@@ -1,5 +1,6 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/misc.lua
 return {
+  -- dims inactive portions of the code
   "folke/twilight.nvim",
 
   -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
@@ -60,6 +61,27 @@ return {
     event = "BufReadPost",
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  },
+
+  -- add vim-repeat to supercharge .
+  { "tpope/vim-repeat" },
+
+  -- add nvim-ufo
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    event = "BufReadPost",
+    opts = {},
+
+    init = function()
+      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+      vim.keymap.set("n", "zR", function()
+        require("ufo").openAllFolds()
+      end)
+      vim.keymap.set("n", "zM", function()
+        require("ufo").closeAllFolds()
+      end)
     end,
   },
 }
