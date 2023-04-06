@@ -391,4 +391,58 @@ return {
       })
     end,
   },
+
+  -- Structural search and replace
+  {
+    "cshuaimin/ssr.nvim",
+    keys = {
+      {
+        "<leader>sR",
+        function()
+          require("ssr").open()
+        end,
+        mode = { "n", "x" },
+        desc = "Structural Replace",
+      },
+    },
+  },
+
+  -- improved %
+  {
+    "andymass/vim-matchup",
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  },
+
+  -- supercharged .
+  { "tpope/vim-repeat" },
+
+  -- Split/join blocks of code
+  -- {
+  --   "Wansmer/treesj",
+  --   keys: <space>m - toggle, <space>j - join, <space>s - split
+  --   keys = {
+  --     { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+  --   },
+  --   opts = { use_default_keymaps = false, max_join_length = 150 },
+  -- },
+
+  -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
+  { "chrisgrieser/nvim-spider", lazy = true },
+
+  -- Open links without netrw using gx mapping
+  {
+    "chrishrb/gx.nvim",
+    -- FIXME register existing gx mapping in which-key
+    -- config = function()
+    --   local wk = require("which-key")
+    --   wk.register({
+    --     g = {
+    --       x = "Open link",
+    --     },
+    --   })
+    -- end,
+  },
 }

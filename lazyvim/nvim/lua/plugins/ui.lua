@@ -149,4 +149,39 @@ return {
       })
     end,
   },
+
+  -- dims inactive portions of the code
+  { "folke/twilight.nvim" },
+
+  -- Zen mode for focusing on editing code
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+        kitty = { enabled = false, font = "+2" },
+      },
+    },
+    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+  },
+
+  -- Fold management
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = "kevinhwang91/promise-async",
+    event = "BufReadPost",
+    opts = {},
+
+    init = function()
+      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+      vim.keymap.set("n", "zR", function()
+        require("ufo").openAllFolds()
+      end)
+      vim.keymap.set("n", "zM", function()
+        require("ufo").closeAllFolds()
+      end)
+    end,
+  },
 }
