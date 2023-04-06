@@ -1,11 +1,15 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/ui.lua
 return {
   -- Install treesitter-aware fork of dracula theme
-  { "Mofiqul/dracula.nvim" },
-  { "shaunsingh/oxocarbon.nvim" },
+  -- { "Mofiqul/dracula.nvim" },
+
+  -- Alternative themes
+  -- { "shaunsingh/oxocarbon.nvim" },
+  -- { "habamax/vim-habamax" },
   -- { "ellisonleao/gruvbox.nvim" },
   -- { "rose-pine/neovim", name = "rose-pine" },
   -- { "drewtempelmeyer/palenight.vim" },
+
   {
     "tokyonight.nvim",
     lazy = false,
@@ -57,6 +61,19 @@ return {
     },
   },
 
+  -- style windows with different colorschemes
+  {
+    "folke/styler.nvim",
+    event = "VeryLazy",
+    opts = {
+      themes = {
+        markdown = { colorscheme = "catppuccin-frappe" },
+        help = { colorscheme = "catppuccin-frappe" },
+        -- noice = { colorscheme = "catppuccin-frappe" },
+      },
+    },
+  },
+
   -- floating winbar
   {
     "b0o/incline.nvim",
@@ -77,24 +94,6 @@ return {
           local icon, color = require("nvim-web-devicons").get_icon_color(filename)
           return { { icon, guifg = color }, { " " }, { filename } }
         end,
-      })
-    end,
-  },
-
-  -- auto-resize windows
-  {
-    "anuvyklack/windows.nvim",
-    event = "WinNew",
-    dependencies = {
-      { "anuvyklack/middleclass" },
-      { "anuvyklack/animation.nvim", enabled = false },
-    },
-    keys = { { "<leader>Z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
-    config = function()
-      vim.o.winwidth = 5
-      vim.o.equalalways = false
-      require("windows").setup({
-        animation = { enable = false, duration = 150 },
       })
     end,
   },
@@ -121,18 +120,6 @@ return {
     end,
   },
 
-  -- style windows with different colorschemes
-  {
-    "folke/styler.nvim",
-    event = "VeryLazy",
-    opts = {
-      themes = {
-        markdown = { colorscheme = "catppuccin-frappe" },
-        help = { colorscheme = "oxocarbon", background = "dark" },
-      },
-    },
-  },
-
   -- lualine
   {
     "nvim-lualine/lualine.nvim",
@@ -141,6 +128,24 @@ return {
         function()
           return require("util.dashboard").status()
         end,
+      })
+    end,
+  },
+
+  -- auto-resize windows
+  {
+    "anuvyklack/windows.nvim",
+    event = "WinNew",
+    dependencies = {
+      { "anuvyklack/middleclass" },
+      { "anuvyklack/animation.nvim", enabled = false },
+    },
+    keys = { { "<leader>Z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
+    config = function()
+      vim.o.winwidth = 5
+      vim.o.equalalways = false
+      require("windows").setup({
+        animation = { enable = false, duration = 150 },
       })
     end,
   },
