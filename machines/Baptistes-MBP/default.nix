@@ -16,10 +16,10 @@
 
       # mail setup
       # XXX to be moved to a module
-      "isync"
-      "mutt"
-      "msmtp"
       "gpgme"
+      "isync"
+      "msmtp"
+      "mutt"
 
       # XXX install from pkgs does not work
       "joplin-cli"
@@ -27,9 +27,10 @@
       "llvm"
 
       "bitwarden-cli"
-      "fetch-crl"
-      "pyenv"
       "checkmake"
+      "fetch-crl"
+      "perltidy"
+      "pyenv"
     ];
     casks = [
       # app launcher, file searcher
