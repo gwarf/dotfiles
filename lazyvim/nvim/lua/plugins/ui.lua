@@ -24,6 +24,10 @@ return {
           "startuptime",
           "Outline",
         },
+        styles = {
+          sidebars = "normal",
+          floats = "normal",
+        },
         dim_inactive = true,
         -- When `true`, section headers in the lualine theme will be bold
         lualine_bold = true,
