@@ -61,6 +61,7 @@ return {
           },
         },
         marksman = {},
+        perlnavigator = {},
         pyright = {},
         rnix = {
           -- rnix-lsp is installed using nix
