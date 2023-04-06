@@ -40,6 +40,7 @@
       # "podman-desktop"
       "rectangle"
       "stretchly"
+      "vlc"
     ];
   };
 }
