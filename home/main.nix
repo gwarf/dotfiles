@@ -98,6 +98,7 @@
     # XXX not working
     # nixpkgs-unstable.pynitrokey
     libreoffice-still
+    vlc
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     ncurses
