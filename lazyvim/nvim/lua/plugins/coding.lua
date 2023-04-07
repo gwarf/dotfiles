@@ -334,18 +334,33 @@ return {
         },
       })
 
+      -- XXX: causing issues with load of cmp in some cases
       -- Filter out copilot from some use cases, like emails to preserve privacy
-      local limited_sources = opts.sources
-      for i = #limited_sources, 1, -1 do
-        if limited_sources[i].name == "copilot" then
-          table.remove(limited_sources, i)
-        end
-      end
+      -- local limited_sources = {}
+      -- for i = #opts.sources, 1, -1 do
+      --   if opts.sources[i].name ~= "copilot" then
+      --     table.insert(limited_sources, opts.sources[i])
+      --   end
+      -- end
 
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
         ---@diagnostic disable-next-line: missing-parameter
-        sources = cmp.config.sources(vim.list_extend(limited_sources, { { name = "lbdb" } })),
+        sources = cmp.config.sources({
+          { name = "lbdb" },
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "path" },
+          { name = "emoji" },
+          {
+            name = "buffer",
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
+        }),
       })
 
       -- Do not use copliot in norg files
