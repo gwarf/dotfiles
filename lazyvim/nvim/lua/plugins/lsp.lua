@@ -61,7 +61,13 @@ return {
           },
         },
         marksman = {},
-        perlnavigator = {},
+        perlnavigator = {
+          -- settings = {
+          --   perlnavigator = {
+          --     perlPath = "/usr/local/bin/perl",
+          --   },
+          -- },
+        },
         pyright = {},
         rnix = {
           -- rnix-lsp is installed using nix
@@ -130,6 +136,8 @@ return {
         nls.builtins.diagnostics.write_good,
         -- lua
         nls.builtins.formatting.stylua,
+        -- perl
+        nls.builtins.formatting.perltidy,
         -- python
         nls.builtins.formatting.isort.with({
           extra_args = { "--profile", "black" },
