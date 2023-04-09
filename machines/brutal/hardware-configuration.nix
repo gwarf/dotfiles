@@ -24,12 +24,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/arch" =
-    { device = "/dev/disk/by-label/arch";
-      fsType = "ext4";
-      options = [ "noauto" ];
-    };
-
   fileSystems."/mnt/data" =
     { device = "/dev/disk/by-label/DataLinux";
       fsType = "ext4";
