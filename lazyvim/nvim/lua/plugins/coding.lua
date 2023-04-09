@@ -172,9 +172,10 @@ return {
   -- better yank/paste
   {
     "kkharji/sqlite.lua",
-    enabled = function()
-      return require("lazyvim.util").has("yanky.nvim") and not jit.os:find("Windows")
-    end,
+    -- XXX: disabled as breaking bootstrap of configuration due to lazyvim.util not found
+    --   enabled = function()
+    --     return require("lazyvim.util").has("yanky.nvim") and not jit.os:find("Windows")
+    --   end,
   },
   {
     "gbprod/yanky.nvim",
