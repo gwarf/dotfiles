@@ -103,6 +103,13 @@
     # nixpkgs-unstable.pynitrokey
     libreoffice-still
     vlc
+    dict
+    perl
+    perlPackages.PerlTidy
+    # perl536Packages.PerlTidy
+    python3Packages.flake8
+    tree-sitter
+    shfmt
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     ncurses
