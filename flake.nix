@@ -76,20 +76,27 @@
       homeManagerLinuxModules = {
         # only for GNU/Linux
         mail = import ./modules/home/mail;
-        neovim = import ./home/neovim.nix;
-        programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
+        # Custom configuration manage in nix
+        # neovim = import ./home/neovim.nix;
+        # Only nightly, no conf
+        neovim = import ./home/neovim-nightly.nix;
+	# malob configuration
+        # neovim = import ./home/neovim-malob.nix;
+        # programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
         keybase = import ./home/keybase.nix;
         firefox = import ./home/firefox.nix;
         wm = import ./modules/home/wm;
 
         kitty = import ./modules/home/kitty;
+        wezterm = import ./modules/home/wezterm;
         fish = import ./modules/home/fish;
         starship = import ./home/starship.nix;
         starship-symbols = import ./home/starship-symbols.nix;
         git = import ./home/git.nix;
         tmux = import ./modules/home/tmux;
+        lbdb = import ./modules/home/lbdb;
         main = import ./home/main.nix;
-        emacs = import ./modules/home/emacs;
+        # emacs = import ./modules/home/emacs;
         home-user-info = { lib, ... }: {
           # XXX figure what this does
           options.home.user-info = (self.systemModules.users-primaryUser { inherit lib; }).options.users.primaryUser;
