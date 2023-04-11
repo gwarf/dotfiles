@@ -1,14 +1,14 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/ui.lua
 return {
-  -- Install treesitter-aware fork of dracula theme
-  -- { "Mofiqul/dracula.nvim" },
-
   -- Alternative themes
   -- { "shaunsingh/oxocarbon.nvim" },
   -- { "habamax/vim-habamax" },
   -- { "ellisonleao/gruvbox.nvim" },
   -- { "rose-pine/neovim", name = "rose-pine" },
   -- { "drewtempelmeyer/palenight.vim" },
+  -- treesitter-aware fork of dracula theme
+  -- { "Mofiqul/dracula.nvim" },
+  -- { "bluz71/vim-nightfly-colors" },
 
   {
     "tokyonight.nvim",
@@ -71,7 +71,7 @@ return {
     event = "VeryLazy",
     opts = {
       themes = {
-        markdown = { colorscheme = "catppuccin-frappe" },
+        -- markdown = { colorscheme = "dracula" },
         help = { colorscheme = "catppuccin-frappe" },
         -- noice = { colorscheme = "catppuccin-frappe" },
       },
