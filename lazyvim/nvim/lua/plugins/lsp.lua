@@ -40,6 +40,7 @@ return {
             "org",
             "pandoc",
             "rst",
+            "tex",
             "text",
           },
           settings = {
