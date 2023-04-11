@@ -348,6 +348,7 @@ return {
       cmp.setup.filetype("mail", {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
+          -- would be useful to be able to use this only when completing headers
           { name = "lbdb" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
@@ -364,8 +365,8 @@ return {
         }),
       })
 
-      -- Do not use copliot in norg files
-      -- cmp.setup.filetype("norg", {
+      -- Do not use copilot in norg and markdown files
+      -- cmp.setup.filetype({"norg", "markdown}", {
       --   ---@diagnostic disable-next-line: missing-parameter
       --   sources = cmp.config.sources(limited_sources),
       -- })
