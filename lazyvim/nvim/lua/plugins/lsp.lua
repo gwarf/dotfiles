@@ -47,7 +47,7 @@ return {
             -- https://valentjn.github.io/ltex/settings.html
             ltex = {
               -- trace = { server = "verbose" },
-              -- checkFrequency = "save",
+              checkFrequency = "save",
               language = "en-GB",
               additionalRules = {
                 enablePickyRules = true,
