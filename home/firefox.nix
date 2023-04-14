@@ -8,34 +8,39 @@
     enable = true;
     package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
       extraPolicies = {
-        ExtensionSettings = let
-          ext = name: {
-            installation_mode = "force_installed";
-            install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
+        ExtensionSettings =
+          let
+            ext = name: {
+              installation_mode = "force_installed";
+              install_url = "https://addons.mozilla.org/firefox/downloads/latest/${name}/latest.xpi";
+            };
+          in
+          {
+            # Prevent manual installation of extensions
+            # "*" = {
+            #   installation_mode = "blocked";
+            #   blocked_install_message = "Extensions managed by home-manager.";
+            # };
+            "uBlock0@raymondhill.net" = ext "ublock-origin";
+            "@contain-facebook" = ext "facebook-container";
+            "{446900e4-71c2-419f-a6a7-df9c091e268b}" = ext "bitwarden-password-manager";
+            # Cookie quick manager
+            "{60f82f00-9ad5-4de5-b31c-b16a47c51558}" = ext "cookie-quick-manager";
+            # cookies.txt: for exporting cookies to a Netscape HTTP Cookie file
+            # "{12cf650b-1822-40aa-bff0-996df6948878}" = ext "cookies.txt";
+            # foxyproxy Standard
+            "foxyproxy@eric.h.jung" = ext "foxyproxy";
+            # wappalyzer
+            "wappalyzer@crunchlabz.com" = ext "wappalyzer";
+            # https://addons.mozilla.org/firefox/downloads/file/4066782/foxytab-2.31.xpi
+            # = ext "foxytab";
+            # Gnome shell integration
+            # "chrome-gnome-shell@gnome.org" = ext "gnome-shell-integration";
+            "dictionnaire_francais1" = {
+              installation_mode = "force_installed";
+              install_url = "https://addons.mozilla.org/firefox/downloads/file/3581786/dictionnaire_francais1-latest.xpi";
+            };
           };
-        in {
-          "*" = {
-            installation_mode = "blocked";
-            blocked_install_message = "Extensions managed by home-manager.";
-          };
-          "uBlock0@raymondhill.net" = ext "ublock-origin";
-          "@contain-facebook" = ext "facebook-container";
-          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = ext "bitwarden-password-manager";
-          # Cookie quick manager
-          "{60f82f00-9ad5-4de5-b31c-b16a47c51558}" = ext "cookie-quick-manager";
-          # cookies.txt: for exporting cookies to a Netscape HTTP Cookie file
-          # "{12cf650b-1822-40aa-bff0-996df6948878}" = ext "cookies.txt";
-          # foxyproxy Standard
-          "foxyproxy@eric.h.jung" = ext "foxyproxy";
-          # wappalyzer
-          "wappalyzer@crunchlabz.com" = ext "wappalyzer";
-          # Gnome shell integration
-          # "chrome-gnome-shell@gnome.org" = ext "gnome-shell-integration";
-          "dictionnaire_francais1" = {
-            installation_mode = "force_installed";
-            install_url = "https://addons.mozilla.org/firefox/downloads/file/3581786/dictionnaire_francais1-latest.xpi";
-          };
-        };
         PasswordManagerEnabled = false;
         EnableTrackingProtection = {
           Value = true;
