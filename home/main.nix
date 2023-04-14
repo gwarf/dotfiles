@@ -57,7 +57,6 @@
     nodePackages.markdownlint-cli
     nodePackages.prettier
     gnumake
-    gcc
     # clang
     # llvm
     # XXX textlint doesn't foudn the terminology rule
@@ -96,6 +95,8 @@
     nextcloud-client
     lm_sensors
     liquidctl
+    clang
+    llvm
     gparted
     arch-install-scripts
     nitrokey-app
@@ -112,6 +113,7 @@
     shfmt
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
+    gcc
     ncurses
     m-cli # useful macOS CLI commands
   ];
