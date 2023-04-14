@@ -427,6 +427,8 @@ return {
   -- improved %
   {
     "andymass/vim-matchup",
+    -- XXX: Need to run master as tagged release is outdated
+    version = false,
     event = "BufReadPost",
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
