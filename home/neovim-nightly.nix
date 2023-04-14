@@ -9,9 +9,8 @@ in
   programs.neovim = {
     enable = true;
     # package = neovim-unwrapped;
-    package = pkgs-unstable.neovim-unwrapped;
-    # XXX: disabled until most plugins are updated to work with neovim 0.10
-    # package = neovim-nightly;
+    # package = pkgs-unstable.neovim-unwrapped;
+    package = neovim-nightly;
 
     # use nvim by default
     vimAlias = true;
