@@ -28,6 +28,7 @@
     fortune
     gh
     gnupg
+    inetutils
     mutt
     pydf
     ripgrep
@@ -35,7 +36,6 @@
     thefuck
     tree
     xz
-    inetutils
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
@@ -51,12 +51,12 @@
     beautysh
     black
     deno
+    gnumake
     isort
     jq
     nodePackages.alex
     nodePackages.markdownlint-cli
     nodePackages.prettier
-    gnumake
     # clang
     # llvm
     # XXX textlint doesn't foudn the terminology rule
@@ -69,20 +69,20 @@
     stylua
 
     # LSP servers
+    ltex-ls
+    nodePackages.yaml-language-server
     pkgs-unstable.ansible-language-server
     pyright
     rnix-lsp
     sumneko-lua-language-server
-    nodePackages.yaml-language-server
-    ltex-ls
     # Required for ltex-ls usage in neovim
     jdk11
     nodePackages.bash-language-server
     nodePackages.vim-language-server
     pkgs-unstable.nodePackages.vscode-json-languageserver
     # Not yet in nixpkgs: https://github.com/NixOS/nixpkgs/pull/193682
-    pkgs-unstable.marksman
     nodePackages.write-good
+    pkgs-unstable.marksman
 
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
@@ -90,32 +90,32 @@
     niv # easy dependency management for nix projects
     nodePackages.node2nix
   ] ++ lib.optionals stdenv.isLinux [
-    checkmake
-    dracula-theme
-    nextcloud-client
-    lm_sensors
-    liquidctl
-    clang
-    llvm
-    gparted
     arch-install-scripts
+    checkmake
+    clang
+    dracula-theme
+    gparted
+    liquidctl
+    llvm
+    lm_sensors
+    nextcloud-client
     nitrokey-app
     # XXX not working
     # nixpkgs-unstable.pynitrokey
-    libreoffice-still
-    vlc
     dict
+    libreoffice-still
     perl
     perlPackages.PerlTidy
+    vlc
     # perl536Packages.PerlTidy
     python3Packages.flake8
-    tree-sitter
     shfmt
+    tree-sitter
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     gcc
-    ncurses
     m-cli # useful macOS CLI commands
+    ncurses
   ];
   programs.tealdeer = {
     enable = true;
