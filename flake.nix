@@ -78,9 +78,9 @@
         mail = import ./modules/home/mail;
         # Custom configuration manage in nix
         # neovim = import ./home/neovim.nix;
-        # Only nightly, no conf
+        # Only nightly, no conf, relying on using vim-managed config
         neovim = import ./home/neovim-nightly.nix;
-	# malob configuration
+        # malob configuration
         # neovim = import ./home/neovim-malob.nix;
         # programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
         keybase = import ./home/keybase.nix;
