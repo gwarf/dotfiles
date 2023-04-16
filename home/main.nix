@@ -36,6 +36,7 @@
     thefuck
     tree
     xz
+    unzip
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
@@ -50,10 +51,13 @@
     ansible-lint
     beautysh
     black
+    cargo
     deno
     gnumake
+    go
     isort
     jq
+    luajitPackages.luarocks
     nodePackages.alex
     nodePackages.markdownlint-cli
     nodePackages.prettier
@@ -111,6 +115,7 @@
     python3Packages.flake8
     shfmt
     tree-sitter
+    xclip
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     gcc
