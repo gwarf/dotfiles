@@ -279,6 +279,7 @@ return {
       -- Use forked version due to https://github.com/codybuell/cmp-lbdb/pull/3/
       -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
       { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
+      { "hrsh7th/cmp-nvim-lua" },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -321,6 +322,7 @@ return {
       -- configuration
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp" },
+        { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "path" },
         { name = "emoji" },
