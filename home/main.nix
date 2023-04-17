@@ -61,6 +61,7 @@
     nodePackages.alex
     nodePackages.markdownlint-cli
     nodePackages.prettier
+    gnumake
     # clang
     # llvm
     # XXX textlint doesn't foudn the terminology rule
