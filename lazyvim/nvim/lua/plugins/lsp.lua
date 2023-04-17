@@ -1,7 +1,7 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
 return {
   -- Improved ltex integration, supporting code actions
-  { "barreiroleo/ltex-extra.nvim" },
+  { "barreiroleo/ltex_extra.nvim" },
 
   -- add various LSP to lspconfig
   {
