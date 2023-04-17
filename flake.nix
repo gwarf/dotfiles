@@ -58,7 +58,8 @@
       # XXX Factorise and simplify like done in https://github.com/gvolpe/nix-config
       homeManagerDarwinModules = {
         kitty = import ./modules/home/kitty;
-        wezterm = import ./modules/home/wezterm;
+        # XXX: currnetly not used
+        # wezterm = import ./modules/home/wezterm;
         fish = import ./modules/home/fish;
         starship = import ./home/starship.nix;
         starship-symbols = import ./home/starship-symbols.nix;
@@ -88,7 +89,8 @@
         wm = import ./modules/home/wm;
 
         kitty = import ./modules/home/kitty;
-        wezterm = import ./modules/home/wezterm;
+        # XXX: currnetly not used
+        # wezterm = import ./modules/home/wezterm;
         fish = import ./modules/home/fish;
         starship = import ./home/starship.nix;
         starship-symbols = import ./home/starship-symbols.nix;
