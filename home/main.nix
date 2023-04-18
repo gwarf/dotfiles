@@ -45,50 +45,6 @@
     # nodePackages_latest.joplin
     joplin-desktop
 
-    # Dev stuff
-    # XXX maybe to be moved to project-specific envs
-    actionlint
-    ansible-lint
-    beautysh
-    black
-    cargo
-    deno
-    gnumake
-    go
-    isort
-    jq
-    luajitPackages.luarocks
-    nodePackages.alex
-    nodePackages.markdownlint-cli
-    nodePackages.prettier
-    gnumake
-    # clang
-    # llvm
-    # XXX textlint doesn't foudn the terminology rule
-    # pkgs-unstable.nodePackages.textlint
-    # pkgs-unstable.nodePackages.textlint-rule-terminology
-    nodejs
-    # podman
-    pylint
-    qemu
-    stylua
-
-    # LSP servers
-    ltex-ls
-    nodePackages.yaml-language-server
-    pkgs-unstable.ansible-language-server
-    pyright
-    rnix-lsp
-    sumneko-lua-language-server
-    # Required for ltex-ls usage in neovim
-    jdk11
-    nodePackages.bash-language-server
-    nodePackages.vim-language-server
-    pkgs-unstable.nodePackages.vscode-json-languageserver
-    # Not yet in nixpkgs: https://github.com/NixOS/nixpkgs/pull/193682
-    nodePackages.write-good
-    pkgs-unstable.marksman
-
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
     # comma # run software from without installing it
@@ -119,7 +75,6 @@
     xclip
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
-    gcc
     m-cli # useful macOS CLI commands
     ncurses
   ];
