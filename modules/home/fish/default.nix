@@ -41,7 +41,7 @@ in
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  # Fish configuration ------------------------------------------------------------------------- {{{
+  # Fish configuration
 
   # Aliases
   programs.fish.shellAliases = {
@@ -97,16 +97,15 @@ in
     set -gx SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
     set -gx MANPAGER "nvim +Man!"
 
-    # Need clang from homebrew on macOS (for C++11 / 14 with neorg and tree-sitter)
     if test (uname) = Darwin
-      # Add nix directories to path missing in current kitty config 
+      # Add path mainly used by brew
+      fish_add_path "/usr/local/bin"
+
+      # Add nix directories to path missing in current kitty config
       fish_add_path "~/.nix-profile/bin"
       fish_add_path "/etc/profiles/per-user/$USER/bin"
       fish_add_path "/run/current-system/sw/bin"
       fish_add_path "/nix/var/nix/profiles/default/bin"
-
-      # Add path mainly used by brew
-      fish_add_path "/usr/local/bin"
 
       # https://spicetify.app
       if test -e ~/.spicetify
@@ -117,21 +116,21 @@ in
         . ~/perl5/perlbrew/etc/perlbrew.fish
       end
 
-      # https://github.com/pyenv/pyenv/wiki/Common-build-problems
-      # XXX clang-15: unknown argument -02
-      # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-      set -gx CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-
+      # XXX: disabled
       # Favor using llvm stuff from homebrew
-      set -gx CPPFLAGS "-I/usr/local/opt/llvm/include"
-      set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
-      fish_add_path "/usr/local/opt/llvm/bin"
-
+      # clang-15: unknown argument -02
+      # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      # set -gx CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+      # set -gx CPPFLAGS "-I/usr/local/opt/llvm/include"
+      # set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+      # fish_add_path "/usr/local/opt/llvm/bin"
+     
       # Use clang/llvm as main compiler
       set -gx CC clang
       set -gx CXX clang++
 
       # Load pyenv
+      # https://github.com/pyenv/pyenv/wiki/Common-build-problems
       set -x PYENV_ROOT $HOME/.pyenv
       fish_add_path $PYENV_ROOT/bin
       pyenv init - | source
@@ -185,6 +184,4 @@ in
 
     [ -e $HOME/fish.env ]; and source $HOME/fish.env
   '';
-  # }}}
 }
-# vim: foldmethod=marker
