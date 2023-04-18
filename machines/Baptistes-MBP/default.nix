@@ -12,7 +12,6 @@
     onActivation.upgrade = true;
     brews = [
       "terminal-notifier"
-      "the_silver_searcher"
 
       # mail setup
       # XXX to be moved to a module
@@ -22,12 +21,10 @@
       "mutt"
 
       # XXX install from pkgs does not work
+      "checkmake"
       "joplin-cli"
-      # To be used for nvim/treesitter/neorg with recent C++
-      "llvm"
 
       "bitwarden-cli"
-      "checkmake"
       "fetch-crl"
       "perltidy"
       "pyenv"
