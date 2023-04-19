@@ -370,6 +370,27 @@ return {
         }),
       })
 
+      -- XXX: Do not use copilot completion in files that may contain senstive information
+      cmp.setup.filetype({ "norg", "tex" }, {
+        ---@diagnostic disable-next-line: missing-parameter
+        sources = cmp.config.sources({
+          -- would be useful to be able to use this only when completing headers
+          { name = "lbdb" },
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "path" },
+          { name = "emoji" },
+          {
+            name = "buffer",
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
+        }),
+      })
+
       -- Do not use copilot in norg and markdown files
       -- cmp.setup.filetype({"norg", "markdown}", {
       --   ---@diagnostic disable-next-line: missing-parameter
