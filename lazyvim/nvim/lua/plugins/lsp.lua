@@ -6,9 +6,6 @@ return {
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
-    -- XXX: Need to run master as tagged release is outdated and not using latest lua_ls
-    -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
-    version = false,
     opts = {
       -- add folding range to capabilities
       capabilities = {
@@ -18,10 +15,6 @@ return {
             lineFoldingOnly = true,
           },
         },
-      },
-      -- Manage virtual text
-      diagnostics = {
-        virtual_text = true,
       },
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
