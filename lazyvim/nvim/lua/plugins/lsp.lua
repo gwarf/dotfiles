@@ -1,7 +1,58 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
 return {
   -- Improved ltex integration, supporting code actions
-  { "barreiroleo/ltex_extra.nvim" },
+  {
+    "barreiroleo/ltex_extra.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+    -- FIXME: move ltex configuration here
+    -- ft = {
+    --   "bib",
+    --   "gitcommit",
+    --   "latex",
+    --   "mail",
+    --   "markdown",
+    --   "norg",
+    --   "org",
+    --   "pandoc",
+    --   "rst",
+    --   "tex",
+    --   "text",
+    -- },
+    -- config = function()
+    --   require("ltex_extra").setup({
+    --     load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+    --     init_check = true, -- whether to load dictionaries on startup
+    --     path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+    --     log_level = "error", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+    --     server_opts = nil,
+    --   })
+    -- end,
+    -- opts = {
+    --   load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+    --   init_check = true, -- whether to load dictionaries on startup
+    --   path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+    --   log_level = "error", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+    --   server_opts = {
+    --     settings = {
+    --       -- https://valentjn.github.io/ltex/settings.html
+    --       ltex = {
+    --         -- trace = { server = "verbose" },
+    --         checkFrequency = "save",
+    --         language = "en-GB",
+    --         additionalRules = {
+    --           enablePickyRules = true,
+    --           motherTongue = "fr",
+    --         },
+    --         -- https://community.languagetool.org/rule/list?lang=en
+    --         disabledRules = {
+    --           -- en-GB disabled rules loaded from ~/.config/nvim/spell/ltex.disabledRules.en-GB.txt
+    --           ["fr"] = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
+    --         },
+    --       },
+    --     },
+    --   },
+    -- },
+  },
 
   -- add various LSP to lspconfig
   {
