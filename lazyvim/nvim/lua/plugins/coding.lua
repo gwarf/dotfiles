@@ -4,6 +4,9 @@ return {
   -- Install support for editing nix files
   { "LnL7/vim-nix" },
 
+  -- TODO: check if useful and incorporate if needed
+  -- https://github.com/AckslD/nvim-FeMaco.lua
+
   -- XXX tools are managed via nix
   -- add any tools you want to have installed below
   -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
@@ -283,6 +286,7 @@ return {
       -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
       { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
       { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-cmdline" },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -375,7 +379,6 @@ return {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
           -- would be useful to be able to use this only when completing headers
-          { name = "lbdb" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
