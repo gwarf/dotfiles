@@ -11,12 +11,12 @@ return {
       load = {
         -- Load default modules
         ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
-        ["core.norg.completion"] = {
+        ["core.concealer"] = {},
+        ["core.completion"] = {
           config = { engine = "nvim-cmp" },
         },
         ["core.integrations.nvim-cmp"] = {},
-        ["core.norg.dirman"] = {
+        ["core.dirman"] = {
           config = {
             workspaces = {
               work = "~/Documents/notes/work",
