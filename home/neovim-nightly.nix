@@ -9,8 +9,9 @@ in
   programs.neovim = {
     enable = true;
     # package = neovim-unwrapped;
-    # package = pkgs-unstable.neovim-unwrapped;
-    package = neovim-nightly;
+    package = pkgs-unstable.neovim-unwrapped;
+    # XXX: disabled for now, temporary issues arriving too often
+    # package = neovim-nightly;
 
     # use nvim by default
     vimAlias = true;
