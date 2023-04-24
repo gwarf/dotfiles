@@ -67,6 +67,7 @@ bind index,pager g noop
 #     "Go to inbox"
 
 # macros to invoke a profile
+macro index <F8> ":source ~/.config/neomutt/default-profile<enter><change-folder>!<enter>" "Load profile: default"
 # macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
 # macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
 
@@ -81,13 +82,16 @@ bind index,pager g noop
 
 # macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 
-# Use Ctrl-l to list URL using urlscan
-# macro pager \cl <pipe-entry>'urlscan'<enter> 'Follow links with urlscan'
-# macro pager \Cl "<pipe-entry>urlview<enter>" "call urlview to open links"
+# Use Ctrl-l to list URL
+# - https://www.memoryhole.net/~kyle/extract_url/
+# - Extract URLs from messages using extract_url
+# - Select URL to dislpay using fzf
+# - Open using open on macOS
+# XXX: use xdg-open or mutt_bgrun(?) on GNU/Linux
 macro index,pager \cl "\
- <enter-command> unset pipe_decode<enter> \
- <pipe-message>extract_url<enter>" \
- "get URLs with extract_url"
+  <enter-command> unset pipe_decode<enter> \
+  <pipe-message>extract_url | fzf | xargs open<enter>" \
+  "get URLs with extract_url + fzf"
 
 # show flagged and unread mails (i.e. important)
 macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
