@@ -13,14 +13,14 @@
     brews = [
       "terminal-notifier"
 
-      # mail setup
-      # XXX to be moved to a module
+      # XXX: mail setup to be moved to a module
       "gpgme"
       "isync"
+      "khal"
       "msmtp"
       "mutt"
 
-      # XXX install from pkgs does not work
+      # XXX: install from pkgs does not work
       "checkmake"
       "joplin-cli"
 
@@ -32,12 +32,15 @@
     casks = [
       # app launcher, file searcher
       "alfred"
+      # XXX: install from pkgs does not work
+      "drawio"
       # Clipboard manager
       "maccy"
       "mumble"
       # "podman-desktop"
       "rectangle"
       "stretchly"
+      "teamviewer"
       "vlc"
     ];
   };

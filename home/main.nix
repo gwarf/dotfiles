@@ -55,7 +55,10 @@
     checkmake
     clang
     dracula-theme
+    drawio
     gparted
+    # Mail
+    khal
     liquidctl
     llvm
     lm_sensors
