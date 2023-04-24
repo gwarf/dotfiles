@@ -107,7 +107,8 @@ bind index,pager \ck extract-keys
 
 # Include the profile name in the status line
 # TODO Align profile name on the right
-set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]────@EGI──%>─%?p?( %p postponed )?───"
+# XXX: automatic padding with ─ does not work, using a normal - for now
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? %?p? (%p postponed)?]───[ EGI ]%|-"
 
 # Fetching mail
 macro index \cf "<shell-escape>mbsync -a<enter>"
