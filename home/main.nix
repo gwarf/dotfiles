@@ -20,6 +20,28 @@
     curl
     wget
 
+    # FIXME: not working for getting norg-treesitter to build
+    # neovim :Neorg sync-parsers
+    # clang and llvm
+    # clang
+    # llvm
+    # clang-tools
+    # pkg-config
+    # clang_14
+    # clang-tools_14
+    # lld_14
+    # llvmPackages_14.stdenv
+    # llvmPackages_14.llvm
+    # llvmPackages_14.clang
+    # llvmPackages_14.libcxx
+    # llvmPackages_14.libcxxabi
+    # llvmPackages_14.clang-unwrapped
+    # llvmPackages_14.clangUseLLVM
+    # llvmPackages_14.libcxxStdenv
+    # llvmPackages_14.libcxxClang
+    # llvmPackages_14.libclang
+    # llvmPackages_14.bintools
+
     # Cool stuff
     doggo
     du-dust
@@ -53,7 +75,6 @@
   ] ++ lib.optionals stdenv.isLinux [
     arch-install-scripts
     checkmake
-    clang
     dracula-theme
     drawio
     gparted
