@@ -1,32 +1,7 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
-
-  -- neorg, org-mode like
-  -- https://github.com/nvim-neorg/neorg
-  {
-    "nvim-neorg/neorg",
-    -- lazy-load on filetype
-    ft = "norg",
-    opts = {
-      load = {
-        -- Load default modules
-        ["core.defaults"] = {},
-        ["core.concealer"] = {},
-        ["core.completion"] = {
-          config = { engine = "nvim-cmp" },
-        },
-        ["core.integrations.nvim-cmp"] = {},
-        ["core.dirman"] = {
-          config = {
-            workspaces = {
-              work = "~/Documents/notes/work",
-              home = "~/Documents/notes/home",
-            },
-          },
-        },
-      },
-    },
-  },
+  -- Edit and review GitHub issues and pull requests
+  { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
 
   -- markdown preview
   {
@@ -46,7 +21,7 @@ return {
         desc = "Peek (Markdown Preview)",
       },
     },
-    opts = { theme = "light" },
+    opts = { theme = "light", app = "browser" },
   },
 
   -- better diffing
@@ -80,5 +55,12 @@ return {
         virtualtext = "■",
       },
     },
+  },
+
+  -- ChatGPT client
+  {
+    "jackMort/ChatGPT.nvim",
+    cmd = { "ChatGPTActAs", "ChatGPT" },
+    opts = {},
   },
 }
