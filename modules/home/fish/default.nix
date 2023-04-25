@@ -125,9 +125,12 @@ in
       # set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
       # fish_add_path "/usr/local/opt/llvm/bin"
      
+      # FIXME: not working for getting norg-treesitter to build
       # Use clang/llvm as main compiler
-      set -gx CC clang
-      set -gx CXX clang++
+      # set -gx CC clang
+      # set -gx CXX clang++
+      # set -gx COMPILER clang++
+      set -gx CC gcc-12
 
       # Load pyenv
       # https://github.com/pyenv/pyenv/wiki/Common-build-problems
@@ -182,6 +185,6 @@ in
     # Set LS_COLORS
     set -xg LS_COLORS (${pkgs.vivid}/bin/vivid generate dracula)
 
-    [ -e $HOME/fish.env ]; and source $HOME/fish.env
+    [ -e $HOME/.fish.env ]; and source $HOME/.fish.env
   '';
 }

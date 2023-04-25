@@ -13,6 +13,10 @@
     brews = [
       "terminal-notifier"
 
+      # XXX: for building norg-treesitter on macOS
+      # https://github.com/nvim-neorg/tree-sitter-norg/issues/7
+      "gcc"
+
       # XXX: mail setup to be moved to a module
       "gpgme"
       "isync"
