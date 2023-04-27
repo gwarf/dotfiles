@@ -3,6 +3,19 @@ return {
   -- Edit and review GitHub issues and pull requests
   { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
 
+  -- git integration :Neogit
+  -- LazyGit and Gitsigns are installed by default
+  {
+    "TimUntersberger/neogit",
+    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
+    opts = {
+      integrations = {
+        diffview = true,
+      },
+      disable_commit_confirmation = true,
+    },
+  },
+
   -- markdown preview
   {
     "toppair/peek.nvim",
