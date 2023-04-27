@@ -20,7 +20,8 @@ require("lazy").setup({
     -- copilot
     -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
     -- configuration and sources
-    { import = "lazyvim.plugins.extras.coding.copilot" },
+    -- XXX: disabled until there is an easy way to opt in using copilot
+    -- { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.project" },
     -- import/override with your plugins
     { import = "plugins" },

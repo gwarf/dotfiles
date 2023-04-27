@@ -20,19 +20,6 @@ return {
     },
   },
 
-  -- git integration :Neogit
-  -- LazyGit and Gitsigns are installed by default
-  {
-    "TimUntersberger/neogit",
-    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
-    opts = {
-      integrations = {
-        diffview = true,
-      },
-      disable_commit_confirmation = true,
-    },
-  },
-
   -- better text objects
   {
     "echasnovski/mini.ai",
@@ -90,43 +77,7 @@ return {
     end,
   },
 
-  {
-    "danymat/neogen",
-    keys = {
-      {
-        "<leader>cc",
-        function()
-          require("neogen").generate({})
-        end,
-        desc = "Neogen Comment",
-      },
-    },
-    opts = { snippet_engine = "luasnip" },
-  },
-
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    config = true,
-  },
-
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>r",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-  },
-
+  -- Go forward/backward with square brackets
   {
     "echasnovski/mini.bracketed",
     event = "BufReadPost",
@@ -172,13 +123,79 @@ return {
     end,
   },
 
+  -- improved %
+  {
+    "andymass/vim-matchup",
+    -- XXX: Need to run master as tagged release is outdated
+    version = false,
+    event = "BufReadPost",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+    end,
+  },
+
+  -- A better annotation generator
+  {
+    "danymat/neogen",
+    keys = {
+      {
+        "<leader>cc",
+        function()
+          require("neogen").generate({})
+        end,
+        desc = "Neogen Comment",
+      },
+    },
+    opts = { snippet_engine = "luasnip" },
+  },
+
+  -- Incremental LSP renaming
+  {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    config = true,
+  },
+
+  -- Structural search and replace
+  {
+    "cshuaimin/ssr.nvim",
+    keys = {
+      {
+        "<leader>sR",
+        function()
+          require("ssr").open()
+        end,
+        mode = { "n", "x" },
+        desc = "Structural Replace",
+      },
+    },
+  },
+
+  -- Refactoring library based off the Refactoring book by Martin Fowler
+  {
+    "ThePrimeagen/refactoring.nvim",
+    keys = {
+      {
+        "<leader>r",
+        function()
+          require("refactoring").select_refactor()
+        end,
+        mode = "v",
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
+    opts = {},
+  },
+
   -- better yank/paste
   {
     "kkharji/sqlite.lua",
     -- XXX: disabled as breaking bootstrap of configuration due to lazyvim.util not found
-    --   enabled = function()
-    --     return require("lazyvim.util").has("yanky.nvim") and not jit.os:find("Windows")
-    --   end,
+    -- enabled = function()
+    --   return require("lazyvim.util").has("yanky.nvim") and not jit.os:find("Windows")
+    -- end,
   },
   {
     "gbprod/yanky.nvim",
@@ -260,6 +277,7 @@ return {
     end,
   },
 
+  -- A tree like view for symbols using LSP
   {
     "simrat39/symbols-outline.nvim",
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
@@ -333,7 +351,8 @@ return {
         { name = "luasnip" },
         { name = "path" },
         { name = "emoji" },
-        { name = "copilot" },
+        -- XXX: disabled until there is a way to opt-in for copilot in special cases
+        -- { name = "copilot" },
         {
           name = "buffer",
           option = {
@@ -344,7 +363,7 @@ return {
         },
       })
 
-      -- XXX: causing issues with load of cmp in some cases
+      -- FIXME: not working, causing issues with load of cmp in some cases
       -- Filter out copilot from some use cases, like emails to preserve privacy
       -- local limited_sources = {}
       -- for i = #opts.sources, 1, -1 do
@@ -352,6 +371,11 @@ return {
       --     table.insert(limited_sources, opts.sources[i])
       --   end
       -- end
+      -- Do not use copilot in norg and markdown files
+      -- cmp.setup.filetype({"norg", "markdown}", {
+      --   ---@diagnostic disable-next-line: missing-parameter
+      --   sources = cmp.config.sources(limited_sources),
+      -- })
 
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
@@ -374,28 +398,7 @@ return {
         }),
       })
 
-      -- XXX: Do not use copilot completion in files that may contain senstive information
-      -- XXX: May be better to disable copilot until there is an easy way to opt in using
-      -- it for specific files
-      cmp.setup.filetype({ "markdown", "tex", "text" }, {
-        ---@diagnostic disable-next-line: missing-parameter
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "path" },
-          { name = "emoji" },
-          {
-            name = "buffer",
-            option = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end,
-            },
-          },
-        }),
-      })
-
-      -- Do not use copilot completion, and add neorg
+      -- Add neorg
       cmp.setup.filetype("norg", {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -413,12 +416,6 @@ return {
           },
         }),
       })
-
-      -- Do not use copilot in norg and markdown files
-      -- cmp.setup.filetype({"norg", "markdown}", {
-      --   ---@diagnostic disable-next-line: missing-parameter
-      --   sources = cmp.config.sources(limited_sources),
-      -- })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
@@ -458,32 +455,6 @@ return {
     end,
   },
 
-  -- Structural search and replace
-  {
-    "cshuaimin/ssr.nvim",
-    keys = {
-      {
-        "<leader>sR",
-        function()
-          require("ssr").open()
-        end,
-        mode = { "n", "x" },
-        desc = "Structural Replace",
-      },
-    },
-  },
-
-  -- improved %
-  {
-    "andymass/vim-matchup",
-    -- XXX: Need to run master as tagged release is outdated
-    version = false,
-    event = "BufReadPost",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  },
-
   -- supercharged .
   { "tpope/vim-repeat" },
 
@@ -501,16 +472,5 @@ return {
   { "chrisgrieser/nvim-spider", lazy = true },
 
   -- Open links without netrw using gx mapping
-  {
-    "chrishrb/gx.nvim",
-    -- FIXME register existing gx mapping in which-key
-    -- config = function()
-    --   local wk = require("which-key")
-    --   wk.register({
-    --     g = {
-    --       x = "Open link",
-    --     },
-    --   })
-    -- end,
-  },
+  { "chrishrb/gx.nvim" },
 }
