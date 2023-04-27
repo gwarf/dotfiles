@@ -73,6 +73,7 @@ return {
         bashls = {},
         -- use LanguageTool via ltex for spell checking
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
+        -- TODO: have cmp do completion using words from the dictionaries
         ltex = {
           filetypes = {
             "bib",
