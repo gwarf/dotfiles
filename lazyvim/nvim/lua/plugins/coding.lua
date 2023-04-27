@@ -375,12 +375,32 @@ return {
       })
 
       -- XXX: Do not use copilot completion in files that may contain senstive information
-      cmp.setup.filetype({ "norg", "tex" }, {
+      -- XXX: May be better to disable copilot until there is an easy way to opt in using
+      -- it for specific files
+      cmp.setup.filetype({ "markdown", "tex", "text" }, {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
-          -- would be useful to be able to use this only when completing headers
           { name = "nvim_lsp" },
           { name = "luasnip" },
+          { name = "path" },
+          { name = "emoji" },
+          {
+            name = "buffer",
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
+        }),
+      })
+
+      -- Do not use copilot completion, and add neorg
+      cmp.setup.filetype("norg", {
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "neorg" },
           { name = "path" },
           { name = "emoji" },
           {
