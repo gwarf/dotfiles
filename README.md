@@ -1,11 +1,11 @@
 # gwarf's dotfiles
 
-My messy **dotfiles** for GNU/Linux and macOS. WIP of course :)
+My messy **dotfiles** for GNU/Linux and macOS. WIP :)
 
 Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
 some others are for macOS.
 
-> **WIP++** I'm currently converting this repository from
+> **WIP++** I'm converting this repository from
 > [yadm](https://github.com/TheLocehiliosan/yadm) to management using [nix](#nix) and
 > [home-manager](https://nix-community.github.io/home-manager/).
 
@@ -13,12 +13,11 @@ some others are for macOS.
 
 This is mainly random notes and pointers to source of inspiration.
 
-This is very early work, some important tasks are pending:
+This is work-in-progress, some important tasks are pending:
 
 - [ ] Try to understand what I'm doing :)
 - [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
 - [ ] Finalise mail configuration
-- [ ] Finalise fish configuration
 - [ ] Finalise neovim configuration
 - [ ] Finalise neomutt/mutt configuration
 - [ ] Unlock gnome keyring on login
@@ -28,7 +27,7 @@ This is very early work, some important tasks are pending:
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
       flakes. Unless it makes sense to keep this to do system configuration?
-- [ ] Consolidate macOS and NixOS configuration.
+- [ ] Consolidation of macOS and NixOS configuration.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
 - [ ] Support home-manager configuration on non-NixOS GNU/Linux systems.
 - [ ] Test and document bootstrap in clean NixOS.
@@ -65,7 +64,7 @@ use two commands:
   updates **ALL** inputs and commit the changes to the lock file.
 
 > Beware as if you are using some nighlyt or unstable inputs it could break,
-  and commit the change, making reverting a bit less easier (but still doable).
+> and commit the change, making reverting a bit less easier (but still doable).
 
 - [`nix flake lock`](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake-lock.html)
   allows to specify one more multiple inputs to update and then you will have
@@ -169,11 +168,13 @@ nix build ".#darwinConfigurations.Baptistes-MBP.system"
 ### For python
 
 See:
+
 - [NixOS Wiki: Python](https://nixos.wiki/wiki/Python)
 - [NixOS Wiki: Packaging Python](https://nixos.wiki/wiki/Packaging/Python)
 - [mach-nix](https://github.com/DavHau/mach-nix), to be replaced by [dream2nix](https://github.com/nix-community/dream2nix)
 
 Using a [Nix flake templates for easy dev envs](https://github.com/the-nix-way/dev-templates):
+
 ```shell
 nix flake init --template github:the-nix-way/dev-templates#python
 direnv allow
