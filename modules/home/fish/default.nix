@@ -141,7 +141,7 @@ in
       # Load custon pytyon3 venv for mutt + ical
       function mutt
         source ~/.config/neomutt/.venv/bin/activate.fish
-        /usr/local/bin/mutt
+        /etc/profiles/per-user/baptiste/bin/mutt
       end
 
       # Start oidc-agent
