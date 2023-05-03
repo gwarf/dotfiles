@@ -15,7 +15,6 @@ This is mainly random notes and pointers to source of inspiration.
 
 This is work-in-progress, some important tasks are pending:
 
-- [ ] Try to understand what I'm doing :)
 - [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
 - [ ] Finalise mail configuration
 - [ ] Finalise neovim configuration
