@@ -17,15 +17,9 @@
       # https://github.com/nvim-neorg/tree-sitter-norg/issues/7
       "gcc"
 
-      # XXX: mail setup to be moved to a module
-      "gpgme"
-      "isync"
-      "khal"
-      "msmtp"
-      "mutt"
-
       # XXX: install from pkgs does not work
       "checkmake"
+      "khal"
       "joplin-cli"
 
       "bitwarden-cli"

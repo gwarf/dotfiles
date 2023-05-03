@@ -101,6 +101,15 @@
     coreutils
     m-cli # useful macOS CLI commands
     ncurses
+    # Mail
+    # XXX: need to take care of configuration
+    mutt
+    gnupg
+    gpgme
+    # XXX: need to take care of daemon
+    isync
+    # XXX: need to take care of daemon
+    msmtp
   ];
   programs.tealdeer = {
     enable = true;
