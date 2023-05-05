@@ -71,9 +71,9 @@ return {
   },
 
   -- ChatGPT client
-  {
-    "jackMort/ChatGPT.nvim",
-    cmd = { "ChatGPTActAs", "ChatGPT" },
-    opts = {},
-  },
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   cmd = { "ChatGPTActAs", "ChatGPT" },
+  --   opts = {},
+  -- },
 }
