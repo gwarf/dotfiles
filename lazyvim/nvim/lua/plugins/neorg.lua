@@ -2,6 +2,9 @@ return {
   -- neorg, org-mode like
   -- https://github.com/nvim-neorg/neorg
   -- Bindings: ~/.local/share/nvim/lazy/neorg/lua/neorg/modules/core/keybinds/keybinds.lua
+  -- XXX: issues with building treesitter extension on macos
+  -- https://github.com/nvim-neorg/tree-sitter-norg/issues/7
+  -- CC="/usr/bin/clang++ -std=c++17" nvim -c "TSInstallSync norg"
   {
     "nvim-neorg/neorg",
     -- lazy-load on filetype
