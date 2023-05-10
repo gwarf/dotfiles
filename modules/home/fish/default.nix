@@ -130,12 +130,24 @@ in
       # set -gx CC clang
       # set -gx CXX clang++
       # set -gx COMPILER clang++
-      # set -gx CC gcc-12
+      
+      # Use gcc12 from homebrew to build neorg treesitter
+      set -gx CC /usr/local/bin/gcc-12
 
+      # XXX: not working
       # Use clang++ from system with recent C++ version to build neorg treesitter
-      function nvim
-        env CC="/usr/bin/clang++ -std=c++17" /etc/profiles/per-user/$USER/bin/nvim $argv
-      end
+      # set -gx CC "/usr/bin/clang++ -std=c++17"
+
+      # XXX: not working
+      # Use clang++ from system with recent C++ version to build neorg treesitter
+      # function nvim
+      #   env CC="/usr/bin/clang++ -std=c++17" /etc/profiles/per-user/$USER/bin/nvim $argv
+      # end
+
+      # XXX: not working
+      # function vim
+      #   env CC="/usr/bin/clang++ -std=c++17" /etc/profiles/per-user/$USER/bin/nvim $argv
+      # end
 
       # Load pyenv
       # https://github.com/pyenv/pyenv/wiki/Common-build-problems
