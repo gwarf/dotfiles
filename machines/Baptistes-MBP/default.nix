@@ -15,7 +15,7 @@
 
       # XXX: for building norg-treesitter on macOS
       # https://github.com/nvim-neorg/tree-sitter-norg/issues/7
-      "gcc@12"
+      # "gcc@12"
 
       # XXX: install from pkgs does not work
       "checkmake"
