@@ -132,7 +132,7 @@ in
       # set -gx COMPILER clang++
       
       # Use gcc12 from homebrew to build neorg treesitter
-      set -gx CC /usr/local/bin/gcc-12
+      # set -gx CC /usr/local/bin/gcc-12
 
       # XXX: not working
       # Use clang++ from system with recent C++ version to build neorg treesitter
