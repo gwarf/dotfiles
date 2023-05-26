@@ -23,6 +23,7 @@ require("lazy").setup({
     -- XXX: disabled until there is an easy way to opt in using copilot
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
     { import = "lazyvim.plugins.extras.util.project" },
+    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- import/override with your plugins
     { import = "plugins" },
   },
