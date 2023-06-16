@@ -287,9 +287,6 @@ return {
   -- Use <tab> for completion and snippets (supertab).
   {
     "L3MON4D3/LuaSnip",
-    -- FIXME: build not working using system gcc
-    -- https://github.com/L3MON4D3/LuaSnip/blob/master/Makefile
-    -- build = "make install_jsregexp LUAJIT_OSX_PATH=/opt/bin",
     keys = function()
       return {}
     end,
