@@ -41,6 +41,8 @@
     git
     vim
     wget
+    # For mutt, to be moved to mail module
+    w3m
   ];
 
   # Fonts
