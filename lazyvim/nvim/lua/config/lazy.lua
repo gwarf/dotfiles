@@ -11,6 +11,9 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras LazyVim modules
+    -- better copy/paste
+    { import = "lazyvim.plugins.extras.coding.yanky" },
+    -- support more languages
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.python" },
@@ -21,13 +24,13 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.ui.mini-starter" },
     -- create and manage predefined window layouts
     { import = "lazyvim.plugins.extras.ui.edgy" },
+    -- project management
+    { import = "lazyvim.plugins.extras.util.project" },
     -- copilot
     -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
     -- configuration and sources
     -- XXX: disabled until there is an easy way to opt in using copilot
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
-    { import = "lazyvim.plugins.extras.util.project" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
     -- import/override with your plugins
     { import = "plugins" },
   },
