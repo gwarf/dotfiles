@@ -11,12 +11,16 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras LazyVim modules
-    -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-    -- treesitter, mason and typescript.nvim.
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- add jsonls and schemastore ans setup treesitter for json, json5 and jsonc
+    { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.python" },
+    { import = "lazyvim.plugins.extras.lang.terraform" },
+    -- Animate common Neovim actions (cursor movement, scrolling...)
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    -- Alternative startup screen/dashboard
+    { import = "lazyvim.plugins.extras.ui.mini-starter" },
+    -- create and manage predefined window layouts
+    { import = "lazyvim.plugins.extras.ui.edgy" },
     -- copilot
     -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
     -- configuration and sources
