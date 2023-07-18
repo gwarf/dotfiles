@@ -78,22 +78,20 @@ set quit             # don't ask, just do!!
 unset mark_old       # read/new is good enough
 
 # sort/threading
-# Goal:
-# * sort by threads, most recent at the top
-# * within threads: oldest message at the top, oldest to newest in descending order
-# Default sorting
-# Set by threads, most recent on top, but sometimes weird inside threads
-# Most of the time from oldest to neweset, but sometims some are mixed
-set sort = threads
-set sort_aux = reverse-last-date-received
-# thread based on regex
+# threads based on subject / regex
+unset strict_threads
 set sort_re
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-# Ensure that INBOX is always using appropriate sorting
-folder-hook Inbox 'set sort=threads sort_aux=reverse-last-date-received'
+# Sort by threads
+set sort = threads
+# Sort threads, having the most recent at the top
+set sort_thread_groups = reverse-last-date-received
+# Sort within threads, last message at the bottom
+set sort_aux = last-date-received
+# Ensure that INBOX is always using appropriate thread-based sort
+folder-hook Inbox 'set sort=threads sort_aux=last-date-received sort_thread_groups=reverse-last-date-received '
+# Ensure that Sent folder is first showing messages last sent
 folder-hook Sent 'set sort=reverse-date-sent'
-# Threads sorted correctly but at bottom
-#set sort_aux = last-date-received
 
 # collapse threads with unread mails
 # set collapse_unread
