@@ -37,6 +37,7 @@
       "mumble"
       # "podman-desktop"
       "rectangle"
+      "slack"
       "stretchly"
       "teamviewer"
       "vlc"
