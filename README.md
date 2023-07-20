@@ -87,6 +87,13 @@ nix flake lock --update-input nur
 nix flake lock --update-input home-manager
 ```
 
+### Nix upgrade
+
+- Read release notes for nix, nixos and home-manager
+- Update channels definition (replace existing ones, with most recent ones)
+- Update channels
+- Rebuild the system
+
 ### NixOS setup
 
 > NixOS version: using the stable NixOS release, and allowing to explicitly
@@ -216,22 +223,4 @@ Interesting approach to look into:
   - https://github.com/Thrimbda/charles/blob/08bb883cff19b01c66bbe25c62c06545ccf40a1c/flake.nix
   - https://github.com/ttak0422/ENV/blob/1478ba70e1a3eddd4dab1b65c191cc320e5b6cf1/flake.nix
   - https://github.com/voidcontext/nix-config/blob/695668066e358be43298eab796f16232a09ba24e/flake.nix
-  - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343/3
-- [mystrio NixOS configuration](https://sr.ht/~misterio/nix-config/)
-- https://dpdmancul.gitlab.io/dotfiles/index.html: fully documented
-- https://github.com/jules-goose/nixcfg
-- https://github.com/booklearner/nixconfig
-- https://github.com/malob/nixpkgs
-- https://github.com/gvolpe/nix-config: very complete.
-  - neovim in a dedicated flake: https://github.com/gvolpe/neovim-flake
-- https://github.com/gmarmstrong/dotfiles
-- https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
-- https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
-- https://github.com/wvhulle/nixosConfigurations
-- https://github.com/ArdanaLabs/ArdanaTenant
-- Dracula colorscheme: https://github.com/RichardYan314/dotfiles-nix
-- https://github.com/Misterio77/nix-starter-configs
-- [NisOS on WSL](https://github.com/nix-community/NixOS-WSL)
-- [NixOS on SoYouStart](https://web.archive.org/web/20160829180041/http://aborsu.github.io/2015/09/26/Install%20NixOS%20on%20So%20You%20Start%20dedicated%20server/)
-- [Installing NixOS on OVH dedicated servers](https://web.archive.org/web/20210125195352/https://www.srid.ca/137ae172.html)
-- https://discourse.nixos.org/t/howto-install-nixos-on-an-ovh-dedicated-server/3089/14
+  - https://discourse.nixos.
