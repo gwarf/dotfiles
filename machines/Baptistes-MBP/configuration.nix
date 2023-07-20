@@ -74,6 +74,12 @@
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 
+  # Define a user account
+  users.users.baptiste = {
+    # https://github.com/nix-community/home-manager/issues/4026
+    home = "/Users/baptiste";
+  };
+
   # macOS system configuration
   system.defaults = {
     dock = {
