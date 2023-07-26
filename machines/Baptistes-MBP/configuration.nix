@@ -152,7 +152,7 @@
       "sync"
     ];
     serviceConfig.RunAtLoad = true;
-    serviceConfig.StartInterval = 180;
+    serviceConfig.StartInterval = 3600;
     serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.vdirsyncer.log";
     serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.vdirsyncer.log";
     serviceConfig.ProcessType = "Background";
