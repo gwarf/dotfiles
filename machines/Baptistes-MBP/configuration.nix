@@ -140,15 +140,14 @@
     serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.mailsync.log";
     serviceConfig.ProcessType = "Background";
   };
-  # Sync of calendar and contacts
-  # XXX: describe the vdirsyncer configuration
+  # Sync of contacts
+  # XXX: describe the vdirsyncer configuration from ~/.config/vdirsyncer/config
   # https://search.nixos.org/options?channel=23.05&show=services.vdirsyncer.jobs.%3Cname%3E.configFile&from=0&size=50&sort=relevance&type=packages&query=vdirsyncer
   # https://github.com/pSub/configs/blob/21c3413cf0f5f39ec118cbbf34704192615c40ca/nixops/configurations/server.pascal-wittmann.de/default.nix#L402
   launchd.user.agents.vdirsyncer = {
     serviceConfig.Program = "${pkgs.vdirsyncer}/bin/vdirsyncer";
     serviceConfig.ProgramArguments = [
-      "--verbosity"
-      "CRITICAL"
+      "--verbosity CRITICAL"
       "sync"
     ];
     serviceConfig.RunAtLoad = true;
