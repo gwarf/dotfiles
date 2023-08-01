@@ -422,7 +422,7 @@
       set foldmethod=indent  " Set 'indent' folding method
       set nofoldenable       " Start with folds opened
       let g:mapleader = ' '
-      let g:maplocalleader = ' '
+      let g:maplocalleader = '\\' " Avoid clashes between local and global mappings
       " use return to enter command mode
       nnoremap <cr> :
       vnoremap <cr> :
