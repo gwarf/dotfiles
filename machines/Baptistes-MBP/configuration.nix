@@ -146,7 +146,7 @@
   # https://github.com/pSub/configs/blob/21c3413cf0f5f39ec118cbbf34704192615c40ca/nixops/configurations/server.pascal-wittmann.de/default.nix#L402
   launchd.user.agents.vdirsyncer = {
     serviceConfig.Program = "${pkgs.vdirsyncer}/bin/vdirsyncer";
-    serviceConfig.ProgramArguemnts = [
+    serviceConfig.ProgramArguments = [
       "--verbosity"
       "CRITICAL"
       "sync"
