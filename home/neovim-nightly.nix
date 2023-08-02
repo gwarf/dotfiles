@@ -49,8 +49,7 @@ in
     qemu
     stylua
 
-    # LSP servers
-    ltex-ls
+    # LSP servers that are installed globally
     nodePackages.yaml-language-server
     pkgs-unstable.ansible-language-server
     pyright
