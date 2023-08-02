@@ -83,14 +83,13 @@
     m-cli # useful macOS CLI commands
     ncurses
     # Mail
-    # XXX: need to take care of configuration
+    # XXX: missing full mail stack configuration
     mutt
     gnupg
     gpgme
-    # XXX: need to take care of daemon
     isync
-    # XXX: need to take care of daemon
     msmtp
+    notmuch
   ];
   programs.tealdeer = {
     enable = true;
