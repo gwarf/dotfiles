@@ -94,6 +94,7 @@ return {
             -- https://valentjn.github.io/ltex/settings.html
             ltex = {
               -- trace = { server = "verbose" },
+              -- XXX: unwanted checks are still occuring, often delaying CodeActions
               checkFrequency = "save",
               language = "en-GB",
               additionalRules = {
