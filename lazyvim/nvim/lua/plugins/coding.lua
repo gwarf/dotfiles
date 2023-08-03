@@ -402,7 +402,15 @@ return {
   -- },
 
   -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
-  { "chrisgrieser/nvim-spider", lazy = true },
+  {
+    "chrisgrieser/nvim-spider",
+    lazy = true,
+    keys = {
+      { "w", "<cmd>lua require('spider').motion('w')<CR>", mode = { "n", "o", "x" }, desc = "Spider-w" },
+      { "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "o", "x" }, desc = "Spider-e" },
+      { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" }, desc = "Spider-b" },
+    },
+  },
 
   -- Open links without netrw using gx mapping
   { "chrishrb/gx.nvim" },
