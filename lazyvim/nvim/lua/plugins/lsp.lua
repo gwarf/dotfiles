@@ -46,7 +46,7 @@ return {
             -- https://valentjn.github.io/ltex/settings.html
             ltex = {
               -- trace = { server = "verbose" },
-              -- XXX: unwanted checks are still occuring, often delaying CodeActions
+              -- XXX: unwanted checks are still occurring, often delaying CodeActions
               checkFrequency = "save",
               language = "en-GB",
               additionalRules = {
@@ -158,6 +158,7 @@ return {
         ltex = function(_, opts)
           vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
+              ---@diagnostic disable-next-line: no-unknown
               local client = vim.lsp.get_client_by_id(args.data.client_id)
               if client.name == "ltex" then
                 require("ltex_extra").setup({
