@@ -1,14 +1,14 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
 return {
   -- Improved ltex integration, supporting code actions
-  { "barreiroleo/ltex_extra.nvim" },
+  {
+    "barreiroleo/ltex_extra.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
+  },
 
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
-    -- XXX: Need to run master as tagged release is outdated and not using latest lua_ls
-    -- name, cf https://github.com/neovim/nvim-lspconfig/pull/2439
-    version = false,
     opts = {
       -- add folding range to capabilities
       capabilities = {
@@ -19,16 +19,15 @@ return {
           },
         },
       },
-      -- Manage virtual text
-      diagnostics = {
-        virtual_text = true,
-      },
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         ansiblels = {},
         bashls = {},
         -- use LanguageTool via ltex for spell checking
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
+        -- TODO: have cmp do completion using words from the dictionaries
+        dockerls = {},
+        html = {},
         ltex = {
           filetypes = {
             "bib",
@@ -47,6 +46,7 @@ return {
             -- https://valentjn.github.io/ltex/settings.html
             ltex = {
               -- trace = { server = "verbose" },
+              -- XXX: unwanted checks are still occurring, often delaying CodeActions
               checkFrequency = "save",
               language = "en-GB",
               additionalRules = {
@@ -57,6 +57,69 @@ return {
               disabledRules = {
                 -- en-GB disabled rules loaded from ~/.config/nvim/spell/ltex.disabledRules.en-GB.txt
                 ["fr"] = { "APOS_TYP", "FRENCH_WHITESPACE", "FR_SPELLING_RULE", "COMMA_PARENTHESIS_WHITESPACE" },
+              },
+            },
+          },
+        },
+        lua_ls = {
+          single_file_support = true,
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                workspaceWord = true,
+                callSnippet = "Both",
+              },
+              misc = {
+                parameters = {
+                  -- "--log-level=trace",
+                },
+              },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = "Disable",
+                semicolon = "Disable",
+                arrayIndex = "Disable",
+              },
+              doc = {
+                privateName = { "^_" },
+              },
+              type = {
+                castNumberToInteger = true,
+              },
+              diagnostics = {
+                disable = { "incomplete-signature-doc", "trailing-space" },
+                groupSeverity = {
+                  strong = "Warning",
+                  strict = "Warning",
+                },
+                groupFileStatus = {
+                  ["ambiguity"] = "Opened",
+                  ["await"] = "Opened",
+                  ["codestyle"] = "None",
+                  ["duplicate"] = "Opened",
+                  ["global"] = "Opened",
+                  ["luadoc"] = "Opened",
+                  ["redefined"] = "Opened",
+                  ["strict"] = "Opened",
+                  ["strong"] = "Opened",
+                  ["type-check"] = "Opened",
+                  ["unbalanced"] = "Opened",
+                  ["unused"] = "Opened",
+                },
+                unusedLocalExclude = { "_*" },
+              },
+              format = {
+                enable = false,
+                defaultConfig = {
+                  indent_style = "space",
+                  indent_size = "2",
+                  continuation_indent_size = "2",
+                },
               },
             },
           },
@@ -86,6 +149,7 @@ return {
             },
           },
         },
+        vimls = {},
       },
       setup = {
         -- integrate ltex_extra with lazyvim
@@ -94,6 +158,7 @@ return {
         ltex = function(_, opts)
           vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
+              ---@diagnostic disable-next-line: no-unknown
               local client = vim.lsp.get_client_by_id(args.data.client_id)
               if client.name == "ltex" then
                 require("ltex_extra").setup({

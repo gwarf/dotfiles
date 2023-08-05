@@ -17,7 +17,7 @@
       copycat
       open
       prefix-highlight
-      sessionist
+      # sessionist
       sensible
       logging
       {
@@ -33,9 +33,9 @@
       }
       {
         plugin = resurrect;
-        extraConfig = ''
-          set -g @resurrect-strategy-nvim "session"
-        '';
+        # extraConfig = ''
+        #   set -g @resurrect-strategy-nvim "session"
+        # '';
       }
       {
         plugin = continuum;
@@ -45,8 +45,8 @@
         '';
       }
     ];
-    # XXX required to get italics: tmux-256color or xterm-kitty
-    # tmux-256color not working fine with delta (showing error WARNING: terminal is not fully functional)
+    # XXX: required to get italics: tmux-256color or xterm-kitty
+    # tmux-256color not working fine with delta
     terminal = "xterm-kitty";
     extraConfig = ''
       # Allow nested tmux sessions by making "C-b b" possible for sending a control
@@ -71,6 +71,9 @@
       # Activity Monitoring
       setw -g monitor-activity off
       set -g visual-activity off
+
+      # option for terminal colors
+      set -sa terminal-features ",xterm-kitty:RGB"
 
       ############ Key Bindings ############
 

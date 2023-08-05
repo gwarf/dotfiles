@@ -1,11 +1,11 @@
 # gwarf's dotfiles
 
-My messy **dotfiles** for GNU/Linux and macOS. WIP of course :)
+My messy **dotfiles** for GNU/Linux and macOS. WIP :)
 
 Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
 some others are for macOS.
 
-> **WIP++** I'm currently converting this repository from
+> **WIP++** I'm converting this repository from
 > [yadm](https://github.com/TheLocehiliosan/yadm) to management using [nix](#nix) and
 > [home-manager](https://nix-community.github.io/home-manager/).
 
@@ -13,12 +13,10 @@ some others are for macOS.
 
 This is mainly random notes and pointers to source of inspiration.
 
-This is very early work, some important tasks are pending:
+This is work-in-progress, some important tasks are pending:
 
-- [ ] Try to understand what I'm doing :)
 - [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
 - [ ] Finalise mail configuration
-- [ ] Finalise fish configuration
 - [ ] Finalise neovim configuration
 - [ ] Finalise neomutt/mutt configuration
 - [ ] Unlock gnome keyring on login
@@ -28,7 +26,7 @@ This is very early work, some important tasks are pending:
 - [ ] Clean packages sets in inputs.
 - [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
       flakes. Unless it makes sense to keep this to do system configuration?
-- [ ] Consolidate macOS and NixOS configuration.
+- [ ] Consolidation of macOS and NixOS configuration.
 - [ ] Look into https://github.com/gvolpe/neovim-flake.
 - [ ] Support home-manager configuration on non-NixOS GNU/Linux systems.
 - [ ] Test and document bootstrap in clean NixOS.
@@ -65,7 +63,7 @@ use two commands:
   updates **ALL** inputs and commit the changes to the lock file.
 
 > Beware as if you are using some nighlyt or unstable inputs it could break,
-  and commit the change, making reverting a bit less easier (but still doable).
+> and commit the change, making reverting a bit less easier (but still doable).
 
 - [`nix flake lock`](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake-lock.html)
   allows to specify one more multiple inputs to update and then you will have
@@ -88,6 +86,13 @@ nix flake lock --update-input nur
 # Update home-manager input
 nix flake lock --update-input home-manager
 ```
+
+### Nix upgrade
+
+- Read release notes for nix, nixos and home-manager
+- Update channels definition (replace existing ones, with most recent ones)
+- Update channels
+- Rebuild the system
 
 ### NixOS setup
 
@@ -169,11 +174,13 @@ nix build ".#darwinConfigurations.Baptistes-MBP.system"
 ### For python
 
 See:
+
 - [NixOS Wiki: Python](https://nixos.wiki/wiki/Python)
 - [NixOS Wiki: Packaging Python](https://nixos.wiki/wiki/Packaging/Python)
 - [mach-nix](https://github.com/DavHau/mach-nix), to be replaced by [dream2nix](https://github.com/nix-community/dream2nix)
 
 Using a [Nix flake templates for easy dev envs](https://github.com/the-nix-way/dev-templates):
+
 ```shell
 nix flake init --template github:the-nix-way/dev-templates#python
 direnv allow
@@ -216,22 +223,4 @@ Interesting approach to look into:
   - https://github.com/Thrimbda/charles/blob/08bb883cff19b01c66bbe25c62c06545ccf40a1c/flake.nix
   - https://github.com/ttak0422/ENV/blob/1478ba70e1a3eddd4dab1b65c191cc320e5b6cf1/flake.nix
   - https://github.com/voidcontext/nix-config/blob/695668066e358be43298eab796f16232a09ba24e/flake.nix
-  - https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343/3
-- [mystrio NixOS configuration](https://sr.ht/~misterio/nix-config/)
-- https://dpdmancul.gitlab.io/dotfiles/index.html: fully documented
-- https://github.com/jules-goose/nixcfg
-- https://github.com/booklearner/nixconfig
-- https://github.com/malob/nixpkgs
-- https://github.com/gvolpe/nix-config: very complete.
-  - neovim in a dedicated flake: https://github.com/gvolpe/neovim-flake
-- https://github.com/gmarmstrong/dotfiles
-- https://github.com/shaunsingh/nix-darwin-dotfiles/blob/main/flake.nix
-- https://discourse.nixos.org/t/system-config-flake-with-darwin-and-linux-system-definitions/22343
-- https://github.com/wvhulle/nixosConfigurations
-- https://github.com/ArdanaLabs/ArdanaTenant
-- Dracula colorscheme: https://github.com/RichardYan314/dotfiles-nix
-- https://github.com/Misterio77/nix-starter-configs
-- [NisOS on WSL](https://github.com/nix-community/NixOS-WSL)
-- [NixOS on SoYouStart](https://web.archive.org/web/20160829180041/http://aborsu.github.io/2015/09/26/Install%20NixOS%20on%20So%20You%20Start%20dedicated%20server/)
-- [Installing NixOS on OVH dedicated servers](https://web.archive.org/web/20210125195352/https://www.srid.ca/137ae172.html)
-- https://discourse.nixos.org/t/howto-install-nixos-on-an-ovh-dedicated-server/3089/14
+  - https://discourse.nixos.

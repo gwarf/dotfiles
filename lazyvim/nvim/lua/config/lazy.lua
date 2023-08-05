@@ -11,16 +11,28 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras LazyVim modules
-    -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-    -- treesitter, mason and typescript.nvim.
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- add jsonls and schemastore ans setup treesitter for json, json5 and jsonc
+    -- better copy/paste
+    { import = "lazyvim.plugins.extras.coding.yanky" },
+    -- support more languages
+    { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.python" },
+    -- Semantic highlighting for python
+    { import = "lazyvim.plugins.extras.lang.python-semshi" },
+    { import = "lazyvim.plugins.extras.lang.terraform" },
+    -- Animate common Neovim actions (cursor movement, scrolling...)
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    -- Alternative startup screen/dashboard
+    { import = "lazyvim.plugins.extras.ui.mini-starter" },
+    -- create and manage predefined window layouts
+    { import = "lazyvim.plugins.extras.ui.edgy" },
+    -- project management
+    { import = "lazyvim.plugins.extras.util.project" },
     -- copilot
     -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
     -- configuration and sources
-    { import = "lazyvim.plugins.extras.coding.copilot" },
+    -- XXX: disabled until there is an easy way to opt in using copilot
+    -- { import = "lazyvim.plugins.extras.coding.copilot" },
     -- import/override with your plugins
     { import = "plugins" },
   },
@@ -30,8 +42,8 @@ require("lazy").setup({
     lazy = false,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
-    -- version = false, -- always use the latest git commit
-    version = "*", -- try installing the latest stable version for plugins that support semver
+    version = false, -- always use the latest git commit
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   install = { colorscheme = { "tokyonight", "catppuccin" } },
   checker = { enabled = false }, -- automatically check for plugin updates
@@ -49,7 +61,7 @@ require("lazy").setup({
         "gzip",
         -- "matchit",
         -- "matchparen",
-        -- "netrwPlugin",
+        "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",

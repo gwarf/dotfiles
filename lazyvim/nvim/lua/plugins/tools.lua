@@ -1,30 +1,18 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
+  -- Edit and review GitHub issues and pull requests
+  { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
 
-  -- neorg, org-mode like
-  -- https://github.com/nvim-neorg/neorg
+  -- git integration :Neogit
+  -- LazyGit and Gitsigns are installed by default
   {
-    "nvim-neorg/neorg",
-    -- lazy-load on filetype
-    ft = "norg",
+    "TimUntersberger/neogit",
+    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
     opts = {
-      load = {
-        -- Load default modules
-        ["core.defaults"] = {},
-        ["core.norg.concealer"] = {},
-        ["core.norg.completion"] = {
-          config = { engine = "nvim-cmp" },
-        },
-        ["core.integrations.nvim-cmp"] = {},
-        ["core.norg.dirman"] = {
-          config = {
-            workspaces = {
-              work = "~/Documents/notes/work",
-              home = "~/Documents/notes/home",
-            },
-          },
-        },
+      integrations = {
+        diffview = true,
       },
+      disable_commit_confirmation = true,
     },
   },
 
@@ -46,7 +34,7 @@ return {
         desc = "Peek (Markdown Preview)",
       },
     },
-    opts = { theme = "light" },
+    opts = { theme = "light", app = "browser" },
   },
 
   -- better diffing
@@ -57,28 +45,10 @@ return {
     keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
   },
 
-  -- colorizer
-  {
-    "NvChad/nvim-colorizer.lua",
-    event = "BufReadPre",
-    opts = {
-      filetypes = { "*", "!lazy" },
-      buftype = { "*", "!prompt", "!nofile" },
-      user_default_options = {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        names = false, -- "Name" codes like Blue
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        AARRGGBB = false, -- 0xAARRGGBB hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-        -- Available modes: foreground, background
-        -- Available modes for `mode`: foreground, background,  virtualtext
-        mode = "background", -- Set the display mode.
-        virtualtext = "■",
-      },
-    },
-  },
+  -- ChatGPT client
+  -- {
+  --   "jackMort/ChatGPT.nvim",
+  --   cmd = { "ChatGPTActAs", "ChatGPT" },
+  --   opts = {},
+  -- },
 }

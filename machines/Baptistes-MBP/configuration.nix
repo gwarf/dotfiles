@@ -41,6 +41,8 @@
     git
     vim
     wget
+    # For mutt, to be moved to mail module
+    w3m
   ];
 
   # Fonts
@@ -71,6 +73,12 @@
   # Keyboard
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
+
+  # Define a user account
+  users.users.baptiste = {
+    # https://github.com/nix-community/home-manager/issues/4026
+    home = "/Users/baptiste";
+  };
 
   # macOS system configuration
   system.defaults = {
@@ -121,7 +129,7 @@
   #   echo "ok"
   # "";
 
-  # Dotfiles.
+  # Mail configuration
   # XXX move to home-manager
   launchd.user.agents.mbsync = {
     # XXX not yet deployed/managed via nix
@@ -130,6 +138,22 @@
     serviceConfig.StartInterval = 180;
     serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.mailsync.log";
     serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.mailsync.log";
+    serviceConfig.ProcessType = "Background";
+  };
+  # Sync of contacts
+  # XXX: describe the vdirsyncer configuration from ~/.config/vdirsyncer/config
+  # https://search.nixos.org/options?channel=23.05&show=services.vdirsyncer.jobs.%3Cname%3E.configFile&from=0&size=50&sort=relevance&type=packages&query=vdirsyncer
+  # https://github.com/pSub/configs/blob/21c3413cf0f5f39ec118cbbf34704192615c40ca/nixops/configurations/server.pascal-wittmann.de/default.nix#L402
+  launchd.user.agents.vdirsyncer = {
+    serviceConfig.Program = "${pkgs.vdirsyncer}/bin/vdirsyncer";
+    serviceConfig.ProgramArguments = [
+      "--verbosity CRITICAL"
+      "sync"
+    ];
+    serviceConfig.RunAtLoad = true;
+    serviceConfig.StartInterval = 3600;
+    serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.vdirsyncer.log";
+    serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.vdirsyncer.log";
     serviceConfig.ProcessType = "Background";
   };
 }

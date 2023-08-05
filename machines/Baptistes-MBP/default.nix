@@ -12,22 +12,17 @@
     onActivation.upgrade = true;
     brews = [
       "terminal-notifier"
-      "the_silver_searcher"
 
-      # mail setup
-      # XXX to be moved to a module
-      "gpgme"
-      "isync"
-      "msmtp"
-      "mutt"
+      # XXX: for building norg-treesitter on macOS
+      # https://github.com/nvim-neorg/tree-sitter-norg/issues/7
+      # "gcc@12"
 
-      # XXX install from pkgs does not work
+      # XXX: install from pkgs does not work
+      "checkmake"
+      "khal"
       "joplin-cli"
-      # To be used for nvim/treesitter/neorg with recent C++
-      "llvm"
 
       "bitwarden-cli"
-      "checkmake"
       "fetch-crl"
       "perltidy"
       "pyenv"
@@ -35,12 +30,16 @@
     casks = [
       # app launcher, file searcher
       "alfred"
+      # XXX: install from pkgs does not work
+      "drawio"
       # Clipboard manager
       "maccy"
       "mumble"
       # "podman-desktop"
       "rectangle"
+      "slack"
       "stretchly"
+      "teamviewer"
       "vlc"
     ];
   };

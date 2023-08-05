@@ -4,6 +4,9 @@ return {
   -- Install support for editing nix files
   { "LnL7/vim-nix" },
 
+  -- TODO: check if useful and incorporate if needed
+  -- https://github.com/AckslD/nvim-FeMaco.lua
+
   -- XXX tools are managed via nix
   -- add any tools you want to have installed below
   -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
@@ -14,19 +17,6 @@ return {
       ensure_installed = {
         "prettierd",
       },
-    },
-  },
-
-  -- git integration :Neogit
-  -- LazyGit and Gitsigns are installed by default
-  {
-    "TimUntersberger/neogit",
-    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
-    opts = {
-      integrations = {
-        diffview = true,
-      },
-      disable_commit_confirmation = true,
     },
   },
 
@@ -87,43 +77,7 @@ return {
     end,
   },
 
-  {
-    "danymat/neogen",
-    keys = {
-      {
-        "<leader>cc",
-        function()
-          require("neogen").generate({})
-        end,
-        desc = "Neogen Comment",
-      },
-    },
-    opts = { snippet_engine = "luasnip" },
-  },
-
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    config = true,
-  },
-
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>r",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-  },
-
+  -- Go forward/backward with square brackets
   {
     "echasnovski/mini.bracketed",
     event = "BufReadPost",
@@ -169,68 +123,70 @@ return {
     end,
   },
 
-  -- better yank/paste
+  -- improved %
   {
-    "kkharji/sqlite.lua",
-    -- XXX: disabled as breaking bootstrap of configuration due to lazyvim.util not found
-    --   enabled = function()
-    --     return require("lazyvim.util").has("yanky.nvim") and not jit.os:find("Windows")
-    --   end,
-  },
-  {
-    "gbprod/yanky.nvim",
-    enabled = false,
+    "andymass/vim-matchup",
+    -- XXX: Need to run master as tagged release is outdated
+    version = false,
     event = "BufReadPost",
     config = function()
-      -- vim.g.clipboard = {
-      --   name = "xsel_override",
-      --   copy = {
-      --     ["+"] = "xsel --input --clipboard",
-      --     ["*"] = "xsel --input --primary",
-      --   },
-      --   paste = {
-      --     ["+"] = "xsel --output --clipboard",
-      --     ["*"] = "xsel --output --primary",
-      --   },
-      --   cache_enabled = 1,
-      -- }
-
-      require("yanky").setup({
-        highlight = {
-          timer = 150,
-        },
-        ring = {
-          storage = jit.os:find("Windows") and "shada" or "sqlite",
-        },
-      })
-
-      vim.keymap.set({ "n", "x" }, "y", "<Plug>(YankyYank)")
-
-      vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
-      vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
-      vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
-      vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
-
-      vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
-      vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
-
-      vim.keymap.set("n", "]p", "<Plug>(YankyPutIndentAfterLinewise)")
-      vim.keymap.set("n", "[p", "<Plug>(YankyPutIndentBeforeLinewise)")
-      vim.keymap.set("n", "]P", "<Plug>(YankyPutIndentAfterLinewise)")
-      vim.keymap.set("n", "[P", "<Plug>(YankyPutIndentBeforeLinewise)")
-
-      vim.keymap.set("n", ">p", "<Plug>(YankyPutIndentAfterShiftRight)")
-      vim.keymap.set("n", "<p", "<Plug>(YankyPutIndentAfterShiftLeft)")
-      vim.keymap.set("n", ">P", "<Plug>(YankyPutIndentBeforeShiftRight)")
-      vim.keymap.set("n", "<P", "<Plug>(YankyPutIndentBeforeShiftLeft)")
-
-      vim.keymap.set("n", "=p", "<Plug>(YankyPutAfterFilter)")
-      vim.keymap.set("n", "=P", "<Plug>(YankyPutBeforeFilter)")
-
-      vim.keymap.set("n", "<leader>P", function()
-        require("telescope").extensions.yank_history.yank_history({})
-      end, { desc = "Paste from Yanky" })
+      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
+  },
+
+  -- A better annotation generator
+  {
+    "danymat/neogen",
+    keys = {
+      {
+        "<leader>cc",
+        function()
+          require("neogen").generate({})
+        end,
+        desc = "Neogen Comment",
+      },
+    },
+    opts = { snippet_engine = "luasnip" },
+  },
+
+  -- Incremental LSP renaming
+  {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    config = true,
+  },
+
+  -- Structural search and replace
+  {
+    "cshuaimin/ssr.nvim",
+    keys = {
+      {
+        "<leader>sR",
+        function()
+          require("ssr").open()
+        end,
+        mode = { "n", "x" },
+        desc = "Structural Replace",
+      },
+    },
+  },
+
+  -- Refactoring library based off the Refactoring book by Martin Fowler
+  {
+    "ThePrimeagen/refactoring.nvim",
+    keys = {
+      {
+        "<leader>r",
+        function()
+          require("refactoring").select_refactor()
+        end,
+        mode = "v",
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
+    opts = {},
   },
 
   -- better increase/descrease
@@ -257,6 +213,7 @@ return {
     end,
   },
 
+  -- A tree like view for symbols using LSP
   {
     "simrat39/symbols-outline.nvim",
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
@@ -280,6 +237,7 @@ return {
       -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
       { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
       { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-cmdline" },
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -326,7 +284,8 @@ return {
         { name = "luasnip" },
         { name = "path" },
         { name = "emoji" },
-        { name = "copilot" },
+        -- XXX: disabled until there is a way to opt-in for copilot in special cases
+        -- { name = "copilot" },
         {
           name = "buffer",
           option = {
@@ -337,7 +296,7 @@ return {
         },
       })
 
-      -- XXX: causing issues with load of cmp in some cases
+      -- FIXME: not working, causing issues with load of cmp in some cases
       -- Filter out copilot from some use cases, like emails to preserve privacy
       -- local limited_sources = {}
       -- for i = #opts.sources, 1, -1 do
@@ -345,6 +304,11 @@ return {
       --     table.insert(limited_sources, opts.sources[i])
       --   end
       -- end
+      -- Do not use copilot in norg and markdown files
+      -- cmp.setup.filetype({"norg", "markdown}", {
+      --   ---@diagnostic disable-next-line: missing-parameter
+      --   sources = cmp.config.sources(limited_sources),
+      -- })
 
       -- only load lbdb completion for emails
       cmp.setup.filetype("mail", {
@@ -367,11 +331,24 @@ return {
         }),
       })
 
-      -- Do not use copilot in norg and markdown files
-      -- cmp.setup.filetype({"norg", "markdown}", {
-      --   ---@diagnostic disable-next-line: missing-parameter
-      --   sources = cmp.config.sources(limited_sources),
-      -- })
+      -- Add neorg
+      cmp.setup.filetype("norg", {
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "neorg" },
+          { name = "path" },
+          { name = "emoji" },
+          {
+            name = "buffer",
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
+        }),
+      })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
@@ -411,32 +388,6 @@ return {
     end,
   },
 
-  -- Structural search and replace
-  {
-    "cshuaimin/ssr.nvim",
-    keys = {
-      {
-        "<leader>sR",
-        function()
-          require("ssr").open()
-        end,
-        mode = { "n", "x" },
-        desc = "Structural Replace",
-      },
-    },
-  },
-
-  -- improved %
-  {
-    "andymass/vim-matchup",
-    -- XXX: Need to run master as tagged release is outdated
-    version = false,
-    event = "BufReadPost",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  },
-
   -- supercharged .
   { "tpope/vim-repeat" },
 
@@ -451,19 +402,16 @@ return {
   -- },
 
   -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
-  { "chrisgrieser/nvim-spider", lazy = true },
+  {
+    "chrisgrieser/nvim-spider",
+    lazy = true,
+    keys = {
+      { "w", "<cmd>lua require('spider').motion('w')<CR>", mode = { "n", "o", "x" }, desc = "Spider-w" },
+      { "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "o", "x" }, desc = "Spider-e" },
+      { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "o", "x" }, desc = "Spider-b" },
+    },
+  },
 
   -- Open links without netrw using gx mapping
-  {
-    "chrishrb/gx.nvim",
-    -- FIXME register existing gx mapping in which-key
-    -- config = function()
-    --   local wk = require("which-key")
-    --   wk.register({
-    --     g = {
-    --       x = "Open link",
-    --     },
-    --   })
-    -- end,
-  },
+  { "chrishrb/gx.nvim" },
 }
