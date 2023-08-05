@@ -6,7 +6,7 @@
     kernel.sysctl = { "kernel.sysrq" = 1; };
     kernelPackages = pkgs.linuxPackages_latest;
     # kernelModules = [ "edac_mce_amd" ];
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     plymouth.enable = false;
     loader.systemd-boot.enable = true;
     loader.systemd-boot.consoleMode = "max";
