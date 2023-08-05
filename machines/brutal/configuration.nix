@@ -97,6 +97,9 @@
   hardware.pulseaudio.extraConfig = "load-module module-combine-sink";
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
+  # Fish is required
+  programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.baptiste = {
     isNormalUser = true;
