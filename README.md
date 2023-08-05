@@ -56,7 +56,7 @@ It is also possible to use different online services to search in the browser:
 
 ### Updating nix flakes inputs
 
-In order to refresh the information about all flakes inputs, it's possible to
+To refresh the information about all flakes inputs, it's possible to
 use two commands:
 
 - [`nix flake update --commit-lock-file`](https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake-update.html)
