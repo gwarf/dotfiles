@@ -23,7 +23,7 @@ return {
       servers = {
         ansiblels = {},
         bashls = {},
-        dockerls = {},
+        -- dockerls = {},
         html = {},
         -- use LanguageTool via ltex for spell checking
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
