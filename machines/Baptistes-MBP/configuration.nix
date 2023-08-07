@@ -155,5 +155,7 @@
     serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.vdirsyncer.log";
     serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.vdirsyncer.log";
     serviceConfig.ProcessType = "Background";
+    serviceConfig.Nice = -10;
+    serviceConfig.LowPriorityIO = true;
   };
 }
