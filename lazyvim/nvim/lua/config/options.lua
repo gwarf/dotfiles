@@ -3,16 +3,17 @@
 -- Add any additional options here
 local opt = vim.opt
 
-opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+-- Using ufo provider: need a large value
+opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldenable = true
 opt.foldcolumn = "0"
 
 -- Default indentation: 2 spaces
-opt.softtabstop = 2
--- XXX breaking indentation of new comments
--- https://unix.stackexchange.com/a/543571
--- opt.smartindent = false
+-- XXX: not needed?
+-- opt.softtabstop = 2
+
+-- Indentation management
 opt.autoindent = false
 -- Indent wrapped lines to match line start
 -- opt.breakindent = true
@@ -22,10 +23,8 @@ opt.autoindent = false
 -- Wrap long lines
 opt.wrap = true
 
--- Set max line length
+-- Set max line length and display column to show light length
 opt.textwidth = 90
-
--- Display column to show light length
 opt.colorcolumn = "90"
 
 -- Disable mouse
@@ -43,6 +42,3 @@ vim.g.loaded_node_provider = 0
 
 -- Use a global statusline
 vim.g.laststatus = 3
-
--- Quicker timeout for mappings, to speed up showing which-key menu
-opt.timeoutlen = 300

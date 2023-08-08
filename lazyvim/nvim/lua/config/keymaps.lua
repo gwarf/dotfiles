@@ -3,7 +3,7 @@
 -- Add any additional keymaps here
 local keymap = vim.keymap
 
--- Move to window using the movement keys
+-- Move to window using the arrow keys
 keymap.set("n", "<left>", "<C-w>h")
 keymap.set("n", "<down>", "<C-w>j")
 keymap.set("n", "<up>", "<C-w>k")
