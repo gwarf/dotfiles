@@ -28,10 +28,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.ui.edgy" },
     -- project management
     { import = "lazyvim.plugins.extras.util.project" },
-    -- copilot
-    -- FIXME: not working fully automatically, likely due to overwritting of ncim-cmp
-    -- configuration and sources
-    -- XXX: disabled until there is an easy way to opt in using copilot
+    -- copilot disabled until there is an easy way to opt in
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
     -- import/override with your plugins
     { import = "plugins" },
