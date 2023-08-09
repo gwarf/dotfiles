@@ -26,6 +26,7 @@
       "fetch-crl"
       "perltidy"
       "pyenv"
+      "flake8"
     ];
     casks = [
       # app launcher, file searcher
