@@ -35,7 +35,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Disable python, perl, ruby and node support
-vim.g.loaded_python3_provider = 0
+-- XXX: re-enabled for testing semshi, cf https://github.com/numirias/semshi/issues/74
+-- vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
