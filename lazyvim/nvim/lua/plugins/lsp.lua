@@ -185,13 +185,13 @@ return {
       local root = utils.get_root()
       local flake8_conf = root .. "/.github/linters/.flake8"
       -- Load configuration file from super-liner, if any
-      if vim.loop.fs_stat(flake8_conf) then
-        flake8_extra_args = { "--config", flake8_conf }
-      else
-        -- Align with black
-        -- https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
-        flake8_extra_args = { "--max-line-length", "88", "--extend-ignore", "E203,W503" }
-      end
+      -- if vim.loop.fs_stat(flake8_conf) then
+      --   flake8_extra_args = { "--config", flake8_conf }
+      -- else
+      --   -- Align with black
+      --   -- https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
+      --   flake8_extra_args = { "--max-line-length", "88", "--extend-ignore", "E203,W503" }
+      -- end
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
       opts.sources = {
         -- fish
@@ -209,13 +209,14 @@ return {
         -- perl
         nls.builtins.formatting.perltidy,
         -- python
-        nls.builtins.formatting.isort.with({
-          extra_args = { "--profile", "black" },
-        }),
-        nls.builtins.formatting.black,
-        nls.builtins.diagnostics.flake8.with({
-          extra_args = flake8_extra_args,
-        }),
+        -- XXX: testing lazyvim.plugins.extras.lang.python
+        -- nls.builtins.formatting.isort.with({
+        --   extra_args = { "--profile", "black" },
+        -- }),
+        -- nls.builtins.formatting.black,
+        -- nls.builtins.diagnostics.flake8.with({
+        --   extra_args = flake8_extra_args,
+        -- }),
         -- Injects code actions for Git operations at the current cursor position
         nls.builtins.code_actions.gitsigns,
         -- markdown
