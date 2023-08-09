@@ -18,7 +18,8 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.python" },
     -- Semantic highlighting for python
-    { import = "lazyvim.plugins.extras.lang.python-semshi" },
+    -- XXX: breaking when opening python files?
+    -- { import = "lazyvim.plugins.extras.lang.python-semshi" },
     { import = "lazyvim.plugins.extras.lang.terraform" },
     -- Animate common Neovim actions (cursor movement, scrolling...)
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
