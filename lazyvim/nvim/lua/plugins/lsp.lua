@@ -24,7 +24,7 @@ return {
         ansiblels = {},
         bashls = {},
         -- dockerls = {},
-        html = {},
+        -- html = {},
         -- use LanguageTool via ltex for spell checking
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         -- TODO: have cmp do completion using words from the dictionaries
@@ -149,7 +149,7 @@ return {
             },
           },
         },
-        vimls = {},
+        -- vimls = {},
       },
       setup = {
         -- integrate ltex_extra with lazyvim
