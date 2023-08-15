@@ -208,11 +208,11 @@ in {
          {block = "load";}
          {block = "cpu";}
          {block = "net";}
-         {
-           block = "networkmanager";
-           device_format = "{icon}{ap}{ips}";
-           on_click = "${pkgs.kitty}/bin/kitty -e nmtui";
-         }
+         # {
+         #   block = "networkmanager";
+         #   device_format = "{icon}{ap}{ips}";
+         #   on_click = "${pkgs.kitty}/bin/kitty -e nmtui";
+         # }
          {
            block = "time";
            format = "%F %A %R";
