@@ -17,6 +17,14 @@ in
     vimAlias = true;
     vimdiffAlias = true;
     viAlias = true;
+    # XXX: only for nixos, for https://github.com/kkharji/sqlite.lua
+    # FIXME: breaking using non managed lazyvim setup
+    # plugins = [
+    #   {
+    #     plugin = pkgs.vimPlugins.sqlite-lua;
+    #     config = "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'";
+    #   }
+    # ];
   };
   home.packages = with pkgs; [
     luajit
