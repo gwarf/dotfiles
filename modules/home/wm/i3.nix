@@ -193,7 +193,7 @@ in
             block = "temperature";
             #collapsed = false;
             chip = "k10temp-pci-00c3";
-            format = "CPU: {average} avg, {max} max";
+            # format = "CPU: {average} avg, {max} max";
             interval = 10;
           }
           {
@@ -204,7 +204,7 @@ in
           { block = "memory"; }
           {
             block = "disk_space";
-            format = "{icon} {used}/{total} ({available} free)";
+            # format = "\${icon} \${used}/\${total} (\${available} free)";
           }
           { block = "load"; }
           { block = "cpu"; }
@@ -216,7 +216,7 @@ in
           # }
           {
             block = "time";
-            format = "%F %A %R";
+            # format = "%F %A %R";
             timezone = "Europe/Paris";
             # locale = "fr_FR";
           }
