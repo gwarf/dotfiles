@@ -48,6 +48,10 @@ in
     pylint
     qemu
     stylua
+    # building treesitter stuff in nvim
+    gcc
+    # yanky sqlite support in nvim
+    sqlite
 
     # LSP servers that are installed globally
     nodePackages.yaml-language-server
