@@ -18,6 +18,7 @@
     # https://github.com/malob/nixpkgs/blob/d930a2e7749248a0b0af7d025d667030011fa7b8/home/packages.nix
     # some basics
     curl
+    gcc
     wget
 
     # Cool stuff
