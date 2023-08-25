@@ -14,7 +14,7 @@ require("lazy").setup({
     -- better copy/paste
     { import = "lazyvim.plugins.extras.coding.yanky" },
     -- support more languages
-    { import = "lazyvim.plugins.extras.lang.docker" },
+    -- { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.python" },
     -- Semantic highlighting for python
