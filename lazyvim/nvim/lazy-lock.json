@@ -61,7 +61,7 @@
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "9bff161dfece6ecf3459e6e46ca42e49f9ed939f" },
   "nvim-ufo": { "branch": "main", "commit": "0c0e1e0af68a608b15d18125be92953c553a5f27" },
   "nvim-web-devicons": { "branch": "master", "commit": "cfc8824cc1db316a276b36517f093baccb8e799a" },
-  "octo.nvim": { "branch": "master", "commit": "b8c7b38b018a66b5fcb61bffa08742fc02c29c5f" },
+  "octo.nvim": { "branch": "master", "commit": "3d749d3f2466870bae996c0a2d44f7517b1da2b0" },
   "peek.nvim": { "branch": "master", "commit": "67752e7581f88da6899838985a05705b008e4185" },
   "persistence.nvim": { "branch": "main", "commit": "4b8051c01f696d8849a5cb8afa9767be8db16e40" },
   "playground": { "branch": "master", "commit": "2b81a018a49f8e476341dfcb228b7b808baba68b" },
