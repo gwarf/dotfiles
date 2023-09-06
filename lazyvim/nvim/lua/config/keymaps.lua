@@ -16,6 +16,3 @@ keymap.set("c", "<C-E>", "<END>")
 -- Commenting is done using https://github.com/echasnovski/mini.comment
 -- use gc in normal/visual mode
 -- use gcc to toggle current line
-
--- Restore 'gw' to default behavior.
-keymap.del({ "n", "x" }, "gw")
