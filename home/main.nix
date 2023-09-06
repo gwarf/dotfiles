@@ -46,7 +46,6 @@
     # joplin
     # nodePackages.joplin
     # nodePackages_latest.joplin
-    joplin-desktop
 
     # Useful nix related tools
     # cachix # adding/managing alternative binary caches hosted by Cachix
@@ -61,6 +60,7 @@
     gparted
     # Mail
     khal
+    joplin-desktop
     liquidctl
     llvm
     lm_sensors

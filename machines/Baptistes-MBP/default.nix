@@ -33,6 +33,7 @@
       "alfred"
       # XXX: install from pkgs does not work
       "drawio"
+      "joplin"
       # Clipboard manager
       "maccy"
       "mumble"
