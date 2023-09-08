@@ -24,6 +24,7 @@
 
       "bitwarden-cli"
       "fetch-crl"
+      "ldapvi"
       "perltidy"
       "pyenv"
       "flake8"
