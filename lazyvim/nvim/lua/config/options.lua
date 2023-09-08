@@ -24,8 +24,8 @@ opt.autoindent = false
 opt.wrap = true
 
 -- Set max line length and display column to show light length
-opt.textwidth = 90
-opt.colorcolumn = "90"
+opt.textwidth = 78
+opt.colorcolumn = "80"
 
 -- Disable mouse
 opt.mouse = ""
