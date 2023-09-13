@@ -24,6 +24,9 @@
     black
     doggo
     du-dust
+    # FIXME: exa is no more maintained and should be replaced by eza
+    # https://github.com/ogham/exa#exa-is-unmaintained-use-the-fork-eza-instead
+    # https://github.com/eza-community/eza
     exa
     fd
     fortune
@@ -90,6 +93,7 @@
     isync
     msmtp
     notmuch
+    rbw
   ];
   programs.tealdeer = {
     enable = true;
