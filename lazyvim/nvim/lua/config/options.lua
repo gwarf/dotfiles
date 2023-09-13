@@ -23,7 +23,7 @@ opt.autoindent = false
 -- Wrap long lines
 opt.wrap = true
 
--- Set max line length and display column to show light length
+-- Set max line length and display column to show line length
 opt.textwidth = 78
 opt.colorcolumn = "80"
 
