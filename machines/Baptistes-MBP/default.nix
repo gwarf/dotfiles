@@ -43,6 +43,8 @@
       "slack"
       "stretchly"
       "teamviewer"
+      "vagrant"
+      "virtualbox"
       "vlc"
     ];
   };
