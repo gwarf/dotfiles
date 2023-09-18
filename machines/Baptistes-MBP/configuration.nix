@@ -129,15 +129,16 @@
   #   echo "ok"
   # "";
 
+  # https://github.com/elobdog/mailhelp/blob/master/homebrew.mxcl.isync.plist
   # Mail configuration
   # XXX move to home-manager
   launchd.user.agents.mbsync = {
     # XXX not yet deployed/managed via nix
     serviceConfig.Program = "/Users/baptiste/.config/neomutt/sync";
     serviceConfig.RunAtLoad = true;
-    serviceConfig.StartInterval = 180;
-    serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.mailsync.log";
-    serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.mailsync.log";
+    serviceConfig.StartInterval = 300;
+    serviceConfig.StandardErrorPath = "/Users/baptiste/Mail/.mailsync_error.log";
+    serviceConfig.StandardOutPath = "/Users/baptiste/Mail/.mailsync_out.log";
     serviceConfig.ProcessType = "Background";
   };
   # Sync of contacts
