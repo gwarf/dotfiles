@@ -35,7 +35,6 @@
   environment.shells = with pkgs; [
     bashInteractive
     fish
-    zsh
   ];
 
   # Make Fish the default shell
@@ -52,9 +51,6 @@
     end
   '';
   environment.variables.SHELL = "${pkgs.fish}/bin/fish";
-
-  # Install and setup ZSH to work with nix(-darwin) as well
-  programs.zsh.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
