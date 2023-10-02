@@ -33,6 +33,10 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.project" },
     -- copilot disabled until there is an easy way to opt in
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
+    -- Extra for formatting, replacing none-ls
+    { import = "lazyvim.plugins.extras.formatting.conform" },
+    -- Extra for linting, replacing none-ls
+    { import = "lazyvim.plugins.extras.linting.nvim-lint" },
     -- import/override with your plugins
     { import = "plugins" },
   },
