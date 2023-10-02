@@ -23,11 +23,12 @@
     # Cool stuff
     black
     doggo
+    # Disk usage
     du-dust
-    # FIXME: exa is no more maintained and should be replaced by eza
-    # https://github.com/ogham/exa#exa-is-unmaintained-use-the-fork-eza-instead
-    # https://github.com/eza-community/eza
-    exa
+    # df replacement
+    duf
+    # ls replacement
+    lsd
     fd
     fortune
     gh
@@ -35,7 +36,6 @@
     httpie
     inetutils
     mutt
-    pydf
     ripgrep
     silver-searcher
     thefuck
