@@ -65,8 +65,8 @@ in
     df = "${pkgs.duf}/bin/duf";
     g = "${pkgs.git}/bin/git";
     ls = "${pkgs.lsd}/bin/lsd --group-directories-first";
+    lsa = "${pkgs.lsd}/bin/lsd --group-directories-first --almost-all";
     l = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T'";
-    ll = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T'";
     la = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T' --almost-all";
     # Only display directories
     ld = "${pkgs.fd}/bin/fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch ${pkgs.lsd}/bin/lsd --directory-only";
