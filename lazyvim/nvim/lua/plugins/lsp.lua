@@ -175,10 +175,32 @@ return {
     },
   },
 
+  -- Replacement for formatting via null-ls/none-ls
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        markdown = { "prettierd" },
+        yaml = { "prettierd" },
+      },
+    },
+  },
+  -- Replacement for linting via null-ls/none-ls
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        -- lua = { "selene", "luacheck" },
+        markdown = { "markdownlint" },
+      },
+    },
+  },
+
   -- customise null-ls
   {
     "nvimtools/none-ls.nvim",
     -- XXX: disable to test conform and nvim-lint
+    -- XXX: to be dropped if adopting conform.nvim and nvim-lint
     -- https://github.com/LazyVim/LazyVim/discussions/1522#discussioncomment-7153402
     enabled = false,
     opts = function(_, opts)
