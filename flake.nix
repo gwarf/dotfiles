@@ -67,7 +67,8 @@
         tmux = import ./modules/home/tmux;
         lbdb = import ./modules/home/lbdb;
         main = import ./home/main.nix;
-        neovim = import ./home/neovim-nightly.nix;
+        # Neovim: no conf, relying on using vim-managed config
+        neovim = import ./home/neovim.nix;
         # emacs = import ./modules/home/emacs;
         home-user-info = { lib, ... }: {
           # XXX figure what this does
@@ -77,13 +78,8 @@
       homeManagerLinuxModules = {
         # only for GNU/Linux
         mail = import ./modules/home/mail;
-        # Custom configuration manage in nix
-        # neovim = import ./home/neovim.nix;
-        # Only nightly, no conf, relying on using vim-managed config
-        neovim = import ./home/neovim-nightly.nix;
-        # malob configuration
-        # neovim = import ./home/neovim-malob.nix;
-        # programs-neovim-extras = import ./modules/home/programs/neovim/extras.nix;
+        # Neovim: no conf, relying on using vim-managed config
+        neovim = import ./home/neovim.nix;
         keybase = import ./home/keybase.nix;
         firefox = import ./home/firefox.nix;
         wm = import ./modules/home/wm;
