@@ -178,12 +178,18 @@ return {
   -- customise null-ls
   {
     "nvimtools/none-ls.nvim",
+    -- XXX: disable to test conform and nvim-lint
+    -- https://github.com/LazyVim/LazyVim/discussions/1522#discussioncomment-7153402
+    enabled = false,
     opts = function(_, opts)
+      ---@diagnostic disable-next-line: no-unknown
       local nls = require("null-ls")
+      ---@diagnostic disable-next-line: no-unknown
       local utils = require("null-ls.utils")
-      local flake8_extra_args = {}
+      -- local flake8_extra_args = {}
+      ---@diagnostic disable-next-line: no-unknown
       local root = utils.get_root()
-      local flake8_conf = root .. "/.github/linters/.flake8"
+      -- local flake8_conf = root .. "/.github/linters/.flake8"
       -- Load configuration file from super-liner, if any
       -- if vim.loop.fs_stat(flake8_conf) then
       --   flake8_extra_args = { "--config", flake8_conf }
