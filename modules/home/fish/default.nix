@@ -62,13 +62,14 @@ in
     more = "${pkgs.bat}/bin/bat";
     less = "${pkgs.bat}/bin/bat";
     du = "${pkgs.du-dust}/bin/dust";
+    df = "${pkgs.duf}/bin/duf";
     g = "${pkgs.git}/bin/git";
-    ls = "${pkgs.exa}/bin/exa";
-    lsd = "${pkgs.exa}/bin/exa -D";
-    ll = "ls -l --time-style long-iso --icons";
-    la = "ll -a";
-    l = "ls -l --time-style long-iso --icons";
-    df = "${pkgs.pydf}/bin/pydf";
+    ls = "${pkgs.lsd}/bin/lsd --group-directories-first";
+    l = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T'";
+    ll = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T'";
+    la = "${pkgs.lsd}/bin/lsd --group-directories-first --long --date '+%F %T' --almost-all";
+    # Only display directories
+    ld = "${pkgs.fd}/bin/fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch ${pkgs.lsd}/bin/lsd --directory-only";
 
     # Be conservative with files
     # --preserver-root is for GNU versions
