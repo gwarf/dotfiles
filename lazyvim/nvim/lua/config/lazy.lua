@@ -25,8 +25,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.terraform" },
     -- Animate common Neovim actions (cursor movement, scrolling...)
     { import = "lazyvim.plugins.extras.ui.mini-animate" },
-    -- Alternative startup screen/dashboard
-    { import = "lazyvim.plugins.extras.ui.mini-starter" },
     -- create and manage predefined window layouts
     { import = "lazyvim.plugins.extras.ui.edgy" },
     -- project management
@@ -65,6 +63,7 @@ require("lazy").setup({
         "gzip",
         -- "matchit",
         -- "matchparen",
+        -- Replaced by https://github.com/nvim-neo-tree/neo-tree.nvim
         "netrwPlugin",
         "tarPlugin",
         "tohtml",
