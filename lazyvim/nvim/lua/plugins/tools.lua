@@ -16,6 +16,40 @@ return {
     },
   },
 
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    -- Required: https://github.com/folke/lazy.nvim/issues/688
+    lazy = false,
+    opts = {
+      window = {
+        position = "left",
+      },
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = true,
+          never_show = { ".git", ".DS_Store" },
+        },
+        follow_current_file = {
+          enabled = true,
+        },
+        group_empty_dirs = true,
+        hijack_netrw_behavior = "open_default",
+        use_libuv_file_watcher = true,
+      },
+      event_handlers = {
+        {
+          -- auto close when a file got selected
+          event = "file_opened",
+          handler = function(file_path)
+            require("neo-tree").close_all()
+          end,
+        },
+      },
+    },
+  },
+
   -- markdown preview
   {
     "toppair/peek.nvim",
