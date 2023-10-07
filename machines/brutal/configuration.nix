@@ -40,9 +40,9 @@
   # Lightweight system
   services.xserver.displayManager.lightdm.enable = false;
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.displayManager.defaultSession = "none+i3";
+  # services.xserver.displayManager.defaultSession = "none+i3";
   # GDM and Gnome
-  # services.xserver.displayManager.defaultSession = "gnome";
+  services.xserver.displayManager.defaultSession = "gnome";
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
