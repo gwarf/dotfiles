@@ -29,6 +29,8 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.ui.edgy" },
     -- project management
     { import = "lazyvim.plugins.extras.util.project" },
+    -- Update conf for treesitter based on what is installed
+    { import = "lazyvim.plugins.extras.util.dot" },
     -- copilot disabled until there is an easy way to opt in
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
     -- Extra for formatting, replacing none-ls
