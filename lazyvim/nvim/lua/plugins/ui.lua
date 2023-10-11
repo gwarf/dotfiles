@@ -11,6 +11,15 @@ return {
   -- { "bluz71/vim-nightfly-colors" },
 
   {
+    "akinsho/bufferline.nvim",
+    opts = {
+      options = {
+        mode = "tabs",
+      },
+    },
+  },
+
+  {
     "tokyonight.nvim",
     lazy = false,
     priority = 1000,
