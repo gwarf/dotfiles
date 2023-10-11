@@ -47,3 +47,17 @@ vim.api.nvim_create_autocmd("CursorHold", {
     vim.diagnostic.open_float(nil, opts)
   end,
 })
+
+-- Set yaml.ansible filetype when we are in an ansible role
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = {
+    "*{group,host}_vars/*.{yaml,yml}",
+    "{playbook*,site,requirements}.{yaml,yml}",
+    "*{roles,tasks,handlers}/*.{yaml,yml}",
+    "ansible*/*.{yaml,yml}",
+  },
+  command = "setlocal filetype=yaml.ansible",
+})
+-- TODO: add an autocommand setting filetypes for jinja template
+-- like *.rb.j2 => 'setlocal filetype=ruby'
+-- See https://github.com/pearofducks/ansible-vim/blob/master/ftdetect/ansible.vim
