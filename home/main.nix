@@ -31,7 +31,7 @@
     lsd
     fd
     fortune
-    gh
+    pkgs-unstable.gh
     gnupg
     httpie
     inetutils
