@@ -39,7 +39,6 @@ in
     beautysh
     black
     cargo
-    deno
     gnumake
     go
     isort
