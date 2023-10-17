@@ -29,7 +29,7 @@ require("lazy").setup({
     -- create and manage predefined window layouts
     { import = "lazyvim.plugins.extras.ui.edgy" },
     -- project management
-    { import = "lazyvim.plugins.extras.util.project" },
+    -- { import = "lazyvim.plugins.extras.util.project" },
     -- Update conf for treesitter based on what is installed
     { import = "lazyvim.plugins.extras.util.dot" },
     -- copilot disabled until there is an easy way to opt in

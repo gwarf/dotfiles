@@ -50,13 +50,13 @@ return {
   },
 
   -- Explicit project switch
-  {
-    "ahmedkhalf/project.nvim",
-    opts = {
-      silent_chdir = true,
-      scope_chdir = "tab",
-    },
-  },
+  -- {
+  --   "ahmedkhalf/project.nvim",
+  --   opts = {
+  --     silent_chdir = true,
+  --     scope_chdir = "tab",
+  --   },
+  -- },
 
   -- ChatGPT client
   -- {
