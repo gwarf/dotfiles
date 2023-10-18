@@ -49,15 +49,6 @@ return {
     keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
   },
 
-  -- Explicit project switch
-  -- {
-  --   "ahmedkhalf/project.nvim",
-  --   opts = {
-  --     silent_chdir = true,
-  --     scope_chdir = "tab",
-  --   },
-  -- },
-
   -- ChatGPT client
   -- {
   --   "jackMort/ChatGPT.nvim",
