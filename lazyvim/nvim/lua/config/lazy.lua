@@ -11,31 +11,13 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras LazyVim modules
-    -- better copy/paste
-    { import = "lazyvim.plugins.extras.coding.yanky" },
-    -- support more languages
-    -- { import = "lazyvim.plugins.extras.lang.docker" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
-    { import = "lazyvim.plugins.extras.lang.python" },
     -- Semantic highlighting for python
     -- XXX: breaking when opening python files
     -- See https://github.com/numirias/semshi/issues/120
     -- Had to run :UpdateRemotePlugins manually
-    { import = "lazyvim.plugins.extras.lang.python-semshi" },
-    { import = "lazyvim.plugins.extras.lang.terraform" },
-    -- Animate common Neovim actions (cursor movement, scrolling...)
-    { import = "lazyvim.plugins.extras.ui.mini-animate" },
-    -- create and manage predefined window layouts
-    { import = "lazyvim.plugins.extras.ui.edgy" },
-    -- project management
-    { import = "lazyvim.plugins.extras.util.project" },
-    -- Update conf for treesitter based on what is installed
-    { import = "lazyvim.plugins.extras.util.dot" },
-    -- copilot disabled until there is an easy way to opt in
+    -- { import = "lazyvim.plugins.extras.lang.python-semshi" },
+    -- copilot disabled until there is an easy way to choose when to use it
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
-    { import = "lazyvim.plugins.extras.formatting.black" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
     -- import/override with your plugins
     { import = "plugins" },
   },
