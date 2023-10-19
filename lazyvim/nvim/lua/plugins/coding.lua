@@ -7,76 +7,6 @@ return {
   -- TODO: check if useful and incorporate if needed
   -- https://github.com/AckslD/nvim-FeMaco.lua
 
-  -- XXX tools are managed via nix
-  -- add any tools you want to have installed below
-  -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
-  -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/formatting/prettier.lua
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "prettierd",
-      },
-    },
-  },
-
-  -- better text objects
-  {
-    "echasnovski/mini.ai",
-    keys = { { "[f", desc = "Prev function" }, { "]f", desc = "Next function" } },
-    opts = function()
-      -- add treesitter jumping
-      ---@param capture string
-      ---@param start boolean
-      ---@param down boolean
-      local function jump(capture, start, down)
-        local rhs = function()
-          local parser = vim.treesitter.get_parser()
-          if not parser then
-            return vim.notify("No treesitter parser for the current buffer", vim.log.levels.ERROR)
-          end
-
-          ---@diagnostic disable-next-line: undefined-field
-          local query = vim.treesitter.get_query(vim.bo.filetype, "textobjects")
-          if not query then
-            return vim.notify("No textobjects query for the current buffer", vim.log.levels.ERROR)
-          end
-
-          local cursor = vim.api.nvim_win_get_cursor(0)
-
-          ---@type {[1]:number, [2]:number}[]
-          local locs = {}
-          for _, tree in ipairs(parser:trees()) do
-            for capture_id, node, _ in query:iter_captures(tree:root(), 0) do
-              if query.captures[capture_id] == capture then
-                local range = { node:range() } ---@type number[]
-                local row = (start and range[1] or range[3]) + 1
-                local col = (start and range[2] or range[4]) + 1
-                if down and row > cursor[1] or (not down) and row < cursor[1] then
-                  table.insert(locs, { row, col })
-                end
-              end
-            end
-          end
-          return pcall(vim.api.nvim_win_set_cursor, 0, down and locs[1] or locs[#locs])
-        end
-
-        local c = capture:sub(1, 1):lower()
-        local lhs = (down and "]" or "[") .. (start and c or c:upper())
-        local desc = (down and "Next " or "Prev ") .. (start and "start" or "end") .. " of " .. capture:gsub("%..*", "")
-        vim.keymap.set("n", lhs, rhs, { desc = desc })
-      end
-
-      for _, capture in ipairs({ "function.outer", "class.outer" }) do
-        for _, start in ipairs({ true, false }) do
-          for _, down in ipairs({ true, false }) do
-            jump(capture, start, down)
-          end
-        end
-      end
-    end,
-  },
-
   -- Go forward/backward with square brackets
   {
     "echasnovski/mini.bracketed",
@@ -211,13 +141,6 @@ return {
         },
       })
     end,
-  },
-
-  -- A tree like view for symbols using LSP
-  {
-    "simrat39/symbols-outline.nvim",
-    keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-    config = true,
   },
 
   -- Use <tab> for completion and snippets (supertab).
@@ -389,17 +312,8 @@ return {
   },
 
   -- supercharged .
-  { "tpope/vim-repeat" },
-
-  -- Split/join blocks of code
-  -- {
-  --   "Wansmer/treesj",
-  --   keys: <space>m - toggle, <space>j - join, <space>s - split
-  --   keys = {
-  --     { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-  --   },
-  --   opts = { use_default_keymaps = false, max_join_length = 150 },
-  -- },
+  -- makes some plugins dot-repeatable
+  { "tpope/vim-repeat", event = "VeryLazy" },
 
   -- Use the w, e, b motions like a spider. Considers camelCase and skips insignificant punctuation.
   {

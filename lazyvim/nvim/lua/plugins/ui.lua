@@ -19,39 +19,39 @@ return {
     },
   },
 
-  {
-    "tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = function()
-      return {
-        sidebars = {
-          "qf",
-          "vista_kind",
-          "terminal",
-          "spectre_panel",
-          "startuptime",
-          "Outline",
-        },
-        styles = {
-          sidebars = "normal",
-          floats = "normal",
-        },
-        dim_inactive = true,
-        -- When `true`, section headers in the lualine theme will be bold
-        lualine_bold = true,
-        ---@param hl Highlights
-        ---@param c ColorScheme
-        on_highlights = function(hl, c)
-          hl.CursorLineNr = { fg = c.orange, bold = true }
-          hl.LineNr = { bold = true }
-          hl.LineNrAbove = { fg = c.fg_gutter }
-          hl.LineNrBelow = { fg = c.fg_gutter }
-          hl.WinSeparator = { fg = c.blue }
-        end,
-      }
-    end,
-  },
+  -- {
+  --   "tokyonight.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = function()
+  --     return {
+  --       sidebars = {
+  --         "qf",
+  --         "vista_kind",
+  --         "terminal",
+  --         "spectre_panel",
+  --         "startuptime",
+  --         "Outline",
+  --       },
+  --       styles = {
+  --         sidebars = "normal",
+  --         floats = "normal",
+  --       },
+  --       dim_inactive = true,
+  --       -- When `true`, section headers in the lualine theme will be bold
+  --       lualine_bold = true,
+  --       ---@param hl Highlights
+  --       ---@param c ColorScheme
+  --       on_highlights = function(hl, c)
+  --         hl.CursorLineNr = { fg = c.orange, bold = true }
+  --         hl.LineNr = { bold = true }
+  --         hl.LineNrAbove = { fg = c.fg_gutter }
+  --         hl.LineNrBelow = { fg = c.fg_gutter }
+  --         hl.WinSeparator = { fg = c.blue }
+  --       end,
+  --     }
+  --   end,
+  -- },
 
   -- Override LazyVim configuration to select colorscheme
   {
@@ -120,18 +120,6 @@ return {
           Hint = { color = colors.hint },
           Misc = { color = colors.purple },
         },
-      })
-    end,
-  },
-
-  -- lualine
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sections.lualine_x, {
-        function()
-          return require("util.dashboard").status()
-        end,
       })
     end,
   },
