@@ -146,6 +146,9 @@ return {
           settings = {
             yaml = {
               keyOrdering = false,
+              -- XXX: not working/not needed?
+              -- format = { enable = true },
+              -- validate = true,
             },
           },
         },
@@ -174,6 +177,28 @@ return {
       },
     },
   },
+
+  -- Replacement for formatting via null-ls/none-ls
+  {
+    -- XXX: auto format not working with prettier but only with prettier?!
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        markdown = { "prettierd" },
+        yaml = { "prettierd" },
+      },
+    },
+  },
+  -- Replacement for linting via null-ls/none-ls
+  -- {
+  --   "mfussenegger/nvim-lint",
+  --   opts = {
+  --     linters_by_ft = {
+  --       -- lua = { "selene", "luacheck" },
+  --       markdown = { "markdownlint" },
+  --     },
+  --   },
+  -- },
 
   -- customise null-ls
   -- {
