@@ -181,7 +181,7 @@ return {
 
   -- Replacement for formatting via null-ls/none-ls
   {
-    -- XXX: auto format not working with prettier but only with prettier?!
+    -- XXX: auto format not working with prettier but only with prettierd?!
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
