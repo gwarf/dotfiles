@@ -41,7 +41,8 @@
         plugin = continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
+          # disable automatic session backup
+          set -g @continuum-save-interval '0'
         '';
       }
     ];
