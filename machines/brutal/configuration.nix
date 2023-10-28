@@ -170,6 +170,8 @@
     git
     vim
     wget
+    # For gnome
+    gnome.gnome-tweaks
   ];
 
   # Fonts
