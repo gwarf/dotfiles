@@ -1,5 +1,5 @@
 # https://github.com/ShadowRZ/flakes/blob/master/nixos/configuration.nix
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
   inherit (config.home.user-info) username;
@@ -8,7 +8,8 @@ let
 in
 {
   home.packages = with pkgs; [
-    bitwarden
+    # XXX: broken on NixOS 2023-10-28
+    pkgs-unstable.bitwarden
     bitwarden-cli
     # rbw
     # pinentry-gtk2
@@ -173,97 +174,97 @@ in
       # interfers with some manually configured bindings
       vimKeys = false;
       binds = [
-      {
-        action = "complete-query";
-        key = "<Tab>";
-        map = [ "editor" ];
-      }
-      {
-        action = "group-reply";
-        key = "R";
-        map = [ "pager" ];
-      }
-      {
-        action = "flag-message";
-        key = "F";
-        map = [ "index" "pager" ];
-      }
-      {
-        action = "half-down";
-        key = "\\Cd";
-        map = [ "pager" ];
-      }
-      {
-        action = "half-down";
-        key = "\\Cn";
-        map = [ "pager" ];
-      }
-      {
-        action = "half-up";
-        key = "\\Cp";
-        map = [ "pager" ];
-      }
-      {
-        action = "half-up";
-        key = "\\Cu";
-        map = [ "pager" ];
-      }
-      {
-        # unbind g to get gg working
-        action = "noop";
-        key = "g";
-        map = [ "attach" "browser" "index" "pager" ];
-      }
-      {
-        action = "first-entry";
-        key = "gg";
-        map = [ "index" ];
-      }
-      {
-        action = "top";
-        key = "gg";
-        map = [ "pager" ];
-      }
-      {
-        action = "bottom";
-        key = "G";
-        map = [ "pager" ];
-      }
-      {
-        action = "last-entry";
-        key = "G";
-        map = [ "index" ];
-      }
-      {
-        action = "current-top";
-        key = "zt";
-        map = [ "index" ];
-      }
-      {
-        action = "current-middle";
-        key = "zz";
-        map = [ "index" ];
-      }
-      {
-        action = "current-bottom";
-        key = "zb";
-        map = [ "index" ];
-      }
-      {
-        action = "toggle-new";
-        key = "N";
-        map = [ "index" ];
-      }
-      {
-        action = "previous-line";
-        key = "k";
-        map = [ "pager" ];
-      }
-      {
-        action = "next-line";
-        key = "j";
-        map = [ "pager" ];
-      }
+        {
+          action = "complete-query";
+          key = "<Tab>";
+          map = [ "editor" ];
+        }
+        {
+          action = "group-reply";
+          key = "R";
+          map = [ "pager" ];
+        }
+        {
+          action = "flag-message";
+          key = "F";
+          map = [ "index" "pager" ];
+        }
+        {
+          action = "half-down";
+          key = "\\Cd";
+          map = [ "pager" ];
+        }
+        {
+          action = "half-down";
+          key = "\\Cn";
+          map = [ "pager" ];
+        }
+        {
+          action = "half-up";
+          key = "\\Cp";
+          map = [ "pager" ];
+        }
+        {
+          action = "half-up";
+          key = "\\Cu";
+          map = [ "pager" ];
+        }
+        {
+          # unbind g to get gg working
+          action = "noop";
+          key = "g";
+          map = [ "attach" "browser" "index" "pager" ];
+        }
+        {
+          action = "first-entry";
+          key = "gg";
+          map = [ "index" ];
+        }
+        {
+          action = "top";
+          key = "gg";
+          map = [ "pager" ];
+        }
+        {
+          action = "bottom";
+          key = "G";
+          map = [ "pager" ];
+        }
+        {
+          action = "last-entry";
+          key = "G";
+          map = [ "index" ];
+        }
+        {
+          action = "current-top";
+          key = "zt";
+          map = [ "index" ];
+        }
+        {
+          action = "current-middle";
+          key = "zz";
+          map = [ "index" ];
+        }
+        {
+          action = "current-bottom";
+          key = "zb";
+          map = [ "index" ];
+        }
+        {
+          action = "toggle-new";
+          key = "N";
+          map = [ "index" ];
+        }
+        {
+          action = "previous-line";
+          key = "k";
+          map = [ "pager" ];
+        }
+        {
+          action = "next-line";
+          key = "j";
+          map = [ "pager" ];
+        }
       ];
       macros = [
         {
@@ -413,7 +414,7 @@ in
         enable = true;
         extraConfig = {
           logfile = "~/.msmtp.log";
-          };
+        };
       };
       # Configure some clients
       aerc.enable = false;
