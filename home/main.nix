@@ -64,7 +64,7 @@
     gparted
     # Mail
     khal
-    joplin-desktop
+    pkgs-unstable.joplin-desktop
     liquidctl
     llvm
     lm_sensors
