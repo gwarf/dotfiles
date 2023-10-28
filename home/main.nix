@@ -82,7 +82,7 @@
     shfmt
     tree-sitter
     xclip
-    xkill
+    xorg.xkill
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
