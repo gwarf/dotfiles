@@ -70,10 +70,10 @@ application/pgp-signature       ; cat %s                                        
 application/vnd.ms-excel        ; mutt_bgrun localc %s                           ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.oasis.opendocument.spreadsheet ; mutt_bgrun scalc %s            ; test=test -n "$DISPLAY" > /dev/null
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun localc %s            ; test=test -n "$DISPLAY" > /dev/null
-application/msword              ; mutt_bgrun lowriter %s                         ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
-application/wps-office.docx     ; mutt_bgrun lowriter %s                         ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
-application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun lowriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
-application/vnd.openxmlformats-officedocument.wordprocessingml.documen ; mutt_bgrun lowriter %s                                    ; test=zsh -c "export | egrep '^DISPLAY='" > /dev/null
+application/msword              ; mutt_bgrun lowriter %s                         ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/wps-office.docx     ; mutt_bgrun lowriter %s                         ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun lowriter %s                                    ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.documen ; mutt_bgrun lowriter %s                                    ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
 application/msword              ; antiword %s                                   ; copiousoutput
 application/x-msword            ; antiword %s                                   ; copiousoutput
 #application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
