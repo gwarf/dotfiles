@@ -434,6 +434,9 @@ in
           set mime_forward = ask-yes
           set mime_forward_rest = ask-yes
 
+          # print is used to show html emails in browser
+          set print = ask-yes
+
           # Bindings
           # Fetching mail
           # Some vim-like keys
