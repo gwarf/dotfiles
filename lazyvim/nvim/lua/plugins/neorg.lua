@@ -10,7 +10,7 @@ return {
     ft = "norg",
     build = ":Neorg sync-parsers",
     cmd = "Neorg",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "max397574/neorg-contexts", "nvim-neorg/neorg-telescope" },
     opts = {
       load = {
         -- Load default modules
@@ -28,6 +28,11 @@ return {
             },
           },
         },
+        ["core.summary"] = {},
+        -- Neovim 0.10.0+ required for core.tempus module
+        -- ["core.ui.calendar"] = {},
+        ["core.integrations.telescope"] = {},
+        ["external.context"] = {},
       },
     },
   },

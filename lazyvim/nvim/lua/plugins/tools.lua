@@ -49,6 +49,11 @@ return {
     keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
   },
 
+  -- Color hex/rgb color codes
+  {
+    "norcalli/nvim-colorizer.lua",
+  },
+
   -- ChatGPT client
   -- {
   --   "jackMort/ChatGPT.nvim",
