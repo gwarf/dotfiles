@@ -31,9 +31,6 @@
   outputs = { self, darwin, nixpkgs, nixpkgs-unstable, nixpkgs-darwin-stable, home-manager, ... }@inputs:
     let
       inherit (nixpkgs.lib) attrValues;
-      # XXX not working, find how to install a iven package from unstable
-      # pkgs-unstable = nixpkgs-unstable.legacyPackages.${builtins.currentSystem};
-
       homeStateVersion = "23.05";
 
       # Configuration for `nixpkgs`
