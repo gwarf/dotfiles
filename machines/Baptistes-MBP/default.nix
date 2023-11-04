@@ -11,7 +11,10 @@
     # can make darwin-rebuild much slower
     onActivation.upgrade = true;
     brews = [
-      "terminal-notifier"
+      # For aerc, to replace mutt?
+      "lolcat"
+      "pandoc"
+      "dante"
 
       # XXX: for building norg-treesitter on macOS
       # https://github.com/nvim-neorg/tree-sitter-norg/issues/7
@@ -28,6 +31,10 @@
       "perltidy"
       "pyenv"
       "flake8"
+      # https://dev.languagetool.org/http-server
+      "languagetool"
+
+      "terminal-notifier"
     ];
     casks = [
       # app launcher, file searcher
