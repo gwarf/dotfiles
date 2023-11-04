@@ -89,6 +89,7 @@
     ncurses
     # Mail
     # XXX: missing full mail stack configuration
+    pkgs-unstable.aerc
     mutt
     gnupg
     gpgme
