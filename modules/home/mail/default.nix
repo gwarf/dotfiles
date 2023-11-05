@@ -11,10 +11,10 @@ in
     # XXX: broken on NixOS 2023-10-28
     pkgs-unstable.bitwarden
     bitwarden-cli
-    # rbw
+    pkgs-unstable.rbw
     # pinentry-gtk2
-    #aerc
-    #himalaya
+    pkgs-unstable.himalaya
+    pkgs-unstable.aerc
     #vimPlugins.himalaya-vim
     mutt
     neomutt
@@ -97,6 +97,7 @@ in
 
     # aerc: basic features working
     aerc = {
+      # XXX: installed from unstable with home-manager
       enable = false;
       extraBinds = {
         global = {
@@ -417,8 +418,8 @@ in
         };
       };
       # Configure some clients
-      aerc.enable = false;
-      himalaya.enable = false;
+      aerc.enable = true;
+      himalaya.enable = true;
       thunderbird = {
         enable = false;
         profiles = [ "Perso" ];
@@ -520,7 +521,6 @@ in
           source ~/.config/neomutt/colors
         '';
       };
-
     };
   };
 }
