@@ -85,6 +85,8 @@
     xorg.xkill
     # For home assistant
     mqttui
+    # For FreeBSD bhyve VMs
+    tigervnc
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
