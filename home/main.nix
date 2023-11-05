@@ -83,6 +83,8 @@
     tree-sitter
     xclip
     xorg.xkill
+    # For home assistant
+    mqttui
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
