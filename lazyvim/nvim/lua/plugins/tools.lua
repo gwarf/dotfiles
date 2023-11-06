@@ -1,8 +1,5 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
-  -- Edit and review GitHub issues and pull requests
-  { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
-
   -- git integration :Neogit
   -- LazyGit and Gitsigns are installed by default
   {
