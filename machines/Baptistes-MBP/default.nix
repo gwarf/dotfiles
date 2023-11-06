@@ -25,6 +25,8 @@
       "khal"
       "joplin-cli"
 
+      "gnu-sed"
+
       "bitwarden-cli"
       "fetch-crl"
       "ldapvi"
