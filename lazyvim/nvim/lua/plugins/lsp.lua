@@ -190,22 +190,10 @@ return {
       },
     },
   },
-  -- Replacement for linting via null-ls/none-ls
-  -- {
-  --   "mfussenegger/nvim-lint",
-  --   opts = {
-  --     linters_by_ft = {
-  --       -- lua = { "selene", "luacheck" },
-  --       markdown = { "markdownlint" },
-  --     },
-  --   },
-  -- },
 
-  -- customise null-ls
   -- {
+  -- FIXME: to be dropped once incorporated in my conform.nvim and nvim-lint setup
   --   "nvimtools/none-ls.nvim",
-  --   -- XXX: disable to test conform and nvim-lint
-  --   -- XXX: to be dropped if adopting conform.nvim and nvim-lint
   --   -- https://github.com/LazyVim/LazyVim/discussions/1522#discussioncomment-7153402
   --   enabled = false,
   --   opts = function(_, opts)
@@ -227,9 +215,6 @@ return {
   --     -- end
   --     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
   --     opts.sources = {
-  --       -- fish
-  --       nls.builtins.diagnostics.fish,
-  --       nls.builtins.formatting.fish_indent,
   --       -- Shell
   --       nls.builtins.formatting.shfmt,
   --       -- text
@@ -237,12 +222,9 @@ return {
   --       nls.builtins.hover.dictionary,
   --       nls.builtins.diagnostics.checkmake,
   --       nls.builtins.diagnostics.write_good,
-  --       -- lua
-  --       nls.builtins.formatting.stylua,
   --       -- perl
   --       nls.builtins.formatting.perltidy,
   --       -- python
-  --       -- XXX: testing lazyvim.plugins.extras.lang.python
   --       -- nls.builtins.formatting.isort.with({
   --       --   extra_args = { "--profile", "black" },
   --       -- }),
@@ -250,10 +232,6 @@ return {
   --       -- nls.builtins.diagnostics.flake8.with({
   --       --   extra_args = flake8_extra_args,
   --       -- }),
-  --       -- Injects code actions for Git operations at the current cursor position
-  --       nls.builtins.code_actions.gitsigns,
-  --       -- markdown
-  --       nls.builtins.formatting.prettierd,
   --     }
   --   end,
   -- },
