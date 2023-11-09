@@ -37,6 +37,9 @@
       "languagetool"
 
       "terminal-notifier"
+
+      # Terminal file manager
+      "yazi"
     ];
     casks = [
       # app launcher, file searcher
@@ -55,6 +58,7 @@
       "vagrant"
       "virtualbox"
       "vlc"
+      "wezterm"
     ];
   };
 }
