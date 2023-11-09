@@ -48,7 +48,10 @@ return {
 
   -- Color hex/rgb color codes
   {
-    "norcalli/nvim-colorizer.lua",
+    "NvChad/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ filetypes = { "*" } })
+    end,
   },
 
   -- ChatGPT client
