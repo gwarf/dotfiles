@@ -21,6 +21,8 @@
     wget
 
     # Cool stuff
+    alacritty
+    ueberzugpp
     black
     doggo
     # Disk usage
@@ -31,18 +33,22 @@
     lsd
     fd
     fortune
+    fzf
     pkgs-unstable.gh
     gnupg
     httpie
     inetutils
     mutt
+    notmuch
+    notmuch-mutt
     ripgrep
     silver-searcher
+    tailspin
     thefuck
     tree
-    xz
     unzip
     vdirsyncer
+    xz
 
     # Graphical tools
     # XXX joplin-cli build failing on macOS
@@ -87,6 +93,7 @@
     mqttui
     # For FreeBSD bhyve VMs
     tigervnc
+    pkgs-unstable.wezterm
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
