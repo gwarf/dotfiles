@@ -31,24 +31,11 @@
           # set -g @dracula-border-contrast true
         '';
       }
-      {
-        plugin = resurrect;
-        # extraConfig = ''
-        #   set -g @resurrect-strategy-nvim "session"
-        # '';
-      }
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          # disable automatic session backup
-          set -g @continuum-save-interval '0'
-        '';
-      }
     ];
     # XXX: required to get italics: tmux-256color or xterm-kitty
     # tmux-256color not working fine with delta
-    terminal = "xterm-kitty";
+    # terminal = "xterm-kitty";
+    terminal = "tmux-256color";
     extraConfig = ''
       # Allow nested tmux sessions by making "C-b b" possible for sending a control
       # sequence to a nested session
@@ -116,6 +103,15 @@
 
       # Send pane next to another one
       bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
+
+      # For yazi
+      # https://github.com/sxyazi/yazi/wiki/Image-preview-within-tmux
+      # FIXME: not working with kitty in tmux
+      set -g allow-passthrough on
+      # set -ga update-environment TERM
+      # set -ga update-environment TERM_PROGRAM
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
     '';
   };
 }
