@@ -98,6 +98,9 @@ in
     set -gx SYSTEMD_PAGER "${pkgs.bat}/bin/bat"
     set -gx MANPAGER "nvim +Man!"
 
+    # Disable cowsay for Ansible
+    set -gx ANSIBLE_NOCOWS 1
+
     if test (uname) = Darwin
       # Add path mainly used by brew
       fish_add_path "/usr/local/bin"
