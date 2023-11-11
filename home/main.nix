@@ -65,6 +65,7 @@
     arch-install-scripts
     boxes
     checkmake
+    pkgs-unstable.calaos_installer
     dracula-theme
     drawio
     gparted
