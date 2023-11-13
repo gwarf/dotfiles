@@ -234,6 +234,7 @@ return {
       -- })
 
       -- only load lbdb completion for emails
+      ---@diagnostic disable-next-line: missing-fields
       cmp.setup.filetype("mail", {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
@@ -255,6 +256,7 @@ return {
       })
 
       -- Add neorg
+      ---@diagnostic disable-next-line: missing-fields
       cmp.setup.filetype("norg", {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
@@ -274,6 +276,7 @@ return {
       })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      ---@diagnostic disable-next-line: missing-fields
       cmp.setup.cmdline(":", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
@@ -284,6 +287,7 @@ return {
       })
 
       -- `/` cmdline setup.
+      ---@diagnostic disable-next-line: missing-fields
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
@@ -293,8 +297,11 @@ return {
 
       -- Custom snippets
       -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
+      ---@diagnostic disable-next-line: no-unknown
       local s = luasnip.snippet
+      ---@diagnostic disable-next-line: no-unknown
       local i = luasnip.insert_node
+      ---@diagnostic disable-next-line: no-unknown
       local t = luasnip.text_node
       luasnip.add_snippets("all", {
         s("ternary", {
