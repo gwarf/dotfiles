@@ -55,6 +55,12 @@ in
     nr = "nix run";
     ns = "nix search";
 
+    # For Neorg journal
+    # https://github.com/nvim-neorg/neorg/wiki/Journal
+    weekly = "nvim +\":Neorg journal custom $(date -d 'monday' +'%Y-%m-%d')\"";
+    weekly_last = "nvim +\":Neorg journal custom $(date -d 'last monday' +'%Y-%m-%d')\"";
+    weekly_next = "nvim +\":Neorg journal custom $(date -d 'next monday' +'%Y-%m-%d')\"";
+
     # Other
     ".." = "cd ..";
     ":q" = "exit";
