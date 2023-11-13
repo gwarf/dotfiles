@@ -28,6 +28,12 @@ return {
             },
           },
         },
+        -- https://github.com/nvim-neorg/neorg/wiki/Journal
+        ["core.journal"] = {
+          config = {
+            workspace = "work",
+          },
+        },
         ["core.summary"] = {},
         -- Neovim 0.10.0+ required for core.tempus module
         -- ["core.ui.calendar"] = {},
