@@ -29,6 +29,7 @@ return {
           },
         },
         -- https://github.com/nvim-neorg/neorg/wiki/Journal
+        -- TODO: https://github.com/pysan3/neorg-templates
         ["core.journal"] = {
           config = {
             workspace = "work",
