@@ -12,35 +12,4 @@ return {
       ]])
     end,
   },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    -- Disable when doing a file diff
-    cond = not vim.opt.diff:get(),
-    opts = {
-      ensure_installed = {
-        "css",
-        "fish",
-        "gitignore",
-        "go",
-        "graphql",
-        "http",
-        "java",
-        "latex",
-        "meson",
-        "nix",
-        "norg",
-        "org",
-        "php",
-        "rust",
-        "scss",
-        "sql",
-      },
-      query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { "BufWrite", "CursorHold" },
-      },
-    },
-  },
 }
