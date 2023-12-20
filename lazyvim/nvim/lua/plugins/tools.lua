@@ -1,22 +1,10 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
   {
-  "gbprod/yanky.nvim",
+    "gbprod/yanky.nvim",
     opts = {
       -- FIXME: not finding sqlite3 on NixOS
       ring = { storage = (jit.os:find("Windows") or jit.os:find("Linux")) and "shada" or "sqlite" },
-    },
-  },
-  -- git integration :Neogit
-  -- LazyGit and Gitsigns are installed by default
-  {
-    "TimUntersberger/neogit",
-    keys = { { "<leader>gg", "<cmd>Neogit<cr>", desc = "Launch Neogit" } },
-    opts = {
-      integrations = {
-        diffview = true,
-      },
-      disable_commit_confirmation = true,
     },
   },
 
