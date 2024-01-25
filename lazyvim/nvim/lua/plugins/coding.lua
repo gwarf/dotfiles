@@ -156,9 +156,7 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      -- Use forked version due to https://github.com/codybuell/cmp-lbdb/pull/3/
-      -- { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
-      { "gwarf/cmp-lbdb", branch = "fix_nil_meta_raw", lazy = true, ft = "mail" },
+      { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-cmdline" },
     },
