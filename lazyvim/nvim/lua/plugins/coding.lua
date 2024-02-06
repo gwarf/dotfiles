@@ -237,7 +237,7 @@ return {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
           -- would be useful to be able to use this only when completing headers
-          { name = "lbdb" },
+          { name = "lbdb", blacklist = { ".*noreply.*" } },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
