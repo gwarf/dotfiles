@@ -180,7 +180,7 @@
   # https://github.com/lightdiscord/nix-nerd-fonts-overlay
   # https://github.com/NixOS/nixpkgs/blob/6ba3207643fd27ffa25a172911e3d6825814d155/pkgs/data/fonts/nerdfonts/shas.nix#L2-L51
   # https://github.com/JonathanReeve/dotfiles/blob/master/dotfiles/configuration.nix#L61
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     # Only pick selected fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" "JetBrainsMono" ]; })
     fantasque-sans-mono
