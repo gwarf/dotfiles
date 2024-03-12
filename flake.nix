@@ -4,9 +4,9 @@
 
   inputs = {
     # Package sets
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
+    nixpkgs-darwin-stable.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
 
     # macOS system configuration
     darwin = {
@@ -16,7 +16,7 @@
 
     # home-manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,7 +31,7 @@
   outputs = { self, darwin, nixpkgs, nixpkgs-unstable, nixpkgs-darwin-stable, home-manager, ... }@inputs:
     let
       inherit (nixpkgs.lib) attrValues;
-      homeStateVersion = "23.05";
+      homeStateVersion = "23.11";
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
