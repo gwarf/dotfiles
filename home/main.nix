@@ -45,6 +45,7 @@
     silver-searcher
     tailspin
     thefuck
+    tig
     tree
     unzip
     vdirsyncer
