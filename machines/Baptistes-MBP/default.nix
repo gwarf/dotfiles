@@ -47,8 +47,6 @@
       # XXX: install from pkgs does not work
       "drawio"
       "joplin"
-      # XXX: app not showing in dash, safer to install from brew
-      "kitty"
       # Clipboard manager
       "maccy"
       "mumble"
