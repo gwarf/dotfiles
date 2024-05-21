@@ -3,8 +3,8 @@ return {
   {
     "gbprod/yanky.nvim",
     opts = {
-      -- FIXME: not finding sqlite3 on NixOS
-      ring = { storage = (jit.os:find("Windows") or jit.os:find("Linux")) and "shada" or "sqlite" },
+      -- FIXME: not finding sqlite3 on NixOS and now on nix-darwin
+      -- ring = { storage = (jit.os:find("Windows") or jit.os:find("Linux")) and "shada" or "sqlite" },
     },
   },
 
