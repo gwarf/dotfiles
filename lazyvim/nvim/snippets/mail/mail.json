@@ -1,0 +1,12 @@
+{
+  "cb": {
+    "prefix": "cb",
+    "description": "Friendly salutation",
+    "body": ["Cheers", "Baptiste"]
+  },
+  "brb": {
+    "prefix": "brb",
+    "description": "Formal salutation",
+    "body": ["Best regards", "Baptiste"]
+  }
+}

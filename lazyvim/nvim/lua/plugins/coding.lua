@@ -76,7 +76,7 @@ return {
         desc = "Neogen Comment",
       },
     },
-    opts = { snippet_engine = "luasnip" },
+    -- opts = { snippet_engine = "luasnip" },
   },
 
   -- Incremental LSP renaming
@@ -120,12 +120,12 @@ return {
   },
 
   -- Use <tab> for completion and snippets (supertab).
-  {
-    "L3MON4D3/LuaSnip",
-    keys = function()
-      return {}
-    end,
-  },
+  -- {
+  --   "L3MON4D3/LuaSnip",
+  --   keys = function()
+  --     return {}
+  --   end,
+  -- },
 
   -- see ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua
   {
@@ -138,39 +138,38 @@ return {
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
+      -- local has_words_before = function()
+      --   unpack = unpack or table.unpack
+      --   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      --   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      -- end
 
-      local luasnip = require("luasnip")
       local cmp = require("cmp")
 
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-          -- they way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-      })
+      -- opts.mapping = vim.tbl_extend("force", opts.mapping, {
+      --   ["<Tab>"] = cmp.mapping(function(fallback)
+      --     if cmp.visible() then
+      --       cmp.select_next_item()
+      --     -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+      --     -- they way you will only jump inside the snippet region
+      --     elseif luasnip.expand_or_jumpable() then
+      --       luasnip.expand_or_jump()
+      --     elseif has_words_before() then
+      --       cmp.complete()
+      --     else
+      --       fallback()
+      --     end
+      --   end, { "i", "s" }),
+      --   ["<S-Tab>"] = cmp.mapping(function(fallback)
+      --     if cmp.visible() then
+      --       cmp.select_prev_item()
+      --     elseif luasnip.jumpable(-1) then
+      --       luasnip.jump(-1)
+      --     else
+      --       fallback()
+      --     end
+      --   end, { "i", "s" }),
+      -- })
 
       ---@diagnostic disable-next-line: missing-parameter
       -- FIXME: only add emoji and overwrite buffer configuration instead of replicating
@@ -178,7 +177,7 @@ return {
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
-        { name = "luasnip" },
+        { name = "snippets" },
         { name = "path" },
         { name = "emoji" },
         -- XXX: disabled until there is a way to opt-in for copilot in special cases
@@ -193,20 +192,6 @@ return {
         },
       })
 
-      -- FIXME: not working, causing issues with load of cmp in some cases
-      -- Filter out copilot from some use cases, like emails to preserve privacy
-      -- local limited_sources = {}
-      -- for i = #opts.sources, 1, -1 do
-      --   if opts.sources[i].name ~= "copilot" then
-      --     table.insert(limited_sources, opts.sources[i])
-      --   end
-      -- end
-      -- Do not use copilot in norg and markdown files
-      -- cmp.setup.filetype({"norg", "markdown}", {
-      --   ---@diagnostic disable-next-line: missing-parameter
-      --   sources = cmp.config.sources(limited_sources),
-      -- })
-
       -- only load lbdb completion for emails
       ---@diagnostic disable-next-line: missing-fields
       cmp.setup.filetype("mail", {
@@ -215,27 +200,7 @@ return {
           -- would be useful to be able to use this only when completing headers
           { name = "lbdb", blacklist = { ".*noreply.*" } },
           { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "path" },
-          { name = "emoji" },
-          {
-            name = "buffer",
-            option = {
-              get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-              end,
-            },
-          },
-        }),
-      })
-
-      -- Add neorg
-      ---@diagnostic disable-next-line: missing-fields
-      cmp.setup.filetype("norg", {
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "neorg" },
+          { name = "snippets" },
           { name = "path" },
           { name = "emoji" },
           {
@@ -267,27 +232,6 @@ return {
         sources = {
           { name = "buffer" },
         },
-      })
-
-      -- Custom snippets
-      -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#lua
-      ---@diagnostic disable-next-line: no-unknown
-      local s = luasnip.snippet
-      ---@diagnostic disable-next-line: no-unknown
-      local i = luasnip.insert_node
-      ---@diagnostic disable-next-line: no-unknown
-      local t = luasnip.text_node
-      luasnip.add_snippets("all", {
-        s("ternary", {
-          -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-          i(1, "cond"),
-          t(" ? "),
-          i(2, "then"),
-          t(" : "),
-          i(3, "else"),
-        }),
-        s("brb", { t({ "Best regards,", "Baptiste" }) }),
-        s("cb", { t({ "Cheers,", "Baptiste" }) }),
       })
     end,
   },
