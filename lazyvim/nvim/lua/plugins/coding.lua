@@ -64,28 +64,6 @@ return {
     end,
   },
 
-  -- A better annotation generator
-  {
-    "danymat/neogen",
-    keys = {
-      {
-        "<leader>cc",
-        function()
-          require("neogen").generate({})
-        end,
-        desc = "Neogen Comment",
-      },
-    },
-    -- opts = { snippet_engine = "luasnip" },
-  },
-
-  -- Incremental LSP renaming
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    config = true,
-  },
-
   -- Structural search and replace
   {
     "cshuaimin/ssr.nvim",
