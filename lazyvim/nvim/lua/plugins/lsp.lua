@@ -134,11 +134,6 @@ return {
           -- },
         },
         pyright = {},
-        -- FIXME: deprecated
-        -- rnix = {
-        --   -- rnix-lsp is installed using nix
-        --   mason = false,
-        -- },
         texlab = {},
         -- XXX: disabled as it's to beinstalled manually
         -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#textlsp
