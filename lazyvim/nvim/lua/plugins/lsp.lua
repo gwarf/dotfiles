@@ -21,7 +21,17 @@ return {
       },
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
-        ansiblels = {},
+        ansiblels = {
+          settings = {
+            ansible = {
+              validation = {
+                lint = {
+                  arguments = "--warn-list role-name[path]",
+                },
+              },
+            },
+          },
+        },
         bashls = {},
         -- dockerls = {},
         -- html = {},
@@ -126,6 +136,10 @@ return {
           },
         },
         marksman = {},
+        -- Do not install nil_ls with Mason
+        nil_ls = {
+          mason = false,
+        },
         perlnavigator = {
           -- settings = {
           --   perlnavigator = {
