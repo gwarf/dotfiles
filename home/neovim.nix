@@ -64,10 +64,7 @@ in
     nodePackages.yaml-language-server
     pkgs-unstable.ansible-language-server
     pyright
-    # XXX: https://discourse.nixos.org/t/nixos-need-help-finding-out-what-is-pulling-in-nix-2-15-3-in-my-config/41103
-    # https://github.com/nix-community/rnix-lsp
-    # rnix-lsp
-    # nixd
+    nil
     sumneko-lua-language-server
     # Required for ltex-ls usage in neovim
     jdk11
