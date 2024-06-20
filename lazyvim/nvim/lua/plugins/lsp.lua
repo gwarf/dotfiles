@@ -22,6 +22,11 @@ return {
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         ansiblels = {
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
+              or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
+              or require("lspconfig.util").find_git_ancestor(fname)
+          end,
           settings = {
             ansible = {
               validation = {
