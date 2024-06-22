@@ -82,7 +82,8 @@
     # XXX not working
     # nixpkgs-unstable.pynitrokey
     dict
-    libreoffice-still
+    # XXX: 2024-06-22: too big
+    # libreoffice-still
     perl
     perlPackages.PerlTidy
     vlc
@@ -96,7 +97,6 @@
     mqttui
     # For FreeBSD bhyve VMs
     tigervnc
-    pkgs-unstable.wezterm
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     m-cli # useful macOS CLI commands
