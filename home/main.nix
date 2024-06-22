@@ -82,8 +82,8 @@
     # XXX not working
     # nixpkgs-unstable.pynitrokey
     dict
-    # XXX: 2024-06-22: too big
-    # libreoffice-still
+    # XXX: comment if having space issues
+    libreoffice-still
     perl
     perlPackages.PerlTidy
     vlc
