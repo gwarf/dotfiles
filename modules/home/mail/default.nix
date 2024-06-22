@@ -21,7 +21,9 @@ in
     msmtp
     isync
     w3m
-    urlview
+    # XXX: 2024006022: deprecated, replace by extract_url urlscan
+    # urlview
+    extract_url
   ];
 
   # Enable static configuration files
