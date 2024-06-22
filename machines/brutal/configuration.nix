@@ -42,13 +42,13 @@
   services.xserver.windowManager.i3.enable = true;
   # services.xserver.displayManager.defaultSession = "none+i3";
   # GDM and Gnome
-  services.xserver.displayManager.defaultSession = "gnome";
+  services.displayManager.defaultSession = "gnome";
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "caps:escape"; # map caps to escape.
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.options = "caps:escape"; # map caps to escape.
   # "eurosign:e";  # map caps to escape.
 
   # Enable CUPS to print documents.
@@ -59,7 +59,7 @@
   # Help with printer auto discovery
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
   };
 
   # Allow access to watercooling devices
