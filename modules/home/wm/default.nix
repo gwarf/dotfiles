@@ -11,7 +11,7 @@
     gnome3.gnome-keyring
     gnome.seahorse
     gnome.gnome-keyring
-    pinentry-gnome
+    pinentry-gnome3
     libsecret
   ];
 
