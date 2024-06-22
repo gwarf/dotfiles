@@ -41,6 +41,7 @@
     mutt
     notmuch
     notmuch-mutt
+    pkgs-unstable.obsidian
     ripgrep
     silver-searcher
     tailspin
