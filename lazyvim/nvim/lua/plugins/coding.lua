@@ -110,12 +110,7 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      {
-        "codybuell/cmp-lbdb",
-        lazy = true,
-        ft = "mail",
-        branch = "mail-header-only-option",
-      },
+      { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-cmdline" },
     },
