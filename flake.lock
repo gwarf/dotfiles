@@ -2,7 +2,9 @@
   "nodes": {
     "darwin": {
       "inputs": {
-        "nixpkgs": ["nixpkgs-darwin-stable"]
+        "nixpkgs": [
+          "nixpkgs-darwin-stable"
+        ]
       },
       "locked": {
         "lastModified": 1719128254,
@@ -53,7 +55,10 @@
     },
     "flake-parts": {
       "inputs": {
-        "nixpkgs-lib": ["neovim-nightly-overlay", "nixpkgs"]
+        "nixpkgs-lib": [
+          "neovim-nightly-overlay",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1717285511,
@@ -94,8 +99,14 @@
       "inputs": {
         "flake-compat": "flake-compat_2",
         "gitignore": "gitignore",
-        "nixpkgs": ["neovim-nightly-overlay", "nixpkgs"],
-        "nixpkgs-stable": ["neovim-nightly-overlay", "nixpkgs"]
+        "nixpkgs": [
+          "neovim-nightly-overlay",
+          "nixpkgs"
+        ],
+        "nixpkgs-stable": [
+          "neovim-nightly-overlay",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1718879355,
@@ -113,7 +124,11 @@
     },
     "gitignore": {
       "inputs": {
-        "nixpkgs": ["neovim-nightly-overlay", "git-hooks", "nixpkgs"]
+        "nixpkgs": [
+          "neovim-nightly-overlay",
+          "git-hooks",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1709087332,
@@ -132,7 +147,10 @@
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": ["neovim-nightly-overlay", "nixpkgs"]
+        "nixpkgs": [
+          "neovim-nightly-overlay",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1718018037,
@@ -150,7 +168,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": ["nixpkgs"]
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1718530513,
@@ -239,11 +259,11 @@
     },
     "nixpkgs-darwin-stable": {
       "locked": {
-        "lastModified": 1719160247,
-        "narHash": "sha256-mWvCCJFG7RFMFXyQHdxDX56RKYdzXmQ25sy69uRQ8BI=",
+        "lastModified": 1719253556,
+        "narHash": "sha256-A/76RFUVxZ/7Y8+OMVL1Lc8LRhBxZ8ZE2bpMnvZ1VpY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "74b529ef56db2bc5ac41b40dca2e57e222964e3a",
+        "rev": "fc07dc3bdf2956ddd64f24612ea7fc894933eb2e",
         "type": "github"
       },
       "original": {
@@ -271,11 +291,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1718835956,
-        "narHash": "sha256-wM9v2yIxClRYsGHut5vHICZTK7xdrUGfrLkXvSuv6s4=",
+        "lastModified": 1719145550,
+        "narHash": "sha256-K0i/coxxTEl30tgt4oALaylQfxqbotTSNb1/+g+mKMQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dd457de7e08c6d06789b1f5b88fc9327f4d96309",
+        "rev": "e4509b3a560c87a8d4cb6f9992b8915abf9e36d8",
         "type": "github"
       },
       "original": {
@@ -287,11 +307,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1719218810,
-        "narHash": "sha256-PZWoNk7pAPFGOPNcnx0Zc5YcH0NMZR9cnIa7oSazDjc=",
+        "lastModified": 1719308707,
+        "narHash": "sha256-NKS3AO5mTJvbzfnGwyEPeIFhHC6HK8Q2aLImNNBHYNM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "a7db791fd44e4d2e60b3891d08fa1aafd1ee37fd",
+        "rev": "d76c0154e524f26a0e4a8e83db97e1844b5028b8",
         "type": "github"
       },
       "original": {
