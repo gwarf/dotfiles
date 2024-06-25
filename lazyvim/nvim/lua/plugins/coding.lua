@@ -110,7 +110,12 @@ return {
     "nvim-cmp",
     dependencies = {
       "hrsh7th/cmp-emoji",
-      { "codybuell/cmp-lbdb", lazy = true, ft = "mail" },
+      {
+        "codybuell/cmp-lbdb",
+        lazy = true,
+        ft = "mail",
+        branch = "mail-header-only-option",
+      },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-cmdline" },
     },
@@ -152,6 +157,7 @@ return {
       ---@diagnostic disable-next-line: missing-parameter
       -- FIXME: only add emoji and overwrite buffer configuration instead of replicating
       -- configuration
+
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
@@ -176,7 +182,12 @@ return {
         ---@diagnostic disable-next-line: missing-parameter
         sources = cmp.config.sources({
           -- would be useful to be able to use this only when completing headers
-          { name = "lbdb", blacklist = { ".*noreply.*" } },
+          {
+            name = "lbdb",
+            option = {
+              mail_header_only = true,
+            },
+          },
           { name = "nvim_lsp" },
           { name = "snippets" },
           { name = "path" },
