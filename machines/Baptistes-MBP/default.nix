@@ -40,8 +40,6 @@
 
       # Terminal file manager
       "yazi"
-
-      "nmap"
     ];
     casks = [
       # app launcher, file searcher
