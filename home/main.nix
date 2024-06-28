@@ -39,6 +39,7 @@
     httpie
     inetutils
     mutt
+    nmap
     notmuch
     notmuch-mutt
     pkgs-unstable.obsidian
