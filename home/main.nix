@@ -33,7 +33,7 @@
     lsd
     fd
     fortune
-    fzf
+    pkgs-unstable.fzf
     pkgs-unstable.gh
     gnupg
     httpie
