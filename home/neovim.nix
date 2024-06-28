@@ -29,8 +29,12 @@ in
   home.packages = with pkgs; [
     luajit
     luajitPackages.luarocks
+    # XXX: trying to address issues with checkhealth
+    # lua51Packages.luarocks
     # For LuaSnip
     luajitPackages.jsregexp
+
+    tree-sitter
 
     # Dev stuff
     # XXX maybe to be moved to project-specific envs
