@@ -46,7 +46,7 @@
     ripgrep
     silver-searcher
     tailspin
-    thefuck
+    # thefuck
     tig
     tree
     unzip
@@ -74,7 +74,7 @@
     gparted
     # Mail
     khal
-    pkgs-unstable.joplin-desktop
+    # pkgs-unstable.joplin-desktop
     liquidctl
     llvm
     lm_sensors
