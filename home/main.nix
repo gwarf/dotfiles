@@ -84,7 +84,7 @@
     # nixpkgs-unstable.pynitrokey
     dict
     # XXX: comment if having space issues
-    libreoffice-still
+    # libreoffice-still
     perl
     perlPackages.PerlTidy
     vlc
