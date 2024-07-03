@@ -23,7 +23,7 @@
       # XXX: install from pkgs does not work
       "checkmake"
       "khal"
-      "joplin-cli"
+      # "joplin-cli"
 
       "gnu-sed"
 
@@ -46,7 +46,7 @@
       "alfred"
       # XXX: install from pkgs does not work
       "drawio"
-      "joplin"
+      # "joplin"
       # Clipboard manager
       "maccy"
       "mumble"
