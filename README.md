@@ -121,6 +121,7 @@ sudo result/bin/switch-to-configuration switch
 # Build and siwtch to the new conf, updating boot menu
 sudo nixos-rebuild switch --flake .
 # On macOS
+nix flake update --commit-lock-file
 darwin-rebuild switch --flake .
 # In case the hostname changed (like on a VPN), it can be specified like this
 ./result/sw/bin/darwin-rebuild switch --flake . -p 'darwinConfigurations.Baptistes-MBP.system'
@@ -137,6 +138,9 @@ sudo nixos-rebuild switch --flake .
 # upgrade nixpkgs **only** and rebuild flake-managed system
 sudo nixos-rebuild switch --upgrade --update-input nixpkgs \
   --commit-lock-file --flake ~/repos/dotfiles
+# On macOS
+nix flake update --commit-lock-file
+darwin-rebuild switch --flake .
 ```
 
 ##### Cleaning old generations
