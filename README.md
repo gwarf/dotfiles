@@ -2,37 +2,58 @@
 
 My messy **dotfiles** for GNU/Linux and macOS. WIP :)
 
+## Chezmoi
+
 Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
 some others are for macOS.
 
-> **WIP++** I'm converting this repository from
-> [yadm](https://github.com/TheLocehiliosan/yadm) to management using [nix](#nix) and
+> **WIP++** I'm converting this repository from using [nix](https://nixos.org/)
+> and [home-manager](https://nix-community.github.io/home-manager/) to
+> [chezmoi](https://www.chezmoi.io).
+
+### Why moving to chezmoi?
+
+Using NixOS and Homemanager on macOS was fun and quite efficient, but remained
+too complex on some aspects, thus I decided to move to something simpler. In
+addition to this, there were recently some issues in the nix community and
+various points from those people made sense to me:
+- [Solene: What is going on in Nix community?](https://dataswamp.org/~solene/2024-04-27-nix-internal-crisis.html)
+- [Xe: Much ado about "nothing"](https://xeiaso.net/blog/2024/much-ado-about-nothing/)
+- [maintainers: remove marsam](https://github.com/NixOS/nixpkgs/pull/306702)
+
+### Initialising
+
+```shell
+chezmoi init gwarf
+chezmoi diff
+chezmoi apply
+```
+
+### Pulling changes
+
+```shell
+# Pull changes and review them
+chezmoi git pull -- --autostash --rebase && chezmoi diff
+# Apply them
+chezmoi apply
+# Pull and apply all at once
+chezmoi update
+```
+
+### Pushing changes
+
+```shell
+chezmoi cd
+git status
+git commit -a
+git push
+```
+
+## Nix (Legacy)
+
+> The nix setup got converted from
+> [yadm](https://github.com/TheLocehiliosan/yadm) to using [nix](#nix) and
 > [home-manager](https://nix-community.github.io/home-manager/).
-
-## Nix
-
-This is mainly random notes and pointers to source of inspiration.
-
-This is work-in-progress, some important tasks are pending:
-
-- [ ] Read [Practical Nix Flakes](https://serokell.io/blog/practical-nix-flakes)
-- [ ] Finalise mail configuration
-- [ ] Finalise neovim configuration
-- [ ] Finalise neomutt/mutt configuration
-- [ ] Unlock gnome keyring on login
-- [ ] Check https://nixos.org/guides/nix-pills/
-- [ ] Read
-      https://www.reddit.com/r/NixOS/comments/xtq2tb/best_way_to_manage_multiple_home_manager_configs/
-- [ ] Clean packages sets in inputs.
-- [ ] Disable/clean/remove `/etc/nixos/configuration.nix`, finalise switch to
-      flakes. Unless it makes sense to keep this to do system configuration?
-- [ ] Consolidation of macOS and NixOS configuration.
-- [ ] Look into https://github.com/gvolpe/neovim-flake.
-- [ ] Support home-manager configuration on non-NixOS GNU/Linux systems.
-- [ ] Test and document bootstrap in clean NixOS.
-- [ ] Test and document bootstrap in clean macOS.
-- [ ] Look into GitHub actions.
-- [ ] Clean static config files.
 
 ### Searching for a Nix package, an option, …
 
