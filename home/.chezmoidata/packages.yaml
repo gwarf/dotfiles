@@ -38,6 +38,7 @@ packages:
       - "shfmt"
       - "starship"
       - "stylua"
+      - "tree"
       - "vivid"
       - "zoxide"
     ports:

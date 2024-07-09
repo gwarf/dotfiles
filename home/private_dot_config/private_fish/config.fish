@@ -1,3 +1,5 @@
+set -U fish_term24bit 1
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 
@@ -9,6 +11,25 @@ if status is-interactive
 
     # Disable cowsay for Ansible
     set -gx ANSIBLE_NOCOWS 1
+
+    # Abbreviations
+    abbr -a :q exit
+    abbr -a g git
+
+    #  Aliases
+    alias cat="bat --paging=never"
+    alias ls="lsd --group-directories-first"
+    alias lsa="lsd --group-directories-first --almost-all"
+    alias l="lsd --group-directories-first --long --date '+%F %T'"
+    alias la="lsd --group-directories-first --long --date '+%F %T' --almost-all"
+    alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
+    alias ..="cd .."
+    alias rm="rm -i --preserve-root"
+    alias mv="mv -i"
+    alias cp="cp -i"
+    alias chown="chown --preserve-root"
+    alias chmod="chmod --preserve-root"
+    alias chgrp="chgrp --preserve-root"
 
     if test (uname) = Darwin
         # Add path mainly used by brew
