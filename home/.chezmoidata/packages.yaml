@@ -1,0 +1,26 @@
+packages:
+  darwin:
+    brews:
+    - 'git'
+    - 'khal'
+    - 'gnu-sed'
+    - 'bitwarden-cli'
+    - "fetch-crl"
+    - "ldapvi"
+    - "languagetool"
+    casks:
+    - 'alfred'
+    - "drawio"
+    - "maccy"
+    - "rectangle"
+    - "slack"
+    - "stretchly"
+    - "teamviewer"
+    - "vagrant"
+    - "virtualbox"
+    - "vlc"
+  freebsd:
+    - 'git'
+    - 'bash'
+    - 'neovim'
+  linux:
