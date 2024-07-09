@@ -1,30 +1,44 @@
 packages:
   darwin:
     brews:
-    - 'git'
-    - 'delta'
-    - 'khal'
-    - 'gnu-sed'
-    - 'bitwarden-cli'
-    - "fetch-crl"
-    - "ldapvi"
-    - "languagetool"
+      - "git"
+      - "delta"
+      - "khal"
+      - "gnu-sed"
+      - "bitwarden-cli"
+      - "fetch-crl"
+      - "ldapvi"
+      - "languagetool"
     casks:
-    - 'alfred'
-    - "drawio"
-    - "maccy"
-    - "rectangle"
-    - "slack"
-    - "stretchly"
-    - "teamviewer"
-    - "vagrant"
-    - "virtualbox"
-    - "vlc"
+      - "alfred"
+      - "drawio"
+      - "maccy"
+      - "rectangle"
+      - "slack"
+      - "stretchly"
+      - "teamviewer"
+      - "vagrant"
+      - "virtualbox"
+      - "vlc"
   freebsd:
     pkgs:
-    - 'git'
-    - 'bash'
-    - 'git-delta'
-    - 'neovim'
+      - "bash"
+      - "bat"
+      - "direnv"
+      - "dust"
+      - "fd-find"
+      - "fish"
+      - "git"
+      - "git-delta"
+      - "kitty"
+      - "lsd"
+      - "neovim"
+      - "python"
+      - "ripgrep-all"
+      - "shfmt"
+      - "starship"
+      - "stylua"
+      - "vivid"
+      - "zoxide"
     ports:
   linux:
