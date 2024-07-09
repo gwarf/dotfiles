@@ -1,6 +1,8 @@
 {{ if eq .chezmoi.os "freebsd" -}}
 #!/bin/sh
-pkg install {{ range .packages.freebsd }}
+
+{{ range .packages.freebsd.pkgs -}}
+doas pkg install {{ . | quote }}
 {{ end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
 #!/bin/bash

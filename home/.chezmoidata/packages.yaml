@@ -2,6 +2,7 @@ packages:
   darwin:
     brews:
     - 'git'
+    - 'delta'
     - 'khal'
     - 'gnu-sed'
     - 'bitwarden-cli'
@@ -20,7 +21,10 @@ packages:
     - "virtualbox"
     - "vlc"
   freebsd:
+    pkgs:
     - 'git'
     - 'bash'
+    - 'git-delta'
     - 'neovim'
+    ports:
   linux:
