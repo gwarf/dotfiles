@@ -28,6 +28,7 @@ if status is-interactive
     abbr -a :q exit
     abbr -a g git
     abbr -a vim nvim
+    abbr -a ch chezmoi
 
     #  Aliases
     alias df="duf"
