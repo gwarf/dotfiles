@@ -38,6 +38,7 @@ packages:
       - "shfmt"
       - "starship"
       - "stylua"
+      - "tmux"
       - "tree"
       - "vivid"
       - "zoxide"

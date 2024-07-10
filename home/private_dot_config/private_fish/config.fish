@@ -1,7 +1,19 @@
+# Only execute this file once per shell.
+set -q __fish_home_manager_config_sourced; and exit
+set -g __fish_home_manager_config_sourced 1
+
 set -U fish_term24bit 1
+
+# if status is-login; and begin
+# Login shell initialisation
+# end
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
+
+    set -g fish_greeting ""
+    # XXX: to be checked
+    # thefuck --alias | source
 
     # Use bat as pager
     set -gx PAGER bat
@@ -137,4 +149,10 @@ if status is-interactive
     set -xg LS_COLORS (vivid generate dracula)
 
     [ -e $HOME/.fish.env ]; and source $HOME/.fish.env
+
+    if test "$TERM" != dumb
+        starship init fish | source
+    end
+    zoxide init fish | source
+    direnv hook fish | source
 end
