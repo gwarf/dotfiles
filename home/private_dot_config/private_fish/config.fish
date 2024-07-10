@@ -27,6 +27,7 @@ if status is-interactive
     # Abbreviations
     abbr -a :q exit
     abbr -a g git
+    abbr -a vim nvim
 
     #  Aliases
     alias cat="bat --paging=never"
@@ -153,6 +154,6 @@ if status is-interactive
     if test "$TERM" != dumb
         starship init fish | source
     end
-    zoxide init fish | source
+    zoxide init --cmd cd fish | source
     direnv hook fish | source
 end
