@@ -1,14 +1,14 @@
 packages:
   darwin:
     brews:
-      - "git"
-      - "delta"
-      - "khal"
-      - "gnu-sed"
       - "bitwarden-cli"
+      - "delta"
       - "fetch-crl"
-      - "ldapvi"
+      - "git"
+      - "gnu-sed"
+      - "khal"
       - "languagetool"
+      - "ldapvi"
     casks:
       - "alfred"
       - "drawio"
@@ -30,9 +30,11 @@ packages:
       - "fish"
       - "git"
       - "git-delta"
+      - "google-fonts"
       - "kitty"
       - "lsd"
       - "neovim"
+      - "nerd-fonts"
       - "python"
       - "ripgrep-all"
       - "shfmt"
@@ -40,7 +42,9 @@ packages:
       - "stylua"
       - "tmux"
       - "tree"
+      - "uwrfonts"
       - "vivid"
+      - "xsel"
       - "zoxide"
     ports:
   linux:
