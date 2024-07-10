@@ -22,6 +22,7 @@ return {
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         ansiblels = {
+          mason = false,
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
               or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
@@ -37,7 +38,9 @@ return {
             },
           },
         },
-        bashls = {},
+        bashls = {
+          mason = false,
+        },
         -- dockerls = {},
         -- html = {},
         -- groovyls = {},
@@ -45,6 +48,7 @@ return {
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         -- TODO: have cmp do completion using words from the dictionaries
         ltex = {
+          mason = false,
           filetypes = {
             "bib",
             "gitcommit",
@@ -78,6 +82,7 @@ return {
           },
         },
         lua_ls = {
+          mason = false,
           single_file_support = true,
           settings = {
             Lua = {
@@ -140,7 +145,9 @@ return {
             },
           },
         },
-        marksman = {},
+        marksman = {
+          mason = false,
+        },
         -- Do not install nil_ls with Mason
         nil_ls = {
           mason = false,
@@ -152,12 +159,17 @@ return {
           --   },
           -- },
         },
-        pyright = {},
-        texlab = {},
+        pyright = {
+          mason = false,
+        },
+        texlab = {
+          mason = false,
+        },
         -- XXX: disabled as it's to beinstalled manually
         -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#textlsp
         -- textlsp = {},
         yamlls = {
+          mason = false,
           -- https://github.com/redhat-developer/yaml-language-server
           settings = {
             yaml = {
