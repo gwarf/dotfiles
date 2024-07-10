@@ -146,3 +146,5 @@
   line-numbers = true
   navigate = true    # use n and N to move between diff sections
   theme = Dracula
+[safe]
+	directory = /usr/ports

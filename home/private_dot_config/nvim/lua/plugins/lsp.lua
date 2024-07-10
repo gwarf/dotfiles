@@ -6,6 +6,8 @@ return {
     dependencies = { "neovim/nvim-lspconfig" },
   },
 
+  -- XXX: stop trying to install pacakges
+  { "williamboman/mason.nvim", enabled = false },
   -- add various LSP to lspconfig
   {
     "neovim/nvim-lspconfig",
