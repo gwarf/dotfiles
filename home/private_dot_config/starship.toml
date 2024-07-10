@@ -1,0 +1,10 @@
+scan_timeout = 10
+
+[cmd_duration]
+format = " ⏲ $duration($style) "
+style = "bold italic #87A752"
+
+[directory]
+fish_style_pwd_dir_length = 1
+read_only = " "
+truncation_length = 2
