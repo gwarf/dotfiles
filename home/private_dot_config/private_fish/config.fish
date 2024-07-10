@@ -30,6 +30,8 @@ if status is-interactive
     abbr -a vim nvim
 
     #  Aliases
+    alias df="duf"
+    alias du="dust"
     alias cat="bat --paging=never"
     alias ls="lsd --group-directories-first"
     alias lsa="lsd --group-directories-first --almost-all"
@@ -156,4 +158,7 @@ if status is-interactive
     end
     zoxide init --cmd cd fish | source
     direnv hook fish | source
+    # XXX: only valid with fzf >= 0.48.0
+    # fzf --fish | source 
+    source /usr/local/share/examples/fzf/shell/key-bindings.fish
 end

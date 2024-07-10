@@ -2,7 +2,7 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/coding.lua
 return {
   -- Install support for editing nix files
-  { "LnL7/vim-nix" },
+  -- { "LnL7/vim-nix" },
 
   -- TODO: check if useful and incorporate if needed
   -- https://github.com/AckslD/nvim-FeMaco.lua
