@@ -43,9 +43,11 @@ if status is-interactive
     alias rm="rm -i --preserve-root"
     alias mv="mv -i"
     alias cp="cp -i"
+    {{ if ne .chezmoi.os "freebsd" -}}
     alias chown="chown --preserve-root"
     alias chmod="chmod --preserve-root"
     alias chgrp="chgrp --preserve-root"
+    {{ end -}}
 
     if test (uname) = Darwin
         # Add path mainly used by brew
