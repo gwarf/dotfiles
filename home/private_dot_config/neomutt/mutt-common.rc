@@ -156,7 +156,7 @@ source ~/.config/neomutt/mime-view
 #set display_filter=/home/baptiste/.mutt/mutt_display_filter
 #set display_filter=/home/baptiste/.mutt/test_display_filter
 #set display_filter='par 72gqr'
-set display_filter="~/.config/neomutt/local-date.pl"
+# set display_filter="~/.config/neomutt/local-date.pl"
 #set wrapmargin=60
 
 # http://www.neomutt.org/feature/new-mail/
