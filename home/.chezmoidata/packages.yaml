@@ -38,6 +38,7 @@ packages:
       - "isync"
       - "jq"
       - "khard"
+      - "keybase"
       - "kitty"
       - "lazygit"
       - "lsd"
