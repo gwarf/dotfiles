@@ -53,6 +53,13 @@ if status is-interactive
     alias mv="mv -i"
     alias cp="cp -i"
 
+    # nvim!
+    set EDITOR nvim
+    # https://fishshell.com/docs/current/interactive.html#vi-mode
+    fish_vi_key_bindings
+    bind --mode insert \ca beginning-of-line
+    bind --mode insert \ce end-of-line
+
     if test (uname) = Darwin
         # Add path mainly used by brew
         fish_add_path /usr/local/bin
@@ -124,13 +131,6 @@ if status is-interactive
             # export OIDC_AGENT_ACCOUNT=egi
         end
     end
-
-    # nvim!
-    set EDITOR nvim
-    # https://fishshell.com/docs/current/interactive.html#vi-mode
-    fish_vi_key_bindings
-    bind \ca beginning-of-line
-    bind \ce end-of-line
 
     # Set color variables
     set emphasized_text brcyan # base1
