@@ -6,7 +6,7 @@ set header_cache = ~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies
 set certificate_file = ~/.mutt/certificates
 
-set tmpdir = '~/tmp'
+# set tmpdir = '~/tmp'
 
 set editor = 'nvim'
 set shell = "/bin/zsh"
