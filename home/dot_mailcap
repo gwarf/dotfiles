@@ -1,0 +1,88 @@
+# mailcap file for usage with mutt.
+
+# Try to use xdg-open for everything
+# */*; xdg-open "%s"
+
+application/octet-stream        ; echo "what to do:" %s "can be anything"       ; copiousoutput
+application/ghostview           ; pdftotext -layout %s -; xdg-open %s    ; copiousoutput
+application/pdf                 ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
+application/x-pdf               ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
+application/postscript          ; pdftotext -layout %s -; print=xdg-open %s    ; copiousoutput
+application/x-bzip2             ; bzip2 -dc %s                         ; copiousoutput
+application/x-cpio              ; cpio -tvF --quiet %s                          ; copiousoutput
+application/x-csh               ; cat %s                                        ; copiousoutput
+application/x-gtar              ; tar tvf %s                                    ; copiousoutput
+application/x-gzip              ; tar tfvz %s                              ; copiousoutput
+application/x-gzip-postscript   ; zcat %s gv                ; copiousoutput
+application/x-latex             ; cat %s                                        ; copiousoutput
+application/x-perl              ; cat %s                                        ; copiousoutput
+application/x-rar-compressed    ; rar v %s                                      ; copiousoutput
+application/x-script            ; cat %s                                        ; copiousoutput
+application/x-shar              ; cat %s                                        ; copiousoutput
+application/x-shellscript       ; cat %s                                        ; copiousoutput
+application/x-sh                ; cat %s                                        ; copiousoutput
+application/x-tar               ; tar tvvf %s                                   ; copiousoutput
+application/x-tar-gz            ; tar tfvz %s                                   ; copiousoutput
+application/x-tcl               ; cat %s                                        ; copiousoutput
+pplication/x-tex                ; cat %s                                        ; copiousoutput
+application/x-troff             ; groff -Tlatin1 %s                             ; copiousoutput
+application/x-troff-man         ; man -l %s 2>/dev/null                         ; copiousoutput
+application/x-troff-me          ; groff -me -Tlatin1 %s                         ; copiousoutput
+application/x-zip-compressed    ; unzip -v %s                                   ; copiousoutput
+application/zip                 ; unzip -v %s                                   ; copiousoutput
+# View: display event
+# Print: add them to calendar
+text/calendar                   ;  mutt-ics; print=add_event %s                 ; copiousoutput
+application/ics                 ;  mutt-ics; print=add_event %s                 ; copiousoutput
+# text/calendar                   ; mutt-ics                                      ; copiousoutput
+audio/basic                     ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY"  > /dev/null
+audio/midi                      ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
+audio/mpegurl                   ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
+audio/mpeg                      ; mutt_bgrun mplayer %s                         ; copiousoutput
+audio/x-midi                    ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
+audio/x-mod                     ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
+audio/x-pn-realaudio-plugin     ; realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
+audio/x-pn-realaudio            ; realplay %s                      ; test=test -n "$DISPLAY" > /dev/null
+audio/*                         ; mutt_bgrun mplayer %s                                    ; test=test -n "$DISPLAY" > /dev/null
+#image/*                         ; mutt_bgrun sxiv -bf %s \; reset
+#image/*                         ; mutt_bgrun gpicview %s                        ; test=test -n "$DISPLAY" > /dev/null
+image/x-eps                     ; gv %s                              ; test=test -n "$DISPLAY" > /dev/null
+image/*                         ; mutt_bgrun sxiv %s                             ; test=test -n "$DISPLAY" > /dev/null
+#image/*                         ; mutt_bgrun gpicview %s                             ; test=test -n "$DISPLAY" > /dev/null
+#image/*                         ; fbi %s                            ; copiousoutput
+
+# XXX Disable backgrouds as it seems that html files is deleted too early
+# text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chromium-perso %s
+text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = firefox %s
+
+text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
+text/x-patch                    ; cat %s | colordiff                            ;copiousoutput
+text/x-compress-html            ; zcat %s lynx -dump -force_html           ; copiousoutput
+text/x-gzip-html                ; zcat %s lynx -dump -force_html           ; copiousoutput
+text/plain                      ; cat %s                                        ; copiousoutput
+text/richtext                   ; mutt_bgrun abiword %s                         ; copiousoutput
+text/x-vcard                    ; ~/mutt/mutt.vcard.filter %s                   ; copiousoutput
+text/*                          ; edit=vim %s                                   ; copiousoutput
+video/*                         ; mutt_bgrun mplayer %s                         ; copiousoutput
+application/pgp-signature       ; cat %s                                        ; copiousoutput
+#application/excel              ; xls2csv %s | column -s, -tn                   ; copiousoutput
+#application/vnd.ms-excel       ; xls2csv %s | column -s, -tn                   ; copiousoutput
+application/vnd.ms-excel        ; mutt_bgrun localc %s                           ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.oasis.opendocument.spreadsheet ; mutt_bgrun scalc %s            ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun localc %s            ; test=test -n "$DISPLAY" > /dev/null
+application/msword              ; mutt_bgrun lowriter %s                         ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/wps-office.docx     ; mutt_bgrun lowriter %s                         ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.document ; mutt_bgrun lowriter %s                                    ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/vnd.openxmlformats-officedocument.wordprocessingml.documen ; mutt_bgrun lowriter %s                                    ; test=bash -c "export | egrep '^DISPLAY='" > /dev/null
+application/msword              ; antiword %s                                   ; copiousoutput
+application/x-msword            ; antiword %s                                   ; copiousoutput
+#application/vnd.oasis.opendocument.text ; odt2txt %s                            ; copiousoutput
+application/vnd.oasis.opendocument.text ; mutt_bgrun lowriter %s                ; copiousoutput
+application/vnd.ms-powerpoint   ; mutt_bgrun loimpress %s                        ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.oasis.opendocument.presentation   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.openxmlformats-officedocument.presentationml.slideshow   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
+application/vnd.openxmlformats-officedocument.presentationml.presentation   ; mutt_bgrun loimpress %s      ; test=test -n "$DISPLAY" > /dev/null
+application/x-pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
+application/pkcs7-signature;openssl pkcs7 -in %s -inform der -noout -print_certs -text | less; needsterminal
+
+# vim: set nowrap:
