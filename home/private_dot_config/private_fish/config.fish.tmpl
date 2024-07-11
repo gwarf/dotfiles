@@ -40,14 +40,16 @@ if status is-interactive
     alias la="lsd --group-directories-first --long --date '+%F %T' --almost-all"
     alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
     alias ..="cd .."
-    alias rm="rm -i --preserve-root"
-    alias mv="mv -i"
-    alias cp="cp -i"
     {{ if ne .chezmoi.os "freebsd" -}}
     alias chown="chown --preserve-root"
     alias chmod="chmod --preserve-root"
     alias chgrp="chgrp --preserve-root"
+    alias rm="rm -i --preserve-root"
+    {{ else -}}
+    alias rm="rm -i"
     {{ end -}}
+    alias mv="mv -i"
+    alias cp="cp -i"
 
     if test (uname) = Darwin
         # Add path mainly used by brew
