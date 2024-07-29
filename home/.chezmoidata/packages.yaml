@@ -2,9 +2,9 @@ packages:
   darwin:
     brews:
       - "bitwarden-cli"
-      - "delta"
       - "fetch-crl"
       - "git"
+      - "git-delta"
       - "gnu-sed"
       - "khal"
       - "languagetool"
