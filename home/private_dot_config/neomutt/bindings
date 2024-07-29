@@ -23,7 +23,15 @@ bind pager \cu half-up
 bind pager N next-unread
 bind index,pager F flag-message
 
+# XXX: by default g is group-reply
 # bind index g first-entry
+# https://www.neomutt.org/guide/configuration.html#bind-warnings
+# XXX: it is possible to disable a key binding to use compounds keys
+# bind index,pager g noop
+# macro index,pager gl <change-folder>?       "Go to 'Label'"
+# macro index,pager gi \
+#     <change-folder>=INBOX<enter> \
+#     "Go to inbox"
 bind index G last-entry
 bind index H current-top
 bind index M current-middle
@@ -56,20 +64,14 @@ macro attach s <save-entry><bol>~/Downloads/<eol>
 # https://gist.github.com/manolomartinez/7082024
 macro attach S "<pipe-message>muttsaveattach"<enter>
 
-#macro index,pager I  <set-flag>O  "Mark as read"
 #macro index,pager U  <clear-flag>O  "Mark as unread"
-
-# https://www.neomutt.org/guide/configuration.html#bind-warnings
-bind index,pager g noop
-# macro index,pager gl <change-folder>?       "Go to 'Label'"
-# macro index,pager gi \
-#     <change-folder>=INBOX<enter> \
-#     "Go to inbox"
+#macro index,pager I  <set-flag>O  "Mark as read"
 
 # macros to invoke a profile
-macro index <F8> ":source ~/.config/neomutt/default-profile<enter><change-folder>!<enter>" "Load profile: default"
+# macro index <F8> ":source ~/.config/neomutt/default-profile<enter><change-folder>!<enter>" "Load profile: default"
 # macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-folder>!<enter>" "Load profile: egi"
 # macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-folder>!<enter>" "Load profile: perso"
+# macro index <F9> ":source ~/.config/neomutt/profile-uli<enter><change-folder>!<enter>" "Load profile: uli"
 
 # macro compose <F8> "<enter-command>source ~/.config/neomutt/profile.egi<enter><edit-from>\
 #   <kill-line>Baptiste Grenier <baptiste.grenier@egi.eu><enter><enter-command>\

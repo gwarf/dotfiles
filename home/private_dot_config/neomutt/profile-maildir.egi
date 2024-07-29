@@ -94,7 +94,9 @@ my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference
 set smime_is_default
 set crypt_autosmime = yes
 # TCS Sectigo ceritificate August 2021
-set smime_sign_as = 0x0EBD819F
+# set smime_sign_as = 0x0EBD819F
+# TCS Sectigo ceritificate October 2023
+set smime_sign_as = 0xC21D536E
 # Passphrase expiration
 set smime_timeout=30000
 # Pinentry program is taken from ~/.gnupg/gpg-agent.conf
@@ -142,10 +144,51 @@ set query_command= "khard email --parsable %s"
 # Google-like key bindings
 macro index,pager A "<save-message>+All<enter>" "move message to the archive"
 
+# Notmuch search
+# notmuch and notmuch-mutt coming from Nix
+macro index <F8> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<shell-escape>notmuch-mutt -r --prompt search<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: search mail"
+
+macro index <F9> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt -r thread<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: reconstruct thread"
+
+macro index <F6> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt tag -- -inbox<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: remove message from inbox"
+
+# http://www.mutt.org/doc/manual/#ignore-list-reply-to
+set ignore_list_reply_to
+
 # Mailing lists
-lists technical-support-cases-c@rt.egi.eu
-subscribe operations@egi.eu
+# http://www.mutt.org/doc/manual/#lists
+# Known
+lists .*@mailman.egi.eu
+# Subscribed
+## EGI Maimlan
+subscribe irtf@mailman.egi.eu
+subscribe ism@mailman.egi.eu
 subscribe office@mailman.egi.eu
+subscribe operations@mailman.egi.eu
+subscribe security-notifications@mailman.egi.eu
+subscribe shodan@mailman.egi.eu
+subscribe svg-rat@mailman.egi.eu
+## EGI Google Workspace
+subscribe admin@egi.eu
+subscribe it-support@egi.eu
+subscribe notifcations-ct@egi.eu
+## Third parties
+subscribe oss-security@lists.openwall.com
 subscribe wise@lists.wise-community.org
+subscribe refeds@lists.refeds.org
 
 # vim: set ft=muttrc:

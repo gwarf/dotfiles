@@ -143,8 +143,12 @@
 
 # https://dandavison.github.io/delta/configuration.html
 [delta]
-  line-numbers = true
   navigate = true    # use n and N to move between diff sections
   theme = Dracula
+  line-numbers = true
 [safe]
 	directory = /usr/ports
+[status]
+	submoduleSummary = true
+[diff]
+	submodule = log

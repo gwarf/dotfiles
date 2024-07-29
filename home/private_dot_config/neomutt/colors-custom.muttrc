@@ -11,20 +11,16 @@
 
 # custom body highlights -----------------------------------------------
 # highlight my name and other personally relevant strings
-color body          color136        default        "(baptiste|genier|gnubila|healthgrid|egi|boob|bgrenier|gwarf)"
+color body          color136        default        "(baptiste|genier|gnubila|healthgrid|egi|bgrenier|gwarf|security)"
+
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
-#color index         color136        default        "~b \"phil(_g|\!| gregory| gold)|pgregory\" !~N !~T !~F !~p !~P"
-#color index         J_cream         color230        "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~N !~T !~F !~p !~P"
-#color index         color136        color37         "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~T !~F !~p !~P"
-#color index         color136        color125        "~b \"phil(_g|\!| gregory| gold)|pgregory\" ~F !~p !~P"
 color index         color136        default        "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" !~N !~T !~F !~p !~P"
 color index         color136        color37         "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" ~T !~F !~p !~P"
+# Messages about security or ISM in the subject
+color index         color136        default         "~s security"
+color index         color136        default         "~s ISM"
 ## messages which are in reference to my mails
-#color index         color125        default        "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" !~N !~T !~F !~p !~P"
-#color index         color125        color230        "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~N !~T !~F !~p !~P"
-#color index         color125        color37         "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~T !~F !~p !~P"
-#color index         color125        color160        "~x \"(mithrandir|aragorn)\\.aperiodic\\.net|thorin\\.hillmgt\\.com\" ~F !~p !~P"
 color index         color125        default        "~x \"(baptiste\\.grenier\\.egi\\.eu|baptiste\\.bapt\\.name)\" !~N !~T !~F !~p !~P"
 
 # for background in 16 color terminal, valid background colors include:
