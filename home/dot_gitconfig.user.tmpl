@@ -1,6 +1,10 @@
 [user]
   name = Baptiste Grenier
+{{- if eq .chezmoi.os "darwin" }}
+  email = "baptiste.grenier@egi.eu"
+{{- else }}
   email = "baptiste@bapt.name"
+{{- end }}
   signingkey = 46BDC6B3DE10CB983B880095022A860ECDA18F02
 
 [github]
