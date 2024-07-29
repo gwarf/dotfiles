@@ -169,7 +169,10 @@ if status is-interactive
     end
     zoxide init --cmd cd fish | source
     direnv hook fish | source
-    # XXX: only valid with fzf >= 0.48.0
-    # fzf --fish | source 
+    {{ if ne .chezmoi.os "freebsd" -}}
+    # XXX: fzf--fish is only valid with fzf >= 0.48.0
+    fzf --fish | source
+    {{ else -}}
     source /usr/local/share/examples/fzf/shell/key-bindings.fish
+    {{ end -}}
 end
