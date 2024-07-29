@@ -64,11 +64,12 @@ if status is-interactive
         # Add path mainly used by brew
         fish_add_path /usr/local/bin
 
+        # FIXME: to be removed
         # Add nix directories to path missing in current kitty config
-        fish_add_path "~/.nix-profile/bin"
-        fish_add_path "/etc/profiles/per-user/$USER/bin"
-        fish_add_path /run/current-system/sw/bin
-        fish_add_path /nix/var/nix/profiles/default/bin
+        # fish_add_path "~/.nix-profile/bin"
+        # fish_add_path "/etc/profiles/per-user/$USER/bin"
+        # fish_add_path /run/current-system/sw/bin
+        # fish_add_path /nix/var/nix/profiles/default/bin
 
         # https://spicetify.app
         if test -e ~/.spicetify
@@ -121,7 +122,7 @@ if status is-interactive
         # Load custon pytyon3 venv for mutt + ical
         function mutt
             source ~/.config/neomutt/.venv/bin/activate.fish
-            /etc/profiles/per-user/baptiste/bin/mutt
+            /usr/local/bin/mutt
         end
 
         # Start oidc-agent
