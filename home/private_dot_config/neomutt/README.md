@@ -29,7 +29,7 @@ msmtp
 
 ## S/MIME signing
 
-### On Mac OS X using gpgme (simplified conf)
+### On Mac OS X using gpgme (simplified configuration)
 
 See http://wiki.netbsd.org/users/wiz/mutt-smime/
 
@@ -40,7 +40,9 @@ $ gpgsm --import baptiste_grenier_until_2021_02.p12
 $ gpgsm --list-keys
 ```
 
-### On Mac OS X using mutt/neomutt smime_keyes feature
+### On Mac OS X using mutt/neomutt smime_keys feature
+
+> Deprecated
 
 Initialize smime store
 
@@ -55,7 +57,6 @@ $ /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userke
 ## Perl modules for Notmuch
 
 It's possible to use [perlbrew](https://perlbrew.pl) to manage perl modules.
-
 
 ```shell
 # For querying mails using notmuch

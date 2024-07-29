@@ -6,12 +6,15 @@ set edit_headers
 ignore *
 unignore from date subject to cc reply-to
 unignore x-url x-resent organization
-unignore x-mailing-list list-id list-unsubscribe
-unignore user-agent x-agent x-mailer x-newsreader
-unignore newsgroups posted-to x-also-posted-to
+# XXX: may be just noise
+# unignore x-mailing-list list-id list-unsubscribe
+unignore list-unsubscribe
+unignore user-agent x-agent x-mailer x-newsreader x-editor
+unignore newsgroups posted-to x-also-posted-to x-resent followup-to mail-followup-to
 unignore sender x-original-sender
 unignore priority importance
-unignore mail-followup-to in-reply-to
+# XXX: may be just noise
+# unignore mail-followup-to in-reply-to
 unignore priority x-priority importance
 # useful to debug smtp path but too verbose
 # unignore references
@@ -21,6 +24,6 @@ unignore tags
 unignore folder
 
 unhdr_order *
-hdr_order Sender: From: To: Cc: Subject: Date: Reply-To: Organization: Message-Id: User-Agent: X-Editor: X-Mailer: X-Newsreader: X-Agent:  X-Resent: Followup-To: Mail-Followup-To: Folder: Tags:
+hdr_order from: date: to: cc: subject: reply-to organization message-id user-agent sender x-editor x-mailer x-newsreader x-agent x-resent followup-to mail-followup-to folder tags
 
 # vim: set ft=muttrc:

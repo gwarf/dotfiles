@@ -9,16 +9,16 @@ PATH="/usr/local/bin:$PATH"
 MBSYNC=$(pgrep mbsync)
 NOTMUCH=$(pgrep notmuch)
 
-if [ -n "$MBSYNC" -o -n "$NOTMUCH" ]; then
-  echo "Already running one instance of mail-sync. Exiting..."
-  exit 0
+if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ]; then
+	echo "Already running one instance of mail-sync. Exiting..."
+	exit 0
 fi
 
 # Retreive emails
-mbsync -aV
+mbsync -a
 
 # Index them with Notmuch
 notmuch new
 
 # Index them with mu
-mu index
+# mu index
