@@ -46,8 +46,9 @@ require("lazy").setup({
         "gzip",
         -- "matchit",
         -- "matchparen",
+        -- XXX: re-enable netrw until a way to open file via SSH is found
         -- Replaced by https://github.com/nvim-neo-tree/neo-tree.nvim
-        "netrwPlugin",
+        -- "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
