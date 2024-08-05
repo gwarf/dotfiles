@@ -2,5 +2,5 @@
 private_dot_config/nvim/spell/en.utf-8.add.spl
 private_dot_config/nvim/spell/en.utf-8.add
 {{- if ne .chezmoi.os "darwin" }}
-~/Library
+Library/**
 {{- end }}
