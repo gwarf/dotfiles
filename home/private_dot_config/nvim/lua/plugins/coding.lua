@@ -167,6 +167,7 @@ return {
             get_bufnrs = function()
               return vim.api.nvim_list_bufs()
             end,
+            keyword_pattern = [[\K\k*]],
           },
         },
       })
@@ -193,6 +194,7 @@ return {
               get_bufnrs = function()
                 return vim.api.nvim_list_bufs()
               end,
+              keyword_pattern = [[\K\k*]],
             },
           },
         }),
@@ -214,7 +216,9 @@ return {
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
         sources = {
-          { name = "buffer" },
+          { name = "buffer", option = {
+            keyword_pattern = [[\K\k*]],
+          } },
         },
       })
     end,
