@@ -155,11 +155,13 @@ color body          color136        default        "(baptiste|genier|gnubila|hea
 # messages which mention my name in the body
 color index         color136        default        "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" !~N !~T !~F !~p !~P"
 color index         color136        color37         "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" ~T !~F !~p !~P"
-# Messages about security or ISM in the subject
-color index         color160        default         "~s security"
-color index         color160        default         "~s ISM"
-# Messages with a TLP code in the subject
-color index         color160        default         "~s TLP"
+# Messages security or ISM in the subject
+color index         cyan        default         "~s \"(security|ISM)\" ~N"
+# color index         green        default         "~s \"security|ISM\" !~N"
+# Unread messages with a TLP code in the subject
+color index         cyan         default         "~s \"TLP\" ~N"
+color index         green        default         "~s \"TLP:GREEN\" ~N"
+color index         red        default         "~s \"TLP:RED\" ~N"
 ## messages which are in reference to my mails
 color index         color125        default        "~x \"(baptiste\\.grenier\\.egi\\.eu|baptiste\\.bapt\\.name)\" !~N !~T !~F !~p !~P"
 
