@@ -40,6 +40,8 @@ packages:
       - "shfmt"
       - "starship"
       - "stylua"
+      - "yamllint"
+      - "yaml-language-server"
       - "vivid"
       - "zoxide"
     casks:
