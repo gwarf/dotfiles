@@ -40,6 +40,7 @@ packages:
       - "shfmt"
       - "starship"
       - "stylua"
+      - "tree"
       - "yamllint"
       - "yaml-language-server"
       - "vivid"
