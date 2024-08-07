@@ -65,13 +65,7 @@ if status is-interactive
     if test (uname) = Darwin
         # Add path mainly used by brew
         fish_add_path /usr/local/bin
-
-        # FIXME: to be removed
-        # Add nix directories to path missing in current kitty config
-        # fish_add_path "~/.nix-profile/bin"
-        # fish_add_path "/etc/profiles/per-user/$USER/bin"
-        # fish_add_path /run/current-system/sw/bin
-        # fish_add_path /nix/var/nix/profiles/default/bin
+        fish_add_path /usr/local/opt/coreutils/libexec/gnubin
 
         # https://spicetify.app
         if test -e ~/.spicetify
@@ -103,17 +97,6 @@ if status is-interactive
         # XXX: not working
         # Use clang++ from system with recent C++ version to build neorg treesitter
         # set -gx CC "/usr/bin/clang++ -std=c++17"
-
-        # XXX: not working
-        # Use clang++ from system with recent C++ version to build neorg treesitter
-        # function nvim
-        #   env CC="/usr/bin/clang++ -std=c++17" /etc/profiles/per-user/$USER/bin/nvim $argv
-        # end
-
-        # XXX: not working
-        # function vim
-        #   env CC="/usr/bin/clang++ -std=c++17" /etc/profiles/per-user/$USER/bin/nvim $argv
-        # end
 
         # Load pyenv
         # https://github.com/pyenv/pyenv/wiki/Common-build-problems
