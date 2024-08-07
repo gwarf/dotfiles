@@ -28,6 +28,7 @@ packages:
       - "mutt"
       - "neovim"
       - "oidc-agent"
+      - "prettierd"
       - "pyenv"
       - "ripgrep"
       - "ripgrep-all"
