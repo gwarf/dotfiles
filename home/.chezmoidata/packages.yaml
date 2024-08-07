@@ -1,6 +1,8 @@
 packages:
   darwin:
     brews:
+      - "ansible-language-server"
+      - "ansible-lint"
       - "bat"
       - "bitwarden-cli"
       - "black"
