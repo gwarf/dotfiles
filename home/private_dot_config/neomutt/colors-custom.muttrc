@@ -33,7 +33,6 @@ mono  error         bold
 
 # index ----------------------------------------------------------------
 
-#color index         color160        default        "~D(!~p|~p)"               # deleted
 #color index         color235        default        ~F                         # flagged
 #color index         color166        default        ~=                         # duplicate messages
 #color index         color240        default        "~A!~N!~T!~p!~Q!~F!~D!~P"  # the rest
@@ -57,7 +56,6 @@ color index         color160        default        "~F~p"                      #
 color index         color160        default        "~N~F"                      # new flagged messages
 color index         color160        default        "~N~F~p"                    # new flagged messages to me
 color index         color160        default        "~U~F~p"                    # new flagged messages to me
-color index         color235        color160        "~D"                        # deleted messages
 color index         color245        default        "~v~(!~N)"                  # collapsed thread with no unread
 color index         color136        default        "~v~(~N)"                   # collapsed thread with some unread
 color index         color64         default        "~N~v~(~N)"                 # collapsed thread with unread parent
@@ -112,7 +110,7 @@ color body          color241        color160        "^gpg: BAD signature from.*"
 mono  body          bold                            "^gpg: Good signature"
 mono  body          bold                            "^gpg: BAD signature from.*"
 
-# yes, an insance URL regex
+# yes, an insane URL regex
 color body          color160        default        "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 # and a heavy handed email regex
 color body          color160        default        "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
@@ -162,7 +160,12 @@ color index         cyan        default         "~s \"(security|ISM)\" ~N"
 color index         cyan         default         "~s \"TLP\" ~N"
 color index         green        default         "~s \"TLP:GREEN\" ~N"
 color index         red        default         "~s \"TLP:RED\" ~N"
-## messages which are in reference to my mails
+
+# messages which are in reference to my mails
 color index         color125        default        "~x \"(baptiste\\.grenier\\.egi\\.eu|baptiste\\.bapt\\.name)\" !~N !~T !~F !~p !~P"
+
+# deleted messages
+# color index         color160        default        "~D(!~p|~p)"
+color index         color235        color160        "~D"
 
 # vim: filetype=muttrc
