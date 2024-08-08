@@ -1,9 +1,9 @@
 *.nix
-private_dot_config/nvim/spell/en.utf-8.add.spl
-private_dot_config/nvim/spell/en.utf-8.add
+.config/nvim/spell/en.utf-8.add.spl
+.config/nvim/spell/en.utf-8.add
 {{- if ne .chezmoi.os "darwin" }}
 Library/**
 {{- end }}
 {{- if ne .chezmoi.os "linux" }}
-home/private_Mail/dot_notmuch/hooks/executable_post-new
+Mail/.notmuch/hooks/post-new
 {{- end }}
