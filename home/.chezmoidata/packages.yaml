@@ -32,6 +32,7 @@ packages:
       - "lazygit"
       - "ldapvi"
       - "lsd"
+      - "ltex-ls"
       - "lua-language-server"
       - "markdownlint-cli2"
       - "msmtp"
