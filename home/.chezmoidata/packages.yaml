@@ -1,5 +1,6 @@
 packages:
   # XXX: bitwarden browser integration only works for appstore app
+  # karabiner-elements is used to swap ESC and CAPSLOCK
   darwin:
     brews:
       - "ansible-language-server"
@@ -84,6 +85,7 @@ packages:
       - "font-jetbrains-mono-nerd-font"
       - "github"
       - "google-drive"
+      - "karabiner-elements"
       - "keybase"
       - "kitty"
       - "libreoffice"
