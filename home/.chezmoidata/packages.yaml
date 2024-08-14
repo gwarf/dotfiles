@@ -1,4 +1,5 @@
 packages:
+  # XXX: bitwarden browser integration only works for appstore app
   darwin:
     brews:
       - "ansible-language-server"
@@ -36,6 +37,7 @@ packages:
       - "ltex-ls"
       - "lua-language-server"
       - "markdownlint-cli2"
+      - "mas"
       - "msmtp"
       - "mutt"
       - "neovim"
@@ -64,7 +66,6 @@ packages:
       - "adobe-acrobat-reader"
       - "alfred"
       - "balenaetcher"
-      - "bitwarden"
       - "brave-browser"
       - "drawio"
       - "firefox"
@@ -94,6 +95,8 @@ packages:
       - "webex"
       - "yubico-yubikey-manager"
       - "zoom"
+    appstore:
+      - "bitwarden"
   freebsd:
     pkgs:
       - "bash"

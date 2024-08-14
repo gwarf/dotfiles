@@ -15,4 +15,7 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+{{ range .packages.darwin.appstore -}}
+mas install {{ . | quote }}
+{{ end -}}
 {{ end -}}
