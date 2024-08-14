@@ -96,7 +96,16 @@ packages:
       - "yubico-yubikey-manager"
       - "zoom"
     appstore:
-      - "bitwarden"
+      # Bitwarden
+      - "1352778147"
+      # Gorp
+      - "1480054463"
+      # WireGuard
+      - "1451685025"
+      # eduVPN
+      - "1317704208"
+      # Xcode
+      - "497799835"
   freebsd:
     pkgs:
       - "bash"
