@@ -16,10 +16,10 @@ set folder = ~/Mail/EGI
 # Queue mail if offline
 # /usr/local/Cellar/msmtp/1.6.6/share/msmtp/scripts/msmtpq/README.msmtpq
 
-# set sendmail = "$HOME/bin/msmtpq"
-set smtp_url = "smtp://127.0.0.1:25/"
-set ssl_force_tls = no
-set ssl_starttls = no
+# Use sendmail from macOS system that autostarts postfix
+# Checking logs with:
+# log stream --predicate  '(process == "smtpd") || (process == "smtp")' --info
+set sendmail = "/usr/sbin/sendmail"
 
 # Don't wait for retrun code
 # set sendmail_wait = -1
