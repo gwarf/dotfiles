@@ -16,8 +16,16 @@ set  -g history-limit     2000
 bind-key b send-prefix
 
 # Use fish as shell
+{{ if eq .chezmoi.os "freebsd" -}}
 set -g default-command /usr/local/bin/fish
 set -g default-shell /usr/local/bin/fish
+{{ else if eq .chezmoi.os "darwin" -}}
+set -g default-command /usr/local/bin/fish
+set -g default-shell /usr/local/bin/fish
+{{ else if eq .chezmoi.os "linux" -}}
+set -g default-command /usr/bin/fish
+set -g default-shell /usr/bin/fish
+{{ end -}}
 
 # automatically renumber tmux windows
 set -g renumber-windows on
