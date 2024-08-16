@@ -3,7 +3,7 @@
 [color]
   ui = true
   interactive = auto
-  editor = vim
+  editor = nvim
   pager = true
 
 [color "branch"]
