@@ -154,10 +154,14 @@ if status is-interactive
     end
     zoxide init --cmd cd fish | source
     direnv hook fish | source
-    {{ if ne .chezmoi.os "freebsd" -}}
+    {{ if eq .chezmoi.os "darwin" -}}
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
-    {{ else -}}
+    {{ end -}}
+    {{ if eq .chezmoi.os "freebsd" -}}
     source /usr/local/share/examples/fzf/shell/key-bindings.fish
     {{ end -}}
+    if type -q batcat
+    	alias bat=batcat
+    end
 end
