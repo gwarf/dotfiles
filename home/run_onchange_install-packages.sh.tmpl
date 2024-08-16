@@ -18,4 +18,12 @@ EOF
 {{ range .packages.darwin.appstore -}}
 mas install {{ . | quote }}
 {{ end -}}
+{{ else if eq .chezmoi.os "linux" -}}
+#!/bin/sh
+{{ range .packages.linux.pkgs -}}
+sudo apt --no-install-recommends install -y {{ . | quote }}
+{{ end -}}
+{{ range .packages.linux.snaps -}}
+sudo snap install {{ . | quote }}
+{{ end -}}
 {{ end -}}
