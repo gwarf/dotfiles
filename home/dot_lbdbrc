@@ -1,0 +1,4 @@
+MODULES_PATH="MODULES_PATH $HOME/.lbdb/modules"
+
+# https://github.com/RolandRosenfeld/lbdb/blob/master/lbdb.rc.in
+METHODS="m_khard"
