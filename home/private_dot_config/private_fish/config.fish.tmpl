@@ -56,7 +56,7 @@ if status is-interactive
   alias vim="nvim"
 
   # nvim!
-  set EDITOR nvim
+  set -gx EDITOR nvim
   # https://fishshell.com/docs/current/interactive.html#vi-mode
   fish_vi_key_bindings
   bind --mode insert \ca beginning-of-line
