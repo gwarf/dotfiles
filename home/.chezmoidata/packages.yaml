@@ -112,6 +112,7 @@ packages:
       - "vlc"
       - "webex"
       - "yubico-yubikey-manager"
+      - "zap"
       - "zoom"
     appstore:
       # Bitwarden
