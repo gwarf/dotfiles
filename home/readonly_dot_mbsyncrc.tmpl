@@ -8,7 +8,7 @@ User baptiste.grenier@egi.eu
 # https://support.google.com/accounts/answer/185833?hl=en
 # Set passwod on OSX: security add-generic-password -a baptiste.grenier@egi.eu -s imap.gmail.com -U -w
 PassCmd "security find-generic-password -s imap.gmail.com -a baptiste.grenier@egi.eu -w"
-SSLType IMAPS
+TLSType IMAPS
 AuthMechs LOGIN
 CertificateFile /usr/local/etc/openssl/cert.pem
 PipelineDepth 50
@@ -107,7 +107,7 @@ IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
 PassCmd "rbw get /mail/baptiste@bapt.name"
-SSLType STARTTLS
+TLSType STARTTLS
 User baptiste@bapt.name
 
 IMAPStore baptiste-remote
