@@ -162,8 +162,9 @@ if status is-interactive
     {{ if eq .chezmoi.os "darwin" -}}
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
-    {{ end -}}
-    {{ if eq .chezmoi.os "freebsd" -}}
+    {{ else if eq .chezmoi.os "freebsd" -}}
+    fzf --fish | source
+    {{ else -}}
     source /usr/local/share/examples/fzf/shell/key-bindings.fish
     {{ end -}}
 end
