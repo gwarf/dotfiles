@@ -3,7 +3,9 @@
 # https://merikan.com/2019/05/how-to-sign-git-commits/
 pinentry-program /usr/local/bin/pinentry-mac
 {{- end }}
-# pinentry-program /usr/local/bin/pinentry
+{{- if eq .chezmoi.os "freebsd" -}}
+pinentry-program /usr/local/bin/pinentry-gnome3
+{{- end }}
 default-cache-ttl 600
 max-cache-ttl 7200
 default-cache-ttl-ssh 600
