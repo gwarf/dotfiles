@@ -146,6 +146,7 @@ packages:
       - "git"
       - "git-delta"
       - "glances"
+      - "gohugo"
       - "google-fonts"
       - "isync"
       - "jq"
