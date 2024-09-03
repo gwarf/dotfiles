@@ -106,7 +106,10 @@ Channel EGI-spam
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
-PassCmd "rbw get /mail/baptiste@bapt.name"
+# XXX: On FreeBSD with pinentry-gnome3, the password is not taken from the gnome keyring
+# PassCmd "rbw get /mail/baptiste@bapt.name"
+# secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
+PassCMD "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
 TLSType STARTTLS
 User baptiste@bapt.name
 
