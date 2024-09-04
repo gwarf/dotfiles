@@ -81,6 +81,7 @@ packages:
       - "yaml-language-server"
       - "yamllint"
       - "yazi"
+      - "vscode-langservers-extracted"
       - "zoxide"
     casks:
       - "adobe-acrobat-reader"
