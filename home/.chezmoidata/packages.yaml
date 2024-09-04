@@ -45,6 +45,7 @@ packages:
       - "lua-language-server"
       - "luajit"
       - "markdownlint-cli2"
+      - "marksman"
       - "mas"
       - "msmtp"
       - "mutt"
