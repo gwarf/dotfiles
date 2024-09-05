@@ -121,6 +121,9 @@ if status is-interactive
             # for fedcloudclient, once egi account got created
             # export OIDC_AGENT_ACCOUNT=egi
         end
+
+        # Start SSH agent
+        eval (ssh-agent -c)
     end
 
     # Set color variables
