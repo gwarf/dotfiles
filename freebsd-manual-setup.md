@@ -56,3 +56,18 @@ doas zpool import -fR /mnt POOL_ID
 # Export the pool once no more used
 doas zpool export zroot
 ```
+
+# X
+
+```shell
+pkg install xf86-video-amdgpu drm-kmod xorg
+pw groupmod video -m baptiste
+sysrc kld_list+="amdgpu"
+kldload amdgpu
+```
+# Fido in firefox
+
+```shell
+service devd restart
+# pw group mod u2f -m baptiste
+```
