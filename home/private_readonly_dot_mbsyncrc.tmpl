@@ -110,7 +110,7 @@ Host mail.bapt.name
 # PassCmd "rbw get /mail/baptiste@bapt.name"
 # secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
 PassCMD "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
-TLSType IMAPS
+SSLType STARTTLS
 User baptiste@bapt.name
 
 IMAPStore baptiste-remote
