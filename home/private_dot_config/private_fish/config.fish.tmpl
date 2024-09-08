@@ -17,7 +17,6 @@ if status is-interactive
 
     # Use bat as pager
     set -gx PAGER bat
-    # https://unix.stackexchange.com/questions/343168/can-i-prevent-service-foo-status-from-paging-its-output-through-less
     set -gx SYSTEMD_PAGER bat
     set -gx MANPAGER "nvim +Man!"
 
@@ -166,9 +165,9 @@ if status is-interactive
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
     {{ else if eq .chezmoi.os "freebsd" -}}
-    fzf --fish | source
-    {{ else -}}
     source /usr/local/share/examples/fzf/shell/key-bindings.fish
+    {{ else -}}
+    fzf --fish | source
     {{ end -}}
 end
 # vim: ft=fish
