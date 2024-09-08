@@ -2,7 +2,7 @@
 #!/bin/sh
 
 {{ range .packages.freebsd.pkgs -}}
-doas pkg install {{ . | quote }}
+doas pkg install -y {{ . | quote }}
 {{ end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
