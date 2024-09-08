@@ -172,6 +172,8 @@ packages:
       - "nerd-fonts"
       - "nsxiv"
       - "portlint"
+      - "poudriere"
+      - "portshaker"
       - "python"
       - "ripgrep"
       - "ripgrep-all"
