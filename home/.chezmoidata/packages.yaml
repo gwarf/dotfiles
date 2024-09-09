@@ -136,6 +136,7 @@ packages:
     pkgs:
       - "bash"
       - "bat"
+      - "chromium"
       - "direnv"
       - "doggo"
       - "drm-kmod"
@@ -187,6 +188,7 @@ packages:
       - "urwfonts"
       - "vivid"
       - "vim"
+      - "vlc"
       - "w3m"
       - "xsel-conrad"
       - "xorg"
