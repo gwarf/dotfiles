@@ -1,73 +1,202 @@
 # FreeBSD manual setup
 
-## Bootstrap chezmoi dependencies
+## pkgs
+
+See [https://docs.freebsd.org/en/books/handbook/ports/#pkgng-intro](pkgng
+intro).
+
+Use latest packages, to be used with HEAD of ports repository.
 
 ```shell
-pkg install -y git chezmoi doas
-cp /usr/local/etc/doas.conf.sample /usr/local/etc/doas.conf
-vim /usr/local/etc/doas.conf
-doas mkdir /usr/local/etc/pkg
-doas echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+mkdir -p /usr/local/etc/pkg/repos
+echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
 pkg update -f
 pkg upgrade -f
+```
+## Bootstrap chezmoi dependencies
+
+### doas
+
+```shell
+pkg install doas
+cp /usr/local/etc/doas.conf.sample /usr/local/etc/doas.conf
+vim /usr/local/etc/doas.conf
 ```
 
 ## Install chezmoi
 
+[chezmoi](https://www.chezmoi.io/) will ake of installing all packages, but
+system level configuration is to be done manually.
+
 ```shell
-git clone https://github.com/gwarf/dotfiles ~/.local/share/chezmoi
+doas pkg install -y git chezmoi
+chezmoi init gwarf
+chezmoi apply
+# Link repos to my usual place
 mkdir ~/repos/
 ln -s ~/.local/share/chezmoi ~/repos/dotfiles/
-chezmoi apply
 ```
 
-## Mount external ZFS pool
+## Xorg
 
 ```shell
-# Show info about a ZFS label ln a partition
-# Debian install
-doas zdb -l /dev/ada0p3 # debian ZFS on root
-doas zdb -l /dev/nda0p4 # main FreeBSD ZFS on root
-daos zdb -l /dev/ada1p3.eli # geli encrytped FreeBSD system
-
-# List pools, and their IDs
-doas zpool import
-# Import pool under /a
-doas zpool import -fR /a POOL_ID
-# Prompt for encryption key
-doas zfs load-key -L prompt zroot
-# Check available pools
-doas zpool list
-# Check available volumes
-doas zfs list -r zrool
-# Check key location
-doas zfs get keylocation -r zroot
-# Mount partitions
-doas zfs mount zroot/ROOT/debian
-doas zfs mount zroot/home
-
-# Mount encrypted geli system
-doas geli attach /dev/ada1p3
-doas geli list
-# Find proper pool ID in case there are duplicated names
-doas zpool import
-doas zpool import -fR /mnt POOL_ID
-
-# Export the pool once no more used
-doas zpool export zroot
+# If willing to get info about hardware
+doas pkg install clover
+doas pkg install clinfo
+clinfo
+# Setup for using Xorg
+doas pw groupmod video -m baptiste
+doas sysrc kld_list+="amdgpu"
+doas kldload amdgpu
+# For the mouse management
+doas echo "kern.evdev.rcpt_mask=6" >> /etc/sysctl.conf
 ```
 
-# X
+### Install fonts
 
 ```shell
-pkg install xf86-video-amdgpu drm-kmod xorg
-pw groupmod video -m baptiste
-sysrc kld_list+="amdgpu"
-kldload amdgpu
+doas pkg install uwrfonts google-fonts nerd-fonts
+# XXX: required?
+xset fp+ /usr/local/share/fonts/urwfonts
+xset fp rehash
+fc-cache -f
 ```
-# Fido in firefox
+
+#### Search for a font/icon
+
+https://www.nerdfonts.com/cheat-sheet
+
+## Install Gnome desktop environment
+
+Check [FreeBSD handbook](https://docs.freebsd.org/en/books/handbook/desktop/).
 
 ```shell
-service devd restart
-# pw group mod u2f -m baptiste
+# Mount /proc
+doas echo "proc			/proc	procfs	rw 		0	0" > /etc/fstab"
+# Enable dbus service
+doas sysrc dbus_enable="YES"
+doas service dbus start
+# Enable gdm service
+doas sysrc gdm_enable="YES"
+doas service gdm start
 ```
+
+## Firefox setup
+
+### Firefox sync
+
+### Firefox extensions
+
+Mimimal list of extensions to install:
+
+- Bitwarden
+- LanguageTool
+- Privacy Badger
+- uBlock Origin
+
+### Fido in firefox
+
+https://forums.freebsd.org/threads/firefox-61-u2f-fido-does-not-work.66989/
+https://gist.github.com/daemonhorn/bdd77a7bc0ff5842e5a31d999b96e1f1
+
+```shell
+doas pw group mod u2f -m baptiste
+doas sysrc devd_enable="YES"
+doas service devd restart
+```
+
+## Mail
+
+```shell
+# Get password from Bitwarden add add it to local keyring
+secret-tool store --label=mail host MAIL_SERVER service imaps user MAIL_USER
+# Get mails
+mkdir -p ~/Mail/Perso
+#XXX: run mbsync manually and on demand
+mbsync -a
+mutt
+```
+
+## Poudriere setup to build ports locally
+
+See https://blog.bapt.name/2024/08/31/building-freebsd-ports/.
+
+## Obsidian
+
+There is [port for Obsidian](https://www.freshports.org/textproc/obsidian/),
+but due to licences issues it connot be redistributed. It's convenient to
+build it using poudriere.
+
+The build will be done using a set named `obsidian`, in order to allow to
+configure make only for this package.
+
+```shell
+# Add obisidian to the package list
+doas echo "textproc/obsidian" > /usr/local/etc/poudriere.d/obsidian-pkglist
+doas echo "DISABLE_LICENSES=yes" > /usr/local/etc/poudriere.d/obsidian-make.conf
+# Build obsidian using poudriere, and using the obsidian set
+doas poudriere bulk -f /usr/local/etc/poudriere.d/obsidian-pkglist -j 14-1-amd64 -p main -z obsidian -v -v
+# Add repos definition
+doas mkdir -p /usr/local/etc/pkg/repos/
+doas vim /usr/local/etc/pkg/repos/obsidian.conf
+Obsidian: {
+  url: "file:///poudriere/data/packages/14-1-amd64-main-obsidian"
+}
+doas pkg update
+pkg search -Q repository obsidian
+doas pkg install obsidian
+```
+
+## rbw
+
+There is currently no official port for Obsidian. It's convenient to build it
+using poudriere.
+
+```shell
+# Add rbw to the custom repository package list
+doas echo "security/rbw> /usr/local/etc/poudriere.d/custom-pkglist
+# Build custom packages using poudriere
+doas poudriere bulk -f /usr/local/etc/poudriere.d/custom-pkglist -j 14-1-amd64 -p main -v -v
+# Add repos definition
+doas mkdir -p /usr/local/etc/pkg/repos/
+doas vim /usr/local/etc/pkg/repos/custom.conf
+Custom: {
+  url: "file:///poudriere/data/packages/14-1-amd64-main"
+}
+doas pkg update
+pkg search -Q repository rbw
+daos pkg install rbw
+```
+
+## Keybase
+
+https://wiki.freebsd.org/Ports/security/keybase
+https://www.freshports.org/security/kbfsd (Not used?)
+https://github.com/0mp/kbfsd
+
+```shell
+doas sysctl vfs.usermount=1
+doas vim /etc/sysctl.conf
+vfs.usermount=1
+# Be in operator group
+groups
+
+doas kldload fusefs
+
+doas vim /etc/rc.conf
+kld_list="amdgpu ext2fs fusefs"
+
+doas mkdir /keybase
+doas chown baptiste:operator /keybase
+chmod 770 /keybase/
+
+kbfsfuse /keybase
+ls /keybase/
+```
+
+## TODO
+
+For nvim:
+- package/install marksman
+- package/insall ltex-ls 
+- package/install markdownlint-cli2
