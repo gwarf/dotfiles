@@ -165,9 +165,9 @@ if status is-interactive
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
     {{ else if eq .chezmoi.os "freebsd" -}}
-    source /usr/local/share/examples/fzf/shell/key-bindings.fish
-    {{ else -}}
     fzf --fish | source
+    {{ else -}}
+    source /usr/local/share/examples/fzf/shell/key-bindings.fish
     {{ end -}}
 end
 # vim: ft=fish
