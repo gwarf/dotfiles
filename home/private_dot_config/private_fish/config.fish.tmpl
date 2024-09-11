@@ -124,7 +124,9 @@ if status is-interactive
         end
 
         # Start SSH agent
-        eval (ssh-agent -c)
+        if test -z "$SSH_AGENT_PID"
+            eval "$(ssh-agent -c)" >/dev/null
+        end
     end
 
     # Set color variables
