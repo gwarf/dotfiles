@@ -80,6 +80,8 @@ if status is-interactive
             . ~/perl5/perlbrew/etc/perlbrew.fish
         end
 
+        abbr -a bru brew update && brew update --cask && brew upgrade && brew upgrade --cask
+
         # XXX: disabled
         # Favor using llvm stuff from homebrew
         # clang-15: unknown argument -02
