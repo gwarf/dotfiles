@@ -1,25 +1,13 @@
 # gwarf's dotfiles
 
-My messy **dotfiles** for GNU/Linux and macOS. WIP :)
+My messy **dotfiles** for GNU/Linux, FreeBSD and macOS. WIP :)
 
 ## Chezmoi
 
-Some files or configuration parts are for GNU/Linux (Archlinux and NixOS) and
+Some files or configuration parts are for GNU/Linux and FreeBSD and
 some others are for macOS.
 
-> **WIP++** I'm converting this repository from using [nix](https://nixos.org/)
-> and [home-manager](https://nix-community.github.io/home-manager/) to
-> [chezmoi](https://www.chezmoi.io).
-
-### Why moving to chezmoi?
-
-Using NixOS and Homemanager on macOS was fun and quite efficient, but remained
-too complex on some aspects, thus I decided to move to something simpler. In
-addition to this, there were recently some issues in the nix community and
-various points from those people made sense to me:
-- [Solene: What is going on in Nix community?](https://dataswamp.org/~solene/2024-04-27-nix-internal-crisis.html)
-- [Xe: Much ado about "nothing"](https://xeiaso.net/blog/2024/much-ado-about-nothing/)
-- [maintainers: remove marsam](https://github.com/NixOS/nixpkgs/pull/306702)
+> Managed using [chezmoi](https://www.chezmoi.io).
 
 ### Initialising
 
