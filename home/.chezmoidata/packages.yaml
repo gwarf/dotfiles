@@ -136,6 +136,7 @@ packages:
     pkgs:
       - "bash"
       - "bat"
+      - "cbsd"
       - "cheat"
       - "chromium"
       - "direnv"
