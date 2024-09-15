@@ -2,6 +2,7 @@ set  -g default-terminal "tmux-256color"
 set  -g base-index      1
 setw -g pane-base-index 1
 
+# Use vi bindings
 set -g status-keys vi
 set -g mode-keys   vi
 
@@ -123,3 +124,6 @@ if "test ! -d ~/.tmux/plugins/tpm" \
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
+
+# Source local configuration if any
+if '[ -f ~/.tmux.local.conf ]' 'run ~/.tmux.local.conf'
