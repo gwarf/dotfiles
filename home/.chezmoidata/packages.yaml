@@ -182,6 +182,7 @@ packages:
       - "nitrokey-app"
       - "notmuch"
       - "nsxiv"
+      - "picard"
       - "portlint"
       - "portshaker"
       - "poudriere"
