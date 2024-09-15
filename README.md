@@ -1,13 +1,18 @@
 # gwarf's dotfiles
 
-My messy **dotfiles** for GNU/Linux, FreeBSD and macOS. WIP :)
+My somewhat messy and ever WIP **dotfiles** for GNU/Linux, FreeBSD and macOS.
+
+> Use at you own risk :)
 
 ## Chezmoi
 
-Some files or configuration parts are for GNU/Linux and FreeBSD and
-some others are for macOS.
+> Everything is managed using [chezmoi](https://www.chezmoi.io).
 
-> Managed using [chezmoi](https://www.chezmoi.io).
+Some files or configuration parts are only avaible for GNU/Linux, FreeBSD, or
+macOS.
+
+OS packages are installed via a [packages.yaml](home/.chezmoidata/packages.yaml)
+and using [run_onchange_install-packages.sh](home/run_onchange_install-packages.sh.tmpl).
 
 ### Initialising
 
