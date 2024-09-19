@@ -10,7 +10,8 @@ mime_lookup application/octet-stream application/octetstream
 video/*; ~/.config/neomutt/view_attachment %s -
 image/*; ~/.config/neomutt/view_attachment %s -
 # View file in W3M, use print to view them in default browser
-text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" %s
+# text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" %s
+text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = "/Applications/Arc.app/Contents/MacOS/Arc" %s
 text/calendar; ~/.config/neomutt/dump-ical.py %s; copiousoutput;
 # text/html; ~/.config/neomutt/view_attachment %s html
 text/csv       ; bat %s                                        ; copiousoutput
