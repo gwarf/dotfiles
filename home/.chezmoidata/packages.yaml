@@ -10,6 +10,7 @@ packages:
       - "bat"
       - "bitwarden-cli"
       - "black"
+      - "burp-suite"
       - "checkmake"
       - "chezmoi"
       - "coreutils"
