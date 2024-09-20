@@ -35,11 +35,17 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 -- Disable python, perl, ruby and node support
--- XXX: re-enabled for testing semshi, cf https://github.com/numirias/semshi/issues/74
--- vim.g.loaded_python3_provider = 0
+vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
+
+-- XXX: was used when enabling python3 provider and using venvs
+-- vim.g.python3_host_prog = "/Users/baptiste/.pyenv/versions/neovim/bin/python3"
+-- vim.g.python_host_prog = "/Users/baptiste/.pyenv/versions/neovim/bin/python"
+
+-- Use basedpyright instead of old pyright
+-- vim.g.lazyvim_python_lsp = "basedpyright"
 
 -- Use a global statusline
 vim.g.laststatus = 3
