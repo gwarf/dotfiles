@@ -8,6 +8,7 @@ packages:
       - "bash"
       - "bash-language-server"
       - "bat"
+      - "basedpyright"
       - "bitwarden-cli"
       - "black"
       - "burp-suite"
