@@ -11,11 +11,6 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import extras LazyVim modules
-    -- Semantic highlighting for python
-    -- XXX: breaking when opening python files
-    -- See https://github.com/numirias/semshi/issues/120
-    -- Had to run :UpdateRemotePlugins manually
-    -- { import = "lazyvim.plugins.extras.lang.python-semshi" },
     -- copilot disabled until there is an easy way to choose when to use it
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
     -- import/override with your plugins
