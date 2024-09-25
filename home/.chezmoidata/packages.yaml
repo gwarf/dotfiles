@@ -98,6 +98,8 @@ packages:
       - "firefox"
       - "font-jetbrains-mono-nerd-font"
       - "github"
+      - "git"
+      - "git-lfs"
       - "google-drive"
       - "karabiner-elements"
       - "keybase"
