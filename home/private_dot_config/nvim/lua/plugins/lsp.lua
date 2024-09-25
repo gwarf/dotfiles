@@ -50,6 +50,7 @@ return {
 				ltex = {
 					mason = false,
 					filetypes = {
+						"asciidoc",
 						"bib",
 						"gitcommit",
 						"latex",
