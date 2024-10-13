@@ -60,7 +60,7 @@ return {
       servers = {
         ansiblels = {
           -- TODO: Find or build a package for FreeBSD
-          mason = false,
+          mason = vim.uv.os_uname().sysname:find("FreeBSD"),
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
               or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
