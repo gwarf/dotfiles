@@ -208,7 +208,7 @@ return {
           mason = false,
           autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
         },
-        mutt_ls({}),
+        mutt_ls = {},
         perlnavigator = {
           -- settings = {
           --   perlnavigator = {
