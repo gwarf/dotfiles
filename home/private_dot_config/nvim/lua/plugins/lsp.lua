@@ -192,11 +192,12 @@ return {
             },
           },
         },
-        marskman = {
+        marksman = {
           -- TODO: Find or build a package for FreeBSD
           --  -- XXX: Fix build on FreeBSD
           -- mason = vim.uv.os_uname().sysname:find("FreeBSD"),
           mason = false,
+          autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
         },
         -- Do not install nil_ls with Mason
         nil_ls = {
