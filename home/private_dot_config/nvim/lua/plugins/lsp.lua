@@ -83,7 +83,7 @@ return {
         },
         black = {
           mason = false,
-        }
+        },
         -- dockerls = {},
         -- html = {},
         -- groovyls = {},
@@ -217,7 +217,7 @@ return {
         },
         ruff = {
           mason = false,
-        }
+        },
         texlab = {
           mason = false,
         },
