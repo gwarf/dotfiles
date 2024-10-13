@@ -204,6 +204,7 @@ packages:
       - "ripgrep"
       - "ripgrep-all"
       - "rubygem-mdl"
+      - "ruff"
       - "shfmt"
       - "signal-desktop"
       - "starship"
