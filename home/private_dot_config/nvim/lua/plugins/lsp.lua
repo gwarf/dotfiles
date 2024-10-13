@@ -5,17 +5,21 @@ return {
     enabled = true,
     -- XXX: Skip non working Mason packages on FreeBSD
     opts = function(_, opts)
-      if vim.uv.os_uname().sysname:find("FreeBSD") then
-        print(opts.ensure_installed)
-        local function skip(mason_package)
-          if type(opts.ensure_installed) == "table" then
-            for i = #opts.ensure_installed, 1, -1 do
-              if opts.ensure_installed[i] == mason_package then
-                table.remove(opts.ensure_installed, i)
-              end
+      local function skip(mason_package)
+        if type(opts.ensure_installed) == "table" then
+          for i = #opts.ensure_installed, 1, -1 do
+            if opts.ensure_installed[i] == mason_package then
+              table.remove(opts.ensure_installed, i)
             end
           end
         end
+      end
+      local function add(mason_package)
+        if type(opts.ensure_installed) == "table" then
+          table.insert(opts.ensure_installed, mason_package)
+        end
+      end
+      if vim.uv.os_uname().sysname:find("FreeBSD") then
         skip("black")
         skip("shellcheck")
         -- TODO: Dockerfile linter: find or build a package
@@ -26,6 +30,7 @@ return {
         skip("stylua")
         skip("tflint")
       end
+      add("debugpy")
       --- Debug for MasonInstall issues
       --- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#default-configuration
       -- log_level = vim.log.levels.DEBUG,
