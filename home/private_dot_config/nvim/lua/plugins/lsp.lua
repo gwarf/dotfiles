@@ -196,8 +196,8 @@ return {
         -- Do not install nil_ls with Mason
         nil_ls = {
           -- TODO: Find or build a package for FreeBSD
-          -- XXX: Look at cargo setup on FreeBSD
-          mason = false,
+          --  -- XXX: Fix build on FreeBSD
+          mason = vim.uv.os_uname().sysname:find("FreeBSD"),
         },
         perlnavigator = {
           -- settings = {
@@ -227,7 +227,6 @@ return {
             },
           },
         },
-        -- vimls = {},
       },
       setup = {
         -- integrate ltex_extra with lazyvim

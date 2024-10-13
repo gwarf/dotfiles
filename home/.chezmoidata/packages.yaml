@@ -141,6 +141,7 @@ packages:
     pkgs:
       - "bash"
       - "bat"
+      - "cargo"
       - "cbsd"
       - "cheat"
       - "chromium"
@@ -197,6 +198,7 @@ packages:
       - "py311-glances"
       - "py311-khard"
       - "py311-pynitrokey"
+      - "py311-pyright"
       - "python"
       - "qFlipper"
       - "ripgrep"
