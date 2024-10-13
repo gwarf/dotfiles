@@ -24,6 +24,8 @@ return {
         skip("shfmt")
         skip("stylua")
         skip("tflint")
+        skip("black")
+        skip("ruff")
       end
       --- Debug for MasonInstall issues
       --- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#default-configuration
