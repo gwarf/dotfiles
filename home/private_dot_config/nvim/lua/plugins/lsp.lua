@@ -130,6 +130,7 @@ return {
         lua_ls = {
           -- TODO: Find or build a package for FreeBSD
           mason = false,
+          autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
           single_file_support = true,
           settings = {
             Lua = {
