@@ -209,6 +209,7 @@ packages:
       - "tealdeer"
       - "telegram-desktop"
       - "terraform"
+      - "tflint"
       - "tigervnc-viewer"
       - "tmux"
       - "tree"

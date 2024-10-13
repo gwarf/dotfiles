@@ -17,6 +17,7 @@ return {
           end
         end
         skip("shellcheck")
+        -- TODO: Dockerfile linter: find or build a package
         skip("hadolint")
         skip("shfmt")
         skip("stylua")
@@ -55,6 +56,7 @@ return {
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       servers = {
         ansiblels = {
+          -- TODO: Find or build a package for FreeBSD
           mason = false,
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
@@ -71,8 +73,9 @@ return {
             },
           },
         },
+        -- XXX: no native package on FreeBSD
         bashls = {
-          mason = false,
+          mason = vim.uv.os_uname().sysname:find("FreeBSD"),
         },
         -- dockerls = {},
         -- html = {},
@@ -81,6 +84,7 @@ return {
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         -- TODO: have cmp do completion using words from the dictionaries
         ltex = {
+          -- TODO: Find or build a package for FreeBSD
           mason = false,
           filetypes = {
             "asciidoc",
@@ -121,6 +125,7 @@ return {
           },
         },
         lua_ls = {
+          -- TODO: Find or build a package for FreeBSD
           mason = false,
           single_file_support = true,
           settings = {
@@ -185,10 +190,13 @@ return {
           },
         },
         marksman = {
+          -- TODO: Find or build a package for FreeBSD
           mason = false,
         },
         -- Do not install nil_ls with Mason
         nil_ls = {
+          -- TODO: Find or build a package for FreeBSD
+          -- XXX: Look at cargo setup on FreeBSD
           mason = false,
         },
         perlnavigator = {
