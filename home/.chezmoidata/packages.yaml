@@ -211,6 +211,7 @@ packages:
       - "tealdeer"
       - "telegram-desktop"
       - "terraform"
+      - "texlab"
       - "tflint"
       - "tigervnc-viewer"
       - "tmux"
