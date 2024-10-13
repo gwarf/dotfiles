@@ -88,9 +88,7 @@ return {
         ltex = {
           -- TODO: Find or build a package for FreeBSD
           mason = false,
-          -- enable = not vim.uv.os_uname().sysname:find("FreeBSD"),
-          enable = false,
-          disable = true,
+          autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
           filetypes = {
             "asciidoc",
             "bib",
