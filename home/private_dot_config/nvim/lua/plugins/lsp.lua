@@ -81,6 +81,9 @@ return {
         bashls = {
           mason = vim.uv.os_uname().sysname:find("FreeBSD"),
         },
+        black = {
+          mason = false,
+        }
         -- dockerls = {},
         -- html = {},
         -- groovyls = {},
@@ -212,6 +215,9 @@ return {
         pyright = {
           mason = false,
         },
+        ruff = {
+          mason = false,
+        }
         texlab = {
           mason = false,
         },
