@@ -3,7 +3,6 @@ return {
   {
     "williamboman/mason.nvim",
     enabled = true,
-    -- XXX: Skip non working Mason packages on FreeBSD
     opts = function(_, opts)
       local function skip(mason_package)
         if type(opts.ensure_installed) == "table" then
@@ -19,18 +18,21 @@ return {
           table.insert(opts.ensure_installed, mason_package)
         end
       end
+      -- Adde debugpy for python files
+      add("debugpy")
+      -- Skip packages installed with OS package manager
+      skip("shfmt")
+      skip("black")
+      skip("stylua")
+      -- TODO: Markdown linter: find or build a package
+      skip("marksman")
+      -- XXX: Skip packages installed win Mason but broken on FreeBSD
       if vim.uv.os_uname().sysname:find("FreeBSD") then
-        skip("black")
         skip("shellcheck")
         -- TODO: Dockerfile linter: find or build a package
         skip("hadolint")
-        -- TODO: Markdown linter: find or build a package
-        skip("marksman")
-        skip("shfmt")
-        skip("stylua")
         skip("tflint")
       end
-      add("debugpy")
       --- Debug for MasonInstall issues
       --- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#default-configuration
       -- log_level = vim.log.levels.DEBUG,
