@@ -1,15 +1,6 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
 
-  -- {
-  --   "williamboman/mason.nvim",
-  --   opts = {
-  --     --- Debug for MasonInstall issues
-  --     --- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#default-configuration
-  --     log_level = vim.log.levels.DEBUG,
-  --   },
-  -- },
-  --
   {
     "gbprod/yanky.nvim",
     opts = {
