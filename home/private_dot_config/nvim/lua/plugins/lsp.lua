@@ -197,7 +197,8 @@ return {
         nil_ls = {
           -- TODO: Find or build a package for FreeBSD
           --  -- XXX: Fix build on FreeBSD
-          mason = vim.uv.os_uname().sysname:find("FreeBSD"),
+          -- mason = vim.uv.os_uname().sysname:find("FreeBSD"),
+          mason = false,
         },
         perlnavigator = {
           -- settings = {
