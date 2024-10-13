@@ -19,6 +19,8 @@ return {
         skip("shellcheck")
         -- TODO: Dockerfile linter: find or build a package
         skip("hadolint")
+        -- TODO: Markdown linter: find or build a package
+        skip("marksman")
         skip("shfmt")
         skip("stylua")
         skip("tflint")
@@ -188,10 +190,6 @@ return {
               },
             },
           },
-        },
-        marksman = {
-          -- TODO: Find or build a package for FreeBSD
-          mason = false,
         },
         -- Do not install nil_ls with Mason
         nil_ls = {
