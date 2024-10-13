@@ -195,6 +195,7 @@ packages:
       - "portshaker"
       - "poudriere"
       - "procs"
+      - "py311-black"
       - "py311-glances"
       - "py311-khard"
       - "py311-pynitrokey"
