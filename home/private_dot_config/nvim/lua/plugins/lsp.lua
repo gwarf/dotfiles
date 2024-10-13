@@ -235,20 +235,25 @@ return {
         -- https://github.com/LazyVim/LazyVim/discussions/403
         ---@diagnostic disable-next-line: unused-local
         ltex = function(_, opts)
-          vim.api.nvim_create_autocmd("LspAttach", {
-            callback = function(args)
-              ---@diagnostic disable-next-line: no-unknown
-              local client = vim.lsp.get_client_by_id(args.data.client_id)
-              if client.name == "ltex" then
-                require("ltex_extra").setup({
-                  load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
-                  init_check = true, -- whether to load dictionaries on startup
-                  path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
-                  log_level = "error", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
-                })
-              end
-            end,
-          })
+          -- Disable ltex on FreeBSD
+          if vim.uv.os_uname().sysname:find("FreeBSD") then
+            return false
+          else
+            vim.api.nvim_create_autocmd("LspAttach", {
+              callback = function(args)
+                ---@diagnostic disable-next-line: no-unknown
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                if client.name == "ltex" then
+                  require("ltex_extra").setup({
+                    load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
+                    init_check = true, -- whether to load dictionaries on startup
+                    path = vim.fn.stdpath("config") .. "/spell", -- path to store dictionaries.
+                    log_level = "error", -- "none", "trace", "debug", "info", "warn", "error", "fatal"
+                  })
+                end
+              end,
+            })
+          end
         end,
       },
     },
