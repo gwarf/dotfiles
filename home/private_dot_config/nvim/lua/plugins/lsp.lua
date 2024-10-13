@@ -16,6 +16,7 @@ return {
             end
           end
         end
+        skip("black")
         skip("shellcheck")
         -- TODO: Dockerfile linter: find or build a package
         skip("hadolint")
@@ -78,9 +79,6 @@ return {
         -- XXX: no native package on FreeBSD
         bashls = {
           mason = vim.uv.os_uname().sysname:find("FreeBSD"),
-        },
-        black = {
-          mason = false,
         },
         -- dockerls = {},
         -- html = {},
