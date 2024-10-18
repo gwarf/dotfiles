@@ -70,6 +70,7 @@ packages:
       - "rpm2cpio"
       - "ruff"
       - "screenfetch"
+      - "shellcheck"
       - "shfmt"
       - "starship"
       - "stylua"
