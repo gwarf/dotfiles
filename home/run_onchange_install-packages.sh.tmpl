@@ -1,13 +1,12 @@
 #!/bin/sh
 
 {{ if eq .chezmoi.os "freebsd" -}}
-{{ range .packages.freebsd.minimal.pkgs -}}
+{{ range .packages.freebsd.minimal -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
 {{- if eq .chezmoi.hostname "brutal" }}
-{{ range .packages.freebsd.desktop.pkgs -}}
+{{ range .packages.freebsd.desktop -}}
 doas pkg install -y {{ . | quote }}
-{{ end -}}
 {{ end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
 brew bundle --no-lock --file=/dev/stdin <<EOF
