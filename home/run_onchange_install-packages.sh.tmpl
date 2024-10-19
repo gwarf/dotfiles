@@ -1,12 +1,14 @@
-{{ if eq .chezmoi.os "freebsd" -}}
 #!/bin/sh
 
-{{ range .packages.freebsd.pkgs -}}
+{{ if eq .chezmoi.os "freebsd" -}}
+{{ range .packages.freebsd.minimal.pkgs -}}
+doas pkg install -y {{ . | quote }}
+{{ end -}}
+{{- if eq .chezmoi.hostname "brutal" }}
+{{ range .packages.freebsd.desktop.pkgs -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
-#!/bin/bash
-
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
@@ -19,7 +21,6 @@ EOF
 mas install {{ . | quote }}
 {{ end -}}
 {{ else if eq .chezmoi.os "linux" -}}
-#!/bin/sh
 {{ range .packages.linux.pkgs -}}
 sudo apt --no-install-recommends install -y {{ . | quote }}
 {{ end -}}
