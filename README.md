@@ -17,27 +17,40 @@ and using [run_onchange_install-packages.sh](home/run_onchange_install-packages.
 ### Initialising
 
 ```shell
-chezmoi init gwarf
+chezmoi init git@github.com:gwarf/dotfiles.git
 chezmoi diff
 chezmoi apply
 ```
 
 ### Pulling changes
 
+#### Pulling changes and reviewing them
+
 ```shell
-# Pull changes and review them
 chezmoi git pull -- --autostash --rebase && chezmoi diff
-# Apply them
+# Applying them
 chezmoi apply
-# Pull and apply all at once
-chezmoi update
+```
+
+#### Pulling changes and apply them without review
+
+```shell
+chezmoi update -v
 ```
 
 ### Pushing changes
 
+> If autocomit is enabled in `~/.config/chezmoi/chezmoi.toml`, changes made
+> with `chezmoi edit` are automatically committed and pushed
+
 ```shell
+# Open repository clone location
 chezmoi cd
+# Check status
 git status
+git diff
+# Commit all changes
 git commit -a
+# Push changes
 git push
 ```
