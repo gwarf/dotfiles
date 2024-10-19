@@ -2,16 +2,16 @@
 
 {{ if eq .chezmoi.os "freebsd" -}}
 
-echo "FreeBSD: install minimal package set"
-{{ range .packages.freebsd.minimal -}}
-doas pkg install -y {{ . | quote }}
-{{ end -}}
-
 {{ if eq .chezmoi.hostname "brutal" }}
-echo "FreeBSD: install desktop package set"
+printf "FreeBSD: install desktop package set"
 {{ range .packages.freebsd.desktop -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
+{{ end -}}
+
+printf "FreeBSD: install minimal package set"
+{{ range .packages.freebsd.minimal -}}
+doas pkg install -y {{ . | quote }}
 {{ end -}}
 
 {{ else if eq .chezmoi.os "darwin" -}}
