@@ -8,6 +8,7 @@ doas pkg install -y {{ . | quote }}
 {{ range .packages.freebsd.desktop.pkgs -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
+{{ end -}}
 {{ else if eq .chezmoi.os "darwin" -}}
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ range .packages.darwin.brews -}}
