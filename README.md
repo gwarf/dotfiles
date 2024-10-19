@@ -17,8 +17,11 @@ and using [run_onchange_install-packages.sh](home/run_onchange_install-packages.
 ### Initialising
 
 ```shell
+# Initialising chezmoi repository
 chezmoi init git@github.com:gwarf/dotfiles.git
+# Checking changes
 chezmoi diff
+# Applying changes
 chezmoi apply
 ```
 
@@ -27,6 +30,7 @@ chezmoi apply
 #### Pulling changes and reviewing them
 
 ```shell
+# Pull latest changes and preview them
 chezmoi git pull -- --autostash --rebase && chezmoi diff
 # Applying them
 chezmoi apply
@@ -35,6 +39,7 @@ chezmoi apply
 #### Pulling changes and apply them without review
 
 ```shell
+# Verbosy pull and apply changes
 chezmoi update -v
 ```
 
