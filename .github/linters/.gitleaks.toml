@@ -1,0 +1,10 @@
+title = "Gitleaks configuration"
+
+[extend]
+useDefault = true
+
+[allowlist]
+regexTarget = "match"
+regexes = [
+  '''46BDC6B3DE10CB983B880095022A860ECDA18F02''',
+]
