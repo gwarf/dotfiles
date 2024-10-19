@@ -1,7 +1,7 @@
 packages:
-  # XXX: bitwarden browser integration only works for appstore app
-  # karabiner-elements is used to swap ESC and CAPSLOCK
   darwin:
+    # XXX: bitwarden browser integration only works for appstore app
+    # karabiner-elements is used to swap ESC and CAPSLOCK
     brews:
       - "ansible-language-server"
       - "ansible-lint"
