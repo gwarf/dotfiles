@@ -154,6 +154,7 @@ packages:
       - "lazygit"
       - "neovim"
       - "npm"
+      - "openjdk11"
       - "python"
       - "py311-ansible-lint"
       - "py311-black"
