@@ -11,4 +11,8 @@
   user = gwarf
 
 [commit]
+{{- if eq .chezmoi.hostname "delamain" }}
+  gpgsign = false
+{{- else }}
   gpgsign = true
+{{- end }}
