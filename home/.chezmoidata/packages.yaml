@@ -149,7 +149,6 @@ packages:
       - "py311-khard"
       - "py311-httpie"
     neovim:
-      - "cargo"
       - "go-yq"
       - "hs-ShellCheck"
       - "lazygit"
