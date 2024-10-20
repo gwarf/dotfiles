@@ -2,22 +2,22 @@
 
 {{ if eq .chezmoi.os "freebsd" -}}
 
-printf "\nFreeBSD: install minimal package set\n"
+# "FreeBSD: install minimal package set"
 {{ range .packages.freebsd.minimal -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
 
-printf "\nFreeBSD: install neovim package set\n"
+# "FreeBSD: install neovim package set"
 {{ range .packages.freebsd.neovim -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
 
 {{ if eq .chezmoi.hostname "brutal" }}
-printf "\nFreeBSD: install cli package set\n"
+# "FreeBSD: install cli package set"
 {{ range .packages.freebsd.cli -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
-printf "\nFreeBSD: install desktop package set\n"
+# "FreeBSD: install desktop package set"
 {{ range .packages.freebsd.desktop -}}
 doas pkg install -y {{ . | quote }}
 {{ end -}}
