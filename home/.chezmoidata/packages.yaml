@@ -159,6 +159,7 @@ packages:
       - "py311-pyright"
       - "rubygem-mdl"
       - "ruff"
+      - "rust"
       - "shfmt"
       - "stylua"
       - "terraform"
