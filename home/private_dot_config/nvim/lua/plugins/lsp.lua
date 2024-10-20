@@ -18,8 +18,6 @@ return {
           table.insert(opts.ensure_installed, mason_package)
         end
       end
-      -- Adde debugpy for python files
-      add("debugpy")
       -- Skip packages installed with OS package manager
       skip("ansible-lint")
       skip("shfmt")
