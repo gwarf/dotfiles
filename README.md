@@ -1,20 +1,20 @@
-# gwarf's dotfiles
+# Gwarf's dotfiles
 
 My somewhat messy and ever WIP **dotfiles** for GNU/Linux, FreeBSD and macOS.
 
-> Use at you own risk :)
+> Use at your own risk :)
 
 ## Chezmoi
 
 > Everything is managed using [chezmoi](https://www.chezmoi.io).
 
-Some files or configuration parts are only avaible for GNU/Linux, FreeBSD, or
+Some files or configuration parts are only available for GNU/Linux, FreeBSD, or
 macOS.
 
 OS packages are installed via a [packages.yaml](home/.chezmoidata/packages.yaml)
 and using [run_onchange_install-packages.sh](home/run_onchange_install-packages.sh.tmpl).
 
-### Initialising
+### Initializing
 
 ```shell
 # Initialising chezmoi repository
@@ -45,7 +45,7 @@ chezmoi update -v
 
 ### Pushing changes
 
-> If autocomit is enabled in `~/.config/chezmoi/chezmoi.toml`, changes made
+> If auto-commit is enabled in `~/.config/chezmoi/chezmoi.toml`, changes made
 > with `chezmoi edit` are automatically committed and pushed
 
 ```shell
