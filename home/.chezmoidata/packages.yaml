@@ -154,6 +154,7 @@ packages:
       - "hs-ShellCheck"
       - "lazygit"
       - "neovim"
+      - "npm"
       - "python"
       - "py311-ansible-lint"
       - "py311-black"
