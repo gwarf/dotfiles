@@ -155,6 +155,7 @@ packages:
       - "lazygit"
       - "neovim"
       - "python"
+      - "py311-ansible-lint"
       - "py311-black"
       - "py311-pyright"
       - "rubygem-mdl"

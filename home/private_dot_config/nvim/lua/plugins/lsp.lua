@@ -21,6 +21,7 @@ return {
       -- Adde debugpy for python files
       add("debugpy")
       -- Skip packages installed with OS package manager
+      skip("ansible-lint")
       skip("shfmt")
       skip("black")
       skip("stylua")
