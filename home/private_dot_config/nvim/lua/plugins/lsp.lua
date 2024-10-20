@@ -100,7 +100,7 @@ return {
         -- TODO: have cmp do completion using words from the dictionaries
         ltex = {
           -- TODO: Find or build a package for FreeBSD
-          mason = false,
+          mason = vim.uv.os_uname().sysname:find("FreeBSD"),
           autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
           filetypes = {
             "asciidoc",
