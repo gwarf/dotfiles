@@ -215,6 +215,7 @@ packages:
       - "ripgrep-all"
       - "rubygem-mdl"
       - "ruff"
+      - "sanoid"
       - "shfmt"
       - "starship"
       - "stylua"
