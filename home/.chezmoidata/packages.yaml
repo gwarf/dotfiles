@@ -87,6 +87,7 @@ packages:
       - "yaml-language-server"
       - "yamllint"
       - "yazi"
+      - "yq"
       - "vscode-langservers-extracted"
       - "zoxide"
     casks:
