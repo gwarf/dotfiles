@@ -30,6 +30,7 @@ return {
 			-- XXX: Skip brew packages
 			if vim.uv.os_uname().sysname:find("Darwin") then
 				skip("ansible-language-server")
+				skip("bash-language-server")
 				skip("shellcheck")
 				skip("markdownlint-cli2")
 			end
