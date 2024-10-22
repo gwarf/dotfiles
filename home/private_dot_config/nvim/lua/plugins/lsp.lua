@@ -79,7 +79,7 @@ return {
 			servers = {
 				ansiblels = {
 					-- TODO: Find or build a package for FreeBSD
-					mason = vim.uv.os_uname().sysname:find("FreeBSD"),
+					mason = vim.uv.os_uname().sysname:find("FreeBSD") or false,
 					root_dir = function(fname)
 						return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
 							or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
@@ -111,7 +111,7 @@ return {
 					-- more automatailly installed. Can be insalled manually:
 					-- MasotnIsntall --target=linux
 					-- TODO: Find or build a package for FreeBSD
-					mason = vim.uv.os_uname().sysname:find("FreeBSD"),
+					mason = vim.uv.os_uname().sysname:find("FreeBSD") or false,
 					filetypes = {
 						"asciidoc",
 						"bib",
