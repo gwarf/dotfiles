@@ -29,12 +29,6 @@ return {
 			skip("marksman")
 			-- XXX: Skip brew packages
 			if vim.uv.os_uname().sysname:find("Darwin") then
-				-- FIXME: exclusion not working
-				skip("ansible-language-server")
-				-- FIXME: exclusion not working
-				skip("bash-language-server")
-				-- FIXME: exclusion not working
-				skip("ltex-ls")
 				skip("shellcheck")
 				skip("markdownlint-cli2")
 			end
@@ -79,7 +73,7 @@ return {
 			servers = {
 				ansiblels = {
 					-- TODO: Find or build a package for FreeBSD
-					mason = vim.uv.os_uname().sysname:find("FreeBSD") or false,
+					mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
 					root_dir = function(fname)
 						return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
 							or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
@@ -97,7 +91,7 @@ return {
 				},
 				-- XXX: no native package on FreeBSD
 				bashls = {
-					mason = vim.uv.os_uname().sysname:find("FreeBSD"),
+					mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
 				},
 				-- dockerls = {},
 				-- html = {},
@@ -111,7 +105,7 @@ return {
 					-- more automatailly installed. Can be insalled manually:
 					-- MasotnIsntall --target=linux
 					-- TODO: Find or build a package for FreeBSD
-					mason = vim.uv.os_uname().sysname:find("FreeBSD") or false,
+					mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
 					filetypes = {
 						"asciidoc",
 						"bib",
