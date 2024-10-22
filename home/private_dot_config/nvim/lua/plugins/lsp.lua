@@ -29,8 +29,11 @@ return {
 			skip("marksman")
 			-- XXX: Skip brew packages
 			if vim.uv.os_uname().sysname:find("Darwin") then
+				-- FIXME: exclusion not working
 				skip("ansible-language-server")
+				-- FIXME: exclusion not working
 				skip("bash-language-server")
+				-- FIXME: exclusion not working
 				skip("ltex-ls")
 				skip("shellcheck")
 				skip("markdownlint-cli2")
