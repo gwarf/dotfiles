@@ -31,6 +31,7 @@ return {
 			if vim.uv.os_uname().sysname:find("Darwin") then
 				skip("ansible-language-server")
 				skip("bash-language-server")
+				skip("ltex-ls")
 				skip("shellcheck")
 				skip("markdownlint-cli2")
 			end
