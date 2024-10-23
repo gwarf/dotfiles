@@ -176,7 +176,9 @@ lists .*@mailman.egi.eu
 # Subscribed
 ## EGI Maimlan
 subscribe irtf@mailman.egi.eu
-subscribe ism@mailman.egi.eu
+# 2024-10-23: comment to see if help not having replies sent to the list and
+# not to the original poster
+# subscribe ism@mailman.egi.eu
 subscribe office@mailman.egi.eu
 subscribe operations@mailman.egi.eu
 subscribe security-notifications@mailman.egi.eu
