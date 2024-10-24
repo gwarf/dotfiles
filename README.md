@@ -46,7 +46,7 @@ chezmoi update -v
 ### Pushing changes
 
 > If auto-commit is enabled in `~/.config/chezmoi/chezmoi.toml`, changes made
-> with `chezmoi edit` are automatically committed and pushed
+> with `chezmoi edit` are automatically committed.
 
 ```shell
 # Open repository clone location
