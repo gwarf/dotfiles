@@ -1,0 +1,20 @@
+[general]
+status_path = "~/.vdirsyncer/status/"
+
+[pair contacts]
+a = "local_contacts"
+b = "google_contacts"
+collections = ["from b"]
+conflict_resolution = "b wins"
+metadata = ["color"]
+
+[storage local_contacts]
+type = "filesystem"
+path = "~/.contacts/"
+fileext = ".vcf"
+
+[storage google_contacts]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/google/google_contacts_token"
+client_id = "{{ (rbw "google/contacts/client_id").notes }}"
+client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
