@@ -34,6 +34,7 @@ cask {{ . | quote }}
 {{ end -}}
 EOF
 {{ range .packages.darwin.appstore -}}
+mas purchase {{ . | quote }}
 mas install {{ . | quote }}
 {{ end -}}
 
