@@ -127,6 +127,8 @@ packages:
       - "yubico-yubikey-manager"
       - "zap"
       - "zoom"
+    # Managed using mas
+    # mas search XXX
     appstore:
       # Bitwarden
       - "1352778147"
@@ -134,6 +136,8 @@ packages:
       - "1480054463"
       # WireGuard
       - "1451685025"
+      # Emby
+      - "992180193"
       # eduVPN
       - "1317704208"
       # Xcode
