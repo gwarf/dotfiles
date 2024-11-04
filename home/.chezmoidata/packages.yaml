@@ -102,7 +102,6 @@ packages:
       - "firefox"
       - "font-jetbrains-mono-nerd-font"
       - "github"
-      - "google-drive"
       - "karabiner-elements"
       - "keybase"
       - "kitty"
