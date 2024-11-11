@@ -1,6 +1,12 @@
 [general]
 status_path = "~/.vdirsyncer/status/"
 
+[storage local_contacts]
+type = "filesystem"
+path = "~/.contacts/"
+fileext = ".vcf"
+
+{{- if eq .chezmoi.os "darwin" }}
 [pair contacts]
 a = "local_contacts"
 b = "google_contacts"
@@ -8,13 +14,23 @@ collections = ["from b"]
 conflict_resolution = "b wins"
 metadata = ["color"]
 
-[storage local_contacts]
-type = "filesystem"
-path = "~/.contacts/"
-fileext = ".vcf"
-
 [storage google_contacts]
 type = "google_contacts"
 token_file = "~/.vdirsyncer/google/google_contacts_token"
 client_id = "{{ (rbw "google/contacts/client_id").notes }}"
 client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+{{- else }}
+# FIXME: get contacts from nextcloud
+[pair contacts]
+a = "local_contacts"
+b = "nextcloud_contacts"
+collections = ["from b"]
+conflict_resolution = "b wins"
+metadata = ["color"]
+
+[storage nextcloud_contacts]
+type = "carddav"
+url = "https://cloud.bapt.name"
+username = "baptiste"
+password = "{{ (rbw "/cloud.bapt.name/baptiste") }}"
+{{- end }}
