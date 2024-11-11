@@ -265,6 +265,7 @@ packages:
       - "git-delta"
       - "glances"
       - "gnupg"
+      - "gparted"
       - "hub"
       - "isort"
       - "isync"
