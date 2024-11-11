@@ -36,6 +36,13 @@ if status is-interactive
     #  Aliases
     alias df="duf"
     alias du="dust"
+    if test (uname) = Linux
+      if test -e /etc/debian_version
+        if test ! -e ~/bin/bat
+          ln -s /usr/bin/batcat ~/bin/bat
+        end
+      end
+    end
     alias cat="bat --paging=never"
     alias ls="lsd --group-directories-first"
     alias lsa="lsd --group-directories-first --almost-all"
@@ -166,13 +173,7 @@ if status is-interactive
     end
     zoxide init --cmd cd fish | source
     direnv hook fish | source
-    {{ if eq .chezmoi.os "darwin" -}}
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
-    {{ else if eq .chezmoi.os "freebsd" -}}
-    fzf --fish | source
-    {{ else -}}
-    source /usr/local/share/examples/fzf/shell/key-bindings.fish
-    {{ end -}}
 end
 # vim: ft=fish
