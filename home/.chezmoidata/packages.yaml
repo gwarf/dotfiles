@@ -279,6 +279,7 @@ packages:
       - "msmtp"
       - "mutt"
       - "ncftp"
+      - "npm"
       - "pandoc"
       - "pinentry-gnome3"
       # - "prettierd"
@@ -303,6 +304,7 @@ packages:
       - "wget"
       - "yamllint"
       # - "yazi"
+      - "yq"
       - "zoxide"
     snaps:
       standard:
