@@ -17,7 +17,7 @@ if status is-interactive
 
     {{ if eq .chezmoi.os "linux" -}}
     if test -d /snap/bin
-      fish_add_path -p -m /snap/bin
+        fish_add_path -p -m /snap/bin
     end
     {{ end -}}
 
@@ -26,7 +26,7 @@ if status is-interactive
     set -gx SYSTEMD_PAGER bat
     {{ if eq .chezmoi.os "linux" -}}
     # XXX: need to use nvim not from snap
-    set -gx MANPAGER "/usb/bin/nvim +Man!"
+    set -gx MANPAGER "/usr/bin/nvim +Man!"
     {{ else -}}
     set -gx MANPAGER "nvim +Man!"
     {{ end -}}
@@ -48,11 +48,11 @@ if status is-interactive
     alias df="duf"
     alias du="dust"
     if test (uname) = Linux
-      if test -e /etc/debian_version
-        if test ! -e ~/bin/bat
-          ln -s /usr/bin/batcat ~/bin/bat
+        if test -e /etc/debian_version
+            if test ! -e ~/bin/bat
+                ln -s /usr/bin/batcat ~/bin/bat
+            end
         end
-      end
     end
     alias cat="bat --paging=never"
     alias ls="lsd --group-directories-first"
