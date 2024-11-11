@@ -93,7 +93,6 @@ return {
 				bashls = {
 					mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
 				},
-				-- dockerls = {},
 				-- html = {},
 				-- groovyls = {},
 				-- groovyls = jit.os:find("BSD") and nil or {},
