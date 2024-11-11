@@ -15,10 +15,16 @@ if status is-interactive
     # XXX: to be checked
     # thefuck --alias | source
 
+    {{ if eq .chezmoi.os "linux" -}}
+    if test -d /snap/bin
+      fish_add_path -p -m /snap/bin
+    end
+    {{ end -}}
+
     # Use bat as pager
     set -gx PAGER bat
     set -gx SYSTEMD_PAGER bat
-    {{ if ne .chezmoi.os "linux" -}}
+    {{ if eq .chezmoi.os "linux" -}}
     # XXX: need to use nvim not from snap
     set -gx MANPAGER "/usb/bin/nvim +Man!"
     {{ else -}}
