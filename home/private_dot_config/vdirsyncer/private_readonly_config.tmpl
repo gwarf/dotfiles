@@ -30,7 +30,7 @@ metadata = ["color"]
 
 [storage nextcloud_contacts]
 type = "carddav"
-url = "https://cloud.bapt.name"
-username = "baptiste"
-password = "{{ (rbw "/cloud.bapt.name/baptiste") }}"
+url = "https://cloud.bapt.name/remote.php/carddav"
+username = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.username }}"
+password.fetch = ["command", "rbw", "get", "/cloud.bapt.name/baptiste/vdirsyncer"]
 {{- end }}
