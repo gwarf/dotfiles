@@ -46,6 +46,9 @@ sudo apt --no-install-recommends install -y {{ . | quote }}
 {{ range .packages.linux.snaps.standard -}}
 sudo snap install {{ . | quote }}
 {{ end -}}
+{{ range .packages.linux.snaps.classic -}}
+sudo snap install --classic {{ . | quote }}
+{{ end -}}
 {{ range .packages.linux.snaps.edge -}}
 sudo snap install --edge {{ . | quote }}
 {{ end -}}
