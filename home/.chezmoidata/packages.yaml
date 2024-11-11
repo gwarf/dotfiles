@@ -54,7 +54,8 @@ packages:
       - "msmtp"
       - "mutt"
       - "ncftp"
-      - "neovim"
+      # XXX: use updated version from snap
+      # - "neovim"
       - "nmap"
       - "oidc-agent"
       - "pandoc"
@@ -282,6 +283,8 @@ packages:
       - "pinentry-gnome3"
       # - "prettierd"
       # - "pyenv"
+    # XXX: manually installed with .deb from GitHub
+    #   - "chezmoi"
       # - "rbw"
       - "ripgrep"
       # - "ripgrep-all"
@@ -303,16 +306,18 @@ packages:
       - "zoxide"
     snaps:
       standard:
+        - "bitwarden"
+        - "bw"
+    # XXX: manually installed with .deb from GitHub
+    #   - "chezmoi"
+        - "doggo"
+    # XXX: manually installed with .deb from GitHub
+    #   - "obsidian"
         - "languagetool"
+        - "lazygit"
+        - "yaml-language-server"
       classic:
         - "nvim"
-    #   - "bitwarden"
-    #   - "bw"
-    #   - "chezmoi"
-    #   - "doggo"
-    #   - "lazygit"
-    #   - "obsidian"
-    #   - "yaml-language-server"
       edge:
         - "prettier"
         - "starship"
