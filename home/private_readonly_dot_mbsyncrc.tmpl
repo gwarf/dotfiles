@@ -110,7 +110,11 @@ Host mail.bapt.name
 # PassCmd "rbw get /mail/baptiste@bapt.name"
 # secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
 PassCMD "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
+{{- if eq .chezmoi.os "freebsd" }}
 TLSType STARTTLS
+{{- else }}
+SSLType STARTTLS
+{{- end }}
 User baptiste@bapt.name
 
 IMAPStore baptiste-remote
