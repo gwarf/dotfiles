@@ -1,12 +1,12 @@
 [general]
 status_path = "~/.vdirsyncer/status/"
 
+{{- if eq .chezmoi.os "darwin" }}
 [storage local_contacts]
 type = "filesystem"
 path = "~/.contacts/"
 fileext = ".vcf"
 
-{{- if eq .chezmoi.os "darwin" }}
 [pair contacts]
 a = "local_contacts"
 b = "google_contacts"
@@ -20,17 +20,67 @@ token_file = "~/.vdirsyncer/google/google_contacts_token"
 client_id = "{{ (rbw "google/contacts/client_id").notes }}"
 client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
 {{- else }}
-# FIXME: get contacts from nextcloud
-[pair contacts]
-a = "local_contacts"
-b = "nextcloud_contacts"
-collections = ["from b"]
-conflict_resolution = "b wins"
-metadata = ["color"]
+[storage local_mc_contacts]
+type = "filesystem"
+path = "~/.contacts/mailcow"
+fileext = ".vcf"
+
+# Using with a systemd unit: https://vdirsyncer.pimutils.org/en/stable/tutorials/systemd-timer.html
+# systemctl --user enable vdirsyncer.timer
 
 [storage nextcloud_contacts]
 type = "carddav"
 url = "https://cloud.bapt.name/remote.php/carddav"
 username = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.username }}"
 password.fetch = ["command", "rbw", "get", "/cloud.bapt.name/baptiste/vdirsyncer"]
+
+[storage mailcow_contacts]
+type = "carddav"
+url = "https://mail.bapt.name/SOGo/dav/baptiste@bapt.name/Contacts/personal/"
+username = "baptiste@bapt.name"
+password.fetch = ["command", "rbw", "get", "/mail/baptiste@bapt.name/vdirsyncer"]
+
+# FIXME: disabled until auth is correctly configured
+# [storage google_contacts]
+# type = "google_contacts"
+# token_file = "~/.vdirsyncer/google/google_contacts_token"
+# read_only = true
+# client_id = ["command", "rbw", "get", "google/contacts/client_id/vdirsyncer"]
+# client_secret.fetch = ["command", "rbw", "get", "google/contacts/client_secret/vdirsyncer"]
+#
+# [storage local_gg_contacts]
+# type = "filesystem"
+# path = "~/.contacts/google"
+# fileext = ".vcf"
+#
+# [pair gg_contacts]
+# a = "local_gg_contacts"
+# b = "google_contacts"
+# collections = ["from b"]
+# conflict_resolution = "b wins"
+# metadata = ["color"]
+#
+# # Synchronise nextcloud with google
+# [pair my_cloud_contacts]
+# a = "mailcow_contacts"
+# b = "google_contacts"
+# collections = [["cloud_contacts", "personal", "contacts" ]]
+# conflict_resolution = "a wins"
+# metadata = ["color", "displayname"]
+
+# Synchronise nextcloud with mailcow
+[pair my_cloud_contacts]
+a = "mailcow_contacts"
+b = "nextcloud_contacts"
+collections = [["cloud_contacts", "personal", "contacts" ]]
+conflict_resolution = "a wins"
+metadata = ["color", "displayname"]
+
+# Use mailcow as the consolidated list of contacts
+[pair mc_contacts]
+a = "local_mc_contacts"
+b = "mailcow_contacts"
+collections = ["from b"]
+conflict_resolution = "b wins"
+metadata = ["color", "displayname"]
 {{- end }}
