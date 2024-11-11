@@ -318,10 +318,10 @@ packages:
     #   - "obsidian"
         - "languagetool"
         - "lazygit"
-        - "pyenv"
         - "yaml-language-server"
       classic:
         - "nvim"
       edge:
         - "prettier"
+        - "pyenv"
         - "starship"
