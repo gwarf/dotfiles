@@ -43,8 +43,11 @@ mas install {{ . | quote }}
 {{ range .packages.linux.pkgs -}}
 sudo apt --no-install-recommends install -y {{ . | quote }}
 {{ end -}}
-{{ range .packages.linux.snaps -}}
+{{ range .packages.linux.snaps.standard -}}
 sudo snap install {{ . | quote }}
+{{ end -}}
+{{ range .packages.linux.snaps.edge -}}
+sudo snap install --edge {{ . | quote }}
 {{ end -}}
 
 {{ end -}}
