@@ -284,6 +284,7 @@ packages:
       - "msmtp"
       - "mutt"
       - "ncftp"
+      - "neovim"
       - "npm"
       - "pandoc"
       - "parted"
