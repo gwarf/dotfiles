@@ -54,8 +54,7 @@ packages:
       - "msmtp"
       - "mutt"
       - "ncftp"
-      # XXX: use updated version from snap
-      # - "neovim"
+      - "neovim"
       - "nmap"
       - "oidc-agent"
       - "pandoc"
@@ -244,7 +243,8 @@ packages:
   linux:
     pkgs:
       - "kitty"
-      - "neovim"
+      # XXX: use updated version from snap
+      # - "neovim"
       # - "ansible-language-server"
       - "ansible-lint"
       - "bash"
