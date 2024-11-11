@@ -283,7 +283,6 @@ packages:
       - "pandoc"
       - "pinentry-gnome3"
       # - "prettierd"
-      # - "pyenv"
     # XXX: manually installed with .deb from GitHub
     #   - "chezmoi"
       # - "rbw"
@@ -317,6 +316,7 @@ packages:
     #   - "obsidian"
         - "languagetool"
         - "lazygit"
+        - "pyenv"
         - "yaml-language-server"
       classic:
         - "nvim"
