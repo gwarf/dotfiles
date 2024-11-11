@@ -254,6 +254,7 @@ packages:
       - "direnv"
       - "docker"
       - "duf"
+      - "du-dust"
       - "fd-find"
       - "fish"
       - "flake8"
@@ -302,17 +303,16 @@ packages:
       - "zoxide"
     snaps:
       standard:
+        - "languagetool"
+      classic:
+        - "nvim"
     #   - "bitwarden"
     #   - "bw"
-    #   - "snapd"
     #   - "chezmoi"
     #   - "doggo"
-    #   - "dust"
-    #   - "languagetool"
     #   - "lazygit"
-    #   - "nvim"
     #   - "obsidian"
-    #   - "prettier"
     #   - "yaml-language-server"
       edge:
+        - "prettier"
         - "starship"
