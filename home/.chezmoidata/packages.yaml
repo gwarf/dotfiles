@@ -272,6 +272,7 @@ packages:
       - "khal"
       - "khard"
       - "ldapvi"
+      - "libsecret-tools"
       - "lsd"
       # - "ltex-ls"
       # - "lua-language-server"
