@@ -251,6 +251,7 @@ packages:
       - "bat"
       - "black"
       # - "checkmake"
+      - "chromium"
       - "cargo"
       - "coreutils"
       - "direnv"
