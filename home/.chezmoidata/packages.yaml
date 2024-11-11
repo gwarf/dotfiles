@@ -308,6 +308,7 @@ packages:
       # - "tree-sitter"
       - "unzip"
       - "urlview"
+      - "vdirsyncer"
       - "vivid"
       - "w3m"
       - "wget"
