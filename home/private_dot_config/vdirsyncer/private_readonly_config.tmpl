@@ -32,13 +32,15 @@ fileext = ".vcf"
 type = "carddav"
 url = "https://cloud.bapt.name/remote.php/carddav"
 username = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.username }}"
-password.fetch = ["command", "rbw", "get", "/cloud.bapt.name/baptiste/vdirsyncer"]
+password = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.password }}"
+# password.fetch = ["command", "rbw", "get", "/cloud.bapt.name/baptiste/vdirsyncer"]
 
 [storage mailcow_contacts]
 type = "carddav"
 url = "https://mail.bapt.name/SOGo/dav/baptiste@bapt.name/Contacts/personal/"
 username = "baptiste@bapt.name"
-password.fetch = ["command", "rbw", "get", "/mail/baptiste@bapt.name/vdirsyncer"]
+# password.fetch = ["command", "rbw", "get", "/mail/baptiste@bapt.name/vdirsyncer"]
+password = "{{ (rbw "/mail/baptiste@bapt.name/vdirsyncer").data.password }}"
 
 # FIXME: disabled until auth is correctly configured
 # [storage google_contacts]
