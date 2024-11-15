@@ -82,6 +82,7 @@ packages:
       - "tree"
       - "tree-sitter"
       - "urlview"
+      - "vdirsyncer"
       - "vivid"
       - "w3m"
       - "wget"
@@ -294,8 +295,8 @@ packages:
       - "python3-pip"
       - "python3-venv"
       # - "prettierd"
-    # XXX: manually installed with .deb from GitHub
-    #   - "chezmoi"
+      # XXX: manually installed with .deb from GitHub
+      #   - "chezmoi"
       # - "rbw"
       - "ripgrep"
       # - "ripgrep-all"
@@ -321,11 +322,11 @@ packages:
       standard:
         - "bitwarden"
         - "bw"
-    # XXX: manually installed with .deb from GitHub
-    #   - "chezmoi"
+        # XXX: manually installed with .deb from GitHub
+        #   - "chezmoi"
         - "doggo"
-    # XXX: manually installed with .deb from GitHub
-    #   - "obsidian"
+        # XXX: manually installed with .deb from GitHub
+        #   - "obsidian"
         - "languagetool"
         - "lazygit"
         - "yaml-language-server"
