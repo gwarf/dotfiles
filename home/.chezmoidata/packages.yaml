@@ -261,6 +261,11 @@ packages:
       - "du-dust"
       - "fd-find"
       - "fish"
+      # XXX: to be checked if needed once fonts-recommended is insalled
+      # - "fonts-noto"
+      # - "fonts-noto-cjk"
+      # - "fonts-noto-color-emoji"
+      - "fonts-recommended"
       - "flake8"
       - "fzf"
       - "git"
