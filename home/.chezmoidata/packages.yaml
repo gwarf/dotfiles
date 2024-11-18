@@ -56,7 +56,7 @@ packages:
       - "ncftp"
       - "neovim"
       - "nmap"
-      - "oidc-agent"
+      - "indigo-dc/oidc-agent/oidc-agent"
       - "pandoc"
       - "pinentry"
       - "pinentry-mac"
