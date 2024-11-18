@@ -125,6 +125,8 @@ packages:
       - "visual-studio-code"
       - "vlc"
       - "webex"
+      # XXX: requires rosetta on Apple Silicon
+      # softwareupdate --install-rosetta --agree-to-license
       - "yubico-yubikey-manager"
       - "zap"
       - "zoom"
