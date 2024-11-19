@@ -119,7 +119,7 @@ packages:
       - "spotify"
       - "stretchly"
       - "sublime-text"
-      - "teamviewer"
+      # - "teamviewer"
       - "vagrant"
       - "virtualbox"
       - "visual-studio-code"
