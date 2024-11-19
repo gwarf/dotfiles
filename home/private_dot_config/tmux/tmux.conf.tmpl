@@ -21,8 +21,13 @@ bind-key b send-prefix
 set -g default-command /usr/local/bin/fish
 set -g default-shell /usr/local/bin/fish
 {{ else if eq .chezmoi.os "darwin" -}}
+{{ if stat "/opt/homebrew/bin/" }}
 set -g default-command /opt/homebrew/bin/fish
 set -g default-shell /opt/homebrew/bin/fish
+{{ else -}}
+set -g default-command /usr/local/bin/fish
+set -g default-shell /usr/local/bin/fish
+{{ end -}}
 {{ else if eq .chezmoi.os "linux" -}}
 set -g default-command /usr/bin/fish
 set -g default-shell /usr/bin/fish

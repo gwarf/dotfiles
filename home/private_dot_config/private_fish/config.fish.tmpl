@@ -85,11 +85,16 @@ if status is-interactive
     end
 
     if test (uname) = Darwin
-        # Add path mainly used by brew
+        # Add homebrew paths
+        {{ if stat "/opt/homebrew/bin/" }}
         fish_add_path /opt/homebrew/bin
+        {{ else -}}
         fish_add_path /usr/local/bin
         fish_add_path /usr/local/sbin
-        fish_add_path /usr/local/opt/coreutils/libexec/gnubin
+        {{ end -}}
+        if test -d /usr/local/opt/coreutils/libexec/gnubin
+            fish_add_path /usr/local/opt/coreutils/libexec/gnubin
+        end
 
         # https://spicetify.app
         if test -e ~/.spicetify
