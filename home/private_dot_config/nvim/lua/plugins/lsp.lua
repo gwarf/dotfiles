@@ -29,6 +29,7 @@ return {
       skip("marksman")
       -- XXX: Skip brew packages
       if vim.uv.os_uname().sysname:find("Darwin") then
+        skip("prettier")
         skip("shellcheck")
         skip("markdownlint-cli2")
       end
