@@ -139,11 +139,11 @@ if status is-interactive
         # Load custon pytyon3 venv for mutt + ical
         function mutt
             source ~/.config/neomutt/.venv/bin/activate.fish
-            {{ if stat "/opt/homebrew/bin/" }}
+            {{- if stat "/opt/homebrew/bin/" }}
             /opt/homebrew/bin/mutt $argv
-            {{ else -}}
+            {{- else }}
             /usr/local/bin/mutt $argv
-            {{ end -}}
+            {{- end }}
         end
 
         # Start oidc-agent
