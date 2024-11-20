@@ -88,13 +88,16 @@ if status is-interactive
         # Add homebrew paths
         {{ if stat "/opt/homebrew/bin/" }}
         fish_add_path /opt/homebrew/bin
+        if test -d /opt/homebrew//opt/coreutils/libexec/gnubin
+            fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+        end
         {{ else -}}
         fish_add_path /usr/local/bin
         fish_add_path /usr/local/sbin
-        {{ end -}}
         if test -d /usr/local/opt/coreutils/libexec/gnubin
             fish_add_path /usr/local/opt/coreutils/libexec/gnubin
         end
+        {{ end -}}
 
         # https://spicetify.app
         if test -e ~/.spicetify

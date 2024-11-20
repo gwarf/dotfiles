@@ -1,7 +1,11 @@
 {{- if eq .chezmoi.os "darwin" -}}
 # use pinentry progam allowing to use keychain
 # https://merikan.com/2019/05/how-to-sign-git-commits/
+{{ if stat "/opt/homebrew/bin/" }}
+pinentry-program /opt/homebrew/bin/pinentry-mac
+{{ else -}}
 pinentry-program /usr/local/bin/pinentry-mac
+{{- end }}
 {{- end }}
 {{- if eq .chezmoi.os "freebsd" -}}
 pinentry-program /usr/local/bin/pinentry-gnome3

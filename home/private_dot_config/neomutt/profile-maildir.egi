@@ -86,8 +86,7 @@ my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference
 
 # S/MIME using gpgme (simplified conf)
 # http://wiki.netbsd.org/users/wiz/mutt-smime/
-# gpgsm --import TrustedRoot.crt
-# gpgsm --import DigiCertCA.crt
+# Import the certificate with the chain
 # gpgsm --import baptiste_grenier_until_2021_02.p12
 # gpgsm --list-keys
 # gpgsm --list-secret-keys

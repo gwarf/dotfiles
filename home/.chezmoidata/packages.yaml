@@ -73,6 +73,7 @@ packages:
       - "screenfetch"
       - "shellcheck"
       - "shfmt"
+      - "shodan"
       - "starship"
       - "stylua"
       - "tealdeer"
