@@ -88,7 +88,7 @@ if status is-interactive
         # Add homebrew paths
         {{ if stat "/opt/homebrew/bin/" }}
         fish_add_path /opt/homebrew/bin
-        if test -d /opt/homebrew//opt/coreutils/libexec/gnubin
+        if test -d /opt/homebrew/opt/coreutils/libexec/gnubin
             fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
         end
         {{ else -}}
