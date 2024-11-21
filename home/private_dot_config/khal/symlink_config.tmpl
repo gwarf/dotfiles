@@ -1,0 +1,14 @@
+[calendars]
+[[personal]]
+{{- if eq .chezmoi.os "darwin" }}
+path = ~/.calendars/baptiste.grenier@egi.eu/
+{{- else }}
+path = ~/.calendars/baptiste@bapt.name/
+{{- end }}
+
+[locale]
+timeformat = %H:%M
+dateformat = %Y-%m-%d
+longdateformat = %Y-%m-%d
+datetimeformat = %Y-%m-%d %H:%M
+longdatetimeformat = %Y-%m-%d %H:%M
