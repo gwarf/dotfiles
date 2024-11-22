@@ -99,6 +99,9 @@ if status is-interactive
         end
         {{ end -}}
 
+        # Use a more usual path for config
+        set -gx TEALDEER_CONFIG_DIR ~/.config/tealdeer/
+
         # https://spicetify.app
         if test -e ~/.spicetify
             fish_add_path ~/.spicetify/
