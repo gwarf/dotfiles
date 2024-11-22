@@ -138,17 +138,6 @@ if status is-interactive
         fish_add_path $PYENV_ROOT/bin
         pyenv init - | source
 
-        # FIXME: managed this more cleanly
-        # Load custon pytyon3 venv for mutt + ical
-        function mutt
-            source ~/.config/neomutt/.venv/bin/activate.fish
-            {{- if stat "/opt/homebrew/bin/" }}
-            /opt/homebrew/bin/mutt $argv
-            {{- else }}
-            /usr/local/bin/mutt $argv
-            {{- end }}
-        end
-
         # Start oidc-agent
         if type -q oidc-agent-service
             eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
