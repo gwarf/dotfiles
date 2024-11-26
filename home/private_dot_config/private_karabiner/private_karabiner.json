@@ -1,19 +1,24 @@
 {
-    "profiles": [
+  "profiles": [
+    {
+      "name": "Kinesis Advantage profile",
+      "simple_modifications": [
         {
-            "name": "Default profile",
-            "selected": true,
-            "simple_modifications": [
-                {
-                    "from": { "key_code": "caps_lock" },
-                    "to": [{ "key_code": "escape" }]
-                },
-                {
-                    "from": { "key_code": "escape" },
-                    "to": [{ "key_code": "caps_lock" }]
-                }
-            ],
-            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
+          "from": { "key_code": "caps_lock" },
+          "to": [{ "key_code": "escape" }]
+        },
+        {
+          "from": { "key_code": "escape" },
+          "to": [{ "key_code": "caps_lock" }]
         }
-    ]
+      ],
+      "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
+    },
+    {
+      "name": "Kinesis Advantage 360 Pro",
+      "selected": true,
+      "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+    }
+  ]
 }
+
