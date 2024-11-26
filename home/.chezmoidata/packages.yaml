@@ -120,6 +120,7 @@ packages:
       - "stretchly"
       - "sublime-text"
       # - "teamviewer"
+      - "thunderbird@esr"
       - "vagrant"
       - "virtualbox"
       - "visual-studio-code"
