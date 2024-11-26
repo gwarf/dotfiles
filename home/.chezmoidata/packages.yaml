@@ -25,6 +25,7 @@ packages:
       - "flake8"
       - "fzf"
       - "gh"
+      - "gimp"
       - "git"
       - "git-delta"
       - "git-lfs"
