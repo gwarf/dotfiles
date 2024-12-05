@@ -11,6 +11,7 @@ packages:
       - "basedpyright"
       - "bitwarden-cli"
       - "black"
+      - "bpython"
       - "checkmake"
       - "chezmoi"
       - "coreutils"
