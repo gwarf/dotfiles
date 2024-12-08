@@ -296,6 +296,7 @@ packages:
       - "mutt"
       - "ncftp"
       - "neovim"
+      - "nextcloud-desktop"
       - "npm"
       - "pandoc"
       - "parted"
