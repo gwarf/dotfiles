@@ -31,6 +31,7 @@ auto_view text/x-vcard
 auto_view text/enriched
 auto_view text/csv
 
+# XXX: this may be overwritten by hooks
 alternative_order text/calendar text/plain text/enriched text/html
 
 # vim: syntax=neomuttrc:
