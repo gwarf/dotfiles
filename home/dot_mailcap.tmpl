@@ -10,8 +10,9 @@ mime_lookup application/octet-stream application/octetstream
 video/*; ~/.config/neomutt/view_attachment %s -
 image/*; ~/.config/neomutt/view_attachment %s -
 # View file in W3M, use print to view them in default browser
-# text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" %s
 text/html; w3m -I %{charset} -T text/html -dump; nametemplate=%s.html; copiousoutput; print = open %s
+#XXX: Using python to kick start a web servber and brow.sh to render the file
+# text/html; cp %s ~/.cache/mutt/mail.html && browsh_serve.sh; nametemplate=%s.html; copiousoutput; print = open %s
 # TODO: Use khal or https://github.com/asciipip/mutt-ical to accept invites
 text/calendar; khal printics %s; copiousoutput;
 # text/html; ~/.config/neomutt/view_attachment %s html
