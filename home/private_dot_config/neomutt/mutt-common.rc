@@ -2,9 +2,9 @@
 # https://pbrisbin.com/posts/mutt_gmail_offlineimap/
 
 # Caching
-set header_cache = ~/.mutt/cache/headers
-set message_cachedir = ~/.mutt/cache/bodies
-set certificate_file = ~/.mutt/certificates
+set header_cache = ~/.cache/mutt/headers
+set message_cachedir = ~/.cache/mutt/bodies
+set certificate_file = ~/.cache/mutt/certificates
 
 # set tmpdir = '~/tmp'
 
@@ -70,9 +70,6 @@ set envelope_from
 # reply as whomever it was to
 set reverse_alias
 # set reverse_name
-
-# Hooks
-source ~/.config/neomutt/hooks
 
 set quit             # don't ask, just do!!
 unset mark_old       # read/new is good enough
@@ -174,6 +171,9 @@ source ~/.config/neomutt/sidebar
 
 # Source mu configuration
 source ~/.config/neomutt/mu
+
+# Hooks
+source ~/.config/neomutt/hooks
 
 set realname = "Baptiste Grenier"
 
