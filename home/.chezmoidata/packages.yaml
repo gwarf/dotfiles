@@ -93,6 +93,7 @@ packages:
       - "yazi"
       - "yq"
       - "vscode-langservers-extracted"
+      - "zellij"
       - "zoxide"
     casks:
       - "adobe-acrobat-reader"
