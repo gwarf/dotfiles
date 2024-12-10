@@ -241,4 +241,7 @@ return {
 
   -- Open links without netrw using gx mapping
   { "chrishrb/gx.nvim" },
+
+  -- Syntax and indentation for kdl
+  { "imsnif/kdl.vim", lazy = true, ft = "kdl" },
 }
