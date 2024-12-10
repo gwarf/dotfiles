@@ -1,6 +1,14 @@
 # Source Mutt legacy configuration
 source ~/.config/neomutt/mutt-common.rc
 
+# XXX: only in neomutt
+# https://neomutt.org/feature/use-threads
+# set use_threads=reverse sort=date sort_aux=date
+set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
+folder-hook Inbox 'set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date'
+
+set editor='neomutt-compose.sh'
+
 # Source neomutt-specific configuration
 # Colors
 source ~/.config/neomutt/progress-color

@@ -82,6 +82,7 @@ set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 # Sort by threads
 set sort = threads
 # Sort threads, having the most recent at the top
+# XXX: not available in neomutt
 set sort_thread_groups = reverse-last-date-received
 # Sort within threads, last message at the bottom
 set sort_aux = last-date-received
