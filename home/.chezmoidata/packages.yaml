@@ -343,6 +343,7 @@ packages:
         - "yaml-language-server"
       classic:
         - "nvim"
+        - "zellij"
       edge:
         - "prettier"
         - "pyenv"
