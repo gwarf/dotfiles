@@ -74,7 +74,11 @@ image/*                         ; mutt_bgrun nsxiv %s                           
 # XXX Disable backgrouds as it seems that html files is deleted too early
 # text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chromium-perso %s
 # text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun firefox %s
+{{- if eq .chezmoi.os "freebsd" }}
 text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chrome %s
+{{- else }}
+text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun brave-browser %s
+{{- end }}
 
 text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
 text/x-patch                    ; cat %s | colordiff                            ;copiousoutput
