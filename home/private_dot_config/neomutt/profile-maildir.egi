@@ -1,12 +1,5 @@
 # Mutt sender profile: egi
 
-# http://www.mutt.org/doc/manual/#bgedit
-# XXX not available on neomutt
-set background_edit
-set editor = "bgedit-screen-tmux.sh nvim"
-# set editor = "nvim-qt"
-# set editor = "subl -n -w"
-
 set folder = ~/Mail/EGI
 
 # Copy sent message to this folder

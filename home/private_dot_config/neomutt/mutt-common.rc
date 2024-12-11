@@ -79,17 +79,6 @@ unset mark_old       # read/new is good enough
 unset strict_threads
 set sort_re
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-# Sort by threads
-set sort = threads
-# Sort threads, having the most recent at the top
-# XXX: not available in neomutt
-set sort_thread_groups = reverse-last-date-received
-# Sort within threads, last message at the bottom
-set sort_aux = last-date-received
-# Ensure that INBOX is always using appropriate thread-based sort
-folder-hook Inbox 'set sort=threads sort_aux=last-date-received sort_thread_groups=reverse-last-date-received '
-# Ensure that Sent folder is first showing messages last sent
-folder-hook Sent 'set sort=reverse-date-sent'
 
 # collapse threads with unread mails
 # set collapse_unread
@@ -131,7 +120,6 @@ source ~/.config/neomutt/forgotten-attachment
 
 # Colors
 source ~/.config/neomutt/colors
-source ~/.config/neomutt/index-color
 
 # Key bindings, macros
 source ~/.config/neomutt/bindings

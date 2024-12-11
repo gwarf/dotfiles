@@ -5,9 +5,14 @@ source ~/.config/neomutt/mutt-common.rc
 # https://neomutt.org/feature/use-threads
 # set use_threads=reverse sort=date sort_aux=date
 set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
-folder-hook Inbox 'set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date'
+folder-hook Inbox set use_threads=threads sort=reverse-last-date sort_aux=reverse-last-date
+# Ensure that Sent folder is first showing messages last sent
+folder-hook Sent set sort=reverse-date-sent
 
-set editor='neomutt-compose.sh'
+# Workaround for lack of background_edit support in Neomutt
+# https://github.com/neomutt/neomutt/discussions/4145
+# https://github.com/neomutt/neomutt/issues/2713
+set editor="neomutt-compose.sh"
 
 # Source neomutt-specific configuration
 # Colors
@@ -15,5 +20,7 @@ source ~/.config/neomutt/progress-color
 
 # Not supported in mutt without notmuch patch
 source ~/.config/neomutt/notmuch-neomutt.rc
+
+source ~/.config/neomutt/index-color
 
 # vim: set ft=muttrc:
