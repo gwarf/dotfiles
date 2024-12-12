@@ -258,6 +258,13 @@ plugins {
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
+    // https://github.com/dj95/zjstatus
+    // XXX: not needed when using zjstatus
+    // "file:~/.config/zellij/plugins/zjframes.wasm" {
+    //     hide_frame_for_single_pane       "true"
+    //     hide_frame_except_for_search     "true"
+    //     hide_frame_except_for_fullscreen "true"
+    // }
 }
  
 // Use a simplified UI without special fonts (arrow glyphs)
@@ -289,7 +296,9 @@ default_shell "fish"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+//default_layout "compact"
+//default_layout "slanted"
+default_layout "default"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -315,7 +324,7 @@ default_shell "fish"
 //   - true (default, enabled)
 //   - false
 //
-pane_frames true
+// pane_frames true
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
