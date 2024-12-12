@@ -107,7 +107,7 @@ packages:
       - "font-jetbrains-mono-nerd-font"
       - "gimp"
       - "github"
-      - "karabiner-elements"
+      # - "karabiner-elements"
       - "keybase"
       - "kitty"
       - "libreoffice"
