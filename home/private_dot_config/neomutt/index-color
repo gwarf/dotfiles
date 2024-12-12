@@ -1,7 +1,10 @@
 # Index color
 
-# http://www.neomutt.org/feature/index-color/
+# http://www.neomutt.org/feature/index-color
 color index_author default color234 '.*'
+# Deleted messages
+color index_author color235 color160 '~D'
+
 color index_flags default red '~F'
 color index_collapsed default brightblue
 color index_date green default

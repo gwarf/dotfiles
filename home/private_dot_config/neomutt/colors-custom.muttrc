@@ -1,4 +1,6 @@
 # Colors based on the Solarized palette
+#
+# http://www.mutt.org/doc/manual/#color
 # https://neomutt.org/guide/configuration.html#11-%C2%A0using-color-and-mono-video-attributes
 # https://neomutt.org/guide/configuration.html#color-style
 # https://neomutt.org/guide/configuration.html#color-simple
@@ -21,7 +23,7 @@ color attachment    color254        default
 color search        color61         default
 #color status        J_black         J_status
 color status        color241        color235
-color indicator     default        color136
+color indicator     black        color136
 # arrow in threads
 color tree          color136        default
 
