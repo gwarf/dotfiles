@@ -9,7 +9,7 @@ color index_flags default red '~F'
 color index_collapsed default brightblue
 color index_date green default
 color index_label default brightgreen
-color index_number red default
+# color index_number red default
 color index_size cyan default
 
 # vim: set ft=muttrc:
