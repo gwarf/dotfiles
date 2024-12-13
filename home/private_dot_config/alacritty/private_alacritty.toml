@@ -1,0 +1,13 @@
+[general]
+import = [
+  "~/.config/alacritty/tokyonight_storm.toml"
+]
+[font]
+# fc-list | grep JetBrains
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+size = 14.0
+
+[terminal]
+[terminal.shell]
+program = "/opt/homebrew/bin/fish"
+args = [ "--interactive", "--login" ]
