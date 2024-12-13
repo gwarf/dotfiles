@@ -1,6 +1,8 @@
 # Source Mutt legacy configuration
 source ~/.config/neomutt/mutt-common.rc
 
+set compose_show_preview = yes
+
 # XXX: only in neomutt
 # https://neomutt.org/feature/use-threads
 # set use_threads=reverse sort=date sort_aux=date
