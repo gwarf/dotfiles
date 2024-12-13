@@ -7,7 +7,9 @@ import = [
 [font]
 # fc-list | grep JetBrains
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-size = 14.0
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold= { family = "JetBrainsMono Nerd Font", style = "Bold" }
+size = 15.0
 
 [terminal]
 [terminal.shell]
@@ -15,5 +17,5 @@ program = "/opt/homebrew/bin/fish"
 args = [ "--interactive", "--login" ]
 
 [window]
-padding = { x = 2, y = 2 }
+padding = { x = 8, y = 2 }
 dynamic_padding = true
