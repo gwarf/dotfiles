@@ -1,7 +1,9 @@
 [general]
+live_config_reload = true
 import = [
   "~/.config/alacritty/tokyonight_storm.toml"
 ]
+
 [font]
 # fc-list | grep JetBrains
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
@@ -11,3 +13,7 @@ size = 14.0
 [terminal.shell]
 program = "/opt/homebrew/bin/fish"
 args = [ "--interactive", "--login" ]
+
+[window]
+padding = { x = 2, y = 2 }
+dynamic_padding = true
