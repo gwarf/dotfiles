@@ -107,13 +107,17 @@ IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
 # XXX: On FreeBSD with pinentry-gnome3, the password is not taken from the gnome keyring
-# PassCmd "rbw get /mail/baptiste@bapt.name"
 # secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
-PassCMD "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
+PassCmd "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
+# PassCmd "rbw get /mail/baptiste@bapt.name"
+# Port 443
+Port 993
 {{- if eq .chezmoi.os "freebsd" }}
-TLSType STARTTLS
+# TLSType STARTTLS
+TLSType IMAPS
 {{- else }}
-SSLType STARTTLS
+# SSLType STARTTLS
+SSLType IMAPS
 {{- end }}
 User baptiste@bapt.name
 
