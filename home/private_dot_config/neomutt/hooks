@@ -18,5 +18,6 @@ message-hook ~A 'unalternative_order *; alternative_order text/calendar text/pla
 # Open HTML part by default for specific messages
 message-hook '~s "Nessus Scan Results:"'  'unalternative_order *;alternative_order text/html text/plain'
 message-hook '~f billing@zoom.us'  'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~f info@propaganda666.com'  'unalternative_order *;alternative_order text/html text/plain'
 
 # vim: set ft=muttrc:
