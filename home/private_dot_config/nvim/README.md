@@ -1,8 +1,8 @@
 # dotfiles/lazyvim/nvim
 
-<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/plugins?style=flat" /></a>
-<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/leaderkey?style=flat" /></a>
-<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/plugin-manager?style=flat" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/plugins?style=flat" alt="dotyfiles badges: plugins" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/leaderkey?style=flat" alt="dotyfiles badges: leaderkey" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-lazyvim-nvim/badges/plugin-manager?style=flat" alt="dotyfiles badges: plugin manager" /></a>
 
 > Configuration managed using https://www.lazyvim.org/
 

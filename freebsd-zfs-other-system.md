@@ -1,4 +1,4 @@
-## Mount external ZFS pool
+# Mount external ZFS pool
 
 ```shell
 # Show info about a ZFS label ln a partition
