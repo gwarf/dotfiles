@@ -20,6 +20,7 @@ packages:
       - "doggo"
       - "duf"
       - "dust"
+      - "extract_url"
       - "fd"
       - "fetch-crl"
       - "fish"
