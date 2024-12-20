@@ -1,6 +1,7 @@
 -- Loading CMP source in blink using https://github.com/Saghen/blink.compat
 -- derived from https://github.com/LazyVim/LazyVim/blob/c1ee761dd88ec71fa9c9eb9706828598e7522c5d/lua/lazyvim/plugins/extras/ai/tabnine.lua#L40
--- FIXME: configuration à la using LazyVim
+-- FIXME: configuration à la LazyVim
+-- Not working
 return {
 
   { "codybuell/cmp-lbdb" },
@@ -24,7 +25,8 @@ return {
   },
 }
 
--- XXX: na5tive configuration
+-- FIXME: native configuration
+-- not working too
 -- return {
 --   -- add blink.compat
 --   -- {
