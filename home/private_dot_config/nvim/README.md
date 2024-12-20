@@ -1,8 +1,8 @@
 # dotfiles/lazyvim/nvim
 
-<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/plugins?style=flat" alt="dotyfiles badges: plugins" /></a>
-<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/leaderkey?style=flat" alt="dotyfiles badges: leaderkey" /></a>
-<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/plugin-manager?style=flat" alt="dotyfiles badges: plugin manager" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/plugins?style=flat" alt="dotfyle badge: plugins" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/leaderkey?style=flat" alt="dotfyle badge: leaderkey" /></a>
+<a href="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim"><img src="https://dotfyle.com/gwarf/dotfiles-home-privatedotconfig-nvim/badges/plugin-manager?style=flat" alt="dotfyle badge: plugin manager" /></a>
 
 > Configuration managed using https://www.lazyvim.org/
 
