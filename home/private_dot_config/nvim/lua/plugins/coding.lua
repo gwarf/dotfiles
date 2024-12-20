@@ -65,6 +65,7 @@ return {
   },
 
   -- Structural search and replace
+  -- XXX: currently not really used
   {
     "cshuaimin/ssr.nvim",
     keys = {
@@ -77,24 +78,6 @@ return {
         desc = "Structural Replace",
       },
     },
-  },
-
-  -- Refactoring library based off the Refactoring book by Martin Fowler
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>r",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
   },
 
   -- Use <tab> for completion and snippets (supertab).
