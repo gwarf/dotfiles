@@ -336,6 +336,7 @@ packages:
         - "bw"
         # XXX: manually installed with .deb from GitHub
         #   - "chezmoi"
+        - "discord"
         - "doggo"
         # XXX: manually installed with .deb from GitHub
         #   - "obsidian"
