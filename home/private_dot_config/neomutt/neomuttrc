@@ -14,7 +14,8 @@ folder-hook Sent set sort=reverse-date-sent
 # Workaround for lack of background_edit support in Neomutt
 # https://github.com/neomutt/neomutt/discussions/4145
 # https://github.com/neomutt/neomutt/issues/2713
-set editor="neomutt-compose.sh"
+# set editor="neomutt-compose.sh"
+set editor="nvim"
 
 # Source neomutt-specific configuration
 # Colors
