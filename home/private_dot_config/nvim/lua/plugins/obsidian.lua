@@ -1,4 +1,8 @@
 -- https://github.com/mmai/dotfiles/blob/master/.config/LazyVim/lua/plugins/markdown.lua
+-- TODO: check and merge useful bits from other configurations
+-- https://github.com/Gentleman-Programming/Gentleman.Dots/blob/main/GentlemanNvim/nvim/lua/plugins/obsidian.lua
+-- https://github.com/epwalsh/obsidian.nvim/issues/770
+-- https://github.com/maxclax/dotfiles/blob/main/private_dot_config/nvim-custom/lua/plugins/obsidian.lua.tmpl
 return {
   -- Blink Auto-completion for Obsidian (replace nvim_cmp)
   {
