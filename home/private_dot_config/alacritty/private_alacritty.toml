@@ -1,21 +1,20 @@
 [general]
 live_config_reload = true
-import = [
-  "~/.config/alacritty/tokyonight_storm.toml"
-]
+import = ["~/.config/alacritty/tokyonight_storm.toml"]
 
 [font]
 # fc-list | grep JetBrains
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
-bold= { family = "JetBrainsMono Nerd Font", style = "Bold" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
 size = 15.0
 
 [terminal]
 [terminal.shell]
 program = "/opt/homebrew/bin/fish"
-args = [ "--interactive", "--login" ]
+args = ["--interactive", "--login"]
 
 [window]
+option_as_alt = "OnlyRight"
 padding = { x = 8, y = 2 }
 dynamic_padding = true
