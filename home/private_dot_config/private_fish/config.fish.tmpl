@@ -21,6 +21,10 @@ if status is-interactive
     end
     {{ end -}}
 
+    if test -d ~/.local/bin
+        fish_add_path -p -m ~/.local/bin
+    end
+
     # Use bat as pager
     set -gx PAGER bat
     set -gx SYSTEMD_PAGER bat
