@@ -37,6 +37,9 @@ EOF
 mas purchase {{ . | quote }}
 mas install {{ . | quote }}
 {{ end -}}
+{{ range .packages.darwin.pipx -}}
+pipx install {{ . | quote }}
+{{ end -}}
 
 {{ else if eq .chezmoi.os "linux" -}}
 

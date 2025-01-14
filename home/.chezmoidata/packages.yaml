@@ -150,6 +150,8 @@ packages:
       - "1317704208"
       # Xcode
       - "497799835"
+    pipx:
+      - "mccli"
   freebsd:
     cli:
       - "direnv"
