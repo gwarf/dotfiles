@@ -106,6 +106,7 @@ packages:
       - "docker"
       - "drawio"
       - "firefox"
+      - "flox"
       - "font-jetbrains-mono-nerd-font"
       - "gimp"
       - "github"
@@ -152,6 +153,8 @@ packages:
       - "497799835"
     pipx:
       - "mccli"
+      - "pre-commit"
+      - "shodan"
   freebsd:
     cli:
       - "direnv"
