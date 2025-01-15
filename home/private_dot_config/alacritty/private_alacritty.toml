@@ -4,9 +4,9 @@ import = ["~/.config/alacritty/tokyonight_storm.toml"]
 
 [font]
 # fc-list | grep JetBrains
-normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
-bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
+italic = { family = "JetBrainsMono Nerd Font Mono", style = "Italic" }
+bold = { family = "JetBrainsMono Nerd Font Mono", style = "Bold" }
 size = 15.0
 
 [terminal]
