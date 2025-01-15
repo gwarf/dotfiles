@@ -38,6 +38,10 @@ if status is-interactive
     # Disable cowsay for Ansible
     set -gx ANSIBLE_NOCOWS 1
 
+    if type -q flox
+        set -gx FLOX_SHELL fish
+    end
+
     # Abbreviations
     abbr -a :q exit
     abbr -a g git
@@ -90,7 +94,7 @@ if status is-interactive
 
     if test (uname) = Darwin
         # Add homebrew paths
-        {{ if stat "/opt/homebrew/bin/" }}
+        {{ if stat "/opt/homebrew/bin/" -}}
         fish_add_path /opt/homebrew/bin
         if test -d /opt/homebrew/opt/coreutils/libexec/gnubin
             fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
