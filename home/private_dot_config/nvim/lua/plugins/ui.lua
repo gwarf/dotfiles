@@ -60,7 +60,8 @@ return {
       -- colorscheme = "dracula",
       -- colorscheme = "catppuccin-frappe",
       colorscheme = function()
-        require("tokyonight").load({ style = "storm" })
+        ---@diagnostic disable-next-line: missing-fields
+        require("tokyonight").load({ style = "moon" })
       end,
     },
   },
@@ -95,7 +96,9 @@ return {
         window = { margin = { vertical = 0, horizontal = 1 } },
         render = function(props)
           local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          ---@diagnostic disable-next-line: no-unknown
           local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+          ---@diagnostic disable-next-line: no-unknown
           return { { icon, guifg = color }, { " " }, { filename } }
         end,
       })
