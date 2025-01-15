@@ -1,0 +1,9 @@
+# Empty values reset the configuration to the default value
+# ghostty +list-fonts
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 15
+
+# ghostty +list-themes
+theme = tokyonight_moon
+
+command = /opt/homebrew/bin/fish --login --interactive
