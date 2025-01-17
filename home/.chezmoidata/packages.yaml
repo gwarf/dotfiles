@@ -82,6 +82,7 @@ packages:
       - "tealdeer"
       - "telnet"
       - "testssl"
+      - "tigervnc-viewer"
       - "tmux"
       - "tree"
       - "tree-sitter"
@@ -127,7 +128,8 @@ packages:
       # - "teamviewer"
       - "thunderbird@esr"
       - "vagrant"
-      - "virtualbox"
+      # XXX: broken on Apple Silicon
+      # - "virtualbox"
       - "visual-studio-code"
       - "vlc"
       - "webex"
