@@ -42,12 +42,12 @@ if xinput list | grep -q '05f3:0007'; then
   printf 'Found a Kinesis keyboard\n'
   # XXX keep only the first value as kinesis have two devices...
   remote_id=$(
-      xinput list \ | sed -n 's/.*05f3:0007.*id=\([0-9]*\).*keyboard.*/\1/p' \
-      | head -1
+    xinput list \  | sed -n 's/.*05f3:0007.*id=\([0-9]*\).*keyboard.*/\1/p' |
+      head -1
   )
   if [ -z "$remote_id" -o -z "$DISPLAY" ]; then
-    printf "remote_id: $remote_id\n"
-    printf "DISPLAY: $DISPLAY\n"
+    printf "remote_id: %s \n" "$remote_id"
+    printf "DISPLAY: %s\n" "$DISPLAY"
     # Fallback to Xmodmap
     # printf "remote_id or DISPLAY are missing, fallback to Xmodmap\n"
     # Xmodmap ~/.Xmodmap-kinesis
@@ -65,8 +65,8 @@ if xinput list | grep -q '05f3:0007'; then
     # XXX use synch?
     # XXX remote_id seems to prevent using it
     # xkbcomp -i $remote_id -w 0 ~/.config/i3/kinesis_custom.xkb $DISPLAY
-    printf "Loading ~/.config/i3/kinesis_custom.xkb on $DISPLAY\n"
-    xkbcomp -w 0 ~/.config/i3/kinesis_custom.xkb $DISPLAY
+    printf "Loading ~/.config/i3/kinesis_custom.xkb on %s\n" "$DISPLAY"
+    xkbcomp -w 0 ~/.config/i3/kinesis_custom.xkb "$DISPLAY"
   fi
 else
   printf 'No kinesis keybaord found\n'
