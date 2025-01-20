@@ -55,6 +55,7 @@ jobs:
           # Validates all source when push on main, else just the git diff with main.
           # Override with true if you always want to lint all sources
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          FILTER_REGEX_EXCLUDE: (deprecated/)
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           DISABLE: COPYPASTE
