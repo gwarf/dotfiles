@@ -120,6 +120,7 @@
 
 [commit]
   gpgsign = false
+  template = ~/.git-commit-message
 
 [fetch]
   # Clean up remote-tracking branches while fetching
