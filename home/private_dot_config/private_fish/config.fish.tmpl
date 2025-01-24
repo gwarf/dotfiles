@@ -68,6 +68,7 @@ if status is-interactive
     alias l="lsd --group-directories-first --long --date '+%F %T'"
     alias la="lsd --group-directories-first --long --date '+%F %T' --almost-all"
     alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
+    alias fd="fd --hidden --no-ignore"
     alias ..="cd .."
     {{ if ne .chezmoi.os "freebsd" -}}
     alias chown="chown --preserve-root"
