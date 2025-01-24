@@ -1,5 +1,5 @@
 {{- if eq .chezmoi.os "darwin" -}}
-{"email":"baptiste.grenier@egi.eu","sso_id":null,"base_url":null,"identity_url":null,"ui_url":null,"notifications_url":null,"lock_timeout":360000,"sync_interval":3600,"pinentry":"pinentry-mac","client_cert_path":null}
+{"email":"baptiste.grenier@egi.eu","sso_id":null,"base_url":null,"identity_url":null,"ui_url":null,"notifications_url":null,"lock_timeout":360000,"sync_interval":3600,"pinentry":"/opt/homebrew/bin/pinentry-mac","client_cert_path":null}
 {{- else }}
 {"email":"baptiste@bapt.name","sso_id":null,"base_url":null,"identity_url":null,"ui_url":null,"notifications_url":null,"lock_timeout":360000,"sync_interval":3600,"pinentry":"pinentry-gnome3","client_cert_path":null}
 {{- end }}
