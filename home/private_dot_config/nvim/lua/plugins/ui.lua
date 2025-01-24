@@ -80,30 +80,30 @@ return {
   },
 
   -- floating winbar
-  {
-    "b0o/incline.nvim",
-    event = "BufReadPre",
-    version = false,
-    config = function()
-      local colors = require("tokyonight.colors").setup()
-      require("incline").setup({
-        highlight = {
-          groups = {
-            InclineNormal = { guibg = "#FC56B1", guifg = colors.black },
-            InclineNormalNC = { guifg = "#FC56B1", guibg = colors.black },
-          },
-        },
-        window = { margin = { vertical = 0, horizontal = 1 } },
-        render = function(props)
-          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-          ---@diagnostic disable-next-line: no-unknown
-          local icon, color = require("nvim-web-devicons").get_icon_color(filename)
-          ---@diagnostic disable-next-line: no-unknown
-          return { { icon, guifg = color }, { " " }, { filename } }
-        end,
-      })
-    end,
-  },
+  -- {
+  --   "b0o/incline.nvim",
+  --   event = "BufReadPre",
+  --   version = false,
+  --   config = function()
+  --     local colors = require("tokyonight.colors").setup()
+  --     require("incline").setup({
+  --       highlight = {
+  --         groups = {
+  --           InclineNormal = { guibg = "#FC56B1", guifg = colors.black },
+  --           InclineNormalNC = { guifg = "#FC56B1", guibg = colors.black },
+  --         },
+  --       },
+  --       window = { margin = { vertical = 0, horizontal = 1 } },
+  --       render = function(props)
+  --         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+  --         ---@diagnostic disable-next-line: no-unknown
+  --         local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+  --         ---@diagnostic disable-next-line: no-unknown
+  --         return { { icon, guifg = color }, { " " }, { filename } }
+  --       end,
+  --     })
+  --   end,
+  -- },
 
   -- scrollbar
   {

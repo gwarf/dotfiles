@@ -9,31 +9,6 @@ return {
     },
   },
 
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    -- Required: https://github.com/folke/lazy.nvim/issues/688
-    lazy = false,
-    opts = {
-      filesystem = {
-        filtered_items = {
-          visible = true,
-          hide_dotfiles = false,
-          never_show = { ".git", ".DS_Store" },
-        },
-        group_empty_dirs = true,
-      },
-      event_handlers = {
-        {
-          -- auto close when a file got selected
-          event = "file_opened",
-          handler = function(_)
-            require("neo-tree.command").execute({ action = "close" })
-          end,
-        },
-      },
-    },
-  },
-
   -- better diffing
   {
     "sindrets/diffview.nvim",
