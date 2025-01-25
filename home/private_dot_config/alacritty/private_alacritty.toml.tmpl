@@ -11,7 +11,13 @@ size = 15.0
 
 [terminal]
 [terminal.shell]
+{{ if eq .chezmoi.os "darwin" -}}
 program = "/opt/homebrew/bin/fish"
+{{ else if eq .chezmoi.os "freebsd" -}}
+program = "/usr/local/bin/fish"
+{{ else -}}
+program = "fish"
+{{ end -}}
 args = ["--interactive", "--login"]
 
 [window]
