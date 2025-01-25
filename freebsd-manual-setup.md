@@ -9,7 +9,7 @@ Use latest packages, to be used with HEAD of ports repository.
 
 ```shell
 mkdir -p /usr/local/etc/pkg/repos
-echo 'FreeBSD: { url: "pkg+http://pkg.FreeBSD.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+echo 'FreeBSD: { url: "pkg+https://pkg.freebsd.org/${ABI}/latest" }' > /usr/local/etc/pkg/repos/FreeBSD.conf
 pkg update -f
 pkg upgrade -f
 ```
@@ -20,21 +20,28 @@ pkg upgrade -f
 ```shell
 pkg install doas
 cp /usr/local/etc/doas.conf.sample /usr/local/etc/doas.conf
-vim /usr/local/etc/doas.conf
+vi /usr/local/etc/doas.conf
 ```
 
 ## Install chezmoi
 
+> Requirement to be able to access Bitwarden secrets: rbw and pinentry
+
+```shell
+scp ptidoux:/poudriere/data/packages/14-2-amd64-main/All/rbw-1.12.1_1.pkg .
+doas pkg install rbw-1.12.1_1.pkg pinentry-gnome
+```
+
 [chezmoi](https://www.chezmoi.io/) will ake of installing all packages, but
 system level configuration is to be done manually.
-
+..
 ```shell
 doas pkg install -y git chezmoi
 chezmoi init gwarf
 chezmoi apply
 # Link repos to my usual place
-mkdir ~/repos/
-ln -s ~/.local/share/chezmoi ~/repos/dotfiles/
+mkdir -p ~/code/repos/
+ln -s ~/.local/share/chezmoi ~/code/repos/dotfiles/
 ```
 
 ## Xorg
@@ -45,11 +52,12 @@ doas pkg install clover
 doas pkg install clinfo
 clinfo
 # Setup for using Xorg
+doas pkg install drm-kmod xorg xf86-video-amdgpu gnome-lie gdm
 doas pw groupmod video -m baptiste
 doas sysrc kld_list+="amdgpu"
 doas kldload amdgpu
 # For the mouse management
-doas echo "kern.evdev.rcpt_mask=6" >> /etc/sysctl.conf
+doas sh -c 'echo "kern.evdev.rcpt_mask=6" >> /etc/sysctl.conf'
 ```
 
 ### Install fonts
@@ -72,7 +80,7 @@ Check [FreeBSD handbook](https://docs.freebsd.org/en/books/handbook/desktop/).
 
 ```shell
 # Mount /proc
-doas echo "proc			/proc	procfs	rw 		0	0" > /etc/fstab"
+doas 'echo "proc			/proc	procfs	rw 		0	0" > /etc/fstab'
 # Enable dbus service
 doas sysrc dbus_enable="YES"
 doas service dbus start
