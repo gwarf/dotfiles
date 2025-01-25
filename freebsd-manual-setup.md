@@ -73,8 +73,8 @@ vi /usr/local/etc/doas.conf
 
 ## rbw
 
-There is currently no official port for Obsidian. It's convenient to build it
-using poudriere.
+There is currently no official port for rbw.
+It's convenient to build it using poudriere.
 
 ```shell
 # Add rbw to the custom repository package list
@@ -90,6 +90,7 @@ Custom: {
 doas pkg update
 pkg search -Q repository rbw
 daos pkg install rbw
+```
 
 ## Install chezmoi
 
@@ -102,7 +103,7 @@ doas pkg install rbw-1.12.1_1.pkg pinentry-gnome
 
 [chezmoi](https://www.chezmoi.io/) will ake of installing all packages, but
 system level configuration is to be done manually.
-..
+
 ```shell
 doas pkg install -y git chezmoi
 chezmoi init gwarf
@@ -155,7 +156,6 @@ See https://blog.bapt.name/2024/08/31/building-freebsd-ports/.
 ## Obsidian
 
 There is [port for Obsidian](https://www.freshports.org/textproc/obsidian/),
-
 but due to licences issues it connot be redistributed. It's convenient to
 build it using poudriere.
 
@@ -178,7 +178,6 @@ doas pkg update
 pkg search -Q repository obsidian
 doas pkg install obsidian
 ```
-```
 
 ## Keybase
 
@@ -190,19 +189,21 @@ https://github.com/0mp/kbfsd
 doas sysctl vfs.usermount=1
 doas vim /etc/sysctl.conf
 vfs.usermount=1
-# Be in operator group
+# Must be in operator group, may need to reboot
+doas pw group mod operator -m baptiste
 groups
 
 doas kldload fusefs
 
 doas vim /etc/rc.conf
-kld_list="amdgpu ext2fs fusefs"
+kld_list="amdgpu 2fs fusefs"
 
 doas mkdir /keybase
 doas chown baptiste:operator /keybase
 chmod 770 /keybase/
 
 kbfsfuse /keybase
+keybase login
 ls /keybase/
 ```
 
