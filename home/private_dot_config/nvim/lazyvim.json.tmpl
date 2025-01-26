@@ -3,6 +3,9 @@
     "lazyvim.plugins.extras.coding.mini-comment",
     "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.coding.neogen",
+{{- if eq .chezmoi.os "freebsd" }}
+    "lazyvim.plugins.extras.coding.nvim-cmp",
+{{- end }}
     "lazyvim.plugins.extras.coding.yanky",
     "lazyvim.plugins.extras.dap.core",
     "lazyvim.plugins.extras.editor.dial",
@@ -20,7 +23,9 @@
     "lazyvim.plugins.extras.lang.markdown",
     "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.terraform",
+{{- if ne .chezmoi.os "freebsd" }}
     "lazyvim.plugins.extras.lang.toml",
+{{- end }}
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.test.core",
     "lazyvim.plugins.extras.ui.edgy",

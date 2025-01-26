@@ -48,8 +48,10 @@ return {
         --- https://github.com/williamboman/mason.nvim?tab=readme-ov-file#default-configuration
         -- log_level = vim.log.levels.DEBUG,
         -- Use a local registry with changes to be merged upstream
+        -- https://github.com/mason-org/mason-registry/pull/7535
+        -- :MasonInstall --target=freebsd_x64 terraform-ls
         opts.registries = {
-          "file:~/repos/mason-registry",
+          "file:~/code/repos/mason-registry",
           "github:mason-org/mason-registry",
         }
       end
