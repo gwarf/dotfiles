@@ -6,6 +6,8 @@
 {{- if ne .chezmoi.os "darwin" }}
 Library/**
 .config/karabiner/karabiner.json
+.config/waybar
+.config/hypr
 {{- end }}
 {{- if ne .chezmoi.os "linux" }}
 Mail/.notmuch/hooks/post-new
