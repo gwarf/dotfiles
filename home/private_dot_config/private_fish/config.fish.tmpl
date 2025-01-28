@@ -167,6 +167,11 @@ if status is-interactive
         eval "$(ssh-agent -c)" >/dev/null
     end
 
+    {{ if ne .chezmoi.os "darwin" -}}
+    # XXX: for hyprland
+    export GPG_TTY=$(tty)
+    {{ end -}}
+
     # Set color variables
     set emphasized_text brcyan # base1
     set normal_text brblue # base0
