@@ -79,10 +79,13 @@ decoration {
     active_opacity = 1.0
     inactive_opacity = 1.0
 
+    {{ if ne .chezmoi.os "freebsd" -}}
+    # XXX: option do not exist on FreeBSD 2025-01-28
     drop_shadow = true
     shadow_range = 4
     shadow_render_power = 3
     col.shadow = rgba(1a1a1aee)
+    {{ end -}}
 
     # https://wiki.hyprland.org/Configuring/Variables/#blur
     blur {

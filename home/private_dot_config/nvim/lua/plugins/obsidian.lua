@@ -50,4 +50,6 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
       },
     },
   }
+else
+  return {}
 end

@@ -8,7 +8,11 @@ pinentry-program /usr/local/bin/pinentry-mac
 {{- end }}
 {{- end }}
 {{- if eq .chezmoi.os "freebsd" -}}
+{{- if eq .chezmoi.hostname "brutal" -}}
+pinentry-program /usr/local/bin/pinentry
+{{ else -}}
 pinentry-program /usr/local/bin/pinentry-gnome3
+{{- end -}}
 {{- end }}
 default-cache-ttl 600
 max-cache-ttl 7200

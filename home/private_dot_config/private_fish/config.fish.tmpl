@@ -93,74 +93,78 @@ if status is-interactive
         fish_add_path ~/bin
     end
 
-    if test (uname) = Darwin
-        # Add homebrew paths
-        {{ if stat "/opt/homebrew/bin/" -}}
-        fish_add_path /opt/homebrew/bin
-        if test -d /opt/homebrew/opt/coreutils/libexec/gnubin
-            fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
-        end
-        {{ else -}}
-        fish_add_path /usr/local/bin
-        fish_add_path /usr/local/sbin
-        if test -d /usr/local/opt/coreutils/libexec/gnubin
-            fish_add_path /usr/local/opt/coreutils/libexec/gnubin
-        end
-        {{ end -}}
+    {{ if eq .chezmoi.os "darwin" -}}
+    # Add homebrew paths
+    {{ if stat "/opt/homebrew/bin/" -}}
+    fish_add_path /opt/homebrew/bin
+    if test -d /opt/homebrew/opt/coreutils/libexec/gnubin
+        fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+    end
+    {{ else -}}
+    fish_add_path /usr/local/bin
+    fish_add_path /usr/local/sbin
+    if test -d /usr/local/opt/coreutils/libexec/gnubin
+        fish_add_path /usr/local/opt/coreutils/libexec/gnubin
+    end
+    {{ end -}}
 
-        # Use a more usual path for config
-        set -gx TEALDEER_CONFIG_DIR ~/.config/tealdeer/
+    # Use a more usual path for config
+    set -gx TEALDEER_CONFIG_DIR ~/.config/tealdeer/
 
-        # https://spicetify.app
-        if test -e ~/.spicetify
-            fish_add_path ~/.spicetify/
-        end
+    # https://spicetify.app
+    if test -e ~/.spicetify
+        fish_add_path ~/.spicetify/
+    end
 
-        if test -e ~/perl5/perlbrew/etc/perlbrew.fish
-            . ~/perl5/perlbrew/etc/perlbrew.fish
-        end
+    if test -e ~/perl5/perlbrew/etc/perlbrew.fish
+        . ~/perl5/perlbrew/etc/perlbrew.fish
+    end
 
-        abbr -a bru "brew update && brew upgrade"
+    abbr -a bru "brew update && brew upgrade"
 
-        # XXX: disabled
-        # Favor using llvm stuff from homebrew
-        # clang-15: unknown argument -02
-        # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-        # set -gx CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
-        # set -gx CPPFLAGS "-I/usr/local/opt/llvm/include"
-        # set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
-        # fish_add_path "/usr/local/opt/llvm/bin"
+    # XXX: disabled
+    # Favor using llvm stuff from homebrew
+    # clang-15: unknown argument -02
+    # set -gx CFLAGS "-02 -I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+    # set -gx CFLAGS "-I/usr/local/opt/openssl/include -I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"
+    # set -gx CPPFLAGS "-I/usr/local/opt/llvm/include"
+    # set -gx LDFLAGS "-L/usr/local/opt/openssl/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/llvm/lib -L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+    # fish_add_path "/usr/local/opt/llvm/bin"
 
-        # FIXME: not working for getting norg-treesitter to build
-        # Use clang/llvm as main compiler
-        # set -gx CC clang
-        # set -gx CXX clang++
-        # set -gx COMPILER clang++
+    # FIXME: not working for getting norg-treesitter to build
+    # Use clang/llvm as main compiler
+    # set -gx CC clang
+    # set -gx CXX clang++
+    # set -gx COMPILER clang++
 
-        # Use gcc12 from homebrew to build neorg treesitter
-        # set -gx CC /usr/local/bin/gcc-12
+    # Use gcc12 from homebrew to build neorg treesitter
+    # set -gx CC /usr/local/bin/gcc-12
 
-        # XXX: not working
-        # Use clang++ from system with recent C++ version to build neorg treesitter
-        # set -gx CC "/usr/bin/clang++ -std=c++17"
+    # XXX: not working
+    # Use clang++ from system with recent C++ version to build neorg treesitter
+    # set -gx CC "/usr/bin/clang++ -std=c++17"
 
-        # Load pyenv
-        # https://github.com/pyenv/pyenv/wiki/Common-build-problems
-        set -x PYENV_ROOT $HOME/.pyenv
-        fish_add_path $PYENV_ROOT/bin
-        pyenv init - | source
+    # Load pyenv
+    # https://github.com/pyenv/pyenv/wiki/Common-build-problems
+    set -x PYENV_ROOT $HOME/.pyenv
+    fish_add_path $PYENV_ROOT/bin
+    pyenv init - | source
 
-        # Start oidc-agent
-        if type -q oidc-agent-service
-            eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
-            # for fedcloudclient, once egi account got created
-            # export OIDC_AGENT_ACCOUNT=egi
-        end
+    # Start oidc-agent
+    if type -q oidc-agent-service
+        eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
+        # for fedcloudclient, once egi account got created
+        # export OIDC_AGENT_ACCOUNT=egi
+    end
+    {{ end -}}
 
-        # Start SSH agent
-        if test -z "$SSH_AGENT_PID"
-            eval "$(ssh-agent -c)" >/dev/null
-        end
+    # Start SSH agent
+    {{ if eq .chezmoi.os "freebsd" -}}
+    # XXX: for hyprland
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+    {{ end -}}
+    if test -z "$SSH_AGENT_PID"
+        eval "$(ssh-agent -c)" >/dev/null
     end
 
     # Set color variables
