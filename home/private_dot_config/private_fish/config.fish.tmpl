@@ -156,6 +156,10 @@ if status is-interactive
         # for fedcloudclient, once egi account got created
         # export OIDC_AGENT_ACCOUNT=egi
     end
+
+    if type -q thefuck
+        thefuck --alias | source
+    end
     {{ end -}}
 
     # Start SSH agent

@@ -82,6 +82,7 @@ packages:
       - "tealdeer"
       - "telnet"
       - "testssl"
+      - "thefuck"
       - "tmux"
       - "tree"
       - "tree-sitter"
