@@ -1,14 +1,13 @@
 -- Loading CMP source in blink using https://github.com/Saghen/blink.compat
 -- derived from https://github.com/LazyVim/LazyVim/blob/c1ee761dd88ec71fa9c9eb9706828598e7522c5d/lua/lazyvim/plugins/extras/ai/tabnine.lua#L40
 -- https://github.com/Saghen/blink.compat/issues/19
+-- XXX: currently on FreeBSD blink.cmp is failing to install
+-- https://github.com/Saghen/blink.cmp/issues/940
 if not vim.uv.os_uname().sysname:find("FreeBSD") then
   return {
     {
       "saghen/blink.cmp",
       dependencies = {
-        -- works
-        "hrsh7th/cmp-emoji",
-        -- FIXME: does not work
         {
           "codybuell/cmp-lbdb",
           -- lazy = true,
@@ -21,11 +20,21 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
       },
       opts = {
         sources = {
-          compat = { "lbdb", "emoji" },
+          compat = { "lbdb" },
         },
       },
     },
   }
 else
-  return {}
+  return {
+    {
+      "hrsh7th/nvim-cmp",
+      optional = true,
+      dependencies = { "codybuell/cmp-lbdb" },
+      opts = function(_, opts)
+        opts.sources = opts.sources or {}
+        table.insert(opts.sources, { name = "lbdb" })
+      end,
+    },
+  }
 end
