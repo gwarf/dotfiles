@@ -8,6 +8,8 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
     {
       "saghen/blink.cmp",
       dependencies = {
+        -- FIXME: this is not working
+        -- https://github.com/codybuell/cmp-lbdb/issues/11
         {
           "codybuell/cmp-lbdb",
           -- lazy = true,
