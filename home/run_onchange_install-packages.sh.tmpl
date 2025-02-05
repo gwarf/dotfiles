@@ -43,6 +43,7 @@ pipx install {{ . | quote }}
 
 {{ else if eq .chezmoi.os "linux" -}}
 
+{{ if eq .chezmoi.osRelease.id "debian" -}}
 {{ range .packages.linux.pkgs -}}
 sudo apt --no-install-recommends install -y {{ . | quote }}
 {{ end -}}
@@ -54,6 +55,9 @@ sudo snap install --classic {{ . | quote }}
 {{ end -}}
 {{ range .packages.linux.snaps.edge -}}
 sudo snap install --edge {{ . | quote }}
+{{ end -}}
+
+{{ else if eq .chezmoi.osRelease.id "arch" -}}
 {{ end -}}
 
 {{ end -}}

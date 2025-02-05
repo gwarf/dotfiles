@@ -18,7 +18,7 @@ monitor=,preferred,auto,auto
 # See https://wiki.hyprland.org/Configuring/Keywords/
 
 # Set programs that you use
-$terminal = kitty
+$terminal = ghostty
 $fileManager = nautilus
 $menu = wofi --show drun
 
@@ -79,8 +79,8 @@ decoration {
     active_opacity = 1.0
     inactive_opacity = 1.0
 
-    {{ if ne .chezmoi.os "freebsd" -}}
-    # XXX: option do not exist on FreeBSD 2025-01-28
+    {{ if eq .chezmoi.osRelease.id "debian" -}}
+    # XXX: option do not exist on FreeBSD nor arch 2025-02
     drop_shadow = true
     shadow_range = 4
     shadow_render_power = 3
@@ -128,6 +128,8 @@ master {
 misc {
     force_default_wallpaper = -1 # Set to 0 or 1 to disable the anime mascot wallpapers
     disable_hyprland_logo = false # If true disables the random hyprland logo / anime girl background. :(
+    # https://github.com/obsidianmd/obsidian-clipper/issues/299
+    focus_on_activate = true
 }
 
 
