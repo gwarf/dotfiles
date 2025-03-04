@@ -107,7 +107,7 @@ return {
         -- use LanguageTool via ltex for spell checking
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         -- TODO: have cmp do completion using words from the dictionaries
-        ltex = {
+        ltex_plus = {
           -- FIXME: ltex-ls was installed and is working on delmain, but no
           -- more automatailly installed. Can be insalled manually:
           -- MasotnIsntall --target=linux
