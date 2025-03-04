@@ -47,7 +47,7 @@ packages:
       - "ldapvi"
       - "lsd"
       - "lsusb"
-      - "ltex-ls"
+      - "ltex-ls-plus"
       - "lua-language-server"
       - "luajit"
       - "markdownlint-cli2"
