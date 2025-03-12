@@ -32,6 +32,10 @@ return {
         skip("prettier")
         skip("shellcheck")
         skip("markdownlint-cli2")
+        opts.registries = {
+          "github:mason-org/mason-registry",
+          "github:visimp/mason-registry",
+        }
       end
       -- XXX: Skip packages to be installed with Mason but missing on FreeBSD
       if vim.uv.os_uname().sysname:find("FreeBSD") then
