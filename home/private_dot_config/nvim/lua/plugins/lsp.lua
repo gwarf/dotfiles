@@ -34,6 +34,7 @@ return {
         skip("markdownlint-cli2")
         opts.registries = {
           "github:mason-org/mason-registry",
+          -- XXX: providing ltex_plus
           "github:visimp/mason-registry",
         }
       end
