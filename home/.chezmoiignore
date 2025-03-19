@@ -11,6 +11,8 @@ Library/**
 Mail/.notmuch/hooks/post-new
 {{- end }}
 {{- if eq .chezmoi.os "darwin" }}
+.msmtprc
+.config/aerc
 .config/waybar
 .config/hypr
 .config/wofi
