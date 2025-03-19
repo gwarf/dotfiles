@@ -25,7 +25,7 @@ doas pkg install -y {{ . | quote }}
 
 {{ else if eq .chezmoi.os "darwin" -}}
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --file=/dev/stdin <<EOF
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
 {{ end -}}
