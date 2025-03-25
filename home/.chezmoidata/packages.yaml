@@ -36,6 +36,7 @@ packages:
       - "gpgme"
       - "httpie"
       - "hub"
+      - "icann-rdap"
       - "isort"
       - "isync"
       - "jq"
