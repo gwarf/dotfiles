@@ -156,10 +156,6 @@ if status is-interactive
         # for fedcloudclient, once egi account got created
         # export OIDC_AGENT_ACCOUNT=egi
     end
-
-    if type -q thefuck
-        thefuck --alias | source
-    end
     {{ end -}}
 
     # Start SSH agent
@@ -214,5 +210,13 @@ if status is-interactive
     direnv hook fish | source
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
+
+    if type -q thefuck
+        thefuck --alias | source
+    end
+
+    if type -q navi
+        navi widget fish | source
+    end
 end
 # vim: ft=fish
