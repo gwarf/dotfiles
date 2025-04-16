@@ -140,11 +140,8 @@ memory() {
 }
 
 check_tag() {
-  if [ "$monitor" == "0" ]; then
-    tags_list=($(herbstclient tag_status 0))
-  else
-    tags_list=($(herbstclient tag_status 1))
-  fi
+  tags_list=()
+  IFS=$'\t' read -r -a tags_list <<<"$(herbstclient tag_status $monitor)"
   tags=""
   for t in "${tags_list[@]}"; do
     if [[ "$t" == \#* ]]; then

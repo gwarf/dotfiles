@@ -45,7 +45,7 @@ if xinput list | grep -q '05f3:0007'; then
     xinput list \  | sed -n 's/.*05f3:0007.*id=\([0-9]*\).*keyboard.*/\1/p' |
       head -1
   )
-  if [ -z "$remote_id" -o -z "$DISPLAY" ]; then
+  if [ -z "$remote_id" ] || [ -z "$DISPLAY" ]; then
     printf "remote_id: %s \n" "$remote_id"
     printf "DISPLAY: %s\n" "$DISPLAY"
     # Fallback to Xmodmap
