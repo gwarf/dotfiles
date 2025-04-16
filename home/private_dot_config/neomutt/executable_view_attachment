@@ -84,10 +84,12 @@ filename=$(basename "$1")
 file=$(echo "$filename" | cut -d"." -f1)
 
 if [ $debug = "yes" ]; then
-  echo "1: $1  2: $2  3: $3" >$debug_file
-  echo "Filename: $filename" >>$debug_file
-  echo "File:""$file" >>$debug_file
-  echo "===========================" >>$debug_file
+  {
+    echo "1: $1  2: $2  3: $3"
+    echo "Filename: $filename"
+    echo "File:""$file"
+    echo "==========================="
+  } >>$debug_file
 fi
 
 # if the type is empty then try to figure it out.
@@ -111,9 +113,11 @@ newfile=$tmpdir/$newfile
 cp "$1" "$newfile"
 
 if [ $debug = "yes" ]; then
-  echo "File: $file TYPE: $type" >>$debug_file
-  echo "Newfile:" "$newfile" >>$debug_file
-  echo "Open With:" "$open_with" >>$debug_file
+  {
+    echo "File: $file TYPE: $type"
+    echo "Newfile:" "$newfile"
+    echo "Open With:" "$open_with"
+  } >>$debug_file
 fi
 
 # If there's no 'open with' then we can let preview do it's thing.

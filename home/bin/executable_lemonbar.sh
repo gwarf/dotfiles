@@ -14,15 +14,14 @@ else
   mkfifo "$fifo"
   monitor=1
 fi
-trap 'update' 10 # allows user to instantaneously update the bar
+trap 'update' SIGUSR1 # allows user to instantaneously update the bar
 
-trap "pkill lemonbar; kill $(jobs -p); rm -r $fifo; rm -r $lockf" EXIT # Cleanly exit
+trap 'pkill lemonbar; kill $(jobs -p); rm -r $fifo; rm -r $lockf' EXIT # Cleanly exit
 
 fgb='%{F#88c0d0}'
 fgn='%{F-}'
 fga='%{F#8fbcbb}'
 bgf='%{B#81a1c1}'
-clock='\uf017'
 # Date
 check_date() {
   while :; do
@@ -119,10 +118,10 @@ check_mus() {
     if pgrep -x "cmus" >/dev/null 2>&1; then
       title="$(cmus-remote -Q | grep "tag title " | sed "s/tag title //")"
       album="$(cmus-remote -Q | grep "tag album " | sed "s/tag album //")"
-      artist="$(cmus-remote -Q | grep "tag artist " | sed "s/tag artist //")"
-      echo "MUS${fgb} ~ ${fgn}$album${fgb} | $title ${fgn}" >$fifo &
+      # artist="$(cmus-remote -Q | grep "tag artist " | sed "s/tag artist //")"
+      echo "MUS${fgb} ~ ${fgn}$album${fgb} | $title ${fgn}" >"$fifo" &
     else
-      echo "MUS${fgb} ~ " >$fifo &
+      echo "MUS${fgb} ~ " >"$fifo" &
 
     fi
     sleep 5 &
@@ -130,7 +129,7 @@ check_mus() {
   done &
 
 }
-rami="$(echo '\uf85a')"
+
 memory() {
   while :; do
     ram="$(free -m | awk 'NR==2{printf "%s/%sMB\n", $3,$2,$3*100/$2 }')"
@@ -156,7 +155,7 @@ check_tag() {
       tags="${tags} ${t#?} "
     fi
   done
-  echo "DE$tags" >$fifo &
+  echo "DE$tags" >"$fifo" &
 }
 
 check_wm() {
@@ -185,15 +184,15 @@ parse_fifo() {
     DAT*)
       date="${line#???}"
       ;;
-    DES*)
-      desktop="${line#???}"
-      ;;
+    # DES*)
+    #   desktop="${line#???}"
+    #   ;;
     NET*)
       network="${line#???}"
       ;;
-    VPN*)
-      vpnname="${line#???}"
-      ;;
+    # VPN*)
+    #   vpnname="${line#???}"
+    #   ;;
     VOL*)
       volume="${line#???}"
       ;;

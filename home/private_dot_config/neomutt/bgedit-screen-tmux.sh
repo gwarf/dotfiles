@@ -38,7 +38,7 @@ set -e
 #   exit 1
 # fi
 
-editor=$1
+# editor=$1
 shift
 
 tmpdir=$(mktemp -d)
@@ -53,14 +53,14 @@ trap 'echo \$exitval > "$tmpdir/status"' EXIT INT QUIT
 exitval=\$?
 END_SCRIPT
 
-if test x$STY != x; then
+if test "x$STY" != "x"; then
   screen -X screen /bin/sh "$tmpdir/run" "$@"
-elif test x$TMUX != x; then
+elif test "x$TMUX" != "x"; then
   tmux neww /bin/sh "$tmpdir/run" "$@"
 else
   echo "Not running inside a terminal emulator" >&2
   exit 1
 fi
 
-read exitval <"$tmpdir/status"
+read -r exitval <"$tmpdir/status"
 exit "$exitval"
