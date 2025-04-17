@@ -102,7 +102,7 @@ packages:
       - "zoxide"
     casks:
       - "adobe-acrobat-reader"
-      - "alfred"
+      # - "alfred"
       - "balenaetcher"
       - "burp-suite"
       - "docker"
