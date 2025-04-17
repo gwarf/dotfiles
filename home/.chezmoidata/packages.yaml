@@ -104,7 +104,6 @@ packages:
       - "adobe-acrobat-reader"
       - "alfred"
       - "balenaetcher"
-      - "brave-browser"
       - "burp-suite"
       - "docker"
       - "drawio"
