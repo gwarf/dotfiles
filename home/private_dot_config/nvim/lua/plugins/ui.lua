@@ -9,6 +9,8 @@ return {
   -- treesitter-aware fork of dracula theme
   -- { "Mofiqul/dracula.nvim" },
   -- { "bluz71/vim-nightfly-colors" },
+  { "bluz71/vim-moonfly-colors", name = "moonfly", lazy = false, priority = 1000 },
+  { "bluz71/vim-nightfly-colors", name = "nightfly", lazy = false, priority = 1000 },
 
   {
     "akinsho/bufferline.nvim",
@@ -57,12 +59,14 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
+      -- colorscheme = "moonfly",
+      colorscheme = "nightfly",
       -- colorscheme = "dracula",
       -- colorscheme = "catppuccin-frappe",
-      colorscheme = function()
-        ---@diagnostic disable-next-line: missing-fields
-        require("tokyonight").load({ style = "moon" })
-      end,
+      -- colorscheme = function()
+      --   ---@diagnostic disable-next-line: missing-fields
+      --   require("tokyonight").load({ style = "moon" })
+      -- end,
     },
   },
 
