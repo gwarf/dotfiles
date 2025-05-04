@@ -163,9 +163,18 @@ if status is-interactive
     # XXX: for hyprland
     export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
     {{ end -}}
+    {{ if eq .chezmoi.os "darwin" -}}
+    # TODO: check if not starting a new agent with every new shell
     if test -z "$SSH_AGENT_PID"
         eval "$(ssh-agent -c)" >/dev/null
     end
+    {{ end -}}
+    {{ if eq .chezmoi.os "linux" -}}
+    # Using GPG agent to provide ssh agent feature
+    # https://wiki.archlinux.org/title/GNOME/Keyring#Disabling
+    set --erase SSH_AGENT_PID
+    set -gx SSH_AUTH_SOCK "$(gpgconf --list-dirs agent-ssh-socket)"
+    {{ end -}}
 
     {{ if ne .chezmoi.os "darwin" -}}
     # XXX: for hyprland

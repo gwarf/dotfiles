@@ -14,7 +14,10 @@ pinentry-program /usr/local/bin/pinentry
 pinentry-program /usr/local/bin/pinentry-gnome3
 {{- end -}}
 {{- end }}
-default-cache-ttl 600
-max-cache-ttl 7200
-default-cache-ttl-ssh 600
-max-cache-ttl-ssh 7200
+{{- if eq .chezmoi.os "linux" -}}
+pinentry-program /usr/bin/pinentry-gnome3
+{{- end }}
+default-cache-ttl 60480000
+max-cache-ttl 60480000
+default-cache-ttl-ssh 60480000
+max-cache-ttl-ssh 60480000
