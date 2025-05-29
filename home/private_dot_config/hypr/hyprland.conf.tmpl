@@ -22,6 +22,10 @@ $terminal = ghostty
 $fileManager = nautilus
 $menu = wofi --show drun
 
+# https://github.com/jetm/dotfiles/blob/5f5faa1661e17e6f29de7e87624d87ba4d2b1e7d/private_dot_config/exact_hypr/exact_hyprland/env.conf#L21
+# env = XDG_SESSION_TYPE, wayland
+# env = XDG_CURRENT_DESKTOP, Hyprland
+# env = XDG_SESSION_DESKTOP, Hyprland
 
 #################
 ### AUTOSTART ###
@@ -33,7 +37,31 @@ $menu = wofi --show drun
 # exec-once = $terminal
 # exec-once = nm-applet &
 # exec-once = waybar & hyprpaper & firefox
+{{ if eq .chezmoi.osRelease.id "freebsd" -}}
+# https://github.com/end-4/dots-hyprland/blob/main/.config/hypr/hyprland/execs.conf
+# exec-once = dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+exec-once = dbus-update-activation-environment --all
+exec-once = /usr/local/libexec/polkit-gnome-authentication-agent-1
+exec-once = /usr/local/libexec/xdg-desktop-portal-hyprland
+# XXX: --replace, --unlock
+# exec-once = eval $(gnome-keyring-daemon --start --components="secrets,pkcs11,ssh")
+env = SSH_AUTH_SOCK, $XDG_RUNTIME_DIR/gcr/ssh
+exec-once = gnome-keyring-daemon --start --components="secrets,pkcs11,ssh"
+exec-once = hypridle
+
+exec-once = waybar
+exec-once = swaync
+exec-once = hyprpaper
+
+# Clipboard: history
+# exec-once = wl-paste --watch cliphist store &
+exec-once = wl-paste --type text --watch cliphist store
+exec-once = wl-paste --type image --watch cliphist store
+
+exec-once = $terminal
+{{ else }}
 exec-once = waybar & swaync & hyprpaper & wlsunset
+{{ end }}
 
 #############################
 ### ENVIRONMENT VARIABLES ###
@@ -259,3 +287,9 @@ bindm = $mainMod, mouse:273, resizewindow
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 
 windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
+
+# logs are in $XDG_RUNTIME/hypr
+debug {
+  disable_logs = false
+  enable_stdout_logs = true
+}
