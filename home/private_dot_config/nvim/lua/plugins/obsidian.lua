@@ -29,16 +29,16 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
 						workspaces = {
 							{
 								name = "Perso",
-								path = "~/Obsidian/Perso",
+								path = "~/Notes/Perso",
 							},
-							{
-								name = "EGI",
-								path = "~/Obsidian/EGI",
-							},
-							{
-								name = "OPERAS",
-								path = "~/Obsidian/OPERAS",
-							},
+							-- {
+							-- 	name = "EGI",
+							-- 	path = "~/Notes/EGI",
+							-- },
+							-- {
+							-- 	name = "OPERAS",
+							-- 	path = "~/Notes/OPERAS",
+							-- },
 						},
 						completion = {
 							-- Set to false to disable completion.
