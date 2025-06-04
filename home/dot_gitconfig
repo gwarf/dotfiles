@@ -153,3 +153,8 @@
 	submoduleSummary = true
 [diff]
 	submodule = log
+
+# Allow to clone with https and then push over ssh
+# https://github.com/twpayne/chezmoi/discussions/3658
+[url "git@github.com:gwarf/"]
+	insteadOf = https://github.com/gwarf/
