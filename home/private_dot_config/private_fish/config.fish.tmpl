@@ -177,7 +177,6 @@ if status is-interactive
         set -gx SSH_AUTH_SOCK "$(gpgconf --list-dirs agent-ssh-socket)"
     end
     {{ end -}}
-
     {{ if ne .chezmoi.os "darwin" -}}
     export GPG_TTY=$(tty)
     {{ end -}}

@@ -1,3 +1,4 @@
+# https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html
 {{- if eq .chezmoi.os "darwin" -}}
 # use pinentry progam allowing to use keychain
 # https://merikan.com/2019/05/how-to-sign-git-commits/
@@ -14,10 +15,29 @@ pinentry-program /usr/local/bin/pinentry
 pinentry-program /usr/local/bin/pinentry-gnome3
 {{- end -}}
 {{- end }}
-{{- if eq .chezmoi.os "linux" -}}
+{{- if eq .chezmoi.os "linux" }}
+# I don't want pinentry-gnome3 to prevent be to get my pass from my password
+# manager
+# See https://dev.gnupg.org/T3084 and https://dev.gnupg.org/T3084
 pinentry-program /usr/bin/pinentry-gnome3
+# Curses causes some rendering issue with tmux, password field disappearing
+# pinentry-program /usr/bin/pinentry-curses
+# pinentry-program /usr/bin/pinentry-gtk
 {{- end }}
-default-cache-ttl 60480000
+
+# Cache passphrase longer
+# TODO: confirm if setting the cache is required for storing key in gnome keyring
+# XXX: secure / recommended timeout are way shorter
+# default-cache-ttl 60
+# max-cache-ttl 120
 max-cache-ttl 60480000
+default-cache-ttl 60480000
+
+# Use gpg-agent and GPG for SSH
+enable-ssh-support
 default-cache-ttl-ssh 60480000
 max-cache-ttl-ssh 60480000
+
+# https://github.com/drduh/YubiKey-Guide/blob/master/config/gpg-agent.conf
+# XXX: Not sure about realy need/use case
+ttyname $GPG_TTY
