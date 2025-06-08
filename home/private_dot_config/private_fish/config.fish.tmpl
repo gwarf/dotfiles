@@ -70,6 +70,7 @@ if status is-interactive
     alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
     alias fd="fd --hidden --no-ignore"
     alias ..="cd .."
+    alias ip="ip --color"
     {{ if ne .chezmoi.os "freebsd" -}}
     alias chown="chown --preserve-root"
     alias chmod="chmod --preserve-root"
