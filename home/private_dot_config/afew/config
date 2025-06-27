@@ -1,0 +1,23 @@
+[SpamFilter]
+
+[KillThreadsFilter]
+
+[ListMailsFilter]
+
+[MeFilter]
+
+[ArchiveSentMailsFilter]
+sent_tag = sent
+
+# FIXME: this is apparently not working as expected 
+# No tags are added for the folders
+[FolderNameFilter]
+maildir_separator = /
+folder_lowercases = true
+# folder_explicit_list =
+# folder_explicit_list = OPERAS/Archives OPERAS/Drafts OPERAS/Junk OPERAS/Sent OPERAS/Trash
+# folder_transforms = OPERAS/Archives:archived OPERAS/Drafts:draft OPERAS/Junk:junk OPERAS/Sent:sent OPERAS/Trash:deleted
+
+[DKIMValidityFilter]
+
+[InboxFilter]

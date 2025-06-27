@@ -12,5 +12,5 @@ fi
 # notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
 
 mbsync --verbose --all
+# XXX: afew is run as a notmuch post hook
 notmuch new
-afew --verbose --tag --new

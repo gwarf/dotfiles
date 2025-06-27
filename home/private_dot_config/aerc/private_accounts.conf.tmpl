@@ -1,11 +1,13 @@
 {{- if eq .chezmoi.hostname "torpedo" -}}
 [Work]
-source   = maildir://~/Mail/OPERAS
+source   = notmuch://~/Mail
+# maildir-store = ~/Mail
 # check-mail-cmd = mail-sync.sh
 # check-mail = 0
 address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
 outgoing = smtps://baptiste.grenier%40operas-eu.org@ssl0.ovh.net:465
 outgoing-cred-cmd = "rbw get ovh/operas/mail"
+query-map = ~/.config/aerc/operas-map.conf
 default  = Inbox
 from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
 copy-to  = Sent
