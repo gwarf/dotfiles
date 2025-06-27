@@ -1,0 +1,27 @@
+{{- if eq .chezmoi.hostname "torpedo" -}}
+[Work]
+source   = maildir://~/Mail/OPERAS
+# check-mail-cmd = mail-sync.sh
+# check-mail = 0
+outgoing = smtps://baptiste.grenier%40operas-eu.org@ssl0.ovh.net:465
+outgoing-cred-cmd = "rbw get ovh/operas/mail"
+default  = Inbox
+from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
+copy-to  = Sent
+pgp-auto-sign = true
+pgp-key-id = "0xCDA18F02"
+signature-file = ~/.config/neomutt/signature-operas
+{{- else }}
+[Personal]
+source   = maildir://~/Mail/Perso
+check-mail-cmd = mbsync -a
+check-mail = 0
+outgoing = smtp://baptiste%40bapt.name@mail.bapt.name:587
+outgoing-cred-cmd = "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
+default  = Inbox
+from     = Baptiste Grenier <baptiste@bapt.name>
+copy-to  = Sent
+pgp-auto-sign = true
+pgp-key-id = "0xCDA18F02"
+signature-file = ~/.config/neomutt/signature-perso
+{{- end }}

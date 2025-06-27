@@ -1,0 +1,17 @@
+configurations:
+  -
+    host: ssl0.ovh.net
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: true
+    username: "baptiste.grenier@operas-eu.org"
+    passwordCMD: "rbw get ovh/operas/mail"
+    xoAuth2: false
+    onNewMail: mail-sync.sh
+    onNewMailPost: SKIP
+    wait: 20
+    boxes:
+      -
+        mailbox: Inbox

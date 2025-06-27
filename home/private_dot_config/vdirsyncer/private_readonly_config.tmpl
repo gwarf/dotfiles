@@ -1,7 +1,7 @@
 [general]
 status_path = "~/.vdirsyncer/status/"
 
-{{- if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.hostname "torpedo" }}
 [storage local_contacts]
 type = "filesystem"
 path = "~/.contacts/"

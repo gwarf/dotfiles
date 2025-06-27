@@ -1,107 +1,34 @@
-{{- if eq .chezmoi.os "darwin" }}
-# https://roylez.info/2016-02-10-mutt-multi-imap-accounts/
-# XXX: may be simplified cf https://github.com/elobdog/mailhelp/blob/master/mbsyncrc
-# EGI Gmail Account
-IMAPAccount EGI
-Host imap.gmail.com
-User baptiste.grenier@egi.eu
-# https://support.google.com/accounts/answer/185833?hl=en
-# Set passwod on OSX: security add-generic-password -a baptiste.grenier@egi.eu -s imap.gmail.com -U -w
-PassCmd "security find-generic-password -s imap.gmail.com -a baptiste.grenier@egi.eu -w"
-TLSType IMAPS
+{{/* https://roylez.info/2016-02-10-mutt-multi-imap-accounts/ */}}
+{{- if eq .chezmoi.hostname "torpedo" -}}
+IMAPAccount account0
+Host ssl0.ovh.net
+User baptiste.grenier@operas-eu.org
+PassCmd "rbw get ovh/operas/mail"
+SSLType IMAPS
 AuthMechs LOGIN
-# CertificateFile /usr/local/etc/openssl/cert.pem
 PipelineDepth 50
 
-# Remote EGI IMAP
-IMAPStore EGI_gmail
-Account EGI
+# Remote
+IMAPStore account0_remote
+Account account0
 
-# Local EGI Maildir
-MaildirStore EGI_local
-Path ~/Mail/EGI/
-Inbox ~/Mail/EGI/Inbox
+# Local
+MaildirStore account0_local
+Path ~/Mail/OPERAS/
+Inbox ~/Mail/OPERAS/Inbox
+Subfolders Verbatim
 
-## Connect remote IMAP to local Folders
-
-Channel EGI-default
-Far :EGI_gmail:"INBOX"
-Near :EGI_local:Inbox
+# Connect remote and local
+Channel account0
+Far :account0_remote:
+Near :account0_local:
+Pattern *
 # Automatically create missing mailboxes, both locally and on the server
 Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
 # Automatically delete messages on either side if they are found deleted on the other
 Expunge Both
-
-Channel EGI-sent
-Far :EGI_gmail:"[Gmail]/Sent Mail"
-Near  :EGI_local:Sent
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
 # Save the synchronization state files in the relevant directory
 SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Channel EGI-starred
-Far :EGI_gmail:"[Gmail]/Starred"
-Near  :EGI_local:Starred
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Channel EGI-trash
-Far :EGI_gmail:"[Gmail]/Bin"
-Near  :EGI_local:Trash
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Channel EGI-archive
-Far :EGI_gmail:"[Gmail]/All Mail"
-Near  :EGI_local:All
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Channel EGI-drafts
-Far :EGI_gmail:"[Gmail]/Drafts"
-Near  :EGI_local:Drafts
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Channel EGI-spam
-Far :EGI_gmail:"[Gmail]/Spam"
-Near  :EGI_local:Spam
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
-# Automatically delete messages on either side if they are found deleted on the other
-Expunge Both
-
-Group EGI
-Channel EGI-default
-Channel EGI-sent
-Channel EGI-starred
-Channel EGI-trash
-Channel EGI-archive
-Channel EGI-drafts
-Channel EGI-spam
 {{- else }}
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
