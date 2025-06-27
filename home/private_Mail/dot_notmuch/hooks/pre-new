@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -eu
+
+afew --move --all --verbose

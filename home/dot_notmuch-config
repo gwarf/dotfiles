@@ -3,6 +3,7 @@
 # For more information about notmuch, see https://notmuchmail.org
 
 [database]
+# XXX: provide full path or expect errors with afew FolderNameFilter
 path=/home/baptiste/Mail
 
 [user]
