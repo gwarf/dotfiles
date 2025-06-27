@@ -5,13 +5,12 @@ configurations:
     tls: true
     tlsOptions:
       rejectUnauthorized: true
-      starttls: true
+      starttls: false
+    wait: 5
     username: "baptiste.grenier@operas-eu.org"
-    passwordCMD: "rbw get ovh/operas/mail"
+    password: "{{ (rbw "ovh/operas/mail").data.password }}"
     xoAuth2: false
-    onNewMail: mail-sync.sh
-    onNewMailPost: SKIP
-    wait: 20
     boxes:
       -
         mailbox: Inbox
+        onNewMail: ~/bin/mail-sync.sh

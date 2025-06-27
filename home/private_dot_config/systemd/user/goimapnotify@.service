@@ -1,0 +1,14 @@
+# https://usher.dev/posts/my-email-setup/
+[Unit]
+Description=Monitor IMAP mailboxes with goimapnotify
+# OnFailure=status-email-user@%n.service
+After=local-fs.target
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=300
+ExecStart=/home/baptiste/go/bin/goimapnotify -log-level info -conf /home/baptiste/.config/aerc/%i.yaml
+
+[Install]
+WantedBy=default.target
