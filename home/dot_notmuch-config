@@ -3,7 +3,7 @@
 # For more information about notmuch, see https://notmuchmail.org
 
 [database]
-path=Mail
+path=/home/baptiste/Mail
 
 [user]
 primary_email=baptiste.grenier@operas-eu.org
