@@ -24,4 +24,3 @@ rename = True
 folders = OPERAS/Inbox OPERAS/Junk
 OPERAS/Inbox = 'tag:sent':OPERAS/Sent 'tag:spam':OPERAS/Junk 'NOT tag:inbox':OPERAS/Archives 'tag:archived':OPERAS/Archives
 OPERAS/Junk = 'NOT tag:spam AND tag:inbox':OPERAS/Inbox 'NOT tag:spam':OPERAS/Archives
-

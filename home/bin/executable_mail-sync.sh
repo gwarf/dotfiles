@@ -8,9 +8,14 @@ if [ -n "$MBSYNC" -o -n "$NOTMUCH" ]; then
     exit 0
 fi
 
+# Move tagged messages to the related folders (i.e. spam and junk)
+afew --move --all --verbose
+
 echo "Deleting messages tagged as *deleted*"
 notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
 
+# Retrieve new messages
 mbsync --verbose --all
-# XXX: afew is run as a notmuch post hook
+
+# Tag new messages, afew runs as post hook
 notmuch new
