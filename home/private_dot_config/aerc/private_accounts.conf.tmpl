@@ -1,14 +1,17 @@
 {{- if eq .chezmoi.hostname "torpedo" -}}
 [Work]
-source   = notmuch://~/Mail
-# maildir-store = ~/Mail
+source   = notmuch://~/Mail/
+maildir-store = ~/Mail/
 address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
 outgoing = smtps://baptiste.grenier%40operas-eu.org@ssl0.ovh.net:465
 outgoing-cred-cmd = "rbw get ovh/operas/mail"
 query-map = ~/.config/aerc/operas-map.conf
 default  = Inbox
+folders-exclude = ~OPERAS.*
+enable-folders-sort = false
+folders-sort = Inbox Archive Sent Draft Junk Trash
 from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
-# copy-to  = Sent
+copy-to  = OPERAS/Sent
 pgp-auto-sign = true
 pgp-key-id = "0xCDA18F02"
 signature-file = ~/.config/neomutt/signature-operas
