@@ -2,4 +2,5 @@
 
 set -eu
 
+# XXX: use --all as otherwise sent mails are not properly identified
 afew --tag --all --verbose

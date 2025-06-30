@@ -12,7 +12,7 @@ other_email=baptiste@bapt.name
 
 [new]
 tags=new
-ignore=
+ignore=.uidvalidity;.mbsyncstate
 
 [search]
 exclude_tags=deleted;spam;
