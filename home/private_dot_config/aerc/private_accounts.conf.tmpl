@@ -15,6 +15,21 @@ copy-to  = OPERAS/Sent
 pgp-auto-sign = true
 pgp-key-id = "0xCDA18F02"
 signature-file = ~/.config/neomutt/signature-operas
+
+[Personal]
+source   = imaps://baptiste%40bapt.name@mail.bapt.name
+source-cred-cmd = "rbw get mail/baptiste@bapt.name"
+outgoing = smtp://baptiste%40bapt.name@mail.bapt.name:587
+outgoing-cred-cmd = "rbw get mail/baptiste@bapt.name"
+default  = INBOX
+folders-exclude = ~Archive/.*
+enable-folders-sort = false
+folders-sort = INBOX Archive Sent Draft Junk Trash
+from     = Baptiste Grenier <baptiste@bapt.name>
+copy-to  = Sent
+pgp-auto-sign = true
+pgp-key-id = "0xCDA18F02"
+signature-file = ~/.config/neomutt/signature-perso
 {{- else }}
 [Personal]
 source   = maildir://~/Mail/Perso
