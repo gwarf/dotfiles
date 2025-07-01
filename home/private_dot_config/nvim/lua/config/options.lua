@@ -3,6 +3,11 @@
 -- Add any additional options here
 local opt = vim.opt
 
+-- Enable backups
+opt.backup = true
+opt.writebackup = true
+opt.swapfile = true
+
 -- Using ufo provider: need a large value
 opt.foldlevel = 99
 opt.foldlevelstart = 99
