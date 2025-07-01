@@ -1,6 +1,6 @@
 # Empty values reset the configuration to the default value
 # ghostty +list-fonts
-font-family = "JetBrainsMono Nerd Font Mono"
+font-family = "Monaspace Neon"
 font-size = 15
 
 # ghostty +list-themes
@@ -11,3 +11,5 @@ command = /opt/homebrew/bin/fish --login --interactive
 {{ else if eq .chezmoi.os "linux" -}}
 command = /usr/bin/fish --login --interactive
 {{ end -}}
+
+window-decoration = client
