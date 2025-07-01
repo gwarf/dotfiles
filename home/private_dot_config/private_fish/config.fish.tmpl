@@ -98,6 +98,11 @@ if status is-interactive
         fish_add_path ~/bin
     end
 
+    if test -d /home/linuxbrew/.linuxbrew/bin
+        fish_add_path /home/linuxbrew/.linuxbrew/bin
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    end
+
     {{ if eq .chezmoi.os "darwin" -}}
     # Add homebrew paths
     {{ if stat "/opt/homebrew/bin/" -}}
