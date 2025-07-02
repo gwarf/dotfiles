@@ -29,6 +29,10 @@ if status is-interactive
         fish_add_path -p -m ~/go/bin
     end
 
+    if test -d /usr/lib/cargo/bin
+        fish_add_path -p -m /usr/lib/cargo/bin
+    end
+
     # Use bat as pager
     set -gx PAGER bat
     set -gx SYSTEMD_PAGER bat
@@ -227,11 +231,8 @@ if status is-interactive
     end
     zoxide init --cmd cd fish | source
     direnv hook fish | source
-    {{/* fzf--fish is only valid with fzf >= 0.48.0 */}}
-    {{/* on tuxedo (at least) the key bindings are automatically added to fish */}}
-    {{ if ne .chezmoi.osRelease.id "tuxedo" -}}
+    # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
-    {{ end -}}
 
     if type -q thefuck
         thefuck --alias | source
