@@ -36,12 +36,7 @@ if status is-interactive
     # Use bat as pager
     set -gx PAGER bat
     set -gx SYSTEMD_PAGER bat
-    {{ if eq .chezmoi.os "linux" -}}
-    # XXX: need to use nvim not from snap
-    set -gx MANPAGER "/usr/bin/nvim +Man!"
-    {{ else -}}
     set -gx MANPAGER "nvim +Man!"
-    {{ end -}}
 
     # Disable cowsay for Ansible
     set -gx ANSIBLE_NOCOWS 1
