@@ -29,39 +29,36 @@ Create Both
 Expunge Both
 # Save the synchronization state files in the relevant directory
 SyncState *
-{{- else }}
+{{- else if eq .chezmoi.hostname "sikaru" }}
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
-# XXX: On FreeBSD with pinentry-gnome3, the password is not taken from the gnome keyring
-# secret-tool store --label=mail host mail.bapt.name service imaps user baptiste@bapt.name
-PassCmd "secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name"
-# PassCmd "rbw get /mail/baptiste@bapt.name"
-# Port 443
-Port 993
-{{- if eq .chezmoi.os "freebsd" }}
-# TLSType STARTTLS
-TLSType IMAPS
-{{- else }}
-# SSLType STARTTLS
-SSLType IMAPS
-{{- end }}
+PassCmd "rbw get mail.bapt.name/sikaru/baptiste@bapt.name"
+Port 143
+TLSType STARTTLS
+AuthMechs LOGIN
 User baptiste@bapt.name
 
+# Remote
 IMAPStore baptiste-remote
 Account baptiste
 
+# Local
 MaildirStore baptiste-local
 Path ~/Mail/Perso/
 Inbox ~/Mail/Perso/Inbox
 SubFolders Verbatim
 
+# Connect remote and local
 Channel baptiste
-Create Both
-Expunge Both
 Far :baptiste-remote:
 Near :baptiste-local:
 Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Automatically delete messages on either side if they are found deleted on the other
+Expunge Both
 Remove None
+# Save the synchronization state files in the relevant directory
 SyncState *
 {{- end }}
