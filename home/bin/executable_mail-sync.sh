@@ -3,7 +3,7 @@
 MBSYNC=$(pgrep mbsync)
 NOTMUCH=$(pgrep notmuch)
 
-if [ -n "$MBSYNC" -o -n "$NOTMUCH" ]; then
+if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ]; then
     echo "Already running one instance of mbsync or notmuch. Exiting..."
     exit 0
 fi
