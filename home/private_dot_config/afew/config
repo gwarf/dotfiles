@@ -39,6 +39,9 @@ folder_transforms = Archive:archived Drafts:draft Trash:deleted Sent:sent
 # To avoid messing up with mbsync
 rename = True
 folders = Perso/Inbox Perso/Junk
-Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'NOT tag:inbox':Perso/Archive 'tag:archived':Perso/Archive
-Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox 'NOT tag:spam':Perso/Archive
+# XXX: Do not mess with archive as there still are subfolders
+# Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'NOT tag:inbox':Perso/Archive 'tag:archived':Perso/Archive
+Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk
+# Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox 'NOT tag:spam':Perso/Archive'
+Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox
 {{- end }}
