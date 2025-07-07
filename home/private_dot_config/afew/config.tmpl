@@ -8,8 +8,7 @@
 
 [ArchiveSentMailsFilter]
 sent_tag = sent
-
-{{- if eq .chezmoi.hostname "torpedo" -}}
+{{- if eq .chezmoi.hostname "torpedo" }}
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true
