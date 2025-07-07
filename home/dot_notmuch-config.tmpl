@@ -7,13 +7,13 @@
 path=/home/baptiste/Mail
 
 [user]
-{{- if eq .chezmoi.hostname "torpedo" -}}
+{{ if eq .chezmoi.hostname "torpedo" -}}
 primary_email=baptiste.grenier@operas-eu.org
 other_email=baptiste@bapt.name
-{{- else if eq .chezmoi.hostname "sikaru" }}
+{{ else if eq .chezmoi.hostname "sikaru" -}}
 primary_email=baptiste@bapt.name
 other_email=baptiste.grenier@operas-eu.org
-{{- end }}
+{{ end -}}
 
 [new]
 tags=new
