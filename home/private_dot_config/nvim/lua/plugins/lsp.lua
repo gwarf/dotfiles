@@ -113,9 +113,9 @@ return {
         -- TODO: https://dev.languagetool.org/finding-errors-using-n-gram-data.html
         -- TODO: have cmp do completion using words from the dictionaries
         ltex_plus = {
-          -- FIXME: ltex-ls was installed and is working on delmain, but no
-          -- more automatailly installed. Can be insalled manually:
-          -- MasotnIsntall --target=linux
+          -- FIXME: ltex-ls was installed and is working on delamain, but no
+          -- more automatically installed. Can be insalled manually:
+          -- MasonInstall --target=linux
           -- TODO: Find or build a package for FreeBSD
           mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
           filetypes = {
@@ -269,12 +269,12 @@ return {
         -- integrate ltex_extra with lazyvim
         -- https://github.com/LazyVim/LazyVim/discussions/403
         ---@diagnostic disable-next-line: unused-local
-        ltex = function(_, opts)
+        ltex_plus = function(_, opts)
           vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(args)
               ---@diagnostic disable-next-line: no-unknown
               local client = vim.lsp.get_client_by_id(args.data.client_id)
-              if client.name == "ltex" then
+              if client.name == "ltex_plus" then
                 require("ltex_extra").setup({
                   load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
                   init_check = true, -- whether to load dictionaries on startup
