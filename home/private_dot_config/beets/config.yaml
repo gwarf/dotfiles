@@ -1,0 +1,25 @@
+---
+directory: ~/Music/
+library: ~/Documents/musiclibrary.db
+
+import:
+    move: yes
+    write: yes
+    quiet: yes
+    resume: yes
+    incremental: yes
+    log: ~/Documents/beets-import.log
+    languages: en
+    duplicate_action: remove
+
+# XXX: manage duplicates with https://beets.readthedocs.io/en/stable/plugins/duplicates.html
+# plugins: lyrics the duplicates
+plugins: fetchart lastgenre embedart scrub discogs
+
+fetchart:
+    auto: yes
+    cautious: yes
+
+embedart:
+    auto: yes
+    compare_threshold: 10
