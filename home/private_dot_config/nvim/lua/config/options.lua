@@ -5,6 +5,7 @@ local opt = vim.opt
 
 -- Enable backups
 opt.backup = true
+opt.backupdir = vim.fn.stdpath('state') .. '/backup/'
 opt.writebackup = true
 opt.swapfile = true
 
