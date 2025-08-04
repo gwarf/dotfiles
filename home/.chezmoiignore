@@ -21,3 +21,6 @@ Mail/.notmuch/hooks/post-new
 {{- if eq .chezmoi.hostname "sikaru" }}
 .config/aerc/operas.yaml
 {{- end }}
+{{- if eq .chezmoi.hostname "torpedo" }}
+.config/beets
+{{- end }}
