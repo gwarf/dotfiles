@@ -99,18 +99,19 @@ set -ga update-environment TERM
 set -ga update-environment TERM_PROGRAM
 
 # List of plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-pain-control'
-set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
-set -g @plugin 'tmux-plugins/tmux-logging'
-set -g @plugin 'dracula/tmux'
-set -g @plugin 'alberti42/tmux-fzf-links'
+set -g @plugin "tmux-plugins/tpm"
+set -g @plugin "tmux-plugins/tmux-sensible"
+set -g @plugin "tmux-plugins/tmux-yank"
+set -g @plugin "tmux-plugins/tmux-pain-control"
+set -g @plugin "tmux-plugins/tmux-prefix-highlight"
+set -g @plugin "tmux-plugins/tmux-logging"
+set -g @plugin "tmux-plugins/tmux-sessionist"
+set -g @plugin "dracula/tmux"
+set -g @plugin "alberti42/tmux-fzf-links"
 
 # tmux-fxf-links plugin
 set-option -g @fzf-links-key C-u
-set-option -g @fzf-links-browser-open-cmd 'xdg-open %url'
+set-option -g @fzf-links-browser-open-cmd "xdg-open %url"
 
 # tmux plugin dracula
 # ---------------------
@@ -128,7 +129,7 @@ if "test ! -d ~/.tmux/plugins/tpm" \
    "run 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins'"
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/.tmux/plugins/tpm/tpm'
+run "~/.tmux/plugins/tpm/tpm"
 
 # Source local configuration if any
-if '[ -f ~/.tmux.local.conf ]' 'run ~/.tmux.local.conf'
+if "[ -f ~/.tmux.local.conf ]" "run ~/.tmux.local.conf"
