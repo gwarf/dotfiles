@@ -1,13 +1,13 @@
 set  -g default-terminal "tmux-256color"
-set  -g base-index      1
+set  -g base-index 1
 setw -g pane-base-index 1
 
 # Use vi bindings
 set -g status-keys vi
-set -g mode-keys   vi
+set -g mode-keys vi
 
-set  -g mouse             off
-setw -g clock-mode-style  12
+set  -g mouse off
+setw -g clock-mode-style 12
 
 # Use fish as shell
 {{ if eq .chezmoi.os "freebsd" -}}
@@ -34,9 +34,6 @@ set -g set-titles on
 set-window-option -g automatic-rename on
 set-window-option -g allow-rename on
 
-# status bar at the top of the screen
-set-option -g status-position "top"
-
 # Activity Monitoring
 setw -g monitor-activity off
 set -g visual-activity off
@@ -52,15 +49,8 @@ bind r source-file ~/.config/tmux/tmux.conf \; display "Config Reloaded!"
 # synchronize all panes in a window
 bind y setw synchronize-panes
 
-bind -r C-h select-window -t :-
-bind -r C-l select-window -t :+
-
 # Remap x to avoid confirmation to kill pane
 bind-key x kill-pane
-
-# Move windows
-bind-key S-Left swap-window -t -1\; select-window -t -1
-bind-key S-Right swap-window -t +1\; select-window -t +1
 
 # Window movement / renumbering like in screen's :number
 bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
@@ -115,6 +105,8 @@ set -g @dracula-time-format "%F %R"
 set -g @catppuccin_flavor "mocha"
 set -g @catppuccin_window_status_style "rounded"
 
+# Status bar at the top of the screen
+set-option -g status-position "top"
 # Make the status line pretty and add some modules
 set -g status-right-length 100
 set -g status-left-length 100
