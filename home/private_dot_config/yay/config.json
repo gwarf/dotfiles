@@ -1,6 +1,6 @@
 {
   "answerclean": "All",
-  "answerdiff": "Installed",
+  "answerdiff": "All",
   "answeredit": "",
   "answerupgrade": "",
   "aurrpcurl": "https://aur.archlinux.org/rpc?",
