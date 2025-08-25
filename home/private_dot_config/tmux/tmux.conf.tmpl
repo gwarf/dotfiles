@@ -74,7 +74,8 @@ set -g @plugin "tmux-plugins/tmux-yank"
 set -g @plugin "tmux-plugins/tmux-pain-control"
 set -g @plugin "tmux-plugins/tmux-prefix-highlight"
 set -g @plugin "tmux-plugins/tmux-logging"
-set -g @plugin "tmux-plugins/tmux-sessionist"
+# set -g @plugin "tmux-plugins/tmux-sessionist"
+set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin "tmux-plugins/tmux-resurrect"
 set -g @plugin "tmux-plugins/tmux-continuum"
 set -g @plugin "alberti42/tmux-fzf-links"
@@ -106,6 +107,9 @@ set -g @dracula-time-format "%F %R"
 # catppuccin theme
 set -g @catppuccin_flavor "mocha"
 set -g @catppuccin_window_status_style "rounded"
+
+# tmux-fzf
+TMUX_FZF_LAUNCH_KEY="C-f"
 
 # Status bar at the top of the screen
 set-option -g status-position "top"
