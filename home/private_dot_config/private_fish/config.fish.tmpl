@@ -158,13 +158,6 @@ if status is-interactive
     set -x PYENV_ROOT $HOME/.pyenv
     fish_add_path $PYENV_ROOT/bin
     pyenv init - | source
-
-    # Start oidc-agent
-    if type -q oidc-agent-service
-        eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
-        # for fedcloudclient, once egi account got created
-        # export OIDC_AGENT_ACCOUNT=egi
-    end
     {{ end -}}
 
     # Start SSH agent
@@ -184,6 +177,15 @@ if status is-interactive
     set --erase SSH_AGENT_PID
     if not set -q gnupg_SSH_AUTH_SOCK_by or test $gnupg_SSH_AUTH_SOCK_by -ne %self
         set -gx SSH_AUTH_SOCK "$(gpgconf --list-dirs agent-ssh-socket)"
+    end
+
+    # Start oidc-agent
+    if type -q oidc-agent-service
+        eval (oidc-agent-service use | awk '/^OIDC.*export/ {print $1}' | tr -d \; | awk -F'=' '{print "set -gx "$1" "$2";" }')
+        # for fedcloudclient
+        if oidc-gen -l | grep -q egi
+            export OIDC_AGENT_ACCOUNT=egi
+        end
     end
     {{ end -}}
     {{ if ne .chezmoi.os "darwin" -}}
