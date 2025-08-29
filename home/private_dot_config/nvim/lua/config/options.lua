@@ -5,7 +5,7 @@ local opt = vim.opt
 
 -- Enable backups
 opt.backup = true
-opt.backupdir = vim.fn.stdpath('state') .. '/backup/'
+opt.backupdir = vim.fn.stdpath("state") .. "/backup/"
 opt.writebackup = true
 opt.swapfile = true
 
@@ -55,3 +55,6 @@ vim.g.loaded_node_provider = 0
 
 -- Use a global statusline
 vim.g.laststatus = 3
+
+-- Disable reliative line numbers
+opt.relativenumber = false
