@@ -32,6 +32,9 @@ return {
     end,
   },
 
+  -- Open links without netrw using gx mapping
+  { "chrishrb/gx.nvim" },
+
   -- Read RFCs
   -- FIXME: this needs pyhon 3 support
   -- { "mhinz/vim-rfc" },
