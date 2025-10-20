@@ -6,6 +6,16 @@ auth on
 tls on
 tls_starttls on
 
+{{- if eq .chezmoi.hostname "torpedo" -}}
+account operas
+host ssl0.ovh.net
+port 587
+from baptiste.grenier@operas-eu.org
+user baptiste.grenier@operas-eu.org
+passwordval rbw get ovh/operas/mail
+
+account default: operas
+{{- else if eq .chezmoi.hostname "sikaru" }}
 account perso
 host mail.bapt.name
 port 587
@@ -16,3 +26,4 @@ passwordeval secret-tool lookup host mail.bapt.name service imaps user baptiste@
 tls_trust_file system
 
 account default: perso
+{{- end }}
