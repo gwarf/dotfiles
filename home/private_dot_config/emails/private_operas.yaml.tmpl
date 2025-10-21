@@ -1,0 +1,21 @@
+configurations:
+  -
+    host: ssl0.ovh.net
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: false
+    wait: 5
+{{- if eq .chezmoi.hostname "torpedo" -}}
+    username: "baptiste.grenier@operas-eu.org"
+    passwordCmd: "rbw get ovh/operas/mail"
+{{- else if eq .chezmoi.hostname "sikaru" }}
+    username: "baptiste@bapt.name"
+    passwordCmd: "rbw get mail.bapt.name/sikaru/baptiste@bapt.name"
+{{- end }}
+    xoAuth2: false
+    boxes:
+      -
+        mailbox: Inbox
+        onNewMail: ~/bin/mail-sync.sh
