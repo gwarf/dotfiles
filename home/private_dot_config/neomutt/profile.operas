@@ -1,0 +1,110 @@
+# Mutt sender profile: OPERAS
+
+set folder = ~/Mail/OPERAS
+
+# Queue mail if offline
+# https://wiki.archlinux.org/title/Msmtp#Using_msmtp_offline
+set sendmail = "~/bin/msmtp-enqueue.sh"
+
+# Custom status color for this profile
+color status cyan default
+
+unset confirmappend
+set spoolfile = "+Inbox"
+set move = no  # Stop asking to "move read messages to mbox"!
+set postponed = "+Drafts"
+set record = "+Sent"
+set trash="+Trash"
+
+mailboxes +Inbox +Archives +Drafts +Trash +Spam +Sent
+
+set from = "baptiste.grenier@operas-eu.org"
+set envelope_from_address = "baptiste.grenier@operas-eu.org"
+
+# Signature file
+set signature='~/.config/neomutt/signature-operas'
+
+# Customized headers
+unmy_hdr *                      # remove all extra headers first.
+
+my_hdr Organization: OPERAS AISBL
+my_hdr X-URL: https://operas-eu.org
+
+my_hdr From: Baptiste Grenier <baptiste.grenier@operas-eu.org>
+my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@operas-eu.org>
+
+# Use GPGME to simplify GPG and S/MIME configuration
+set crypt_use_gpgme = yes
+set crypt_autosign = yes
+set crypt_verify_sig=yes
+set crypt_replyencrypt=yes
+set crypt_replysign=yes
+set crypt_replysignencrypted=yes
+
+# Pretty Good Privacy (PGP):
+# PGP using gpgme (simplified conf)
+# In order to sign with a sub key, only the subkey should be available locally
+unset smime_is_default
+set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing - main key ID
+set nopgp_autoencrypt           # Default (enc))
+set pgp_autosign              # Default (sign))
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
+my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
+
+# Extract PGP or S/MIME keys
+# To be done before trying to send an encrypted message
+# Known keys can be displayed using gpgsm --list-keys
+bind index,pager \ck extract-keys
+
+# Include the profile name in the status line
+# TODO Align profile name on the right
+# XXX: automatic padding with ─ does not work, using a normal - for now
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? %?p? (%p postponed)?]───[ OPERAS ]%|-"
+
+# Fetching mail
+macro index \cf "<shell-escape>mbsync -a<enter>"
+
+# Contacts from Google contacts
+# Syncronised with vdirsyncer
+# Accessed via khard
+set query_command= "khard email --parsable %s"
+
+# set alias_file = "~/.config/neomutt/aliases"
+# source "~/.config/neomutt/aliases"
+
+# Google-like key bindings
+macro index,pager A "<save-message>+Archives<enter>" "move message to the archive"
+
+# Notmuch search
+# notmuch and notmuch-mutt coming from Nix
+macro index <F8> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<shell-escape>notmuch-mutt -r --prompt search<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: search mail"
+
+macro index <F9> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt -r thread<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: reconstruct thread"
+
+macro index <F6> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt tag -- -inbox<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: remove message from inbox"
+
+# http://www.mutt.org/doc/manual/#ignore-list-reply-to
+set ignore_list_reply_to
+
+# Mailing lists
+# http://www.mutt.org/doc/manual/#lists
+# Known
+# lists .*@...
+# Subscribed
+# subscribe ...@...
+
+# vim: set ft=muttrc:
