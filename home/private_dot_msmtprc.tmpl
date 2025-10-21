@@ -2,28 +2,32 @@
 defaults
 logfile ~/.msmtp.log
 protocol smtp
-auth on
-tls on
-tls_starttls on
 
-{{- if eq .chezmoi.hostname "torpedo" -}}
+{{- if eq .chezmoi.hostname "torpedo" }}
 account operas
 host ssl0.ovh.net
 port 587
+auth on
+tls on
+tls_starttls on
+tls_trust_file system
 from baptiste.grenier@operas-eu.org
 user baptiste.grenier@operas-eu.org
-passwordval rbw get ovh/operas/mail
+passwordeval rbw get ovh/operas/mail
 
 account default: operas
 {{- else if eq .chezmoi.hostname "sikaru" }}
 account perso
 host mail.bapt.name
 port 587
+auth on
+tls on
+tls_starttls on
+tls_trust_file system
 from baptiste@bapt.name
 user baptiste@bapt.name
 # secret-tool store --label=msmtp host smtp.your.domain service smtp user yourusername
 passwordeval secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name
-tls_trust_file system
 
 account default: perso
 {{- end }}
