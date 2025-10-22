@@ -25,11 +25,17 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
             "nvim-lua/plenary.nvim",
           },
           opts = {
+            daily_notes = {
+              folder = "Perso/",
+              date_format = "03. Agenda 🗓️/%Y/%m/%Y-%m-%d",
+              default_tags = { "journal", "agenda" },
+              workdays_only = false,
+            },
             ui = { enable = false },
             workspaces = {
               {
                 name = "Perso",
-                path = "~/Notes/Perso",
+                path = "~/Documents/Notes/",
               },
             },
             completion = {
