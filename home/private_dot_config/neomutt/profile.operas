@@ -2,9 +2,11 @@
 
 set folder = ~/Mail/OPERAS
 
+# Directly send via msmtp
+set sendmail = "/usr/bin/msmtp"
 # Queue mail if offline
 # https://wiki.archlinux.org/title/Msmtp#Using_msmtp_offline
-set sendmail = "~/bin/msmtp-enqueue.sh"
+# set sendmail = "~/bin/msmtp-enqueue.sh"
 
 # Custom status color for this profile
 color status cyan default
