@@ -16,7 +16,7 @@ set spoolfile = "+Inbox"
 set move = no  # Stop asking to "move read messages to mbox"!
 set postponed = "+Drafts"
 set record = "+Sent"
-set trash="+Trash"
+set trash = "+Trash"
 
 mailboxes +Inbox +Archives +Drafts +Trash +Spam +Sent
 
@@ -38,16 +38,16 @@ my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@operas-eu.org>
 # Use GPGME to simplify GPG and S/MIME configuration
 set crypt_use_gpgme = yes
 set crypt_autosign = yes
-set crypt_verify_sig=yes
-set crypt_replyencrypt=yes
-set crypt_replysign=yes
-set crypt_replysignencrypted=yes
+set crypt_verify_sig = yes
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
 
 # Pretty Good Privacy (PGP):
 # PGP using gpgme (simplified conf)
 # In order to sign with a sub key, only the subkey should be available locally
 unset smime_is_default
-set pgp_sign_as="0xCDA18F02"    # UserID/KeyID for signing - main key ID
+set pgp_sign_as = "0xCDA18F02"    # UserID/KeyID for signing - main key ID
 set nopgp_autoencrypt           # Default (enc))
 set pgp_autosign              # Default (sign))
 my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
