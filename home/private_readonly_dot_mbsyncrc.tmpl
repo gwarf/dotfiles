@@ -3,7 +3,7 @@
 IMAPAccount account0
 Host ssl0.ovh.net
 User baptiste.grenier@operas-eu.org
-PassCmd "rbw get ovh/operas/mail"
+Password "{{ (rbw "ovh/operas/mail").data.password }}"
 TLSType IMAPS
 AuthMechs LOGIN
 PipelineDepth 50
@@ -33,7 +33,7 @@ SyncState *
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
-PassCmd "rbw get mail.bapt.name/sikaru/baptiste@bapt.name"
+Password "{{ (rbw "mail.bapt.name/sikaru/baptiste@bapt.name").data.password }}"
 Port 143
 TLSType STARTTLS
 AuthMechs LOGIN
