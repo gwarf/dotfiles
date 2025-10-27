@@ -76,8 +76,10 @@ image/*                         ; mutt_bgrun nsxiv %s                           
 # text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun firefox %s
 {{- if eq .chezmoi.os "freebsd" }}
 text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chrome %s
+{{- else if eq .chezmoi.hostname "torpedo" }}
+text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chromium %s
 {{- else }}
-text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun brave-browser %s
+text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun firefox %s
 {{- end }}
 
 text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
