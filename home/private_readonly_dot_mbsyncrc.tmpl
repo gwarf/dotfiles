@@ -3,7 +3,7 @@
 IMAPAccount account0
 Host ssl0.ovh.net
 User baptiste.grenier@operas-eu.org
-Password "{{ (rbw "ovh/operas/mail").data.password }}"
+PassCmd "rbw get ovh/operas/mail"
 TLSType IMAPS
 AuthMechs LOGIN
 PipelineDepth 50
