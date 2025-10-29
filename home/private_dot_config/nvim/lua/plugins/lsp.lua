@@ -291,7 +291,6 @@ return {
     },
   },
 
-  -- Replacement for formatting via null-ls/none-ls
   {
     -- XXX: auto format not working with prettier but only with prettierd?!
     "stevearc/conform.nvim",
@@ -317,49 +316,4 @@ return {
       },
     },
   },
-
-  -- {
-  -- FIXME: to be dropped once incorporated in my conform.nvim and nvim-lint setup
-  --   "nvimtools/none-ls.nvim",
-  --   -- https://github.com/LazyVim/LazyVim/discussions/1522#discussioncomment-7153402
-  --   enabled = false,
-  --   opts = function(_, opts)
-  --     ---@diagnostic disable-next-line: no-unknown
-  --     local nls = require("null-ls")
-  --     ---@diagnostic disable-next-line: no-unknown
-  --     local utils = require("null-ls.utils")
-  --     -- local flake8_extra_args = {}
-  --     ---@diagnostic disable-next-line: no-unknown
-  --     local root = utils.get_root()
-  --     -- local flake8_conf = root .. "/.github/linters/.flake8"
-  --     -- Load configuration file from super-liner, if any
-  --     -- if vim.loop.fs_stat(flake8_conf) then
-  --     --   flake8_extra_args = { "--config", flake8_conf }
-  --     -- else
-  --     --   -- Align with black
-  --     --   -- https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html#flake8
-  --     --   flake8_extra_args = { "--max-line-length", "88", "--extend-ignore", "E203,W503" }
-  --     -- end
-  --     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-  --     opts.sources = {
-  --       -- Shell
-  --       nls.builtins.formatting.shfmt,
-  --       -- text
-  --       nls.builtins.diagnostics.alex,
-  --       nls.builtins.hover.dictionary,
-  --       nls.builtins.diagnostics.checkmake,
-  --       nls.builtins.diagnostics.write_good,
-  --       -- perl
-  --       nls.builtins.formatting.perltidy,
-  --       -- python
-  --       -- nls.builtins.formatting.isort.with({
-  --       --   extra_args = { "--profile", "black" },
-  --       -- }),
-  --       -- nls.builtins.formatting.black,
-  --       -- nls.builtins.diagnostics.flake8.with({
-  --       --   extra_args = flake8_extra_args,
-  --       -- }),
-  --     }
-  --   end,
-  -- },
 }
