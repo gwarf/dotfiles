@@ -275,7 +275,7 @@ return {
             callback = function(args)
               ---@diagnostic disable-next-line: no-unknown
               local client = vim.lsp.get_client_by_id(args.data.client_id)
-              if client.name == "ltex_plus" then
+              if client and client.name == "ltex_plus" then
                 require("ltex_extra").setup({
                   load_langs = { "en-GB", "fr" }, -- languages for witch dictionaries will be loaded
                   init_check = true, -- whether to load dictionaries on startup
