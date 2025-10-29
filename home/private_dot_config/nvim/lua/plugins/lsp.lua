@@ -292,27 +292,15 @@ return {
   },
 
   {
-    -- XXX: auto format not working with prettier but only with prettierd?!
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        markdown = { "prettierd" },
-        yaml = { "prettierd" },
+        fish = { "fish_indent" },
         groovy = { "npm_groovy_lint" },
-      },
-      formatters = {
-        -- FIXME: too slow, the formatter should be installed locally
-        -- npm_groovy_lint = {
-        --   -- command = "npm-groovy-lint",
-        --   command = "docker",
-        --   -- FIXME: latest version is currently broken 2023-11-15
-        --   -- https://github.com/nvuillam/npm-groovy-lint/issues/319
-        --   args = { "run", "--rm", "nvuillam/npm-groovy-lint:11.1.1", "--format", "--files", "$FILENAME" },
-        --   stdin = false,
-        --   condition = function(ctx)
-        --     return vim.fs.basename(ctx.filename) == "Jenkinsfile"
-        --   end,
-        -- },
+        lua = { "stylua" },
+        markdown = { "prettierd" },
+        sh = { "shfmt" },
+        yaml = { "prettierd" },
       },
     },
   },
