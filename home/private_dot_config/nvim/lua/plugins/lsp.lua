@@ -73,17 +73,19 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      -- add folding range to capabilities
-      capabilities = {
-        textDocument = {
-          foldingRange = {
-            dynamicRegistration = false,
-            lineFoldingOnly = true,
-          },
-        },
-      },
       -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
       servers = {
+        ["*"] = {
+          -- add folding range to capabilities
+          capabilities = {
+            textDocument = {
+              foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+              },
+            },
+          },
+        },
         ansiblels = {
           -- TODO: Find or build a package for FreeBSD
           mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
