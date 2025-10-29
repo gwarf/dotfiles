@@ -232,7 +232,6 @@ return {
           autostart = not vim.uv.os_uname().sysname:find("FreeBSD"),
         },
         mutt_ls = {
-          -- XXX: fix build on TuxedoOS
           mason = false,
         },
         perlnavigator = {
