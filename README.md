@@ -1,6 +1,7 @@
 # Gwarf's dotfiles
 
-My somewhat messy and ever WIP **dotfiles** for GNU/Linux, FreeBSD and macOS.
+My somewhat messy and ever WIP **dotfiles** for GNU/Linux, FreeBSD and macOS
+(mostly legacy now).
 
 > Use at your own risk :)
 
