@@ -38,11 +38,4 @@ return {
   -- Read RFCs
   -- FIXME: this needs pyhon 3 support
   -- { "mhinz/vim-rfc" },
-
-  -- ChatGPT client
-  -- {
-  --   "jackMort/ChatGPT.nvim",
-  --   cmd = { "ChatGPTActAs", "ChatGPT" },
-  --   opts = {},
-  -- },
 }
