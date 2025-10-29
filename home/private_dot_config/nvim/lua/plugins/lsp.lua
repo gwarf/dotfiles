@@ -290,17 +290,17 @@ return {
     },
   },
 
-  {
-    "stevearc/conform.nvim",
-    opts = {
-      formatters_by_ft = {
-        fish = { "fish_indent" },
-        groovy = { "npm_groovy_lint" },
-        lua = { "stylua" },
-        markdown = { "prettierd" },
-        sh = { "shfmt" },
-        yaml = { "prettierd" },
-      },
-    },
-  },
+  -- {
+  --   "stevearc/conform.nvim",
+  --   opts = {
+  --     formatters_by_ft = {
+  --       fish = { "fish_indent" },
+  --       groovy = { "npm_groovy_lint" },
+  --       lua = { "stylua" },
+  --       markdown = { "prettierd" },
+  --       sh = { "shfmt" },
+  --       yaml = { "prettierd" },
+  --     },
+  --   },
+  -- },
 }
