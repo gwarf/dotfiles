@@ -13,7 +13,7 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
         {
           "codybuell/cmp-lbdb",
           -- lazy = true,
-          -- ft = "mail",
+          ft = "mail",
           -- opts = {
           --   mail_header_only = false,
           -- },
