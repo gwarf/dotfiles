@@ -21,7 +21,7 @@ return {
       -- Requried for python
       add("debugpy")
       -- Skip packages installed with OS package manager
-      skip("ansible-lint")
+      -- skip("ansible-lint")
       skip("shfmt")
       skip("black")
       skip("stylua")
@@ -88,7 +88,9 @@ return {
         },
         ansiblels = {
           -- TODO: Find or build a package for FreeBSD
-          mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
+          -- mason = vim.uv.os_uname().sysname:find("FreeBSD") ~= nil,
+          -- Test using Mason
+          mason = true,
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
               or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
