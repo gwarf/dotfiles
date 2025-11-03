@@ -8,11 +8,11 @@
 
 [ArchiveSentMailsFilter]
 sent_tag = sent
-{{- if eq .chezmoi.hostname "torpedo" }}
+{{ if eq .chezmoi.hostname "torpedo" }}
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true
-folder_transforms = Archives:archived Drafts:draft Trash:deleted Sent:sent
+folder_transforms = OPERAS/Archives:archived OPERAS/Drafts:draft OPERAS/Trash:deleted OPERAS/Sent:sent OPERAS/Phishing:phishing
 
 [DKIMValidityFilter]
 
@@ -22,9 +22,10 @@ folder_transforms = Archives:archived Drafts:draft Trash:deleted Sent:sent
 # To avoid messing up with mbsync
 rename = True
 folders = OPERAS/Inbox OPERAS/Junk
+# <src> = ['<qry>':<dst>]+
 OPERAS/Inbox = 'tag:sent':OPERAS/Sent 'tag:spam':OPERAS/Junk 'NOT tag:inbox':OPERAS/Archives 'tag:archived':OPERAS/Archives
 OPERAS/Junk = 'NOT tag:spam AND tag:inbox':OPERAS/Inbox 'NOT tag:spam':OPERAS/Archives
-{{- else if eq .chezmoi.hostname "sikaru" }}
+{{ else if eq .chezmoi.hostname "sikaru" }}
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true

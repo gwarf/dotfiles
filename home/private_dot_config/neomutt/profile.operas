@@ -78,7 +78,7 @@ set query_command= "khard email --parsable %s"
 macro index,pager A "<save-message>+Archives<enter>" "move message to the archive"
 
 # Notmuch search
-# notmuch and notmuch-mutt coming from Nix
+# notmuch and notmuch-mutt
 macro index <F8> \
 "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
 <shell-escape>notmuch-mutt -r --prompt search<enter>\
