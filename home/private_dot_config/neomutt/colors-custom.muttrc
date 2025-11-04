@@ -149,12 +149,12 @@ color body brightblue default "^@@ .*"
 
 # custom body highlights -----------------------------------------------
 # highlight my name and other personally relevant strings
-color body          color136        default        "(baptiste|genier|gnubila|healthgrid|egi|bgrenier|gwarf|security)"
+color body          color136        default        "(baptiste|genier|gnubila|healthgrid|egi|operas|bgrenier|gwarf|security)"
 
 # custom index highlights ----------------------------------------------
 # messages which mention my name in the body
-color index         color136        default        "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" !~N !~T !~F !~p !~P"
-color index         color136        color37         "~b \"(baptiste\\.grenier\\.egi\\.eu|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" ~T !~F !~p !~P"
+color index         color136        default        "~b \"(baptiste\\.grenier\\.operas-eu\\.org|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" !~N !~T !~F !~p !~P"
+color index         color136        color37         "~b \"(baptiste\\.grenier\\.operas-eu\\.org|gwarf\\.gwarf\\.org|baptiste\\.bapt\\.name|baptiste|gwarf|bapt)\" ~T !~F !~p !~P"
 # Messages security or ISM in the subject
 color index         cyan        default         "~s \"(security|ISM)\" ~N"
 # color index         green        default         "~s \"security|ISM\" !~N"
@@ -164,7 +164,7 @@ color index         green        default         "~s \"TLP:GREEN\" ~N"
 color index         red        default         "~s \"TLP:RED\" ~N"
 
 # messages which are in reference to my mails
-color index         color125        default        "~x \"(baptiste\\.grenier\\.egi\\.eu|baptiste\\.bapt\\.name)\" !~N !~T !~F !~p !~P"
+color index         color125        default        "~x \"(baptiste\\.grenier\\.operas-eu\\.org|baptiste\\.bapt\\.name)\" !~N !~T !~F !~p !~P"
 
 # deleted messages
 # color index         color160        default        "~D(!~p|~p)"
