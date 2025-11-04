@@ -12,9 +12,7 @@ return {
   -- },
 
   -- better diffing
-  {
-    "sindrets/diffview.nvim",
-  },
+  { "sindrets/diffview.nvim" },
 
   -- Color hex/rgb color codes
   {

@@ -150,7 +150,7 @@ return {
   },
 
   -- dims inactive portions of the code
-  { "folke/twilight.nvim" },
+  -- { "folke/twilight.nvim" },
 
   -- Fold management
   {
@@ -169,4 +169,6 @@ return {
       end)
     end,
   },
+
+  { "HiPhish/rainbow-delimiters.nvim" },
 }
