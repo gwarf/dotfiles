@@ -18,7 +18,7 @@ return {
           table.insert(opts.ensure_installed, mason_package)
         end
       end
-      -- Requried for python
+      -- Required for python
       add("debugpy")
       -- Skip packages installed with OS package manager
       -- skip("ansible-lint")
@@ -236,13 +236,7 @@ return {
         mutt_ls = {
           mason = false,
         },
-        perlnavigator = {
-          -- settings = {
-          --   perlnavigator = {
-          --     perlPath = "/usr/local/bin/perl",
-          --   },
-          -- },
-        },
+        perlnavigator = {},
         pyright = {
           mason = false,
         },
@@ -261,9 +255,6 @@ return {
           settings = {
             yaml = {
               keyOrdering = false,
-              -- XXX: not working/not needed?
-              -- format = { enable = true },
-              -- validate = true,
             },
           },
         },
