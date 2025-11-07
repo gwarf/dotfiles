@@ -21,40 +21,6 @@ return {
     },
   },
 
-  -- {
-  --   "tokyonight.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = function()
-  --     return {
-  --       sidebars = {
-  --         "qf",
-  --         "vista_kind",
-  --         "terminal",
-  --         "spectre_panel",
-  --         "startuptime",
-  --         "Outline",
-  --       },
-  --       styles = {
-  --         sidebars = "normal",
-  --         floats = "normal",
-  --       },
-  --       dim_inactive = true,
-  --       -- When `true`, section headers in the lualine theme will be bold
-  --       lualine_bold = true,
-  --       ---@param hl Highlights
-  --       ---@param c ColorScheme
-  --       on_highlights = function(hl, c)
-  --         hl.CursorLineNr = { fg = c.orange, bold = true }
-  --         hl.LineNr = { bold = true }
-  --         hl.LineNrAbove = { fg = c.fg_gutter }
-  --         hl.LineNrBelow = { fg = c.fg_gutter }
-  --         hl.WinSeparator = { fg = c.blue }
-  --       end,
-  --     }
-  --   end,
-  -- },
-
   -- Override LazyVim configuration to select colorscheme
   {
     "LazyVim/LazyVim",
@@ -84,91 +50,55 @@ return {
   },
 
   -- floating winbar
+  {
+    "b0o/incline.nvim",
+    event = "BufReadPre",
+    version = false,
+    config = function()
+      local colors = require("tokyonight.colors").setup()
+      require("incline").setup({
+        highlight = {
+          groups = {
+            InclineNormal = { guibg = "#FC56B1", guifg = colors.black },
+            InclineNormalNC = { guifg = "#FC56B1", guibg = colors.black },
+          },
+        },
+        window = { margin = { vertical = 0, horizontal = 1 } },
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          ---@diagnostic disable-next-line: no-unknown
+          local icon, color = require("nvim-web-devicons").get_icon_color(filename)
+          ---@diagnostic disable-next-line: no-unknown
+          return { { icon, guifg = color }, { " " }, { filename } }
+        end,
+      })
+    end,
+  },
+
+  -- scrollbar
   -- {
-  --   "b0o/incline.nvim",
-  --   event = "BufReadPre",
-  --   version = false,
+  --   "petertriho/nvim-scrollbar",
+  --   event = "BufReadPost",
   --   config = function()
+  --     local scrollbar = require("scrollbar")
   --     local colors = require("tokyonight.colors").setup()
-  --     require("incline").setup({
-  --       highlight = {
-  --         groups = {
-  --           InclineNormal = { guibg = "#FC56B1", guifg = colors.black },
-  --           InclineNormalNC = { guifg = "#FC56B1", guibg = colors.black },
-  --         },
+  --     scrollbar.setup({
+  --       handle = { color = colors.bg_highlight },
+  --       excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify" },
+  --       marks = {
+  --         Search = { color = colors.orange },
+  --         Error = { color = colors.error },
+  --         Warn = { color = colors.warning },
+  --         Info = { color = colors.info },
+  --         Hint = { color = colors.hint },
+  --         Misc = { color = colors.purple },
   --       },
-  --       window = { margin = { vertical = 0, horizontal = 1 } },
-  --       render = function(props)
-  --         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
-  --         ---@diagnostic disable-next-line: no-unknown
-  --         local icon, color = require("nvim-web-devicons").get_icon_color(filename)
-  --         ---@diagnostic disable-next-line: no-unknown
-  --         return { { icon, guifg = color }, { " " }, { filename } }
-  --       end,
   --     })
   --   end,
   -- },
 
-  -- scrollbar
-  {
-    "petertriho/nvim-scrollbar",
-    event = "BufReadPost",
-    config = function()
-      local scrollbar = require("scrollbar")
-      local colors = require("tokyonight.colors").setup()
-      scrollbar.setup({
-        handle = { color = colors.bg_highlight },
-        excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify" },
-        marks = {
-          Search = { color = colors.orange },
-          Error = { color = colors.error },
-          Warn = { color = colors.warning },
-          Info = { color = colors.info },
-          Hint = { color = colors.hint },
-          Misc = { color = colors.purple },
-        },
-      })
-    end,
-  },
-
-  -- auto-resize windows
-  {
-    "anuvyklack/windows.nvim",
-    event = "WinNew",
-    dependencies = {
-      { "anuvyklack/middleclass" },
-      { "anuvyklack/animation.nvim", enabled = false },
-    },
-    keys = { { "<leader>Z", "<cmd>WindowsMaximize<cr>", desc = "Zoom" } },
-    config = function()
-      vim.o.winwidth = 5
-      vim.o.equalalways = false
-      require("windows").setup({
-        animation = { enable = false, duration = 150 },
-      })
-    end,
-  },
-
   -- dims inactive portions of the code
   -- { "folke/twilight.nvim" },
-
-  -- Fold management
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = "kevinhwang91/promise-async",
-    event = "BufReadPost",
-    opts = {},
-
-    init = function()
-      -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-      vim.keymap.set("n", "zR", function()
-        require("ufo").openAllFolds()
-      end)
-      vim.keymap.set("n", "zM", function()
-        require("ufo").closeAllFolds()
-      end)
-    end,
-  },
 
   { "HiPhish/rainbow-delimiters.nvim" },
 }

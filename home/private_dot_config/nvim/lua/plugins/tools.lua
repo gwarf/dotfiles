@@ -1,18 +1,8 @@
 -- https://github.com/folke/dot/blob/master/nvim/lua/plugins/tools.lua
 return {
 
-  -- {
-  --   "gbprod/yanky.nvim",
-  --   opts = {
-  --     -- FIXME: not finding sqlite3 on NixOS and now on nix-darwin
-  --     -- ring = { storage = (jit.os:find("Windows") or jit.os:find("Linux")) and "shada" or "sqlite" },
-  --     -- XXX: https://github.com/gbprod/yanky.nvim/issues/123
-  --     system_clipboard = { sync_with_ring = false },
-  --   },
-  -- },
-
   -- better diffing
-  { "sindrets/diffview.nvim" },
+  -- { "sindrets/diffview.nvim" },
 
   -- Color hex/rgb color codes
   {
@@ -32,8 +22,4 @@ return {
 
   -- Open links without netrw using gx mapping
   { "chrishrb/gx.nvim" },
-
-  -- Read RFCs
-  -- FIXME: this needs pyhon 3 support
-  -- { "mhinz/vim-rfc" },
 }
