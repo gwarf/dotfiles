@@ -33,7 +33,7 @@ SyncState *
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
-Password "{{ (rbw "mail.bapt.name/sikaru/baptiste@bapt.name").data.password }}"
+PassCmd "rbw get mail.bapt.name/sikaru/baptiste@bapt.name"
 Port 143
 TLSType STARTTLS
 AuthMechs LOGIN
