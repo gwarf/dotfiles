@@ -75,18 +75,18 @@ image/*                         ; mutt_bgrun nsxiv %s                           
 # text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chromium-perso %s
 # text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun firefox %s
 {{- if eq .chezmoi.os "freebsd" }}
-text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun chrome %s
+text/html; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html; copiousoutput; print = mutt_bgrun chrome %s
 {{- else if eq .chezmoi.hostname "torpedo" }}
 # https://www.reddit.com/r/commandline/comments/z7vkwn/comment/khpbtxp/
 # The first one here is triggered when going in to view the attachments, then pressing 'm' on the text/html
 # -sixel changes w3m behavior a bit. Without it, images will show up, but only when you do something to the screen
 # having the option shows the images immediately
-text/html;                         w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html; needsterminal
+text/html; w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html; needsterminal
 
 # This second one is chosen by auto_view due to the copiousoutput tag
-text/html;                         w3m -I %{charset} -T text/html -cols 140 -o display_link_number=1 -dump; copiousoutput; print = mutt_bgrun chromium %s
+text/html; w3m -I %{charset} -T text/html -cols 140 -o display_link_number=1 -dump; nametemplate=%s.html; copiousoutput; print = mutt_bgrun chromium %s
 {{- else }}
-text/html                       ; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html            ; copiousoutput ; print = mutt_bgrun firefox %s
+text/html; w3m -I %{charset} -T text/html -dump %s; nametemplate=%s.html; copiousoutput; print = mutt_bgrun firefox %s
 {{- end }}
 
 text/x-diff                     ; cat %s | colordiff                            ;copiousoutput
