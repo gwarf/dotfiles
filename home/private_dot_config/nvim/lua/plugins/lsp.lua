@@ -94,7 +94,7 @@ return {
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("roles", "playbooks")(fname)
               or require("lspconfig.util").root_pattern("ansible.cfg", ".ansible-lint")(fname)
-              or require("lspconfig.util").find_git_ancestor(fname)
+              or vim.fs.dirname(vim.fs.find(".git", { path = startpath, upward = true })[1])
           end,
           settings = {
             ansible = {
