@@ -13,7 +13,20 @@ tls_starttls on
 tls_trust_file system
 from baptiste.grenier@operas-eu.org
 user baptiste.grenier@operas-eu.org
-passwordeval rbw get ovh/operas/mail
+passwordeval rbw get ovh/baptiste.grenier@operas-eu.org
+
+account google
+host smtp.gmail.com
+port 587
+auth on
+tls on
+tls_starttls on
+tls_trust_file system
+from no-reply@operas-eu.org
+user no-reply@operas-eu.org
+# passwordeval rbw get google/no-reply/apppass/vera
+passwordeval rbw get google/no-reply/apppass/internal_services
+# passwordeval rbw get google/no-reply/apppass/operasid
 
 account default: operas
 {{- else if eq .chezmoi.hostname "sikaru" }}
