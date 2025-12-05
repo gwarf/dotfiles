@@ -16,3 +16,8 @@
 {{- else }}
   gpgsign = true
 {{- end }}
+
+{{- if eq .chezmoi.hostname "torpedo" }}
+[credential "https://gitlab.pcss.pl"]
+  helper = "!f() { echo "username=baptiste.grenier@operas-eu.org"; echo "password=$GITLAB_TOKEN"; };f"
+{{- end }}
