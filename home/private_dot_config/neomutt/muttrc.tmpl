@@ -24,6 +24,11 @@ set sort_aux = last-date-received
 folder-hook Inbox set sort=threads sort_aux=last-date-received sort_thread_groups=reverse-last-date-received
 
 # Source Maildir profile
+{{- if eq .chezmoi.hostname "torpedo" -}}
 source ~/.config/neomutt/profile.operas
+{{- else if eq .chezmoi.hostname "sikaru" }}
+source ~/.config/neomutt/profile.perso
+{{- end }}
+
 
 # vim: set ft=muttrc:
