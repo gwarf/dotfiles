@@ -1,5 +1,6 @@
 # Mutt sender profile: OPERAS
 
+set mbox_type = Maildir
 set folder = ~/Mail/OPERAS
 
 # Directly send via msmtp
@@ -12,13 +13,14 @@ set sendmail = "/usr/bin/msmtp"
 color status cyan default
 
 unset confirmappend
-set spoolfile = "+Inbox"
+set spoolfile = "+inbox"
 set move = no  # Stop asking to "move read messages to mbox"!
-set postponed = "+Drafts"
-set record = "+Sent"
-set trash = "+Trash"
+set postponed = "+drafts"
+# Sent mails are recorded automatically by Gmail
+unset record
+set trash = "+trash"
 
-mailboxes +Inbox +Archives +Drafts +Trash +Spam +Sent
+mailboxes +inbox +all +drafts +trash +spam +phishing +sent
 
 set from = "baptiste.grenier@operas-eu.org"
 set envelope_from_address = "baptiste.grenier@operas-eu.org"
@@ -71,11 +73,11 @@ macro index \cf "<shell-escape>mbsync -a<enter>"
 # Accessed via khard
 set query_command= "khard email --parsable %s"
 
-# set alias_file = "~/.config/neomutt/aliases"
-# source "~/.config/neomutt/aliases"
-
-# Google-like key bindings
-macro index,pager A "<save-message>+Archives<enter>" "move message to the archive"
+# Archive read messages to All Mail folder
+macro pager,index A "<save-message>+all<enter>" "Archive"
+# Automatic archive of read messages excluding Sent and Trash
+# macro index A "<tag-pattern>~R !~D !~F<enter><tag-prefix>\
+# <save-message>+all<enter>" "Archive"
 
 # Notmuch search
 # notmuch and notmuch-mutt

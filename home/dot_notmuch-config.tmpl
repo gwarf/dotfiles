@@ -3,22 +3,29 @@
 # For more information about notmuch, see https://notmuchmail.org
 
 [database]
+{{ if eq .chezmoi.hostname "torpedo" -}}
+path=/home/baptiste/mail
+{{ else if eq .chezmoi.hostname "sikaru" -}}
 # XXX: provide full path or expect errors with afew FolderNameFilter
 path=/home/baptiste/Mail
-
+{{ end }}
 [user]
+name=Baptiste Grenier
 {{ if eq .chezmoi.hostname "torpedo" -}}
 primary_email=baptiste.grenier@operas-eu.org
 other_email=baptiste@bapt.name
 {{ else if eq .chezmoi.hostname "sikaru" -}}
 primary_email=baptiste@bapt.name
 other_email=baptiste.grenier@operas-eu.org
-{{ end -}}
-
+{{ end }}
 [new]
+{{ if eq .chezmoi.hostname "torpedo" -}}
+tags=
+ignore=/.*[.](json|lock|bak)$/
+{{ else if eq .chezmoi.hostname "sikaru" -}}
 tags=new
 ignore=.uidvalidity;.mbsyncstate
-
+{{ end }}
 [search]
 exclude_tags=deleted;spam;
 

@@ -1,7 +1,0 @@
-# XXX: disable MU integration, not used any more
-# first macro does the search according to user query, second macro jumps to result list
-# macro index <F8> "<shell-escape>rm -rf ~/.mu/results; mu-find -o l -l ~/.mu/results " "mu-find"
-# macro index <F9> "<change-folder-readonly>~/.mu/results\n" "display mu-find results"
-
-# looking up addresses with mu cfind
-# set query_command="mu cfind -–format=mutt-ab '%s"

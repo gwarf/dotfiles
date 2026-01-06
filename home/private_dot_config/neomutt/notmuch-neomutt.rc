@@ -31,13 +31,12 @@
 
 #set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 
-# path to the maildir
-set nm_default_uri = "notmuch:///Users/baptiste/Mail/EGI"
+set nm_db_limit = 5000
 
 # enable virtual folders
 # When set, NeoMutt will use the first virtual mailbox (see virtual-mailboxes)
 # as a spoolfile.
-set virtual_spoolfile = no
+# set virtual_spoolfile = no
 
 # XXX virtual-mailboxes are loaded from profile-related conf
 # sets up queries for virtual folders

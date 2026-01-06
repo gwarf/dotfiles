@@ -152,22 +152,12 @@ source ~/.config/neomutt/mime-view
 # http://www.neomutt.org/feature/new-mail/
 # set new_mail_command="notify-send --icon='/home/baptiste/.mutt/mutt.png' 'New Email in %f' '%n new messages, %u unread.' &"
 
-# Maildir
-source ~/.config/neomutt/maildir
-
 # sidebar
 source ~/.config/neomutt/sidebar
-
-# Source mu configuration
-source ~/.config/neomutt/mu
 
 # Hooks
 source ~/.config/neomutt/hooks
 
 set realname = "Baptiste Grenier"
-
-# Source default profile
-# XXX need to manually link it
-source ~/.config/neomutt/default-profile
 
 # vim: set ft=muttrc:

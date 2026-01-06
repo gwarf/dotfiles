@@ -23,4 +23,7 @@ set sort_aux = last-date-received
 # Ensure that INBOX is always using appropriate thread-based sort
 folder-hook Inbox set sort=threads sort_aux=last-date-received sort_thread_groups=reverse-last-date-received
 
+# Source Maildir profile
+source ~/.config/neomutt/profile.operas
+
 # vim: set ft=muttrc:

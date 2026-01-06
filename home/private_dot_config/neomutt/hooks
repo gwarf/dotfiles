@@ -16,8 +16,9 @@
 # Default alternative_order for all mails
 message-hook ~A 'unalternative_order *; alternative_order text/calendar text/plain text/enriched text/html'
 # Open HTML part by default for specific messages
-message-hook '~s "Nessus Scan Results:"'  'unalternative_order *;alternative_order text/html text/plain'
-message-hook '~f billing@zoom.us'  'unalternative_order *;alternative_order text/html text/plain'
-message-hook '~f info@propaganda666.com'  'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~s "Nessus Scan Results:"' 'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~s "Weekly Uptime Monitoring Report"' 'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~f billing@zoom.us' 'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~f info@propaganda666.com' 'unalternative_order *;alternative_order text/html text/plain'
 
 # vim: set ft=muttrc:

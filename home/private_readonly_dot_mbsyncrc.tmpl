@@ -1,34 +1,94 @@
 {{/* https://roylez.info/2016-02-10-mutt-multi-imap-accounts/ */}}
 {{- if eq .chezmoi.hostname "torpedo" -}}
-IMAPAccount account0
-Host ssl0.ovh.net
-User baptiste.grenier@operas-eu.org
-PassCmd "rbw get ovh/baptiste.grenier@operas-eu.org"
-TLSType IMAPS
-AuthMechs LOGIN
-PipelineDepth 50
-
-# Remote
-IMAPStore account0_remote
-Account account0
-
-# Local
-MaildirStore account0_local
-Path ~/Mail/OPERAS/
-Inbox ~/Mail/OPERAS/Inbox
-Subfolders Verbatim
-
-# Connect remote and local
-Channel account0
-Far :account0_remote:
-Near :account0_local:
-Pattern *
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
+# Defaults
+# Don't create any mailbox remotely by default
+Create Near
 # Automatically delete messages on either side if they are found deleted on the other
 Expunge Both
 # Save the synchronization state files in the relevant directory
 SyncState *
+
+# Remote
+IMAPStore gmail-remote
+Host imap.gmail.com
+User baptiste.grenier@operas-eu.org
+PassCmd "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
+PipelineDepth 50
+TLSType IMAPS
+AuthMechs LOGIN
+
+# Local
+MaildirStore gmail-local
+Path ~/Mail/OPERAS/
+Inbox ~/Mail/OPERAS/inbox
+# Only useful when willing to download all subfolders
+# Subfolders Verbatim
+
+# Connect remote and local and get everything at once
+# Channel gmail
+# Far :gmail-remote:
+# Near :gmail-local:
+# # Mirror everything
+# # Pattern *
+# # Ignore some Gmail-specific folders
+# # Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin"
+# # Automatically create missing mailboxes on both ends
+# Create Both
+
+# Only synchronize all mails and sent to work only with labels
+# Useful for a notmuch-based usage
+# May be lieer could be used too
+# Channel gmail-all
+# Far :gmail-remote:"[Gmail]/All Mail"
+# Near :gmail-local:all
+#
+# Channel gmail-sent
+# Far gmail-remote:"[Gmail]/Sent Mail"
+# Near :gmail-local:sent
+#
+# Group gmail
+# Channel gmail-all
+# Channel gmail-sent
+
+# Connect remote and local and use custom mapping
+# Useful for a Maildir based usage
+Channel gmail-inbox
+Far ":gmail-remote:INBOX"
+Near ":gmail-local:inbox"
+
+Channel gmail-all
+Far ":gmail-remote:[Gmail]/All Mail"
+Near ":gmail-local:all"
+
+Channel gmail-drafts
+Far ":gmail-remote:[Gmail]/Drafts"
+Near ":gmail-local:drafts"
+
+Channel gmail-sent
+Far ":gmail-remote:[Gmail]/Sent Mail"
+Near ":gmail-local:sent"
+
+Channel gmail-trash
+Far ":gmail-remote:[Gmail]/Bin"
+Near ":gmail-local:trash"
+
+Channel gmail-spam
+Far ":gmail-remote:[Gmail]/Spam"
+Near ":gmail-local:spam"
+
+Channel gmail-phishing
+Far ":gmail-remote:Phishing"
+Near ":gmail-local:phishing"
+
+Group gmail
+Channel gmail-inbox
+Channel gmail-all
+Channel gmail-drafts
+Channel gmail-sent
+Channel gmail-trash
+Channel gmail-spam
+Channel gmail-phishing
+
 {{- else if eq .chezmoi.hostname "sikaru" }}
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt

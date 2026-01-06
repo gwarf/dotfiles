@@ -26,4 +26,7 @@ source ~/.config/neomutt/notmuch-neomutt.rc
 
 source ~/.config/neomutt/index-color
 
+# Source notmuch profile
+source ~/.config/neomutt/profile.operas.notmuch
+
 # vim: set ft=muttrc:

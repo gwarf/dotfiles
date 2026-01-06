@@ -2,45 +2,24 @@
 defaults
 logfile ~/.msmtp.log
 protocol smtp
-
-{{- if eq .chezmoi.hostname "torpedo" }}
-account operas
-host ssl0.ovh.net
-port 587
 auth on
 tls on
 tls_starttls on
+{{ if eq .chezmoi.hostname "torpedo" }}
+account gmail
+host smtp.gmail.com
+port 587
 tls_trust_file system
 from baptiste.grenier@operas-eu.org
 user baptiste.grenier@operas-eu.org
-passwordeval rbw get ovh/baptiste.grenier@operas-eu.org
-
-account google
-host smtp.gmail.com
-port 587
-auth on
-tls on
-tls_starttls on
-tls_trust_file system
-from no-reply@operas-eu.org
-user no-reply@operas-eu.org
-# passwordeval rbw get google/no-reply/apppass/vera
-passwordeval rbw get google/no-reply/apppass/internal_services
-# passwordeval rbw get google/no-reply/apppass/operasid
-
-account default: operas
-{{- else if eq .chezmoi.hostname "sikaru" }}
+passwordeval rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo
+{{ else if eq .chezmoi.hostname "sikaru" }}
 account perso
 host mail.bapt.name
 port 587
-auth on
-tls on
-tls_starttls on
 tls_trust_file system
 from baptiste@bapt.name
 user baptiste@bapt.name
 # secret-tool store --label=msmtp host smtp.your.domain service smtp user yourusername
 passwordeval secret-tool lookup host mail.bapt.name service imaps user baptiste@bapt.name
-
-account default: perso
-{{- end }}
+{{- end -}}
