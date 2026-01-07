@@ -27,10 +27,10 @@ source ~/.config/neomutt/notmuch-neomutt.rc
 source ~/.config/neomutt/index-color
 
 # Source notmuch profile
-{{- if eq .chezmoi.hostname "torpedo" -}}
+{{ if eq .chezmoi.hostname "torpedo" -}}
 source ~/.config/neomutt/profile.operas.notmuch
-{{- else if eq .chezmoi.hostname "sikaru" }}
+{{ else if eq .chezmoi.hostname "sikaru" }}
 source ~/.config/neomutt/profile.perso
-{{- end }}
+{{ end }}
 
 # vim: set ft=muttrc:
