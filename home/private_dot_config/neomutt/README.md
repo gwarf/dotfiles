@@ -1,22 +1,15 @@
 # Requirements
 
 - mutt (neomutt not supporting background edit as of 2022-11-28)
-- neovim ❤️ / vim
+- Neovim ❤️ / vim
 - mbsync (isync)
 - msmtp / postfix
-- perl
-
-## Setting up default profile
-
-```shell
-# Need to set a default profile
-$ ln -s ~/.config/neomutt/profile-maildir.egi ~/.config/neomutt/default-profile
-```
+- Perl
 
 ## Accessing neomutt documentation
 
 ```shell
-$ neomutt -O -Q smart_wrap
+neomutt -O -Q smart_wrap
 ```
 
 ## Fetching emails / IMAP sync
@@ -31,22 +24,22 @@ msmtp
 
 ### On Mac OS X using gpgme (simplified configuration)
 
-See http://wiki.netbsd.org/users/wiz/mutt-smime/
+See <http://wiki.netbsd.org/users/wiz/mutt-smime/>
 
 ```shell
-$ gpgsm --import TrustedRoot.crt
-$ gpgsm --import DigiCertCA.crt
-$ gpgsm --import baptiste_grenier_until_2021_02.p12
-$ gpgsm --list-keys
+gpgsm --import TrustedRoot.crt
+gpgsm --import DigiCertCA.crt
+gpgsm --import baptiste_grenier_until_2021_02.p12
+gpgsm --list-keys
 ```
 
 ### On Mac OS X using mutt/neomutt smime_keys feature
 
 > Deprecated
 
-Initialize smime store
+Initialize S/MIME certificate store
 
-```sh
+```shell
 $ /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys init
 # Import DigiCert root
 $ /usr/local/Cellar/neomutt/20180716//libexec/neomutt/smime_keys add_root baptiste_grenier/TrustedRoot.crt
@@ -56,7 +49,7 @@ $ /usr/local/Cellar/neomutt/20180716/libexec/neomutt/smime_keys add_chain userke
 
 ## Perl modules for Notmuch
 
-It's possible to use [perlbrew](https://perlbrew.pl) to manage perl modules.
+It's possible to use [perlbrew](https://perlbrew.pl) to manage Perl modules.
 
 ```shell
 # For querying mails using notmuch
@@ -66,7 +59,7 @@ $ cpanm String::ShellQuote
 
 ## Python setup for reading calendar invites
 
-Requirements: pyhon3 + a virtualenv
+Requirements: pyhon3 + a virtual environment
 
 ```shell
 # Get latest version at https://www.python.org/downloads/
@@ -77,9 +70,9 @@ $ source .venv/bin/activate.fish
 $ pip install -r requirements.txt
 ```
 
-Mutt should be started with the proper python environment:
+Mutt should be started with the appropriate python environment:
 
 ```shell
-$ source ~/.config/neomutt/.venv/bin/activate.fish
-$ mutt
+source ~/.config/neomutt/.venv/bin/activate.fish
+mutt
 ```
