@@ -1,0 +1,22 @@
+# .notmuch-config - Configuration file for the notmuch mail system
+#
+# For more information about notmuch, see https://notmuchmail.org
+
+[database]
+# This location is to be used with lieer
+path=/home/baptiste/mail
+
+[user]
+name=Baptiste Grenier
+primary_email=baptiste.grenier@operas-eu.org
+other_email=baptiste@bapt.name
+
+[new]
+tags=
+ignore=/.*[.](json|lock|bak)$/
+
+[search]
+exclude_tags=deleted;spam;
+
+[maildir]
+synchronize_flags=true

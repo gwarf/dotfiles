@@ -8,18 +8,23 @@ if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ]; then
   exit 0
 fi
 
-# Move tagged messages to the related folders (i.e. spam and junk)
-afew --move --all --verbose
+# TODO: check if programs are available
 
-echo "Deleting messages tagged as *deleted*"
-notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
+# Only run if notmuch DB is aleady initialized
+if [ -d ~/Mail/.notmuch/xapian ]; then
 
-echo "Removing inbox tag from sent messages"
-notmuch tag -inbox -- "tag:sent and tag:inbox"
-echo "Removing archived tag from sent messages"
-notmuch tag -archived -- "tag:sent and tag:archived"
+  # XXX: disabled while moving to Gmail for $WORK, to be seen if needed
+  # Move tagged messages to the related folders (i.e. spam, sent or deleted messages)
+  # afew --move --all --verbose
 
-# Retrieve new messages
+  echo "Deleting local messages tagged as *deleted*"
+  notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
+
+  echo "Removing inbox tag from sent messages"
+  notmuch tag -inbox -- "tag:sent and tag:inbox"
+fi
+
+# Synchronize all mailboxes
 mbsync --verbose --all
 
 # Tag new messages, afew runs as post hook

@@ -1,122 +1,122 @@
 #!/usr/bin/env python3
 
-from subprocess import check_output, check_call, Popen, PIPE
-from tempfile import NamedTemporaryFile
-import sys
-import json
-import codecs
-import sys
-
-try:
-    import ijson
-    HAS_IJSON = True
-except ImportError:
-    HAS_IJSON = False
-    print("WARN: ijson not available. I may choke on big mailbox.",
-          file=sys.stderr)
-
-# basic functions
-
-def cmd_run(cmd):
-    print('Running (run): {}'.format(cmd))
-    return check_call(cmd)
-
-def cmd_capture(cmd):
-    print('Running (capture): {}'.format(cmd))
-    return check_output(cmd)
-
-def cmd_stream(cmd):
-    print('Running (stream): {}'.format(cmd))
-    p = Popen(cmd, stdout = PIPE)
-    return p
-
-# reconstruct responses from thread info
-
-def traverse(msg, ms, parent = None):
-    assert len(msg) == 2
-    head = msg[0]
-    head_id = head['id']
-    if parent is not None:
-        ms.append((head_id, parent))
-    children = msg[1]
-    for ch in children:
-        traverse(ch, ms, parent = head_id)
-
-def get_responses(obj):
-    ms = []
-    for thread in obj:  # over all threads
-        get_responses_from_thread(thread, ms)
-    return ms
-
-def get_responses_from_thread(thread, ms):
-    for top_message in thread:
-        traverse(top_message, ms, None)
-
-def get_replied_ids(query):
-    notmuch = [ 'notmuch', 'show', '--format=json',
-                '--entire-thread=true', '--body=false', query ]
-    out = cmd_stream(notmuch)
-    ms = []
-    try:
-        reader = codecs.getreader('utf8')
-        reader = reader(out.stdout, errors = 'replace')
-        if HAS_IJSON:
-            threads = ijson.items(reader, 'item')
-            for thread in threads:
-                get_responses_from_thread(thread, ms)
-        else:
-            obj = json.load(reader)
-            ms = get_responses(obj)
-    finally:
-        pass
-    replied = set( x[1] for x in ms )
-    return sorted(replied)
-
-# stuff to untag messages
-
-def untag_ids(ids):
-    with NamedTemporaryFile() as batch_file:
-        for i in ids:
-            line = '-noresponse +response -- id:{}\n'.format(i)
-            batch_file.write(line.encode('utf8'))
-        batch_file.flush()
-        notmuch = [ 'notmuch', 'tag',
-                    '--batch', '--input={}'.format(batch_file.name) ]
-        cmd_run(notmuch)
-
-# high-level commands
-
-def index(query = None):
-    # indexes only the new mails
-    query = 'tag:new' if query is None else query
-    replied = get_replied_ids(query)
-    if len(replied) == 0:
-        print('Nothing to untag.')
-    else:
-        print('IDs to untag ({}): {}'.format(len(replied), ', '.join(replied)))
-        untag_ids(replied)
-
-def reindex(query = None):
-    # reindexes messages that much the query, it may take some time
-    # 1. tag everything with unreplied
-    query = '*' if query is None else query
-    cmd_run([ 'notmuch', 'tag', '+noresponse', '-response', query ])
-    # 3. get all reply ids
-    replied = get_replied_ids(query)
-    print('Replies to untag: {}'.format(len(replied)))
-    # 4. untag these ids
-    untag_ids(replied)
-
-if __name__ == '__main__':
-    if len(sys.argv) not in [ 2, 3 ]:
-        print('Usage: {} <index|reindex> [query]'.format(sys.argv[0]))
-        sys.exit(1)
-    cmd = sys.argv[1]
-    query = None if len(sys.argv) == 2 else sys.argv[2]
-    if cmd == 'index':
-        index(query)
-    elif cmd == 'reindex':
-        reindex(query)
-    else:
-        print('Unknown command: {}'.format(cmd))
-        sys.exit(1)
+# from subprocess import check_output, check_call, Popen, PIPE
+# from tempfile import NamedTemporaryFile
+# import sys
+# import json
+# import codecs
+# import sys
+#
+# try:
+#     import ijson
+#     HAS_IJSON = True
+# except ImportError:
+#     HAS_IJSON = False
+#     print("WARN: ijson not available. I may choke on big mailbox.",
+#           file=sys.stderr)
+#
+# # basic functions
+#
+# def cmd_run(cmd):
+#     print('Running (run): {}'.format(cmd))
+#     return check_call(cmd)
+#
+# def cmd_capture(cmd):
+#     print('Running (capture): {}'.format(cmd))
+#     return check_output(cmd)
+#
+# def cmd_stream(cmd):
+#     print('Running (stream): {}'.format(cmd))
+#     p = Popen(cmd, stdout = PIPE)
+#     return p
+#
+# # reconstruct responses from thread info
+#
+# def traverse(msg, ms, parent = None):
+#     assert len(msg) == 2
+#     head = msg[0]
+#     head_id = head['id']
+#     if parent is not None:
+#         ms.append((head_id, parent))
+#     children = msg[1]
+#     for ch in children:
+#         traverse(ch, ms, parent = head_id)
+#
+# def get_responses(obj):
+#     ms = []
+#     for thread in obj:  # over all threads
+#         get_responses_from_thread(thread, ms)
+#     return ms
+#
+# def get_responses_from_thread(thread, ms):
+#     for top_message in thread:
+#         traverse(top_message, ms, None)
+#
+# def get_replied_ids(query):
+#     notmuch = [ 'notmuch', 'show', '--format=json',
+#                 '--entire-thread=true', '--body=false', query ]
+#     out = cmd_stream(notmuch)
+#     ms = []
+#     try:
+#         reader = codecs.getreader('utf8')
+#         reader = reader(out.stdout, errors = 'replace')
+#         if HAS_IJSON:
+#             threads = ijson.items(reader, 'item')
+#             for thread in threads:
+#                 get_responses_from_thread(thread, ms)
+#         else:
+#             obj = json.load(reader)
+#             ms = get_responses(obj)
+#     finally:
+#         pass
+#     replied = set( x[1] for x in ms )
+#     return sorted(replied)
+#
+# # stuff to untag messages
+#
+# def untag_ids(ids):
+#     with NamedTemporaryFile() as batch_file:
+#         for i in ids:
+#             line = '-noresponse +response -- id:{}\n'.format(i)
+#             batch_file.write(line.encode('utf8'))
+#         batch_file.flush()
+#         notmuch = [ 'notmuch', 'tag',
+#                     '--batch', '--input={}'.format(batch_file.name) ]
+#         cmd_run(notmuch)
+#
+# # high-level commands
+#
+# def index(query = None):
+#     # indexes only the new mails
+#     query = 'tag:new' if query is None else query
+#     replied = get_replied_ids(query)
+#     if len(replied) == 0:
+#         print('Nothing to untag.')
+#     else:
+#         print('IDs to untag ({}): {}'.format(len(replied), ', '.join(replied)))
+#         untag_ids(replied)
+#
+# def reindex(query = None):
+#     # reindexes messages that much the query, it may take some time
+#     # 1. tag everything with unreplied
+#     query = '*' if query is None else query
+#     cmd_run([ 'notmuch', 'tag', '+noresponse', '-response', query ])
+#     # 3. get all reply ids
+#     replied = get_replied_ids(query)
+#     print('Replies to untag: {}'.format(len(replied)))
+#     # 4. untag these ids
+#     untag_ids(replied)
+#
+# if __name__ == '__main__':
+#     if len(sys.argv) not in [ 2, 3 ]:
+#         print('Usage: {} <index|reindex> [query]'.format(sys.argv[0]))
+#         sys.exit(1)
+#     cmd = sys.argv[1]
+#     query = None if len(sys.argv) == 2 else sys.argv[2]
+#     if cmd == 'index':
+#         index(query)
+#     elif cmd == 'reindex':
+#         reindex(query)
+#     else:
+#         print('Unknown command: {}'.format(cmd))
+#         sys.exit(1)

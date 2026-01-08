@@ -66,7 +66,8 @@ bind index,pager \ck extract-keys
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? %?p? (%p postponed)?]───[ OPERAS ]%|-"
 
 # Fetching mail
-macro index \cf "<shell-escape>mbsync -a<enter>"
+# macro index \cf "<shell-escape>mbsync -a<enter>"
+macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 
 # Contacts from Google contacts
 # Syncronised with vdirsyncer

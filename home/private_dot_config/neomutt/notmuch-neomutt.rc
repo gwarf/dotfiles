@@ -1,7 +1,7 @@
 # notmuch
 
 # XXX To be clarified
-# - Need to remove unred flag when mail has been read
+# - Need to remove unread flag when mail has been read
 # - Sync mailbox after having sent an email
 # - search-based addressbook (instead of gobook)
 # - Index colors based on tags
@@ -14,66 +14,18 @@
 # - Best notmuch/search-based workflow with neomutt
 # - notmuch search, different results for tag= and tag:
 # - Best workflow for mutlitple accounts
-# - Best integration with gmail
-#   - delete
-#   - tags <=> labels
-#   - All: duplicates from Inbox, with different tags?
-#   - Managing Starred emails (separate folder?)
-# - Are folders updated automatically
-# - How are sorted emails in the change-vfolder view?
-# - Move automatically spam marked as trainham to the trainham folder for Perso
-# - validating managment of answered emails
-#   - Answer to 74BCB9D9-E942-466F-9204-0E46990087B5@cmcc.it (Sandro Fiore <sandro.fiore@cmcc.it> / Re: Stage rollout for analytics portle)
-#     -> My answer received: +all +egi +sent +signed
-#     -> His email received: +replied
-#        But not in Sent
-#   - Ordering vfolder browser
+# - Managing Starred emails (separate folder?)
+# - Ordering vfolder browser
 
 #set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 
-set nm_db_limit = 5000
-
-# enable virtual folders
-# When set, NeoMutt will use the first virtual mailbox (see virtual-mailboxes)
-# as a spoolfile.
-# set virtual_spoolfile = no
-
-# XXX virtual-mailboxes are loaded from profile-related conf
-# sets up queries for virtual folders
-#virtual-mailboxes \
-#    "Inbox"         "notmuch://?query=tag:inbox" \
-#    "All"           "notmuch://?query=tag:all" \
-#    "TODO"          "notmuch://?query=tag:todo" \
-#    "Important"     "notmuch://?query=tag:important" \
-#    "Drafts"        "notmuch://?query=tag:draft" \
-#    "Trash"         "notmuch://?query=tag:deleted" \
-#    "Spam"          "notmuch://?query=tag:spam" \
-#    "Sent"          "notmuch://?query=tag:sent"
+# default limit used in notmuch queries
+# set nm_db_limit = 5000
 
 # This variable specifies notmuch query type, supported types: 'threads' and
 # 'messages'.
-#set nm_query_type = threads
+# set nm_query_type = threads
 set nm_query_type = messages
-
-# By default do not save sent emails
-# Gmail takes care of this
-#unset record
-# Add messages stored to the NeoMutt record (see $record in the NeoMutt
-# docs) also to notmuch DB.
-# If you reply to an email then the new email inherits tags from the
-# original email.
-#set nm_record = no
-
-# set nm_record_tag = ''
-# Tags that should be removed or added to the to the messages stored in the NeoMutt record.
-#
-# example:
-# set record = "~/Mail/EGI/Sent"
-# set nm_record = yes
-# set nm_record_tags = "-inbox,archive,me,egi"
-
-# use new?
-#set nm_unread_tag = unread
 
 # This variable specifies private notmuch tags which should not be printed
 # on screen (index, pager).
@@ -81,51 +33,39 @@ set nm_query_type = messages
 # set nm_hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
 # set nm_hidden_tags = "passed,replied,attachment,signed,encrypted"
 
-# The messages tagged with these tags are excluded and not loaded
-# from notmuch DB to NeoMutt unless specified explicitly.
-#set nm_exclude_tags = ""
-
-# setup time window preferences
-# first setup the duration, and then the time unit of that duration
-# when set to 0 (the default) the search window feature is disabled
-# XXX Setting this will limit shown messages!
-set nm_query_window_duration=0
-# Could also be "hour", "day", "week", "month", "year"
-set nm_query_window_timebase="week"
-
 # Configure vfolder browser display
 # XXX how to order folder list?
 # $n: number of unread messages
 # $m: number of messages
 # $N: N if mailbox has new mail
-#set vfolder_format  = '%6n/%6m (%N) %f'
+# set vfolder_format  = '%6n/%6m (%N) %f'
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
 # XXX This chars are taking more than one cell
-# tag-transforms "inbox"   ""   \
-#                "unread"  "✘"   \
-#                "replied" "↻"  \
-#                "sent"    "✎"  \
-#                "important" "★"   \
-#                "waiting" ""   \
-#                "deleted" "" \
-#                "spam" "😈" \
-#                "attachment" "" \
-#                "invites" ""
+tag-transforms "inbox"   ""   \
+               "unread"  "✘"   \
+               "replied" "↻"  \
+               "sent"    "✎"  \
+               "important" "★"   \
+               "waiting" ""   \
+               "deleted" "" \
+               "spam" "😈" \
+               "attachment" "" \
+               "invites" ""
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
 # tag-formats tag format-string { tag format-string ...}
-# tag-formats "inbox"   "Gi" \
-#              "unread"  "GU" \
-#              "replied" "GR" \
-#              "sent"    "GS" \
-#              "important"    "Gt" \
-#              "waiting"    "Gw" \
-#              "deleted" "GD" \
-#              "spam" "GT" \
-#              "attachment" "Ga" \
-#              "invites" "GI"
+tag-formats "inbox"   "Gi" \
+             "unread"  "GU" \
+             "replied" "GR" \
+             "sent"    "GS" \
+             "important"    "Gt" \
+             "waiting"    "Gw" \
+             "deleted" "GD" \
+             "spam" "GT" \
+             "attachment" "Ga" \
+             "invites" "GI"
 
 # http://www.mutt.org/doc/manual/#index-format
 # Now instead of using '%g' in your $index_format, which lists all tags
@@ -151,15 +91,16 @@ set nm_query_window_timebase="week"
 #   - %Gw: waiting
 # %s: message subject
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
-#set index_format='%4C %Z %[%y.%m.%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
+# set index_format='%4C %Z %[%Y-%m-%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
+set index_format='%4C %Z %[%b %d] %-20.19F %?GD?%GD&?%?GR?%GR&?%?GI?%GI&? (%?l?%4l&%4c?) %s'
 
 ## Macros and bindings
 
 # open a different virtual folder
-#macro index,pager c "<change-vfolder>?"
+# macro index,pager c "<change-vfolder>?"
 # macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
 # modify (notmuch) tags
-#bind index,pager \` modify-labels
+ bind index,pager \` modify-labels
 
 # generate virtual folder from query
 macro index \\\\ "<vfolder-from-query>"
@@ -179,55 +120,19 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 # 'a' shows all messages again (supersedes default <alias> binding)
 # macro index a "<limit>all\n" "show all messages (undo limit)"
 
-# macros to invoke a profile
-#macro index <F8> ":source ~/.config/neomutt/profile.egi<enter><change-vfolder>Inbox<enter>" "Load profile: egi"
-#macro index <F9> ":source ~/.config/neomutt/profile.perso<enter><change-vfolder>Inbox<enter>" "Load profile: perso"
-
-## Prefix-based bindings
-
-# [g]o to
-# Set/modify [t]ag
-# Launch [a]ction
-# Need to free the short keymap
-# https://www.neomutt.org/guide/configuration.html#bind-warnings
-#bind index,pager g noop
-#bind index,pager t noop
-#bind index,pager a noop
-
-## Tagging emails
-
-# tag as read and archive
-# macro index A "<modify-labels-then-hide>+all -unread -inbox<enter>"
-# macro index,pager A "<modify-labels>+all -unread -inbox<enter>"
-# macro index,pager ta "<modify-labels>+all -unread -inbox<enter>"
-# # tag as unread and unarchive
-# macro index,pager N "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
-# macro index,pager tu "<modify-labels>-all +unread +inbox<enter><sync-mailbox>"
-# # toglle important flag
-# macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
-# macro index,pager ti "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
-# macro index,pager ts "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>"
-# # Toggle the 'todo' tag
-# macro index,pager tt "<modify-labels>!todo<enter><sync-mailbox>"
-# macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"
-# # Mark as spam
-# macro index,pager S "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>"
-# macro index,pager ts "<modify-labels-then-hide>-inbox -unread +junk<enter><sync-mailbox>"
-# # Mark as to waiting reply
-# macro index,pager tw "<modify-labels>+waiting<enter><sync-mailbox>"
-# # Delete emails from the index, but NOT delete the file.
-# # To be managed elsewhere (afew to move it in the Trahs folder?)
-# # XXX how are they hidden?
-# # XXX how to flag mail as deleted/red in the UI?
-# # When in index it updates tags and moves to next email
-# # When in pager it updates tags but do not move to next email
+# Delete emails from the index, but NOT delete the file.
+# To be managed elsewhere (afew to move it in the Trahs folder?)
+# XXX how are they hidden?
+# XXX how to flag mail as deleted/red in the UI?
+# When in index it updates tags and moves to next email
+# When in pager it updates tags but do not move to next email
 # macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
 # macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
-# # TODO Need to manage delete-thread Ctrl-d and Undelete Thread Ctrl-u
-# # Revovering emails marked for deletion
+# TODO Need to manage delete-thread Ctrl-d and Undelete Thread Ctrl-u
+# Revovering emails marked for deletion
 # macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
-# # removed from inbox
-# # bind index,pager D quasi-delete
+# removed from inbox
+# bind index,pager D quasi-delete
 
 ## Actions on emails
 
@@ -238,8 +143,20 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 #   "<pipe-message>add_contact<enter>" \
 #   "add sender to google contacts"
 
-## Opening virtual folders
+# Opening virtual folders
 
+# Prefix-based bindings
+
+# [g]o to
+# Set/modify [t]ag
+# Launch [a]ction
+# Need to free the short keymap
+# https://www.neomutt.org/guide/configuration.html#bind-warnings
+# bind index,pager g noop
+# bind index,pager t noop
+# bind index,pager a noop
+# Mark as to waiting reply
+# macro index,pager tw "<modify-labels>+waiting<enter><sync-mailbox>"
 # macro index,pager gi \
 #     <change-vfolder>Inbox<enter> \
 #     "Go to inbox"
@@ -272,17 +189,17 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 
 # important messages
 # color index_tag    color160        color234        "t"
-# # deleted messages
+# deleted messages
 # color index_tag    color235        color160        "D"
-# # Error in patern
-# # color index_tag    color235        color160        "~GD"
-#  color index_tag    color235        color160        "GD"
+# Error in patern
+# color index_tag    color235        color160        "~GD"
+# color index_tag    color235        color160        "GD"
 # color index_tag    color235        color160        "~D"
-# # invites messages
+# invites messages
 # color index_tag    color160        color234        "important"
 # color index_tag    color160        color234        "starred"
 # color index_tag    color160        color234        "I"
-# # Inbox message
+# Inbox message
 # color index_tag    color33         color234        "unbox"
 
 # Used where/when?
@@ -293,7 +210,7 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 # color index         color160        color234        "~F"
 # Not able to find an appripriate pattern for this
 # color index         color160        color234        "~G 'starred'"
-#color index         color160        color234        "~Gt"
+# color index         color160        color234        "~Gt"
 # color index         color160        color234        "Gt"
 
 # vim: set ft=muttrc:

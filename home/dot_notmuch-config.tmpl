@@ -4,7 +4,8 @@
 
 [database]
 {{ if eq .chezmoi.hostname "torpedo" -}}
-path=/home/baptiste/mail
+# XXX: provide full path or expect errors with afew FolderNameFilter
+path=/home/baptiste/Mail
 {{ else if eq .chezmoi.hostname "sikaru" -}}
 # XXX: provide full path or expect errors with afew FolderNameFilter
 path=/home/baptiste/Mail
@@ -20,8 +21,9 @@ other_email=baptiste.grenier@operas-eu.org
 {{ end }}
 [new]
 {{ if eq .chezmoi.hostname "torpedo" -}}
-tags=
-ignore=/.*[.](json|lock|bak)$/
+# Initially tag all new messages as new, post-new hook will do the real tagging
+tags=new
+ignore=.uidvalidity;.mbsyncstate
 {{ else if eq .chezmoi.hostname "sikaru" -}}
 tags=new
 ignore=.uidvalidity;.mbsyncstate

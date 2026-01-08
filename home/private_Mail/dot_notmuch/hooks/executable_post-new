@@ -2,5 +2,20 @@
 
 set -eu
 
+# Tag all new messages using afew
+# https://afew.readthedocs.io/en/latest/quickstart.html
 # XXX: use --all as otherwise sent mails are not properly identified
-afew --tag --all --verbose
+# XXX: may only be required when they are added locally, not when added by the
+# remote server like for Gmail
+# afew --tag --all --verbose
+afew --tag --new --verbose
+
+# XXX: alternative to afew: use manual tagging
+# immediately archive all messages from "me"
+# notmuch tag -new -- tag:new and from:me@example.com
+# delete all messages from a spammer:
+# notmuch tag +deleted -- tag:new and from:spam@spam.com
+# tag all message from notmuch mailing list
+# notmuch tag +notmuch -- tag:new and to:notmuch@notmuchmail.org
+# finally, retag all "new" messages "inbox" and "unread"
+# notmuch tag +inbox +unread -new -- tag:new

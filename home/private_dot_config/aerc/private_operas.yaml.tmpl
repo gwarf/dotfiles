@@ -1,6 +1,6 @@
 configurations:
   -
-    host: ssl0.ovh.net
+    host: imap.gmail.com
     port: 993
     tls: true
     tlsOptions:
@@ -8,9 +8,9 @@ configurations:
       starttls: false
     wait: 5
     username: "baptiste.grenier@operas-eu.org"
-    password: "{{ (rbw "ovh/baptiste.grenier@operas-eu.org").data.password }}"
+    password: "{{ (rbw "google/baptiste.grenier@operas-eu.org/apppass/tuxedo").notes }}"
     xoAuth2: false
     boxes:
       -
-        mailbox: Inbox
-        onNewMail: ~/bin/mail-sync.sh
+        mailbox: inbox
+        # onNewMail: ~/bin/mail-sync.sh

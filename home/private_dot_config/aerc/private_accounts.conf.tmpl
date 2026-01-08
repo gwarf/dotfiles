@@ -1,37 +1,52 @@
 {{- if eq .chezmoi.hostname "torpedo" -}}
-[Work]
-source   = notmuch://~/Mail/
-maildir-store = ~/Mail/
-address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
-outgoing = smtps://baptiste.grenier%40operas-eu.org@ssl0.ovh.net:465
-outgoing-cred-cmd = "rbw get ovh/operas/mail"
+[Work-Notmuch]
+# notmuch-based setup
+# XXX: review/redo notmuch-based setup
+source   = notmuch://~/Mail
+maildir-store = ~/Mail
 query-map = ~/.config/aerc/operas-map.conf
-default  = Inbox
 folders-exclude = ~OPERAS.*
-enable-folders-sort = false
-folders-sort = Inbox Archive Sent Draft Junk Trash
+address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
+outgoing = smtps://baptiste.grenier%40operas-eu.org@smtp.gmail.com:587
+outgoing-cred-cmd = "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
+default  = inbox
+enable-folders-sort = true
+folders-sort = inbox,sent,all,drafts,spam,phishing,trash
 from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
-copy-to  = OPERAS/Sent
 pgp-auto-sign = true
 pgp-key-id = "0xCDA18F02"
 signature-file = ~/.config/neomutt/signature-operas
 
-[Personal]
+[Work-Maildir]
+# notmuch-based setup
+source = maildir://~/Mail/OPERAS
+address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
+outgoing = smtps://baptiste.grenier%40operas-eu.org@smtp.gmail.com:587
+outgoing-cred-cmd = "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
+default  = inbox
+enable-folders-sort = true
+folders-sort = inbox,sent,all,drafts,spam,phishing,trash
+from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
+pgp-auto-sign = true
+pgp-key-id = "0xCDA18F02"
+signature-file = ~/.config/neomutt/signature-operas
+
+[Personal (IMAP)]
 source   = imaps://baptiste%40bapt.name@mail.bapt.name
 source-cred-cmd = "rbw get mail/baptiste@bapt.name"
 outgoing = smtp://baptiste%40bapt.name@mail.bapt.name:587
 outgoing-cred-cmd = "rbw get mail/baptiste@bapt.name"
 default  = INBOX
 folders-exclude = ~Archive/.*
-enable-folders-sort = false
-folders-sort = INBOX Archive Sent Draft Junk Trash
+enable-folders-sort = true
+folders-sort = INBOX,Archive,Sent,Drafts,Junk,Trash
 from     = Baptiste Grenier <baptiste@bapt.name>
 copy-to  = Sent
 pgp-auto-sign = true
 pgp-key-id = "0xCDA18F02"
 signature-file = ~/.config/neomutt/signature-perso
 {{- else }}
-[Personal]
+[Personal (Maildir)]
 source   = maildir://~/Mail/Perso
 check-mail-cmd = mbsync -a
 check-mail = 0
