@@ -20,14 +20,12 @@ return {
       end
       -- Required for python
       add("debugpy")
-      -- Skip packages installed with OS package manager
-      -- skip("ansible-lint")
+      -- Skip packages installed with another package manager
       skip("shfmt")
       skip("black")
       skip("stylua")
-      -- TODO: Markdown linter: find or build a package
       skip("marksman")
-      -- XXX: Skip brew packages
+      -- Skip packages installed with Homebrew on macOS
       if vim.uv.os_uname().sysname:find("Darwin") then
         skip("prettier")
         skip("shellcheck")
@@ -42,11 +40,18 @@ return {
       if vim.uv.os_uname().sysname:find("FreeBSD") then
         skip("shellcheck")
         -- TODO: Dockerfile linter: find or build a package
+        -- TODO: Markdown linter: find or build a packag
         skip("hadolint")
         skip("tflint")
       end
+      -- Skip packages installed with OS package manager
       if vim.uv.os_uname().sysname:find("Linux") then
-        add("lua-language-server")
+        skip("hadolint")
+        skip("lua-language-server")
+        skip("markdownlint-cli2")
+        skip("prettier")
+        skip("shellcheck")
+        skip("tflint")
       end
       if vim.uv.os_uname().sysname:find("FreeBSD") then
         --- Debug for MasonInstall issues
