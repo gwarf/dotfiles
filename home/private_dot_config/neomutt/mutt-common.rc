@@ -9,7 +9,7 @@ set certificate_file = ~/.cache/mutt/certificates
 # set tmpdir = '~/tmp'
 
 set editor = 'nvim'
-set shell = "/bin/zsh"
+set shell = "/usr/bin/fish"
 
 # number of input lines for prompts to remember
 set history = 1000
@@ -86,6 +86,7 @@ set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 set uncollapse_jump
 
 # Pager View Options
+
 # format of the pager status bar
 spam "X-Spam-Score: ([0-9\\.]+).*" "SA: %1"
 set pager_format = "──[%[%y.%m.%d %H:%M]]──[%.20F]─[%s]%*─%?H?─[%H] ?"
@@ -125,7 +126,7 @@ source ~/.config/neomutt/colors
 source ~/.config/neomutt/bindings
 
 # Spelling
-set ispell = "aspell -e -c"
+# set ispell = "aspell -e -c"
 
 set send_charset = "utf-8"
 

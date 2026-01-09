@@ -1,44 +1,11 @@
 # notmuch
 
-# XXX To be clarified
-# - Need to remove unread flag when mail has been read
-# - Sync mailbox after having sent an email
-# - search-based addressbook (instead of gobook)
-# - Index colors based on tags
-# - Updating files status from tags (like read emails)
-# - handling of deleted emails
-#   - https://github.com/neomutt/neomutt/issues/200
-# - seeing all the tags of an email from mutt
-# - seeing all the tags of an email from CLI
-# notmuch dump id:4DCAB3B3.8080301@maatg.com
-# - Best notmuch/search-based workflow with neomutt
-# - notmuch search, different results for tag= and tag:
-# - Best workflow for mutlitple accounts
-# - Managing Starred emails (separate folder?)
-# - Ordering vfolder browser
-
-#set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
-
-# default limit used in notmuch queries
-# set nm_db_limit = 5000
+set sidebar_format = "%D%* %S"
 
 # This variable specifies notmuch query type, supported types: 'threads' and
 # 'messages'.
 # set nm_query_type = threads
 set nm_query_type = messages
-
-# This variable specifies private notmuch tags which should not be printed
-# on screen (index, pager).
-# nm_hidden_tags: unknown variable
-# set nm_hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
-# set nm_hidden_tags = "passed,replied,attachment,signed,encrypted"
-
-# Configure vfolder browser display
-# XXX how to order folder list?
-# $n: number of unread messages
-# $m: number of messages
-# $N: N if mailbox has new mail
-# set vfolder_format  = '%6n/%6m (%N) %f'
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
@@ -94,45 +61,25 @@ tag-formats "inbox"   "Gi" \
 # set index_format='%4C %Z %[%Y-%m-%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
 set index_format='%4C %Z %[%b %d] %-20.19F %?GD?%GD&?%?GR?%GR&?%?GI?%GI&? (%?l?%4l&%4c?) %s'
 
-## Macros and bindings
+# Macros and bindings
 
 # open a different virtual folder
-# macro index,pager c "<change-vfolder>?"
-# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+# XXX: when changing vfolder, the folders ar not sorted as wanted
+bind index,pager c change-vfolder
 # modify (notmuch) tags
- bind index,pager \` modify-labels
+bind index,pager \` modify-labels
 
 # generate virtual folder from query
-macro index \\\\ "<vfolder-from-query>"
-bind index,pager <F4> vfolder-from-query
-bind index,pager \eX vfolder-from-query
+macro index \\\\ "<vfolder-from-query>" "Query messages using a notmuch pattern"
+macro index,pager L "<vfolder-from-query>" "Query messages using a notmuch pattern"
 
-# Mive time window of virtual folder from query
+# Move time window of virtual folder from query
 # Only works if nm_query_window_duration > 0
 bind index < vfolder-window-backward
 bind index > vfolder-window-forward
 
 # read entire thread of the current message
 bind index,pager <F5> entire-thread
-
-# 'L' performs a notmuch query, showing only the results
-macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuch query: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a'\`\"<enter>" "show only messages matching a notmuch pattern"
-# 'a' shows all messages again (supersedes default <alias> binding)
-# macro index a "<limit>all\n" "show all messages (undo limit)"
-
-# Delete emails from the index, but NOT delete the file.
-# To be managed elsewhere (afew to move it in the Trahs folder?)
-# XXX how are they hidden?
-# XXX how to flag mail as deleted/red in the UI?
-# When in index it updates tags and moves to next email
-# When in pager it updates tags but do not move to next email
-# macro index d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter>"
-# macro pager d "<modify-labels-then-hide>+deleted -inbox -unread -all<enter><next-message>"
-# TODO Need to manage delete-thread Ctrl-d and Undelete Thread Ctrl-u
-# Revovering emails marked for deletion
-# macro index u "<modify-labels-then-hide>-deleted +inbox +all<enter>"
-# removed from inbox
-# bind index,pager D quasi-delete
 
 ## Actions on emails
 
@@ -142,8 +89,6 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 # macro index,pager ag \
 #   "<pipe-message>add_contact<enter>" \
 #   "add sender to google contacts"
-
-# Opening virtual folders
 
 # Prefix-based bindings
 
@@ -181,37 +126,23 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 
 # Colors tag indicators in index
 
-# These symbols are added to the index-color feature:
-# an individual message tag, %G, uses tag name
-# this symbol uses a pattern
-# the transformed message tags, %g
-# this symbol does not use a pattern
-
 # important messages
 color index_tag    color160        color234        "important"
 color index_tag    color160        color234        "starred"
+color index         color160        color234        "~Y \"starred\""
+color index         color160        color234        "~Y \"important\""
+
 # deleted messages
 # Color the index_tag column for messages tagged as deleted
 # color index_tag    color235        color160        "deleted"
 # Color the full index row for messages tagged as deleted
 # XXX: this should only be done in the inbox, not when viewing the trash
 color index    color235        color160        "~Y \"deleted\""
+
 # Color the full index row for messages in the inbox no more having the inbox label
 folder-hook inbox 'color index    color235        color160        "! ~Y \"inbox\""'
-# XXX: not working, need to avoid messing up with colors in non inbox folder
+# XXX: not working, need to avoid messing up with colors in all folder
 # folder-hook '[^inbox]' 'color index    default        default        "! ~Y \"inbox\""'
-# Inbox message
-# color index_tag    color33         color234        "inbox"
-
-# Used where/when?
-# color index_tags green default
-
-# Colors messages based on tags
-# flagged messages
-# color index         color160        color234        "~F"
-# Not able to find an appripriate pattern for this
-# color index         color160        color234        "~G 'starred'"
-# color index         color160        color234        "~Gt"
-# color index         color160        color234        "Gt"
+folder-hook all 'color index    default        default        "! ~Y \"inbox\""'
 
 # vim: set ft=muttrc:

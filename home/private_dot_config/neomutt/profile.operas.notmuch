@@ -28,6 +28,7 @@ set nm_default_uri = "notmuch:///home/baptiste/Mail"
 
 set spoolfile = "inbox"
 virtual-mailboxes "inbox" "notmuch://?query=tag:inbox and not tag:deleted and not tag:spam and not tag:phishing"
+virtual-mailboxes "important" "notmuch://?query=tag:important or tag:starred"
 virtual-mailboxes "all" "notmuch://?query=tag:all"
 virtual-mailboxes "sent" "notmuch://?query=tag:sent"
 virtual-mailboxes "spam" "notmuch://?query=tag:spam and not tag:deleted"
@@ -44,17 +45,13 @@ macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 # Email tagging
 macro index,pager A "<modify-labels-then-hide>+all -unread -inbox<enter>" "Archive message"
 macro index,pager d "<modify-labels-then-hide>all -unread -inbox +deleted<enter>" "Delete message"
-
-# tag as unread and unarchive
+macro index,pager u "<modify-labels-then-hide>-deleted +inbox +all<enter>" "Undelete message"
 macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox><enter>" "Move to inbox as unread"
-
-# Toggle important tag
-macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox><enter>" "Toggle important"
+macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox><enter>" "Toggle important label"
 
 # Toggle the 'todo' tag
 # macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"
-# Mark as spam
-# macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>"
 
 # Sent mails are recorded automatically by Gmail
 unset record
@@ -92,11 +89,6 @@ set pgp_autosign              # Default (sign))
 my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
 my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
 
-# Extract PGP or S/MIME keys
-# To be done before trying to send an encrypted message
-# Known keys can be displayed using gpgsm --list-keys
-bind index,pager \ck extract-keys
-
 # Include the profile name in the status line
 # TODO Align profile name on the right
 # XXX: automatic padding with ─ does not work, using a normal - for now
@@ -112,9 +104,6 @@ set query_command= "khard email --parsable %s"
 # set query_command="goobook query %s"
 # bind editor <Tab> complete-query
 # macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
-
-# XXX: clashes with fetch mail
-# macro index \Cf "<vfolder-from-query>" "show only messages matching a notmuch pattern"
 
 # http://www.mutt.org/doc/manual/#ignore-list-reply-to
 set ignore_list_reply_to

@@ -101,6 +101,11 @@ macro index \' "l(~F | ~U) ! ~D\r"  "Show Important Mails"
 # Create a taskwarrior task using mutt2task
 # macro index,pager t "<pipe-message>mutt2task.py<enter>"
 
+# Extract PGP or S/MIME keys
+# To be done before trying to send an encrypted message
+# Known keys can be displayed using gpgsm --list-keys
+bind index,pager \ck extract-keys
+
 # Use Ctrl-a to print a message smime info using openssl
 macro index,pager \Ca "<pipe-entry>openssl smime -verify -noverify -pk7out | openssl pkcs7 -print_certs | openssl x509 -subject -issuer -dates -text | less<enter>" "call OpenSSL to print S/MIME info"
 
