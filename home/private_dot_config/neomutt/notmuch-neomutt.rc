@@ -8,7 +8,7 @@ set sidebar_format = "%D%* %S"
 set nm_query_type = messages
 
 # Hide various tags from the UI
-set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists
+set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
@@ -69,7 +69,7 @@ tag-formats "inbox"   "Gi" \
 # %3?GD?%GD&?%?GR?%GR&?%?GI?%GI&?%?GT?%GT&?: show icons for specific tags
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
 # set index_format='%4C %Z %[%Y-%m-%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
-set index_format='%4C %Z %7<[y?%<[m?%<[d?%[%l:%M%p]&%[%a %d]>&%[%b %d]>&%[%m/%y]> %-20.20F %s [%g] (%?l?%4l&%4c?)'
+set index_format='%4C %Z %7<[y?%<[m?%<[d?%[%l:%M%p]&%[%a %d]>&%[%b %d]>&%[%m/%y]> %-20.20F %s %?g?%g&? (%?l?%4l&%4c?)'
 
 # Macros and bindings
 
