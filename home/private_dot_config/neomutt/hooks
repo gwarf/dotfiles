@@ -20,7 +20,7 @@ message-hook '~s "Nessus Scan Results:"' 'unalternative_order *;alternative_orde
 message-hook '~s "Weekly Uptime Monitoring Report"' 'unalternative_order *;alternative_order text/html text/plain'
 message-hook '~f billing@zoom.us' 'unalternative_order *;alternative_order text/html text/plain'
 message-hook '~f info@propaganda666.com' 'unalternative_order *;alternative_order text/html text/plain'
-message-hook '~f no-reply@herixtools.com' 'unalternative_order *;alternative_order text/html text/plain'
+message-hook '~f no-reply@hetrixtools.com' 'unalternative_order *;alternative_order text/html text/plain'
 message-hook '~h "X-Original-Sender: no-reply@hetrixtools.com"' 'unalternative_order *;alternative_order text/html text/plain'
 
 # vim: set ft=muttrc:
