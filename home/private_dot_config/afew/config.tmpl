@@ -12,21 +12,20 @@ sent_tag = sent
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true
-# folder_transforms = Archives:archived Drafts:draft Trash:deleted Sent:sent Phishing:phishing
 folder_transforms = trash:deleted
 
 [DKIMValidityFilter]
 
 [InboxFilter]
 
-# [MailMover]
-# # To avoid messing up with mbsync
-# rename = True
-# folders = OPERAS/inbox OPERAS/spam
-# # <src> = ['<qry>':<dst>]+
-# OPERAS/inbox = 'tag:sent':OPERAS/sent 'tag:spam':OPERAS/spam
-# # OPERAS/inbox = 'tag:sent':OPERAS/sent 'tag:spam':OPERAS/spam 'NOT tag:inbox':OPERAS/all 'tag:archived':OPERAS/all
-# OPERAS/spam = 'NOT tag:spam AND tag:inbox':OPERAS/inbox 'NOT tag:spam':OPERAS/all
+[MailMover]
+# To avoid messing up with mbsync
+rename = True
+folders = OPERAS/all OPERAS/inbox OPERAS/spam
+# <src> = ['<qry>':<dst>]+
+OPERAS/all = 'tag:deleted':OPERAS/trash
+OPERAS/inbox = 'tag:sent':OPERAS/sent 'tag:spam':OPERAS/spam 'NOT tag:inbox':OPERAS/all 'tag:deleted':OPERAS/trash
+OPERAS/spam = 'NOT tag:spam AND tag:inbox':OPERAS/inbox 'NOT tag:spam':OPERAS/all 'tag:deleted':OPERAS/trash
 {{ else if eq .chezmoi.hostname "sikaru" }}
 [FolderNameFilter.0]
 maildir_separator = /

@@ -42,12 +42,14 @@ set sendmail = "/usr/bin/msmtp"
 macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 
 # Email tagging
-macro index,pager A "<modify-labels-then-hide>+all -unread -inbox\n<sync-mailbox>\n" "Archive message"
-macro index,pager d "<modify-labels-then-hide>all -unread -inbox +deleted\n<sync-mailbox>\n" "Delete message"
+macro index,pager A "<modify-labels-then-hide>+all -unread -inbox<enter>" "Archive message"
+macro index,pager d "<modify-labels-then-hide>all -unread -inbox +deleted<enter>" "Delete message"
 
 # tag as unread and unarchive
-macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
-macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important"
+macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox><enter>" "Move to inbox as unread"
+
+# Toggle important tag
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox><enter>" "Toggle important"
 
 # Toggle the 'todo' tag
 # macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"

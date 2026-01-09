@@ -13,12 +13,14 @@ fi
 # Only run if notmuch DB is aleady initialized
 if [ -d ~/Mail/.notmuch/xapian ]; then
 
-  # XXX: disabled while moving to Gmail for $WORK, to be seen if needed
-  # Move tagged messages to the related folders (i.e. spam, sent or deleted messages)
-  # afew --move --all --verbose
+  # Move tagged messages to the related folders (i.e. all, spam, sent or trash)
+  # XXX: with Gmail all messages are already in the all folders
+  echo "Move tagged messages to the relevant folder"
+  afew --move --all --verbose
 
-  echo "Deleting local messages tagged as *deleted*"
-  notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
+  # This can be used to definitely delete messages, skipping the trash
+  # echo "Deleting local messages tagged as *deleted*"
+  # notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
 
   echo "Removing inbox tag from sent messages"
   notmuch tag -inbox -- "tag:sent and tag:inbox"

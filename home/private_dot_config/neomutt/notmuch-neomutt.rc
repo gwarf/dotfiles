@@ -188,19 +188,20 @@ macro index L "<enter-command>unset wait_key<enter><shell-escape>read -p 'notmuc
 # this symbol does not use a pattern
 
 # important messages
-# color index_tag    color160        color234        "t"
+color index_tag    color160        color234        "important"
+color index_tag    color160        color234        "starred"
 # deleted messages
-# color index_tag    color235        color160        "D"
-# Error in patern
-# color index_tag    color235        color160        "~GD"
-# color index_tag    color235        color160        "GD"
-# color index_tag    color235        color160        "~D"
-# invites messages
-# color index_tag    color160        color234        "important"
-# color index_tag    color160        color234        "starred"
-# color index_tag    color160        color234        "I"
+# Color the index_tag column for messages tagged as deleted
+# color index_tag    color235        color160        "deleted"
+# Color the full index row for messages tagged as deleted
+# XXX: this should only be done in the inbox, not when viewing the trash
+color index    color235        color160        "~Y \"deleted\""
+# Color the full index row for messages in the inbox no more having the inbox label
+folder-hook inbox 'color index    color235        color160        "! ~Y \"inbox\""'
+# XXX: not working, need to avoid messing up with colors in non inbox folder
+# folder-hook '[^inbox]' 'color index    default        default        "! ~Y \"inbox\""'
 # Inbox message
-# color index_tag    color33         color234        "unbox"
+# color index_tag    color33         color234        "inbox"
 
 # Used where/when?
 # color index_tags green default
