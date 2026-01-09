@@ -8,7 +8,8 @@ set sidebar_format = "%D%* %S"
 set nm_query_type = messages
 
 # Hide various tags from the UI
-set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox
+# set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
+set hidden_tags = operas,dkim-ok,lists,to-me,unread,all,signed
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
@@ -25,7 +26,9 @@ tag-transforms "inbox"   ""   \
                "attachment" "" \
                "invites" "" \
                "dkim-fail" "❗" \
-               "lists/help" "🌞"
+               "lists/help" "🌞" \
+               "to-me" "🗿" \
+               "all" "🌐"
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
 # tag-formats tag format-string { tag format-string ...}
@@ -148,14 +151,14 @@ color index_tag    color235        color160        "deleted"
 # Color the full index row for messages tagged as deleted
 # XXX: this should only be done in the inbox, not when viewing the trash
 color index    color235        color160        "~Y \"deleted\""
-folder-hook trash 'color index    default        default        "~Y \"deleted\""'
+# folder-hook trash 'color index    default        default        "~Y \"deleted\""'
 
 # Color the full index row for messages in the inbox no more having the inbox label
-folder-hook inbox 'color index    color235        color160        "! ~Y \"inbox\""'
+color index    color235        color160        "! ~Y \"inbox\""
 # XXX: not working, need to avoid messing up with colors in all folder
 # folder-hook '[^inbox]' 'color index    default        default        "! ~Y \"inbox\""'
-folder-hook all 'color index    default        default        "! ~Y \"inbox\""'
-folder-hook phishing 'color index    default        default        "! ~Y \"inbox\""'
-folder-hook spam 'color index    default        default        "! ~Y \"inbox\""'
+# folder-hook all 'color index    default        default        "! ~Y \"inbox\""'
+# folder-hook phishing 'color index    default        default        "! ~Y \"inbox\""'
+# folder-hook spam 'color index    default        default        "! ~Y \"inbox\""'
 
 # vim: set ft=muttrc:
