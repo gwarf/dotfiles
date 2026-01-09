@@ -1,0 +1,14 @@
+configurations:
+  - host: imap.gmail.com
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: false
+    wait: 5
+    username: "baptiste.grenier@operas-eu.org"
+    passwordCmd: "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
+    xoAuth2: false
+    boxes:
+      - mailbox: inbox
+        onNewMail: ~/bin/mail-sync.sh
