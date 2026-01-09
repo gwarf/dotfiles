@@ -77,8 +77,12 @@ Far ":gmail-remote:[Gmail]/Spam"
 Near ":gmail-local:spam"
 
 Channel gmail-phishing
-Far ":gmail-remote:Phishing"
+Far ":gmail-remote:phishing"
 Near ":gmail-local:phishing"
+
+Channel gmail-edch
+Far ":gmail-remote:edch"
+Near ":gmail-local:edch"
 
 Group gmail
 Channel gmail-inbox
@@ -88,6 +92,7 @@ Channel gmail-sent
 Channel gmail-trash
 Channel gmail-spam
 Channel gmail-phishing
+Channel gmail-edch
 
 {{- else if eq .chezmoi.hostname "sikaru" }}
 IMAPAccount baptiste

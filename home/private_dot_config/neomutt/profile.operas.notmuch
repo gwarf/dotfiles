@@ -28,6 +28,7 @@ set nm_default_uri = "notmuch:///home/baptiste/Mail"
 
 set spoolfile = "inbox"
 virtual-mailboxes "inbox" "notmuch://?query=tag:inbox and not tag:deleted and not tag:spam and not tag:phishing"
+virtual-mailboxes "edch" "notmuch://?query=tag:edch"
 virtual-mailboxes "important" "notmuch://?query=tag:important or tag:starred"
 virtual-mailboxes "all" "notmuch://?query=tag:all"
 virtual-mailboxes "sent" "notmuch://?query=tag:sent"
