@@ -7,19 +7,25 @@ set sidebar_format = "%D%* %S"
 # set nm_query_type = threads
 set nm_query_type = messages
 
+# Hide various tags from the UI
+set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists
+
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
-# XXX This chars are taking more than one cell
+# XXX: Some chars are taking more than one cell
 tag-transforms "inbox"   ""   \
                "unread"  "✘"   \
                "replied" "↻"  \
                "sent"    "✎"  \
                "important" "★"   \
                "waiting" ""   \
-               "deleted" "" \
+               "deleted" "☠️" \
                "spam" "😈" \
+               "phishing" "😈" \
                "attachment" "" \
-               "invites" ""
+               "invites" "" \
+               "dkim-fail" "❗" \
+               "lists/help" "🌞"
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
 # tag-formats tag format-string { tag format-string ...}
@@ -44,10 +50,10 @@ tag-formats "inbox"   "Gi" \
 #   - New, Read, Reply
 #   - Deletion or Encryption flags
 #   - Tagging, flagging or information about the To/Cc...
-# %[%y.%m.%d]: Date
 # %n: Author realname or email if missing
 # %F: author name, or recipient name if the message is from you
 # %W: Organization
+# %g: list of tags
 # .G: Notmuch tags info
 #   - %Gi: inbox
 #   - %GD: deleted
@@ -57,9 +63,13 @@ tag-formats "inbox"   "Gi" \
 #   - %GT: spam
 #   - %Gw: waiting
 # %s: message subject
+# %7<[y?%<[m?%<[d?%[%l:%M%p]&%[%a %d]>&%[%b %d]>&%[%m/%y]>: Show relative dates with a 7 chars column
+# %[%y.%m.%d]: Date
+# %?l?%4l&%4c?: message size
+# %3?GD?%GD&?%?GR?%GR&?%?GI?%GI&?%?GT?%GT&?: show icons for specific tags
 # Default: %4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s
 # set index_format='%4C %Z %[%Y-%m-%d] %-18.18F %?Gi?%Gi& ? %?GD?%GD& ? %?GR?%GR& ? %?GI?%GI& ? %?GT?%GT& ? %?Gw?%Gw& ?  %?Ga?%Ga& ? %s'
-set index_format='%4C %Z %[%b %d] %-20.19F %?GD?%GD&?%?GR?%GR&?%?GI?%GI&? (%?l?%4l&%4c?) %s'
+set index_format='%4C %Z %7<[y?%<[m?%<[d?%[%l:%M%p]&%[%a %d]>&%[%b %d]>&%[%m/%y]> %-20.20F %s [%g] (%?l?%4l&%4c?)'
 
 # Macros and bindings
 
@@ -134,15 +144,18 @@ color index         color160        color234        "~Y \"important\""
 
 # deleted messages
 # Color the index_tag column for messages tagged as deleted
-# color index_tag    color235        color160        "deleted"
+color index_tag    color235        color160        "deleted"
 # Color the full index row for messages tagged as deleted
 # XXX: this should only be done in the inbox, not when viewing the trash
 color index    color235        color160        "~Y \"deleted\""
+folder-hook trash 'color index    default        default        "~Y \"deleted\""'
 
 # Color the full index row for messages in the inbox no more having the inbox label
 folder-hook inbox 'color index    color235        color160        "! ~Y \"inbox\""'
 # XXX: not working, need to avoid messing up with colors in all folder
 # folder-hook '[^inbox]' 'color index    default        default        "! ~Y \"inbox\""'
 folder-hook all 'color index    default        default        "! ~Y \"inbox\""'
+folder-hook phishing 'color index    default        default        "! ~Y \"inbox\""'
+folder-hook spam 'color index    default        default        "! ~Y \"inbox\""'
 
 # vim: set ft=muttrc:
