@@ -43,6 +43,30 @@ set sendmail = "/usr/bin/msmtp"
 # Fetching mail
 macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 
+# Hide various tags from the UI
+# set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
+set hidden_tags = operas,dkim-ok,lists,to-me,unread,all,signed
+
+# Replace some tags with icons
+# tag-transforms tag transformed-string { tag transformed-string ...}
+# XXX: Some chars are taking more than one cell
+tag-transforms "inbox"   ""   \
+               "unread"  "✘"   \
+               "replied" "↻"  \
+               "sent"    "✎"  \
+               "important" "★"   \
+               "waiting" ""   \
+               "deleted" "☠️" \
+               "spam" "😈" \
+               "phishing" "😈" \
+               "attachment" "" \
+               "invites" "" \
+               "dkim-fail" "❗" \
+               "lists/help" "🌞" \
+               "lists/edchtools" "TTTF" \
+               "to-me" "🗿" \
+               "all" "🌐"
+
 # Email tagging
 macro index,pager A "<modify-labels-then-hide>+all -unread -inbox<enter>" "Archive message"
 macro index,pager d "<modify-labels-then-hide>all -unread -inbox +deleted<enter>" "Delete message"

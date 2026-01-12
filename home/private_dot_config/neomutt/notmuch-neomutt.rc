@@ -7,10 +7,6 @@ set sidebar_format = "%D%* %S"
 # set nm_query_type = threads
 set nm_query_type = messages
 
-# Hide various tags from the UI
-# set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
-set hidden_tags = operas,dkim-ok,lists,to-me,unread,all,signed
-
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
 # XXX: Some chars are taking more than one cell
@@ -22,14 +18,10 @@ tag-transforms "inbox"   ""   \
                "waiting" ""   \
                "deleted" "☠️" \
                "spam" "😈" \
-               "phishing" "😈" \
                "attachment" "" \
                "invites" "" \
                "dkim-fail" "❗" \
-               "lists/help" "🌞" \
-               "lists/edchtools" "TTTF" \
-               "to-me" "🗿" \
-               "all" "🌐"
+               "to-me" "🗿"
 
 # The formats must start with 'G' and the entire sequence is case sensitive.
 # tag-formats tag format-string { tag format-string ...}
