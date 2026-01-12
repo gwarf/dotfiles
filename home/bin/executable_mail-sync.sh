@@ -2,9 +2,10 @@
 
 MBSYNC=$(pgrep mbsync)
 NOTMUCH=$(pgrep notmuch)
+AFEW=$(pgrep afew)
 
-if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ]; then
-  echo "Already running one instance of mbsync or notmuch. Exiting..."
+if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ] || [ -n "$AFEW" ]; then
+  echo "Already running one instance of mbsync, notmuch or afew. Exiting..."
   exit 0
 fi
 
@@ -22,7 +23,7 @@ if [ -d ~/Mail/.notmuch/xapian ]; then
   # echo "Deleting local messages tagged as *deleted*"
   # notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
 
-  echo "Removing inbox tag from sent messages"
+  echo "Remove inbox tag from sent messages"
   notmuch tag -inbox -- "tag:sent and tag:inbox"
 fi
 

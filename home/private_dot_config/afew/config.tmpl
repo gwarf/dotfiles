@@ -1,3 +1,6 @@
+# TODO: take inspartion from other people
+# https://gist.github.com/stain/c176164be966eb5c1850ea0886058b49
+
 [SpamFilter]
 
 [KillThreadsFilter]
@@ -16,8 +19,14 @@ folder_transforms = trash:deleted
 
 [DKIMValidityFilter]
 
-# XXX: rely on the FolderNameFilter to set the inbox tab
-# [InboxFilter]
+# Add tag invite to new calendar invites
+[Filter.1]
+query = "tag:new and mimetype:text/calendar"
+tags = +invites
+message: Tagging invites
+
+# remove tag new and add tag inbox
+[InboxFilter]
 
 [MailMover]
 # To avoid messing up with mbsync

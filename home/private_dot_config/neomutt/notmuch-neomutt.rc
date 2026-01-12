@@ -27,6 +27,7 @@ tag-transforms "inbox"   ""   \
                "invites" "" \
                "dkim-fail" "❗" \
                "lists/help" "🌞" \
+               "lists/edchtools" "TTTF" \
                "to-me" "🗿" \
                "all" "🌐"
 
