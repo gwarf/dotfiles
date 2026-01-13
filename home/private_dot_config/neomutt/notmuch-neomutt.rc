@@ -143,11 +143,11 @@ color index         color160        color234        "~Y \"important\""
 color index_tag    color235        color160        "deleted"
 # Color the full index row for messages tagged as deleted
 # XXX: this should only be done in the inbox, not when viewing the trash
-color index    color235        color160        "~Y \"deleted\""
-# folder-hook trash 'color index    default        default        "~Y \"deleted\""'
+folder-hook inbox 'color index    color235        color160        "~Y \"deleted\""'
+folder-hook trash 'color index    default        default        "~Y \"deleted\""'
 
 # Color the full index row for messages in the inbox no more having the inbox label
-color index    color235        color160        "! ~Y \"inbox\""
+# color index    color235        color160        "! ~Y \"inbox\""
 # XXX: not working, need to avoid messing up with colors in all folder
 # folder-hook '[^inbox]' 'color index    default        default        "! ~Y \"inbox\""'
 # folder-hook all 'color index    default        default        "! ~Y \"inbox\""'
