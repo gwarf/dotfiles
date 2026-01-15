@@ -66,16 +66,17 @@ tag-transforms "inbox"   ""   \
                "dkim-fail" "❗" \
                "lists/help" "🌞" \
                "lists/edchtools" "TTTF" \
+               "lists/130" "↻" \
                "to-me" "🗿" \
                "all" "🌐"
 
 # Email tagging
-macro index,pager A "<modify-labels-then-hide>+all -unread -inbox<enter>" "Archive message"
+macro index,pager A "<modify-labels-then-hide>+all -unread -inbox<enter><sync-mailbox>" "Archive message"
 macro index,pager d "<modify-labels-then-hide>all -unread -inbox +deleted<enter>" "Delete message"
-macro index,pager u "<modify-labels-then-hide>-deleted +inbox +all<enter>" "Undelete message"
-macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox><enter>" "Move to inbox as unread"
+macro index,pager u "<modify-labels-then-hide>-deleted +inbox +all<enter><sync-mailbox>" "Undelete message"
+macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
 macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
-macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox><enter>" "Toggle important label"
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
 
 # Toggle the 'todo' tag
 # macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"
