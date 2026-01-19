@@ -66,7 +66,10 @@ tag-transforms "inbox"   ""   \
                "dkim-fail" "❗" \
                "lists/help" "🌞" \
                "lists/edchtools" "TTTF" \
-               "lists/130" "↻" \
+               "lists/130" "👷" \
+               "lists/133" "👷" \
+               "lists/134" "👷" \
+               "lists/plura-list" "✊" \
                "to-me" "🗿" \
                "all" "🌐"
 
