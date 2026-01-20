@@ -1,0 +1,130 @@
+# Mutt sender profile: OPERAS with notmuch via neomutt
+
+set mbox_type = Maildir
+
+# XXX: Test setup for lieer
+set folder = ~/.mail/operas.gmail/mail
+# path to the maildir
+set nm_default_uri = "notmuch:///home/baptiste/.mail"
+
+set spoolfile = "Inbox"
+virtual-mailboxes "Inbox" "notmuch://?query=tag:inbox OR (not tag:inbox and tag:flagged)"
+virtual-mailboxes "Archive" "notmuch://?query=(not tag:inbox) and (not tag:spam) and (not tag:phishing)"
+# Starred messages on Gmail
+virtual-mailboxes "Flagged" "notmuch://?query=tag:flagged"
+virtual-mailboxes "Important" "notmuch://?query=tag:important"
+# virtual-mailboxes "important" "notmuch://?query=tag:important or tag:starred"
+virtual-mailboxes "Sent" "notmuch://?query=tag:sent"
+virtual-mailboxes "atrium" "notmuch://?query=tag:atrium"
+virtual-mailboxes "edch" "notmuch://?query=tag:edch"
+virtual-mailboxes "graphia" "notmuch://?query=tag:graphia"
+virtual-mailboxes "personal" "notmuch://?query=tag:personal"
+virtual-mailboxes "phishing" "notmuch://?query=tag:phishing and (not tag:trash)"
+virtual-mailboxes "spam" "notmuch://?query=tag:spam and (not tag:deleted)"
+virtual-mailboxes "trash" "notmuch://?query=tag:trash"
+virtual-mailboxes "drafts" "notmuch://?query=tag:drafts and (not tag:trash)"
+
+# Directly send via msmtp
+set sendmail = "/usr/bin/msmtp"
+
+# XXX: alterntive: send via Lieer
+# set sendmail = "gmi send -t -C ~/.mail/operas.gmail"
+#
+# Fetching mail
+# It's required to run lieer to sync emails, and also send them
+macro index,pager \cf "<shell-escape>gmi sync -C ~/.mail/operas.gmail<enter>" "run lieer to sync email@gmail.com"
+
+# Hide various tags from the UI
+# set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
+set hidden_tags = operas,dkim-ok,lists,to-me,personal,unread,all,signed,YELLOW_STAR
+
+# Replace some tags with icons
+# tag-transforms tag transformed-string { tag transformed-string ...}
+# XXX: Some chars are taking more than one cell
+tag-transforms "inbox" "" \
+               "unread" "✘" \
+               "replied" "↻" \
+               "sent" "✏️" \
+               "important" "★" \
+               "flagged" "🌟" \
+               "waiting" "" \
+               "trash" "☠️" \
+               "spam" "😈" \
+               "phishing" "😈" \
+               "attachment" "" \
+               "invites" ""
+
+# Email tagging
+macro index,pager A "<modify-labels-then-hide>-unread -inbox<enter><sync-mailbox>" "Archive message"
+macro index,pager d "<modify-labels-then-hide>-unread -inbox +trash<enter>" "Delete message"
+macro index,pager u "<modify-labels-then-hide>-trash +inbox<enter><sync-mailbox>" "Undelete message"
+macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
+macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
+
+# Toggle the 'todo' tag
+# macro index,pager <F2> "<modify-labels>!todo<enter><sync-mailbox>"
+
+# Sent mails are recorded automatically by Gmail
+unset record
+
+set from = "baptiste.grenier@operas-eu.org"
+set envelope_from_address = "baptiste.grenier@operas-eu.org"
+
+# Signature file
+set signature='~/.config/neomutt/signature-operas'
+
+# Customized headers
+unmy_hdr *                      # remove all extra headers first.
+
+my_hdr Organization: OPERAS AISBL
+my_hdr X-URL: https://operas-eu.org
+
+my_hdr From: Baptiste Grenier <baptiste.grenier@operas-eu.org>
+my_hdr Reply-To: Baptiste Grenier <baptiste.grenier@operas-eu.org>
+
+# Use GPGME to simplify GPG and S/MIME configuration
+set crypt_use_gpgme = yes
+set crypt_autosign = yes
+set crypt_verify_sig = yes
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+
+# Pretty Good Privacy (PGP):
+# PGP using gpgme (simplified conf)
+# In order to sign with a sub key, only the subkey should be available locally
+unset smime_is_default
+set pgp_sign_as = "0xCDA18F02"    # UserID/KeyID for signing - main key ID
+set nopgp_autoencrypt           # Default (enc))
+set pgp_autosign              # Default (sign))
+my_hdr X-PGP-Key: https://keys.bapt.name/pubkey.asc
+my_hdr OpenPGP: id=CDA18F02\; url=https://keys.bapt.name/pubkey.asc\; preference\=sign
+
+# Include the profile name in the status line
+# TODO Align profile name on the right
+# XXX: automatic padding with ─ does not work, using a normal - for now
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? %?p? (%p postponed)?]───[ OPERAS ]%|-"
+
+# Contacts from Google Contacts
+
+# Syncronised with vdirsyncer and accessed via khard
+set query_command= "khard email --parsable %s"
+
+# Using GooBook
+# https://gitlab.com/goobook/goobook
+# set query_command="goobook query %s"
+# bind editor <Tab> complete-query
+# macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+# http://www.mutt.org/doc/manual/#ignore-list-reply-to
+set ignore_list_reply_to
+
+# Mailing lists
+# http://www.mutt.org/doc/manual/#lists
+# Known
+# lists .*@...
+# Subscribed
+# subscribe ...@...
+
+# vim: set ft=muttrc:

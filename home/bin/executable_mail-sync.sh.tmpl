@@ -1,5 +1,9 @@
 #!/bin/sh
 
+{{- if eq .chezmoi.hostname "torpedo" }}
+/usr/bin/gmi sync -C ~/.mail/operas.gmail
+{{- else }}
+
 MBSYNC=$(pgrep mbsync)
 NOTMUCH=$(pgrep notmuch)
 AFEW=$(pgrep afew)
@@ -32,3 +36,4 @@ mbsync --verbose --all
 
 # Tag new messages, afew runs as post hook
 notmuch new
+{{- end }}

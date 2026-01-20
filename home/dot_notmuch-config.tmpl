@@ -4,8 +4,12 @@
 
 [database]
 {{ if eq .chezmoi.hostname "torpedo" -}}
+# TODO: clean-up once decided to use lieer or not
 # XXX: provide full path or expect errors with afew FolderNameFilter
-path=/home/baptiste/Mail
+# Path for notmuch + afew without lieer
+# path=/home/baptiste/Mail
+# Path for notmuch with lieer
+path=/home/baptiste/.mail
 {{ else if eq .chezmoi.hostname "sikaru" -}}
 # XXX: provide full path or expect errors with afew FolderNameFilter
 path=/home/baptiste/Mail
@@ -21,9 +25,13 @@ other_email=baptiste.grenier@operas-eu.org
 {{ end }}
 [new]
 {{ if eq .chezmoi.hostname "torpedo" -}}
+# XXX: When using notmuch + afew without lieer: add a new tag
 # Initially tag all new messages as new, post-new hook will do the real tagging
-tags=new
-ignore=.uidvalidity;.mbsyncstate
+# tags=new
+# ignore=.uidvalidity;.mbsyncstate
+# XXX: when using notmuch + lieer, do not add any new tag, only use Gmail ones
+tags=
+ignore=/.*[.](json|lock|bak)$/
 {{ else if eq .chezmoi.hostname "sikaru" -}}
 tags=new
 ignore=.uidvalidity;.mbsyncstate
