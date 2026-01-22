@@ -54,8 +54,8 @@ application/x-zip-compressed    ; unzip -v %s                                   
 application/zip                 ; unzip -v %s                                   ; copiousoutput
 # View: display event
 # Print: add them to calendar
-text/calendar                   ;  mutt-ics; print=add_event %s                 ; copiousoutput
-application/ics                 ;  mutt-ics; print=add_event %s                 ; copiousoutput
+text/calendar                   ; mutt-ics; print=add_event %s                 ; copiousoutput
+application/ics                 ; mutt-ics; print=add_event %s                 ; copiousoutput
 # text/calendar                   ; mutt-ics                                      ; copiousoutput
 audio/basic                     ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY"  > /dev/null
 audio/midi                      ; mutt_bgrun mplayer %s                         ; test=test -n "$DISPLAY" > /dev/null
