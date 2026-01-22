@@ -1,31 +1,16 @@
 {{- if eq .chezmoi.hostname "torpedo" -}}
-[Work-Notmuch]
+[Work]
 # notmuch-based setup
-# XXX: review/redo notmuch-based setup
-source   = notmuch://~/Mail
-maildir-store = ~/Mail
+source   = notmuch://~/.mail
+maildir-store = ~/.mail
 query-map = ~/.config/aerc/operas-map.conf
-folders-exclude = ~OPERAS.*
+folders-exclude = ~operas.gmail.*
 address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
 outgoing = smtps://baptiste.grenier%40operas-eu.org@smtp.gmail.com:587
 outgoing-cred-cmd = "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
 default  = inbox
 enable-folders-sort = true
-folders-sort = inbox,sent,all,drafts,spam,phishing,trash
-from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
-pgp-auto-sign = true
-pgp-key-id = "0xCDA18F02"
-signature-file = ~/.config/neomutt/signature-operas
-
-[Work-Maildir]
-# notmuch-based setup
-source = maildir://~/Mail/OPERAS
-address-book-cmd = khard email --parsable --search-in-source-files --remove-first-line %s
-outgoing = smtps://baptiste.grenier%40operas-eu.org@smtp.gmail.com:587
-outgoing-cred-cmd = "rbw get google/baptiste.grenier@operas-eu.org/apppass/tuxedo"
-default  = inbox
-enable-folders-sort = true
-folders-sort = inbox,sent,all,drafts,spam,phishing,trash
+folders-sort = Inbox,atrium,edch,graphia,Flagged,Important,personal,Sent,Archive,drafts,spam,phishing,trash
 from     = Baptiste Grenier <baptiste.grenier@operas-eu.org>
 pgp-auto-sign = true
 pgp-key-id = "0xCDA18F02"
