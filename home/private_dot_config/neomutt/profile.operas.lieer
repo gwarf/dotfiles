@@ -14,13 +14,13 @@ virtual-mailboxes "Archive" "notmuch://?query=(not tag:inbox) and (not tag:spam)
 virtual-mailboxes "Flagged" "notmuch://?query=tag:flagged"
 virtual-mailboxes "Important" "notmuch://?query=tag:important"
 # virtual-mailboxes "important" "notmuch://?query=tag:important or tag:starred"
-virtual-mailboxes "Sent" "notmuch://?query=tag:sent"
 virtual-mailboxes "atrium" "notmuch://?query=tag:atrium"
 virtual-mailboxes "edch" "notmuch://?query=tag:edch"
 virtual-mailboxes "graphia" "notmuch://?query=tag:graphia"
 virtual-mailboxes "personal" "notmuch://?query=tag:personal"
+virtual-mailboxes "Sent" "notmuch://?query=tag:sent"
 virtual-mailboxes "phishing" "notmuch://?query=tag:phishing and (not tag:trash)"
-virtual-mailboxes "spam" "notmuch://?query=tag:spam and (not tag:deleted)"
+virtual-mailboxes "spam" "notmuch://?query=tag:spam and (not tag:trash)"
 virtual-mailboxes "trash" "notmuch://?query=tag:trash"
 virtual-mailboxes "drafts" "notmuch://?query=tag:drafts and (not tag:trash)"
 
@@ -36,7 +36,7 @@ macro index,pager \cf "<shell-escape>gmi sync -C ~/.mail/operas.gmail<enter>" "r
 
 # Hide various tags from the UI
 # set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
-set hidden_tags = operas,dkim-ok,lists,to-me,personal,unread,all,signed,YELLOW_STAR
+set hidden_tags = operas,dkim-ok,lists,to-me,personal,unread,all,signed,YELLOW_STAR,forums
 
 # Replace some tags with icons
 # tag-transforms tag transformed-string { tag transformed-string ...}
@@ -55,11 +55,11 @@ tag-transforms "inbox" "" \
                "invites" ""
 
 # Email tagging
-macro index,pager A "<modify-labels-then-hide>-unread -inbox<enter><sync-mailbox>" "Archive message"
-macro index,pager d "<modify-labels-then-hide>-unread -inbox +trash<enter>" "Delete message"
+macro index,pager A "<modify-labels-then-hide>-inbox<enter><sync-mailbox>" "Archive message"
+macro index,pager d "<modify-labels-then-hide>-inbox +trash<enter>" "Delete message"
 macro index,pager u "<modify-labels-then-hide>-trash +inbox<enter><sync-mailbox>" "Undelete message"
-macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
-macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
+macro index,pager N "<modify-labels>+inbox<enter><sync-mailbox>" "Move to inbox as unread"
+macro index,pager S "<modify-labels-then-hide>-inbox +spam<enter><sync-mailbox>" "Mark as SPAM"
 macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
 
 # Toggle the 'todo' tag
@@ -126,5 +126,14 @@ set ignore_list_reply_to
 # lists .*@...
 # Subscribed
 # subscribe ...@...
+
+# deleted messages
+# Color the index_tag column for messages tagged as deleted
+color index_tag    color235        color160        "trash"
+# Color the full index row for messages tagged as deleted
+# color index    color235        color160        "~Y \"trash\""
+# XXX: this should only be done in the inbox, not when viewing the trash
+folder-hook Inbox 'color index    color235        color160        "~Y \"trash\""'
+folder-hook trash 'color index    default        default        "~Y \"trash\""'
 
 # vim: set ft=muttrc:
