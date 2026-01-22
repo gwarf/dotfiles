@@ -57,7 +57,7 @@ tag-transforms "inbox" "" \
 # Email tagging
 macro index,pager A "<modify-labels-then-hide>-inbox<enter><sync-mailbox>" "Archive message"
 macro index,pager d "<modify-labels-then-hide>-inbox +trash<enter>" "Delete message"
-macro index,pager u "<modify-labels-then-hide>-trash +inbox<enter><sync-mailbox>" "Undelete message"
+macro index,pager u "<modify-labels-then-hide>-trash -spam +inbox<enter><sync-mailbox>" "Move message to inbox"
 macro index,pager N "<modify-labels>+inbox<enter><sync-mailbox>" "Move to inbox as unread"
 macro index,pager S "<modify-labels-then-hide>-inbox +spam<enter><sync-mailbox>" "Mark as SPAM"
 macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
@@ -135,5 +135,8 @@ color index_tag    color235        color160        "trash"
 # XXX: this should only be done in the inbox, not when viewing the trash
 folder-hook Inbox 'color index    color235        color160        "~Y \"trash\""'
 folder-hook trash 'color index    default        default        "~Y \"trash\""'
+
+# Do not group by thread in Sent folder
+folder-hook Sent 'set use_threads=no sort=reverse-date-sent'
 
 # vim: set ft=muttrc:
