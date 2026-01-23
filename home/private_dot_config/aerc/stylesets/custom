@@ -1,6 +1,6 @@
-# 
-# aerc dracula styleset
-# 
+#
+# aerc cusotm styleseet based on dracula
+#
 # This styleset uses the terminal defaults as its fallback.
 # More information on how to configure the styleset can be found in
 # the aerc-stylesets(7) manpage. Please read the manual before
@@ -14,8 +14,8 @@
 
 *.default=true
 
-# default.bg=#20212b
-default.bg=default
+default.bg=#20212b
+# default.bg=default
 
 title.reverse=true
 header.bold=true
