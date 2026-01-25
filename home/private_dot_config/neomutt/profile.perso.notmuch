@@ -1,19 +1,36 @@
 # Mutt sender profile: perso
 
 set mbox_type = Maildir
-set folder = ~/Mail/Perso
+set folder = ~/Mail
+set nm_default_uri = "notmuch:///home/baptiste/Mail"
+set spoolfile = "Inbox"
+
+# XXX: only for neomutt
+# sets up queries for virtual folders
+unvirtual-mailboxes *
+virtual-mailboxes \
+    "Unread"        "notmuch://?query=tag:inbox AND tag:unread" \
+    "Inbox"         "notmuch://?query=tag:inbox" \
+    "All"           "notmuch://?query=tag:all" \
+    "Neomutt"       "notmuch://?query=tag:neomutt" \
+    "Lists"         "notmuch://?query=tag:lists" \
+    "TODO"          "notmuch://?query=tag:todo" \
+    "Trash"         "notmuch://?query=tag:deleted" \
+    "Spam"          "notmuch://?query=tag:spam" \
+    "Sent"          "notmuch://?query=tag:sent"
 
 set sendmail = "/usr/bin/msmtp -a perso"
 
 color status green default
 
-set spoolfile   = "=Inbox"
+# set spoolfile   = "+INBOX"
+# set mbox        = "+_Read"
 # Record sent emails
-set record="=Sent"
-set postponed="=Drafts"
+set record="+Perso/Sent"
+set postponed="+Perso/Drafts"
 
 # If using trash-folder-patch
-set trash="+Trash"
+# set trash="+Trash"
 
 # mailboxes +INBOX
 
@@ -58,7 +75,7 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 
 # Fetching mail
 # XXX need to call notmuch
-macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
+macro index \cf "<shell-escape>mbsync Perso<enter>"
 
 # Queryintg abook
 set query_command="abook --mutt-query '%s'"
