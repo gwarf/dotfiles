@@ -43,7 +43,7 @@ virtual-mailboxes "trash" "notmuch://?query=tag:deleted"
 set sendmail = "/usr/bin/msmtp"
 
 # Fetching mail
-macro index \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
+macro index,pager \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 
 # Hide various tags from the UI
 # set hidden_tags = unread,draft,flagged,passed,attachment,signed,encrypted,all,operas,to-me,dkim-ok,lists,inbox,replied
