@@ -129,12 +129,12 @@ set ignore_list_reply_to
 
 # deleted messages
 # Color the index_tag column for messages tagged as deleted
-color index_tag    color235        color160        "trash"
+# color index_tag color235 color160 "trash"
 # Color the full index row for messages tagged as deleted
-# color index    color235        color160        "~Y \"trash\""
+color index color235 color160 "~Y \"trash\""
 # XXX: this should only be done in the inbox, not when viewing the trash
-folder-hook Inbox 'color index    color235        color160        "~Y \"trash\""'
-folder-hook trash 'color index    default        default        "~Y \"trash\""'
+folder-hook Inbox 'color index color235 color160 "~Y \"trash\""'
+folder-hook trash 'color index default default "~Y \"trash\""'
 
 # Do not group by thread in Sent folder
 folder-hook Sent 'set use_threads=no sort=reverse-date-sent'
