@@ -55,10 +55,11 @@ tag-transforms "inbox" "" \
                "invites" ""
 
 # Email tagging
-macro index,pager A "<modify-labels-then-hide>-inbox<enter><sync-mailbox>" "Archive message"
+macro index A "<modify-labels-then-hide>-inbox<enter><sync-mailbox>" "Archive message"
+macro pager A "<modify-labels-then-hide>-inbox<enter>" "Archive message"
 macro index,pager d "<modify-labels-then-hide>-inbox +trash<enter>" "Delete message"
 macro index,pager u "<modify-labels-then-hide>-trash -spam +inbox<enter><sync-mailbox>" "Move message to inbox"
-macro index,pager N "<modify-labels>+inbox<enter><sync-mailbox>" "Move to inbox as unread"
+macro index,pager N "<toggle-new><modify-labels>+inbox<enter><sync-mailbox>" "Move to inbox as unread"
 macro index,pager S "<modify-labels-then-hide>-inbox +spam<enter><sync-mailbox>" "Mark as SPAM"
 macro index,pager F "<flag-message><modify-labels>!important !flagged<enter><sync-mailbox>" "Toggle important label"
 
