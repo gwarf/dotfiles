@@ -74,8 +74,7 @@ set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)
 #     "Go to all mail"
 
 # Fetching mail
-# XXX need to call notmuch
-macro index \cf "<shell-escape>mbsync Perso<enter>"
+macro index,pager \cf "<shell-escape>~/bin/mail-sync.sh<enter>"
 
 # Queryintg abook
 set query_command="abook --mutt-query '%s'"
