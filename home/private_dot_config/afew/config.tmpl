@@ -11,13 +11,13 @@
 
 [ArchiveSentMailsFilter]
 sent_tag = sent
+
+[DKIMValidityFilter]
 {{ if eq .chezmoi.hostname "torpedo" }}
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true
 folder_transforms = trash:deleted
-
-[DKIMValidityFilter]
 
 # Add tag invite to new calendar invites
 [Filter.1]
@@ -40,19 +40,18 @@ OPERAS/spam = 'NOT tag:spam AND tag:inbox':OPERAS/inbox 'NOT tag:spam':OPERAS/al
 [FolderNameFilter.0]
 maildir_separator = /
 folder_lowercases = true
-folder_transforms = Archive:archived Drafts:draft Trash:deleted Sent:sent
+folder_transforms = Archive:archived Drafts:draft Trash:deleted Sent:sent Junk:spam
 
-[DKIMValidityFilter]
-
+# remove tag new and add tag inbox
 [InboxFilter]
 
 [MailMover]
 # To avoid messing up with mbsync
 rename = True
 folders = Perso/Inbox Perso/Junk
-# XXX: Do not mess with archive as there still are subfolders
-# Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'NOT tag:inbox':Perso/Archive 'tag:archived':Perso/Archive
-Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk
-# Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox 'NOT tag:spam':Perso/Archive'
+# <src> = ['<qry>':<dst>]+
+# XXX: Archives all messages to the main Archive folder, not using any of the
+# existing subfolders
+Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'tag:archived':Perso/Archive
 Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox
 {{- end }}

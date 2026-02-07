@@ -9,10 +9,9 @@ set spoolfile = "Inbox"
 # sets up queries for virtual folders
 unvirtual-mailboxes *
 virtual-mailboxes \
-    "Unread"        "notmuch://?query=tag:inbox AND tag:unread" \
-    "Inbox"         "notmuch://?query=tag:inbox" \
-    "All"           "notmuch://?query=tag:all" \
-    "Neomutt"       "notmuch://?query=tag:neomutt" \
+    "Inbox"        "notmuch://?query=tag:inbox and (not tag:deleted) AND (not tag:spam)" \
+    "Archive"       "notmuch://?query=tag:archived" \
+    "Starred"       "notmuch://?query=tag:starred" \
     "Lists"         "notmuch://?query=tag:lists" \
     "TODO"          "notmuch://?query=tag:todo" \
     "Trash"         "notmuch://?query=tag:deleted" \
@@ -29,10 +28,13 @@ color status green default
 set record="+Perso/Sent"
 set postponed="+Perso/Drafts"
 
-# If using trash-folder-patch
-# set trash="+Trash"
-
-# mailboxes +INBOX
+# Email tagging
+macro index,pager A "<modify-labels-then-hide>+archived -unread -inbox<enter><sync-mailbox>" "Archive message"
+macro index,pager d "<modify-labels-then-hide>-archived -unread -inbox +deleted<enter>" "Delete message"
+macro index,pager u "<modify-labels-then-hide>-deleted +inbox<enter><sync-mailbox>" "Undelete message"
+macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
+macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
+macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
 
 set from       = "baptiste@bapt.name"
 
@@ -89,3 +91,16 @@ subscribe debiocidons@framalistes.org
 # save-hook ' ~h debiocidons-ca@framalistes.org' =debiocidons-ca
 # save-hook ' ~h debiocidons-bureau@framalistes.org' =debiocidons-bureau
 # save-hook ' ~h boursorama' =boursorama
+
+# deleted messages
+# Color the index_tag column for messages tagged as deleted
+# color index_tag color235 color160 "trash"
+# Color the full index row for messages tagged as deleted
+color index color235 color160 "~Y \"deleted\""
+# XXX: this should only be done in the inbox, not when viewing the trash
+folder-hook Inbox 'color index color235 color160 "~Y \"deleted\""'
+folder-hook Trash 'color index default default "~Y \"deleted\""'
+
+# Do not group by thread in Sent folder
+folder-hook Sent 'set use_threads=no sort=reverse-date-sent'
+
