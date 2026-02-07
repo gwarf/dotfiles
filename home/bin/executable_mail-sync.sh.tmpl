@@ -19,8 +19,7 @@ fi
 if [ -d ~/Mail/.notmuch/xapian ]; then
 
   # Move tagged messages to the related folders (i.e. all, spam, sent or trash)
-  echo "Move tagged messages to the relevant folder"
-  afew --move --all --verbose
+  afew --move --all
 
   # This can be used to definitely delete messages, skipping the trash
   # echo "Deleting local messages tagged as *deleted*"
@@ -28,7 +27,7 @@ if [ -d ~/Mail/.notmuch/xapian ]; then
 fi
 
 # Synchronize all mailboxes
-mbsync --verbose --all
+mbsync --all
 
 # Tag new messages, afew runs as post hook
 notmuch new
