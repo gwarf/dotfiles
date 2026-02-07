@@ -11,7 +11,7 @@ unvirtual-mailboxes *
 virtual-mailboxes \
     "Inbox"        "notmuch://?query=tag:inbox and (not tag:deleted) AND (not tag:spam)" \
     "Archive"       "notmuch://?query=tag:archived" \
-    "Starred"       "notmuch://?query=tag:starred" \
+    "Starred"       "notmuch://?query=tag:starred or tag:flagged" \
     "Lists"         "notmuch://?query=tag:lists" \
     "TODO"          "notmuch://?query=tag:todo" \
     "Trash"         "notmuch://?query=tag:deleted" \
@@ -33,8 +33,8 @@ macro index,pager A "<modify-labels-then-hide>+archived -unread -inbox<enter><sy
 macro index,pager d "<modify-labels-then-hide>-archived -unread -inbox +deleted<enter>" "Delete message"
 macro index,pager u "<modify-labels-then-hide>-deleted +inbox<enter><sync-mailbox>" "Undelete message"
 macro index,pager N "<modify-labels>+unread +inbox<enter><sync-mailbox>" "Move to inbox as unread"
-macro index,pager S "<modify-labels-then-hide>-inbox -unread +spam<enter><sync-mailbox>" "Mark as SPAM"
-macro index,pager F "<flag-message><modify-labels>!important !starred<enter><sync-mailbox>" "Toggle important label"
+macro index,pager S "<modify-labels-then-hide>!inbox !spam<enter><sync-mailbox>" "Toogle SPAM"
+macro index,pager F "<flag-message><modify-labels>!important !starred !flagged<enter><sync-mailbox>" "Toggle flagged"
 
 set from       = "baptiste@bapt.name"
 

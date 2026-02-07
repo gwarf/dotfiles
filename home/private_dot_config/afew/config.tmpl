@@ -45,6 +45,26 @@ folder_transforms = Archive:archived Drafts:draft Trash:deleted Sent:sent Junk:s
 # remove tag new and add tag inbox
 [InboxFilter]
 
+[Filter.1]
+query = "tag:inbox and not tag:deleted and folder:/'Perso/Trash/*'"
+tags = -inbox +deleted
+message: Fix tags for messages deleted
+
+[Filter.2]
+query = "tag:inbox and folder:/'Perso/Archive.*'/"
+tags = -inbox
+message: Removing archived messages from Inbox
+
+[Filter.3]
+query = "tag:inbox and folder:'Perso/Trash'"
+tags = -inbox
+message: Removing deleted messages from Inbox
+
+[Filter.4]
+query = "tag:sent and tag:inbox and folder:'Perso/Sent'"
+tags = -inbox
+message: Removing Sent messages from Inbox
+
 [MailMover]
 # To avoid messing up with mbsync
 rename = True
@@ -52,6 +72,6 @@ folders = Perso/Inbox Perso/Junk
 # <src> = ['<qry>':<dst>]+
 # XXX: Archives all messages to the main Archive folder, not using any of the
 # existing subfolders
-Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'tag:archived':Perso/Archive
+Perso/Inbox = 'tag:sent':Perso/Sent 'tag:spam':Perso/Junk 'tag:archived':Perso/Archive 'tag:deleted':Perso/Trash
 Perso/Junk = 'NOT tag:spam AND tag:inbox':Perso/Inbox
 {{- end }}
