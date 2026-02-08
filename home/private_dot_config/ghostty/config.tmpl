@@ -6,6 +6,10 @@ font-size = 15
 # ghostty +list-themes
 theme = TokyoNight Moon
 
+# XXX: not yet released
+# https://github.com/ghostty-org/ghostty/pull/9335
+# selection-word-chars = " \t'\"│`|:;,()[]{}<>$"
+
 {{ if eq .chezmoi.os "darwin" -}}
 command = /opt/homebrew/bin/fish --login --interactive
 {{ else if eq .chezmoi.os "linux" -}}
