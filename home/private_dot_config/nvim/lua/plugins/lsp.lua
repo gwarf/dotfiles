@@ -161,6 +161,9 @@ return {
                   "FR_SPELLING_RULE",
                   "COMMA_PARENTHESIS_WHITESPACE",
                 },
+                ["en-GB"] = {
+                  "OXFORD_SPELLING_Z_NOT_S",
+                },
               },
             },
           },
