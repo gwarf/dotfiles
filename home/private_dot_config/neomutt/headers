@@ -24,6 +24,6 @@ unignore tags
 unignore folder
 
 unhdr_order *
-hdr_order from: date: to: cc: subject: reply-to organization message-id user-agent sender x-editor x-mailer x-newsreader x-agent x-resent followup-to mail-followup-to folder tags
+hdr_order from: date: to: cc: subject: reply-to organization message-id user-agent sender x-original-sender x-editor x-mailer x-newsreader x-agent x-resent followup-to mail-followup-to folder tags
 
 # vim: set ft=muttrc:
