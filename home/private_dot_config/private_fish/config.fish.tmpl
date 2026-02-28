@@ -25,6 +25,10 @@ if status is-interactive
         fish_add_path -p -m ~/.local/bin
     end
 
+    if test -d ~/.lmstudio/bin
+        fish_add_path -p -m ~/.lmstudio/bin/
+    end
+
     if test -d ~/go/bin
         fish_add_path -p -m ~/go/bin
     end
