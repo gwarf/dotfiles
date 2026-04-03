@@ -193,6 +193,17 @@ if status is-interactive
             export OIDC_AGENT_ACCOUNT=egi
         end
     end
+
+    if test -e ~/.bun
+      # bun
+      set --export BUN_INSTALL "$HOME/.bun"
+      set --export PATH $BUN_INSTALL/bin $PATH
+    end
+
+    if test -e ~/.claude/PAI/Tools/pai.ts
+      # PAI alias
+      alias pai='bun /home/baptiste/.claude/PAI/Tools/pai.ts'
+    end
     {{ end -}}
     {{ if ne .chezmoi.os "darwin" -}}
     export GPG_TTY=$(tty)
