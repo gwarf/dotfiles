@@ -29,3 +29,17 @@ def_key "N"
 
 def_key "."
     show_lyrics
+
+def_key "space"
+  add_item_to_playlist
+def_key "delete"
+  delete_playlist_items
+
+def_key "?"
+  show_help
+
+def_key "1"
+  show_playlist
+
+def_key "2"
+  show_browser
