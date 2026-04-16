@@ -1,0 +1,11 @@
+[Unit]
+Description=PAI ~/.claude git sync — morning, midday, end of day
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 08:00:00 Europe/Paris
+OnCalendar=Mon..Fri *-*-* 12:30:00 Europe/Paris
+OnCalendar=Mon..Fri *-*-* 18:00:00 Europe/Paris
+Persistent=true
+
+[Install]
+WantedBy=timers.target
