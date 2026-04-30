@@ -5,6 +5,7 @@ After=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h/.claude
+Environment=SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh
 ExecStart=%h/.local/bin/pai-git-sync
 StandardOutput=journal
 StandardError=journal
