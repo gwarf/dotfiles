@@ -8,7 +8,7 @@
   "batchinstall": false,
   "bottomup": true,
   "buildDir": "/home/baptiste/.cache/yay",
-  "cleanAfter": false,
+  "cleanAfter": true,
   "cleanmenu": true,
   "combinedupgrade": true,
   "completionrefreshtime": 7,
