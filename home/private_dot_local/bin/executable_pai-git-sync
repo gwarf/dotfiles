@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO="$HOME/.claude"
+TG_ENV="$HOME/.claude/channels/telegram/.env"
+CHAT_ID="-1003961816258"
+
+BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2-)
+
+tg_notify() {
+  curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+    -d "chat_id=${CHAT_ID}" \
+    --data-urlencode "text=$1" > /dev/null 2>&1 || true
+}
+
+cd "$REPO"
+
+if ! git fetch 2>&1; then
+  tg_notify "⚠️ pai-git-sync: fetch failed (SSH key unavailable?)"
+  exit 1
+fi
+
+git add -A
+
+if ! git diff --cached --quiet; then
+  if ! git commit -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
+    tg_notify "⚠️ pai-git-sync: commit failed (GPG signing timeout?)"
+    exit 1
+  fi
+fi
+
+if ! git rebase origin/main; then
+  git rebase --abort 2>/dev/null || true
+  tg_notify "⚠️ pai-git-sync: rebase conflict — resolve manually in ~/.claude"
+  exit 1
+fi
+
+if ! git push; then
+  tg_notify "⚠️ pai-git-sync: push failed"
+  exit 1
+fi

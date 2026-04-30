@@ -5,12 +5,6 @@ After=network-online.target
 [Service]
 Type=oneshot
 WorkingDirectory=%h/.claude
-ExecStart=/usr/bin/bash -c '\
-  cd %h/.claude && \
-  git add -A && \
-  if ! git diff --cached --quiet; then \
-    git commit -m "auto: timed sync $(date +%%Y-%%m-%%d\ %%H:%%M)"; \
-    git push; \
-  fi'
+ExecStart=%h/.local/bin/pai-git-sync
 StandardOutput=journal
 StandardError=journal
