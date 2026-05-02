@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO="$HOME/.claude"
-TG_ENV="$HOME/.claude/channels/telegram/.env"
+TG_ENV="$HOME/.env"
 CHAT_ID="-1003961816258"
 
 BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2-)
