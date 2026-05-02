@@ -206,9 +206,9 @@ if status is-interactive
       set --export PATH $BUN_INSTALL/bin $PATH
     end
 
-    if test -e ~/.claude/PAI/Tools/pai.ts
+    if test -e ~/.claude/PAI/TOOLS/pai.ts
       # PAI alias
-      alias pai='bun /home/baptiste/.claude/PAI/Tools/pai.ts'
+      alias pai='bun /home/baptiste/.claude/PAI/TOOLS/pai.ts'
     end
     {{ end -}}
     {{ if ne .chezmoi.os "darwin" -}}
