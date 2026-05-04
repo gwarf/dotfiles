@@ -1,0 +1,15 @@
+[Unit]
+Description=PAI Pulse — Life Dashboard daemon
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.claude/PAI/PULSE
+ExecStart=%h/.bun/bin/bun run pulse.ts
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
