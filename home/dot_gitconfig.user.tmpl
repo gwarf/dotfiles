@@ -13,6 +13,8 @@
 [commit]
 {{- if eq .chezmoi.hostname "delamain" }}
   gpgsign = false
+{{- else if eq .chezmoi.hostname "assist" }}
+  gpgsign = false
 {{- else }}
   gpgsign = true
 {{- end }}
