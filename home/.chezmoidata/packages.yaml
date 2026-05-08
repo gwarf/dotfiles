@@ -394,6 +394,7 @@ packages:
       - "fish"
       - "jq"
       - "lsd"
+      - "ripgrep"
       - "vivid"
       - "zoxide"
       - "zsh"
