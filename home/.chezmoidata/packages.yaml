@@ -389,6 +389,7 @@ packages:
         - "starship"
   assist:
     pkgs:
+      - "bat"
       - "direnv"
       - "fish"
       - "fzf"
