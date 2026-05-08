@@ -392,6 +392,7 @@ packages:
       - "bat"
       - "direnv"
       - "fish"
+      - "git-delta"
       - "jq"
       - "lsd"
       - "ripgrep"
