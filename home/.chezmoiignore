@@ -26,11 +26,26 @@ Mail/.notmuch/hooks/post-new
 .config/beets
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
-.config/beets
 .config/aerc
+.config/beets
 .config/emails
-.msmtprc
-.config/waybar
 .config/hypr
+.config/waybar
 .config/wofi
+.config/yay
+.config/zellij
+.msmtprc
+bin/add_event
+bin/autostart.sh
+bin/browsh_serve.sh
+bin/colors.py
+bin/dual-screen
+bin/gnomekeyring-helpers.py
+bin/launch_bar
+bin/lemonbar.sh
+bin/mutt_bgrun
+bin/nerd-fonts.sh
+bin/setup_kinesis_keyboard
+bin/start_zoom
+bin/true-color.sh
 {{- end }}
