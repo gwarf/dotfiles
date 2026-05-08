@@ -27,9 +27,12 @@ Mail/.notmuch/hooks/post-new
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
 .config/aerc
+.config/alacritty
+.config/backgrounds
 .config/beets
 .config/emails
 .config/hypr
+.config/kitty
 .config/waybar
 .config/wofi
 .config/yay
@@ -38,6 +41,7 @@ Mail/.notmuch/hooks/post-new
 bin/add_event
 bin/autostart.sh
 bin/browsh_serve.sh
+bin/color-spaces.pl
 bin/colors.py
 bin/dual-screen
 bin/gnomekeyring-helpers.py
