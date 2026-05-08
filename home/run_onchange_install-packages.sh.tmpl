@@ -59,5 +59,10 @@ sudo snap install --edge {{ . | quote }}
 
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
 {{ end -}}
+{{ if eq .chezmoi.hostname "assist" }}
+{{ range .packages.assist.pkgs -}}
+sudo apt --no-install-recommends install -y {{ . | quote }}
+{{ end -}}
+{{ end -}}
 
 {{ end -}}

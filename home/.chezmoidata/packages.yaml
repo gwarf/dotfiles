@@ -387,3 +387,13 @@ packages:
         - "prettier"
         - "pyenv"
         - "starship"
+  assist:
+    pkgs:
+      - "direnv"
+      - "fish"
+      - "fzf"
+      - "jq"
+      - "neovim"
+      - "vivid"
+      - "zoxide"
+      - "zsh"
