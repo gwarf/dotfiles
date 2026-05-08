@@ -63,6 +63,9 @@ sudo snap install --edge {{ . | quote }}
 {{ range .packages.assist.pkgs -}}
 sudo apt --no-install-recommends install -y {{ . | quote }}
 {{ end -}}
+{{ range .packages.assist.brews -}}
+brew {{ . | quote }}
+{{ end -}}
 {{ end -}}
 
 {{ end -}}
