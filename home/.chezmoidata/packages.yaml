@@ -405,4 +405,5 @@ packages:
       - "neovim"
       - "rbw"
       - "starship"
+      - "tree-sitter-cli"
       - "uv"
