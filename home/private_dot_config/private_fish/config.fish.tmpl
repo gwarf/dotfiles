@@ -182,6 +182,7 @@ if status is-interactive
     end
     {{ end -}}
     {{ if eq .chezmoi.os "linux" -}}
+    {{ if ne .chezmoi.hostname "assist" }}
     # Using GPG agent to provide ssh agent feature
     # See also https://wiki.archlinux.org/title/GNOME/Keyring#Disabling
     set --erase SSH_AGENT_PID
@@ -199,6 +200,7 @@ if status is-interactive
             export OIDC_AGENT_ACCOUNT=egi
         end
     end
+    {{ end -}}
 
     if test -e ~/.bun
       # bun
