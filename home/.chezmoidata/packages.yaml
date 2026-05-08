@@ -402,6 +402,7 @@ packages:
       - "fzf"
       - "gcc"
       - "gh"
+      - "lazygit"
       - "neovim"
       - "rbw"
       - "starship"
