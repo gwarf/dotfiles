@@ -37,6 +37,7 @@ Mail/.notmuch/hooks/post-new
 .config/wofi
 .config/yay
 .config/zellij
+.config/systemd/user/pai-pulse.service
 .msmtprc
 bin/add_event
 bin/autostart.sh
