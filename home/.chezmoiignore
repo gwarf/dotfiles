@@ -25,3 +25,12 @@ Mail/.notmuch/hooks/post-new
 {{- if eq .chezmoi.hostname "torpedo" }}
 .config/beets
 {{- end }}
+{{- if eq .chezmoi.hostname "assist" }}
+.config/beets
+.config/aerc
+.config/emails
+.msmtprc
+.config/waybar
+.config/hypr
+.config/wofi
+{{- end }}
