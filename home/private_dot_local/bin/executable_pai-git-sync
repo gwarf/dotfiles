@@ -54,6 +54,15 @@ sync_repo() {
     tg_notify "⚠️ pai-git-sync[$name]: push failed"
     return 1
   fi
+
+  # Post-sync hook for chezmoi: source commits don't render to target files until apply.
+  # chezmoi apply is idempotent and overwrites drift — chezmoi treats source as canonical.
+  if [ "$repo" = "$HOME/.local/share/chezmoi" ]; then
+    if ! chezmoi apply -v 2>&1; then
+      tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed"
+      return 1
+    fi
+  fi
 }
 
 overall=0
