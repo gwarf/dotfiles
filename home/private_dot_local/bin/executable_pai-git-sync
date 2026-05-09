@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="$HOME/.claude"
+REPOS=(
+  "$HOME/.claude"
+  "$HOME/.local/share/chezmoi"
+)
+
 TG_ENV="$HOME/.env"
 CHAT_ID="-1003961816258"
 
@@ -20,29 +24,47 @@ tg_notify() {
     --data-urlencode "text=$1" > /dev/null 2>&1 || true
 }
 
-cd "$REPO"
+sync_repo() {
+  local repo="$1"
+  local name
+  name=$(basename "$repo")
+  cd "$repo" || { tg_notify "⚠️ pai-git-sync[$name]: cd failed"; return 1; }
 
-if ! git fetch 2>&1; then
-  tg_notify "⚠️ pai-git-sync: fetch failed (SSH key unavailable?)"
-  exit 1
-fi
-
-git add -A
-
-if ! git diff --cached --quiet; then
-  if ! git commit -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-    tg_notify "⚠️ pai-git-sync: commit failed (GPG signing timeout?)"
-    exit 1
+  if ! git fetch 2>&1; then
+    tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
+    return 1
   fi
-fi
 
-if ! git rebase origin/main; then
-  git rebase --abort 2>/dev/null || true
-  tg_notify "⚠️ pai-git-sync: rebase conflict — resolve manually in ~/.claude"
-  exit 1
-fi
+  git add -A
 
-if ! git push; then
-  tg_notify "⚠️ pai-git-sync: push failed"
-  exit 1
-fi
+  if ! git diff --cached --quiet; then
+    if ! git commit -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
+      tg_notify "⚠️ pai-git-sync[$name]: commit failed (GPG signing timeout?)"
+      return 1
+    fi
+  fi
+
+  if ! git rebase origin/main; then
+    git rebase --abort 2>/dev/null || true
+    tg_notify "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
+    return 1
+  fi
+
+  if ! git push; then
+    tg_notify "⚠️ pai-git-sync[$name]: push failed"
+    return 1
+  fi
+}
+
+overall=0
+for repo in "${REPOS[@]}"; do
+  if [ -d "$repo/.git" ]; then
+    # Subshell isolates per-repo failure from set -e killing the loop.
+    ( sync_repo "$repo" ) || overall=1
+  else
+    tg_notify "⚠️ pai-git-sync: $repo missing .git/"
+    overall=1
+  fi
+done
+
+exit "$overall"
