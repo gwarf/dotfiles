@@ -390,7 +390,9 @@ packages:
   assist:
     pkgs:
       - "bat"
+      - "cargo"
       - "direnv"
+      - "fd-find"
       - "fish"
       - "git-delta"
       - "jq"
