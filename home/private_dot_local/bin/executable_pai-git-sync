@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# systemd user services have minimal PATH; chezmoi (linuxbrew) needs explicit reach.
+export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:$HOME/.local/bin:$PATH"
+
 REPOS=(
   "$HOME/.claude"
   "$HOME/.local/share/chezmoi"
