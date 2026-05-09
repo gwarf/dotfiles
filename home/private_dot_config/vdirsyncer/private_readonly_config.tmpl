@@ -21,9 +21,9 @@ token_file = "~/.vdirsyncer/google/google_contacts_token"
 client_id = "{{ (rbw "google/contacts/client_id").notes }}"
 client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
 {{- else }}
-[storage local_mc_contacts]
+[storage local_nc_contacts]
 type = "filesystem"
-path = "~/.contacts/mailcow"
+path = "~/.contacts/nextcloud"
 fileext = ".vcf"
 
 # Using with a systemd unit: https://vdirsyncer.pimutils.org/en/stable/tutorials/systemd-timer.html
@@ -71,19 +71,22 @@ password = "{{ (rbw "/mail/baptiste@bapt.name/vdirsyncer").data.password }}"
 # conflict_resolution = "a wins"
 # metadata = ["color", "displayname"]
 
-# Synchronise nextcloud with mailcow
-[pair my_cloud_contacts]
-a = "mailcow_contacts"
-b = "nextcloud_contacts"
-collections = [["cloud_contacts", "personal", "contacts" ]]
+# Synchronise mailcow from nextcloud (nextcloud is canonical)
+# Triplet is [local_label, a_collection, b_collection] — a=nextcloud uses 'contacts', b=mailcow uses 'personal'
+[pair nc_consolidate]
+a = "nextcloud_contacts"
+b = "mailcow_contacts"
+collections = [["cloud_contacts", "contacts", "personal" ]]
 conflict_resolution = "a wins"
 metadata = ["color", "displayname"]
 
-# Use mailcow as the consolidated list of contacts
-[pair mc_contacts]
-a = "local_mc_contacts"
-b = "mailcow_contacts"
-collections = ["from b"]
+# Use Nextcloud as the consolidated list of contacts; mailcow is a downstream mirror
+# Local mirror reads from Nextcloud directly (canonical → local → khard)
+# Scoped to the real 'contacts' address book; system books (z-server-generated--*) are excluded.
+[pair local_nc]
+a = "local_nc_contacts"
+b = "nextcloud_contacts"
+collections = ["contacts"]
 conflict_resolution = "b wins"
 metadata = ["color", "displayname"]
 {{- end }}
