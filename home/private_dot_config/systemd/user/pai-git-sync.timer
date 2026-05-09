@@ -1,41 +1,9 @@
 [Unit]
-Description=PAI ~/.claude git sync — morning, midday, end of day
+Description=PAI ~/.claude git sync — every 4h, 7 days a week
 
 [Timer]
-OnCalendar=Mon..Fri *-*-* 07:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 08:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 08:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 09:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 09:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 10:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 10:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 11:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 11:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 12:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 12:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 13:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 13:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 14:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 14:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 15:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 15:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 16:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 16:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 17:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 17:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 18:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 18:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 19:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 19:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 20:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 20:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 21:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 21:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 22:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 22:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 23:00:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 23:30:00 Europe/Paris
-OnCalendar=Mon..Fri *-*-* 24:00:00 Europe/Paris
+OnCalendar=*-*-* 0/4:00:00 Europe/Paris
+RandomizedDelaySec=5min
 Persistent=true
 
 [Install]
