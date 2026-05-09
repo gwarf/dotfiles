@@ -1,5 +1,5 @@
 [Unit]
-Description=PAI ~/.claude git sync
+Description=PAI multi-repo git sync (~/.claude + chezmoi)
 After=network-online.target
 
 [Service]

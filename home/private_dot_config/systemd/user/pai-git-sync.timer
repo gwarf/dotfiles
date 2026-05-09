@@ -1,5 +1,5 @@
 [Unit]
-Description=PAI ~/.claude git sync — every 4h, 7 days a week
+Description=PAI multi-repo git sync — every 4h, 7 days a week
 
 [Timer]
 OnCalendar=*-*-* 0/4:00:00 Europe/Paris
