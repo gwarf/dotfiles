@@ -58,6 +58,11 @@ sudo snap install --edge {{ . | quote }}
 {{ end -}}
 
 {{ else if eq .chezmoi.osRelease.id "arch" -}}
+{{ if eq .chezmoi.hostname "sikaru" }}
+{{ range .packages.sikaru.pkgs -}}
+sudo pacman -S {{ . | quote }} --noconfirm
+{{ end -}}
+{{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.hostname "assist" }}
 {{ range .packages.assist.pkgs -}}
