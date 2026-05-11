@@ -1,7 +1,9 @@
 [addressbooks]
 {{- if eq .chezmoi.hostname "torpedo" }}
-[[work]]
-path = ~/.contacts/default/
+[[operas]]
+path = ~/.contacts/operas/
+[[nextcloud]]
+path = ~/.contacts/nextcloud/contacts/
 {{- else }}
 [[nextcloud]]
 path = ~/.contacts/nextcloud/contacts/

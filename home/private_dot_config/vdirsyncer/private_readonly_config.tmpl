@@ -3,6 +3,12 @@
 status_path = "~/.vdirsyncer/status/"
 
 {{- if eq .chezmoi.hostname "torpedo" }}
+# Torpedo: OPERAS Google (work) + Nextcloud (personal)
+# Google contacts land under ~/.contacts/operas/ (renamed via triplet form from upstream "default")
+# Nextcloud password is provisioned out-of-band via systemd-creds (TPM2+host sealed),
+# loaded into vdirsyncer.service via LoadCredentialEncrypted= in the user-unit drop-in
+# (~/.config/systemd/user/vdirsyncer.service.d/torpedo-credstore.conf), and fetched at
+# run-time by vdirsyncer from $CREDENTIALS_DIRECTORY.
 [storage local_contacts]
 type = "filesystem"
 path = "~/.contacts/"
@@ -11,7 +17,10 @@ fileext = ".vcf"
 [pair contacts]
 a = "local_contacts"
 b = "google_contacts"
-collections = ["from b"]
+# Triplet form: [local_label, a_collection, b_collection]
+# a_collection = "operas" → vdirsyncer reads/writes ~/.contacts/operas/
+# b_collection = "default" → Google's "My Contacts" address book
+collections = [["operas", "operas", "default"]]
 conflict_resolution = "b wins"
 metadata = ["color"]
 
@@ -20,6 +29,27 @@ type = "google_contacts"
 token_file = "~/.vdirsyncer/google/google_contacts_token"
 client_id = "{{ (rbw "google/contacts/client_id").notes }}"
 client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+
+[storage local_nc_contacts]
+type = "filesystem"
+path = "~/.contacts/nextcloud"
+fileext = ".vcf"
+
+[storage nextcloud_contacts]
+type = "carddav"
+url = "https://cloud.bapt.name/remote.php/carddav"
+username = "baptiste"
+# Password is supplied by systemd-creds via LoadCredentialEncrypted= on vdirsyncer.service
+# (see ~/.config/systemd/user/vdirsyncer.service.d/torpedo-credstore.conf).
+# vdirsyncer reads $CREDENTIALS_DIRECTORY/vdirsyncer-nextcloud-password at run-time.
+password.fetch = ["command", "sh", "-c", "cat \"$CREDENTIALS_DIRECTORY/vdirsyncer-nextcloud-password\""]
+
+[pair local_nc]
+a = "local_nc_contacts"
+b = "nextcloud_contacts"
+collections = ["contacts"]
+conflict_resolution = "b wins"
+metadata = ["color", "displayname"]
 {{- else }}
 [storage local_nc_contacts]
 type = "filesystem"
