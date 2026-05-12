@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# pai — Personal AI launcher. Delegates to ~/.claude/PAI/TOOLS/pai.ts which
+# injects /run/pai-pulse/.env into the spawned `claude` subprocess and
+# handles MCP profile loading + banner + voice notification.
+#
+# Same shape as the assist/sikaru installations of this wrapper. Lives on
+# every host where Pulse runs in system-mode (post-2026-05-12 fleet
+# alignment) so credstore secrets reach Claude subprocesses uniformly.
+
+exec bun "$HOME/.claude/PAI/TOOLS/pai.ts" "$@"
