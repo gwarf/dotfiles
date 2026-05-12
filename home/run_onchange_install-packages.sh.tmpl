@@ -63,6 +63,11 @@ sudo snap install --edge {{ . | quote }}
 sudo pacman -S {{ . | quote }} --noconfirm
 {{ end -}}
 {{ end -}}
+{{ if eq .chezmoi.hostname "torpedo" }}
+{{ range .packages.torpedo.pkgs -}}
+sudo pacman -S {{ . | quote }} --noconfirm
+{{ end -}}
+{{ end -}}
 {{ end -}}
 {{ if eq .chezmoi.hostname "assist" }}
 {{ range .packages.assist.pkgs -}}
