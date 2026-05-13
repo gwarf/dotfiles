@@ -1,22 +1,4 @@
-# Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
-
-scan_timeout = 500
-command_timeout = 3000
-
-# Explanation of the current prompt configuration:
-# starship explain
-
-[cmd_duration]
-format = "🕰️$duration($style) "
-style = "bold italic #87A752"
-
-[hostname]
-ssh_only = false
-
-[gcloud]
-symbol = '️🇬️ '
-disabled = true
 
 format = """
 [](color_orange)\
@@ -49,6 +31,20 @@ $time\
 $line_break$character"""
 
 palette = 'gruvbox_dark'
+
+scan_timeout = 500
+command_timeout = 3000
+
+[cmd_duration]
+format = "🕰$duration($style) "
+style = "bold italic #87A752"
+
+[hostname]
+ssh_only = false
+
+[gcloud]
+symbol = '🇬 '
+disabled = true
 
 [palettes.gruvbox_dark]
 color_fg0 = '#fbf1c7'
@@ -101,8 +97,6 @@ style = "fg:color_fg0 bg:color_yellow"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
-# fish_style_pwd_dir_length = 1
-# read_only = " "
 
 [directory.substitutions]
 "Documents" = "󰈙 "
@@ -115,12 +109,6 @@ truncation_symbol = "…/"
 symbol = ""
 style = "bg:color_aqua"
 format = '[[ $symbol $branch ](fg:color_fg0 bg:color_aqua)]($style)'
-# always_show_remote = true
-# symbol = '🌱 '
-# truncation_length = 4
-# truncation_symbol = ''
-# ignore_branches = ['master', 'main']
-
 
 [git_status]
 style = "bg:color_aqua"
