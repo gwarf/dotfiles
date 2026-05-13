@@ -4,6 +4,9 @@
 scan_timeout = 500
 command_timeout = 3000
 
+# Explanation of the current prompt configuration:
+# starship explain
+
 [cmd_duration]
 format = "🕰️$duration($style) "
 style = "bold italic #87A752"
