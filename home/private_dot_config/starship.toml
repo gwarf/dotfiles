@@ -5,10 +5,24 @@ scan_timeout = 500
 command_timeout = 3000
 
 [cmd_duration]
-format = " ⏲ $duration($style) "
+format = "🕰️$duration($style) "
 style = "bold italic #87A752"
 
 [directory]
 fish_style_pwd_dir_length = 1
 read_only = " "
 truncation_length = 2
+
+[hostname]
+ssh_only = false
+
+[gcloud]
+symbol = '️🇬️ '
+disabled = true
+
+[git_branch]
+always_show_remote = true
+symbol = '🌱 '
+# truncation_length = 4
+# truncation_symbol = ''
+# ignore_branches = ['master', 'main']
