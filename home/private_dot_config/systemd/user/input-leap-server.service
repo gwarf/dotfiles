@@ -1,0 +1,16 @@
+[Unit]
+Description=Input Leap server (sikaru -> torpedo over tailnet)
+Documentation=https://github.com/input-leap/input-leap
+After=graphical-session.target plasma-xdg-desktop-portal-kde.service
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+StateDirectory=input-leap
+ExecStart=/usr/bin/input-leaps --no-daemon --no-tray --use-ei --disable-crypto --name sikaru --address 100.122.199.125:24800 --config %h/.config/InputLeap/InputLeap.conf --log %S/input-leap/server.log
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+
+[Install]
+WantedBy=graphical-session.target
