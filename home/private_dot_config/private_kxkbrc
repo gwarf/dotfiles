@@ -1,0 +1,8 @@
+[Layout]
+DisplayNames=cus,us
+LayoutList=custom,us
+Model=pc104alt
+Options=caps:escape
+ResetOldOptions=true
+Use=true
+VariantList=,
