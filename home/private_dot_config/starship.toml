@@ -93,7 +93,7 @@ format = '[ $user]($style)'
 [hostname]
 ssh_only = false
 style = "bg:color_orange fg:color_yellow"
-format = '[@$hostname$ssh_symbol]($style)'
+format = '[@$hostname $ssh_symbol]($style)'
 
 [directory]
 style = "fg:color_fg0 bg:color_yellow"

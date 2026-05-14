@@ -28,6 +28,7 @@ Mail/.notmuch/hooks/post-new
 {{- if ne .chezmoi.hostname "torpedo" }}
 .config/systemd/user/vdirsyncer.service.d
 .config/systemd/user/input-leap-client.service
+.config/kxkbrc
 {{- end }}
 {{- if ne .chezmoi.hostname "sikaru" }}
 .config/InputLeap
