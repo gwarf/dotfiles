@@ -4,6 +4,7 @@ format = """
 [](color_orange)\
 $os\
 $username\
+$hostname\
 [](bg:color_yellow fg:color_orange)\
 $directory\
 [](fg:color_yellow bg:color_aqua)\
@@ -38,9 +39,6 @@ command_timeout = 3000
 [cmd_duration]
 format = "🕰$duration($style) "
 style = "bold italic #87A752"
-
-[hostname]
-ssh_only = false
 
 [gcloud]
 symbol = '🇬 '
@@ -90,20 +88,18 @@ Pop = ""
 show_always = true
 style_user = "bg:color_orange fg:color_fg0"
 style_root = "bg:color_orange fg:color_fg0"
-format = '[ $user ]($style)'
+format = '[ $user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bg:color_orange fg:color_yellow"
+format = '[@$hostname$ssh_symbol]($style)'
 
 [directory]
 style = "fg:color_fg0 bg:color_yellow"
 format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
-
-[directory.substitutions]
-"Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = "󰝚 "
-"Pictures" = " "
-"Developer" = "󰲋 "
+fish_style_pwd_dir_length = 1
+truncation_length = 2
 
 [git_branch]
 symbol = ""
