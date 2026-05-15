@@ -1,34 +1,81 @@
 #!/bin/sh
+# mail-sync.sh — account-aware mail sync trigger
+# Usage: mail-sync.sh [mailcow|operas|all]
+#   mailcow: mbsync against baptiste@bapt.name (~/Mail/, notmuch DB at ~/Mail/.notmuch/)
+#   operas:  gmi pull (or sync on assist) against baptiste.grenier@operas-eu.org
+#            (~/.mail/operas.gmail/, notmuch DB at ~/.mail/.notmuch/)
+#   all:     both, in sequence
+#
+# Single-writer-to-Gmail (Local mail stack ISC-37): only assist runs `gmi sync`
+# (which includes push); sikaru/torpedo run `gmi pull` only. Workstation tag
+# changes to OPERAS mail stay local to the workstation's notmuch DB until v2
+# cross-host tag propagation lands.
 
 {{- if eq .chezmoi.hostname "torpedo" }}
-/usr/bin/gmi sync -C ~/.mail/operas.gmail
+ACCOUNT="${1:-operas}"
 {{- else }}
-
-MBSYNC=$(pgrep mbsync)
-NOTMUCH=$(pgrep notmuch)
-AFEW=$(pgrep afew)
-
-if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ] || [ -n "$AFEW" ]; then
-  echo "Already running one instance of mbsync, notmuch or afew. Exiting..."
-  exit 0
-fi
-
-# TODO: check if programs are available
-
-# Only run if notmuch DB is aleady initialized
-if [ -d ~/Mail/.notmuch/xapian ]; then
-
-  # Move tagged messages to the related folders (i.e. all, spam, sent or trash)
-  afew --move --all
-
-  # This can be used to definitely delete messages, skipping the trash
-  # echo "Deleting local messages tagged as *deleted*"
-  # notmuch search --format=text0 --output=files tag:deleted | xargs -0 --no-run-if-empty rm -v
-fi
-
-# Synchronize all mailboxes
-mbsync --all
-
-# Tag new messages, afew runs as post hook
-notmuch new
+ACCOUNT="${1:-all}"
 {{- end }}
+
+run_mailcow() {
+    MBSYNC=$(pgrep mbsync)
+    NOTMUCH=$(pgrep notmuch)
+    AFEW=$(pgrep afew)
+
+    if [ -n "$MBSYNC" ] || [ -n "$NOTMUCH" ] || [ -n "$AFEW" ]; then
+        echo "Already running one instance of mbsync, notmuch or afew. Skipping mailcow sync."
+        return 0
+    fi
+
+    # Only run move-mails if mbsync notmuch DB is already initialized
+    if [ -d ~/Mail/.notmuch/xapian ]; then
+        # Move tagged messages to the related Maildir folders per MailMover rules
+        afew --move --all
+    fi
+
+    # Synchronize all mbsync mailboxes
+    mbsync --all
+
+    # Tag new messages — afew --tag --new is invoked by the post-new hook at
+    # ~/Mail/.notmuch/hooks/post-new for the mailcow DB
+    notmuch new
+}
+
+run_operas() {
+    # Scope notmuch + afew to the lieer notmuch DB for this account
+    export NOTMUCH_CONFIG="$HOME/.notmuch-config-lieer"
+
+{{- if eq .chezmoi.hostname "assist" }}
+    # assist is the sole gmi push host per Local mail stack ISC-37
+    # (single-writer-to-Gmail anti). `gmi sync` does pull + push.
+    /usr/bin/gmi sync -C "$HOME/.mail/operas.gmail"
+{{- else }}
+    # sikaru/torpedo pull-only — push is assist-only per ISC-37
+    /usr/bin/gmi pull -C "$HOME/.mail/operas.gmail"
+{{- end }}
+
+    # Index any new mail. lieer's gmi pull populates notmuch directly during pull,
+    # so this is a safety net more than a primary action.
+    notmuch new
+
+    # Tag with stock filters only.
+    #
+    # The afew config's sikaru-branch has [Filter.1]..[Filter.4] entries shaped
+    # for the mbsync Personal-account Maildir folders (Perso/Trash, Perso/Archive,
+    # Perso/Sent). Those filter queries produce a malformed Xapian regex against
+    # the lieer DB (which has a flat Maildir at ~/.mail/operas.gmail/mail/, no
+    # Perso/* folders) and afew errors with `notmuch2.XapianError`.
+    #
+    # afew 3.x has no alternate-afew-config-file flag (only -C / --notmuch-config
+    # for the notmuch config). The cleanest scope is -e (filter class whitelist):
+    # run only the cross-account stock filters that don't depend on folder paths.
+    afew --tag --new \
+        -e SpamFilter,KillThreadsFilter,ListMailsFilter,MeFilter,ArchiveSentMailsFilter,DKIMValidityFilter,InboxFilter
+}
+
+case "$ACCOUNT" in
+    mailcow) run_mailcow ;;
+    operas)  run_operas ;;
+    all)     run_mailcow; run_operas ;;
+    *) echo "Usage: $0 [mailcow|operas|all]"; exit 1 ;;
+esac
