@@ -1,0 +1,23 @@
+[Unit]
+Description=Flush msmtp offline-send queue
+
+# Notes on this unit:
+# - Runs `msmtp-runqueue` (the shell script shipped with the msmtp Arch package,
+#   landed in chezmoi source under private_dot_local/bin/executable_msmtp-queue
+#   per the Local mail stack project deployment).
+# - The queue is at ~/.msmtp.queue/ (created on first msmtpq invocation).
+# - msmtp uses passwordeval=rbw to fetch SMTP credentials; if rbw is locked at
+#   service-start time, msmtp itself fails per-message and the queue entry stays
+#   for the next run. SuccessExitStatus=1 keeps the timer enabled even when
+#   individual runs fail.
+# - Companion unit: msmtp-runqueue.timer
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/msmtp-runqueue
+# msmtp-runqueue exits non-zero when network is unreachable or rbw is locked.
+# That's expected operating behavior, not a unit failure.
+SuccessExitStatus=1
+
+[Install]
+WantedBy=default.target

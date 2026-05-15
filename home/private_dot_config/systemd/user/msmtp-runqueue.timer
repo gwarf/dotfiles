@@ -1,0 +1,14 @@
+[Unit]
+Description=Periodic msmtp offline-send queue flush
+
+[Timer]
+# Fire 2 minutes after boot (gives graphical session + rbw unlock time to land
+# before the first queue-flush attempt) then every 10 minutes.
+OnBootSec=2m
+OnUnitActiveSec=10m
+Unit=msmtp-runqueue.service
+# Make missed runs catch up after suspend (laptops sleeping / docked)
+Persistent=true
+
+[Install]
+WantedBy=timers.target

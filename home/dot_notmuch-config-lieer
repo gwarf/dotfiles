@@ -3,8 +3,8 @@
 # For more information about notmuch, see https://notmuchmail.org
 
 [database]
-# This location is to be used with lieer
-path=/home/baptiste/mail
+# This location is to be used with lieer (matches profile.operas.lieer nm_default_uri)
+path=/home/baptiste/.mail
 
 [user]
 name=Baptiste Grenier
