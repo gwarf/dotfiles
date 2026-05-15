@@ -25,7 +25,7 @@ virtual-mailboxes "trash" "notmuch://?query=tag:trash"
 virtual-mailboxes "drafts" "notmuch://?query=tag:drafts and (not tag:trash)"
 
 # Directly send via msmtp
-set sendmail = "/usr/bin/msmtp"
+set sendmail = "/home/baptiste/.local/bin/msmtpq"
 
 # XXX: alterntive: send via Lieer
 # set sendmail = "gmi send -t -C ~/.mail/operas.gmail"

@@ -18,7 +18,7 @@ virtual-mailboxes \
     "Spam"          "notmuch://?query=tag:spam" \
     "Sent"          "notmuch://?query=tag:sent"
 
-set sendmail = "/usr/bin/msmtp -a perso"
+set sendmail = "/home/baptiste/.local/bin/msmtpq -a perso"
 
 color status green default
 
