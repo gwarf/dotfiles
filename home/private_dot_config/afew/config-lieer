@@ -1,18 +1,18 @@
-  # afew config for the OPERAS / lieer notmuch DB
-  # Cross-account filters only; no Perso/* references.
+# afew config for the OPERAS / lieer notmuch DB
+# Cross-account filters only; no Perso/* references.
 
-  [SpamFilter]
+[SpamFilter]
 
-  [KillThreadsFilter]
+[KillThreadsFilter]
 
-  [ListMailsFilter]
+[ListMailsFilter]
 
-  [MeFilter]
+[MeFilter]
 
-  [ArchiveSentMailsFilter]
-  sent_tag = sent
+[ArchiveSentMailsFilter]
+sent_tag = sent
 
-  [DKIMValidityFilter]
+[DKIMValidityFilter]
 
-  # remove tag new and add tag inbox
-  [InboxFilter]
+# remove tag new and add tag inbox
+[InboxFilter]
