@@ -18,7 +18,14 @@ virtual-mailboxes \
     "Spam"          "notmuch://?query=tag:spam" \
     "Sent"          "notmuch://?query=tag:sent"
 
+# Outbound path varies per host (same pattern as profile.operas.lieer):
+# - workstations: msmtpq with -a perso (msmtp account selector for this mailbox)
+# - assist: OpenSMTPd Unix-socket relay (no -a needed; OpenSMTPd routes by From:)
+{{- if eq .chezmoi.hostname "assist" }}
+set sendmail = "/usr/sbin/sendmail"
+{{- else }}
 set sendmail = "/home/baptiste/.local/bin/msmtpq -a perso"
+{{- end }}
 
 color status green default
 

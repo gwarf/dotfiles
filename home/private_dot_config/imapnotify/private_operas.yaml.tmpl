@@ -1,0 +1,25 @@
+configurations:
+  - host: imap.gmail.com
+    port: 993
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: false
+    wait: 5
+    username: "baptiste.grenier@operas-eu.org"
+{{- if eq .chezmoi.hostname "assist" }}
+    # Credential loaded by systemd-creds inside the goimapnotify@operas.service
+    # system unit (LoadCredentialEncrypted=OPERAS_GMAIL_APPPASS_ASSIST:.../OPERAS_GMAIL_APPPASS_ASSIST.cred).
+    passwordCmd: "systemd-creds cat OPERAS_GMAIL_APPPASS_ASSIST"
+{{- else }}
+    # Per-host Gmail app-password — rbw entry name keyed on hostname so each
+    # workstation has its own grant. Generate via Google Accounts → 2FA → App passwords
+    # if missing on a new host.
+    passwordCmd: "rbw get google/baptiste.grenier@operas-eu.org/apppass/{{ .chezmoi.hostname }}"
+{{- end }}
+    xoAuth2: false
+    boxes:
+      - mailbox: inbox
+        # Account-aware trigger — mail-sync.sh routes to gmi pull (workstations)
+        # or gmi sync (assist, sole-writer per ISC-37)
+        onNewMail: ~/bin/mail-sync.sh operas

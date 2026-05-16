@@ -134,4 +134,38 @@ Expunge Both
 Remove None
 # Save the synchronization state files in the relevant directory
 SyncState *
+{{- else if eq .chezmoi.hostname "assist" }}
+IMAPAccount baptiste
+Host mail.bapt.name
+# Credential loaded by systemd-creds inside the mbsync.service system unit
+# (LoadCredentialEncrypted=MAILCOW_BAPTISTE_PASSWORD:.../MAILCOW_BAPTISTE_PASSWORD.cred).
+# `systemd-creds cat` reads from $CREDENTIALS_DIRECTORY which is set by systemd.
+# Interactive `mbsync --all` from a regular terminal will NOT work on assist —
+# the credential isn't available outside a system-unit exec environment.
+# Run via `systemctl start mbsync.service` instead.
+PassCmd "systemd-creds cat MAILCOW_BAPTISTE_PASSWORD"
+Port 143
+TLSType STARTTLS
+AuthMechs LOGIN
+User baptiste@bapt.name
+
+# Remote
+IMAPStore baptiste-remote
+Account baptiste
+
+# Local
+MaildirStore baptiste-local
+Path ~/Mail/Perso/
+Inbox ~/Mail/Perso/Inbox
+SubFolders Verbatim
+
+# Connect remote and local
+Channel baptiste
+Far :baptiste-remote:
+Near :baptiste-local:
+Patterns *
+Create Both
+Expunge Both
+Remove None
+SyncState *
 {{- end }}

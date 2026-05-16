@@ -1,0 +1,24 @@
+{{- if or (eq .chezmoi.hostname "assist") (eq .chezmoi.hostname "sikaru") }}
+configurations:
+  - host: mail.bapt.name
+    port: 143
+    tls: true
+    tlsOptions:
+      rejectUnauthorized: true
+      starttls: true
+    wait: 5
+    username: "baptiste@bapt.name"
+{{- if eq .chezmoi.hostname "assist" }}
+    # Credential loaded by systemd-creds inside the goimapnotify@mailcow.service
+    # system unit (LoadCredentialEncrypted=MAILCOW_BAPTISTE_PASSWORD:.../MAILCOW_BAPTISTE_PASSWORD.cred).
+    passwordCmd: "systemd-creds cat MAILCOW_BAPTISTE_PASSWORD"
+{{- else }}
+    # Workstation-side rbw lookup, per-host entry name.
+    passwordCmd: "rbw get mail.bapt.name/{{ .chezmoi.hostname }}/baptiste@bapt.name"
+{{- end }}
+    xoAuth2: false
+    boxes:
+      - mailbox: Inbox
+        # Account-aware trigger — mail-sync.sh routes to mbsync for mailcow
+        onNewMail: ~/bin/mail-sync.sh mailcow
+{{- end }}
