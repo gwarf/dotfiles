@@ -73,33 +73,30 @@ username = "baptiste@bapt.name"
 # password.fetch = ["command", "rbw", "get", "/mail/baptiste@bapt.name/vdirsyncer"]
 password = "{{ (rbw "/mail/baptiste@bapt.name/vdirsyncer").data.password }}"
 
-# FIXME: disabled until auth is correctly configured
-# [storage google_contacts]
-# type = "google_contacts"
-# token_file = "~/.vdirsyncer/google/google_contacts_token"
-# read_only = true
-# client_id = ["command", "rbw", "get", "google/contacts/client_id/vdirsyncer"]
-# client_secret.fetch = ["command", "rbw", "get", "google/contacts/client_secret/vdirsyncer"]
-#
-# [storage local_gg_contacts]
-# type = "filesystem"
-# path = "~/.contacts/google"
-# fileext = ".vcf"
-#
-# [pair gg_contacts]
-# a = "local_gg_contacts"
-# b = "google_contacts"
-# collections = ["from b"]
-# conflict_resolution = "b wins"
-# metadata = ["color"]
-#
-# # Synchronise nextcloud with google
-# [pair my_cloud_contacts]
-# a = "mailcow_contacts"
-# b = "google_contacts"
-# collections = [["cloud_contacts", "personal", "contacts" ]]
-# conflict_resolution = "a wins"
-# metadata = ["color", "displayname"]
+# OPERAS Google (work) contacts land under ~/.contacts/operas/ (renamed via triplet form from upstream "default")
+# OAuth secrets pulled from rbw (notes field). First sync requires interactive OAuth bootstrap:
+# headless assist → ssh -L 8080:localhost:8080 assist + run `vdirsyncer discover contacts` and open
+# the printed URL on your workstation; OAuth redirect lands through the tunnel.
+[storage google_contacts]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/google/google_contacts_token"
+client_id = "{{ (rbw "google/contacts/client_id").notes }}"
+client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+
+[storage local_contacts]
+type = "filesystem"
+path = "~/.contacts/"
+fileext = ".vcf"
+
+# Triplet form: [local_label, a_collection, b_collection]
+# a_collection = "operas" → vdirsyncer reads/writes ~/.contacts/operas/
+# b_collection = "default" → Google's "My Contacts" address book
+[pair contacts]
+a = "local_contacts"
+b = "google_contacts"
+collections = [["operas", "operas", "default"]]
+conflict_resolution = "b wins"
+metadata = ["color"]
 
 # Synchronise mailcow from nextcloud (nextcloud is canonical)
 # Triplet is [local_label, a_collection, b_collection] — a=nextcloud uses 'contacts', b=mailcow uses 'personal'
