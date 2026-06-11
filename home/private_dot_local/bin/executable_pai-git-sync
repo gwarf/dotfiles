@@ -41,8 +41,10 @@ sync_repo() {
   git add -A
 
   if ! git diff --cached --quiet; then
-    if ! git commit -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-      tg_notify "⚠️ pai-git-sync[$name]: commit failed (GPG signing timeout?)"
+    # Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
+    # from a headless timer unit, so signing fails on cache-cold runs.
+    if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
+      tg_notify "⚠️ pai-git-sync[$name]: commit failed"
       return 1
     fi
   fi
