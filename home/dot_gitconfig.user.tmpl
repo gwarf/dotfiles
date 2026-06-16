@@ -21,7 +21,7 @@
 
 {{- if eq .chezmoi.hostname "torpedo" }}
 [credential "https://gitlab.pcss.pl"]
-  helper = "!f() { echo "username=baptiste.grenier@operas-eu.org"; echo "password=$GITLAB_TOKEN"; };f"
+  helper = "!f() { echo "username=baptiste.grenier@operas-eu.org"; echo "password=$PCSS_GITLAB_TOKEN"; };f"
 
 [credential "https://forge.bapt.name"]
   username = gwarf
