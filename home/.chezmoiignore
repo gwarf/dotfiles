@@ -29,6 +29,7 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/vdirsyncer.service.d
 .config/systemd/user/input-leap-client.service
 .config/kxkbrc
+.config/powerdevilrc
 {{- end }}
 {{- if ne .chezmoi.hostname "sikaru" }}
 .config/InputLeap
