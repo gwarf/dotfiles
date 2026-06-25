@@ -1,6 +1,6 @@
 [AC][SuspendAndShutdown]
-AutoSuspendIdleTimeoutSec=3600
-
+AutoSuspendIdleTimeoutSec={{ if eq .chezmoi.hostname "sikaru" }}7200{{ else }}3600{{ end }}
+{{ if eq .chezmoi.hostname "torpedo" }}
 [Activities][2c0f7a0e-d407-48c6-bbfa-2df0ece08d70]
 InhibitScreenManagement=false
 InhibitSuspend=false
@@ -19,3 +19,4 @@ UseProfileSpecificDisplayBrightness=true
 
 [Battery][SuspendAndShutdown]
 SleepMode=3
+{{- end }}
