@@ -62,6 +62,9 @@ bind-key . command-prompt "move-window -r -t '%%'"
 # Send pane next to another one
 bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
 
+# Toggle between the two most-recent windows (default prefix+l is taken by tmux-pain-control)
+bind-key Tab last-window
+
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
 set -g allow-passthrough on
