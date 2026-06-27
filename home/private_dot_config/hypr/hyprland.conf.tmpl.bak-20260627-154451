@@ -143,6 +143,7 @@ animations {
 
 # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
 dwindle {
+    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = true # You probably want this
 }
 
@@ -182,6 +183,10 @@ input {
 }
 
 # https://wiki.hyprland.org/Configuring/Variables/#gestures
+gestures {
+    workspace_swipe = false
+}
+
 # Example per-device config
 # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
 device {
@@ -216,9 +221,9 @@ bind = SHIFT, Print, exec, grim - | swappy -f -
 bind = $mainMod, V, togglefloating,
 bind = $mainMod, P, pseudo, # dwindle
 bind = $mainMod, F, fullscreen, # dwindle
-bind = $mainMod, E, layoutmsg, togglesplit # dwindle
+bind = $mainMod, E, togglesplit, # dwindle
 bind = $mainMod, W, togglegroup, # dwindle
-bind = $mainMod, S, layoutmsg, swapsplit # dwindle
+bind = $mainMod, S, swapsplit, # dwindle
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, left, movefocus, l
@@ -281,7 +286,7 @@ bindm = $mainMod, mouse:273, resizewindow
 # Example windowrule v2
 # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
 
-windowrule = suppressevent maximize, class:.* # You'll probably like this.
+windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
 
 # logs are in $XDG_RUNTIME/hypr
 debug {
