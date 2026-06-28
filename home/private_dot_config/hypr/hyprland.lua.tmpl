@@ -159,7 +159,6 @@ hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + W", hl.dsp.group.toggle())
-hl.bind(mainMod .. " + S", hl.dsp.layout("swapsplit"))
 
 -- Move focus with mainMod + arrow keys / hjkl
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
@@ -178,8 +177,7 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- Special workspace (scratchpad). NOTE: mainMod + S is also bound to swapsplit above
--- (pre-existing duplicate carried over from the hyprlang config).
+-- Special workspace (scratchpad): toggle + move-to-special pair
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
