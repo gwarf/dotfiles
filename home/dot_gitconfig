@@ -101,8 +101,8 @@
   threads = 4
 
 [gc]
-  reflogexpire = 300
-  reflogexpireunreachab
+  reflogexpire = 300 days
+  reflogExpireUnreachable = 100 days
 
 [giggle]
   compact-mode = false
