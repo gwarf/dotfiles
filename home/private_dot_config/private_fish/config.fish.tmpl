@@ -98,6 +98,7 @@ if status is-interactive
 
     # nvim!
     set -gx EDITOR nvim
+    set -Ux SUDO_EDITOR nvim
     # https://fishshell.com/docs/current/interactive.html#vi-mode
     set --global fish_key_bindings fish_vi_key_bindings
     bind --mode insert \ca beginning-of-line
@@ -207,14 +208,14 @@ if status is-interactive
     {{ end -}}
 
     if test -e ~/.bun
-      # bun
-      set --export BUN_INSTALL "$HOME/.bun"
-      set --export PATH $BUN_INSTALL/bin $PATH
+        # bun
+        set --export BUN_INSTALL "$HOME/.bun"
+        set --export PATH $BUN_INSTALL/bin $PATH
     end
 
     if test -e ~/.claude/PAI/TOOLS/pai.ts
-      # PAI alias
-      alias pai='bun /home/baptiste/.claude/PAI/TOOLS/pai.ts'
+        # PAI alias
+        alias pai='bun /home/baptiste/.claude/PAI/TOOLS/pai.ts'
     end
     {{ end -}}
     {{ if ne .chezmoi.os "darwin" -}}
