@@ -107,9 +107,9 @@ hl.config({
     },
 
     input = {
-        kb_layout    = "us",
+        kb_layout    = "custom",   -- QWERTY-Lafayette, matches KDE kxkbrc; resolves via ~/.config/xkb/symbols/custom
         kb_variant   = "",
-        kb_model     = "",
+        kb_model     = "kinesis",  -- matches KDE kxkbrc Model=kinesis
         kb_options   = "compose:rctrl",
         kb_rules     = "",
         follow_mouse = 1,
@@ -143,7 +143,7 @@ hl.device({
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
-local mainMod = "ALT" -- modifier keyword (modmask 8); hyprlang's "Alt_L" keysym is invalid in Lua bind strings
+local mainMod = "SUPER" -- Super/Meta as WM modifier, matching KDE; avoids Alt+key app-shortcut collisions
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + C",      hl.dsp.window.close())
