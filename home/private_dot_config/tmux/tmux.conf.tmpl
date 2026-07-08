@@ -119,6 +119,10 @@ set -g @catppuccin_window_status_style "rounded"
 
 # tmux-fzf
 TMUX_FZF_LAUNCH_KEY="C-f"
+# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
+set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
+# Wider/taller popup so titles are not truncated
+set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
 
 # Status bar at the top of the screen
 set-option -g status-position "top"
