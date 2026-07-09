@@ -75,7 +75,9 @@ set -ga update-environment TERM_PROGRAM
 set -g @plugin "tmux-plugins/tpm"
 set -g @plugin "tmux-plugins/tmux-sensible"
 set -g @plugin "tmux-plugins/tmux-cpu"
-set -g @plugin "tmux-plugins/tmux-battery"
+# XXX: would need to hide it when plugged
+# https://github.com/tmux-plugins/tmux-battery#enabled
+# set -g @plugin "tmux-plugins/tmux-battery"
 set -g @plugin "tmux-plugins/tmux-yank"
 set -g @plugin "tmux-plugins/tmux-pain-control"
 set -g @plugin "tmux-plugins/tmux-prefix-highlight"
@@ -84,6 +86,8 @@ set -g @plugin "tmux-plugins/tmux-logging"
 set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin "tmux-plugins/tmux-resurrect"
 set -g @plugin "tmux-plugins/tmux-continuum"
+set -g @plugin 'timvw/tmux-assistant-resurrect'
+
 set -g @plugin "alberti42/tmux-fzf-links"
 # MPD playing
 set -g @plugin "vascomfnunes/tmux-ludanta"
@@ -134,8 +138,9 @@ set -g status-right "#{mpd_now_playing}"
 set -ag status-right "#{E:@catppuccin_status_application}"
 set -agF status-right "#{E:@catppuccin_status_cpu}"
 set -ag status-right "#{E:@catppuccin_status_session}"
-set -ag status-right "#{E:@catppuccin_status_uptime}"
-set -agF status-right "#{E:@catppuccin_status_battery}"
+# set -ag status-right "#{E:@catppuccin_status_uptime}"
+# XXX: display of tmux-battery
+# set -agF status-right "#{E:@catppuccin_status_battery}"
 
 # Install tpm if not available
 if "test ! -d ~/.tmux/plugins/tpm" \
