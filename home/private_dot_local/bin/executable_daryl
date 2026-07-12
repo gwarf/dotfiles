@@ -1,0 +1,4 @@
+#!/bin/sh
+# daryl — everyday Daryl on the default provider (Claude via claude-acp).
+# Usage: daryl [dir]     (defaults to the current directory)
+exec goose-daryl "$@"

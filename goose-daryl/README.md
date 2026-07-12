@@ -14,6 +14,12 @@ Managed here via chezmoi. `chezmoi apply` deploys:
   log (never tool inputs).
 - `~/.local/bin/goose-daryl` — launcher: `goose-daryl [dir] [provider] [model]`,
   `GOOSE_MODE=approve` by default.
+- `~/.local/bin/daryl` — everyday Daryl on your default provider (Claude).
+- `~/.local/bin/daryl-gh-gpt` — Daryl on GitHub Copilot's flagship GPT
+  (`gpt-5.6-sol`; needs a Copilot seat with GPT-5.6 + a one-time
+  `github_copilot` device login). Override the tier per run:
+  `GOOSE_MODEL=gpt-5.6-terra daryl-gh-gpt` (sol = flagship, terra = balanced,
+  luna = fast/cheap).
 
 Requires [`bun`](https://bun.sh) and `goose`.
 

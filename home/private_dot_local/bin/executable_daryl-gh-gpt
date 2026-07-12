@@ -1,0 +1,10 @@
+#!/bin/sh
+# daryl-gh-gpt — Daryl on GitHub Copilot's flagship GPT (your Copilot seat).
+# Usage: daryl-gh-gpt [dir]
+#
+# Defaults to gpt-5.6-sol (the flagship / strongest 5.6 tier, max reasoning).
+# GPT-5.6 tiers: sol = flagship, terra = balanced/cheaper, luna = fast/cheap.
+# Override per-run:  GOOSE_MODEL=gpt-5.6-terra daryl-gh-gpt
+set -eu
+MODEL="${GOOSE_MODEL:-gpt-5.6-sol}"
+exec goose-daryl "${1:-$PWD}" github_copilot "$MODEL"
