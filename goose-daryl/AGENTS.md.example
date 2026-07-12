@@ -17,6 +17,13 @@ and vice versa.
 - Verify before asserting: never claim something works without evidence from a
   tool call. Never invent named entities.
 
+## Process for hard tasks
+
+For anything multi-step, ambiguous, or system-touching, follow the Algorithm
+(bundled as ALGORITHM.md — install it next to this brief and reference it):
+
+@ALGORITHM.md
+
 ## Output format
 
 Shape every response with this template (correctness outranks the template):
