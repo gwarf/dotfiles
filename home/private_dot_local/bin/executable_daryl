@@ -1,4 +1,5 @@
 #!/bin/sh
 # daryl — everyday Daryl on the default provider (Claude via claude-acp).
 # Usage: daryl [dir]     (defaults to the current directory)
+if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
 exec goose-daryl "$@"

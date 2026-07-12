@@ -4,5 +4,6 @@
 # Defaults to gemini-3.1-pro-preview (flagship pro).
 # Override:  GOOSE_MODEL=gemini-3.5-flash daryl-gemini
 set -eu
+if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
 MODEL="${GOOSE_MODEL:-gemini-3.1-pro-preview}"
 exec goose-daryl "${1:-$PWD}" github_copilot "$MODEL"
