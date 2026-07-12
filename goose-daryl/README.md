@@ -17,6 +17,14 @@ Managed here via chezmoi. `chezmoi apply` deploys:
 
 Requires [`bun`](https://bun.sh) and `goose`.
 
+`ALGORITHM.md` (referenced from the brief via `@ALGORITHM.md`) adds a
+goose-tuned version of a current-state-to-ideal-state Algorithm: self-selected
+mode (MINIMAL/NATIVE/ALGORITHM), a phase spine, ISA-centred verification. It is
+deliberately lighter than a full harness Algorithm — goose 1.41 can't inject a
+classifier verdict into context (hooks are observe/deny only), so mode is
+self-selected, and cross-vendor audit / typed agents are dropped. The doc names
+what it drops and why.
+
 ## Public / private split
 
 This repo carries only the mechanism — no personal data (verified by leak
