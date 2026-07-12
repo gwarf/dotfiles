@@ -1,0 +1,15 @@
+{
+  "_comment": "Copy to ~/.agents/pai-guards.config.json and add YOUR environment's sensitive paths. Keep this file private — it fingerprints your infrastructure. Patterns are case-insensitive regex, tested against tool inputs. Appended to the engine's generic defaults.",
+  "rules": [
+    {
+      "name": "my-secret-store",
+      "pattern": "my-secret-store|\\.mysecrets/",
+      "reason": "guard: access to the local secret store is denied"
+    },
+    {
+      "name": "destructive-rm",
+      "pattern": "rm\\s+(-[a-z]*r[a-z]*f|-[a-z]*f[a-z]*r)[a-z]*\\s+[^;&|]*(important-dir|notes-vault)",
+      "reason": "guard: recursive-force delete targeting protected directories is denied"
+    }
+  ]
+}

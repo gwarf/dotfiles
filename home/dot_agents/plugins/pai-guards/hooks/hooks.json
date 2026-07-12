@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bun ${PLUGIN_ROOT}/scripts/Guards.ts", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "pai-observability",
+  "version": "1.0.0",
+  "description": "PAI observability trail for goose: logs session lifecycle and tool usage (names only, never inputs) to MEMORY/OBSERVABILITY/goose-activity.jsonl"
+}

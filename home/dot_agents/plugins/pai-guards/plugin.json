@@ -1,0 +1,5 @@
+{
+  "name": "pai-guards",
+  "version": "1.0.0",
+  "description": "PAI guard fleet for goose: deny-capable PreToolUse rules mirroring the Claude Code hook guards (secret files, env dumps, git remote URLs, vault installs, destructive rm)"
+}

@@ -1,0 +1,34 @@
+#!/bin/sh
+# goose-daryl — launch a briefed, guarded goose session.
+#
+# Usage:
+#   goose-daryl [dir]                       # session in dir (default: cwd)
+#   goose-daryl [dir] <provider> [model]    # pick provider/model
+#
+# Defaults to GOOSE_MODE=approve so every tool call is confirmed — the
+# human-in-the-loop backstop for non-Claude models. Override by exporting
+# GOOSE_MODE before calling (e.g. GOOSE_MODE=auto for hands-off runs where
+# the guard plugin is your only gate).
+set -eu
+
+dir="${1:-$PWD}"
+provider="${2:-}"
+model="${3:-}"
+
+if [ ! -d "$dir" ]; then
+  echo "goose-daryl: not a directory: $dir" >&2
+  exit 1
+fi
+cd "$dir"
+
+: "${GOOSE_MODE:=approve}"
+export GOOSE_MODE
+
+if [ -n "$provider" ]; then
+  export GOOSE_PROVIDER="$provider"
+  # Non-default providers need an explicit model; the global config's default
+  # model may be provider-specific and 400 elsewhere.
+  [ -n "$model" ] && export GOOSE_MODEL="$model"
+fi
+
+exec goose session
