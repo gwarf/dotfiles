@@ -1,0 +1,8 @@
+#!/bin/sh
+# daryl-gemini — Daryl on Google Gemini via GitHub Copilot (your Copilot seat).
+# Usage: daryl-gemini [dir]
+# Defaults to gemini-3.1-pro-preview (flagship pro).
+# Override:  GOOSE_MODEL=gemini-3.5-flash daryl-gemini
+set -eu
+MODEL="${GOOSE_MODEL:-gemini-3.1-pro-preview}"
+exec goose-daryl "${1:-$PWD}" github_copilot "$MODEL"

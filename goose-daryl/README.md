@@ -12,14 +12,20 @@ Managed here via chezmoi. `chezmoi apply` deploys:
   `auto` mode). Extend with your own paths via a private config (below).
 - `~/.agents/plugins/pai-observability/` — session + tool-name trail to a JSONL
   log (never tool inputs).
-- `~/.local/bin/goose-daryl` — launcher: `goose-daryl [dir] [provider] [model]`,
-  `GOOSE_MODE=approve` by default.
-- `~/.local/bin/daryl` — everyday Daryl on your default provider (Claude).
-- `~/.local/bin/daryl-gh-gpt` — Daryl on GitHub Copilot's flagship GPT
-  (`gpt-5.6-sol`; needs a Copilot seat with GPT-5.6 + a one-time
-  `github_copilot` device login). Override the tier per run:
-  `GOOSE_MODEL=gpt-5.6-terra daryl-gh-gpt` (sol = flagship, terra = balanced,
-  luna = fast/cheap).
+The everyday commands are a consistent `daryl` family:
+
+- `daryl [dir]` — Daryl on your default provider (Claude). The everyday driver.
+- `daryl-gpt [dir]` — Daryl on GitHub Copilot's flagship GPT (`gpt-5.6-sol`).
+  Override the tier: `GOOSE_MODEL=gpt-5.6-terra daryl-gpt` (sol = flagship,
+  terra = balanced, luna = fast/cheap).
+- `daryl-gemini [dir]` — Daryl on Gemini via Copilot (`gemini-3.1-pro-preview`).
+
+The Copilot-backed ones (`daryl-gpt`, `daryl-gemini`) need a Copilot seat with
+those models enabled and a one-time `github_copilot` device login.
+
+`~/.local/bin/goose-daryl` is the underlying launcher the family calls
+(`goose-daryl [dir] [provider] [model]`, `GOOSE_MODE=approve` by default) — use
+it directly only for an ad-hoc provider/model.
 
 Requires [`bun`](https://bun.sh) and `goose`.
 
