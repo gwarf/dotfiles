@@ -55,6 +55,24 @@ infrastructure fingerprint never leaves your machine.
 3. Register the plugins in `~/.config/goose/config.yaml` under `plugins:`
    (goose also auto-registers on first discovery).
 
+## Appearance (optional)
+
+In `~/.config/goose/config.yaml`:
+
+```yaml
+GOOSE_CLI_THEME: dark
+GOOSE_CLI_DARK_THEME: Nord   # syntax palette for code blocks (default: zenburn)
+```
+
+Theme names are goose's underlying `bat` themes and are **case-sensitive** —
+run `bat --list-themes` for valid values (`Nord`, `Dracula`, `gruvbox-dark`,
+`zenburn`, `TwoDark`, …). A wrong value spams `Unknown theme` on every render.
+
+To cut the `todo_write` boxes that clutter transcripts, disable the bundled
+`todo` extension (set its `enabled: false`). `GOOSE_CLI_MIN_PRIORITY` does NOT
+hide tool-call boxes — they render outside the priority filter — so disabling
+the extension is the real lever.
+
 ## Guard protocol note
 
 goose's blocking path (`crates/goose/src/hooks/mod.rs`, v1.41+): deny by
