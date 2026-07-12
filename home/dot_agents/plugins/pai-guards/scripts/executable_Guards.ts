@@ -63,6 +63,29 @@ const DEFAULT_RULES: RuleSpec[] = [
     reason:
       "guard: printing git remote URLs is denied (HTTPS origins can embed tokens) — transport-only: git config --get remote.origin.url | cut -d: -f1",
   },
+  // SecurityPipeline port (2026-07-12): dangerous-action + egress inspectors.
+  // Injection MARKERS (ignore-previous-instructions etc.) live on tool OUTPUT,
+  // which a PreToolUse hook can't see — those are logged by pai-observability.
+  {
+    name: "dangerous-actions",
+    pattern:
+      "\\brm\\s+-rf\\s+~|\\brm\\s+-rf\\s+/($|\\s|\\*)|\\bdelete\\s+all\\s+files\\b|\\bdisable\\s+(all\\s+)?(security|logging|monitoring|protection)\\b|\\bexfiltrate\\b|\\bupload\\s+(your|the)\\s+(data|config|secrets)\\b|\\bsend\\s+(your|the|all)\\s+(config|credentials|secrets|keys|tokens)\\s+to\\b",
+    reason:
+      "guard: destructive or exfiltration action denied (dangerous-action inspector)",
+  },
+  {
+    name: "credential-egress",
+    pattern:
+      "(?=.*\\b(curl|wget|nc|ncat|fetch)\\b)(?=.*(TOKEN|API_?KEY|SECRET|PASSWORD|credential|\\.env\\b|\\.ssh/|id_(rsa|ed25519)))",
+    reason:
+      "guard: sending secret-shaped data to an outbound tool is denied (egress inspector)",
+  },
+  {
+    name: "remote-pipe-to-shell",
+    pattern: "\\b(curl|wget)\\b[^|]*\\|\\s*(sudo\\s+)?(sh|bash|zsh)\\b",
+    reason:
+      "guard: piping a downloaded script straight into a shell is denied — download, inspect, then run",
+  },
 ];
 
 function loadRules(): { re: RegExp; reason: string; name: string }[] {
