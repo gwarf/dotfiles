@@ -1,5 +1,5 @@
 [ui]
-agent_panel_sort = "priority"
+agent_panel_sort = "spaces"
 
 [keys]
 # Workspace picker (prefix+w) list navigation: arrows plus vim-style k/j.
