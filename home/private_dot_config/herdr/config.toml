@@ -1,3 +1,6 @@
+[theme]
+name = "catppuccin"
+
 [ui]
 agent_panel_sort = "spaces"
 
@@ -9,3 +12,11 @@ navigate_workspace_down = ["down", "j"]
 # tmux-pain-control-style pane splits.
 split_vertical = ["prefix+v", "prefix+|"]         # split right — v (unshifted) + | (tmux, shifted)
 split_horizontal = ["prefix+minus", 'prefix+"']   # split below — minus (unshifted) + " (tmux, shifted)
+
+[ui.toast]
+# Desktop popups when a background agent finishes or needs input (no sound).
+delivery = "system"
+
+[session]
+# Resume agent conversations after a herdr server restart.
+resume_agents_on_restore = true
