@@ -20,3 +20,7 @@ delivery = "system"
 [session]
 # Resume agent conversations after a herdr server restart.
 resume_agents_on_restore = true
+
+[ui.sound]
+# No herdr sounds — PAI/Pulse handles audio cues.
+enabled = false
