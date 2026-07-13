@@ -1,0 +1,11 @@
+[ui]
+agent_panel_sort = "priority"
+
+[keys]
+# Workspace picker (prefix+w) list navigation: arrows plus vim-style k/j.
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+
+# tmux-pain-control-style pane splits.
+split_vertical = ["prefix+v", "prefix+|"]         # split right — v (unshifted) + | (tmux, shifted)
+split_horizontal = ["prefix+minus", 'prefix+"']   # split below — minus (unshifted) + " (tmux, shifted)

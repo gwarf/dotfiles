@@ -65,6 +65,12 @@ bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
 # Toggle between the two most-recent windows (default prefix+l is taken by tmux-pain-control)
 bind-key Tab last-window
 
+# ── herdr parity (keep tmux and herdr muscle memory aligned) ──
+# Split right on prefix+v (herdr split_vertical); | and % already split right too.
+bind-key v split-window -h -c "#{pane_current_path}"
+# Fuzzy jump to any pane, like herdr's prefix+g goto picker (tmux-fzf pane switcher).
+bind-key g run-shell -b "~/.config/tmux/plugins/tmux-fzf/scripts/pane.sh"
+
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
 set -g allow-passthrough on
