@@ -33,9 +33,9 @@ Announce each transition by voice (see the brief's notify curl), then do it.
 
 1. **OBSERVE** — Echo the intent in one sentence. Reverse-engineer the request
    (explicit wants, things NOT wanted). If the task is non-trivial, scaffold an
-   ISA: `load_skill ISA` → a task ISA at `~/.claude/PAI/MEMORY/WORK/{slug}/ISA.md`
-   (the SAME store the other engine uses). Write Problem / Goal / Criteria. Each
-   criterion is one binary, tool-checkable probe.
+   ISA: `load_skill ISA` → a task ISA in your shared work store (the SAME place
+   the other engine writes, so both see it). Write Problem / Goal / Criteria.
+   Each criterion is one binary, tool-checkable probe.
 2. **THINK** — Riskiest assumptions, a premortem (how could this fail?), and
    prerequisites. Refine the criteria against those failure modes.
 3. **PLAN** — If the request has 2+ sub-tasks, list them explicitly (a
