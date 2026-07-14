@@ -1,6 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$env_var\
 [](color_orange)\
 $os\
 $username\
@@ -195,3 +196,8 @@ vimcmd_symbol = '[](bold fg:color_green)'
 vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+# zmx session indicator — shows [session] when inside a zmx-persisted session.
+[env_var.ZMX_SESSION]
+format = '[\[$env_value\] ]($style)'
+style = 'bold yellow'
