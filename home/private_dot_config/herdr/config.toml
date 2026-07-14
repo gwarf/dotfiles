@@ -13,6 +13,9 @@ navigate_workspace_down = ["down", "j"]
 split_vertical = ["prefix+v", "prefix+|"]         # split right — v (unshifted) + | (tmux, shifted)
 split_horizontal = ["prefix+minus", 'prefix+"']   # split below — minus (unshifted) + " (tmux, shifted)
 
+# tmux rename muscle memory: prefix+, renames the tab (herdr default prefix+shift+t kept).
+rename_tab = ["prefix+shift+t", "prefix+,"]
+
 [ui.toast]
 # Desktop popups when a background agent finishes or needs input (no sound).
 delivery = "system"
