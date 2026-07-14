@@ -1,8 +1,8 @@
 #!/bin/sh
-# daryl-gemini — Daryl on Google Gemini via GitHub Copilot (your Copilot seat).
-# Usage: daryl-gemini [dir]
+# gd-gemini — goose Daryl on Google Gemini via GitHub Copilot (your Copilot seat).
+# Usage: gd-gemini [dir]
 # Defaults to gemini-3.1-pro-preview (flagship pro).
-# Override:  GOOSE_MODEL=gemini-3.5-flash daryl-gemini
+# Override:  GOOSE_MODEL=gemini-3.5-flash gd-gemini
 set -eu
 if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
 MODEL="${GOOSE_MODEL:-gemini-3.1-pro-preview}"

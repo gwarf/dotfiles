@@ -12,13 +12,13 @@ Managed here via chezmoi. `chezmoi apply` deploys:
   `auto` mode). Extend with your own paths via a private config (below).
 - `~/.agents/plugins/pai-observability/` — session + tool-name trail to a JSONL
   log (never tool inputs).
-The everyday commands are a consistent `daryl` family:
+The everyday commands are a consistent `gd` (goose-daryl) family:
 
-- `daryl [dir]` — Daryl on your default provider (Claude). The everyday driver.
-- `daryl-gpt [dir]` — Daryl on GitHub Copilot's flagship GPT (`gpt-5.6-sol`).
-  Override the tier: `GOOSE_MODEL=gpt-5.6-terra daryl-gpt` (sol = flagship,
+- `gd [dir]` — goose Daryl on your default provider (Claude). The everyday driver.
+- `gd-gpt [dir]` — goose Daryl on GitHub Copilot's flagship GPT (`gpt-5.6-sol`).
+  Override the tier: `GOOSE_MODEL=gpt-5.6-terra gd-gpt` (sol = flagship,
   terra = balanced, luna = fast/cheap).
-- `daryl-gemini [dir]` — Daryl on Gemini via Copilot (`gemini-3.1-pro-preview`).
+- `gd-gemini [dir]` — goose Daryl on Gemini via Copilot (`gemini-3.1-pro-preview`).
 
 The Copilot-backed ones (`daryl-gpt`, `daryl-gemini`) need a Copilot seat with
 those models enabled and a one-time `github_copilot` device login.
