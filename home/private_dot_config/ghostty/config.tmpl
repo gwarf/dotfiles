@@ -17,3 +17,19 @@ command = /usr/bin/fish --login --interactive
 {{ end -}}
 
 window-decoration = client
+
+# tmux/herdr-style keys for native tabs/splits (zmx trial: Ghostty owns windowing).
+# Leader is ctrl+shift+b — NOT ctrl+b, which must pass through to herdr/tmux
+# running inside Ghostty. Same suffixes as the herdr/tmux muscle memory.
+keybind = ctrl+shift+b>c=new_tab
+keybind = ctrl+shift+b>n=next_tab
+keybind = ctrl+shift+b>p=previous_tab
+keybind = ctrl+shift+b>comma=prompt_tab_title
+keybind = ctrl+shift+b>v=new_split:right
+keybind = ctrl+shift+b>minus=new_split:down
+keybind = ctrl+shift+b>h=goto_split:left
+keybind = ctrl+shift+b>j=goto_split:down
+keybind = ctrl+shift+b>k=goto_split:up
+keybind = ctrl+shift+b>l=goto_split:right
+keybind = ctrl+shift+b>z=toggle_split_zoom
+keybind = ctrl+shift+b>x=close_surface
