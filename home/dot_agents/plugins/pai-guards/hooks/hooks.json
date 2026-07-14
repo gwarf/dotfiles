@@ -3,7 +3,8 @@
     "PreToolUse": [
       {
         "hooks": [
-          { "type": "command", "command": "bun ${PLUGIN_ROOT}/scripts/Guards.ts", "timeout": 10 }
+          { "type": "command", "command": "bun ${PLUGIN_ROOT}/scripts/Guards.ts", "timeout": 10 },
+          { "type": "command", "command": "bun ${PLUGIN_ROOT}/scripts/InjectionInspector.ts", "timeout": 25 }
         ]
       }
     ]
