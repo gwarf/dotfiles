@@ -1,3 +1,5 @@
+onboarding = false
+
 [theme]
 name = "catppuccin"
 
@@ -10,8 +12,10 @@ navigate_workspace_up = ["up", "k"]
 navigate_workspace_down = ["down", "j"]
 
 # tmux-pain-control-style pane splits.
-split_vertical = ["prefix+v", "prefix+|"]         # split right — v (unshifted) + | (tmux, shifted)
-split_horizontal = ["prefix+minus", 'prefix+"']   # split below — minus (unshifted) + " (tmux, shifted)
+# split right — v (unshifted) + | (tmux, shifted)
+split_vertical = ["prefix+v", "prefix+|"]
+# split below — minus (unshifted) + " (tmux, shifted)
+split_horizontal = ["prefix+minus", 'prefix+"']
 
 # tmux rename muscle memory: prefix+, renames the tab (herdr default prefix+shift+t kept).
 rename_tab = ["prefix+shift+t", "prefix+,"]
