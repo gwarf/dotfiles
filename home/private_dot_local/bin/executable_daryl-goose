@@ -1,5 +1,9 @@
 #!/bin/sh
-# daryl-goose — goose Daryl on the default provider (Claude via claude-acp).
+# daryl-goose — goose Daryl on your Claude Code subscription via claude-acp.
 # Usage: daryl-goose [dir]
+# Defaults to claude-sonnet-4-6. Override:  GOOSE_MODEL=claude-opus-4-6 daryl-goose
+# Requires the ACP adapter on PATH: bun install -g @agentclientprotocol/claude-agent-acp
+set -eu
 if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
-exec goose-daryl "$@"
+MODEL="${GOOSE_MODEL:-claude-sonnet-4-6}"
+exec goose-daryl "${1:-$PWD}" claude-acp "$MODEL"
