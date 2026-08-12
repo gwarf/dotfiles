@@ -4,6 +4,7 @@
 # Defaults to gpt-5.6-sol (flagship). Tiers: sol=flagship, terra=balanced, luna=fast.
 # Override:  GOOSE_MODEL=gpt-5.6-terra daryl-gpt
 set -eu
+# shellcheck source=/dev/null
 if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
 MODEL="${GOOSE_MODEL:-gpt-5.6-sol}"
 exec goose-daryl "${1:-$PWD}" github_copilot "$MODEL"

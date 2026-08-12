@@ -62,6 +62,13 @@ jobs:
           DISABLE_LINTERS: REPOSITORY_GRYPE,REPOSITORY_TRIVY,REPOSITORY_TRUFFLEHOG,SPELL_CSPELL,CSS_STYLELINT,BASH_EXEC
           # Scan only changes in PR, otherwise scan everything
           REPOSITORY_GITLEAKS_PR_COMMITS_SCAN: ${{ github.event_name == 'pull_request' }}
+          # zizmor needs the token for its online audits (ref-confusion,
+          # known-vulnerable-actions); MegaLinter strips it from linter
+          # subprocesses unless it is explicitly whitelisted.
+          ACTION_ZIZMOR_UNSECURED_ENV_VARIABLES: GITHUB_TOKEN
+          # msmtpq and msmtp-queue are vendored upstream (msmtpq suite,
+          # Chris Gianniotis, GPLv3) - not ours to reformat or patch.
+          BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE: (home/private_dot_local/bin/executable_msmtp(q|-queue))
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
