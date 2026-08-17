@@ -50,6 +50,7 @@ Mail/.notmuch/hooks/post-new
 .config/yay
 .config/zellij
 .config/systemd/user/pai-pulse.service
+.local/bin/vaultpick
 .msmtprc
 bin/add_event
 bin/autostart.sh
