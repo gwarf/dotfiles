@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Pick a Bitwarden entry via wofi and copy its password to the clipboard.
+# Selects by exact name+username, so entry names containing "/" work.
+set -euo pipefail
+
+# Seconds before the password is wiped from the clipboard.
+TTL=${VAULTPICK_TTL:-45}
+
+sel=$(
+	rbw list --fields name,user |
+		wofi --dmenu --insensitive --prompt vault --width 700 --lines 15
+) || exit 0
+
+[ -n "$sel" ] || exit 0
+
+name=${sel%%$'\t'*}
+user=${sel#*$'\t'}
+[ "$user" = "$sel" ] && user=""
+
+if [ -n "$user" ]; then
+	pw=$(rbw get -- "$name" "$user")
+else
+	pw=$(rbw get -- "$name")
+fi
+
+# --sensitive sets the x-kde-passwordManagerHint MIME hint, which keeps the
+# password out of Klipper's history entirely. Without it the password stays
+# in history and cannot be removed selectively. Do not add --paste-once:
+# Klipper reads the clipboard on every change and consumes the single paste.
+printf '%s' "$pw" | wl-copy --trim-newline --sensitive
+
+# Klipper substitutes the previous history item on clear, which is enough to
+# get the password off the clipboard. Only fires if it is still there.
+setsid --fork bash -c '
+	sleep "$1"
+	[ "$(wl-paste --no-newline 2>/dev/null)" = "$2" ] && wl-copy --clear
+' _ "$TTL" "$pw" >/dev/null 2>&1
+
+command -v notify-send >/dev/null &&
+	notify-send -t 2000 "vaultpick" "password copied (clears in ${TTL}s)"
