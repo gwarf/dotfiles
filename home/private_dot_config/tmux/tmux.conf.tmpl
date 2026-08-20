@@ -73,6 +73,10 @@ bind-key v split-window -h -c "#{pane_current_path}"
 # find-window kept reachable on C-f since prefix+f now launches tmux-fzf.
 bind-key C-f command-prompt { find-window -Z "%%" }
 
+# Day-plan overlay: popup with today's daily note (05:00 Dream.ts writes the
+# Overnight brief into it). prefix+t shows, q hides. Replaces clock-mode.
+bind-key t display-popup -E -w 82% -h 85% 'glow -p "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md"'
+
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
 set -g allow-passthrough on
