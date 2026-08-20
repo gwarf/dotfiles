@@ -5,8 +5,8 @@ set -euo pipefail
 export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:$HOME/.local/bin:$PATH"
 
 REPOS=(
-  "$HOME/.claude"
-  "$HOME/.local/share/chezmoi"
+	"$HOME/.claude"
+	"$HOME/.local/share/chezmoi"
 )
 
 TG_ENV="$HOME/.env"
@@ -17,81 +17,84 @@ CHAT_ID="-1003961816258"
 # token) still get a working sync; they just don't get notifications.
 BOT_TOKEN=""
 if [ -f "$TG_ENV" ]; then
-  BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2- || true)
+	BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2- || true)
 fi
 
 tg_notify() {
-  [ -z "$BOT_TOKEN" ] && return 0
-  curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-    -d "chat_id=${CHAT_ID}" \
-    --data-urlencode "text=$1" > /dev/null 2>&1 || true
+	[ -z "$BOT_TOKEN" ] && return 0
+	curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+		-d "chat_id=${CHAT_ID}" \
+		--data-urlencode "text=$1" >/dev/null 2>&1 || true
 }
 
 sync_repo() {
-  local repo="$1"
-  local name
-  name=$(basename "$repo")
-  cd "$repo" || { tg_notify "⚠️ pai-git-sync[$name]: cd failed"; return 1; }
+	local repo="$1"
+	local name
+	name=$(basename "$repo")
+	cd "$repo" || {
+		tg_notify "⚠️ pai-git-sync[$name]: cd failed"
+		return 1
+	}
 
-  # Self-install the shell-lint gate. This script is the unattended committer,
-  # so the guard has to be wired wherever the timer runs rather than wherever
-  # someone remembered to set it. core.hooksPath is per-repo and lives in
-  # untracked .git/config, so this is the only place it can land as code.
-  local hooks_dir="$HOME/.config/git/hooks"
-  if [ -x "$hooks_dir/pre-commit" ] &&
-    [ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
-    git config core.hooksPath "$hooks_dir"
-  fi
+	# Self-install the shell-lint gate. This script is the unattended committer,
+	# so the guard has to be wired wherever the timer runs rather than wherever
+	# someone remembered to set it. core.hooksPath is per-repo and lives in
+	# untracked .git/config, so this is the only place it can land as code.
+	local hooks_dir="$HOME/.config/git/hooks"
+	if [ -x "$hooks_dir/pre-commit" ] &&
+		[ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
+		git config core.hooksPath "$hooks_dir"
+	fi
 
-  if ! git fetch 2>&1; then
-    tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
-    return 1
-  fi
+	if ! git fetch 2>&1; then
+		tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
+		return 1
+	fi
 
-  git add -A
+	git add -A
 
-  if ! git diff --cached --quiet; then
-    # Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
-    # from a headless timer unit, so signing fails on cache-cold runs.
-    if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-      tg_notify "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
-      return 1
-    fi
-  fi
+	if ! git diff --cached --quiet; then
+		# Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
+		# from a headless timer unit, so signing fails on cache-cold runs.
+		if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
+			tg_notify "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
+			return 1
+		fi
+	fi
 
-  if ! git rebase origin/main; then
-    git rebase --abort 2>/dev/null || true
-    tg_notify "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
-    return 1
-  fi
+	if ! git rebase origin/main; then
+		git rebase --abort 2>/dev/null || true
+		tg_notify "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
+		return 1
+	fi
 
-  if ! git push; then
-    tg_notify "⚠️ pai-git-sync[$name]: push failed"
-    return 1
-  fi
+	if ! git push; then
+		tg_notify "⚠️ pai-git-sync[$name]: push failed"
+		return 1
+	fi
 
-  # Post-sync hook for chezmoi: source commits don't render to target files until apply.
-  # chezmoi apply is idempotent and overwrites drift — chezmoi treats source as canonical.
-  if [ "$repo" = "$HOME/.local/share/chezmoi" ]; then
-    # No -v: verbose apply renders the contents of files it changes, and the
-    # source tree carries rbw-templated mail credentials (msmtprc, mbsyncrc,
-    # imapnotify, aerc). Under a systemd unit that output lands in the journal.
-    if ! chezmoi apply 2>&1; then
-      tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed"
-      return 1
-    fi
-  fi
+	# Post-sync hook for chezmoi: source commits don't render to target files until apply.
+	# chezmoi apply is idempotent and overwrites drift — chezmoi treats source as canonical.
+	if [ "$repo" = "$HOME/.local/share/chezmoi" ]; then
+		# No -v: verbose apply renders the contents of files it changes, and the
+		# source tree carries rbw-templated mail credentials (msmtprc, mbsyncrc,
+		# imapnotify, aerc). Under a systemd unit that output lands in the journal.
+		if ! chezmoi apply 2>&1; then
+			tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed"
+			return 1
+		fi
+	fi
 }
 
 overall=0
 for repo in "${REPOS[@]}"; do
-  if [ -d "$repo/.git" ]; then
-    # Subshell isolates per-repo failure from set -e killing the loop.
-    ( sync_repo "$repo" ) || overall=1
-  else
-    tg_notify "⚠️ pai-git-sync: $repo missing .git/"
-    overall=1
-  fi
+	if [ -d "$repo/.git" ]; then
+		# Subshell isolates per-repo failure from set -e killing the loop.
+		(sync_repo "$repo") || overall=1
+	else
+		tg_notify "⚠️ pai-git-sync: $repo missing .git/"
+		overall=1
+	fi
 done
 
 exit "$overall"
