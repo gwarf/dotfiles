@@ -68,8 +68,8 @@ bind-key Tab last-window
 # ── herdr parity (keep tmux and herdr muscle memory aligned) ──
 # Split right on prefix+v (herdr split_vertical); | and % already split right too.
 bind-key v split-window -h -c "#{pane_current_path}"
-# Fuzzy jump to any pane, like herdr's prefix+g goto picker (tmux-fzf pane switcher).
-bind-key g run-shell -b "~/.config/tmux/plugins/tmux-fzf/scripts/pane.sh"
+# prefix+g left at its tmux 3.8 default (floating-pane positioning table);
+# the tmux-fzf pane picker that used to live here was unused (2026-08-20).
 
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
@@ -128,7 +128,8 @@ set -g @catppuccin_flavor "mocha"
 set -g @catppuccin_window_status_style "rounded"
 
 # tmux-fzf
-TMUX_FZF_LAUNCH_KEY="C-f"
+# prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
+TMUX_FZF_LAUNCH_KEY="f"
 # Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
 set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
 # Wider/taller popup so titles are not truncated
