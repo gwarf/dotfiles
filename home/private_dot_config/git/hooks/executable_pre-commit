@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# Shell-lint gate for the two repos pai-git-sync pushes unattended.
+#
+# pai-git-sync runs `git add -A` + commit + push on a timer, so without a gate
+# whatever sits in the tree at timer o'clock reaches main. On 2026-08-20 a
+# half-finished shellcheck directive (SC1073) was one tick away from shipping
+# that way.
+#
+# Severity is per-repo because the baselines differ:
+#   chezmoi/dotfiles - MegaLinter gates it at shellcheck's default severity,
+#                      so matching that makes this hook a true CI pre-flight.
+#   everything else  - no CI, and ~/.claude carries 18 tracked scripts with
+#                      warning/info findings. Gating those at default severity
+#                      would block the sync timer the first time one is
+#                      touched; at error severity the tree is clean today, so
+#                      genuine breakage is caught without blocking work.
+# Re-check this split if either repo gains or loses CI.
+#
+# shfmt is advisory only: MegaLinter runs `shfmt -w`, which auto-fixes and
+# opens a fix PR, so blocking on format here would be stricter than CI.
+#
+# Lints the worktree copy, not the staged blob. Identical under `git add -A`;
+# they can differ when only part of a file is staged by hand.
+
+set -uo pipefail
+
+if [ "${PAI_SKIP_SHELL_LINT:-}" = "1" ]; then
+	exit 0
+fi
+
+if ! command -v shellcheck >/dev/null 2>&1; then
+	printf 'pre-commit: shellcheck not installed, skipping shell lint\n' >&2
+	exit 0
+fi
+
+repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+
+case "$repo_root" in
+*/.local/share/chezmoi) severity=style ;;
+*) severity=error ;;
+esac
+
+mapfile -d '' staged < <(git diff --cached --name-only --diff-filter=ACM -z)
+
+targets=()
+for f in "${staged[@]}"; do
+	case "$f" in
+	# Go-template syntax is not parseable shell.
+	*.tmpl) continue ;;
+	*.py) continue ;;
+	# Mirrors FILTER_REGEX_EXCLUDE and BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE
+	# in .github/workflows/mega-linter.yml - msmtpq and msmtp-queue are
+	# vendored upstream and not ours to reformat.
+	*deprecated/*) continue ;;
+	*executable_msmtpq | *executable_msmtp-queue) continue ;;
+	esac
+	[ -f "$repo_root/$f" ] || continue
+	head -n1 "$repo_root/$f" 2>/dev/null |
+		grep -qE '^#!.*\b(bash|sh)\b' || continue
+	targets+=("$f")
+done
+
+if [ "${#targets[@]}" -eq 0 ]; then
+	exit 0
+fi
+
+cd "$repo_root" || exit 0
+
+rc=0
+shellcheck --external-sources --severity="$severity" "${targets[@]}" || rc=1
+
+if command -v shfmt >/dev/null 2>&1; then
+	if ! shfmt -d "${targets[@]}" >/dev/null 2>&1; then
+		printf 'pre-commit: shfmt would reformat staged shell files (advisory)\n' >&2
+	fi
+fi
+
+if [ "$rc" -ne 0 ]; then
+	printf '\npre-commit: shellcheck failed at severity=%s\n' "$severity" >&2
+	printf 'bypass with: git commit --no-verify\n' >&2
+fi
+
+exit "$rc"

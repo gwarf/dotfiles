@@ -33,6 +33,16 @@ sync_repo() {
   name=$(basename "$repo")
   cd "$repo" || { tg_notify "⚠️ pai-git-sync[$name]: cd failed"; return 1; }
 
+  # Self-install the shell-lint gate. This script is the unattended committer,
+  # so the guard has to be wired wherever the timer runs rather than wherever
+  # someone remembered to set it. core.hooksPath is per-repo and lives in
+  # untracked .git/config, so this is the only place it can land as code.
+  local hooks_dir="$HOME/.config/git/hooks"
+  if [ -x "$hooks_dir/pre-commit" ] &&
+    [ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
+    git config core.hooksPath "$hooks_dir"
+  fi
+
   if ! git fetch 2>&1; then
     tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
     return 1
@@ -44,7 +54,7 @@ sync_repo() {
     # Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
     # from a headless timer unit, so signing fails on cache-cold runs.
     if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-      tg_notify "⚠️ pai-git-sync[$name]: commit failed"
+      tg_notify "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
       return 1
     fi
   fi
@@ -63,7 +73,10 @@ sync_repo() {
   # Post-sync hook for chezmoi: source commits don't render to target files until apply.
   # chezmoi apply is idempotent and overwrites drift — chezmoi treats source as canonical.
   if [ "$repo" = "$HOME/.local/share/chezmoi" ]; then
-    if ! chezmoi apply -v 2>&1; then
+    # No -v: verbose apply renders the contents of files it changes, and the
+    # source tree carries rbw-templated mail credentials (msmtprc, mbsyncrc,
+    # imapnotify, aerc). Under a systemd unit that output lands in the journal.
+    if ! chezmoi apply 2>&1; then
       tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed"
       return 1
     fi
