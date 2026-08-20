@@ -31,6 +31,10 @@ printf '%s' "$pw" | wl-copy --trim-newline --sensitive
 
 # Klipper substitutes the previous history item on clear, which is enough to
 # get the password off the clipboard. Only fires if it is still there.
+# SC2016 is deliberate: $1/$2 are the child bash's positional params, fed by
+# the trailing `_ "$TTL" "$pw"`. Expanding them here would inline the password
+# into this shell's command string instead of passing it as argv.
+# shellcheck disable=SC2016
 setsid --fork bash -c '
 	sleep "$1"
 	[ "$(wl-paste --no-newline 2>/dev/null)" = "$2" ] && wl-copy --clear
