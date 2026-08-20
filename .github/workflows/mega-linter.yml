@@ -66,8 +66,12 @@ jobs:
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           DISABLE: COPYPASTE
           DISABLE_LINTERS: REPOSITORY_GRYPE,REPOSITORY_TRIVY,REPOSITORY_TRUFFLEHOG,SPELL_CSPELL,CSS_STYLELINT,BASH_EXEC
-          # Scan only changes in PR, otherwise scan everything
-          REPOSITORY_GITLEAKS_PR_COMMITS_SCAN: ${{ github.event_name == 'pull_request' }}
+          # Secret scanning is deliberately not PR-scoped. v10 replaced
+          # gitleaks with betterleaks, and REPOSITORY_BETTERLEAKS_PR_COMMITS_SCAN
+          # puts betterleaks in git mode, where it aborts on "dubious ownership"
+          # of /github/workspace; a safe.directory PRE_COMMANDS does not fix it.
+          # So betterleaks scans the whole workspace on every PR. Do not
+          # reintroduce REPOSITORY_GITLEAKS_PR_COMMITS_SCAN: v10 ignores it.
           # zizmor needs the token for its online audits (ref-confusion,
           # known-vulnerable-actions); MegaLinter strips it from linter
           # subprocesses unless it is explicitly whitelisted.
