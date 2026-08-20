@@ -65,6 +65,12 @@ if status is-interactive
     abbr -a chzs chezmoi status
     abbr -a vimdiff vim -d
 
+    # EDCH Drupal TEST instances on PCSS OKD. Read-only by default: the tool
+    # refuses anything outside its allow-list unless --allow-write is passed.
+    abbr -a capdrush bun run $HOME/.claude/PAI/TOOLS/EdchDrush.ts cap
+    abbr -a regdrush bun run $HOME/.claude/PAI/TOOLS/EdchDrush.ts registry
+    abbr -a edchdrush bun run $HOME/.claude/PAI/TOOLS/EdchDrush.ts
+
     #  Aliases
     alias df="df -h"
     # alias du="dust"
