@@ -70,6 +70,8 @@ bind-key Tab last-window
 bind-key v split-window -h -c "#{pane_current_path}"
 # prefix+g left at its tmux 3.8 default (floating-pane positioning table);
 # the tmux-fzf pane picker that used to live here was unused (2026-08-20).
+# find-window kept reachable on C-f since prefix+f now launches tmux-fzf.
+bind-key C-f command-prompt { find-window -Z "%%" }
 
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
