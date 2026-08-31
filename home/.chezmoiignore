@@ -38,7 +38,19 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/input-leap-server.service
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
+# .config/aerc, .config/emails, .msmtprc and .config/vdirsyncer are all
+# secret-templated mail configs whose templates resolve `rbw` at RENDER time.
+# assist is a long-running headless VM: `chezmoi apply` runs there unattended
+# from pai-git-sync.service, where no pinentry exists and the rbw agent is
+# normally locked — so rendering them fails the whole unit. Ignoring leaves any
+# existing rendered file in place (ignore = unmanaged, not deleted).
+# vdirsyncer joined this list 2026-08-31; its timer is disabled on assist and it
+# last synced in May. The durable fix is a runtime credential read, but
+# systemd-creds on assist (systemd 255.4, no TPM) has no `--user` support, so
+# torpedo's LoadCredentialEncrypted drop-in cannot be copied here — that design
+# belongs to the assist MUA rollout, not to this gate.
 .config/aerc
+.config/vdirsyncer
 .config/alacritty
 .config/backgrounds
 .config/beets
