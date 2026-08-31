@@ -75,10 +75,11 @@ bind-key C-f command-prompt { find-window -Z "%%" }
 
 # Day-plan overlay: popup with today's daily note (05:00 Dream.ts writes the
 # Overnight brief into it). prefix+t shows, q hides. Replaces clock-mode.
-# Opens positioned at the first h3 (= CEST timeline, Plan right below) so the
-# actionable part is visible without scrolling; -s dark forces glow to keep
+# Anchors on the section heading text, not "### ": the brief has no h3
+# subheadings (that assumption broke when the first ### match became the
+# task-list base blocks at the bottom); -s dark forces glow to keep
 # ANSI styling into the pipe (auto-detect strips it when stdout is not a tty).
-bind-key t display-popup -E -w 82% -h 85% 'glow -s dark -w "$(tput cols)" "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md" | less -R +/"### "'
+bind-key t display-popup -E -w 82% -h 85% 'glow -s dark -w "$(tput cols)" "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md" | less -R +/"Overnight brief"'
 
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
