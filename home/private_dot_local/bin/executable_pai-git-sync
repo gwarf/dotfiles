@@ -43,7 +43,10 @@ sync_repo() {
 	local hooks_dir="$HOME/.config/git/hooks"
 	if [ -x "$hooks_dir/pre-commit" ] &&
 		[ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
-		git config core.hooksPath "$hooks_dir"
+		# Non-fatal: an unset lint gate degrades commits, it doesn't make the sync wrong.
+		if ! git config core.hooksPath "$hooks_dir"; then
+			tg_notify "⚠️ pai-git-sync[$name]: could not set core.hooksPath (lint gate off)"
+		fi
 	fi
 
 	if ! git fetch 2>&1; then
@@ -51,7 +54,12 @@ sync_repo() {
 		return 1
 	fi
 
-	git add -A
+	# Unguarded, a partial add stages nothing and the rest of the function no-ops
+	# to a false success.
+	if ! git add -A; then
+		tg_notify "⚠️ pai-git-sync[$name]: git add failed"
+		return 1
+	fi
 
 	if ! git diff --cached --quiet; then
 		# Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
@@ -79,22 +87,54 @@ sync_repo() {
 		# No -v: verbose apply renders the contents of files it changes, and the
 		# source tree carries rbw-templated mail credentials (msmtprc, mbsyncrc,
 		# imapnotify, aerc). Under a systemd unit that output lands in the journal.
+		# Returns 2, not 1, so the caller can tell this apart from a git failure.
 		if ! chezmoi apply 2>&1; then
-			tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed"
-			return 1
+			tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed (git sync itself was OK)"
+			return 2
 		fi
 	fi
 }
 
-overall=0
+git_failed=""
+# Three states: a git-stage failure skips the hook entirely, and "did not run"
+# must not read as "ran clean".
+hook_state="not-run"
+
 for repo in "${REPOS[@]}"; do
-	if [ -d "$repo/.git" ]; then
-		# Subshell isolates per-repo failure from set -e killing the loop.
-		(sync_repo "$repo") || overall=1
-	else
+	repo_name=$(basename "$repo")
+	if [ ! -d "$repo/.git" ]; then
 		tg_notify "⚠️ pai-git-sync: $repo missing .git/"
-		overall=1
+		git_failed="${git_failed}${repo_name} "
+		continue
 	fi
+	# The `||` disarms errexit inside sync_repo, so commands there check their own
+	# status. The subshell only contains sync_repo's `cd` — keep it.
+	rc=0
+	(sync_repo "$repo") || rc=$?
+	case "$rc" in
+	0)
+		if [ "$repo" = "$HOME/.local/share/chezmoi" ]; then
+			hook_state="ok"
+		fi
+		;;
+	2)
+		hook_state="FAILED"
+		;;
+	*)
+		git_failed="${git_failed}${repo_name} "
+		;;
+	esac
 done
 
-exit "$overall"
+# Emitted on success too, so the journal states the outcome rather than implying it.
+if [ -n "$git_failed" ]; then
+	echo "pai-git-sync: git=FAILED (${git_failed% })"
+else
+	echo "pai-git-sync: git=ok"
+fi
+echo "pai-git-sync: post-sync-hook=$hook_state"
+
+if [ -n "$git_failed" ] || [ "$hook_state" = "FAILED" ]; then
+	exit 1
+fi
+exit 0
