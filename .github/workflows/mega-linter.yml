@@ -79,6 +79,13 @@ jobs:
           # msmtpq and msmtp-queue are vendored upstream (msmtpq suite,
           # Chris Gianniotis, GPLv3) - not ours to reformat or patch.
           BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE: (home/private_dot_local/bin/executable_msmtp(q|-queue))
+          # Every script in home/private_dot_local/bin/ is extension-less, and the
+          # BASH descriptor ships file_extensions [.sh .bash .dash .ksh] with no ""
+          # entry. filter_files() drops a file at the extension gate before it ever
+          # reaches file_contains_regex, so the shebang match never runs and none of
+          # these were linted. Adding "" makes them candidates; the descriptor's
+          # shebang regexes then select the shell ones.
+          BASH_SHELLCHECK_FILE_EXTENSIONS: '["", ".sh", ".bash", ".dash", ".ksh"]'
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
