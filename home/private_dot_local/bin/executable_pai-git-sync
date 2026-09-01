@@ -112,9 +112,11 @@ for repo in "${REPOS[@]}"; do
 		git_failed="${git_failed}${repo_name} "
 		continue
 	fi
-	# Subshell contains sync_repo's `cd`; `|| rc=$?` keeps the loop alive. Both
-	# together suppress errexit inside sync_repo, so every command there checks
-	# its own status rather than relying on set -e.
+	# Subshell contains sync_repo's `cd` — that is all it does; a bare `(f)` still
+	# aborts under errexit. The `|| rc=$?` is what both keeps the loop alive and
+	# disarms errexit inside sync_repo, so every command there checks its own
+	# status rather than relying on set -e. Don't drop the subshell to get errexit
+	# back; it isn't the cause, and the loop needs the cwd isolation.
 	rc=0
 	(sync_repo "$repo") || rc=$?
 	case "$rc" in
