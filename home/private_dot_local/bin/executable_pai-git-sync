@@ -43,10 +43,7 @@ sync_repo() {
 	local hooks_dir="$HOME/.config/git/hooks"
 	if [ -x "$hooks_dir/pre-commit" ] &&
 		[ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
-		# Checked explicitly: errexit is suppressed inside this function (see the
-		# call site). Non-fatal on purpose — an unset lint gate degrades commit
-		# quality but does not make the sync wrong, and failing here would wedge
-		# the sync of every repo over a lint concern.
+		# Non-fatal: an unset lint gate degrades commits, it doesn't make the sync wrong.
 		if ! git config core.hooksPath "$hooks_dir"; then
 			tg_notify "⚠️ pai-git-sync[$name]: could not set core.hooksPath (lint gate off)"
 		fi
@@ -57,9 +54,8 @@ sync_repo() {
 		return 1
 	fi
 
-	# Checked explicitly: errexit is suppressed inside this function (see the call
-	# site), so a silent failure here would stage nothing, make commit/rebase/push
-	# no-ops, return 0, and get reported as git=ok.
+	# Unguarded, a partial add stages nothing and the rest of the function no-ops
+	# to a false success.
 	if ! git add -A; then
 		tg_notify "⚠️ pai-git-sync[$name]: git add failed"
 		return 1
@@ -100,9 +96,8 @@ sync_repo() {
 }
 
 git_failed=""
-# Three states, because "did not run" is not "ran clean": the hook lives at the
-# end of sync_repo, so a git-stage failure skips it and leaves the rendered
-# targets stale. Reporting that as ok is the worst case to mislabel.
+# Three states: a git-stage failure skips the hook entirely, and "did not run"
+# must not read as "ran clean".
 hook_state="not-run"
 
 for repo in "${REPOS[@]}"; do
@@ -112,11 +107,8 @@ for repo in "${REPOS[@]}"; do
 		git_failed="${git_failed}${repo_name} "
 		continue
 	fi
-	# Subshell contains sync_repo's `cd` — that is all it does; a bare `(f)` still
-	# aborts under errexit. The `|| rc=$?` is what both keeps the loop alive and
-	# disarms errexit inside sync_repo, so every command there checks its own
-	# status rather than relying on set -e. Don't drop the subshell to get errexit
-	# back; it isn't the cause, and the loop needs the cwd isolation.
+	# The `||` disarms errexit inside sync_repo, so commands there check their own
+	# status. The subshell only contains sync_repo's `cd` — keep it.
 	rc=0
 	(sync_repo "$repo") || rc=$?
 	case "$rc" in
@@ -134,8 +126,7 @@ for repo in "${REPOS[@]}"; do
 	esac
 done
 
-# Emitted on success too, so the journal states the outcome instead of leaving it
-# inferred from an absence of errors.
+# Emitted on success too, so the journal states the outcome rather than implying it.
 if [ -n "$git_failed" ]; then
 	echo "pai-git-sync: git=FAILED (${git_failed% })"
 else
