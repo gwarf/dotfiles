@@ -79,11 +79,7 @@ sync_repo() {
 		# No -v: verbose apply renders the contents of files it changes, and the
 		# source tree carries rbw-templated mail credentials (msmtprc, mbsyncrc,
 		# imapnotify, aerc). Under a systemd unit that output lands in the journal.
-		#
-		# Returns 2, not 1, so the caller can tell a post-sync hook failure from a
-		# git failure. Both used to collapse into a bare exit 1, and on 2026-08-31
-		# that sent an investigation into the git half of a unit whose git half was
-		# already clean — the real failure was rbw having no pinentry under systemd.
+		# Returns 2, not 1, so the caller can tell this apart from a git failure.
 		if ! chezmoi apply 2>&1; then
 			tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed (git sync itself was OK)"
 			return 2
@@ -111,10 +107,8 @@ for repo in "${REPOS[@]}"; do
 	esac
 done
 
-# Say which half failed. This unit is named for git sync, so a bare exit 1 from a
-# post-sync hook reads as a git problem and costs a detour in the wrong half.
-# Always emitted, success or failure, so the journal states the outcome plainly
-# instead of leaving it to be inferred from the absence of errors.
+# Emitted on success too, so the journal states the outcome instead of leaving it
+# inferred from an absence of errors.
 if [ -n "$git_failed" ]; then
 	echo "pai-git-sync: git=FAILED (${git_failed% })"
 else
