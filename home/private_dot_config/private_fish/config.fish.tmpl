@@ -269,6 +269,17 @@ if status is-interactive
 
     if type -q tirith
         tirith init --shell fish | source
+        # tirith 0.4.1 fish-hook bug: `(commandline)` splits the buffer on
+        # newlines, so a backslash-continued command reaches the receipt
+        # commit space-joined, mismatches the `string collect` copy, and is
+        # silently discarded. Re-derive from the live definition so a tirith
+        # upgrade keeps the fix; drop this once upstream lands it.
+        if functions -q _tirith_check_command
+            functions _tirith_check_command \
+                | string replace -- 'set -l cmd (commandline)' \
+                    'set -l cmd (commandline | string collect)' \
+                | source
+        end
     end
 
     if type -q thefuck
