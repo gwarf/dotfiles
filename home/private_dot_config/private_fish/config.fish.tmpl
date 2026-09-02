@@ -267,6 +267,10 @@ if status is-interactive
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     fzf --fish | source
 
+    if type -q tirith
+        tirith init --shell fish | source
+    end
+
     if type -q thefuck
         thefuck --alias | source
     end
