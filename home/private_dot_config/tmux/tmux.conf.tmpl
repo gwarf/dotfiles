@@ -166,10 +166,5 @@ if "test ! -d ~/.tmux/plugins/tpm" \
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run "~/.tmux/plugins/tpm/tpm"
 
-# Undo tmux-sensible's unconditional `aggressive-resize on` (sensible.tmux:124).
-# tmux defaults it off and documents it only for window-size largest/smallest,
-# so under the default `latest` it buys nothing. Must stay after the tpm run.
-setw -g aggressive-resize off
-
 # Source local configuration if any
 if "[ -f ~/.tmux.local.conf ]" "run ~/.tmux.local.conf"
