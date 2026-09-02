@@ -1,0 +1,20 @@
+#!/bin/sh
+# daryl-hermes-gpt — Daryl on the Hermes runtime, OpenAI GPT via your Copilot seat.
+# Usage: daryl-hermes-gpt [dir]
+# Defaults to gpt-5.6-sol (flagship). Tiers: sol=flagship, terra=balanced, luna=fast.
+# Override:  HERMES_MODEL=gpt-5.6-terra daryl-hermes-gpt
+#
+# Copilot is for NON-Anthropic models only — never point HERMES_MODEL at a
+# claude-* model here. Claude goes through daryl-hermes (Anthropic direct);
+# this seat is OPERAS Copilot Business, so it is the wrong billing home for it.
+set -eu
+# shellcheck source=/dev/null
+if [ -r "$HOME/.config/daryl/mail-env.sh" ]; then . "$HOME/.config/daryl/mail-env.sh"; fi
+MODEL="${HERMES_MODEL:-gpt-5.6-sol}"
+case "$MODEL" in
+  claude-*)
+    echo "daryl-hermes-gpt: refusing to route '$MODEL' through Copilot — use daryl-hermes" >&2
+    exit 2
+    ;;
+esac
+exec hermes-daryl "${1:-$PWD}" copilot "$MODEL"
