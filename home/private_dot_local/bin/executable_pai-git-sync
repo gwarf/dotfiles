@@ -27,6 +27,55 @@ tg_notify() {
 		--data-urlencode "text=$1" >/dev/null 2>&1 || true
 }
 
+# Age floor for calling a lock abandoned. Real git operations on these repos
+# finish in seconds, so an empty lock this old with no holder is a corpse.
+STALE_LOCK_MIN_AGE=900
+
+# Removing a lock a live git still holds corrupts the index, so this clears one
+# only when it is provably nobody's. Anything short of that is left for a human;
+# the `git add` below then fails as it already did.
+# Returns 0 when a lock was removed, 1 when one was left alone.
+clear_stale_index_lock() {
+	local repo="$1" name="$2"
+	local lock="$repo/.git/index.lock"
+
+	[ -e "$lock" ] || return 1
+
+	# A symlink here would redirect the rm out of the repo entirely.
+	if [ -L "$lock" ] || [ ! -f "$lock" ]; then
+		tg_notify "⚠️ pai-git-sync[$name]: index.lock is not a regular file — left alone"
+		return 1
+	fi
+
+	# Non-empty means git wrote index content into it: live, or a partial write.
+	if [ -s "$lock" ]; then
+		tg_notify "⚠️ pai-git-sync[$name]: index.lock is non-empty — left alone"
+		return 1
+	fi
+
+	local mtime now age
+	mtime=$(stat -c %Y "$lock" 2>/dev/null) || return 1
+	now=$(date +%s)
+	age=$((now - mtime))
+	[ "$age" -ge "$STALE_LOCK_MIN_AGE" ] || return 1
+
+	# No holder is the load-bearing check, so a missing fuser fails closed.
+	if ! command -v fuser >/dev/null 2>&1; then
+		tg_notify "⚠️ pai-git-sync[$name]: fuser missing, cannot clear index.lock"
+		return 1
+	fi
+	if fuser "$lock" >/dev/null 2>&1; then
+		return 1
+	fi
+
+	# Closes the window between the age check and the rm.
+	[ "$(stat -c %Y "$lock" 2>/dev/null)" = "$mtime" ] || return 1
+
+	rm -f "$lock" || return 1
+	echo "pai-git-sync[$name]: removed stale index.lock (empty, unheld, ${age}s old)"
+	tg_notify "🧹 pai-git-sync[$name]: cleared stale index.lock (${age}s old, no holder)"
+}
+
 sync_repo() {
 	local repo="$1"
 	local name
@@ -53,6 +102,10 @@ sync_repo() {
 		tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
 		return 1
 	fi
+
+	# A crashed git leaves index.lock behind and every later add fails until a
+	# human clears it — three hours of dead syncs on 2026-09-03.
+	clear_stale_index_lock "$repo" "$name" || true
 
 	# Unguarded, a partial add stages nothing and the rest of the function no-ops
 	# to a false success.
@@ -94,6 +147,11 @@ sync_repo() {
 		fi
 	fi
 }
+
+# Sourced by the test suite: define the functions, sync nothing.
+if [ "${PAI_GIT_SYNC_SOURCED:-0}" = "1" ]; then
+	return 0
+fi
 
 git_failed=""
 # Three states: a git-stage failure skips the hook entirely, and "did not run"
