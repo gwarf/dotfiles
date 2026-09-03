@@ -30,6 +30,23 @@ token_file = "~/.vdirsyncer/google/google_contacts_token"
 client_id = "{{ (rbw "google/contacts/client_id").notes }}"
 client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
 
+# Personal Google account. Separate token file — same OAuth client, different
+# consent. read_only: Nextcloud stays canonical for personal contacts, this is a
+# one-way mirror so the two sources can never fight over a card.
+[storage google_perso]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/google/google_perso_token"
+read_only = true
+client_id = "{{ (rbw "google/contacts/client_id").notes }}"
+client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+
+[pair contacts_perso]
+a = "local_contacts"
+b = "google_perso"
+collections = [["google", "google", "default"]]
+conflict_resolution = "b wins"
+metadata = ["color"]
+
 [storage local_nc_contacts]
 type = "filesystem"
 path = "~/.contacts/nextcloud"
@@ -95,6 +112,23 @@ fileext = ".vcf"
 a = "local_contacts"
 b = "google_contacts"
 collections = [["operas", "operas", "default"]]
+conflict_resolution = "b wins"
+metadata = ["color"]
+
+# Personal Google account. Separate token file — same OAuth client, different
+# consent. read_only: Nextcloud stays canonical for personal contacts, this is a
+# one-way mirror so the two sources can never fight over a card.
+[storage google_perso]
+type = "google_contacts"
+token_file = "~/.vdirsyncer/google/google_perso_token"
+read_only = true
+client_id = "{{ (rbw "google/contacts/client_id").notes }}"
+client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+
+[pair contacts_perso]
+a = "local_contacts"
+b = "google_perso"
+collections = [["google", "google", "default"]]
 conflict_resolution = "b wins"
 metadata = ["color"]
 

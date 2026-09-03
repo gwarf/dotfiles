@@ -1,15 +1,10 @@
 [addressbooks]
-{{- if eq .chezmoi.hostname "torpedo" }}
 [[operas]]
 path = ~/.contacts/operas/
 [[nextcloud]]
 path = ~/.contacts/nextcloud/contacts/
-{{- else }}
-[[operas]]
-path = ~/.contacts/operas/
-[[nextcloud]]
-path = ~/.contacts/nextcloud/contacts/
-{{- end }}
+[[google]]
+path = ~/.contacts/google/
 
 [general]
 debug = no
