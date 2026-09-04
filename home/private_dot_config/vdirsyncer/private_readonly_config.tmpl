@@ -76,6 +76,8 @@ password.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/
 # Bootstrap on a headless host: copy a working token_file from a host that has
 # one, it is bound to the client and the user, not the machine. A fixed
 # ssh -L 8080 tunnel does not work, the redirect port is random (seen 47401).
+# Rotating any fetched value changes the config hash, so every host then needs
+# `vdirsyncer discover <pair>` once before it will sync again.
 # Credentials come from ~/.vdirsyncer/secrets/ (0400, host-local, outside chezmoi).
 # They are NOT rendered here: render-time rbw needs pinentry, so an unattended
 # apply cannot refresh this file, and it froze on assist holding a since-deleted
