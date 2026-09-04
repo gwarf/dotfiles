@@ -25,10 +25,11 @@ conflict_resolution = "b wins"
 metadata = ["color"]
 
 [storage google_contacts]
+# Same host-local 0400 files as the other branch; see the comment there.
 type = "google_contacts"
 token_file = "~/.vdirsyncer/google/google_contacts_token"
-client_id = "{{ (rbw "google/contacts/client_id").notes }}"
-client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+client_id.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/google-client-id"]
+client_secret.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/google-client-secret"]
 
 [storage local_nc_contacts]
 type = "filesystem"
@@ -62,26 +63,28 @@ fileext = ".vcf"
 [storage nextcloud_contacts]
 type = "carddav"
 url = "https://cloud.bapt.name/remote.php/carddav"
-username = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.username }}"
-password = "{{ (rbw "/cloud.bapt.name/baptiste/vdirsyncer").data.password }}"
-# password.fetch = ["command", "rbw", "get", "/cloud.bapt.name/baptiste/vdirsyncer"]
+username = "baptiste"
+password.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/nextcloud-password"]
 
 [storage mailcow_contacts]
 type = "carddav"
 url = "https://mail.bapt.name/SOGo/dav/baptiste@bapt.name/Contacts/personal/"
 username = "baptiste@bapt.name"
-# password.fetch = ["command", "rbw", "get", "/mail/baptiste@bapt.name/vdirsyncer"]
-password = "{{ (rbw "/mail/baptiste@bapt.name/vdirsyncer").data.password }}"
+password.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/mailcow-password"]
 
 # OPERAS Google (work) contacts land under ~/.contacts/operas/ (renamed via triplet form from upstream "default")
-# OAuth secrets pulled from rbw (notes field). First sync requires interactive OAuth bootstrap:
+# First sync requires interactive OAuth bootstrap:
 # headless assist → ssh -L 8080:localhost:8080 assist + run `vdirsyncer discover contacts` and open
 # the printed URL on your workstation; OAuth redirect lands through the tunnel.
+# Credentials come from ~/.vdirsyncer/secrets/ (0400, host-local, outside chezmoi).
+# They are NOT rendered here: render-time rbw needs pinentry, so an unattended
+# apply cannot refresh this file, and it froze on assist holding a since-deleted
+# OAuth client. The OPERAS vault stays the source of truth for these two values.
 [storage google_contacts]
 type = "google_contacts"
 token_file = "~/.vdirsyncer/google/google_contacts_token"
-client_id = "{{ (rbw "google/contacts/client_id").notes }}"
-client_secret = "{{ (rbw "google/contacts/client_secret").notes }}"
+client_id.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/google-client-id"]
+client_secret.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/google-client-secret"]
 
 [storage local_contacts]
 type = "filesystem"
