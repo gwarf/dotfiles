@@ -40,11 +40,12 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/input-leap-server.service
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
-# aerc and vdirsyncer resolve `rbw` at render time, and chezmoi apply runs
-# unattended here (pai-git-sync.service) with no pinentry. Ignoring is not a
-# delete — an already-rendered file stays put. Rest of the list: headless box.
+# aerc resolves `rbw` at render time, and chezmoi apply runs unattended here
+# (pai-git-sync.service) with no pinentry. Ignoring is not a delete — an
+# already-rendered file stays put. Rest of the list: headless box.
+# vdirsyncer left this list once its credentials moved to run-time fetch; its
+# config froze here for 103 days precisely because it was on it.
 .config/aerc
-.config/vdirsyncer
 .config/alacritty
 .config/backgrounds
 .config/beets
