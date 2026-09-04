@@ -10,10 +10,23 @@
 # needs a gateway restart AND `/reset` in a live chat: disk, process and
 # session are three separate staleness layers.
 #
-# No --yolo, mirroring goose-daryl's GOOSE_MODE=approve default. Hermes runs
-# no PAI guard plugin at all, so the interactive approval prompt is the only
-# backstop there is.
+# No --yolo, mirroring goose-daryl's GOOSE_MODE=approve default. The PAI guard
+# plugin must be mounted (bun ~/.claude/PAI/HERMES/Mount.ts); this launcher
+# refuses to start without it.
 set -eu
+
+HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
+if [ ! -f "$HERMES_HOME/plugins/lifeos/policy.json" ]; then
+  echo "hermes-daryl: PAI guard not installed — run: bun ~/.claude/PAI/HERMES/Mount.ts" >&2
+  exit 1
+fi
+# Hermes skips a plugin that fails to import (fail-open); prove it imports first.
+"$HERMES_HOME/hermes-agent/venv/bin/python" -c \
+  "import sys; sys.path.insert(0, '$HERMES_HOME/plugins'); import lifeos" \
+  || { echo "hermes-daryl: PAI guard plugin does not import — refusing to start" >&2; exit 1; }
+# write_file/patch are hard-blocked outside these roots; the PAI tree stays read-only.
+HERMES_WRITE_SAFE_ROOT="${HERMES_WORKSPACE:-$HOME/HermesWorkspace}:$HERMES_HOME"
+export HERMES_HOME HERMES_WRITE_SAFE_ROOT
 
 dir="${1:-$PWD}"
 provider="${2:-}"
