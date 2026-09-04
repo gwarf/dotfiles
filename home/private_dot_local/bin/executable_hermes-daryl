@@ -22,8 +22,10 @@ if [ ! -f "$HERMES_HOME/plugins/lifeos/policy.json" ]; then
 fi
 # Hermes skips a plugin that fails to import (fail-open); prove it imports first.
 "$HERMES_HOME/hermes-agent/venv/bin/python" -c \
-  "import sys; sys.path.insert(0, '$HERMES_HOME/plugins'); import lifeos" \
-  || { echo "hermes-daryl: PAI guard plugin does not import — refusing to start" >&2; exit 1; }
+  "import sys, json; sys.path.insert(0, '$HERMES_HOME/plugins'); import lifeos; assert json.load(open('$HERMES_HOME/plugins/lifeos/policy.json'))['denyRules']" \
+  || { echo "hermes-daryl: PAI guard plugin does not import or policy unreadable — refusing to start" >&2; exit 1; }
+grep -qE '^    - lifeos$' "$HERMES_HOME/config.yaml" \
+  || { echo "hermes-daryl: lifeos not in plugins.enabled — run: bun ~/.claude/PAI/HERMES/Mount.ts" >&2; exit 1; }
 # write_file/patch are hard-blocked outside these roots; the PAI tree stays read-only.
 HERMES_WRITE_SAFE_ROOT="${HERMES_WORKSPACE:-$HOME/HermesWorkspace}:$HERMES_HOME"
 export HERMES_HOME HERMES_WRITE_SAFE_ROOT
