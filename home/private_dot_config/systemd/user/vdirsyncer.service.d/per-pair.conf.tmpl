@@ -1,0 +1,27 @@
+# One vdirsyncer invocation per pair, so a single broken pair cannot abort the
+# others. The vendor unit runs `vdirsyncer sync` across every pair in one
+# process: on 2026-05-23 a dead Google OAuth client took down nc_consolidate
+# and local_nc with it, and the personal contact sync stayed silently broken
+# for 103 days.
+#
+# `-` prefix means systemd ignores a failing line and continues to the next
+# pair. The trade-off is that unit state no longer reports pair failure, so
+# failures are visible only in the journal.
+#
+# Multiple ExecStart= requires Type=oneshot, which in turn forbids Restart= and
+# makes the vendor RuntimeMaxSec=3m inert. RuntimeMaxSec has no reset syntax, so
+# systemd keeps warning that it is ignored; TimeoutStartSec is the oneshot
+# equivalent and is what actually keeps a hung sync from running forever.
+[Service]
+Type=oneshot
+Restart=no
+TimeoutStartSec=9m
+ExecStart=
+{{- if eq .chezmoi.hostname "torpedo" }}
+ExecStart=-/usr/bin/vdirsyncer sync contacts
+ExecStart=-/usr/bin/vdirsyncer sync local_nc
+{{- else }}
+ExecStart=-/usr/bin/vdirsyncer sync contacts
+ExecStart=-/usr/bin/vdirsyncer sync nc_consolidate
+ExecStart=-/usr/bin/vdirsyncer sync local_nc
+{{- end }}

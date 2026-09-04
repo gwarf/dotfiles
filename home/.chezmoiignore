@@ -26,7 +26,9 @@ Mail/.notmuch/hooks/post-new
 .config/beets
 {{- end }}
 {{- if ne .chezmoi.hostname "torpedo" }}
-.config/systemd/user/vdirsyncer.service.d
+# Only the credstore drop-in is torpedo-specific (TPM2+host sealed, and
+# systemd-creds has no --user on assist). per-pair.conf must reach every host.
+.config/systemd/user/vdirsyncer.service.d/torpedo-credstore.conf
 .config/systemd/user/input-leap-client.service
 .config/kxkbrc
 {{- end }}
