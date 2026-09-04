@@ -73,9 +73,9 @@ username = "baptiste@bapt.name"
 password.fetch = ["command", "cat", "{{ .chezmoi.homeDir }}/.vdirsyncer/secrets/mailcow-password"]
 
 # OPERAS Google (work) contacts land under ~/.contacts/operas/ (renamed via triplet form from upstream "default")
-# First sync requires interactive OAuth bootstrap:
-# headless assist → ssh -L 8080:localhost:8080 assist + run `vdirsyncer discover contacts` and open
-# the printed URL on your workstation; OAuth redirect lands through the tunnel.
+# Bootstrap on a headless host: copy a working token_file from a host that has
+# one, it is bound to the client and the user, not the machine. A fixed
+# ssh -L 8080 tunnel does not work, the redirect port is random (seen 47401).
 # Credentials come from ~/.vdirsyncer/secrets/ (0400, host-local, outside chezmoi).
 # They are NOT rendered here: render-time rbw needs pinentry, so an unattended
 # apply cannot refresh this file, and it froze on assist holding a since-deleted
