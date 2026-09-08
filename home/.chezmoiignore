@@ -35,6 +35,11 @@ Mail/.notmuch/hooks/post-new
 {{- if and (ne .chezmoi.hostname "torpedo") (ne .chezmoi.hostname "sikaru") }}
 .config/powerdevilrc
 {{- end }}
+{{- if ne .chezmoi.osRelease.id "arch" }}
+# Arch packages the fabric CLI as fabric-ai (extra/fabric is the Python SSH
+# tool); other hosts install the upstream binary under its own name.
+.local/bin/fabric
+{{- end }}
 {{- if ne .chezmoi.hostname "sikaru" }}
 .config/InputLeap
 .config/systemd/user/input-leap-server.service
