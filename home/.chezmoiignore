@@ -93,15 +93,6 @@ bin/true-color.sh
 .config/herdr/config.toml
 .config/hypr/hyprland.lua
 .config/kitty/kitty.conf
-.config/nvim/.neoconf.json
-.config/nvim/README.md
-.config/nvim/init.lua
-.config/nvim/lazyvim.json
-.config/nvim/lua/config/autocmds.lua
-.config/nvim/lua/config/keymaps.lua
-.config/nvim/lua/config/lazy.lua
-.config/nvim/lua/config/options.lua
-.config/nvim/stylua.toml
 .config/starship.toml
 # Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
 # none of which Omarchy installs, and mocha.lua is loaded by a require() that
@@ -127,16 +118,8 @@ bin/true-color.sh
 .config/kitty/dracula.conf
 .config/kitty/tokyonight_moon.conf
 .config/kitty/tokyonight_storm.conf
-# Omarchy owns nvim on this host: its LazyVim base, unlayered. Files only, so
-# the enclosing directories stay managed - Omarchy's own specs live in
-# lua/plugins, and unmanaging a directory chezmoi wrote makes apply prompt.
-.config/nvim/lua/plugins/coding.lua
-.config/nvim/lua/plugins/completion.lua
-.config/nvim/lua/plugins/gemini.lua
-.config/nvim/lua/plugins/lsp.lua
-.config/nvim/lua/plugins/mail.lua
-.config/nvim/lua/plugins/obsidian.lua
-.config/nvim/lua/plugins/tools.lua
-.config/nvim/lua/plugins/ui.lua
-.config/nvim/snippets/mail/mail.json
+# Omarchy owns nvim on this host, whole subtree. Safe as a directory entry
+# because nothing under it should be managed here - unlike .config or .local,
+# which hold managed files alongside the Omarchy-seeded ones.
+.config/nvim
 {{- end }}
