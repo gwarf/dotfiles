@@ -103,7 +103,6 @@ bin/true-color.sh
 .config/nvim/lua/config/options.lua
 .config/nvim/stylua.toml
 .config/starship.toml
-.config/tmux/tmux.conf
 # Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
 # none of which Omarchy installs, and mocha.lua is loaded by a require() that
 # only existed in the pre-Omarchy hyprland.lua.
