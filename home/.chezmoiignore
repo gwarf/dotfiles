@@ -127,4 +127,16 @@ bin/true-color.sh
 .config/kitty/dracula.conf
 .config/kitty/tokyonight_moon.conf
 .config/kitty/tokyonight_storm.conf
+# Omarchy owns nvim on this host: its LazyVim base, unlayered. Files only, so
+# the enclosing directories stay managed - Omarchy's own specs live in
+# lua/plugins, and unmanaging a directory chezmoi wrote makes apply prompt.
+.config/nvim/lua/plugins/coding.lua
+.config/nvim/lua/plugins/completion.lua
+.config/nvim/lua/plugins/gemini.lua
+.config/nvim/lua/plugins/lsp.lua
+.config/nvim/lua/plugins/mail.lua
+.config/nvim/lua/plugins/obsidian.lua
+.config/nvim/lua/plugins/tools.lua
+.config/nvim/lua/plugins/ui.lua
+.config/nvim/snippets/mail/mail.json
 {{- end }}
