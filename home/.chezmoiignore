@@ -109,6 +109,11 @@ bin/true-color.sh
 # Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
 # none of which Omarchy installs, and mocha.lua is loaded by a require() that
 # only existed in the pre-Omarchy hyprland.lua.
+# The directories too: once their files are ignored nothing managed remains
+# under them, and leaving them managed makes apply prompt for a TTY it has
+# none of when it runs from pai-git-sync.service.
+.config/waybar
+.config/wofi
 .config/waybar/config.jsonc
 .config/waybar/style.css
 .config/waybar/mocha.css
