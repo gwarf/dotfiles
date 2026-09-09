@@ -79,3 +79,31 @@ bin/setup_kinesis_keyboard
 bin/start_zoom
 bin/true-color.sh
 {{- end }}
+{{- if stat "/usr/share/omarchy" }}
+# Omarchy ships its own version of each of these, and on an Omarchy host its
+# copy wins. Gated on the directory rather than the hostname so a second
+# Omarchy box inherits it and the other hosts keep their dotfiles.
+# The set is every `chezmoi managed` target that also exists as a regular file
+# under /etc/skel or /usr/share/omarchy/{config,default}; regenerate it that
+# way after an Omarchy upgrade adds defaults.
+# Directories are deliberately absent: .config, .local, .config/git and
+# .config/systemd exist in skel too, and listing them would ignore everything
+# beneath.
+.config/alacritty/alacritty.toml
+.config/chromium-flags.conf
+.config/ghostty/config
+.config/herdr/config.toml
+.config/hypr/hyprland.lua
+.config/kitty/kitty.conf
+.config/nvim/.neoconf.json
+.config/nvim/README.md
+.config/nvim/init.lua
+.config/nvim/lazyvim.json
+.config/nvim/lua/config/autocmds.lua
+.config/nvim/lua/config/keymaps.lua
+.config/nvim/lua/config/lazy.lua
+.config/nvim/lua/config/options.lua
+.config/nvim/stylua.toml
+.config/starship.toml
+.config/tmux/tmux.conf
+{{- end }}
