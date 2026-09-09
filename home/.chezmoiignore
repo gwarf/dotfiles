@@ -106,4 +106,23 @@ bin/true-color.sh
 .config/nvim/stylua.toml
 .config/starship.toml
 .config/tmux/tmux.conf
+# Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
+# none of which Omarchy installs, and mocha.lua is loaded by a require() that
+# only existed in the pre-Omarchy hyprland.lua.
+.config/waybar/config.jsonc
+.config/waybar/style.css
+.config/waybar/mocha.css
+.config/wofi/style.css
+.config/hypr/hyprpaper.conf
+.config/hypr/mocha.lua
+# Colour schemes for the pre-Omarchy terminal configs. Omarchy's own
+# alacritty.toml and kitty.conf import from its theme system under
+# ~/.local/state/omarchy/current/theme, so nothing loads these.
+.config/alacritty/tokyonight_day.toml
+.config/alacritty/tokyonight_moon.toml
+.config/alacritty/tokyonight_night.toml
+.config/alacritty/tokyonight_storm.toml
+.config/kitty/dracula.conf
+.config/kitty/tokyonight_moon.conf
+.config/kitty/tokyonight_storm.conf
 {{- end }}
