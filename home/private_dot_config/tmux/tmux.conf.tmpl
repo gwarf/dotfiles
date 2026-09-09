@@ -18,7 +18,9 @@ bind -N "Copy selection" -T copy-mode-vi y send -X copy-selection-and-cancel
 # Pane Controls
 bind -N "Split pane vertically" -n M-Enter split-window -v -c "#{pane_current_path}"
 bind -N "Split pane horizontally" -n M-S-Enter split-window -h -c "#{pane_current_path}"
-bind -N "Kill pane" -n M-Escape kill-pane
+# Omarchy binds this to kill-pane. No prefix and no confirmation, one slip from
+# Alt+Tab, and it took a root shell with it. Prefix+x still kills a pane.
+unbind -n M-Escape
 
 bind -N "Split pane vertically" h split-window -v -c "#{pane_current_path}"
 bind -N "Split pane horizontally" v split-window -h -c "#{pane_current_path}"
