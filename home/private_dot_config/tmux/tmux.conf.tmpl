@@ -39,7 +39,7 @@ bind -N "Resize pane right" -n C-M-S-Right resize-pane -R 5
 # Window navigation
 bind -N "Rename window" r command-prompt -I "#W" "rename-window -- '%%'"
 bind -N "Create window" c new-window -c "#{pane_current_path}"
-bind -N "Kill window" k kill-window
+# bind -N "Kill window" k kill-window
 
 bind -N "Switch to window 1" -n M-1 select-window -t 1
 bind -N "Switch to window 2" -n M-2 select-window -t 2
@@ -59,7 +59,7 @@ bind -N "Move window right" -n M-S-Right swap-window -t +1 \; select-window -t +
 # Session controls
 bind -N "Rename session" R command-prompt -I "#S" "rename-session -- '%%'"
 bind -N "Create session" C new-session -c "#{pane_current_path}"
-bind -N "Kill session" K kill-session
+# bind -N "Kill session" K kill-session
 bind -N "Previous session" P switch-client -p
 bind -N "Next session" N switch-client -n
 
@@ -93,7 +93,7 @@ set -g status-left-length 30
 set -g status-right-length 50
 set -g window-status-separator ""
 set -gw automatic-rename on
-set -gw automatic-rename-format '#{b:pane_current_path}'
+#set -gw automatic-rename-format '#{b:pane_current_path}'
 set -g set-titles on
 set -g set-titles-string '#h:#W'
 
@@ -129,8 +129,7 @@ set -g @resurrect-capture-pane-contents 'off'
 # tmux-fzf
 # prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
 TMUX_FZF_LAUNCH_KEY="f"
-# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
-set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
+# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
 # Wider/taller popup so titles are not truncated
 set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
 
