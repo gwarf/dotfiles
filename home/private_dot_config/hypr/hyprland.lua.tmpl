@@ -107,14 +107,12 @@ hl.config({
     },
 
     input = {
-        -- QWERTY-Lafayette. Resolves the `custom` symbols file shipped by the
-        -- qwerty-lafayette package under /usr/share/xkeyboard-config.d/, so the
-        -- package is a hard requirement for this layout.
+        -- QWERTY-Lafayette. The `custom` symbols file comes from the
+        -- qwerty-lafayette package, which is therefore a hard requirement.
         kb_layout    = "custom",
         kb_variant   = "",
-        -- kb_model is deliberately unset: in the xkb rules the model only selects
-        -- a geometry, never symbols/keycodes/types, so it cannot change key
-        -- behaviour. Verified by compiling this layout with and without a model.
+        -- kb_model deliberately unset: the xkb rules map model to geometry only,
+        -- never to symbols, so it cannot change key behaviour.
         kb_options   = "compose:rctrl",
         kb_rules     = "",
         follow_mouse = 1,
