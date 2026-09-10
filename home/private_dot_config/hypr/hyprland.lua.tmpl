@@ -107,9 +107,14 @@ hl.config({
     },
 
     input = {
-        kb_layout    = "custom",   -- QWERTY-Lafayette, matches KDE kxkbrc; resolves via ~/.config/xkb/symbols/custom
+        -- QWERTY-Lafayette. Resolves the `custom` symbols file shipped by the
+        -- qwerty-lafayette package under /usr/share/xkeyboard-config.d/, so the
+        -- package is a hard requirement for this layout.
+        kb_layout    = "custom",
         kb_variant   = "",
-        kb_model     = "kinesis",  -- matches KDE kxkbrc Model=kinesis
+        -- kb_model is deliberately unset: in the xkb rules the model only selects
+        -- a geometry, never symbols/keycodes/types, so it cannot change key
+        -- behaviour. Verified by compiling this layout with and without a model.
         kb_options   = "compose:rctrl",
         kb_rules     = "",
         follow_mouse = 1,
