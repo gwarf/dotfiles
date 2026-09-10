@@ -113,6 +113,27 @@ setw -g clock-mode-colour blue
 # XXX: research on usage of fish on omarchy
 # set -g default-command /usr/bin/fish
 # set -g default-shell /usr/bin/fish
+
+# TPM plugins
+set -g @plugin "tmux-plugins/tpm"
+set -g @plugin 'sainnhe/tmux-fzf'
+set -g @plugin "tmux-plugins/tmux-resurrect"
+set -g @plugin "tmux-plugins/tmux-continuum"
+set -g @plugin 'timvw/tmux-assistant-resurrect'
+
+# Automatically restore tmux session
+set -g @continuum-restore "on"
+# Do not capture panes content to avoid capturing secrets
+set -g @resurrect-capture-pane-contents 'off'
+
+# tmux-fzf
+# prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
+TMUX_FZF_LAUNCH_KEY="f"
+# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
+set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
+# Wider/taller popup so titles are not truncated
+set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
+
 {{ else -}}
 set  -g default-terminal "tmux-256color"
 set  -g base-index 1
@@ -281,6 +302,7 @@ set -ag status-right "#{E:@catppuccin_status_session}"
 # set -ag status-right "#{E:@catppuccin_status_uptime}"
 # XXX: display of tmux-battery
 # set -agF status-right "#{E:@catppuccin_status_battery}"
+{{ end -}}
 
 # Install tpm if not available
 if "test ! -d ~/.tmux/plugins/tpm" \
@@ -291,4 +313,3 @@ run "~/.tmux/plugins/tpm/tpm"
 
 # Source local configuration if any
 if "[ -f ~/.tmux.local.conf ]" "run ~/.tmux.local.conf"
-{{ end -}}
