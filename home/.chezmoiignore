@@ -89,7 +89,6 @@ bin/true-color.sh
 # directories too, and an entry here would ignore everything beneath them.
 .config/alacritty/alacritty.toml
 .config/chromium-flags.conf
-.config/ghostty/config
 .config/herdr/config.toml
 .config/hypr/hyprland.lua
 .config/kitty/kitty.conf
