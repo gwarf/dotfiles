@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# PATH shadow for Omarchy's packaged omarchy-agent (~/.config/hypr/hyprland.lua
+# prepends this directory): when the default agent is claude, launch the PAI
+# `daryl` launcher so the session carries the system prompt, credstore secrets
+# and project MCP config. Any other agent, an unknown flag, or a host without
+# `daryl` falls through to the packaged script. Omarchy offers no user seam for
+# a custom agent command (omacom/omarchy#10090); this shadows one command
+# rather than patching /usr/share/omarchy. Rollback: rename this directory.
+
+set -euo pipefail
+
+packaged="${OMARCHY_PATH:-/usr/share/omarchy}/bin/omarchy-agent"
+original=("$@")
+
+# The packaged script this shadow was written against. A drift means its
+# flags or claude invocation may have changed; warn, never block.
+packaged_sha=1e1b1ff117fab4d0d6c69963313e510ebb00694f4ce7d00a9218e764ad3b6a8e
+if [[ $(sha256sum "$packaged" | cut -c1-64) != "$packaged_sha" ]]; then
+  omarchy-notification-send -u low "omarchy-agent override" \
+    "Packaged omarchy-agent changed; re-check ~/.local/bin/omarchy-overrides" || true
+fi
+
+command -v daryl >/dev/null || exec "$packaged" "${original[@]}"
+
+inline=false
+prompt=""
+while (($#)); do
+  case "$1" in
+    --inline) inline=true; shift ;;
+    --pick) shift ;;
+    --prompt) prompt=${2:?--prompt needs a value}; shift 2 ;;
+    *) exec "$packaged" "${original[@]}" ;;
+  esac
+done
+
+agent=$(omarchy-default-agent)
+if [[ $agent != "claude" ]]; then
+  exec "$packaged" "${original[@]}"
+fi
+
+command=(daryl)
+[[ -n $prompt ]] && command+=(--initial "$prompt")
+
+if [[ ${OMARCHY_AGENT_DRYRUN:-} == 1 ]]; then
+  printf 'inline=%s\n' "$inline"
+  printf '%q ' "${command[@]}"
+  printf '\n'
+  exit 0
+fi
+
+if [[ $inline == "true" ]]; then
+  exec "${command[@]}"
+else
+  exec omarchy-launch-tui --app-id=org.omarchy.agent "${command[@]}"
+fi

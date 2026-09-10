@@ -127,4 +127,7 @@ bin/true-color.sh
 # .bashrc here is Omarchy's file plus a direnv hook, so it is meaningless off
 # Omarchy and would clobber whatever bashrc the host already has.
 .bashrc
+# Hyprland autostart hooks and the omarchy-* PATH shadows they enable.
+.config/hypr/autostart.lua
+.local/bin/omarchy-overrides
 {{- end }}
