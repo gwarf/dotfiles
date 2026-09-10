@@ -81,13 +81,17 @@ if status is-interactive
             end
         end
     end
-    alias cat="bat --paging=never"
-    alias ls="lsd --group-directories-first"
-    alias lsa="lsd --group-directories-first --almost-all"
-    alias l="lsd --group-directories-first --long --date '+%F %T'"
-    alias la="lsd --group-directories-first --long --date '+%F %T' --almost-all"
-    alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
-    alias fd="fd --hidden --no-ignore"
+    # Gated so a machine missing one of these keeps a working ls and cat rather
+    # than an alias that errors on every call.
+    type -q bat; and alias cat="bat --paging=never"
+    if type -q lsd
+        alias ls="lsd --group-directories-first"
+        alias lsa="lsd --group-directories-first --almost-all"
+        alias l="lsd --group-directories-first --long --date '+%F %T'"
+        alias la="lsd --group-directories-first --long --date '+%F %T' --almost-all"
+        type -q fd; and alias ld="fd . --type d --max-depth 1 --strip-cwd-prefix --exec-batch lsd --directory-only"
+    end
+    type -q fd; and alias fd="fd --hidden --no-ignore"
     alias ..="cd .."
     alias ip="ip --color"
     {{ if ne .chezmoi.os "freebsd" -}}
@@ -255,17 +259,19 @@ if status is-interactive
     set --global fish_pager_color_selected_description $background
 
     # Set LS_COLORS
-    set -xg LS_COLORS (vivid generate dracula)
+    type -q vivid; and set -xg LS_COLORS (vivid generate dracula)
 
     [ -e $HOME/.fish.env ]; and source $HOME/.fish.env
 
-    if test "$TERM" != dumb
+    # Each init is gated on its own binary: an absent tool would otherwise throw
+    # on every prompt, and a missing starship silently costs the prompt itself.
+    if test "$TERM" != dumb; and type -q starship
         starship init fish | source
     end
-    zoxide init --cmd cd fish | source
-    direnv hook fish | source
+    type -q zoxide; and zoxide init --cmd cd fish | source
+    type -q direnv; and direnv hook fish | source
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
-    fzf --fish | source
+    type -q fzf; and fzf --fish | source
 
     # if type -q tirith
     #     tirith init --shell fish | source

@@ -110,9 +110,10 @@ set -g message-command-style "bg=default,fg=blue"
 set -g mode-style "bg=blue,fg=black"
 setw -g clock-mode-colour blue
 
-# XXX: research on usage of fish on omarchy
-# set -g default-command /usr/bin/fish
-# set -g default-shell /usr/bin/fish
+# Without this, panes fall back to the passwd shell (bash) and lose the fish
+# config: starship prompt, abbreviations, PATH additions. default-command stays
+# unset so tmux runs this as a login shell rather than through a bash wrapper.
+set -g default-shell /usr/bin/fish
 
 # TPM plugins
 set -g @plugin "tmux-plugins/tpm"
