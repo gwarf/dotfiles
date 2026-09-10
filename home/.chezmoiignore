@@ -122,3 +122,9 @@ bin/true-color.sh
 # which hold managed files alongside the Omarchy-seeded ones.
 .config/nvim
 {{- end }}
+
+{{- if not (stat "/usr/share/omarchy") }}
+# .bashrc here is Omarchy's file plus a direnv hook, so it is meaningless off
+# Omarchy and would clobber whatever bashrc the host already has.
+.bashrc
+{{- end }}

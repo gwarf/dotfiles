@@ -1,0 +1,23 @@
+{{ if stat "/usr/share/omarchy" -}}
+# Omarchy environment (OMARCHY_PATH + PATH), needed even for non-interactive shells
+[[ -r /usr/share/omarchy/default/bash/env-bootstrap ]] && source /usr/share/omarchy/default/bash/env-bootstrap
+
+# SSH auth via YubiKey smartcard (gpg-agent as ssh-agent) — needed even non-interactively
+export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+
+# If not running interactively, don't do anything else (leave this above the rc source)
+[[ $- != *i* ]] && return
+
+# All the default Omarchy aliases and functions
+# (don't mess with these directly, just overwrite them here!)
+source "$OMARCHY_PATH/default/bash/rc"
+
+# Add your own exports, aliases, and functions here.
+#
+# Make an alias for invoking commands you use constantly
+# alias p='python'
+
+# Without this .envrc never runs, so venvs stay unactivated and every secret it
+# exports is silently absent. config.fish:184 has the fish equivalent.
+eval "$(direnv hook bash)"
+{{ end -}}
