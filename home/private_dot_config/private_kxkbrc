@@ -1,8 +1,7 @@
 [Layout]
-DisplayNames=cus,us
-LayoutList=custom,us
-Model=pc104alt
+DisplayNames=cus
+LayoutList=custom
 Options=caps:escape
 ResetOldOptions=true
 Use=true
-VariantList=,
+VariantList=
