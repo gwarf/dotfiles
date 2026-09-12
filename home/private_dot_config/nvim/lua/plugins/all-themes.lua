@@ -1,5 +1,6 @@
--- Vendored verbatim from /usr/share/omarchy-nvim/config/lua/plugins/all-themes.lua.
--- Unedited below this header so drift against the package stays a plain diff.
+-- Vendored from /usr/share/omarchy-nvim/config/lua/plugins/all-themes.lua, with
+-- one deliberate divergence marked inline below. Diff before adopting a newer
+-- package copy: it still ships the dead monokai-pro pin.
 return {
 	-- Load all theme plugins but don't apply them
 	-- This ensures all colorschemes are available for hot-reloading
@@ -79,7 +80,10 @@ return {
 		priority = 1000,
 	},
 	{
-		"gthelding/monokai-pro.nvim",
+		-- DELIBERATE DIVERGENCE from the package, do not "restore" it: Omarchy
+		-- pins gthelding/monokai-pro.nvim, a fork deleted from GitHub, so lazy
+		-- cannot clone it. Upstream: omacom/omarchy#10094.
+		"loctvl842/monokai-pro.nvim",
 		lazy = true,
 		priority = 1000,
 	},
