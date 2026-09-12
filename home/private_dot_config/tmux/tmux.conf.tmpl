@@ -188,7 +188,6 @@ set -g @plugin "tmux-plugins/tmux-cpu"
 # https://github.com/tmux-plugins/tmux-battery#enabled
 # set -g @plugin "tmux-plugins/tmux-battery"
 set -g @plugin "tmux-plugins/tmux-yank"
-set -g @plugin "tmux-plugins/tmux-pain-control"
 set -g @plugin "tmux-plugins/tmux-prefix-highlight"
 set -g @plugin "tmux-plugins/tmux-logging"
 # set -g @plugin "tmux-plugins/tmux-sessionist"
@@ -266,6 +265,9 @@ set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin "tmux-plugins/tmux-resurrect"
 set -g @plugin "tmux-plugins/tmux-continuum"
 set -g @plugin 'timvw/tmux-assistant-resurrect'
+# Supplies prefix+| and prefix+- splits plus hjkl pane navigation; the herdr
+# parity bindings above assume they exist, so it belongs in every branch.
+set -g @plugin "tmux-plugins/tmux-pain-control"
 
 # Automatically restore tmux session
 set -g @continuum-restore "on"
