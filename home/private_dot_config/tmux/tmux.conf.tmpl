@@ -115,13 +115,6 @@ setw -g clock-mode-colour blue
 # unset so tmux runs this as a login shell rather than through a bash wrapper.
 set -g default-shell /usr/bin/fish
 
-# TPM plugins
-set -g @plugin "tmux-plugins/tpm"
-set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin "tmux-plugins/tmux-resurrect"
-set -g @plugin "tmux-plugins/tmux-continuum"
-set -g @plugin 'timvw/tmux-assistant-resurrect'
-
 # Automatically restore tmux session
 set -g @continuum-restore "on"
 # Do not capture panes content to avoid capturing secrets
@@ -209,22 +202,6 @@ bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
 # Toggle between the two most-recent windows (default prefix+l is taken by tmux-pain-control)
 bind-key Tab last-window
 
-# ── herdr parity (keep tmux and herdr muscle memory aligned) ──
-# Split right on prefix+v (herdr split_vertical); | and % already split right too.
-bind-key v split-window -h -c "#{pane_current_path}"
-# prefix+g left at its tmux 3.8 default (floating-pane positioning table);
-# the tmux-fzf pane picker that used to live here was unused (2026-08-20).
-# find-window kept reachable on C-f since prefix+f now launches tmux-fzf.
-bind-key C-f command-prompt { find-window -Z "%%" }
-
-# Day-plan overlay: popup with today's daily note (05:00 Dream.ts writes the
-# Overnight brief into it). prefix+t shows, q hides. Replaces clock-mode.
-# Anchors on the section heading text, not "### ": the brief has no h3
-# subheadings (that assumption broke when the first ### match became the
-# task-list base blocks at the bottom); -s dark forces glow to keep
-# ANSI styling into the pipe (auto-detect strips it when stdout is not a tty).
-bind-key t display-popup -E -w 82% -h 85% 'glow -s dark -w "$(tput cols)" "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md" | less -R +/"Overnight brief"'
-
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
 set -g allow-passthrough on
@@ -232,8 +209,6 @@ set -ga update-environment TERM
 set -ga update-environment TERM_PROGRAM
 
 # List of plugins
-set -g @plugin "tmux-plugins/tpm"
-set -g @plugin "tmux-plugins/tmux-sensible"
 set -g @plugin "tmux-plugins/tmux-cpu"
 # XXX: would need to hide it when plugged
 # https://github.com/tmux-plugins/tmux-battery#enabled
@@ -243,10 +218,6 @@ set -g @plugin "tmux-plugins/tmux-pain-control"
 set -g @plugin "tmux-plugins/tmux-prefix-highlight"
 set -g @plugin "tmux-plugins/tmux-logging"
 # set -g @plugin "tmux-plugins/tmux-sessionist"
-set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin "tmux-plugins/tmux-resurrect"
-set -g @plugin "tmux-plugins/tmux-continuum"
-set -g @plugin 'timvw/tmux-assistant-resurrect'
 
 set -g @plugin "alberti42/tmux-fzf-links"
 # MPD playing
@@ -256,11 +227,6 @@ set -g @plugin "vascomfnunes/tmux-ludanta"
 # set -g @plugin "dracula/tmux"
 # set -g @plugin "fabioluciano/tmux-tokyo-night"
 set -g @plugin "catppuccin/tmux#v2.1.3"
-
-# Automatically restore tmux session
-set -g @continuum-restore "on"
-# Do not capture panes content to avoid capturing secrets
-set -g @resurrect-capture-pane-contents 'off'
 
 # tmux-fxf-links plugin
 set-option -g @fzf-links-key C-u
@@ -303,6 +269,35 @@ set -ag status-right "#{E:@catppuccin_status_session}"
 # XXX: display of tmux-battery
 # set -agF status-right "#{E:@catppuccin_status_battery}"
 {{ end -}}
+
+# ── herdr parity (keep tmux and herdr muscle memory aligned) ──
+# Split right on prefix+v (herdr split_vertical); | and % already split right too.
+bind-key v split-window -h -c "#{pane_current_path}"
+# prefix+g left at its tmux 3.8 default (floating-pane positioning table);
+# the tmux-fzf pane picker that used to live here was unused (2026-08-20).
+# find-window kept reachable on C-f since prefix+f now launches tmux-fzf.
+bind-key C-f command-prompt { find-window -Z "%%" }
+
+# Day-plan overlay: popup with today's daily note (05:00 Dream.ts writes the
+# Overnight brief into it). prefix+t shows, q hides. Replaces clock-mode.
+# Anchors on the section heading text, not "### ": the brief has no h3
+# subheadings (that assumption broke when the first ### match became the
+# task-list base blocks at the bottom); -s dark forces glow to keep
+# ANSI styling into the pipe (auto-detect strips it when stdout is not a tty).
+bind-key t display-popup -E -w 82% -h 85% 'glow -s dark -w "$(tput cols)" "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md" | less -R +/"Overnight brief"'
+
+# TPM plugins
+set -g @plugin "tmux-plugins/tpm"
+set -g @plugin "tmux-plugins/tmux-sensible"
+set -g @plugin 'sainnhe/tmux-fzf'
+set -g @plugin "tmux-plugins/tmux-resurrect"
+set -g @plugin "tmux-plugins/tmux-continuum"
+set -g @plugin 'timvw/tmux-assistant-resurrect'
+
+# Automatically restore tmux session
+set -g @continuum-restore "on"
+# Do not capture panes content to avoid capturing secrets
+set -g @resurrect-capture-pane-contents 'off'
 
 # Install tpm if not available
 if "test ! -d ~/.tmux/plugins/tpm" \
