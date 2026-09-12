@@ -133,4 +133,10 @@ bin/true-color.sh
 .config/hypr/autostart.lua
 .config/hypr/input.lua
 .local/bin/omarchy-overrides
+# Neovim theme integration borrowed from Omarchy. theme.lua is a symlink into
+# ~/.local/state/omarchy, which exists nowhere else, and a dangling spec file
+# breaks lazy.nvim's module walk; the other two are only useful alongside it.
+.config/nvim/lua/plugins/theme.lua
+.config/nvim/lua/plugins/all-themes.lua
+.config/nvim/lua/plugins/omarchy-theme-hotreload.lua
 {{- end }}

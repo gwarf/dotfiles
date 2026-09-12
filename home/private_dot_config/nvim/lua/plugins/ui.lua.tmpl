@@ -26,7 +26,13 @@ return {
     "LazyVim/LazyVim",
     opts = {
       -- colorscheme = "moonfly",
+{{- if not (stat "/usr/share/omarchy") }}
       colorscheme = "nightfly",
+{{- else }}
+      -- Omarchy drives the colorscheme through plugins/theme.lua. lazy sorts
+      -- spec imports by module name and the last one wins, so a value here
+      -- would silently beat plugins.theme and leave the symlink decorative.
+{{- end }}
       -- colorscheme = "dracula",
       -- colorscheme = "catppuccin-frappe",
       -- colorscheme = function()

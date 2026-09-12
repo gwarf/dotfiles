@@ -1,6 +1,13 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+
+-- OSC 52 clipboard bridge; returns immediately outside tmux/SSH/herdr.
+-- pcall so host-gating the module later cannot turn startup into a hard error.
+pcall(function()
+  require("config.remote_clipboard").setup()
+end)
+
 local opt = vim.opt
 
 -- Enable backups
