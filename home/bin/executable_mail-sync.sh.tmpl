@@ -70,7 +70,7 @@ run_operas() {
     # for the notmuch config). The cleanest scope is -e (filter class whitelist):
     # run only the cross-account stock filters that don't depend on folder paths.
     afew --tag --new \
-        -e SpamFilter,KillThreadsFilter,ListMailsFilter,MeFilter,ArchiveSentMailsFilter,DKIMValidityFilter,InboxFilter
+        -e SpamFilter,KillThreadsFilter,ListMailsFilter,MeFilter,ArchiveSentMailsFilter,InboxFilter
 }
 
 case "$ACCOUNT" in
