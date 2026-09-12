@@ -117,10 +117,6 @@ bin/true-color.sh
 .config/kitty/dracula.conf
 .config/kitty/tokyonight_moon.conf
 .config/kitty/tokyonight_storm.conf
-# Omarchy owns nvim on this host, whole subtree. Safe as a directory entry
-# because nothing under it should be managed here - unlike .config or .local,
-# which hold managed files alongside the Omarchy-seeded ones.
-.config/nvim
 {{- end }}
 
 {{- if not (stat "/usr/share/omarchy") }}
