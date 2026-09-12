@@ -12,7 +12,9 @@ if not vim.uv.os_uname().sysname:find("FreeBSD") then
       ft = "markdown",
       opts = {
         daily_notes = {
-          folder = "Perso/",
+          -- No folder: the plugin joins workspace / folder / date_format, and
+          -- date_format already carries the full path from the vault root.
+          -- Setting it also made the plugin mkdir an empty folder of that name.
           date_format = "03. Agenda 🗓️/%Y/%m/%Y-%m-%d",
           default_tags = { "journal", "agenda" },
           workdays_only = false,

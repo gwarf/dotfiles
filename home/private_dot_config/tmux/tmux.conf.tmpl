@@ -1,35 +1,60 @@
+############ Key Bindings ############
+
+# Prefix
+# C-Space is the prefix; C-b stays live as the secondary one so old muscle
+# memory keeps working. prefix+C-Space sends a literal C-Space through to the
+# app underneath (nested tmux, emacs set-mark, IME toggles).
+set -g prefix C-Space
+set -g prefix2 C-b
+bind-key C-Space send-prefix
+bind -N "Send prefix" C-Space send-prefix
+
+# Vi mode for copy
+set -g status-keys vi
+setw -g mode-keys vi
+bind -N "Begin selection" -T copy-mode-vi v send -X begin-selection
+bind -N "Copy selection" -T copy-mode-vi y send -X copy-selection-and-cancel
+
+# Toggle between the two most-recent windows (default prefix+l is taken by tmux-pain-control)
+bind-key Tab last-window
+
+# General
+set -g default-terminal "tmux-256color"
+set -ag terminal-overrides ",*:RGB"
+set  -g base-index 1
+setw -g pane-base-index 1
+# automatically renumber tmux windows
+set -g renumber-windows on
+# Disable automatic changes of titles
+set -g set-titles on
+set-window-option -g automatic-rename on
+set-window-option -g allow-rename on
+
+set -ag terminal-features "xterm-kitty:extkeys"
+set -as terminal-features ",*:clipboard"
+# option for terminal colors
+# set -sa terminal-features ",xterm-kitty:RGB"
+# Enable OSC 8 hyperlinks
+set -sa terminal-features ",*:hyperlinks"
+
 {{ if stat "/usr/share/omarchy" -}}
 # Omarchy branch: its stock tmux.conf, imported verbatim so both configs sit
 # here while they get merged into one. Other hosts render the branch below.
-# Prefix
-set -g prefix C-Space
-set -g prefix2 C-b
-bind -N "Send prefix" C-Space send-prefix
 
 # Config and help
 bind -N "Reload configuration" q source-file ~/.config/tmux/tmux.conf \; display "Configuration reloaded"
 bind -N "Show Tmux keybindings" ? display-popup -E -w 80% -h 70% -T "Tmux keybindings" "omarchy-menu-tmux-keybindings --print | less -R"
 
-# Vi mode for copy
-setw -g mode-keys vi
-bind -N "Begin selection" -T copy-mode-vi v send -X begin-selection
-bind -N "Copy selection" -T copy-mode-vi y send -X copy-selection-and-cancel
-
 # Pane Controls
-bind -N "Split pane vertically" -n M-Enter split-window -v -c "#{pane_current_path}"
-bind -N "Split pane horizontally" -n M-S-Enter split-window -h -c "#{pane_current_path}"
 # Omarchy binds this to kill-pane. No prefix and no confirmation, one slip from
 # Alt+Tab, and it took a root shell with it. Prefix+x still kills a pane.
 unbind -n M-Escape
 
-bind -N "Split pane vertically" h split-window -v -c "#{pane_current_path}"
-bind -N "Split pane horizontally" v split-window -h -c "#{pane_current_path}"
+# bind -N "Split pane vertically" -n M-Enter split-window -v -c "#{pane_current_path}"
+# bind -N "Split pane horizontally" -n M-S-Enter split-window -h -c "#{pane_current_path}"
+# bind -N "Split pane vertically" h split-window -v -c "#{pane_current_path}"
+# bind -N "Split pane horizontally" v split-window -h -c "#{pane_current_path}"
 bind -N "Kill pane" x kill-pane
-
-bind -N "Focus pane left" -n C-M-Left select-pane -L
-bind -N "Focus pane right" -n C-M-Right select-pane -R
-bind -N "Focus pane up" -n C-M-Up select-pane -U
-bind -N "Focus pane down" -n C-M-Down select-pane -D
 
 bind -N "Resize pane left" -n C-M-S-Left resize-pane -L 5
 bind -N "Resize pane down" -n C-M-S-Down resize-pane -D 5
@@ -67,12 +92,8 @@ bind -N "Previous session" -n M-Up switch-client -p
 bind -N "Next session" -n M-Down switch-client -n
 
 # General
-set -g default-terminal "tmux-256color"
-set -ag terminal-overrides ",*:RGB"
 set -g mouse on
 set -g base-index 1
-setw -g pane-base-index 1
-set -g renumber-windows on
 set -g history-limit 50000
 set -g escape-time 0
 set -g focus-events on
@@ -82,8 +103,6 @@ setw -g aggressive-resize on
 set -g detach-on-destroy off
 set -g extended-keys on
 set -g extended-keys-format csi-u
-set -ag terminal-features "xterm-kitty:extkeys"
-set -as terminal-features ",*:clipboard"
 set -sg escape-time 10
 
 # Status bar
@@ -115,27 +134,7 @@ setw -g clock-mode-colour blue
 # unset so tmux runs this as a login shell rather than through a bash wrapper.
 set -g default-shell /usr/bin/fish
 
-# Automatically restore tmux session
-set -g @continuum-restore "on"
-# Do not capture panes content to avoid capturing secrets
-set -g @resurrect-capture-pane-contents 'off'
-
-# tmux-fzf
-# prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
-TMUX_FZF_LAUNCH_KEY="f"
-# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
-# Wider/taller popup so titles are not truncated
-set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
-
 {{ else -}}
-set  -g default-terminal "tmux-256color"
-set  -g base-index 1
-setw -g pane-base-index 1
-
-# Use vi bindings
-set -g status-keys vi
-set -g mode-keys vi
-
 set  -g mouse off
 setw -g clock-mode-style 12
 
@@ -155,35 +154,13 @@ set -g default-shell /usr/local/bin/fish
 set -g default-command /usr/bin/fish
 set -g default-shell /usr/bin/fish
 {{ end -}}
-
-# automatically renumber tmux windows
-set -g renumber-windows on
-
-# Disable automatic changes of titles
-set -g set-titles on
-set-window-option -g automatic-rename on
-set-window-option -g allow-rename on
-
 # Activity Monitoring
 setw -g monitor-activity off
 set -g visual-activity off
 
-# option for terminal colors
-# set -sa terminal-features ",xterm-kitty:RGB"
-
-# Enable OSC 8 hyperlinks
-set -sa terminal-features ",*:hyperlinks"
-
-############ Key Bindings ############
-
-# C-Space is the prefix; C-b stays live as the secondary one so old muscle
-# memory keeps working. prefix+C-Space sends a literal C-Space through to the
-# app underneath (nested tmux, emacs set-mark, IME toggles).
-set -g prefix C-Space
-set -g prefix2 C-b
-bind-key C-Space send-prefix
-
 # reload config file
+# XXX: default binding is rename windows, and R is rename session
+# a better keybing would be good
 bind r source-file ~/.config/tmux/tmux.conf \; display "Config Reloaded!"
 
 # synchronize all panes in a window
@@ -198,9 +175,6 @@ bind-key . command-prompt "move-window -r -t '%%'"
 
 # Send pane next to another one
 bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
-
-# Toggle between the two most-recent windows (default prefix+l is taken by tmux-pain-control)
-bind-key Tab last-window
 
 # For yazi
 # https://yazi-rs.github.io/docs/image-preview/#tmux
@@ -272,7 +246,7 @@ set -ag status-right "#{E:@catppuccin_status_session}"
 
 # ── herdr parity (keep tmux and herdr muscle memory aligned) ──
 # Split right on prefix+v (herdr split_vertical); | and % already split right too.
-bind-key v split-window -h -c "#{pane_current_path}"
+# bind-key v split-window -h -c "#{pane_current_path}"
 # prefix+g left at its tmux 3.8 default (floating-pane positioning table);
 # the tmux-fzf pane picker that used to live here was unused (2026-08-20).
 # find-window kept reachable on C-f since prefix+f now launches tmux-fzf.
@@ -280,11 +254,10 @@ bind-key C-f command-prompt { find-window -Z "%%" }
 
 # Day-plan overlay: popup with today's daily note (05:00 Dream.ts writes the
 # Overnight brief into it). prefix+t shows, q hides. Replaces clock-mode.
-# Anchors on the section heading text, not "### ": the brief has no h3
-# subheadings (that assumption broke when the first ### match became the
-# task-list base blocks at the bottom); -s dark forces glow to keep
-# ANSI styling into the pipe (auto-detect strips it when stdout is not a tty).
-bind-key t display-popup -E -w 82% -h 85% 'glow -s dark -w "$(tput cols)" "$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md" | less -R +/"Overnight brief"'
+# -EE, not -E: the popup then survives a non-zero exit, so a missing note or
+# renderer shows its reason instead of flashing shut with nothing on screen.
+bind-key t display-popup -EE -w 82% -h 85% '~/.local/bin/daynote'
+bind-key T display-popup -EE -w 82% -h 85% '~/.local/bin/daynote --edit'
 
 # TPM plugins
 set -g @plugin "tmux-plugins/tpm"
@@ -298,6 +271,13 @@ set -g @plugin 'timvw/tmux-assistant-resurrect'
 set -g @continuum-restore "on"
 # Do not capture panes content to avoid capturing secrets
 set -g @resurrect-capture-pane-contents 'off'
+
+# tmux-fzf
+# prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
+TMUX_FZF_LAUNCH_KEY="f"
+# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
+# Wider/taller popup so titles are not truncated
+set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
 
 # Install tpm if not available
 if "test ! -d ~/.tmux/plugins/tpm" \

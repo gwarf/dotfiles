@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Show today's daily note, or edit it with --edit. Drives tmux prefix+t and T.
+set -euo pipefail
+
+note="$HOME/Documents/Notes/03. Agenda 🗓️/$(date +%Y/%m/%Y-%m-%d).md"
+
+if [ ! -r "$note" ]; then
+	printf 'No readable daily note for today:\n  %s\n' "$note"
+	exit 1
+fi
+
+# Deliberately after the readability gate, so editing never creates the note:
+# a missing one has to come from Obsidian's daily-note command, which runs
+# Templater. A bare write here would leave a note with no frontmatter.
+if [ "${1:-}" = "--edit" ]; then
+	exec "${EDITOR:-nvim}" "$note"
+fi
+
+# Feed less from a herestring, never a pipe: the styled output outruns the pipe
+# buffer, so quitting less mid-read SIGPIPEs the writer and pipefail turns a
+# normal q into a non-zero exit. -s dark keeps glow's ANSI styling into the var.
+if command -v glow >/dev/null; then
+	rendered=$(glow -s dark -w "$(tput cols)" "$note")
+else
+	printf 'glow is not installed, showing raw markdown.\n\n'
+	rendered=$(cat "$note")
+fi
+
+less -R +/'Overnight brief' <<<"$rendered"
