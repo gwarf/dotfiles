@@ -29,6 +29,7 @@ set -g renumber-windows on
 set -g set-titles on
 set-window-option -g automatic-rename on
 set-window-option -g allow-rename on
+set  -g mouse off
 
 set -ag terminal-features "xterm-kitty:extkeys"
 set -as terminal-features ",*:clipboard"
@@ -92,8 +93,6 @@ bind -N "Previous session" -n M-Up switch-client -p
 bind -N "Next session" -n M-Down switch-client -n
 
 # General
-set -g mouse on
-set -g base-index 1
 set -g history-limit 50000
 set -g escape-time 0
 set -g focus-events on
@@ -135,7 +134,6 @@ setw -g clock-mode-colour blue
 set -g default-shell /usr/bin/fish
 
 {{ else -}}
-set  -g mouse off
 setw -g clock-mode-style 12
 
 # Use fish as shell
