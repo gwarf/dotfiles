@@ -5,7 +5,8 @@
 # memory keeps working. prefix+C-Space sends a literal C-Space through to the
 # app underneath (nested tmux, emacs set-mark, IME toggles).
 set -g prefix C-Space
-set -g prefix2 C-b
+# XXX: disable legacy prefix to retrain muscle memory
+# set -g prefix2 C-b
 bind-key C-Space send-prefix
 bind -N "Send prefix" C-Space send-prefix
 
