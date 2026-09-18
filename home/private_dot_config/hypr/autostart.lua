@@ -13,3 +13,7 @@ for entry in (os.getenv("PATH") or "/usr/local/bin:/usr/bin"):gmatch("[^:]+") do
 end
 table.insert(path_entries, 1, overrides_dir)
 hl.env("PATH", table.concat(path_entries, ":"))
+
+o.launch_on_start("obsidian")
+o.launch_on_start("ghostty")
+o.launch_on_start("firefox")
