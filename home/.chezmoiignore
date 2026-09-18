@@ -90,7 +90,6 @@ bin/true-color.sh
 .config/alacritty/alacritty.toml
 .config/chromium-flags.conf
 .config/herdr/config.toml
-.config/hypr/hyprland.lua
 .config/kitty/kitty.conf
 .config/starship.toml
 # Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
