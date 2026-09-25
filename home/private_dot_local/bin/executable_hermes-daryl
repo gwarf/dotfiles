@@ -28,7 +28,7 @@ grep -qE '^    - lifeos$' "$HERMES_HOME/config.yaml" \
   || { echo "hermes-daryl: lifeos not in plugins.enabled — run: bun ~/.claude/PAI/HERMES/Mount.ts" >&2; exit 1; }
 # write_file/patch are hard-blocked outside these roots; the PAI tree stays read-only,
 # the Obsidian vault is the knowledge write target.
-HERMES_WRITE_SAFE_ROOT="${HERMES_WORKSPACE:-$HOME/HermesWorkspace}:$HERMES_HOME:${PAI_VAULT:-$HOME/Documents/Notes}"
+HERMES_WRITE_SAFE_ROOT="${HERMES_WORKSPACE:-$HOME/HermesWorkspace}:$HERMES_HOME:${PAI_VAULT:-$HOME/Documents/Notes}:${PAI_DIR:-$HOME/.claude}"
 export HERMES_HOME HERMES_WRITE_SAFE_ROOT
 
 dir="${1:-$PWD}"
