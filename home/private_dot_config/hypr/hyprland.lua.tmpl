@@ -33,6 +33,8 @@ require("default.hypr.toggles")
 -- focus along, so the login sequence doesn't ping-pong between workspaces.
 o.window("^firefox$", { workspace = "2 silent" })
 o.window("^md\\.obsidian\\.Obsidian$", { workspace = "3 silent" })
+-- Daryl's Interceptor browser (brave-interceptor.service) stays out of the way.
+o.window("^brave-origin$", { workspace = "4 silent" })
 {{ else -}}
 -- Hyprland configuration (migrated from hyprlang to Lua for Hyprland 0.55+)
 -- Refer to the wiki: https://wiki.hypr.land/Configuring/Start/
