@@ -43,6 +43,9 @@ Mail/.notmuch/hooks/post-new
 {{- if ne .chezmoi.hostname "sikaru" }}
 .config/InputLeap
 .config/systemd/user/input-leap-server.service
+# Brave Origin is sikaru's Interceptor browser; torpedo/assist launch theirs differently.
+.config/systemd/user/brave-interceptor.service
+.config/systemd/user/graphical-session.target.wants/brave-interceptor.service
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
 # aerc resolves `rbw` at render time, and chezmoi apply runs unattended here

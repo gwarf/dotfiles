@@ -1,0 +1,17 @@
+[Unit]
+Description=Brave Origin with the Interceptor extension (Daryl's browser)
+Documentation=https://github.com/Hacker-Valley-Media/Interceptor
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+# The wrapper reads ~/.config/brave-origin-flags.conf, whose --load-extension
+# line loads the Interceptor build; the extension spawns the daemon itself.
+ExecStart=/usr/bin/brave-origin
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+
+[Install]
+WantedBy=graphical-session.target
