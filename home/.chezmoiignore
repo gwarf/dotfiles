@@ -40,6 +40,11 @@ Mail/.notmuch/hooks/post-new
 # tool); other hosts install the upstream binary under its own name.
 .local/bin/fabric
 {{- end }}
+{{- if not (stat "/usr/bin/httpx-toolkit") }}
+# AUR httpx-bin ships ProjectDiscovery's httpx as httpx-toolkit (python-httpx
+# owns the bare name); linked only where it exists so nothing dangles.
+.local/bin/httpx
+{{- end }}
 {{- if ne .chezmoi.hostname "sikaru" }}
 .config/InputLeap
 .config/systemd/user/input-leap-server.service
