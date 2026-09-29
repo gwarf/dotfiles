@@ -1,0 +1,137 @@
+#!/usr/bin/env bun
+// Transcribe a gsr-ui meeting recording with WhisperX into <video>.md and <video>.srt.
+// Track layout follows ~/.config/gpu-screen-recorder/config_ui: track 1 = system
+// output (the other participants, diarized), track 2 = mic (you, one known speaker).
+// Single-track recordings are diarized as a whole.
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { basename, dirname, extname, join } from "node:path";
+
+const USAGE = `usage: meeting-transcribe <video> [--language fr|en|...] [--me NAME] [--speakers N] [--model NAME] [--keep]
+  HF token for diarization is read from Bitwarden (rbw) entry $MEETING_HF_RBW_ENTRY
+  (default huggingface/torpedo/whisperx_read_token).`;
+
+type Segment = { start: number; end: number; text: string; speaker: string };
+
+function parseArgs(argv: string[]) {
+  const opts = { video: "", language: "", me: "Baptiste", speakers: "", model: "large-v3-turbo", keep: false };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    const next = () => {
+      const v = argv[++i];
+      if (!v) throw new Error(`${a} needs a value`);
+      return v;
+    };
+    if (a === "--language") opts.language = next();
+    else if (a === "--me") opts.me = next();
+    else if (a === "--speakers") opts.speakers = next();
+    else if (a === "--model") opts.model = next();
+    else if (a === "--keep") opts.keep = true;
+    else if (a === "-h" || a === "--help") { console.log(USAGE); process.exit(0); }
+    else if (!opts.video) opts.video = a;
+    else throw new Error(`unexpected argument: ${a}`);
+  }
+  if (!opts.video) { console.error(USAGE); process.exit(2); }
+  return opts;
+}
+
+function audioTrackCount(video: string): number {
+  const out = execFileSync("ffprobe", [
+    "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", video,
+  ], { encoding: "utf8" });
+  return out.split("\n").filter(Boolean).length;
+}
+
+function extractTrack(video: string, track: number, wav: string) {
+  execFileSync("ffmpeg", [
+    "-v", "error", "-y", "-i", video, "-map", `0:a:${track}`, "-ac", "1", "-ar", "16000", wav,
+  ], { stdio: "inherit" });
+}
+
+function hfToken(): string {
+  const entry = process.env.MEETING_HF_RBW_ENTRY ?? "huggingface/torpedo/whisperx_read_token";
+  try {
+    return execFileSync("rbw", ["get", entry], { encoding: "utf8" }).trim();
+  } catch {
+    throw new Error(`could not read HF token from rbw entry "${entry}" (rbw unlock?)`);
+  }
+}
+
+function whisperx(wav: string, outDir: string, opts: ReturnType<typeof parseArgs>, diarize: boolean, token: string) {
+  const args = [wav, "--model", opts.model, "--output_dir", outDir, "--output_format", "json"];
+  if (opts.language) args.push("--language", opts.language);
+  if (diarize) {
+    args.push("--diarize");
+    if (opts.speakers) args.push("--min_speakers", opts.speakers, "--max_speakers", opts.speakers);
+  }
+  // Token via env, never argv: argv is visible in ps and shell history.
+  execFileSync("whisperx", args, { stdio: "inherit", env: { ...process.env, HF_TOKEN: token } });
+  const json = JSON.parse(readFileSync(join(outDir, `${basename(wav, ".wav")}.json`), "utf8"));
+  return json.segments as { start: number; end: number; text: string; speaker?: string }[];
+}
+
+function stamp(seconds: number, srt = false): string {
+  const ms = Math.round(seconds * 1000);
+  const h = Math.floor(ms / 3_600_000), m = Math.floor(ms / 60_000) % 60, s = Math.floor(ms / 1000) % 60;
+  const base = [h, m, s].map((n) => String(n).padStart(2, "0")).join(":");
+  return srt ? `${base},${String(ms % 1000).padStart(3, "0")}` : base;
+}
+
+function main() {
+  const opts = parseArgs(process.argv.slice(2));
+  const tracks = audioTrackCount(opts.video);
+  if (tracks === 0) throw new Error("no audio track in video");
+  const work = mkdtempSync(join(tmpdir(), "meeting-transcribe-"));
+  try {
+    const token = hfToken();
+    const segments: Segment[] = [];
+    const others = join(work, "others.wav");
+    extractTrack(opts.video, 0, others);
+    for (const s of whisperx(others, work, opts, true, token)) {
+      const speaker = s.speaker ? `Speaker ${Number(s.speaker.replace(/\D/g, "")) + 1}` : "Unknown";
+      segments.push({ start: s.start, end: s.end, text: s.text.trim(), speaker });
+    }
+    if (tracks >= 2) {
+      const mic = join(work, "mic.wav");
+      extractTrack(opts.video, 1, mic);
+      for (const s of whisperx(mic, work, opts, false, token)) {
+        segments.push({ start: s.start, end: s.end, text: s.text.trim(), speaker: opts.me });
+      }
+    }
+    segments.sort((a, b) => a.start - b.start);
+
+    const stem = join(dirname(opts.video), basename(opts.video, extname(opts.video)));
+    const srt = segments
+      .map((s, i) => `${i + 1}\n${stamp(s.start, true)} --> ${stamp(s.end, true)}\n${s.speaker}: ${s.text}\n`)
+      .join("\n");
+    writeFileSync(`${stem}.srt`, srt);
+
+    // Markdown merges consecutive turns by the same speaker into one paragraph.
+    const turns: Segment[] = [];
+    for (const s of segments) {
+      const last = turns.at(-1);
+      if (last && last.speaker === s.speaker) { last.text += ` ${s.text}`; last.end = s.end; }
+      else turns.push({ ...s });
+    }
+    const md = [
+      `# Transcript: ${basename(opts.video)}`,
+      "",
+      `Tracks: ${tracks}${tracks >= 2 ? ` (track 2 = ${opts.me})` : " (mixed, diarized)"} · model ${opts.model}`,
+      "",
+      ...turns.map((t) => `**[${stamp(t.start)}] ${t.speaker}:** ${t.text}\n`),
+    ].join("\n");
+    writeFileSync(`${stem}.md`, md);
+    console.log(`wrote ${stem}.md and ${stem}.srt (${turns.length} turns)`);
+  } finally {
+    if (opts.keep) console.log(`kept work dir ${work}`);
+    else rmSync(work, { recursive: true, force: true });
+  }
+}
+
+try {
+  main();
+} catch (e) {
+  console.error(`meeting-transcribe: ${(e as Error).message}`);
+  process.exit(1);
+}
