@@ -1,0 +1,248 @@
+#!/usr/bin/env python3
+"""Systray front end for gsr-ui: record full screen or a region, icon shows state.
+
+Ayatana AppIndicator rather than Qt: Qt hardcodes the StatusNotifierItem
+ItemIsMenu=false, so Plasma never opens the menu on left-click, and a
+parentless Qt popup is refused on Wayland.
+"""
+import os
+import signal
+import subprocess
+
+import gi
+
+import cairo
+
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+gi.require_version("AyatanaAppIndicator3", "0.1")
+gi.require_version("GtkLayerShell", "0.1")
+from gi.repository import AyatanaAppIndicator3 as AppIndicator, Gdk, GLib, Gtk  # noqa: E402
+from gi.repository import GtkLayerShell  # noqa: E402
+
+IDLE_ICON = "camera-video"
+RECORDING_ICON = "media-record"
+POLL_SECONDS = 1
+# Match only a recorder writing a file (-o); gsr-ui also spawns short --info/--list probes.
+RECORDER_PATTERN = r"^([^ ]*/)?gpu-screen-recorder .* -o "
+CAPTURE_LABELS = {"region": "region", "portal": "window (portal)", "focused": "focused window"}
+MARKER_BORDER = 3
+# Gap keeps the outline outside the captured rectangle, so it never lands in the video.
+MARKER_GAP = 2
+MARKER_RGBA = (0.9, 0.1, 0.1, 0.9)
+
+
+def parse_region(spec):
+    """'WxH+X+Y' -> (x, y, w, h) ints, or None."""
+    try:
+        size, x, y = spec.split("+")
+        w, h = size.split("x")
+        return int(x), int(y), int(w), int(h)
+    except (AttributeError, ValueError):
+        return None
+
+
+class RegionMarker:
+    """Click-through layer-shell outline around the region being recorded."""
+
+    def __init__(self):
+        self.window = None
+        self.spec = None
+
+    def update(self, spec):
+        if spec == self.spec:
+            return
+        self.hide()
+        self.spec = spec
+        region = parse_region(spec)
+        if region:
+            self._show(region)
+
+    def _show(self, region):
+        # -region is in compositor logical pixels (slurp format); the video comes out
+        # at the monitor's physical size, so never compare it with the file's resolution.
+        x, y, w, h = region
+        display = Gdk.Display.get_default()
+        for i in range(display.get_n_monitors()):
+            monitor = display.get_monitor(i)
+            geo = monitor.get_geometry()
+            if geo.x <= x < geo.x + geo.width and geo.y <= y < geo.y + geo.height:
+                break
+        else:
+            print(f"gsr-tray: region {self.spec} is on no monitor", flush=True)
+            return
+        rect = (x - geo.x, y - geo.y, w, h)
+        print(f"gsr-tray: marker {self.spec} -> monitor {i} rect {rect}", flush=True)
+        win = Gtk.Window()
+        GtkLayerShell.init_for_window(win)
+        GtkLayerShell.set_layer(win, GtkLayerShell.Layer.OVERLAY)
+        GtkLayerShell.set_namespace(win, "gsr-region-marker")
+        GtkLayerShell.set_monitor(win, monitor)
+        for edge in (GtkLayerShell.Edge.TOP, GtkLayerShell.Edge.BOTTOM,
+                     GtkLayerShell.Edge.LEFT, GtkLayerShell.Edge.RIGHT):
+            GtkLayerShell.set_anchor(win, edge, True)
+        GtkLayerShell.set_exclusive_zone(win, -1)
+        GtkLayerShell.set_keyboard_mode(win, GtkLayerShell.KeyboardMode.NONE)
+        visual = win.get_screen().get_rgba_visual()
+        if visual:
+            win.set_visual(visual)
+        win.set_app_paintable(True)
+        win.connect("draw", self._draw, rect)
+        win.show_all()
+        win.input_shape_combine_region(cairo.Region())
+        self.window = win
+
+    @staticmethod
+    def _draw(_widget, cr, rect):
+        cr.set_operator(cairo.OPERATOR_SOURCE)
+        cr.set_source_rgba(0, 0, 0, 0)
+        cr.paint()
+        x, y, w, h = rect
+        pad = MARKER_GAP + MARKER_BORDER / 2
+        cr.set_source_rgba(*MARKER_RGBA)
+        cr.set_line_width(MARKER_BORDER)
+        cr.rectangle(x - pad, y - pad, w + 2 * pad, h + 2 * pad)
+        cr.stroke()
+        return True
+
+    def hide(self):
+        if self.window:
+            self.window.destroy()
+        self.window = None
+        self.spec = None
+
+
+def _pgrep(*args):
+    return subprocess.run(["pgrep", *args], stdout=subprocess.DEVNULL).returncode == 0
+
+
+def _arg(argv, flag):
+    try:
+        return argv[argv.index(flag) + 1]
+    except (ValueError, IndexError):
+        return None
+
+
+def describe(argv, elapsed_seconds, size_bytes):
+    """Menu lines for a running recorder, from its argv and live stats."""
+    target = _arg(argv, "-w") or "?"
+    capture = CAPTURE_LABELS.get(target, f"full screen ({target})")
+    hours, rest = divmod(int(elapsed_seconds), 3600)
+    duration = f"{hours:02d}:{rest // 60:02d}:{rest % 60:02d}"
+    output = _arg(argv, "-o") or "?"
+    size = f"{size_bytes / 1_000_000:.1f} MB" if size_bytes is not None else "size unknown"
+    return [f"● Recording {capture} · {duration}", f"{os.path.basename(output)} · {size}"]
+
+
+def recorder():
+    """(info lines, region spec or None) for the running recording, or None when idle."""
+    pids = subprocess.run(
+        ["pgrep", "-f", RECORDER_PATTERN], capture_output=True, text=True
+    ).stdout.split()
+    if not pids:
+        return None
+    pid = pids[0]
+    try:
+        with open(f"/proc/{pid}/cmdline", "rb") as f:
+            argv = [a.decode(errors="replace") for a in f.read().split(b"\0") if a]
+        elapsed = int(subprocess.run(
+            ["ps", "-o", "etimes=", "-p", pid], capture_output=True, text=True
+        ).stdout.strip())
+    except (OSError, ValueError):
+        # The recorder exited between pgrep and the reads.
+        return None
+    output = _arg(argv, "-o")
+    try:
+        size = os.path.getsize(output) if output else None
+    except OSError:
+        size = None
+    region = _arg(argv, "-region") if _arg(argv, "-w") == "region" else None
+    return describe(argv, elapsed, size), region
+
+
+def _item(menu, label, callback=None):
+    item = Gtk.MenuItem(label=label)
+    if callback:
+        item.connect("activate", lambda _item: callback())
+    else:
+        item.set_sensitive(False)
+    menu.append(item)
+    return item
+
+
+class Tray:
+    def __init__(self):
+        self.mode = None
+        self.marker = RegionMarker()
+        self.indicator = AppIndicator.Indicator.new(
+            "gsr-tray", IDLE_ICON, AppIndicator.IndicatorCategory.APPLICATION_STATUS
+        )
+        self.indicator.set_title("GPU Screen Recorder")
+        self.indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE)
+        menu = Gtk.Menu()
+        self.info = [_item(menu, ""), _item(menu, "")]
+        self.info_separator = Gtk.SeparatorMenuItem()
+        menu.append(self.info_separator)
+        self.full = _item(menu, "Record full screen", lambda: self.start("toggle-record"))
+        self.region = _item(menu, "Record region", lambda: self.start("toggle-record-region"))
+        self.stop_item = _item(menu, "Stop recording", self.stop)
+        menu.append(Gtk.SeparatorMenuItem())
+        _item(menu, "Quit tray", Gtk.main_quit)
+        menu.show_all()
+        self.indicator.set_menu(menu)
+        # Middle-click stops a recording without opening the menu.
+        self.indicator.set_secondary_activate_target(self.stop_item)
+        self.refresh()
+        GLib.timeout_add_seconds(POLL_SECONDS, self.refresh)
+
+    def run_cli(self, command):
+        if _pgrep("-x", "gsr-ui"):
+            subprocess.Popen(["gsr-ui-cli", command])
+            return
+        # gsr-ui-cli only talks to a running instance; give the daemon time to come up.
+        subprocess.Popen(["gsr-ui", "launch-daemon"])
+        GLib.timeout_add_seconds(2, lambda: subprocess.Popen(["gsr-ui-cli", command]) and False)
+
+    def start(self, command):
+        self.mode = command
+        self.run_cli(command)
+
+    def stop(self):
+        if recorder() is None:
+            return
+        # A recording started outside the tray (overlay, hotkey) stops with the plain toggle.
+        self.run_cli(self.mode or "toggle-record")
+        self.mode = None
+
+    def refresh(self):
+        state = recorder()
+        recording = state is not None
+        lines, region = state if recording else (None, None)
+        if region:
+            self.marker.update(region)
+        else:
+            self.marker.hide()
+        if not recording:
+            self.mode = None
+        for item, text in zip(self.info, lines or ["", ""]):
+            item.set_label(text)
+            item.set_visible(recording)
+        self.info_separator.set_visible(recording)
+        self.indicator.set_icon_full(
+            RECORDING_ICON if recording else IDLE_ICON,
+            "Recording" if recording else "Idle",
+        )
+        self.full.set_sensitive(not recording)
+        self.region.set_sensitive(not recording)
+        self.stop_item.set_sensitive(recording)
+        return True
+
+
+def main():
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+    Tray()
+    Gtk.main()
+
+
+if __name__ == "__main__":
+    main()

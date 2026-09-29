@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=GPU Screen Recorder tray
+Comment=Tray icon to record full screen or a region with gsr-ui
+Icon=camera-video
+Exec=/home/baptiste/.local/bin/gsr-tray
+Terminal=false
+X-KDE-autostart-phase=2
