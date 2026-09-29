@@ -162,6 +162,8 @@ def recorder():
 
 def _item(menu, label, callback=None):
     item = Gtk.MenuItem(label=label)
+    # Otherwise GTK eats "_" as a mnemonic marker, mangling file names like Video_2026-...
+    item.set_use_underline(False)
     if callback:
         item.connect("activate", lambda _item: callback())
     else:
