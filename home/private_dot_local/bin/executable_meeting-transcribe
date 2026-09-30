@@ -3,24 +3,36 @@
 // Track layout follows ~/.config/gpu-screen-recorder/config_ui: track 1 = system
 // output (the other participants, diarized), track 2 = mic (you, one known speaker).
 // Single-track recordings are diarized as a whole.
-// `speakers` and `label` map diarized labels to names after the fact, from the SRT.
+// Diarized speakers are auto-named against enrolled voiceprints; `label` corrects and enrolls.
 import { execFileSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { basename, dirname, extname, join } from "node:path";
+
+// Voiceprints are biometric data about other people: host-local, 0600, never in the dotfiles repo.
+const VOICE_DIR = process.env.MEETING_VOICES_DIR ?? join(homedir(), ".local", "share", "meeting-transcribe");
+const VOICES = join(VOICE_DIR, "voices.json");
+const THRESHOLD = Number(process.env.MEETING_MATCH_THRESHOLD ?? "0.7");
+const MAX_SAMPLES = 12;
 
 const USAGE = `usage:
   meeting-transcribe <video> [--language fr|en|...] [--me NAME] [--speakers N] [--model NAME] [--keep]
-  meeting-transcribe speakers <video>                     evidence per diarized speaker, to identify them
-  meeting-transcribe label <video> "Speaker 2=Jane Doe" [...]
-                                                          map labels to names and re-render .md/.srt
-                                                          ("2=Jane" works too; "Speaker 2=" drops a mapping;
-                                                          two labels may map to one name)
+  meeting-transcribe speakers <video>          evidence per speaker, with auto-match scores
+  meeting-transcribe label <video> "Speaker 2=Jane Doe" [...] [--confirm]
+                                               name speakers, re-render .md/.srt, enroll their voices
+                                               ("2=Jane" works; "2=" drops a name; --confirm accepts
+                                               every auto-match and enrolls it too)
+  meeting-transcribe match <video>             re-run auto-matching (after enrolling more people)
+  meeting-transcribe voices [forget NAME]      list or erase enrolled voiceprints
   HF token for diarization is read from Bitwarden (rbw) entry $MEETING_HF_RBW_ENTRY
   (default huggingface/torpedo/whisperx_read_token).
-  The name map lives in <video>.speakers.json; labels always resolve against <video>.raw.srt.`;
+  Voiceprints: ${VOICES} (MEETING_VOICES_DIR); match threshold ${THRESHOLD} (MEETING_MATCH_THRESHOLD).`;
 
 type Segment = { start: number; end: number; text: string; speaker: string };
+type Entry = { name: string; source: "manual" | "auto"; score?: number };
+type SpeakerMap = Record<string, Entry>;
+type Sample = { meeting: string; label: string; embedding: number[] };
+type Voices = { people: Record<string, { samples: Sample[] }> };
 
 function parseArgs(argv: string[]) {
   const opts = { video: "", language: "", me: "Baptiste", speakers: "", model: "large-v3-turbo", keep: false };
@@ -44,10 +56,20 @@ function parseArgs(argv: string[]) {
   return opts;
 }
 
-// Accepts the video or any of its sidecars (.md, .srt) and returns the shared stem.
+// Accepts the video or any of its sidecars and returns the shared stem.
 function stemOf(path: string): string {
-  const name = basename(path).replace(/\.(raw\.srt|speakers\.json)$/, "");
+  const name = basename(path).replace(/\.(raw\.srt|speakers\.json|embeddings\.json)$/, "");
   return join(dirname(path), basename(name, extname(name)));
+}
+
+function writeAtomic(path: string, content: string, mode = 0o644) {
+  const tmp = `${path}.tmp`;
+  writeFileSync(tmp, content, { mode });
+  renameSync(tmp, path);
+}
+
+function readJson<T>(path: string, fallback: T): T {
+  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : fallback;
 }
 
 function audioTrackCount(video: string): number {
@@ -72,17 +94,24 @@ function hfToken(): string {
   }
 }
 
+function diarizedLabel(raw: string): string {
+  return `Speaker ${Number(raw.replace(/\D/g, "")) + 1}`;
+}
+
 function whisperx(wav: string, outDir: string, opts: ReturnType<typeof parseArgs>, diarize: boolean, token: string) {
   const args = [wav, "--model", opts.model, "--output_dir", outDir, "--output_format", "json"];
   if (opts.language) args.push("--language", opts.language);
   if (diarize) {
-    args.push("--diarize");
+    args.push("--diarize", "--speaker_embeddings");
     if (opts.speakers) args.push("--min_speakers", opts.speakers, "--max_speakers", opts.speakers);
   }
   // Token via env, never argv: argv is visible in ps and shell history.
   execFileSync("whisperx", args, { stdio: "inherit", env: { ...process.env, HF_TOKEN: token } });
   const json = JSON.parse(readFileSync(join(outDir, `${basename(wav, ".wav")}.json`), "utf8"));
-  return json.segments as { start: number; end: number; text: string; speaker?: string }[];
+  return {
+    segments: json.segments as { start: number; end: number; text: string; speaker?: string }[],
+    embeddings: (json.speaker_embeddings ?? {}) as Record<string, number[]>,
+  };
 }
 
 function stamp(seconds: number, srt = false): string {
@@ -126,25 +155,127 @@ function toTurns(segments: Segment[]): Segment[] {
   return turns;
 }
 
-function writeOutputs(stem: string, segments: Segment[], headerLines: string[]): number {
-  writeFileSync(`${stem}.srt`, toSrt(segments));
-  const turns = toTurns(segments);
+function labelOrder(a: string, b: string): number {
+  const n = (s: string) => {
+    const m = /^Speaker (\d+)$/.exec(s);
+    return m ? Number(m[1]) : Infinity;
+  };
+  return n(a) - n(b) || a.localeCompare(b);
+}
+
+// --- voiceprints -------------------------------------------------------------
+
+function normalize(v: number[]): number[] {
+  const len = Math.hypot(...v) || 1;
+  return v.map((x) => x / len);
+}
+
+function cosine(a: number[], b: number[]): number {
+  const na = normalize(a), nb = normalize(b);
+  return na.reduce((t, x, i) => t + x * nb[i], 0);
+}
+
+// A person's print is the mean of their normalised samples, so one noisy meeting cannot dominate.
+function centroid(samples: Sample[]): number[] {
+  const sum = samples.map((s) => normalize(s.embedding)).reduce((acc, v) => acc.map((x, i) => x + v[i]));
+  return normalize(sum);
+}
+
+function loadVoices(): Voices {
+  return readJson<Voices>(VOICES, { people: {} });
+}
+
+function saveVoices(voices: Voices) {
+  mkdirSync(VOICE_DIR, { recursive: true, mode: 0o700 });
+  writeAtomic(VOICES, `${JSON.stringify(voices)}\n`, 0o600);
+}
+
+function scores(embedding: number[], voices: Voices): { name: string; score: number }[] {
+  return Object.entries(voices.people)
+    .filter(([, p]) => p.samples.length)
+    .map(([name, p]) => ({ name, score: cosine(embedding, centroid(p.samples)) }))
+    .sort((a, b) => b.score - a.score);
+}
+
+// One person per label and one label per person, strongest pairs first; manual entries are kept.
+function autoMatch(embeddings: Record<string, number[]>, voices: Voices, keep: SpeakerMap = {}): SpeakerMap {
+  const map: SpeakerMap = Object.fromEntries(Object.entries(keep).filter(([, e]) => e.source === "manual"));
+  const taken = new Set(Object.values(map).map((e) => e.name));
+  const pairs = Object.entries(embeddings)
+    .flatMap(([label, e]) => scores(e, voices).map((s) => ({ label, ...s })))
+    .filter((p) => p.score >= THRESHOLD)
+    .sort((a, b) => b.score - a.score);
+  for (const p of pairs) {
+    if (map[p.label] || taken.has(p.name)) continue;
+    map[p.label] = { name: p.name, source: "auto", score: Number(p.score.toFixed(3)) };
+    taken.add(p.name);
+  }
+  return map;
+}
+
+// Keyed by meeting + label, so relabelling a speaker moves its sample instead of duplicating it.
+function enroll(voices: Voices, meeting: string, label: string, name: string | undefined, embedding?: number[]) {
+  for (const p of Object.values(voices.people)) {
+    p.samples = p.samples.filter((s) => !(s.meeting === meeting && s.label === label));
+  }
+  if (name && embedding) {
+    const person = (voices.people[name] ??= { samples: [] });
+    person.samples.push({ meeting, label, embedding });
+    person.samples = person.samples.slice(-MAX_SAMPLES);
+  }
+  for (const [n, p] of Object.entries(voices.people)) if (!p.samples.length) delete voices.people[n];
+}
+
+// --- sidecars and rendering ----------------------------------------------------
+
+function loadMap(stem: string): SpeakerMap {
+  const raw = readJson<Record<string, Entry | string>>(`${stem}.speakers.json`, {});
+  return Object.fromEntries(Object.entries(raw).map(([k, v]) =>
+    [k, typeof v === "string" ? { name: v, source: "manual" as const } : v]));
+}
+
+function saveMap(stem: string, map: SpeakerMap) {
+  writeAtomic(`${stem}.speakers.json`, `${JSON.stringify(map, null, 2)}\n`);
+}
+
+function loadEmbeddings(stem: string): Record<string, number[]> {
+  return readJson<Record<string, number[]>>(`${stem}.embeddings.json`, {});
+}
+
+// The diarized SRT is frozen once; every render starts from that snapshot.
+function rawSegments(stem: string): Segment[] {
+  const raw = `${stem}.raw.srt`;
+  if (!existsSync(raw)) {
+    if (!existsSync(`${stem}.srt`)) throw new Error(`no ${stem}.srt, transcribe first`);
+    writeFileSync(raw, readFileSync(`${stem}.srt`));
+  }
+  return parseSrt(readFileSync(raw, "utf8"));
+}
+
+function render(stem: string, segments: Segment[], map: SpeakerMap, header?: string): number {
+  const named = segments.map((s) => ({ ...s, speaker: map[s.speaker]?.name ?? s.speaker }));
+  writeFileSync(`${stem}.srt`, toSrt(named));
+  const tracks = header ?? (existsSync(`${stem}.md`)
+    ? readFileSync(`${stem}.md`, "utf8").split("\n").find((l) => l.startsWith("Tracks:"))
+    : undefined);
+  const mapping = Object.keys(map).sort(labelOrder)
+    .map((k) => `${k} = ${map[k].name}${map[k].source === "auto" ? ` (auto ${map[k].score})` : ""}`).join(", ");
+  const turns = toTurns(named);
   const md = [
     `# Transcript: ${basename(stem)}`,
     "",
-    ...headerLines.flatMap((l) => [l, ""]),
+    ...[tracks, mapping && `Speakers: ${mapping}`].filter(Boolean).flatMap((l) => [l as string, ""]),
     ...turns.map((t) => `**[${stamp(t.start)}] ${t.speaker}:** ${t.text}\n`),
   ].join("\n");
   writeFileSync(`${stem}.md`, md);
   return turns.length;
 }
 
-// A re-transcription re-diarizes, so an older label map would silently point at the wrong people.
-function retireSpeakerMap(stem: string) {
-  for (const f of [`${stem}.speakers.json`, `${stem}.raw.srt`]) {
-    if (existsSync(f)) { renameSync(f, `${f}.old`); console.log(`moved stale ${basename(f)} to ${basename(f)}.old`); }
-  }
+function unlabelled(segments: Segment[], map: SpeakerMap): string[] {
+  return [...new Set(segments.map((s) => s.speaker))].filter((k) => !map[k] && /^Speaker \d+$/.test(k)).sort(labelOrder);
 }
+
+// --- commands ------------------------------------------------------------------
 
 function transcribe(argv: string[]) {
   const opts = parseArgs(argv);
@@ -156,52 +287,38 @@ function transcribe(argv: string[]) {
     const segments: Segment[] = [];
     const others = join(work, "others.wav");
     extractTrack(opts.video, 0, others);
-    for (const s of whisperx(others, work, opts, true, token)) {
-      const speaker = s.speaker ? `Speaker ${Number(s.speaker.replace(/\D/g, "")) + 1}` : "Unknown";
-      segments.push({ start: s.start, end: s.end, text: s.text.trim(), speaker });
+    const diarized = whisperx(others, work, opts, true, token);
+    for (const s of diarized.segments) {
+      segments.push({ start: s.start, end: s.end, text: s.text.trim(), speaker: s.speaker ? diarizedLabel(s.speaker) : "Unknown" });
     }
     if (tracks >= 2) {
       const mic = join(work, "mic.wav");
       extractTrack(opts.video, 1, mic);
-      for (const s of whisperx(mic, work, opts, false, token)) {
+      for (const s of whisperx(mic, work, opts, false, token).segments) {
         segments.push({ start: s.start, end: s.end, text: s.text.trim(), speaker: opts.me });
       }
     }
     segments.sort((a, b) => a.start - b.start);
 
     const stem = stemOf(opts.video);
-    retireSpeakerMap(stem);
+    // Re-diarization renumbers speakers, so an older map would silently name the wrong people.
+    if (existsSync(`${stem}.speakers.json`)) renameSync(`${stem}.speakers.json`, `${stem}.speakers.json.old`);
+    const embeddings = Object.fromEntries(Object.entries(diarized.embeddings).map(([k, v]) => [diarizedLabel(k), v]));
+    writeAtomic(`${stem}.embeddings.json`, `${JSON.stringify(embeddings)}\n`, 0o600);
+    writeFileSync(`${stem}.raw.srt`, toSrt(segments));
+    const map = autoMatch(embeddings, loadVoices());
+    saveMap(stem, map);
     const header = `Tracks: ${tracks}${tracks >= 2 ? ` (track 2 = ${opts.me})` : " (mixed, diarized)"} · model ${opts.model}`;
-    const turns = writeOutputs(stem, segments, [header]);
+    const turns = render(stem, segments, map, header);
+    const auto = Object.entries(map).map(([k, e]) => `${k}=${e.name} (${e.score})`);
     console.log(`wrote ${stem}.md and ${stem}.srt (${turns} turns)`);
-    console.log(`next: meeting-transcribe speakers ${opts.video}`);
+    console.log(auto.length ? `auto-matched: ${auto.join(", ")}` : "auto-matched: none");
+    const left = unlabelled(segments, map);
+    if (left.length) console.log(`unlabelled: ${left.join(", ")} -> meeting-transcribe speakers ${opts.video}`);
   } finally {
     if (opts.keep) console.log(`kept work dir ${work}`);
     else rmSync(work, { recursive: true, force: true });
   }
-}
-
-// The first label call freezes the diarized SRT; every render starts from that snapshot.
-function rawSegments(stem: string): Segment[] {
-  const raw = `${stem}.raw.srt`;
-  if (!existsSync(raw)) {
-    if (!existsSync(`${stem}.srt`)) throw new Error(`no ${stem}.srt, transcribe first`);
-    copyFileSync(`${stem}.srt`, raw);
-  }
-  return parseSrt(readFileSync(raw, "utf8"));
-}
-
-function loadMap(stem: string): Record<string, string> {
-  const f = `${stem}.speakers.json`;
-  return existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : {};
-}
-
-function labelOrder(a: string, b: string): number {
-  const n = (s: string) => {
-    const m = /^Speaker (\d+)$/.exec(s);
-    return m ? Number(m[1]) : Infinity;
-  };
-  return n(a) - n(b) || a.localeCompare(b);
 }
 
 function speakers(argv: string[]) {
@@ -209,56 +326,98 @@ function speakers(argv: string[]) {
   const stem = stemOf(argv[0]);
   const segments = rawSegments(stem);
   const map = loadMap(stem);
+  const embeddings = loadEmbeddings(stem);
+  const voices = loadVoices();
   const turns = toTurns(segments);
-  const labels = [...new Set(segments.map((s) => s.speaker))].sort(labelOrder);
-  for (const label of labels) {
+  for (const label of [...new Set(segments.map((s) => s.speaker))].sort(labelOrder)) {
     const mine = segments.filter((s) => s.speaker === label);
     const talk = mine.reduce((t, s) => t + (s.end - s.start), 0);
-    const turnCount = turns.filter((t) => t.speaker === label).length;
-    const name = map[label] ? ` = ${map[label]}` : "";
-    console.log(`\n${label}${name}: ${turnCount} turns, ${stamp(talk)} talk, first at ${stamp(mine[0].start)}`);
+    const e = map[label];
+    const name = e ? ` = ${e.name} (${e.source === "auto" ? `auto ${e.score}` : "manual"})` : "";
+    const closest = !e && embeddings[label] ? scores(embeddings[label], voices).slice(0, 2) : [];
+    const hint = closest.length ? `  closest: ${closest.map((c) => `${c.name} ${c.score.toFixed(2)}`).join(", ")}` : "";
+    console.log(`\n${label}${name}: ${turns.filter((t) => t.speaker === label).length} turns, ${stamp(talk)} talk, first at ${stamp(mine[0].start)}${hint}`);
     for (const s of [...mine].sort((a, b) => b.text.length - a.text.length).slice(0, 3).sort((a, b) => a.start - b.start)) {
-      const text = s.text.length > 220 ? `${s.text.slice(0, 220)}…` : s.text;
-      console.log(`  [${stamp(s.start)}] ${text}`);
+      console.log(`  [${stamp(s.start)}] ${s.text.length > 220 ? `${s.text.slice(0, 220)}…` : s.text}`);
     }
   }
+  if (!Object.keys(embeddings).length) console.log("\n(no embeddings for this recording: labels work, voices cannot be enrolled)");
 }
 
 function label(argv: string[]) {
-  if (argv.length < 2) { console.error(USAGE); process.exit(2); }
-  const stem = stemOf(argv[0]);
+  const confirm = argv.includes("--confirm");
+  const args = argv.filter((a) => a !== "--confirm");
+  if (!args.length || (args.length < 2 && !confirm)) { console.error(USAGE); process.exit(2); }
+  const stem = stemOf(args[0]);
+  const meeting = basename(stem);
   const segments = rawSegments(stem);
   const known = new Set(segments.map((s) => s.speaker));
   const map = loadMap(stem);
-  for (const pair of argv.slice(1)) {
+  const embeddings = loadEmbeddings(stem);
+  const voices = loadVoices();
+  const touched = new Set<string>();
+  if (confirm) {
+    for (const [k, e] of Object.entries(map)) if (e.source === "auto") { map[k] = { name: e.name, source: "manual" }; touched.add(k); }
+  }
+  for (const pair of args.slice(1)) {
     const eq = pair.indexOf("=");
     if (eq < 0) throw new Error(`expected LABEL=Name, got: ${pair}`);
     let key = pair.slice(0, eq).trim();
     if (/^S?\d+$/i.test(key)) key = `Speaker ${key.replace(/\D/g, "")}`;
     if (!known.has(key)) throw new Error(`no speaker "${key}" in this transcript (have: ${[...known].sort(labelOrder).join(", ")})`);
     const name = pair.slice(eq + 1).trim();
-    if (name) map[key] = name;
+    if (name) map[key] = { name, source: "manual" };
     else delete map[key];
+    touched.add(key);
   }
-  const tmp = `${stem}.speakers.json.tmp`;
-  writeFileSync(tmp, `${JSON.stringify(map, null, 2)}\n`);
-  renameSync(tmp, `${stem}.speakers.json`);
+  saveMap(stem, map);
+  let enrolled = 0;
+  for (const key of touched) {
+    enroll(voices, meeting, key, map[key]?.name, embeddings[key]);
+    if (map[key] && embeddings[key]) enrolled++;
+  }
+  if (touched.size) saveVoices(voices);
 
-  const named = segments.map((s) => ({ ...s, speaker: map[s.speaker] ?? s.speaker }));
-  const oldHeader = existsSync(`${stem}.md`)
-    ? readFileSync(`${stem}.md`, "utf8").split("\n").find((l) => l.startsWith("Tracks:"))
-    : undefined;
-  const mapping = Object.keys(map).sort(labelOrder).map((k) => `${k} = ${map[k]}`).join(", ");
-  const header = [...(oldHeader ? [oldHeader] : []), ...(mapping ? [`Speakers: ${mapping}`] : [])];
-  const turns = writeOutputs(stem, named, header);
-  const left = [...known].filter((k) => !map[k] && /^Speaker \d+$/.test(k)).sort(labelOrder);
-  console.log(`wrote ${stem}.md and ${stem}.srt (${turns} turns)${left.length ? `; unlabelled: ${left.join(", ")}` : ""}`);
+  const turns = render(stem, segments, map);
+  const left = unlabelled(segments, map);
+  console.log(`wrote ${stem}.md and ${stem}.srt (${turns} turns); enrolled ${enrolled} voice sample(s)${left.length ? `; unlabelled: ${left.join(", ")}` : ""}`);
+}
+
+function match(argv: string[]) {
+  if (argv.length !== 1) { console.error(USAGE); process.exit(2); }
+  const stem = stemOf(argv[0]);
+  const embeddings = loadEmbeddings(stem);
+  if (!Object.keys(embeddings).length) throw new Error(`no ${basename(stem)}.embeddings.json, re-transcribe to get voiceprints`);
+  const segments = rawSegments(stem);
+  const map = autoMatch(embeddings, loadVoices(), loadMap(stem));
+  saveMap(stem, map);
+  const turns = render(stem, segments, map);
+  const auto = Object.entries(map).filter(([, e]) => e.source === "auto").map(([k, e]) => `${k}=${e.name} (${e.score})`);
+  console.log(`wrote ${stem}.md and ${stem}.srt (${turns} turns); auto-matched: ${auto.join(", ") || "none"}`);
+}
+
+function voicesCmd(argv: string[]) {
+  const voices = loadVoices();
+  if (argv[0] === "forget") {
+    const name = argv.slice(1).join(" ");
+    if (!voices.people[name]) throw new Error(`no voiceprint for "${name}"`);
+    delete voices.people[name];
+    saveVoices(voices);
+    console.log(`erased voiceprint for ${name} (meeting .embeddings.json files still hold the raw clusters)`);
+    return;
+  }
+  if (argv.length) { console.error(USAGE); process.exit(2); }
+  const people = Object.entries(voices.people).sort(([a], [b]) => a.localeCompare(b));
+  if (!people.length) console.log("no enrolled voices");
+  for (const [name, p] of people) console.log(`${name}: ${p.samples.length} sample(s) from ${[...new Set(p.samples.map((s) => s.meeting))].join(", ")}`);
 }
 
 try {
   const [cmd, ...rest] = process.argv.slice(2);
   if (cmd === "speakers") speakers(rest);
   else if (cmd === "label") label(rest);
+  else if (cmd === "match") match(rest);
+  else if (cmd === "voices") voicesCmd(rest);
   else transcribe(process.argv.slice(2));
 } catch (e) {
   console.error(`meeting-transcribe: ${(e as Error).message}`);
