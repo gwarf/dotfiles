@@ -18,10 +18,11 @@ const MAX_SAMPLES = 12;
 const USAGE = `usage:
   meeting-transcribe <video> [--language fr|en|...] [--me NAME] [--speakers N] [--model NAME] [--keep]
   meeting-transcribe speakers <video>          evidence per speaker, with auto-match scores
-  meeting-transcribe label <video> "Speaker 2=Jane Doe" [...] [--confirm]
+  meeting-transcribe label <video> "Speaker 2=Jane Doe" [...] [--confirm] [--no-enroll]
                                                name speakers, re-render .md/.srt, enroll their voices
                                                ("2=Jane" works; "2=" drops a name; --confirm accepts
-                                               every auto-match and enrolls it too)
+                                               every auto-match and enrolls it too; --no-enroll names
+                                               without enrolling, for fragmentary clusters like backchannels)
   meeting-transcribe match <video>             re-run auto-matching (after enrolling more people)
   meeting-transcribe voices [forget NAME]      list or erase enrolled voiceprints
   HF token for diarization is read from Bitwarden (rbw) entry $MEETING_HF_RBW_ENTRY
@@ -346,7 +347,8 @@ function speakers(argv: string[]) {
 
 function label(argv: string[]) {
   const confirm = argv.includes("--confirm");
-  const args = argv.filter((a) => a !== "--confirm");
+  const noEnroll = argv.includes("--no-enroll");
+  const args = argv.filter((a) => a !== "--confirm" && a !== "--no-enroll");
   if (!args.length || (args.length < 2 && !confirm)) { console.error(USAGE); process.exit(2); }
   const stem = stemOf(args[0]);
   const meeting = basename(stem);
@@ -373,8 +375,8 @@ function label(argv: string[]) {
   saveMap(stem, map);
   let enrolled = 0;
   for (const key of touched) {
-    enroll(voices, meeting, key, map[key]?.name, embeddings[key]);
-    if (map[key] && embeddings[key]) enrolled++;
+    enroll(voices, meeting, key, noEnroll ? undefined : map[key]?.name, embeddings[key]);
+    if (!noEnroll && map[key] && embeddings[key]) enrolled++;
   }
   if (touched.size) saveVoices(voices);
 
