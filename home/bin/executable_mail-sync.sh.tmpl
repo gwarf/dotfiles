@@ -17,6 +17,18 @@ ACCOUNT="${1:-operas}"
 ACCOUNT="${1:-all}"
 {{- end }}
 
+# Every step runs even after a failure (notmuch should still index what did
+# sync), but any failure makes the script exit 1 so mailsync.service goes red.
+FAILED=0
+run() {
+    "$@"
+    status=$?
+    if [ "$status" -ne 0 ]; then
+        echo "mail-sync: '$*' failed with exit $status" >&2
+        FAILED=1
+    fi
+}
+
 run_mailcow() {
     MBSYNC=$(pgrep mbsync)
     NOTMUCH=$(pgrep notmuch)
@@ -30,15 +42,15 @@ run_mailcow() {
     # Only run move-mails if mbsync notmuch DB is already initialized
     if [ -d ~/Mail/.notmuch/xapian ]; then
         # Move tagged messages to the related Maildir folders per MailMover rules
-        afew --move --all
+        run afew --move --all
     fi
 
     # Synchronize all mbsync mailboxes
-    mbsync --all
+    run mbsync --all
 
     # Tag new messages — afew --tag --new is invoked by the post-new hook at
     # ~/Mail/.notmuch/hooks/post-new for the mailcow DB
-    notmuch new
+    run notmuch new
 }
 
 run_operas() {
@@ -48,15 +60,15 @@ run_operas() {
 {{- if eq .chezmoi.hostname "assist" }}
     # assist is the sole gmi push host per Local mail stack ISC-37
     # (single-writer-to-Gmail anti). `gmi sync` does pull + push.
-    /usr/bin/gmi sync -C "$HOME/.mail/operas.gmail"
+    run /usr/bin/gmi sync -C "$HOME/.mail/operas.gmail"
 {{- else }}
     # sikaru/torpedo pull-only — push is assist-only per ISC-37
-    /usr/bin/gmi pull -C "$HOME/.mail/operas.gmail"
+    run /usr/bin/gmi pull -C "$HOME/.mail/operas.gmail"
 {{- end }}
 
     # Index any new mail. lieer's gmi pull populates notmuch directly during pull,
     # so this is a safety net more than a primary action.
-    notmuch new
+    run notmuch new
 
     # Tag with stock filters only.
     #
@@ -69,7 +81,7 @@ run_operas() {
     # afew 3.x has no alternate-afew-config-file flag (only -C / --notmuch-config
     # for the notmuch config). The cleanest scope is -e (filter class whitelist):
     # run only the cross-account stock filters that don't depend on folder paths.
-    afew --tag --new \
+    run afew --tag --new \
         -e SpamFilter,KillThreadsFilter,ListMailsFilter,MeFilter,ArchiveSentMailsFilter,InboxFilter
 }
 
@@ -77,5 +89,7 @@ case "$ACCOUNT" in
     mailcow) run_mailcow ;;
     operas)  run_operas ;;
     all)     run_mailcow; run_operas ;;
-    *) echo "Usage: $0 [mailcow|operas|all]"; exit 1 ;;
+    *) echo "Usage: $0 [mailcow|operas|all]" >&2; exit 1 ;;
 esac
+
+exit "$FAILED"
