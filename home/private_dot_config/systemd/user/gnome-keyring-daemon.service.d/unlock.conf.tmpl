@@ -1,0 +1,8 @@
+{{- if eq .chezmoi.hostname "sikaru" -}}
+[Service]
+# Autologin gives PAM no password, so the daemon unlocks the login keyring
+# itself from a TPM-sealed copy; exec keeps it the unit's main process.
+# If the credential cannot be read it starts locked and prompts as before.
+ExecStart=
+ExecStart=/bin/bash -c 'a=(--foreground --components=pkcs11,secrets --control-directory=%t/keyring); if pw=$$(systemd-creds decrypt --user --name=gnome-keyring-login %h/.config/credstore.user/gnome-keyring-login.cred -); then exec /usr/bin/gnome-keyring-daemon "$${a[@]}" --unlock < <(printf %%s "$$pw"); fi; exec /usr/bin/gnome-keyring-daemon "$${a[@]}"'
+{{- end }}
