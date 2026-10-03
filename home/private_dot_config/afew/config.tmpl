@@ -19,7 +19,7 @@ folder_transforms = trash:deleted
 
 # Add tag invite to new calendar invites
 [Filter.1]
-query = "mimetype:text/calendar or mimetype:application/ics"
+query = mimetype:text/calendar or mimetype:application/ics
 tags = +invites
 message: Tagging invites
 
@@ -43,25 +43,25 @@ folder_transforms = Archive:archived Drafts:draft Trash:deleted Sent:sent Junk:s
 # remove tag new and add tag inbox
 [InboxFilter]
 
-# folder: takes a bare path or a /regex/; quotes inside the value are literal
-# and make the query match nothing.
+# Values are taken literally: quoting a query (or a folder: path) turns it
+# into a phrase search that matches nothing.
 [Filter.1]
-query = "tag:inbox and not tag:deleted and folder:Perso/Trash"
-tags = -inbox +deleted
+query = tag:inbox and not tag:deleted and folder:Perso/Trash
+tags = -inbox;+deleted
 message: Fix tags for messages deleted
 
 [Filter.2]
-query = "tag:inbox and folder:/Perso\/Archive/"
+query = tag:inbox and folder:/Perso\/Archive/
 tags = -inbox
 message: Removing archived messages from Inbox
 
 [Filter.3]
-query = "tag:inbox and folder:Perso/Trash"
+query = tag:inbox and folder:Perso/Trash
 tags = -inbox
 message: Removing deleted messages from Inbox
 
 [Filter.4]
-query = "tag:sent and tag:inbox and folder:Perso/Sent"
+query = tag:sent and tag:inbox and folder:Perso/Sent
 tags = -inbox
 message: Removing Sent messages from Inbox
 
