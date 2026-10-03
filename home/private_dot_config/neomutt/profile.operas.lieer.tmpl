@@ -25,17 +25,19 @@ virtual-mailboxes "trash" "notmuch://?query=tag:trash"
 virtual-mailboxes "drafts" "notmuch://?query=tag:drafts and (not tag:trash)"
 
 # Outbound path varies per host:
-# - workstations (sikaru, torpedo): msmtpq queues offline, flushes via msmtp-runqueue.timer
+# - sikaru: lieer sends through the Gmail API with its existing OAuth token,
+#   so no SMTP secret exists; no offline queue, a failed send errors in neomutt
+# - torpedo: msmtpq queues offline, flushes via msmtp-runqueue.timer
 # - assist: OpenSMTPd Unix-socket relay via the /usr/sbin/sendmail shim
 #   (OpenSMTPd routes by From: header in /etc/smtpd.conf — Gmail upstream for OPERAS)
 {{- if eq .chezmoi.hostname "assist" }}
 set sendmail = "/usr/sbin/sendmail"
+{{- else if eq .chezmoi.hostname "sikaru" }}
+# gmi refuses to load the repository unless notmuch points at the lieer DB
+set sendmail = "/usr/bin/env NOTMUCH_CONFIG={{ .chezmoi.homeDir }}/.notmuch-config-lieer /usr/bin/gmi send -t -C {{ .chezmoi.homeDir }}/.mail/operas.gmail"
 {{- else }}
 set sendmail = "/home/baptiste/.local/bin/msmtpq"
 {{- end }}
-
-# XXX: alterntive: send via Lieer
-# set sendmail = "gmi send -t -C ~/.mail/operas.gmail"
 #
 # Fetching mail
 # It's required to run lieer to sync emails, and also send them
