@@ -106,7 +106,8 @@ Channel gmail-edch
 IMAPAccount baptiste
 # CertificateFile /etc/ssl/certs/ca-certificates.crt
 Host mail.bapt.name
-PassCmd "rbw get mail.bapt.name/sikaru/baptiste@bapt.name"
+# TPM-sealed user credential, no unlock step under autologin (DR-0041)
+PassCmd "systemd-creds decrypt --user --name=mailcow-baptiste $HOME/.config/credstore.user/mailcow-baptiste.cred -"
 Port 143
 TLSType STARTTLS
 AuthMechs LOGIN

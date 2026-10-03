@@ -13,8 +13,8 @@ configurations:
     # system unit (LoadCredentialEncrypted=MAILCOW_BAPTISTE_PASSWORD:.../MAILCOW_BAPTISTE_PASSWORD.cred).
     passwordCmd: "systemd-creds cat MAILCOW_BAPTISTE_PASSWORD"
 {{- else }}
-    # Workstation-side rbw lookup, per-host entry name.
-    passwordCmd: "rbw get mail.bapt.name/{{ .chezmoi.hostname }}/baptiste@bapt.name"
+    # TPM-sealed user credential, no unlock step under autologin (DR-0041).
+    passwordCmd: "systemd-creds decrypt --user --name=mailcow-baptiste $HOME/.config/credstore.user/mailcow-baptiste.cred -"
 {{- end }}
     xoAuth2: false
     boxes:
