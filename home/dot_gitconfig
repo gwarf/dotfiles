@@ -159,3 +159,11 @@
 # https://github.com/twpayne/chezmoi/discussions/3658
 [url "git@github.com:gwarf/"]
 	insteadOf = https://github.com/gwarf/
+# gh resolved via PATH: `gh auth setup-git` writes a versioned install path
+# that breaks on every gh upgrade. Empty helper resets any inherited one.
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
