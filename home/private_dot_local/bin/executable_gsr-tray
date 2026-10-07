@@ -134,8 +134,19 @@ def describe(argv, elapsed_seconds, size_bytes):
     return [f"● Recording {capture} · {duration}", f"{os.path.basename(output)} · {size}"]
 
 
-def recorder():
-    """(info lines, region spec or None) for the running recording, or None when idle."""
+def stop_command(argv):
+    """gsr-ui-cli toggle matching how the recorder was started; a mismatched toggle
+    makes gsr-ui kill the recorder and report a false save failure."""
+    target = _arg(argv, "-w")
+    if target == "region" or parse_region(target):
+        return "toggle-record-region"
+    if target in ("portal", "focused"):
+        return "toggle-record-window"
+    return "toggle-record"
+
+
+def _recorder_proc():
+    """(argv, elapsed seconds) of the running recorder, or None when idle."""
     pids = subprocess.run(
         ["pgrep", "-f", RECORDER_PATTERN], capture_output=True, text=True
     ).stdout.split()
@@ -151,6 +162,15 @@ def recorder():
     except (OSError, ValueError):
         # The recorder exited between pgrep and the reads.
         return None
+    return argv, elapsed
+
+
+def recorder():
+    """(info lines, region spec or None) for the running recording, or None when idle."""
+    proc = _recorder_proc()
+    if proc is None:
+        return None
+    argv, elapsed = proc
     output = _arg(argv, "-o")
     try:
         size = os.path.getsize(output) if output else None
@@ -174,7 +194,6 @@ def _item(menu, label, callback=None):
 
 class Tray:
     def __init__(self):
-        self.mode = None
         self.marker = RegionMarker()
         self.indicator = AppIndicator.Indicator.new(
             "gsr-tray", IDLE_ICON, AppIndicator.IndicatorCategory.APPLICATION_STATUS
@@ -185,8 +204,8 @@ class Tray:
         self.info = [_item(menu, ""), _item(menu, "")]
         self.info_separator = Gtk.SeparatorMenuItem()
         menu.append(self.info_separator)
-        self.full = _item(menu, "Record full screen", lambda: self.start("toggle-record"))
-        self.region = _item(menu, "Record region", lambda: self.start("toggle-record-region"))
+        self.full = _item(menu, "Record full screen", lambda: self.run_cli("toggle-record"))
+        self.region = _item(menu, "Record region", lambda: self.run_cli("toggle-record-region"))
         self.stop_item = _item(menu, "Stop recording", self.stop)
         menu.append(Gtk.SeparatorMenuItem())
         _item(menu, "Quit tray", Gtk.main_quit)
@@ -205,16 +224,12 @@ class Tray:
         subprocess.Popen(["gsr-ui", "launch-daemon"])
         GLib.timeout_add_seconds(2, lambda: subprocess.Popen(["gsr-ui-cli", command]) and False)
 
-    def start(self, command):
-        self.mode = command
-        self.run_cli(command)
-
     def stop(self):
-        if recorder() is None:
-            return
-        # A recording started outside the tray (overlay, hotkey) stops with the plain toggle.
-        self.run_cli(self.mode or "toggle-record")
-        self.mode = None
+        # Derived from the live process, so hotkey/overlay starts and the region
+        # selection delay (no recorder yet) cannot leave a stale mode behind.
+        proc = _recorder_proc()
+        if proc is not None:
+            self.run_cli(stop_command(proc[0]))
 
     def refresh(self):
         state = recorder()
@@ -224,8 +239,6 @@ class Tray:
             self.marker.update(region)
         else:
             self.marker.hide()
-        if not recording:
-            self.mode = None
         for item, text in zip(self.info, lines or ["", ""]):
             item.set_label(text)
             item.set_visible(recording)
