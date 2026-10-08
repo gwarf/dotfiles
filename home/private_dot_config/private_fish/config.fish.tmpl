@@ -272,6 +272,8 @@ if status is-interactive
     type -q direnv; and direnv hook fish | source
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     type -q fzf; and fzf --fish | source
+    # After fzf so Ctrl-R is atuin's; Up keeps fish's own history search.
+    type -q atuin; and atuin init fish --disable-up-arrow | source
 
     # if type -q tirith
     #     tirith init --shell fish | source

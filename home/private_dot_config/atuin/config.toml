@@ -1,0 +1,6 @@
+# Sync goes to the self-hosted server; the encryption key stays in
+# ~/.local/share/atuin/key and is never managed here.
+sync_address = "https://atuin.internal.bapt.name"
+auto_sync = true
+sync_frequency = "5m"
+update_check = false

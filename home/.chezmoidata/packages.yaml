@@ -404,6 +404,7 @@ packages:
       - "zoxide"
       - "zsh"
     brews:
+      - "atuin"
       - "chezmoi"
       - "fzf"
       - "gcc"
@@ -416,6 +417,7 @@ packages:
       - "uv"
   sikaru:
     pkgs:
+      - "atuin"
       - "bat"
       - "chezmoi"
       - "direnv"
@@ -446,6 +448,7 @@ packages:
       - "zsh"
   torpedo:
     pkgs:
+      - "atuin"
       - "bat"
       - "chezmoi"
       - "direnv"
