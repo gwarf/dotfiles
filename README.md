@@ -14,6 +14,8 @@ macOS.
 
 OS packages are installed via a [packages.yaml](home/.chezmoidata/packages.yaml)
 and using [run_onchange_install-packages.sh](home/run_onchange_install-packages.sh.tmpl).
+Arch workstations and the apt side of `assist` get theirs from Ansible instead,
+because that script also runs unattended, where sudo has no terminal.
 
 ### Initializing
 
