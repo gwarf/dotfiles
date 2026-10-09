@@ -155,7 +155,7 @@ set -g window-status-separator ""
 # Session pill: name, then an icon that turns red while prefix is held, flat at
 # the screen edge and rounded towards the windows.
 set -g @session_pill_color "#{?client_prefix,#{@thm_red},#{@thm_green}}"
-set -g status-left "#[fg=#{@thm_fg},bg=#{@thm_surface_0}] #S #[fg=#{@thm_crust},bg=#{E:@session_pill_color}] \uE795 #[fg=#{E:@session_pill_color},bg=default]\uE0B4 "
+set -g status-left "#[fg=#{@thm_fg},bg=#{@thm_surface_0}] #S #[fg=#{@thm_crust},bg=#{E:@session_pill_color}] \uEBC8 #[fg=#{E:@session_pill_color},bg=default]\uE0B4 "
 set -g status-right "#[fg=#{@thm_blue},bold]#{?pane_in_mode,COPY ,}#{?client_prefix,PREFIX ,}#{?window_zoomed_flag,ZOOM ,}#[default]"
 set -ag status-right "#{mpd_now_playing}"
 set -agF status-right "#{E:@catppuccin_status_cpu}"
