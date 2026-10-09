@@ -1,0 +1,3 @@
+color:
+  # Reads colors.yaml next to this file (catppuccin macchiato).
+  theme: custom
