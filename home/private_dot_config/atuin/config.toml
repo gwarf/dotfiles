@@ -4,3 +4,13 @@ sync_address = "https://atuin.internal.bapt.name"
 auto_sync = true
 sync_frequency = "5m"
 update_check = false
+
+# Enter runs the selection, Tab puts it on the prompt for editing.
+enter_accept = true
+# Adds a git-repo scope to the Ctrl-R cycle.
+workspaces = true
+invert = true
+
+[theme]
+# Matches the mocha + mauve accent used by hypr and tmux.
+name = "catppuccin-mocha-mauve"
