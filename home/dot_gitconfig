@@ -146,7 +146,7 @@
 # https://dandavison.github.io/delta/configuration.html
 [delta]
   navigate = true    # use n and N to move between diff sections
-  theme = Dracula
+  syntax-theme = Catppuccin Macchiato
   line-numbers = true
 [safe]
 	directory = /usr/ports

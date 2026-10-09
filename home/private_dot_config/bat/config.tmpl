@@ -1,0 +1,8 @@
+{{- /* Catppuccin ships with bat 0.25+; older bat would warn on every run. */ -}}
+{{- $bat := lookPath "bat" -}}
+{{- if and $bat (contains "Catppuccin Macchiato" (output $bat "--list-themes")) -}}
+--theme="Catppuccin Macchiato"
+{{ else -}}
+--theme="Dracula"
+{{ end -}}
+--style="plain"

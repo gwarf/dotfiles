@@ -12,5 +12,5 @@ workspaces = true
 invert = true
 
 [theme]
-# Matches the mocha + mauve accent used by hypr and tmux.
-name = "catppuccin-mocha-mauve"
+# Macchiato + mauve, like tmux, starship and ls.
+name = "catppuccin-macchiato-mauve"
