@@ -32,7 +32,7 @@ $time\
 [ ](fg:color_bg1)\
 $line_break$character"""
 
-palette = 'catppuccin_mocha'
+palette = 'catppuccin_macchiato'
 
 scan_timeout = 500
 command_timeout = 3000
@@ -72,6 +72,46 @@ color_orange = '#fab387'
 color_purple = '#cba6f7'
 color_red = '#f38ba8'
 color_yellow = '#f9e2af'
+
+[palettes.catppuccin_macchiato]
+color_fg0 = '#181926'
+color_text = '#cad3f5'
+color_bg1 = '#363a4f'
+color_bg3 = '#494d64'
+color_blue = '#8aadf4'
+color_aqua = '#8bd5ca'
+color_green = '#a6da95'
+color_orange = '#f5a97f'
+color_purple = '#c6a0f6'
+color_red = '#ed8796'
+color_yellow = '#eed49f'
+
+[palettes.catppuccin_frappe]
+color_fg0 = '#232634'
+color_text = '#c6d0f5'
+color_bg1 = '#414559'
+color_bg3 = '#51576d'
+color_blue = '#8caaee'
+color_aqua = '#81c8be'
+color_green = '#a6d189'
+color_orange = '#ef9f76'
+color_purple = '#ca9ee6'
+color_red = '#e78284'
+color_yellow = '#e5c890'
+
+# Light flavour: crust is light here, so segment text inverts to light-on-saturated.
+[palettes.catppuccin_latte]
+color_fg0 = '#dce0e8'
+color_text = '#4c4f69'
+color_bg1 = '#ccd0da'
+color_bg3 = '#bcc0cc'
+color_blue = '#1e66f5'
+color_aqua = '#179299'
+color_green = '#40a02b'
+color_orange = '#fe640b'
+color_purple = '#8839ef'
+color_red = '#d20f39'
+color_yellow = '#df8e1d'
 
 [os]
 disabled = false
