@@ -28,6 +28,7 @@ setw -g pane-base-index 1
 set -g renumber-windows on
 # Disable automatic changes of titles
 set -g set-titles on
+set -g set-titles-string '#h:#W'
 set-window-option -g automatic-rename on
 set-window-option -g allow-rename on
 set  -g mouse off
@@ -39,24 +40,53 @@ set -as terminal-features ",*:clipboard"
 # Enable OSC 8 hyperlinks
 set -sa terminal-features ",*:hyperlinks"
 
-{{ if stat "/usr/share/omarchy" -}}
-# Omarchy branch: its stock tmux.conf, imported verbatim so both configs sit
-# here while they get merged into one. Other hosts render the branch below.
+set -g history-limit 50000
+set -sg escape-time 10
+set -g focus-events on
+set -g set-clipboard on
+# Also needed by yazi image preview: https://yazi-rs.github.io/docs/image-preview/#tmux
+set -g allow-passthrough on
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+setw -g aggressive-resize on
+set -g detach-on-destroy off
+set -g extended-keys on
+%if #{>=:#{version},3.5}
+set -g extended-keys-format csi-u
+%endif
 
+# Activity Monitoring
+setw -g monitor-activity off
+set -g visual-activity off
+
+# Without this, panes fall back to the passwd shell (bash) and lose the fish
+# config: starship prompt, abbreviations, PATH additions. default-command stays
+# unset so tmux runs this as a login shell rather than through a bash wrapper.
+{{ if eq .chezmoi.os "freebsd" -}}
+set -g default-shell /usr/local/bin/fish
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ if stat "/opt/homebrew/bin/fish" -}}
+set -g default-shell /opt/homebrew/bin/fish
+{{ else -}}
+set -g default-shell /usr/local/bin/fish
+{{ end -}}
+{{ else -}}
+set -g default-shell /usr/bin/fish
+{{ end }}
 # Config and help
 bind -N "Reload configuration" q source-file ~/.config/tmux/tmux.conf \; display "Configuration reloaded"
+{{ if stat "/usr/share/omarchy" -}}
 bind -N "Show Tmux keybindings" ? display-popup -E -w 80% -h 70% -T "Tmux keybindings" "omarchy-menu-tmux-keybindings --print | less -R"
-
+{{ else -}}
+bind -N "Show Tmux keybindings" ? display-popup -E -w 80% -h 70% -T "Tmux keybindings" "tmux list-keys -N | less"
+{{ end }}
 # Pane Controls
 # Omarchy binds this to kill-pane. No prefix and no confirmation, one slip from
 # Alt+Tab, and it took a root shell with it. Prefix+x still kills a pane.
 unbind -n M-Escape
-
-# bind -N "Split pane vertically" -n M-Enter split-window -v -c "#{pane_current_path}"
-# bind -N "Split pane horizontally" -n M-S-Enter split-window -h -c "#{pane_current_path}"
-# bind -N "Split pane vertically" h split-window -v -c "#{pane_current_path}"
-# bind -N "Split pane horizontally" v split-window -h -c "#{pane_current_path}"
 bind -N "Kill pane" x kill-pane
+bind -N "Synchronize panes" y setw synchronize-panes
+bind -N "Send pane to window" s command-prompt -p "send pane to:" "join-pane -t '%%'"
 
 bind -N "Resize pane left" -n C-M-S-Left resize-pane -L 5
 bind -N "Resize pane down" -n C-M-S-Down resize-pane -D 5
@@ -66,7 +96,8 @@ bind -N "Resize pane right" -n C-M-S-Right resize-pane -R 5
 # Window navigation
 bind -N "Rename window" r command-prompt -I "#W" "rename-window -- '%%'"
 bind -N "Create window" c new-window -c "#{pane_current_path}"
-# bind -N "Kill window" k kill-window
+bind -N "Swap window with" m command-prompt -p "move window to:" "swap-window -t '%%'"
+bind -N "Move window to index" . command-prompt "move-window -r -t '%%'"
 
 bind -N "Switch to window 1" -n M-1 select-window -t 1
 bind -N "Switch to window 2" -n M-2 select-window -t 2
@@ -86,164 +117,11 @@ bind -N "Move window right" -n M-S-Right swap-window -t +1 \; select-window -t +
 # Session controls
 bind -N "Rename session" R command-prompt -I "#S" "rename-session -- '%%'"
 bind -N "Create session" C new-session -c "#{pane_current_path}"
-# bind -N "Kill session" K kill-session
 bind -N "Previous session" P switch-client -p
 bind -N "Next session" N switch-client -n
 
 bind -N "Previous session" -n M-Up switch-client -p
 bind -N "Next session" -n M-Down switch-client -n
-
-# General
-set -g history-limit 50000
-set -g escape-time 0
-set -g focus-events on
-set -g set-clipboard on
-set -g allow-passthrough on
-setw -g aggressive-resize on
-set -g detach-on-destroy off
-set -g extended-keys on
-set -g extended-keys-format csi-u
-set -sg escape-time 10
-
-# Status bar
-set -g status-position top
-set -g status-interval 5
-set -g status-left-length 30
-set -g status-right-length 50
-set -g window-status-separator ""
-set -gw automatic-rename on
-#set -gw automatic-rename-format '#{b:pane_current_path}'
-set -g set-titles on
-set -g set-titles-string '#h:#W'
-
-# Theme
-set -g status-style "bg=default,fg=default"
-set -g status-left "#[fg=black,bg=blue,bold] #S #[bg=default] "
-set -g status-right "#[fg=blue]#{?pane_in_mode,COPY ,}#{?client_prefix,PREFIX ,}#{?window_zoomed_flag,ZOOM ,}#[fg=brightblack]#h "
-set -g window-status-format "#[fg=brightblack] #I:#W "
-set -g window-status-current-format "#[fg=blue,bold] #I:#W "
-set -g pane-border-style "fg=brightblack"
-set -g pane-active-border-style "fg=blue"
-set -g message-style "bg=default,fg=blue"
-set -g message-command-style "bg=default,fg=blue"
-set -g mode-style "bg=blue,fg=black"
-setw -g clock-mode-colour blue
-
-# Without this, panes fall back to the passwd shell (bash) and lose the fish
-# config: starship prompt, abbreviations, PATH additions. default-command stays
-# unset so tmux runs this as a login shell rather than through a bash wrapper.
-set -g default-shell /usr/bin/fish
-
-{{ else -}}
-setw -g clock-mode-style 12
-
-# Use fish as shell
-{{ if eq .chezmoi.os "freebsd" -}}
-set -g default-command /usr/local/bin/fish
-set -g default-shell /usr/local/bin/fish
-{{ else if eq .chezmoi.os "darwin" -}}
-{{ if stat "/opt/homebrew/bin/fish" }}
-set -g default-command /opt/homebrew/bin/fish
-set -g default-shell /opt/homebrew/bin/fish
-{{ else -}}
-set -g default-command /usr/local/bin/fish
-set -g default-shell /usr/local/bin/fish
-{{ end -}}
-{{ else if eq .chezmoi.os "linux" -}}
-set -g default-command /usr/bin/fish
-set -g default-shell /usr/bin/fish
-{{ end -}}
-# Activity Monitoring
-setw -g monitor-activity off
-set -g visual-activity off
-
-# reload config file
-# XXX: default binding is rename windows, and R is rename session
-# a better keybing would be good
-bind r source-file ~/.config/tmux/tmux.conf \; display "Config Reloaded!"
-
-# synchronize all panes in a window
-bind y setw synchronize-panes
-
-# Remap x to avoid confirmation to kill pane
-bind-key x kill-pane
-
-# Window movement / renumbering like in screen's :number
-bind-key m command-prompt -p "move window to:"  "swap-window -t '%%'"
-bind-key . command-prompt "move-window -r -t '%%'"
-
-# Send pane next to another one
-bind-key s command-prompt -p "send pane to:"  "join-pane -t '%%'"
-
-# For yazi
-# https://yazi-rs.github.io/docs/image-preview/#tmux
-set -g allow-passthrough on
-set -ga update-environment TERM
-set -ga update-environment TERM_PROGRAM
-
-# List of plugins
-set -g @plugin "tmux-plugins/tmux-cpu"
-# XXX: would need to hide it when plugged
-# https://github.com/tmux-plugins/tmux-battery#enabled
-# set -g @plugin "tmux-plugins/tmux-battery"
-set -g @plugin "tmux-plugins/tmux-yank"
-set -g @plugin "tmux-plugins/tmux-prefix-highlight"
-set -g @plugin "tmux-plugins/tmux-logging"
-# set -g @plugin "tmux-plugins/tmux-sessionist"
-
-set -g @plugin "alberti42/tmux-fzf-links"
-# MPD playing
-set -g @plugin "vascomfnunes/tmux-ludanta"
-
-# Themes
-# set -g @plugin "dracula/tmux"
-# set -g @plugin "fabioluciano/tmux-tokyo-night"
-set -g @plugin "catppuccin/tmux#v2.1.3"
-
-# tmux-fzf-links plugin
-# python3, not an absolute path: /usr/bin/python is absent on Ubuntu. The editor
-# command is set because the plugin's fallback is a hardcoded `open`, absent here.
-set-option -g @fzf-links-key C-u
-set-option -g @fzf-links-python "python3"
-set-option -g @fzf-links-browser-open-cmd "xdg-open '%url'"
-set-option -g @fzf-links-editor-open-cmd "tmux new-window -n nvim nvim +%line '%file'"
-
-# dracula theme
-set -g @dracula-plugins "ssh-session time"
-set -g @dracula-show-powerline true
-set -g @dracula-show-left-icon "💀 #S"
-set -g @dracula-show-left-sep 
-set -g @dracula-show-right-sep 
-set -g @dracula-show-empty-plugins false
-set -g @dracula-time-format "%F %R"
-# set -g @dracula-border-contrast true
-
-# catppuccin theme
-set -g @catppuccin_flavor "mocha"
-set -g @catppuccin_window_status_style "rounded"
-
-# tmux-fzf
-# prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
-TMUX_FZF_LAUNCH_KEY="f"
-# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
-set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
-# Wider/taller popup so titles are not truncated
-set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
-
-# Status bar at the top of the screen
-set-option -g status-position "top"
-# Make the status line pretty and add some modules
-set -g status-right-length 100
-set -g status-left-length 100
-set -g status-left ""
-set -g status-right "#{mpd_now_playing}"
-# set -ag status-right "#{E:@catppuccin_status_application}"
-set -agF status-right "#{E:@catppuccin_status_cpu}"
-set -ag status-right "#{E:@catppuccin_status_session}"
-# set -ag status-right "#{E:@catppuccin_status_uptime}"
-# XXX: display of tmux-battery
-# set -agF status-right "#{E:@catppuccin_status_battery}"
-{{ end -}}
 
 # ── herdr parity (keep tmux and herdr muscle memory aligned) ──
 # Split right on prefix+v (herdr split_vertical); | and % already split right too.
@@ -260,26 +138,67 @@ bind-key C-f command-prompt { find-window -Z "%%" }
 bind-key t display-popup -EE -w 82% -h 85% '~/.local/bin/daynote'
 bind-key T display-popup -EE -w 82% -h 85% '~/.local/bin/daynote --edit'
 
-# TPM plugins
+############ Theme ############
+
+set -g @catppuccin_flavor "mocha"
+set -g @catppuccin_window_status_style "rounded"
+# Run catppuccin here rather than from tpm at the bottom: the status line below
+# reads its @catppuccin_status_* and @thm_* options, which only exist once it ran.
+if "test -f ~/.config/tmux/plugins/tmux/catppuccin.tmux" \
+   "run ~/.config/tmux/plugins/tmux/catppuccin.tmux"
+
+set -g status-position top
+set -g status-interval 5
+set -g status-left-length 100
+set -g status-right-length 100
+set -g window-status-separator ""
+set -g status-left "#{E:@catppuccin_status_session} "
+set -g status-right "#[fg=#{@thm_blue},bold]#{?pane_in_mode,COPY ,}#{?client_prefix,PREFIX ,}#{?window_zoomed_flag,ZOOM ,}#[default]"
+set -ag status-right "#{mpd_now_playing}"
+set -agF status-right "#{E:@catppuccin_status_cpu}"
+set -ag status-right "#{E:@catppuccin_status_host}"
+
+############ Plugins ############
+
 set -g @plugin "tmux-plugins/tpm"
 set -g @plugin "tmux-plugins/tmux-sensible"
+set -g @plugin "catppuccin/tmux#v2.1.3"
 set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin "tmux-plugins/tmux-resurrect"
 set -g @plugin "tmux-plugins/tmux-continuum"
 set -g @plugin 'timvw/tmux-assistant-resurrect'
 # Supplies prefix+| and prefix+- splits plus hjkl pane navigation; the herdr
-# parity bindings above assume they exist, so it belongs in every branch.
+# parity bindings above assume they exist.
 set -g @plugin "tmux-plugins/tmux-pain-control"
+set -g @plugin "tmux-plugins/tmux-cpu"
+# XXX: would need to hide it when plugged
+# https://github.com/tmux-plugins/tmux-battery#enabled
+# set -g @plugin "tmux-plugins/tmux-battery"
+set -g @plugin "tmux-plugins/tmux-yank"
+set -g @plugin "tmux-plugins/tmux-prefix-highlight"
+set -g @plugin "tmux-plugins/tmux-logging"
+set -g @plugin "alberti42/tmux-fzf-links"
+# MPD playing
+set -g @plugin "vascomfnunes/tmux-ludanta"
 
 # Automatically restore tmux session
 set -g @continuum-restore "on"
 # Do not capture panes content to avoid capturing secrets
 set -g @resurrect-capture-pane-contents 'off'
 
+# tmux-fzf-links
+# python3, not an absolute path: /usr/bin/python is absent on Ubuntu. The editor
+# command is set because the plugin's fallback is a hardcoded `open`, absent here.
+set-option -g @fzf-links-key C-u
+set-option -g @fzf-links-python "python3"
+set-option -g @fzf-links-browser-open-cmd "xdg-open '%url'"
+set-option -g @fzf-links-editor-open-cmd "tmux new-window -n nvim nvim +%line '%file'"
+
 # tmux-fzf
 # prefix+f (shadows default find-window, unused); was C-f until 2026-08-20.
 TMUX_FZF_LAUNCH_KEY="f"
-# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
+# Show the pane title (descriptive, set by Claude Code) in the window list, like choose-tree
+set-environment -g TMUX_FZF_WINDOW_FORMAT '#{pane_title}  ·  #{window_name} (#{window_panes}p)'
 # Wider/taller popup so titles are not truncated
 set-environment -g TMUX_FZF_OPTIONS '-p -w 90% -h 60% -m'
 
