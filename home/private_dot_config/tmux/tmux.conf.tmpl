@@ -142,8 +142,6 @@ bind-key T display-popup -EE -w 82% -h 85% '~/.local/bin/daynote --edit'
 
 set -g @catppuccin_flavor "macchiato"
 set -g @catppuccin_window_status_style "rounded"
-# Short hostname (#h) in the host module, not the FQDN (#H).
-set -g @catppuccin_host_text " #h"
 # Run catppuccin here rather than from tpm at the bottom: the status line below
 # reads its @catppuccin_status_* and @thm_* options, which only exist once it ran.
 if "test -f ~/.config/tmux/plugins/tmux/catppuccin.tmux" \
@@ -159,9 +157,12 @@ set -g window-status-separator ""
 set -g @session_pill_color "#{?client_prefix,#{@thm_red},#{@thm_green}}"
 set -g status-left "#[fg=#{@thm_crust},bg=#{E:@session_pill_color}] #S #[fg=#{E:@session_pill_color},bg=default]\uE0B4 "
 set -g status-right "#[fg=#{@thm_blue},bold]#{?pane_in_mode,COPY ,}#{?client_prefix,PREFIX ,}#{?window_zoomed_flag,ZOOM ,}#[default]"
+{{ if lookPath "mpc" -}}
 set -ag status-right "#{mpd_now_playing}"
+{{ end -}}
 set -agF status-right "#{E:@catppuccin_status_cpu}"
-set -ag status-right "#{E:@catppuccin_status_host}"
+# Host pill mirrors the session pill: colour only, rounded towards the windows.
+set -ag status-right " #[fg=#{@thm_mauve},bg=default]\uE0B6#[fg=#{@thm_crust},bg=#{@thm_mauve}] #h "
 
 ############ Plugins ############
 
@@ -183,8 +184,10 @@ set -g @plugin "tmux-plugins/tmux-yank"
 set -g @plugin "tmux-plugins/tmux-prefix-highlight"
 set -g @plugin "tmux-plugins/tmux-logging"
 set -g @plugin "alberti42/tmux-fzf-links"
-# MPD playing
+{{ if lookPath "mpc" -}}
+# MPD playing; only where mpc exists, since without it the plugin always says "Paused".
 set -g @plugin "vascomfnunes/tmux-ludanta"
+{{ end -}}
 
 # Automatically restore tmux session
 set -g @continuum-restore "on"
