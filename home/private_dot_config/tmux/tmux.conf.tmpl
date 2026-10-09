@@ -152,7 +152,17 @@ set -g status-interval 5
 set -g status-left-length 100
 set -g status-right-length 100
 set -g window-status-separator ""
-set -g status-left "#{E:@catppuccin_status_session} "
+# Session pill flat at the screen edge, rounded towards the windows (session_flat.conf).
+set -gF @_ctp_saved_left "#{@catppuccin_status_left_separator}"
+set -gF @_ctp_saved_right "#{@catppuccin_status_right_separator}"
+set -g @catppuccin_status_left_separator ""
+set -g @catppuccin_status_right_separator "#[bg=default]"
+source -F "#{d:current_file}/session_flat.conf"
+set -gF @catppuccin_status_left_separator "#{@_ctp_saved_left}"
+set -gF @catppuccin_status_right_separator "#{@_ctp_saved_right}"
+set -gu @_ctp_saved_left
+set -gu @_ctp_saved_right
+set -g status-left "#{E:@catppuccin_status_session_flat} "
 set -g status-right "#[fg=#{@thm_blue},bold]#{?pane_in_mode,COPY ,}#{?client_prefix,PREFIX ,}#{?window_zoomed_flag,ZOOM ,}#[default]"
 set -ag status-right "#{mpd_now_playing}"
 set -agF status-right "#{E:@catppuccin_status_cpu}"
