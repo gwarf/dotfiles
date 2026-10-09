@@ -142,6 +142,8 @@ bind-key T display-popup -EE -w 82% -h 85% '~/.local/bin/daynote --edit'
 
 set -g @catppuccin_flavor "macchiato"
 set -g @catppuccin_window_status_style "rounded"
+# Short hostname (#h) in the host module, not the FQDN (#H).
+set -g @catppuccin_host_text " #h"
 # Run catppuccin here rather than from tpm at the bottom: the status line below
 # reads its @catppuccin_status_* and @thm_* options, which only exist once it ran.
 if "test -f ~/.config/tmux/plugins/tmux/catppuccin.tmux" \
