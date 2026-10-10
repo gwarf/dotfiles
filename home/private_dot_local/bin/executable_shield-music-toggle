@@ -1,0 +1,10 @@
+#!/bin/sh
+# Toggle play/pause on whatever plays on the Shield (Symfonium). The Shield has
+# no reverse channel, so the popup confirms the key was sent, not the new state.
+target="${PAI_SHIELD_HOST:-shield.home.arpa}:5555"
+adb connect "$target" >/dev/null 2>&1
+if ! out=$(adb -s "$target" shell input keyevent KEYCODE_MEDIA_PLAY_PAUSE 2>&1); then
+	notify-send -a "Shield music" -i dialog-error "Shield music" "adb failed: $out"
+	exit 1
+fi
+notify-send -a "Shield music" -i media-playback-start -t 2000 "Shield music" "Play/pause sent"
