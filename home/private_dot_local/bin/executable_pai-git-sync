@@ -4,6 +4,13 @@ set -euo pipefail
 # systemd user services have minimal PATH; chezmoi (linuxbrew) needs explicit reach.
 export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:$HOME/.local/bin:$PATH"
 
+# A host with a dedicated sync key (a write deploy key on both repos) uses it
+# for these pushes only, so a locked smartcard cannot fail the tick. Kept out
+# of ~/.ssh/config: deploy keys are per-repo and would break every other push.
+if [ -f "$HOME/.ssh/id_pai_sync" ]; then
+	export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_pai_sync -o IdentitiesOnly=yes -o IdentityAgent=none"
+fi
+
 REPOS=(
 	"$HOME/.claude"
 	"$HOME/.local/share/chezmoi"
