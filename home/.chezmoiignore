@@ -33,9 +33,17 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/input-leap-client.service
 .config/kxkbrc
 .config/brave-flags.conf
+# Only torpedo's unattended mail and sync jobs read secrets through rbw.
+.config/systemd/user/goimapnotify@.service.d
+.config/systemd/user/mailsync.service.d
+.config/systemd/user/pai-git-sync.service.d
+.config/systemd/user/graphical-session.target.wants/goimapnotify@operas.service
 {{- end }}
 {{- if and (ne .chezmoi.hostname "torpedo") (ne .chezmoi.hostname "sikaru") }}
 .config/powerdevilrc
+# rbw-agent needs a desktop for pinentry; headless hosts have neither.
+.config/systemd/user/rbw-agent.service
+.config/systemd/user/graphical-session.target.wants/rbw-agent.service
 {{- end }}
 {{- if ne .chezmoi.osRelease.id "arch" }}
 # Arch packages the fabric CLI as fabric-ai (extra/fabric is the Python SSH

@@ -1,0 +1,17 @@
+[Unit]
+Description=rbw agent (Bitwarden CLI unlock cache)
+Documentation=https://github.com/doy/rbw
+# Started with the desktop so pinentry has a display; a client that spawns the
+# agent itself puts it in its own cgroup, and it dies with that unit or tab.
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/rbw-agent
+PIDFile=%t/rbw/pidfile
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
