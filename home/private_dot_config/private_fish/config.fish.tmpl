@@ -281,7 +281,12 @@ if status is-interactive
     if test "$TERM" != dumb; and type -q starship
         starship init fish | source
     end
-    type -q zoxide; and zoxide init --cmd cd fish | source
+    if type -q zoxide
+        # zoxide < 0.9.9 copies cd from $__fish_data_dir/functions/cd.fish, which
+        # fish 4 no longer ships (functions are embedded): pre-seed its copy.
+        functions -q cd; and functions --copy cd __zoxide_cd_internal
+        zoxide init --cmd cd fish | source
+    end
     type -q direnv; and direnv hook fish | source
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     type -q fzf; and fzf --fish | source
