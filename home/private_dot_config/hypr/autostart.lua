@@ -19,9 +19,11 @@ o.launch_on_start("ghostty")
 o.launch_on_start("firefox")
 o.launch_on_start("Telegram")
 o.launch_on_start("element-desktop")
+o.launch_on_start("signal-desktop")
 
 -- Class rules, not exec rules: uwsm-app detaches the app, so PID-matched
 -- exec rules would miss its window. Applies to every launch, not just login.
 o.window("^(org\\.telegram\\.desktop|TelegramDesktop)$", { workspace = "3 silent" })
 o.window("^(Element|element)$", { workspace = "3 silent" })
+o.window("^signal$", { workspace = "3 silent" })
 o.window("^md\\.obsidian\\.Obsidian$", { workspace = "5 silent" })
