@@ -11,6 +11,17 @@ enter_accept = true
 workspaces = true
 invert = true
 
+# Never record a command carrying a literal secret ($VAR and $(…) stay
+# recorded). Keep in sync with fish's fish_should_add_to_history.
+history_filter = [
+  '''eyJ[A-Za-z0-9_-]{8,}\.eyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}''',
+  '''://[^/[:space:]:@$]+:[^/[:space:]@$(]{8,}@''',
+  '''(^|[[:space:]"':-])([Bb]earer|[Tt]oken|PRIVATE-TOKEN:)[[:space:]]+[A-Za-z0-9._~+/=-]{8,}[a-z0-9][A-Za-z0-9._~+/=-]{7,}''',
+  '''(token|token_auth|api_key|apikey|access_token|password|passwd|secret)=["']?[A-Za-z0-9._~+/=-]{8,}[a-z0-9][A-Za-z0-9._~+/=-]{7,}''',
+  '''(glpat-|ghp_|gho_|ghs_|github_pat_|xox[abp]-|sk-)[A-Za-z0-9_-]{16,}''',
+  '''AKIA[0-9A-Z]{16}''',
+]
+
 [theme]
 # Macchiato + mauve, like tmux, starship and ls.
 name = "catppuccin-macchiato-mauve"
