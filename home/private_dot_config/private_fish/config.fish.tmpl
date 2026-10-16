@@ -292,6 +292,13 @@ if status is-interactive
     type -q fzf; and fzf --fish | source
     # After fzf so Ctrl-R is atuin's; Up keeps fish's own history search.
     type -q atuin; and atuin init fish --disable-up-arrow | source
+    # Trial: Ctrl-R searches atuin history through fzf, Alt-R keeps atuin's TUI.
+    if type -q atuin; and type -q fzf
+        for mode in default insert
+            bind -M $mode ctrl-r _atuin_fzf
+            bind -M $mode alt-r _atuin_search
+        end
+    end
 
     # if type -q tirith
     #     tirith init --shell fish | source
