@@ -14,3 +14,7 @@ invert = true
 [theme]
 # Macchiato + mauve, like tmux, starship and ls.
 name = "catppuccin-macchiato-mauve"
+
+[ui]
+# Ctrl-R is for finding a command to run, not for analysing history.
+columns = ["command"]
