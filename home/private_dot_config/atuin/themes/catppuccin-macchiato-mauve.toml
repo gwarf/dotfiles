@@ -4,9 +4,17 @@ name = "catppuccin-macchiato-mauve"
 [colors]
 AlertInfo = "#a6da95"
 AlertWarn = "#f5a97f"
-AlertError = "#ed8796"
+# Local divergence from catppuccin/atuin: atuin paints the selected row with
+# AlertError, so mauve here keeps it from reading as an error.
+AlertError = "#c6a0f6"
 Annotation = "#c6a0f6"
 Base = "#cad3f5"
 Guidance = "#939ab7"
 Important = "#ed8796"
 Title = "#c6a0f6"
+# Local addition: fish's catppuccin-macchiato syntax colours, as fzf shows them.
+SyntaxCommand = "#8aadf4"
+SyntaxFlag = "#a6da95"
+SyntaxString = "#a6da95"
+SyntaxOperator = "#f5bde6"
+SyntaxComment = "#8087a2"
