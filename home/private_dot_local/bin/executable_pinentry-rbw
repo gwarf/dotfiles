@@ -4,7 +4,9 @@
 # prompt, a retry after a wrong password or an unreadable credential goes to the
 # real pinentry, so a stale seal can never loop into an account lockout.
 set -u
-cred=${PINENTRY_RBW_CRED:-$HOME/.config/credstore.user/rbw-master.cred}
+# One seal per rbw profile: rbw-agent passes RBW_PROFILE down to its pinentry.
+name=rbw-master${RBW_PROFILE:+-$RBW_PROFILE}
+cred=${PINENTRY_RBW_CRED:-$HOME/.config/credstore.user/$name.cred}
 fallback=${PINENTRY_RBW_FALLBACK:-/usr/bin/pinentry-qt}
 
 # rbw writes every command, then closes stdin before reading any reply.
@@ -19,7 +21,7 @@ while IFS= read -r line || [[ -n $line ]]; do
 done
 
 if [[ $prompt == 'Master Password' && $desc == 'Unlock the local database'* && -z $retry && -r $cred ]] &&
-  pw=$(systemd-creds decrypt --user --name=rbw-master "$cred" -) && [[ -n $pw ]]; then
+  pw=$(systemd-creds decrypt --user --name="$name" "$cred" -) && [[ -n $pw ]]; then
   pw=${pw//%/%25}
   pw=${pw//$'\r'/%0D}
   pw=${pw//$'\n'/%0A}
