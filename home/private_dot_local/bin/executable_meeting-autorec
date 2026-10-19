@@ -1,0 +1,132 @@
+#!/usr/bin/env bun
+// Record every Chromium call automatically: starts gpu-screen-recorder on the call's
+// window when Chromium opens the mic, stops it once the mic has been released for GRACE_S.
+// Track 1 = Chromium audio, track 2 = mic, the layout meeting-transcribe expects.
+// A <stem>.window.json sidecar records which window and area were captured.
+
+import { $ } from "bun";
+import { spawn, type Subprocess } from "bun";
+import { existsSync, mkdirSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+
+const POLL_MS = 3000;
+// Long enough to bridge a rejoin or a Zoom audio reconnect without splitting the file.
+const GRACE_S = Number(process.env.MEETING_AUTOREC_GRACE_S ?? 45);
+const OUT_DIR = process.env.MEETING_AUTOREC_DIR ?? join(process.env.HOME!, "Vidéos");
+const RECORDER_PATTERN = "^([^ ]*/)?gpu-screen-recorder .* -o ";
+
+type Win = { caption: string; x: number; y: number; w: number; h: number; output: string };
+
+const log = (msg: string) => console.log(`meeting-autorec: ${msg}`);
+const notify = (summary: string, body = "") =>
+  $`notify-send -a meeting-autorec -i media-record ${summary} ${body}`.quiet().nothrow();
+
+async function chromiumMicOpen(): Promise<boolean> {
+  const dump = await $`pw-dump`.quiet().nothrow();
+  if (dump.exitCode !== 0) return false;
+  return (JSON.parse(dump.stdout.toString()) as any[]).some((o) => {
+    const p = o.info?.props;
+    // Chromium names its capture stream's client "Chromium input".
+    return p?.["media.class"] === "Stream/Input/Audio" && p["application.name"] === "Chromium input";
+  });
+}
+
+async function otherRecorderRunning(): Promise<boolean> {
+  return (await $`pgrep -f ${RECORDER_PATTERN}`.quiet().nothrow()).exitCode === 0;
+}
+
+// The topmost Chromium window when the mic opens is the one the call was just joined from;
+// a window title only names its active tab, and Zoom titles it with the meeting topic.
+async function callWindow(): Promise<Win | null> {
+  const tag = `meeting-autorec-${process.pid}`;
+  const script = `/tmp/${tag}.js`;
+  writeFileSync(script, `
+    const ws = workspace.stackingOrder.filter((w) => w.resourceClass === "chromium" && !w.minimized && w.normalWindow);
+    const w = ws[ws.length - 1];
+    if (w) { const g = w.frameGeometry;
+      print("${tag}|" + JSON.stringify({ caption: w.caption, x: g.x, y: g.y, w: g.width, h: g.height, output: w.output ? w.output.name : "" })); }`);
+  const since = new Date(Date.now() - 1000).toISOString();
+  try {
+    const id = (await $`qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript ${script} ${tag}`.text()).trim();
+    await $`qdbus6 org.kde.KWin /Scripting/Script${id} org.kde.kwin.Script.run`.quiet();
+    await Bun.sleep(800);
+    await $`qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript ${tag}`.quiet().nothrow();
+  } finally {
+    unlinkSync(script);
+  }
+  const journal = await $`journalctl --user --since ${since} --no-pager -o cat`.text();
+  const line = journal.split("\n").reverse().find((l) => l.includes(`${tag}|`));
+  return line ? (JSON.parse(line.slice(line.indexOf(`${tag}|`) + tag.length + 1)) as Win) : null;
+}
+
+const stamp = () => {
+  const d = new Date();
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}-${p(d.getMinutes())}-${p(d.getSeconds())}`;
+};
+
+function startRecorder(win: Win | null): { proc: Subprocess; file: string } {
+  mkdirSync(OUT_DIR, { recursive: true });
+  const file = join(OUT_DIR, `Video_${stamp()}.mp4`);
+  // -region is in compositor logical pixels, which is what KWin's frameGeometry reports.
+  // gsr 6 deprecates it for `-w WxH+X+Y`, but gsr-tray draws its region marker from -region.
+  const r = win && { x: Math.round(win.x), y: Math.round(win.y), w: Math.round(win.w), h: Math.round(win.h) };
+  const target = r ? ["-w", "region", "-region", `${r.w}x${r.h}+${r.x}+${r.y}`] : ["-w", "screen"];
+  const argv = ["gpu-screen-recorder", ...target, "-c", "mp4", "-f", "30",
+    "-a", "app:Chromium", "-a", "default_input", "-ac", "opus", "-o", file];
+  log(`start ${argv.join(" ")}`);
+  const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
+  const sidecar = file.replace(/\.mp4$/, ".window.json");
+  writeFileSync(`${sidecar}.tmp`, JSON.stringify({ capture: r ? "window" : "screen", ...win, region: r }, null, 2) + "\n");
+  renameSync(`${sidecar}.tmp`, sidecar);
+  return { proc, file };
+}
+
+let rec: { proc: Subprocess; file: string } | null = null;
+let micClosedSince: number | null = null;
+let skipThisCall = false;
+
+async function stopRecorder(reason: string) {
+  if (!rec) return;
+  log(`stop (${reason}) ${rec.file}`);
+  rec.proc.kill("SIGINT");
+  await rec.proc.exited;
+  const ok = existsSync(rec.file);
+  notify(ok ? "Meeting recording saved" : "Meeting recording failed", rec.file);
+  rec = null;
+}
+
+for (const sig of ["SIGTERM", "SIGINT"] as const)
+  process.on(sig, async () => { await stopRecorder(sig); process.exit(0); });
+
+log(`watching (grace ${GRACE_S}s, output ${OUT_DIR})`);
+while (true) {
+  const mic = await chromiumMicOpen();
+  if (rec && rec.proc.exitCode !== null) {
+    // Stopped from outside (gsr-tray, crash): don't restart within the same call.
+    log(`recorder exited (${rec.proc.exitCode}) ${rec.file}`);
+    notify("Meeting recording stopped", rec.file);
+    rec = null;
+    skipThisCall = true;
+  }
+  if (mic) {
+    micClosedSince = null;
+    if (!rec && !skipThisCall) {
+      if (await otherRecorderRunning()) {
+        log("another recording is running, leaving this call to it");
+        skipThisCall = true;
+      } else {
+        const win = await callWindow();
+        rec = startRecorder(win);
+        notify("Recording the call", win ? win.caption : "full screen (no Chromium window found)");
+      }
+    }
+  } else {
+    micClosedSince ??= Date.now();
+    if ((Date.now() - micClosedSince) / 1000 >= GRACE_S) {
+      skipThisCall = false;
+      await stopRecorder("mic closed");
+    }
+  }
+  await Bun.sleep(POLL_MS);
+}

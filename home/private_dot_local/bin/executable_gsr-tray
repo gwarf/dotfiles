@@ -145,6 +145,23 @@ def stop_command(argv):
     return "toggle-record"
 
 
+def _recorder_pid():
+    pids = subprocess.run(
+        ["pgrep", "-f", RECORDER_PATTERN], capture_output=True, text=True
+    ).stdout.split()
+    return pids[0] if pids else None
+
+
+def _parent_name(pid):
+    try:
+        with open(f"/proc/{pid}/stat") as f:
+            ppid = f.read().rsplit(")", 1)[1].split()[1]
+        with open(f"/proc/{ppid}/comm") as f:
+            return f.read().strip()
+    except (OSError, IndexError):
+        return None
+
+
 def _recorder_proc():
     """(argv, elapsed seconds) of the running recorder, or None when idle."""
     pids = subprocess.run(
@@ -228,7 +245,13 @@ class Tray:
         # Derived from the live process, so hotkey/overlay starts and the region
         # selection delay (no recorder yet) cannot leave a stale mode behind.
         proc = _recorder_proc()
-        if proc is not None:
+        if proc is None:
+            return
+        pid = _recorder_pid()
+        # meeting-autorec spawns its own recorder; gsr-ui-cli cannot stop that one cleanly.
+        if pid and _parent_name(pid) != "gsr-ui":
+            os.kill(int(pid), signal.SIGINT)
+        else:
             self.run_cli(stop_command(proc[0]))
 
     def refresh(self):

@@ -1,0 +1,16 @@
+[Unit]
+Description=Record Chromium calls automatically (gpu-screen-recorder)
+# Needs the Wayland session for KWin scripting, notifications and screen capture.
+After=graphical-session.target pipewire.service
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=%h/.local/bin/meeting-autorec
+# SIGTERM reaches only the watcher, which SIGINTs the recorder so the mp4 is finalised.
+KillMode=mixed
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=graphical-session.target

@@ -38,6 +38,9 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/mailsync.service.d
 .config/systemd/user/pai-git-sync.service.d
 .config/systemd/user/graphical-session.target.wants/goimapnotify@operas.service
+# Call auto-recording is a torpedo meeting-desk job (KWin, CUDA transcription).
+.config/systemd/user/meeting-autorec.service
+.config/systemd/user/graphical-session.target.wants/meeting-autorec.service
 {{- end }}
 {{- if and (ne .chezmoi.hostname "torpedo") (ne .chezmoi.hostname "sikaru") }}
 .config/powerdevilrc
