@@ -25,7 +25,7 @@ Options (before the prompt):
   -b <file>       hand over a brief file instead of a prompt
   -n <name>       tmux window name (default <agent>-HHMMSS)
   -d              stay where you are, do not switch to the window
-  -h, --help      this help
+  -h, --help      this help (also: spawn help, spawn <agent> help)
 
 Examples:
   spawn codex fix the failing test in this repo
@@ -37,8 +37,9 @@ The window starts in the current directory. Run inside tmux.
 EOF
 }
 
-case "${1:-}" in
-'' | -h | --help)
+# A lone "help" word is help; "help me with X" stays a prompt.
+case "$#:${1:-}" in
+0: | *:-h | *:--help | 1:help)
 	usage
 	exit 0
 	;;
@@ -51,7 +52,7 @@ claude | codex | gemini | goose | hermes)
 	shift
 	;;
 esac
-if [ "${1:-}" = --help ]; then
+if [ "${1:-}" = --help ] || [ "$#:${1:-}" = 1:help ]; then
 	usage
 	exit 0
 fi
