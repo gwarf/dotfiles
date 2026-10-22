@@ -1,22 +1,60 @@
 #!/bin/sh
 # spawn — open a tmux window running an agent CLI, seeded with a prompt.
-#   spawn [claude|codex|gemini|goose|hermes] [-m model] [-p provider]
-#         [-b brief.md] [-n window] [-d] [prompt words...]
 # Thin wrapper over the PAI _SPAWN tool; switches to the new window unless -d.
 set -e
 tool="$HOME/.claude/skills/_SPAWN/Tools/SpawnSession.ts"
 
-agent=claude
+usage() {
+	cat <<'EOF'
+spawn — open a tmux window running an agent CLI, seeded with a prompt
+
+Usage:
+  spawn <agent> [options] [prompt words...]
+  spawn [options] prompt words...     (agent defaults to claude)
+
+Agents:
+  claude   Claude Code through pai (model switched with /model)
+  codex    OpenAI Codex CLI
+  gemini   Google Gemini CLI
+  goose    Goose (needs a provider: goose configure)
+  hermes   Hermes agent (any provider it has credentials for)
+
+Options (before the prompt):
+  -m <model>      model to use
+  -p <provider>   provider, goose and hermes only
+  -b <file>       hand over a brief file instead of a prompt
+  -n <name>       tmux window name (default <agent>-HHMMSS)
+  -d              stay where you are, do not switch to the window
+  -h, --help      this help
+
+Examples:
+  spawn codex fix the failing test in this repo
+  spawn codex -m gpt-6-luna explain this Makefile
+  spawn claude -m opus -b ~/notes/brief.md
+  spawn gemini                        (bare session, no prompt)
+
+The window starts in the current directory. Run inside tmux.
+EOF
+}
+
 case "${1:-}" in
+'' | -h | --help)
+	usage
+	exit 0
+	;;
+esac
+
+agent=claude
+case "$1" in
 claude | codex | gemini | goose | hermes)
 	agent=$1
 	shift
 	;;
--h | --help)
-	sed -n '2,5p' "$0"
-	exit 0
-	;;
 esac
+if [ "${1:-}" = --help ]; then
+	usage
+	exit 0
+fi
 
 model='' provider='' brief='' name='' detach=''
 while getopts m:p:b:n:dh opt; do
@@ -26,8 +64,12 @@ while getopts m:p:b:n:dh opt; do
 	b) brief=$OPTARG ;;
 	n) name=$OPTARG ;;
 	d) detach=1 ;;
+	h)
+		usage
+		exit 0
+		;;
 	*)
-		sed -n '2,5p' "$0"
+		usage >&2
 		exit 2
 		;;
 	esac
