@@ -396,6 +396,7 @@ packages:
       - "gcc"
       - "gh"
       - "lazygit"
+      - "mise"
       - "neovim"
       - "rbw"
       - "starship"
