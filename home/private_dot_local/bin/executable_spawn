@@ -1,16 +1,20 @@
 #!/bin/sh
 # spawn — open a tmux window running an agent CLI, seeded with a prompt.
-# Thin wrapper over the PAI _SPAWN tool; switches to the new window unless -d.
+# daryl (a symlink to this script) runs the same thing in the current pane.
+# Thin wrapper over the PAI _SPAWN tool; spawn switches to the new window unless -d.
 set -e
 tool="$HOME/.claude/skills/_SPAWN/Tools/SpawnSession.ts"
+self=$(basename "$0")
 
 usage() {
 	cat <<'EOF'
 spawn — open a tmux window running an agent CLI, seeded with a prompt
+daryl — the same, in the current pane
 
 Usage:
   spawn <agent> [options] [prompt words...]
   spawn [options] prompt words...     (agent defaults to claude)
+  daryl [agent] [options] [prompt words...]
 
 Agents:
   claude   Claude Code through pai (model switched with /model)
@@ -23,19 +27,27 @@ Options (before the prompt):
   -m <model>      model to use
   -p <provider>   provider, goose and hermes only
   -b <file>       hand over a brief file instead of a prompt
-  -n <name>       tmux window name (default <agent>-HHMMSS)
-  -d              stay where you are, do not switch to the window
+  -r <id>         resume that Claude session instead of starting one
+  -n <name>       tmux window name (default <agent>-HHMMSS; spawn only)
+  -d              stay where you are, do not switch to the window (spawn only)
   -h, --help      this help (also: spawn help, spawn <agent> help)
 
 Examples:
   spawn codex fix the failing test in this repo
-  spawn codex -m gpt-6-luna explain this Makefile
   spawn claude -m opus -b ~/notes/brief.md
-  spawn gemini                        (bare session, no prompt)
+  spawn -r <session-id> address the review comments
+  daryl Review https://forge.example/owner/repo/pulls/1
+  daryl -r <session-id>               (resume here)
+  daryl                               (plain Daryl session)
 
-The window starts in the current directory. Run inside tmux.
+spawn runs inside tmux; the window starts in the current directory.
 EOF
 }
+
+# A bare daryl is a plain session, as before.
+if [ "$self" = daryl ] && [ $# -eq 0 ]; then
+	exec pai
+fi
 
 # A lone "help" word is help; "help me with X" stays a prompt.
 case "$#:${1:-}" in
@@ -57,13 +69,14 @@ if [ "${1:-}" = --help ] || [ "$#:${1:-}" = 1:help ]; then
 	exit 0
 fi
 
-model='' provider='' brief='' name='' detach=''
-while getopts m:p:b:n:dh opt; do
+model='' provider='' brief='' name='' detach='' resume=''
+while getopts m:p:b:n:r:dh opt; do
 	case $opt in
 	m) model=$OPTARG ;;
 	p) provider=$OPTARG ;;
 	b) brief=$OPTARG ;;
 	n) name=$OPTARG ;;
+	r) resume=$OPTARG ;;
 	d) detach=1 ;;
 	h)
 		usage
@@ -77,11 +90,23 @@ while getopts m:p:b:n:dh opt; do
 done
 shift $((OPTIND - 1))
 prompt="$*"
-[ -n "$name" ] || name="$agent-$(date +%H%M%S)"
 
+if [ "$self" = daryl ]; then
+	if [ -n "$name" ] || [ -n "$detach" ]; then
+		echo "daryl: -n and -d only apply to spawn" >&2
+		exit 2
+	fi
+	exec bun "$tool" --here --agent "$agent" \
+		${model:+--model "$model"} ${provider:+--provider "$provider"} \
+		${resume:+--resume "$resume"} ${brief:+--brief "$brief"} \
+		${prompt:+--prompt "$prompt"}
+fi
+
+[ -n "$name" ] || name="$agent-$(date +%H%M%S)"
 out=$(bun "$tool" --name "$name" --agent "$agent" --cwd "$PWD" --no-wait \
 	${model:+--model "$model"} ${provider:+--provider "$provider"} \
-	${brief:+--brief "$brief"} ${prompt:+--prompt "$prompt"})
+	${resume:+--resume "$resume"} ${brief:+--brief "$brief"} \
+	${prompt:+--prompt "$prompt"})
 target=$(printf '%s\n' "$out" | sed -n '1s/ .*//p')
 echo "$target ($name)"
 

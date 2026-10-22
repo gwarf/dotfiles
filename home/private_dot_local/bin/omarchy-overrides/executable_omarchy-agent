@@ -40,7 +40,7 @@ if [[ $agent != "claude" ]]; then
 fi
 
 command=(daryl)
-[[ -n $prompt ]] && command+=(--initial "$prompt")
+[[ -n $prompt ]] && command+=(-- "$prompt")
 
 if [[ ${OMARCHY_AGENT_DRYRUN:-} == 1 ]]; then
   printf 'inline=%s\n' "$inline"
