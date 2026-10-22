@@ -27,7 +27,7 @@ Options (before the prompt):
   -m <model>      model to use
   -p <provider>   provider, goose and hermes only
   -b <file>       hand over a brief file instead of a prompt
-  -r <id>         resume that Claude session instead of starting one
+  -r [<id>]       resume that Claude session; no ID opens the picker (daryl only)
   -n <name>       tmux window name (default <agent>-HHMMSS; spawn only)
   -d              stay where you are, do not switch to the window (spawn only)
   -h, --help      this help (also: spawn help, spawn <agent> help)
@@ -38,6 +38,7 @@ Examples:
   spawn -r <session-id> address the review comments
   daryl Review https://forge.example/owner/repo/pulls/1
   daryl -r <session-id>               (resume here)
+  daryl -r                            (pick a session to resume)
   daryl                               (plain Daryl session)
 
 spawn runs inside tmux; the window starts in the current directory.
@@ -69,20 +70,39 @@ if [ "${1:-}" = --help ] || [ "$#:${1:-}" = 1:help ]; then
 	exit 0
 fi
 
-model='' provider='' brief='' name='' detach='' resume=''
-while getopts m:p:b:n:r:dh opt; do
+model='' provider='' brief='' name='' detach='' resume='' pick=''
+# Leading ':' lets -r go without an ID: a bare -r opens Claude's session picker.
+while getopts :m:p:b:n:r:dh opt; do
 	case $opt in
 	m) model=$OPTARG ;;
 	p) provider=$OPTARG ;;
 	b) brief=$OPTARG ;;
 	n) name=$OPTARG ;;
-	r) resume=$OPTARG ;;
+	r)
+		case $OPTARG in
+		-*)
+			pick=1
+			OPTIND=$((OPTIND - 1))
+			;;
+		*) resume=$OPTARG ;;
+		esac
+		;;
 	d) detach=1 ;;
 	h)
 		usage
 		exit 0
 		;;
+	:)
+		if [ "$OPTARG" = r ]; then
+			pick=1
+		else
+			echo "$self: option requires an argument -- $OPTARG" >&2
+			usage >&2
+			exit 2
+		fi
+		;;
 	*)
+		echo "$self: illegal option -- $OPTARG" >&2
 		usage >&2
 		exit 2
 		;;
@@ -96,12 +116,26 @@ if [ "$self" = daryl ]; then
 		echo "daryl: -n and -d only apply to spawn" >&2
 		exit 2
 	fi
+	if [ -n "$pick" ]; then
+		if [ "$agent" != claude ] || [ -n "$prompt$brief" ]; then
+			echo "daryl: -r without an ID takes no agent, prompt or brief" >&2
+			exit 2
+		fi
+		if [ -n "$model" ]; then
+			ANTHROPIC_MODEL=$model exec pai -r
+		fi
+		exec pai -r
+	fi
 	exec bun "$tool" --here --agent "$agent" \
 		${model:+--model "$model"} ${provider:+--provider "$provider"} \
 		${resume:+--resume "$resume"} ${brief:+--brief "$brief"} \
 		${prompt:+--prompt "$prompt"}
 fi
 
+if [ -n "$pick" ]; then
+	echo "spawn: -r needs a session ID (the picker is daryl -r)" >&2
+	exit 2
+fi
 [ -n "$name" ] || name="$agent-$(date +%H%M%S)"
 out=$(bun "$tool" --name "$name" --agent "$agent" --cwd "$PWD" --no-wait \
 	${model:+--model "$model"} ${provider:+--provider "$provider"} \
