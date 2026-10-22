@@ -1,0 +1,47 @@
+#!/bin/sh
+# spawn — open a tmux window running an agent CLI, seeded with a prompt.
+#   spawn [claude|codex|gemini|goose|hermes] [-m model] [-p provider]
+#         [-b brief.md] [-n window] [-d] [prompt words...]
+# Thin wrapper over the PAI _SPAWN tool; switches to the new window unless -d.
+set -e
+tool="$HOME/.claude/skills/_SPAWN/Tools/SpawnSession.ts"
+
+agent=claude
+case "${1:-}" in
+claude | codex | gemini | goose | hermes)
+	agent=$1
+	shift
+	;;
+-h | --help)
+	sed -n '2,5p' "$0"
+	exit 0
+	;;
+esac
+
+model='' provider='' brief='' name='' detach=''
+while getopts m:p:b:n:dh opt; do
+	case $opt in
+	m) model=$OPTARG ;;
+	p) provider=$OPTARG ;;
+	b) brief=$OPTARG ;;
+	n) name=$OPTARG ;;
+	d) detach=1 ;;
+	*)
+		sed -n '2,5p' "$0"
+		exit 2
+		;;
+	esac
+done
+shift $((OPTIND - 1))
+prompt="$*"
+[ -n "$name" ] || name="$agent-$(date +%H%M%S)"
+
+out=$(bun "$tool" --name "$name" --agent "$agent" --cwd "$PWD" --no-wait \
+	${model:+--model "$model"} ${provider:+--provider "$provider"} \
+	${brief:+--brief "$brief"} ${prompt:+--prompt "$prompt"})
+target=$(printf '%s\n' "$out" | sed -n '1s/ .*//p')
+echo "$target ($name)"
+
+if [ -z "$detach" ] && [ -n "${TMUX:-}" ]; then
+	tmux switch-client -t "$target"
+fi
