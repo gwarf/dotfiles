@@ -10,7 +10,10 @@ import signal
 import subprocess
 import sys
 
-import gi
+# SIGUSR1 would terminate the tray if a shortcut fires before the GLib handler is installed.
+signal.signal(signal.SIGUSR1, signal.SIG_IGN)
+
+import gi  # noqa: E402
 
 import cairo
 
@@ -24,6 +27,8 @@ from gi.repository import GtkLayerShell  # noqa: E402
 IDLE_ICON = "camera-video"
 RECORDING_ICON = "media-record"
 POLL_SECONDS = 1
+# One missed poll (recorder read race) must not un-hide the marker mid-call.
+RESET_IDLE_POLLS = 3
 # Match only a recorder writing a file (-o); gsr-ui also spawns short --info/--list probes.
 RECORDER_PATTERN = r"^([^ ]*/)?gpu-screen-recorder .* -o "
 CAPTURE_LABELS = {"region": "region", "portal": "window (portal)", "focused": "focused window"}
@@ -246,6 +251,7 @@ class Tray:
         # Middle-click stops a recording without opening the menu.
         self.indicator.set_secondary_activate_target(self.stop_item)
         self.was_recording = False
+        self.idle_polls = 0
         self.refresh()
         GLib.timeout_add_seconds(POLL_SECONDS, self.refresh)
         # `gsr-tray toggle-marker` (a global shortcut) flips the hide from outside.
@@ -281,10 +287,15 @@ class Tray:
         recording = state is not None
         lines, region = state if recording else (None, None)
         self.marker.update(region)
-        if self.was_recording and not recording:
-            # A hide is for one call: the next recording shows its area again.
-            self.hide_item.set_active(False)
-        self.was_recording = recording
+        if recording:
+            self.was_recording = True
+            self.idle_polls = 0
+        elif self.was_recording:
+            self.idle_polls += 1
+            if self.idle_polls >= RESET_IDLE_POLLS:
+                # A hide is for one call: the next recording shows its area again.
+                self.hide_item.set_active(False)
+                self.was_recording = False
         for item, text in zip(self.info, lines or ["", ""]):
             item.set_label(text)
             item.set_visible(recording)
