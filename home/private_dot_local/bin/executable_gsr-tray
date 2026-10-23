@@ -5,6 +5,7 @@ Ayatana AppIndicator rather than Qt: Qt hardcodes the StatusNotifierItem
 ItemIsMenu=false, so Plasma never opens the menu on left-click, and a
 parentless Qt popup is refused on Wayland.
 """
+import json
 import os
 import signal
 import subprocess
@@ -129,6 +130,28 @@ class RegionMarker:
 
 def _pgrep(*args):
     return subprocess.run(["pgrep", *args], stdout=subprocess.DEVNULL).returncode == 0
+
+
+def screencast_active():
+    """True while KWin feeds a screencast (browser share, portal recording).
+
+    gpu-screen-recorder's own region/screen capture goes through KMS and never
+    creates this node, so a running recording alone does not count as sharing."""
+    dump = subprocess.run(["pw-dump"], capture_output=True, text=True)
+    if dump.returncode != 0:
+        return False
+    try:
+        objects = json.loads(dump.stdout)
+    except ValueError:
+        return False
+    for obj in objects:
+        info = obj.get("info") or {}
+        props = info.get("props") or {}
+        if (props.get("node.name") == "kwin_wayland"
+                and props.get("media.class") == "Stream/Output/Video"
+                and info.get("state") == "running"):
+            return True
+    return False
 
 
 def _arg(argv, flag):
@@ -287,6 +310,10 @@ class Tray:
         recording = state is not None
         lines, region = state if recording else (None, None)
         self.marker.update(region)
+        # Only pay for pw-dump while there is an outline to hide.
+        sharing = bool(region) and screencast_active()
+        self.marker.set_hidden(self.hide_item.get_active() or sharing)
+        self.hide_item.set_label("Hide region marker" + (" · hidden while sharing" if sharing else ""))
         if recording:
             self.was_recording = True
             self.idle_polls = 0
