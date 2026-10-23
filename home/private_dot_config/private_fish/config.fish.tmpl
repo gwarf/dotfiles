@@ -288,6 +288,8 @@ if status is-interactive
         zoxide init --cmd cd fish | source
     end
     type -q direnv; and direnv hook fish | source
+    # Activates per-directory mise.toml tools and venvs (homelab repo) on cd.
+    type -q mise; and mise activate fish | source
     # XXX: fzf--fish is only valid with fzf >= 0.48.0
     type -q fzf; and fzf --fish | source
     # After fzf so Ctrl-R is atuin's; Up keeps fish's own history search.
