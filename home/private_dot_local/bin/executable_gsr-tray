@@ -8,6 +8,7 @@ parentless Qt popup is refused on Wayland.
 import os
 import signal
 import subprocess
+import sys
 
 import gi
 
@@ -48,15 +49,24 @@ class RegionMarker:
     def __init__(self):
         self.window = None
         self.spec = None
+        self.shown = None
+        self.hidden = False
 
     def update(self, spec):
-        if spec == self.spec:
+        """Track the recorded region (None when idle); draw it unless hidden."""
+        self.spec = spec
+        want = None if self.hidden else spec
+        if want == self.shown:
             return
         self.hide()
-        self.spec = spec
-        region = parse_region(spec)
+        self.shown = want
+        region = parse_region(want) if want else None
         if region:
             self._show(region)
+
+    def set_hidden(self, hidden):
+        self.hidden = hidden
+        self.update(self.spec)
 
     def _show(self, region):
         # -region is in compositor logical pixels (slurp format); the video comes out
@@ -109,7 +119,7 @@ class RegionMarker:
         if self.window:
             self.window.destroy()
         self.window = None
-        self.spec = None
+        self.shown = None
 
 
 def _pgrep(*args):
@@ -224,14 +234,26 @@ class Tray:
         self.full = _item(menu, "Record full screen", lambda: self.run_cli("toggle-record"))
         self.region = _item(menu, "Record region", lambda: self.run_cli("toggle-record-region"))
         self.stop_item = _item(menu, "Stop recording", self.stop)
+        # Keeps the outline out of a screen share; can be ticked before the call starts.
+        self.hide_item = Gtk.CheckMenuItem(label="Hide region marker")
+        self.hide_item.set_use_underline(False)
+        self.hide_item.connect("toggled", lambda item: self.marker.set_hidden(item.get_active()))
+        menu.append(self.hide_item)
         menu.append(Gtk.SeparatorMenuItem())
         _item(menu, "Quit tray", Gtk.main_quit)
         menu.show_all()
         self.indicator.set_menu(menu)
         # Middle-click stops a recording without opening the menu.
         self.indicator.set_secondary_activate_target(self.stop_item)
+        self.was_recording = False
         self.refresh()
         GLib.timeout_add_seconds(POLL_SECONDS, self.refresh)
+        # `gsr-tray toggle-marker` (a global shortcut) flips the hide from outside.
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGUSR1, self.toggle_marker)
+
+    def toggle_marker(self):
+        self.hide_item.set_active(not self.hide_item.get_active())
+        return True
 
     def run_cli(self, command):
         if _pgrep("-x", "gsr-ui"):
@@ -258,10 +280,11 @@ class Tray:
         state = recorder()
         recording = state is not None
         lines, region = state if recording else (None, None)
-        if region:
-            self.marker.update(region)
-        else:
-            self.marker.hide()
+        self.marker.update(region)
+        if self.was_recording and not recording:
+            # A hide is for one call: the next recording shows its area again.
+            self.hide_item.set_active(False)
+        self.was_recording = recording
         for item, text in zip(self.info, lines or ["", ""]):
             item.set_label(text)
             item.set_visible(recording)
@@ -276,7 +299,20 @@ class Tray:
         return True
 
 
+TRAY_PATTERN = r"(^|/)python3? \S*/gsr-tray$"
+
+
+def toggle_marker_cli():
+    if subprocess.run(["pkill", "-USR1", "-f", TRAY_PATTERN]).returncode != 0:
+        raise SystemExit("gsr-tray: no running tray to signal")
+
+
 def main():
+    if sys.argv[1:] == ["toggle-marker"]:
+        toggle_marker_cli()
+        return
+    if sys.argv[1:]:
+        raise SystemExit("usage: gsr-tray [toggle-marker]")
     signal.signal(signal.SIGINT, signal.SIG_DFL)
     Tray()
     Gtk.main()
