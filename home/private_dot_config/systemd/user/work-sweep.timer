@@ -1,0 +1,10 @@
+[Unit]
+Description=PAI work sweep, hourly
+
+[Timer]
+OnCalendar=hourly
+RandomizedDelaySec=120s
+Persistent=true
+
+[Install]
+WantedBy=timers.target
