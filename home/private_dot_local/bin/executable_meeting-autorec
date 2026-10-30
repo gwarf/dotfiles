@@ -2,29 +2,41 @@
 // Record every Chromium call automatically: starts gpu-screen-recorder on the call's
 // window when Chromium opens the mic, stops it once the mic has been released for GRACE_S.
 // Track 1 = Chromium audio, track 2 = mic, the layout meeting-transcribe expects.
-// A <stem>.window.json sidecar records which window and area were captured.
+// gsr cannot move its region, so when the window moves or resizes the call continues in
+// a new part file; `meeting-autorec join <first part>` turns the parts into one video.
 
 import { $ } from "bun";
 import { spawn, type Subprocess } from "bun";
-import { existsSync, mkdirSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const POLL_MS = 3000;
 // Long enough to bridge a rejoin or a Zoom audio reconnect without splitting the file.
 const GRACE_S = Number(process.env.MEETING_AUTOREC_GRACE_S ?? 45);
 const OUT_DIR = process.env.MEETING_AUTOREC_DIR ?? join(process.env.HOME!, "Vidéos");
+// Whole-screen capture only on explicit opt-in; without it a call with no window is skipped.
+const SCREEN_FALLBACK = process.env.MEETING_AUTOREC_SCREEN_FALLBACK === "1";
 const RECORDER_PATTERN = "^([^ ]*/)?gpu-screen-recorder .* -o ";
 
-type Win = { caption: string; x: number; y: number; w: number; h: number; output: string };
+type Rect = { x: number; y: number; w: number; h: number };
+type Win = Rect & { id: string; caption: string; minimized: boolean; output: string; outputRect: Rect };
+type Part = { proc: Subprocess; file: string; region: Rect | null; started: number };
 
 const log = (msg: string) => console.log(`meeting-autorec: ${msg}`);
 const notify = (summary: string, body = "") =>
   $`notify-send -a meeting-autorec -i media-record ${summary} ${body}`.quiet().nothrow();
 
+function writeJson(path: string, data: unknown) {
+  writeFileSync(`${path}.tmp`, JSON.stringify(data, null, 2) + "\n");
+  renameSync(`${path}.tmp`, path);
+}
+
 async function chromiumMicOpen(): Promise<boolean> {
   const dump = await $`pw-dump`.quiet().nothrow();
   if (dump.exitCode !== 0) return false;
-  return (JSON.parse(dump.stdout.toString()) as any[]).some((o) => {
+  let objs: any[];
+  try { objs = JSON.parse(dump.stdout.toString()); } catch { return false; }
+  return objs.some((o) => {
     const p = o.info?.props;
     // Chromium names its capture stream's client "Chromium input".
     return p?.["media.class"] === "Stream/Input/Audio" && p["application.name"] === "Chromium input";
@@ -35,29 +47,60 @@ async function otherRecorderRunning(): Promise<boolean> {
   return (await $`pgrep -f ${RECORDER_PATTERN}`.quiet().nothrow()).exitCode === 0;
 }
 
-// The topmost Chromium window when the mic opens is the one the call was just joined from;
-// a window title only names its active tab, and Zoom titles it with the meeting topic.
-async function callWindow(): Promise<Win | null> {
+// With an id, the window being recorded (tracked by id: Zoom retitles it with the topic).
+// Without, the topmost Chromium window, which is the one the call was just joined from.
+// null means KWin could not be asked, which is never the same as "window gone".
+async function kwinWindow(id?: string): Promise<{ win: Win | null; screens: Rect[] } | null> {
   const tag = `meeting-autorec-${process.pid}`;
   const script = `/tmp/${tag}.js`;
   writeFileSync(script, `
-    const ws = workspace.stackingOrder.filter((w) => w.resourceClass === "chromium" && !w.minimized && w.normalWindow);
+    const rect = (g) => ({ x: g.x, y: g.y, w: g.width, h: g.height });
+    const want = ${JSON.stringify(id ?? null)};
+    const ws = want ? workspace.windowList().filter((w) => String(w.internalId) === want)
+      : workspace.stackingOrder.filter((w) => w.resourceClass === "chromium" && !w.minimized && w.normalWindow);
     const w = ws[ws.length - 1];
-    if (w) { const g = w.frameGeometry;
-      print("${tag}|" + JSON.stringify({ caption: w.caption, x: g.x, y: g.y, w: g.width, h: g.height, output: w.output ? w.output.name : "" })); }`);
+    // KWin's JS engine has no object spread.
+    const win = w ? Object.assign(rect(w.frameGeometry), { id: String(w.internalId), caption: w.caption,
+      minimized: w.minimized, output: w.output ? w.output.name : "",
+      outputRect: w.output ? rect(w.output.geometry) : null }) : null;
+    print("${tag}|" + JSON.stringify({ win, screens: workspace.screens.map((s) => rect(s.geometry)) }));`);
   const since = new Date(Date.now() - 1000).toISOString();
   try {
-    const id = (await $`qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript ${script} ${tag}`.text()).trim();
-    await $`qdbus6 org.kde.KWin /Scripting/Script${id} org.kde.kwin.Script.run`.quiet();
+    const n = (await $`qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.loadScript ${script} ${tag}`.text()).trim();
+    await $`qdbus6 org.kde.KWin /Scripting/Script${n} org.kde.kwin.Script.run`.quiet();
     await Bun.sleep(800);
     await $`qdbus6 org.kde.KWin /Scripting org.kde.kwin.Scripting.unloadScript ${tag}`.quiet().nothrow();
+    const journal = await $`journalctl --user --since ${since} --no-pager -o cat`.text();
+    const line = journal.split("\n").reverse().find((l) => l.includes(`${tag}|`));
+    return line ? JSON.parse(line.slice(line.indexOf(`${tag}|`) + tag.length + 1)) : null;
+  } catch (e) {
+    log(`kwin query failed: ${e}`);
+    return null;
   } finally {
     unlinkSync(script);
   }
-  const journal = await $`journalctl --user --since ${since} --no-pager -o cat`.text();
-  const line = journal.split("\n").reverse().find((l) => l.includes(`${tag}|`));
-  return line ? (JSON.parse(line.slice(line.indexOf(`${tag}|`) + tag.length + 1)) as Win) : null;
 }
+
+const intersect = (a: Rect, b: Rect): Rect | null => {
+  const x = Math.max(a.x, b.x), y = Math.max(a.y, b.y);
+  const w = Math.min(a.x + a.w, b.x + b.w) - x, h = Math.min(a.y + a.h, b.y + b.h) - y;
+  return w > 0 && h > 0 ? { x, y, w, h } : null;
+};
+const contains = (r: Rect, px: number, py: number) => px >= r.x && px < r.x + r.w && py >= r.y && py < r.y + r.h;
+
+// gsr records a region spanning outputs, but refuses one whose centre is on no output
+// (measured on gsr 6.1.6), so a window dragged half off-screen is clipped until it is.
+function captureRegion(win: Win, screens: Rect[]): Rect | null {
+  const r = { x: Math.round(win.x), y: Math.round(win.y), w: Math.round(win.w), h: Math.round(win.h) };
+  const onScreen = (c: Rect) => screens.some((s) => contains(s, c.x + c.w / 2, c.y + c.h / 2));
+  if (onScreen(r)) return r;
+  const clipped = win.outputRect && intersect(r, win.outputRect);
+  return clipped && onScreen(clipped) ? clipped : null;
+}
+
+const sameRect = (a: Rect | null, b: Rect | null) =>
+  a === b || (!!a && !!b && a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h);
+const regionSpec = (r: Rect) => `${r.w}x${r.h}+${r.x}+${r.y}`;
 
 const stamp = () => {
   const d = new Date();
@@ -65,68 +108,193 @@ const stamp = () => {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}-${p(d.getMinutes())}-${p(d.getSeconds())}`;
 };
 
-function startRecorder(win: Win | null): { proc: Subprocess; file: string } {
-  mkdirSync(OUT_DIR, { recursive: true });
-  const file = join(OUT_DIR, `Video_${stamp()}.mp4`);
-  // -region is in compositor logical pixels, which is what KWin's frameGeometry reports.
-  // gsr 6 deprecates it for `-w WxH+X+Y`, but gsr-tray draws its region marker from -region.
-  const r = win && { x: Math.round(win.x), y: Math.round(win.y), w: Math.round(win.w), h: Math.round(win.h) };
-  const target = r ? ["-w", "region", "-region", `${r.w}x${r.h}+${r.x}+${r.y}`] : ["-w", "screen"];
-  const argv = ["gpu-screen-recorder", ...target, "-c", "mp4", "-f", "30",
-    "-a", "app:Chromium", "-a", "default_input", "-ac", "opus", "-o", file];
-  log(`start ${argv.join(" ")}`);
-  const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
-  const sidecar = file.replace(/\.mp4$/, ".window.json");
-  writeFileSync(`${sidecar}.tmp`, JSON.stringify({ capture: r ? "window" : "screen", ...win, region: r }, null, 2) + "\n");
-  renameSync(`${sidecar}.tmp`, sidecar);
-  return { proc, file };
+// One call: Video_<stamp>.mp4, then Video_<stamp>.part02.mp4 … (they sort together), each
+// with a <part stem>.window.json, and Video_<stamp>.parts.json listing the parts in order.
+class Call {
+  stem: string;
+  parts: { file: string; started: string; region: Rect | null; caption: string }[] = [];
+  part: Part | null = null;
+  win: Win | null;
+  pending: Rect | null = null;
+
+  constructor(win: Win | null) {
+    mkdirSync(OUT_DIR, { recursive: true });
+    this.stem = join(OUT_DIR, `Video_${stamp()}`);
+    this.win = win;
+  }
+
+  get manifest() { return `${this.stem}.parts.json`; }
+
+  start(region: Rect | null) {
+    const n = this.parts.length + 1;
+    const file = n === 1 ? `${this.stem}.mp4` : `${this.stem}.part${String(n).padStart(2, "0")}.mp4`;
+    // -region is in compositor logical pixels, which is what KWin's frameGeometry reports.
+    // gsr 6 deprecates it for `-w WxH+X+Y`, but gsr-tray draws its region marker from -region.
+    const target = region ? ["-w", "region", "-region", regionSpec(region)] : ["-w", "screen"];
+    const argv = ["gpu-screen-recorder", ...target, "-c", "mp4", "-f", "30",
+      "-a", "app:Chromium", "-a", "default_input", "-ac", "opus", "-o", file];
+    log(`start ${argv.join(" ")}`);
+    const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
+    this.part = { proc, file, region, started: Date.now() };
+    const caption = this.win?.caption ?? "";
+    this.parts.push({ file, started: new Date().toISOString(), region, caption });
+    writeJson(file.replace(/\.mp4$/, ".window.json"),
+      { capture: region ? "window" : "screen", part: n, call: this.manifest, ...this.win, region });
+    this.save(false);
+  }
+
+  save(complete: boolean) {
+    writeJson(this.manifest, { complete, parts: this.parts });
+  }
+
+  async stopPart(): Promise<boolean> {
+    if (!this.part) return false;
+    const { proc, file } = this.part;
+    this.part = null;
+    proc.kill("SIGINT");
+    const timeout = setTimeout(() => proc.kill("SIGKILL"), 15_000);
+    await proc.exited;
+    clearTimeout(timeout);
+    return existsSync(file);
+  }
+
+  // Window moved or resized: once the new area holds for one poll, continue in a new part.
+  async follow() {
+    if (!this.part?.region || !this.win) return;
+    let found = await kwinWindow(this.win.id);
+    if (!found) return;
+    if (!found.win) {
+      // Closed (Zoom pops the meeting into a new window): adopt the topmost Chromium window.
+      found = await kwinWindow();
+      if (!found?.win) return;
+      log(`window ${this.win.id} gone, following ${found.win.id} "${found.win.caption}"`);
+    }
+    const { win, screens } = found as { win: Win; screens: Rect[] };
+    // A minimised window keeps its last area; the audio is what matters until it is back.
+    if (win.minimized) return;
+    const region = captureRegion(win, screens);
+    if (!region || sameRect(region, this.part.region)) { this.pending = null; return; }
+    // Debounce drags and quick-tile animations: restart only on a geometry seen twice in a row.
+    if (!sameRect(region, this.pending)) { this.pending = region; return; }
+    // Stopped from outside since the poll began: leave it to the loop, which ends the call.
+    if (stopping || this.part.proc.exitCode !== null) return;
+    this.pending = null;
+    this.win = win;
+    log(`window ${regionSpec(this.part.region)} -> ${regionSpec(region)}, new part`);
+    await this.stopPart();
+    if (!stopping) this.start(region);
+  }
 }
 
-let rec: { proc: Subprocess; file: string } | null = null;
+let call: Call | null = null;
 let micClosedSince: number | null = null;
 let skipThisCall = false;
+let warnedNoWindow = false;
+let stopping = false;
 
-async function stopRecorder(reason: string) {
-  if (!rec) return;
-  log(`stop (${reason}) ${rec.file}`);
-  rec.proc.kill("SIGINT");
-  await rec.proc.exited;
-  const ok = existsSync(rec.file);
-  notify(ok ? "Meeting recording saved" : "Meeting recording failed", rec.file);
-  rec = null;
+async function stopCall(reason: string) {
+  const c = call;
+  if (!c) return;
+  call = null;
+  log(`stop (${reason}) ${c.stem}`);
+  const ok = await c.stopPart();
+  c.save(true);
+  const n = c.parts.length;
+  notify(ok ? "Meeting recording saved" : "Meeting recording failed",
+    n > 1 ? `${c.stem}.mp4 (+${n - 1} parts)` : `${c.stem}.mp4`);
 }
 
-for (const sig of ["SIGTERM", "SIGINT"] as const)
-  process.on(sig, async () => { await stopRecorder(sig); process.exit(0); });
+async function watch() {
+  for (const sig of ["SIGTERM", "SIGINT"] as const)
+    process.on(sig, async () => { stopping = true; await stopCall(sig); process.exit(0); });
 
-log(`watching (grace ${GRACE_S}s, output ${OUT_DIR})`);
-while (true) {
-  const mic = await chromiumMicOpen();
-  if (rec && rec.proc.exitCode !== null) {
-    // Stopped from outside (gsr-tray, crash): don't restart within the same call.
-    log(`recorder exited (${rec.proc.exitCode}) ${rec.file}`);
-    notify("Meeting recording stopped", rec.file);
-    rec = null;
-    skipThisCall = true;
-  }
-  if (mic) {
-    micClosedSince = null;
-    if (!rec && !skipThisCall) {
-      if (await otherRecorderRunning()) {
-        log("another recording is running, leaving this call to it");
-        skipThisCall = true;
-      } else {
-        const win = await callWindow();
-        rec = startRecorder(win);
-        notify("Recording the call", win ? win.caption : "full screen (no Chromium window found)");
+  log(`watching (grace ${GRACE_S}s, output ${OUT_DIR}, screen fallback ${SCREEN_FALLBACK ? "on" : "off"})`);
+  while (true) {
+    const mic = await chromiumMicOpen();
+    const part = call?.part;
+    if (call && part && part.proc.exitCode !== null) {
+      // Stopped from outside (gsr-tray, crash): don't restart within the same call.
+      log(`recorder exited (${part.proc.exitCode}) ${part.file}`);
+      notify(part.proc.exitCode === 0 ? "Meeting recording stopped" : "Meeting recording failed", part.file);
+      call.part = null;
+      call.save(true);
+      call = null;
+      skipThisCall = true;
+    }
+    if (mic) {
+      micClosedSince = null;
+      if (call) {
+        await call.follow();
+      } else if (!skipThisCall) {
+        if (await otherRecorderRunning()) {
+          log("another recording is running, leaving this call to it");
+          skipThisCall = true;
+        } else {
+          const found = await kwinWindow();
+          const win = found?.win ?? null;
+          const region = win && captureRegion(win, found!.screens);
+          if (region || SCREEN_FALLBACK) {
+            call = new Call(region ? win : null);
+            call.start(region);
+            warnedNoWindow = false;
+            notify("Recording the call", region ? win!.caption : "full screen (opted in, no Chromium window)");
+          } else if (!warnedNoWindow) {
+            // Retried every poll: the call window may still be appearing.
+            log("mic open but no Chromium window on screen, not recording");
+            notify("Call not recorded yet", "No Chromium window on screen; will start when one appears");
+            warnedNoWindow = true;
+          }
+        }
+      }
+    } else {
+      micClosedSince ??= Date.now();
+      if ((Date.now() - micClosedSince) / 1000 >= GRACE_S) {
+        skipThisCall = false;
+        warnedNoWindow = false;
+        await stopCall("mic closed");
       }
     }
-  } else {
-    micClosedSince ??= Date.now();
-    if ((Date.now() - micClosedSince) / 1000 >= GRACE_S) {
-      skipThisCall = false;
-      await stopRecorder("mic closed");
-    }
+    await Bun.sleep(POLL_MS);
   }
-  await Bun.sleep(POLL_MS);
 }
+
+// Concatenate a multi-part call into <stem>.joined.mp4: every part scaled into the largest
+// part's frame (letterboxed), both audio tracks kept. Each window move costs about 1 s.
+async function joinParts(arg: string) {
+  const manifest = arg.endsWith(".parts.json") ? arg
+    : arg.replace(/(\.part\d+)?\.mp4$/, ".parts.json");
+  const { parts } = JSON.parse(readFileSync(manifest, "utf8")) as { parts: { file: string }[] };
+  const files: string[] = [];
+  for (const f of parts.map((p) => p.file)) {
+    // A part killed hard has no index and cannot be decoded; join the rest.
+    const ok = existsSync(f) && (await $`ffprobe -v error ${f}`.quiet().nothrow()).exitCode === 0;
+    if (ok) files.push(f); else console.error(`skipping unreadable part ${f}`);
+  }
+  if (files.length < 2) { console.log(files[0] ?? "no parts on disk"); return; }
+  const probe = async (f: string) =>
+    (await $`ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 ${f}`.text()).trim().split(",").map(Number);
+  const sizes = await Promise.all(files.map(probe));
+  const W = Math.max(...sizes.map((s) => s[0])) & ~1, H = Math.max(...sizes.map((s) => s[1])) & ~1;
+  const chains = files.map((_, i) =>
+    `[${i}:v:0]scale=${W}:${H}:force_original_aspect_ratio=decrease,pad=${W}:${H}:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v${i}]`);
+  // concat needs identical audio parameters, and a headset swap can change the mic layout.
+  const audio = files.flatMap((_, i) => [0, 1].map((k) =>
+    `[${i}:a:${k}]aformat=sample_rates=48000:channel_layouts=stereo[a${i}_${k}]`));
+  const inputs = files.map((_, i) => `[v${i}][a${i}_0][a${i}_1]`).join("");
+  const filter = `${[...chains, ...audio].join(";")};${inputs}concat=n=${files.length}:v=1:a=2[v][a1][a2]`;
+  // nvenc stops at 4096 px, which a window spanning both outputs can exceed.
+  const nvenc = W <= 4096 && H <= 4096 && (await $`ffmpeg -hide_banner -encoders`.quiet().text()).includes("h264_nvenc");
+  const out = manifest.replace(/\.parts\.json$/, ".joined.mp4");
+  const argv = ["ffmpeg", "-v", "error", "-y", ...files.flatMap((f) => ["-i", f]),
+    "-filter_complex", filter, "-map", "[v]", "-map", "[a1]", "-map", "[a2]",
+    "-c:v", nvenc ? "h264_nvenc" : "libx264", ...(nvenc ? [] : ["-preset", "veryfast"]),
+    "-c:a", "libopus", "-b:a", "96k", out];
+  const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
+  if ((await proc.exited) !== 0) throw new Error(`ffmpeg failed joining ${manifest}`);
+  writeJson(out.replace(/\.mp4$/, ".window.json"), { capture: "window", joined: files });
+  console.log(out);
+}
+
+if (process.argv[2] === "join" && process.argv[3]) await joinParts(process.argv[3]);
+else if (process.argv[2]) { console.error("usage: meeting-autorec [join <Video_….mp4|….parts.json>]"); process.exit(2); }
+else await watch();
