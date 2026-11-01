@@ -241,6 +241,7 @@ packages:
       # XXX: may not be needed
       # - "wlroots"
     minimal:
+      - "atuin"
       - "bash"
       - "bat"
       - "cbsd"
