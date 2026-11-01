@@ -19,7 +19,6 @@ Mail/.notmuch/hooks/post-new
 .config/systemd
 {{- end }}
 {{- if eq .chezmoi.hostname "sikaru" }}
-.config/aerc/operas.yaml
 .config/emails/operas.yaml
 {{- end }}
 {{- if eq .chezmoi.hostname "torpedo" }}

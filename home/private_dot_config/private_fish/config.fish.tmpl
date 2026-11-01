@@ -187,8 +187,11 @@ if status is-interactive
 
     # Start SSH agent
     {{ if eq .chezmoi.os "freebsd" -}}
-    # XXX: for hyprland
-    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+    # Hyprland desktops run an agent there; a headless box has no
+    # XDG_RUNTIME_DIR and must keep a forwarded agent's socket.
+    if set -q XDG_RUNTIME_DIR; and test -S "$XDG_RUNTIME_DIR/ssh-agent.socket"
+        set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+    end
     {{ end -}}
     {{ if eq .chezmoi.os "darwin" -}}
     # TODO: check if not starting a new agent with every new shell
