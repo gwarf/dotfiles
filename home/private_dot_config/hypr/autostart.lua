@@ -14,16 +14,23 @@ end
 table.insert(path_entries, 1, overrides_dir)
 hl.env("PATH", table.concat(path_entries, ":"))
 
-o.launch_on_start("obsidian")
+-- Two terminals land on workspace 1, where the session starts focused.
 o.launch_on_start("ghostty")
+o.launch_on_start("ghostty")
+o.launch_on_start("thunderbird")
 o.launch_on_start("firefox")
 o.launch_on_start("Telegram")
 o.launch_on_start("element-desktop")
 o.launch_on_start("signal-desktop")
+o.launch_on_start("obsidian")
 
 -- Class rules, not exec rules: uwsm-app detaches the app, so PID-matched
 -- exec rules would miss its window. Applies to every launch, not just login.
+o.window("^org\\.mozilla\\.Thunderbird$", { workspace = "2 silent" })
+o.window("^firefox$", { workspace = "2 silent" })
 o.window("^(org\\.telegram\\.desktop|TelegramDesktop)$", { workspace = "3 silent" })
 o.window("^(Element|element)$", { workspace = "3 silent" })
 o.window("^signal$", { workspace = "3 silent" })
-o.window("^md\\.obsidian\\.Obsidian$", { workspace = "5 silent" })
+o.window("^md\\.obsidian\\.Obsidian$", { workspace = "4 silent" })
+-- Daryl's Interceptor browser (brave-interceptor.service) stays out of the way.
+o.window("^brave-origin$", { workspace = "5 silent" })

@@ -29,12 +29,7 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 -- o.window("qemu", { workspace = "5" })
 
--- Autostarted apps get fixed homes. "silent" places them without dragging
--- focus along, so the login sequence doesn't ping-pong between workspaces.
-o.window("^firefox$", { workspace = "2 silent" })
-o.window("^md\\.obsidian\\.Obsidian$", { workspace = "3 silent" })
--- Daryl's Interceptor browser (brave-interceptor.service) stays out of the way.
-o.window("^brave-origin$", { workspace = "4 silent" })
+-- Autostarted apps and their workspace homes live in hypr/autostart.lua.
 {{ else -}}
 -- Hyprland configuration (migrated from hyprlang to Lua for Hyprland 0.55+)
 -- Refer to the wiki: https://wiki.hypr.land/Configuring/Start/
