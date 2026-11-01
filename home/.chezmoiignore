@@ -99,6 +99,30 @@ bin/setup_kinesis_keyboard
 bin/start_zoom
 bin/true-color.sh
 {{- end }}
+{{- if eq .chezmoi.hostname "delamain" }}
+# Headless FreeBSD box without rbw: keep the mail/sync stack, whose
+# credentials come from rbw at run time, from landing on a bare apply.
+.config/aerc
+.config/imapnotify
+.config/rbw
+.config/systemd/user/mailsync.service
+.config/systemd/user/mailsync.timer
+.config/systemd/user/mbsync.service
+.config/systemd/user/mbsync.timer
+.config/systemd/user/msmtp-runqueue.service
+.config/systemd/user/msmtp-runqueue.timer
+.config/systemd/user/pai-git-sync.service
+.config/systemd/user/pai-git-sync.timer
+.config/vdirsyncer
+.local/bin/meeting-transcribe
+.local/bin/msmtp-queue
+.local/bin/msmtpq
+.local/bin/pai-git-sync
+.local/bin/pinentry-rbw
+.local/bin/vaultpick
+.mbsyncrc
+.msmtprc
+{{- end }}
 {{- if stat "/usr/share/omarchy" }}
 # Omarchy-seeded config we have NOT taken ownership of; its copy wins here.
 # Taking ownership means customising the file and adding it, at which point it
