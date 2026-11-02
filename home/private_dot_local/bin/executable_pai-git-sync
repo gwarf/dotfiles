@@ -2,7 +2,23 @@
 set -euo pipefail
 
 # systemd user services have minimal PATH; chezmoi (linuxbrew) needs explicit reach.
-export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:$HOME/.local/bin:$PATH"
+export PATH="/home/linuxbrew/.linuxbrew/bin:$HOME/.linuxbrew/bin:$HOME/.local/bin:$HOME/.bun/bin:$PATH"
+
+# node_modules is untracked, so a pulled dependency change breaks every bun
+# script in the repo until someone installs; do it here, and only when the
+# lockfile moved, so an ordinary sync never touches the network for packages.
+install_deps_if_lockfile_changed() {
+	local repo="$1" name="$2" head_before="$3"
+	[ -f "$repo/bun.lock" ] || return 0
+	command -v bun >/dev/null 2>&1 || return 0
+	if [ -z "$(git -C "$repo" diff --name-only "$head_before" HEAD -- package.json bun.lock)" ]; then
+		return 0
+	fi
+	if ! (cd "$repo" && bun install --frozen-lockfile >/dev/null 2>&1); then
+		tg_notify "⚠️ pai-git-sync[$name]: bun install failed after a lockfile change"
+		return 1
+	fi
+}
 
 # A host with a dedicated sync key (a write deploy key on both repos) uses it
 # for these pushes only, so a locked smartcard cannot fail the tick. Kept out
@@ -130,6 +146,8 @@ sync_repo() {
 		fi
 	fi
 
+	local head_before
+	head_before=$(git rev-parse HEAD)
 	if ! git rebase origin/main; then
 		git rebase --abort 2>/dev/null || true
 		tg_notify "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
@@ -140,6 +158,8 @@ sync_repo() {
 		tg_notify "⚠️ pai-git-sync[$name]: push failed"
 		return 1
 	fi
+
+	install_deps_if_lockfile_changed "$repo" "$name" "$head_before" || true
 
 	# Post-sync hook for chezmoi: source commits don't render to target files until apply.
 	# chezmoi apply is idempotent and overwrites drift — chezmoi treats source as canonical.
