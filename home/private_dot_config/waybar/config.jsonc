@@ -2,9 +2,18 @@
   "position": "top",
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["hyprland/window"],
-  "modules-right": ["tray", "pulseaudio", "clock"],
+  "modules-right": ["tray", "idle_inhibitor", "pulseaudio", "clock"],
   "tray": {
     "spacing": 8,
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰅶",
+      "deactivated": "󰛊",
+    },
+    "tooltip-format-activated": "Staying awake: no lock, no screen off",
+    "tooltip-format-deactivated": "Idle lock and screen off enabled",
   },
   "clock": {
     "format": "<span foreground='#f5c2e7'>   </span>{:%a %d %H:%M}",
