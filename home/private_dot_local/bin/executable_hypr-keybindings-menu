@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Pick a binding from the table hypr/binds.lua exported, and run it.
+set -euo pipefail
+
+table="${XDG_RUNTIME_DIR:?}/hypr-binds.tsv"
+[[ -r $table ]] || { notify-send "Keybindings" "No bind table yet: reload Hyprland"; exit 1; }
+
+choice=$(awk -F'\t' '{ printf "%-28s %s\n", $1, $2 }' "$table" | rofi -dmenu -i -p keys -format i) || exit 0
+expression=$(awk -F'\t' -v n=$((choice + 1)) 'NR == n { print $3 }' "$table")
+[[ -n $expression ]] && hyprctl dispatch "$expression"

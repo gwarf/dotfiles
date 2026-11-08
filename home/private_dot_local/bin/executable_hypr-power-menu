@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+choice=$(printf '%s\n' Lock Logout Suspend Reboot "Power off" | rofi -dmenu -i -p power) || exit 0
+case $choice in
+  Lock) loginctl lock-session ;;
+  Logout) uwsm stop ;;
+  Suspend) systemctl suspend ;;
+  Reboot) systemctl reboot ;;
+  "Power off") systemctl poweroff ;;
+esac

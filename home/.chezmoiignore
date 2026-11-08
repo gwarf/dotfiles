@@ -15,7 +15,7 @@ Mail/.notmuch/hooks/post-new
 .config/aerc
 .config/waybar
 .config/hypr
-.config/wofi
+.config/rofi
 .config/systemd
 {{- end }}
 {{- if eq .chezmoi.hostname "sikaru" }}
@@ -78,7 +78,7 @@ Mail/.notmuch/hooks/post-new
 .config/hypr
 .config/kitty
 .config/waybar
-.config/wofi
+.config/rofi
 .config/yay
 .config/zellij
 .config/systemd/user/pai-pulse.service
@@ -135,20 +135,25 @@ bin/true-color.sh
 .config/chromium-flags.conf
 .config/herdr/config.toml
 .config/kitty/kitty.conf
-# Omarchy owns the desktop stack. These configure waybar, wofi and hyprpaper,
-# none of which Omarchy installs, and mocha.lua is loaded by a require() that
-# only existed in the pre-Omarchy hyprland.lua.
+# Omarchy owns the desktop stack. These configure the self-owned desktop that
+# replaces it (waybar, rofi, hyprpaper, hypridle, hyprlock, the bind table and
+# its menus), loaded only by the non-Omarchy branch of hyprland.lua.
 # The directories too: once their files are ignored nothing managed remains
 # under them, and leaving them managed makes apply prompt for a TTY it has
 # none of when it runs from pai-git-sync.service.
 .config/waybar
-.config/wofi
+.config/rofi
 .config/waybar/config.jsonc
 .config/waybar/style.css
 .config/waybar/mocha.css
-.config/wofi/style.css
+.config/rofi/config.rasi
 .config/hypr/hyprpaper.conf
 .config/hypr/mocha.lua
+.config/hypr/binds.lua
+.config/hypr/hypridle.conf
+.config/hypr/hyprlock.conf
+.local/bin/hypr-keybindings-menu
+.local/bin/hypr-power-menu
 # Colour schemes for the pre-Omarchy terminal configs. Omarchy's own
 # alacritty.toml and kitty.conf import from its theme system under
 # ~/.local/state/omarchy/current/theme, so nothing loads these.
