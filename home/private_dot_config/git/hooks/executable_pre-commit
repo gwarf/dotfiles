@@ -21,63 +21,77 @@
 #
 # Lints the worktree copy, not the staged blob. Identical under `git add -A`;
 # they can differ when only part of a file is staged by hand.
+#
+# A repo can add its own checks with an executable `.pre-commit-local` at its
+# root; it runs after the lint and its exit code gates the commit too.
 
 set -uo pipefail
 
-if [ "${PAI_SKIP_SHELL_LINT:-}" = "1" ]; then
-	exit 0
-fi
+shell_lint() {
+	if [ "${PAI_SKIP_SHELL_LINT:-}" = "1" ]; then
+		return 0
+	fi
 
-if ! command -v shellcheck >/dev/null 2>&1; then
-	printf 'pre-commit: shellcheck not installed, skipping shell lint\n' >&2
-	exit 0
-fi
+	if ! command -v shellcheck >/dev/null 2>&1; then
+		printf 'pre-commit: shellcheck not installed, skipping shell lint\n' >&2
+		return 0
+	fi
+
+	local severity
+	case "$repo_root" in
+	*/.local/share/chezmoi) severity=style ;;
+	*) severity=error ;;
+	esac
+
+	local staged targets f
+	mapfile -d '' staged < <(git diff --cached --name-only --diff-filter=ACM -z)
+
+	targets=()
+	for f in "${staged[@]}"; do
+		case "$f" in
+		# Go-template syntax is not parseable shell.
+		*.tmpl) continue ;;
+		*.py) continue ;;
+		# Mirrors FILTER_REGEX_EXCLUDE and BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE
+		# in .github/workflows/mega-linter.yml - msmtpq and msmtp-queue are
+		# vendored upstream and not ours to reformat.
+		*deprecated/*) continue ;;
+		*executable_msmtpq | *executable_msmtp-queue) continue ;;
+		esac
+		[ -f "$repo_root/$f" ] || continue
+		head -n1 "$repo_root/$f" 2>/dev/null |
+			grep -qE '^#!.*\b(bash|sh)\b' || continue
+		targets+=("$f")
+	done
+
+	if [ "${#targets[@]}" -eq 0 ]; then
+		return 0
+	fi
+
+	local rc=0
+	shellcheck --external-sources --severity="$severity" "${targets[@]}" || rc=1
+
+	if command -v shfmt >/dev/null 2>&1; then
+		if ! shfmt -d "${targets[@]}" >/dev/null 2>&1; then
+			printf 'pre-commit: shfmt would reformat staged shell files (advisory)\n' >&2
+		fi
+	fi
+
+	if [ "$rc" -ne 0 ]; then
+		printf '\npre-commit: shellcheck failed at severity=%s\n' "$severity" >&2
+		printf 'bypass with: git commit --no-verify\n' >&2
+	fi
+	return "$rc"
+}
 
 repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
-
-case "$repo_root" in
-*/.local/share/chezmoi) severity=style ;;
-*) severity=error ;;
-esac
-
-mapfile -d '' staged < <(git diff --cached --name-only --diff-filter=ACM -z)
-
-targets=()
-for f in "${staged[@]}"; do
-	case "$f" in
-	# Go-template syntax is not parseable shell.
-	*.tmpl) continue ;;
-	*.py) continue ;;
-	# Mirrors FILTER_REGEX_EXCLUDE and BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE
-	# in .github/workflows/mega-linter.yml - msmtpq and msmtp-queue are
-	# vendored upstream and not ours to reformat.
-	*deprecated/*) continue ;;
-	*executable_msmtpq | *executable_msmtp-queue) continue ;;
-	esac
-	[ -f "$repo_root/$f" ] || continue
-	head -n1 "$repo_root/$f" 2>/dev/null |
-		grep -qE '^#!.*\b(bash|sh)\b' || continue
-	targets+=("$f")
-done
-
-if [ "${#targets[@]}" -eq 0 ]; then
-	exit 0
-fi
-
 cd "$repo_root" || exit 0
 
 rc=0
-shellcheck --external-sources --severity="$severity" "${targets[@]}" || rc=1
+shell_lint || rc=1
 
-if command -v shfmt >/dev/null 2>&1; then
-	if ! shfmt -d "${targets[@]}" >/dev/null 2>&1; then
-		printf 'pre-commit: shfmt would reformat staged shell files (advisory)\n' >&2
-	fi
-fi
-
-if [ "$rc" -ne 0 ]; then
-	printf '\npre-commit: shellcheck failed at severity=%s\n' "$severity" >&2
-	printf 'bypass with: git commit --no-verify\n' >&2
+if [ -x "$repo_root/.pre-commit-local" ]; then
+	"$repo_root/.pre-commit-local" || rc=1
 fi
 
 exit "$rc"
