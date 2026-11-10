@@ -32,16 +32,16 @@ REPOS=(
 	"$HOME/.local/share/chezmoi"
 )
 
-TG_ENV="$HOME/.env"
 CHAT_ID="-1003961816258"
 
-# Telegram notifications are optional — only load the token if ~/.env exists
-# AND defines TELEGRAM_BOT_TOKEN. Hosts without the env file (or without the
-# token) still get a working sync; they just don't get notifications.
+# Telegram notifications are optional: the token comes from the credstore render
+# first, then the legacy ~/.env; a host with neither syncs without notifying.
 BOT_TOKEN=""
-if [ -f "$TG_ENV" ]; then
+for TG_ENV in /run/pai-pulse/.env "$HOME/.env"; do
+	[ -r "$TG_ENV" ] || continue
 	BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2- || true)
-fi
+	[ -n "$BOT_TOKEN" ] && break
+done
 
 tg_notify() {
 	[ -z "$BOT_TOKEN" ] && return 0
