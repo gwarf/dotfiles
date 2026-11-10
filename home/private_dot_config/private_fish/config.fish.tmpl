@@ -277,6 +277,11 @@ if status is-interactive
     # Set LS_COLORS
     type -q vivid; and set -xg LS_COLORS (vivid generate catppuccin-macchiato)
 
+{{- if eq .chezmoi.hostname "torpedo" }}
+    set -gx MPD_HOST music-office.home.arpa
+    set -gx MPD_PORT 6600
+{{- end }}
+
     [ -e $HOME/.fish.env ]; and source $HOME/.fish.env
 
     # Each init is gated on its own binary: an absent tool would otherwise throw
