@@ -25,7 +25,7 @@ PAI_GIT_SYNC_SOURCED=1 HOME="$TMPROOT" . "$TARGET"
 set +e
 
 NOTIFIED=""
-tg_notify() { NOTIFIED="$1"; }
+record_failure() { NOTIFIED="$1"; }
 
 CALLS="$TMPROOT/bun-calls"
 mkdir -p "$TMPROOT/bin"

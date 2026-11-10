@@ -15,7 +15,7 @@ install_deps_if_lockfile_changed() {
 		return 0
 	fi
 	if ! (cd "$repo" && bun install --frozen-lockfile >/dev/null 2>&1); then
-		tg_notify "⚠️ pai-git-sync[$name]: bun install failed after a lockfile change"
+		record_failure "⚠️ pai-git-sync[$name]: bun install failed after a lockfile change"
 		return 1
 	fi
 }
@@ -32,22 +32,13 @@ REPOS=(
 	"$HOME/.local/share/chezmoi"
 )
 
-CHAT_ID="-1003961816258"
+# Failures are recorded on this host instead of pushed anywhere; the agent's
+# status and wrap-up commands read the file. A fully clean run clears it.
+FAILURE_LOG="${XDG_STATE_HOME:-$HOME/.local/state}/pai-git-sync/failures"
 
-# Telegram notifications are optional: the token comes from the credstore render
-# first, then the legacy ~/.env; a host with neither syncs without notifying.
-BOT_TOKEN=""
-for TG_ENV in /run/pai-pulse/.env "$HOME/.env"; do
-	[ -r "$TG_ENV" ] || continue
-	BOT_TOKEN=$(grep -m1 '^TELEGRAM_BOT_TOKEN=' "$TG_ENV" | cut -d= -f2- || true)
-	[ -n "$BOT_TOKEN" ] && break
-done
-
-tg_notify() {
-	[ -z "$BOT_TOKEN" ] && return 0
-	curl -s "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
-		-d "chat_id=${CHAT_ID}" \
-		--data-urlencode "text=$1" >/dev/null 2>&1 || true
+record_failure() {
+	mkdir -p "$(dirname "$FAILURE_LOG")" 2>/dev/null || return 0
+	printf '%s\t%s\n' "$(date -Iseconds)" "$1" >>"$FAILURE_LOG" 2>/dev/null || true
 }
 
 # Age floor for calling a lock abandoned. Real git operations on these repos
@@ -66,13 +57,13 @@ clear_stale_index_lock() {
 
 	# A symlink here would redirect the rm out of the repo entirely.
 	if [ -L "$lock" ] || [ ! -f "$lock" ]; then
-		tg_notify "⚠️ pai-git-sync[$name]: index.lock is not a regular file — left alone"
+		record_failure "⚠️ pai-git-sync[$name]: index.lock is not a regular file — left alone"
 		return 1
 	fi
 
 	# Non-empty means git wrote index content into it: live, or a partial write.
 	if [ -s "$lock" ]; then
-		tg_notify "⚠️ pai-git-sync[$name]: index.lock is non-empty — left alone"
+		record_failure "⚠️ pai-git-sync[$name]: index.lock is non-empty — left alone"
 		return 1
 	fi
 
@@ -84,7 +75,7 @@ clear_stale_index_lock() {
 
 	# No holder is the load-bearing check, so a missing fuser fails closed.
 	if ! command -v fuser >/dev/null 2>&1; then
-		tg_notify "⚠️ pai-git-sync[$name]: fuser missing, cannot clear index.lock"
+		record_failure "⚠️ pai-git-sync[$name]: fuser missing, cannot clear index.lock"
 		return 1
 	fi
 	if fuser "$lock" >/dev/null 2>&1; then
@@ -96,7 +87,7 @@ clear_stale_index_lock() {
 
 	rm -f "$lock" || return 1
 	echo "pai-git-sync[$name]: removed stale index.lock (empty, unheld, ${age}s old)"
-	tg_notify "🧹 pai-git-sync[$name]: cleared stale index.lock (${age}s old, no holder)"
+	record_failure "🧹 pai-git-sync[$name]: cleared stale index.lock (${age}s old, no holder)"
 }
 
 sync_repo() {
@@ -104,7 +95,7 @@ sync_repo() {
 	local name
 	name=$(basename "$repo")
 	cd "$repo" || {
-		tg_notify "⚠️ pai-git-sync[$name]: cd failed"
+		record_failure "⚠️ pai-git-sync[$name]: cd failed"
 		return 1
 	}
 
@@ -117,12 +108,12 @@ sync_repo() {
 		[ "$(git config --get core.hooksPath || true)" != "$hooks_dir" ]; then
 		# Non-fatal: an unset lint gate degrades commits, it doesn't make the sync wrong.
 		if ! git config core.hooksPath "$hooks_dir"; then
-			tg_notify "⚠️ pai-git-sync[$name]: could not set core.hooksPath (lint gate off)"
+			record_failure "⚠️ pai-git-sync[$name]: could not set core.hooksPath (lint gate off)"
 		fi
 	fi
 
 	if ! git fetch 2>&1; then
-		tg_notify "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
+		record_failure "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
 		return 1
 	fi
 
@@ -133,7 +124,7 @@ sync_repo() {
 	# Unguarded, a partial add stages nothing and the rest of the function no-ops
 	# to a false success.
 	if ! git add -A; then
-		tg_notify "⚠️ pai-git-sync[$name]: git add failed"
+		record_failure "⚠️ pai-git-sync[$name]: git add failed"
 		return 1
 	fi
 
@@ -141,7 +132,7 @@ sync_repo() {
 		# Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
 		# from a headless timer unit, so signing fails on cache-cold runs.
 		if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-			tg_notify "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
+			record_failure "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
 			return 1
 		fi
 	fi
@@ -150,12 +141,12 @@ sync_repo() {
 	head_before=$(git rev-parse HEAD)
 	if ! git rebase origin/main; then
 		git rebase --abort 2>/dev/null || true
-		tg_notify "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
+		record_failure "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
 		return 1
 	fi
 
 	if ! git push; then
-		tg_notify "⚠️ pai-git-sync[$name]: push failed"
+		record_failure "⚠️ pai-git-sync[$name]: push failed"
 		return 1
 	fi
 
@@ -169,7 +160,7 @@ sync_repo() {
 		# imapnotify, aerc). Under a systemd unit that output lands in the journal.
 		# Returns 2, not 1, so the caller can tell this apart from a git failure.
 		if ! chezmoi apply 2>&1; then
-			tg_notify "⚠️ pai-git-sync[$name]: chezmoi apply failed (git sync itself was OK)"
+			record_failure "⚠️ pai-git-sync[$name]: chezmoi apply failed (git sync itself was OK)"
 			return 2
 		fi
 	fi
@@ -188,7 +179,7 @@ hook_state="not-run"
 for repo in "${REPOS[@]}"; do
 	repo_name=$(basename "$repo")
 	if [ ! -d "$repo/.git" ]; then
-		tg_notify "⚠️ pai-git-sync: $repo missing .git/"
+		record_failure "⚠️ pai-git-sync: $repo missing .git/"
 		git_failed="${git_failed}${repo_name} "
 		continue
 	fi
@@ -222,4 +213,5 @@ echo "pai-git-sync: post-sync-hook=$hook_state"
 if [ -n "$git_failed" ] || [ "$hook_state" = "FAILED" ]; then
 	exit 1
 fi
+rm -f "$FAILURE_LOG"
 exit 0

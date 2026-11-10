@@ -20,8 +20,8 @@ fi
 TMPROOT=$(mktemp -d)
 trap 'rm -rf "$TMPROOT"' EXIT
 
-# Redirecting HOME keeps the real ~/.env out of reach, so BOT_TOKEN stays empty
-# and no test can reach Telegram even if the stub below is dropped.
+# Redirecting HOME keeps the failure log under the temp root, so no test can write
+# to the real one even if the stub below is dropped.
 # shellcheck source=/dev/null
 PAI_GIT_SYNC_SOURCED=1 HOME="$TMPROOT" . "$TARGET"
 
@@ -29,7 +29,7 @@ PAI_GIT_SYNC_SOURCED=1 HOME="$TMPROOT" . "$TARGET"
 set +e
 
 NOTIFIED=""
-tg_notify() {
+record_failure() {
 	NOTIFIED="$1"
 }
 
