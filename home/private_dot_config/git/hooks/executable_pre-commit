@@ -158,59 +158,79 @@ is_ignored() {
 	return 1
 }
 
-scan_line() {
-	local path="$1" number="$2" line="$3" entry name regex rc fingerprint match tail remaining candidate
-	local -a matches
-	[[ "$line" == *pai-leak-allow* ]] && return 0
-	line=${line%$'\r'}
+report_finding() {
+	local path="$1" number="$2" name="$3" fingerprint="$4"
+	if [ "$SCAN_HOOK_NAME" = pre-commit ]; then
+		printf '%s:%s: %s fingerprint=%s\n' "$path" "$number" "$name" "$fingerprint" >&2
+	else
+		printf '%s: %s:%s: %s fingerprint=%s\n' "$SCAN_HOOK_NAME" "$path" "$number" "$name" "$fingerprint" >&2
+	fi
+}
+
+# Scans added_text (one added line per element, beside added_path and
+# added_number) with one grep per pattern over the whole text: a grep per line
+# and pattern made a large commit take a minute. A line yields one finding, the
+# first pattern in table order whose match is neither a placeholder nor ignored.
+scan_added() {
+	local text name regex hits rc entry row previous_row settled match tail remaining fingerprint
+	local -A finding=()
+	[ "${#added_text[@]}" -gt 0 ] || return 0
+	text=$(printf '%s\n' "${added_text[@]}")
 	while IFS=$'\t' read -r name regex; do
 		[ -n "$name" ] || continue
-		printf '%s\n' "$line" | grep -Eq -- "$regex"
+		# -a: one undecodable byte would otherwise turn every match into a "binary file" notice.
+		hits=$(grep -a -onE -- "$regex" <<<"$text")
 		rc=$?
 		case "$rc" in
 		0) ;;
 		1) continue ;;
 		*) printf '%s: grep failed while scanning staged content\n' "$SCAN_HOOK_NAME" >&2; return 2 ;;
 		esac
-		mapfile -t matches < <(printf '%s\n' "$line" | grep -oE -- "$regex")
-		if [ "${#matches[@]}" -eq 0 ]; then
-			printf '%s: grep failed while extracting a fingerprint\n' "$SCAN_HOOK_NAME" >&2
-			return 2
-		fi
-		match=${matches[0]}
-		if [ "$name" = url-credentials ]; then
-			remaining=$line
-			match=''
-			for candidate in "${matches[@]}"; do
-				tail=${remaining#*"$candidate"}
-				if ! url_credential_is_placeholder "$candidate" "$tail"; then
-					match=$candidate
-					break
+		previous_row=0
+		settled=0
+		while IFS= read -r entry; do
+			row=${entry%%:*}
+			match=${entry#*:}
+			if [[ ! "$row" =~ ^[0-9]+$ ]] || [ "$row" -gt "${#added_text[@]}" ]; then
+				printf '%s: grep failed while extracting a fingerprint\n' "$SCAN_HOOK_NAME" >&2
+				return 2
+			fi
+			if [ "$row" != "$previous_row" ]; then
+				previous_row=$row
+				settled=0
+				remaining=${added_text[row - 1]}
+			fi
+			[ "$settled" = 0 ] || continue
+			[ -z "${finding[$row]:-}" ] || continue
+			if [ "$name" = url-credentials ]; then
+				tail=${remaining#*"$match"}
+				if url_credential_is_placeholder "$match" "$tail"; then
+					remaining=$tail
+					continue
 				fi
-				remaining=$tail
-			done
-			[ -n "$match" ] || continue
-		fi
-		fingerprint=$(printf '%s' "$match" | sha256sum) || {
-			printf '%s: fingerprint calculation failed\n' "$SCAN_HOOK_NAME" >&2
-			return 2
-		}
-		fingerprint=${fingerprint%% *}
-		fingerprint=${fingerprint:0:16}
-		is_ignored "$path" "$fingerprint" && continue
-		if [ "$SCAN_HOOK_NAME" = pre-commit ]; then
-			printf '%s:%s: %s fingerprint=%s\n' "$path" "$number" "$name" "$fingerprint" >&2
-		else
-			printf '%s: %s:%s: %s fingerprint=%s\n' "$SCAN_HOOK_NAME" "$path" "$number" "$name" "$fingerprint" >&2
-		fi
-		return 1
+			fi
+			settled=1
+			fingerprint=$(printf '%s' "$match" | sha256sum) || {
+				printf '%s: fingerprint calculation failed\n' "$SCAN_HOOK_NAME" >&2
+				return 2
+			}
+			fingerprint=${fingerprint%% *}
+			fingerprint=${fingerprint:0:16}
+			is_ignored "${added_path[row - 1]}" "$fingerprint" && continue
+			finding[$row]="$name $fingerprint"
+		done <<<"$hits"
 	done <<<"$LEAK_PATTERNS"
-	return 0
+	[ "${#finding[@]}" -gt 0 ] || return 0
+	for ((row = 1; row <= ${#added_text[@]}; row += 1)); do
+		[ -n "${finding[$row]:-}" ] || continue
+		report_finding "${added_path[row - 1]}" "${added_number[row - 1]}" "${finding[$row]% *}" "${finding[$row]#* }"
+	done
+	return 1
 }
 
 leak_scan() {
 	local patch line path new_line active rc
-	local scan_rc=0
+	local -a added_path=() added_number=() added_text=()
 	load_head_ignores || return 2
 	patch=$(git -c core.quotepath=off diff --cached -M --no-ext-diff --no-color --unified=0)
 	rc=$?
@@ -240,13 +260,13 @@ leak_scan() {
 		fi
 		[ "$active" = 1 ] || continue
 		if [[ "$line" == +* ]]; then
-			scan_line "$path" "$new_line" "${line:1}"
-			rc=$?
-			case "$rc" in
-			0) ;;
-			1) scan_rc=1 ;;
-			*) return 2 ;;
-			esac
+			line=${line:1}
+			line=${line%$'\r'}
+			# An allowed line stays as an empty element so rows keep matching grep's numbering.
+			[[ "$line" == *pai-leak-allow* ]] && line=''
+			added_path+=("$path")
+			added_number+=("$new_line")
+			added_text+=("$line")
 			((new_line += 1))
 		elif [[ "$line" == -* ]]; then
 			:
@@ -254,7 +274,7 @@ leak_scan() {
 			((new_line += 1))
 		fi
 	done <<<"$patch"
-	return "$scan_rc"
+	scan_added
 }
 
 resolve_path() {
