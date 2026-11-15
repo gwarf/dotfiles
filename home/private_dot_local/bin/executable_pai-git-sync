@@ -131,6 +131,13 @@ sync_repo() {
 			record_failure "⚠️ pai-git-sync[$name]: could not set pai.shellcheckSeverity (lint gate off)"
 	fi
 
+	# The dotfiles repo is published on purpose; without this mark the push hook
+	# refuses its public destination and every tick fails.
+	if [ "$repo" = "$HOME/.local/share/chezmoi" ] && [ "$(git config --get pai.publicOk || true)" != true ]; then
+		git config pai.publicOk true ||
+			record_failure "⚠️ pai-git-sync[$name]: could not set pai.publicOk (pushes will be refused)"
+	fi
+
 	if ! git fetch 2>&1; then
 		record_failure "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
 		return 1
