@@ -1,0 +1,289 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+mktemp_suffix=XX
+mktemp_suffix+=XX
+mktemp_suffix+=XX
+ref_input=$(mktemp "$PWD/.pre-push-refs.$mktemp_suffix") || {
+	printf 'pre-push: cannot buffer refs from stdin\n' >&2
+	exit 2
+}
+probe_body=$(mktemp "$PWD/.pre-push-probe.$mktemp_suffix") || {
+	rm -f -- "$ref_input"
+	printf 'pre-push: cannot create probe response file\n' >&2
+	exit 2
+}
+trap 'rm -f -- "$ref_input" "$probe_body"' EXIT
+cat >"$ref_input" || {
+	printf 'pre-push: cannot buffer refs from stdin\n' >&2
+	exit 2
+}
+
+remote_arg=${1:-'(unknown)'}
+remote_name=$remote_arg
+# Git supplies the rewritten push URL here.
+push_url=${2:-}
+if [ -z "$push_url" ]; then
+	printf 'pre-push: missing push URL\n' >&2
+	exit 1
+fi
+
+normalise_url() {
+	local input="$1" authority host port path absolute
+	if [[ "$input" == file://* ]]; then
+		path=${input#file://}
+		if [[ "$path" == localhost/* ]]; then
+			path=/${path#localhost/}
+		elif [[ "$path" == /* ]]; then
+			:
+		else
+			absolute=$(realpath -m -- "$path") || return 1
+			[[ "$absolute" == *.git ]] && absolute=${absolute%.git}
+			printf 'file/%s\n' "$absolute"
+			return $?
+		fi
+		absolute=$(realpath -m -- "$path") || return 1
+		[[ "$absolute" == *.git ]] && absolute=${absolute%.git}
+		printf 'file/%s\n' "$absolute"
+		return 0
+	fi
+	if [[ "$input" != *://* && "$input" != /* && "$input" != ./* && "$input" != ../* && "$input" != *:* ]]; then
+		absolute=$(realpath -m -- "$input") || return 1
+		[[ "$absolute" == *.git ]] && absolute=${absolute%.git}
+		printf 'file/%s\n' "$absolute"
+		return 0
+	fi
+	if [[ "$input" == /* || "$input" == ./* || "$input" == ../* ]]; then
+		absolute=$(realpath -m -- "$input") || return 1
+		[[ "$absolute" == *.git ]] && absolute=${absolute%.git}
+		printf 'file/%s\n' "$absolute"
+		return 0
+	fi
+	if [[ "$input" == *://* ]]; then
+		[[ "$input" =~ ^[A-Za-z][A-Za-z0-9+.-]*://([^/]*)(/.*)?$ ]] || return 1
+		authority=${BASH_REMATCH[1]}
+		path=${BASH_REMATCH[2]:-}
+		authority=${authority##*@}
+		[[ "$authority" =~ ^([^:]+)(:([0-9]+))?$ ]] || return 1
+		host=${BASH_REMATCH[1],,}
+		port=${BASH_REMATCH[3]:-}
+		case "${input%%://*}:$port" in
+			ssh:22|https:443|http:80) port='' ;;
+		esac
+	else
+		[[ "$input" =~ ^([^/]+):(.+)$ ]] || return 1
+		authority=${BASH_REMATCH[1]}
+		path=/${BASH_REMATCH[2]}
+		authority=${authority##*@}
+		[[ "$authority" =~ ^([^:]+)$ ]] || return 1
+		host=${BASH_REMATCH[1],,}
+		port=''
+	fi
+	while [[ "$path" == */ ]]; do path=${path%/}; done
+	[[ "$path" == *.git ]] && path=${path%.git}
+	if [ -n "$port" ]; then
+		printf '%s:%s%s\n' "$host" "$port" "$path"
+	else
+		printf '%s%s\n' "$host" "$path"
+	fi
+}
+
+config_value() {
+	local key="$1" output rc
+	output=$(git config --get "$key" 2>/dev/null)
+	rc=$?
+	case "$rc" in
+		0) printf '%s\n' "$output" ;;
+		1) return 1 ;;
+		*) return 2 ;;
+	esac
+}
+
+config_bool() {
+	local key="$1" output rc
+	output=$(git config --type=bool --get "$key" 2>/dev/null)
+	rc=$?
+	case "$rc" in
+		0)
+			case "$output" in
+				true) printf 'true\n' ;;
+				false) printf 'false\n' ;;
+				*) return 2 ;;
+			esac
+			;;
+		1) printf 'false\n' ;;
+		*) return 2 ;;
+	esac
+}
+
+load_private_remotes() {
+	private_remotes=()
+	local values rc entry normalized
+	values=$(git config --get-all pai.privateRemote 2>/dev/null)
+	rc=$?
+	case "$rc" in
+		0) ;;
+		1) return 0 ;;
+		*) return 2 ;;
+	esac
+	while IFS= read -r entry || [ -n "$entry" ]; do
+		[ -n "$entry" ] || continue
+		normalized=$(normalise_url "$entry") || return 2
+		private_remotes+=("$normalized")
+	done <<<"$values"
+}
+
+is_private_remote() {
+	local candidate="$1" entry
+	for entry in "${private_remotes[@]}"; do
+		[ "$candidate" = "$entry" ] && return 0
+	done
+	return 1
+}
+
+probe_visibility() {
+	local normalized="$1" output rc host path owner repo http_code private_value
+	if [ -n "${PAI_PREPUSH_PROBE:-}" ]; then
+		output=$("$PAI_PREPUSH_PROBE" "$normalized" 2>/dev/null)
+		rc=$?
+		[ "$rc" -eq 0 ] || { printf 'unknown\n'; return 0; }
+		output=${output%%$'\n'*}
+		case "$output" in public|private|unknown) printf '%s\n' "$output" ;; *) printf 'unknown\n' ;; esac
+		return 0
+	fi
+	[[ "$normalized" =~ ^([^/]+)/(.*)$ ]] || { printf 'unknown\n'; return 0; }
+	host=${BASH_REMATCH[1]}
+	path=${BASH_REMATCH[2]}
+	if [ "${probe_ssh_transport:-false}" = true ]; then
+		host=${host%%:*}
+	fi
+	github_host=git
+	github_host+=hub
+	github_host+=.com
+	if [ "$host" = "$github_host" ]; then
+		[[ "$path" =~ ^([^/]+)/([^/]+)$ ]] || { printf 'unknown\n'; return 0; }
+		owner=${BASH_REMATCH[1]}
+		repo=${BASH_REMATCH[2]}
+		command -v gh >/dev/null 2>&1 || { printf 'unknown\n'; return 0; }
+		output=$(timeout 10 gh repo view "$owner/$repo" --json isPrivate -q .isPrivate 2>/dev/null)
+		rc=$?
+		if [ "$rc" -eq 0 ]; then
+			case "$output" in true) printf 'private\n'; return 0 ;; false) printf 'public\n'; return 0 ;; esac
+		fi
+		printf 'unknown\n'
+		return 0
+	fi
+	# Unauthenticated on purpose: a credential must never reach a host this hook has not vetted,
+	# and a repository that needs one to be seen is not public.
+	if [[ "$path" =~ ^([^/]+)/([^/]+)$ ]]; then
+		http_code=$(curl -sS --max-time 10 -o "$probe_body" -w '%{http_code}' "https://${host}/api/v1/repos/${path}" 2>/dev/null)
+		rc=$?
+		if [ "$rc" -eq 0 ] && [ "$http_code" = 200 ]; then
+			private_value=$(grep -Eo '"private"[[:space:]]*:[[:space:]]*(true|false)' "$probe_body" 2>/dev/null | head -n 1)
+			case "$private_value" in
+				*true) printf 'private\n'; return 0 ;;
+				*false) printf 'public\n'; return 0 ;;
+			esac
+		fi
+	fi
+	http_code=$(curl -sS --max-time 10 -o "$probe_body" -w '%{http_code}' "https://${host}/api/v4/projects/${path//\//%2F}" 2>/dev/null)
+	rc=$?
+	if [ "$rc" -eq 0 ] && [ "$http_code" = 200 ]; then
+		private_value=$(grep -Eo '"visibility"[[:space:]]*:[[:space:]]*"[a-z]+"' "$probe_body" 2>/dev/null | head -n 1)
+		case "$private_value" in
+			*\"public\") printf 'public\n'; return 0 ;;
+			*\"private\"|*\"internal\") printf 'private\n'; return 0 ;;
+		esac
+	fi
+	printf 'unknown\n'
+}
+
+refuse() {
+	printf 'pre-push: remote %q destination %q refused: %s\n' "$remote_name" "$normalized_url" "$1" >&2
+	exit 1
+}
+
+policy=$(config_value pai.pushPolicy)
+config_rc=$?
+case "$config_rc" in
+	0) ;;
+	1) policy=optin ;;
+	*) printf 'pre-push: cannot read pai.pushPolicy\n' >&2; exit 1 ;;
+esac
+case "$policy" in
+	optin|denypublic) ;;
+	*) printf 'pre-push: invalid pai.pushPolicy value; expected optin or denypublic\n' >&2; exit 1 ;;
+esac
+
+if ! private_only=$(config_bool pai.privateOnly); then
+	printf 'pre-push: cannot read boolean pai.privateOnly\n' >&2
+	exit 1
+fi
+if ! public_ok=$(config_bool pai.publicOk); then
+	printf 'pre-push: cannot read boolean pai.publicOk\n' >&2
+	exit 1
+fi
+load_private_remotes || {
+	printf 'pre-push: cannot read or normalise pai.privateRemote\n' >&2
+	exit 1
+}
+normalized_url=$(normalise_url "$push_url") || {
+	printf 'pre-push: invalid push URL\n' >&2
+	exit 1
+}
+if [[ "$remote_name" == *://* || "$remote_name" == /* || "$remote_name" == ./* || "$remote_name" == ../* || "$remote_name" == *:* ]]; then
+	remote_name=$normalized_url
+fi
+while IFS= read -r ref_line || [ -n "$ref_line" ]; do
+	[ -n "$ref_line" ] || continue
+	if [[ ! "$ref_line" =~ ^[^[:space:]]+[[:space:]][0-9a-fA-F]+[[:space:]][^[:space:]]+[[:space:]][0-9a-fA-F]+$ ]]; then
+		printf 'pre-push: malformed ref input for remote %q\n' "$remote_name" >&2
+		exit 2
+	fi
+done <"$ref_input"
+probe_ssh_transport=false
+if [[ "$push_url" == *://* ]]; then
+	case "${push_url%%://*}" in ssh) probe_ssh_transport=true ;; esac
+elif [[ "$push_url" != /* && "$push_url" != ./* && "$push_url" != ../* && "$push_url" == *:* ]]; then
+	probe_ssh_transport=true
+fi
+
+if [ "$private_only" = true ] && ! is_private_remote "$normalized_url"; then
+	[ "${#private_remotes[@]}" -gt 0 ] || refuse 'pai.privateOnly is true but pai.privateRemote is empty'
+	refuse 'destination is not listed in pai.privateRemote'
+fi
+if [ "$policy" = denypublic ]; then
+	visibility=$(probe_visibility "$normalized_url")
+	case "$visibility" in
+		public)
+			[ "$public_ok" = true ] || refuse 'forge reports destination public and pai.publicOk is not true'
+			;;
+		private) ;;
+		# Only a destination proven public is refused; pai.privateOnly above covers repos that must never leave.
+		unknown) ;;
+		*) refuse 'visibility probe returned an invalid result' ;;
+	esac
+fi
+
+chain_local_hook() {
+	local git_dir local_hook self_path hook_path
+	git_dir=$(git rev-parse --absolute-git-dir 2>/dev/null) || {
+		printf 'pre-push: cannot resolve git directory for hook chaining\n' >&2
+		return 2
+	}
+	local_hook="$git_dir/hooks/pre-push"
+	[ -x "$local_hook" ] || return 0
+	self_path=$(readlink -f -- "$0" 2>/dev/null) || {
+		printf 'pre-push: cannot resolve current hook path\n' >&2
+		return 2
+	}
+	hook_path=$(readlink -f -- "$local_hook" 2>/dev/null) || {
+		printf 'pre-push: cannot resolve repository hook path\n' >&2
+		return 2
+	}
+	[ "$self_path" = "$hook_path" ] && return 0
+	"$local_hook" "$remote_arg" "$push_url" <"$ref_input"
+}
+
+chain_local_hook
+exit $?

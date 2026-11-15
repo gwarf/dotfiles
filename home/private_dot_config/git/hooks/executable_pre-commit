@@ -1,31 +1,63 @@
 #!/usr/bin/env bash
-# Shell-lint gate for the two repos pai-git-sync pushes unattended.
-#
-# pai-git-sync runs `git add -A` + commit + push on a timer, so without a gate
-# whatever sits in the tree at timer o'clock reaches main. On 2026-08-20 a
-# half-finished shellcheck directive (SC1073) was one tick away from shipping
-# that way.
-#
-# Severity is per-repo because the baselines differ:
-#   chezmoi/dotfiles - MegaLinter gates it at shellcheck's default severity,
-#                      so matching that makes this hook a true CI pre-flight.
-#   everything else  - no CI, and ~/.claude carries 18 tracked scripts with
-#                      warning/info findings. Gating those at default severity
-#                      would block the sync timer the first time one is
-#                      touched; at error severity the tree is clean today, so
-#                      genuine breakage is caught without blocking work.
-# Re-check this split if either repo gains or loses CI.
-#
-# shfmt is advisory only: MegaLinter runs `shfmt -w`, which auto-fixes and
-# opens a fix PR, so blocking on format here would be stricter than CI.
-#
-# Lints the worktree copy, not the staged blob. Identical under `git add -A`;
-# they can differ when only part of a file is staged by hand.
-#
-# A repo can add its own checks with an executable `.pre-commit-local` at its
-# root; it runs after the lint and its exit code gates the commit too.
-
+# Gates a commit on two checks: a leak scan over the lines the commit adds, and
+# an opt-in shell lint (git config pai.shellcheckSeverity; unset means off).
+# The lint reads the worktree copy, not the staged blob: identical when a whole
+# file is staged, different when only part of one is. shfmt is advisory, since
+# blocking on format would be stricter than a CI that auto-fixes it.
+# An executable .pre-commit-local at the repo root runs last and gates too.
 set -uo pipefail
+
+SCAN_HOOK_NAME=pre-commit
+
+LEAK_PATTERNS=$(cat <<'PATTERNS'
+private-key	-{5}BEGIN (RSA |EC |OPENSSH |DSA |ENCRYPTED )?PRIVATE KEY-{5}|-{5}BEGIN PGP PRIVATE KEY BLOCK-{5}
+github-classic	(^|[^A-Za-z0-9_])ghp_[A-Za-z0-9]{36}([^A-Za-z0-9_]|$)
+github-fine-grained	(^|[^A-Za-z0-9_])github_pat_[A-Za-z0-9_]{60,}([^A-Za-z0-9_]|$)
+github-other	(^|[^A-Za-z0-9_])gh[osur]_[A-Za-z0-9]{36}([^A-Za-z0-9_]|$)
+gitlab	(^|[^A-Za-z0-9_-])glpat-[A-Za-z0-9_-]{20,}([^A-Za-z0-9_-]|$)
+anthropic	(^|[^A-Za-z0-9_-])sk-ant-[A-Za-z0-9_-]{32,}([^A-Za-z0-9_-]|$)
+aws-access-key	(^|[^A-Za-z0-9_])AKIA[0-9A-Z]{16}([^A-Za-z0-9_]|$)
+slack	(^|[^A-Za-z0-9-])xox[abp]-[A-Za-z0-9-]{10,}([^A-Za-z0-9-]|$)
+tailscale	(^|[^A-Za-z0-9-])tskey-[A-Za-z0-9-]{20,}([^A-Za-z0-9-]|$)
+age-secret	(^|[^A-Za-z0-9])AGE-SECRET-KEY-1[0-9A-Z]{58}([^A-Za-z0-9]|$)
+google-api-key	(^|[^A-Za-z0-9_-])AIza[0-9A-Za-z_-]{35}([^A-Za-z0-9_-]|$)
+telegram-bot	(^|[^0-9A-Za-z_-])[0-9]{8,10}:[A-Za-z0-9_-]{35}([^A-Za-z0-9_-]|$)
+url-credentials	[a-z][a-z0-9+.-]*://[^/:@[:space:]]+:[^/@[:space:]]+@
+PATTERNS
+)
+
+url_credential_is_placeholder() {
+	local candidate="$1" suffix="$2" password host lowered command_pattern
+	[[ "$candidate" =~ ^[a-z][a-z0-9+.-]*://[^/:@[:space:]]+:([^/@[:space:]]+)@$ ]] || return 1
+	password=${BASH_REMATCH[1]}
+	if [[ "$suffix" =~ ^([^/:?#[:space:]]+) ]]; then
+		host=${BASH_REMATCH[1]}
+	else
+		host=''
+	fi
+	host=${host%%:*}
+	lowered=${password,,}
+	case "$lowered" in
+		pass|password|passwd|pw|pwd|secret|token|redacted|'<pass>'|'<password>'|'<passwd>'|'<pw>'|'<pwd>'|'<secret>'|'<token>'|'<redacted>'|'[pass]'|'[password]'|'[passwd]'|'[pw]'|'[pwd]'|'[secret]'|'[token]'|'[redacted]'|'{pass}'|'{password}'|'{passwd}'|'{pw}'|'{pwd}'|'{secret}'|'{token}'|'{redacted}') return 0 ;;
+		'<'*'>'|'['*']') return 0 ;;
+	esac
+	[[ "$password" =~ ^[xX]+$ || "$password" =~ ^\*+$ ]] && return 0
+	[[ "$password" == *'...'* || "$password" == *'…'* ]] && return 0
+	[[ "$password" =~ ^\$[A-Za-z_][A-Za-z0-9_]*$ ]] && return 0
+	[[ "$password" =~ ^\$\{[^}]+\}$ ]] && return 0
+	command_pattern='^\$\([^)]*\)$'
+	[[ "$password" =~ $command_pattern ]] && return 0
+	[[ "$password" == '%s' ]] && return 0
+	[[ "$password" =~ ^%\([A-Za-z_][A-Za-z0-9_]*\)s$ ]] && return 0
+	[[ "$password" =~ ^\{\{.*\}\}$ ]] && return 0
+	[[ "$password" =~ ^\{[A-Za-z_][A-Za-z0-9_]*\}$ ]] && return 0
+	[ "${#password}" -lt 8 ] && return 0
+	lowered=${host,,}
+	case "$lowered" in
+		host|localhost|example|example.*|*.example|*.example.com|*.example.org|*.example.net) return 0 ;;
+	esac
+	return 1
+}
 
 shell_lint() {
 	if [ "${PAI_SKIP_SHELL_LINT:-}" = "1" ]; then
@@ -37,11 +69,25 @@ shell_lint() {
 		return 0
 	fi
 
-	local severity
-	case "$repo_root" in
-	*/.local/share/chezmoi) severity=style ;;
-	*) severity=error ;;
-	esac
+	local severity config_status
+	if severity=$(git config --get pai.shellcheckSeverity); then
+		case "$severity" in
+		''|error|warning|info|style) severity=${severity:-error} ;;
+		*)
+			printf 'pre-commit: invalid pai.shellcheckSeverity value %q; falling back to error\n' "$severity" >&2
+			severity=error
+			;;
+		esac
+	else
+		config_status=$?
+		if [ "$config_status" -eq 1 ]; then
+			# Opt-in: with a global hooks path, linting every repository would block unrelated work.
+			return 0
+		else
+			printf 'pre-commit: cannot read pai.shellcheckSeverity (git config exited %s)\n' "$config_status" >&2
+			return 1
+		fi
+	fi
 
 	local staged targets f
 	mapfile -d '' staged < <(git diff --cached --name-only --diff-filter=ACM -z)
@@ -53,8 +99,7 @@ shell_lint() {
 		*.tmpl) continue ;;
 		*.py) continue ;;
 		# Mirrors FILTER_REGEX_EXCLUDE and BASH_SHELLCHECK_FILTER_REGEX_EXCLUDE
-		# in .github/workflows/mega-linter.yml - msmtpq and msmtp-queue are
-		# vendored upstream and not ours to reformat.
+		# in the lint configuration; vendored files are not ours to reformat.
 		*deprecated/*) continue ;;
 		*executable_msmtpq | *executable_msmtp-queue) continue ;;
 		esac
@@ -84,14 +129,178 @@ shell_lint() {
 	return "$rc"
 }
 
-repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
-cd "$repo_root" || exit 0
+load_head_ignores() {
+	ignore_entries=()
+	if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
+		return 0
+	fi
+	local tree_entry content line
+	tree_entry=$(git ls-tree HEAD -- .leakscan-ignore) || {
+		printf '%s: cannot inspect HEAD ignore file\n' "$SCAN_HOOK_NAME" >&2
+		return 2
+	}
+	[ -n "$tree_entry" ] || return 0
+	content=$(git show HEAD:.leakscan-ignore) || {
+		printf '%s: cannot read HEAD ignore file\n' "$SCAN_HOOK_NAME" >&2
+		return 2
+	}
+	while IFS= read -r line || [ -n "$line" ]; do
+		[[ "$line" =~ ^(.*)[[:space:]]([[:xdigit:]]{16})$ ]] || continue
+		ignore_entries+=("${BASH_REMATCH[1]} ${BASH_REMATCH[2],,}")
+	done <<<"$content"
+}
 
-rc=0
-shell_lint || rc=1
+is_ignored() {
+	local candidate="$1 $2" entry
+	for entry in "${ignore_entries[@]}"; do
+		[ "$entry" = "$candidate" ] && return 0
+	done
+	return 1
+}
 
-if [ -x "$repo_root/.pre-commit-local" ]; then
-	"$repo_root/.pre-commit-local" || rc=1
+scan_line() {
+	local path="$1" number="$2" line="$3" entry name regex rc fingerprint match tail remaining candidate
+	local -a matches
+	[[ "$line" == *pai-leak-allow* ]] && return 0
+	line=${line%$'\r'}
+	while IFS=$'\t' read -r name regex; do
+		[ -n "$name" ] || continue
+		printf '%s\n' "$line" | grep -Eq -- "$regex"
+		rc=$?
+		case "$rc" in
+		0) ;;
+		1) continue ;;
+		*) printf '%s: grep failed while scanning staged content\n' "$SCAN_HOOK_NAME" >&2; return 2 ;;
+		esac
+		mapfile -t matches < <(printf '%s\n' "$line" | grep -oE -- "$regex")
+		if [ "${#matches[@]}" -eq 0 ]; then
+			printf '%s: grep failed while extracting a fingerprint\n' "$SCAN_HOOK_NAME" >&2
+			return 2
+		fi
+		match=${matches[0]}
+		if [ "$name" = url-credentials ]; then
+			remaining=$line
+			match=''
+			for candidate in "${matches[@]}"; do
+				tail=${remaining#*"$candidate"}
+				if ! url_credential_is_placeholder "$candidate" "$tail"; then
+					match=$candidate
+					break
+				fi
+				remaining=$tail
+			done
+			[ -n "$match" ] || continue
+		fi
+		fingerprint=$(printf '%s' "$match" | sha256sum) || {
+			printf '%s: fingerprint calculation failed\n' "$SCAN_HOOK_NAME" >&2
+			return 2
+		}
+		fingerprint=${fingerprint%% *}
+		fingerprint=${fingerprint:0:16}
+		is_ignored "$path" "$fingerprint" && continue
+		if [ "$SCAN_HOOK_NAME" = pre-commit ]; then
+			printf '%s:%s: %s fingerprint=%s\n' "$path" "$number" "$name" "$fingerprint" >&2
+		else
+			printf '%s: %s:%s: %s fingerprint=%s\n' "$SCAN_HOOK_NAME" "$path" "$number" "$name" "$fingerprint" >&2
+		fi
+		return 1
+	done <<<"$LEAK_PATTERNS"
+	return 0
+}
+
+leak_scan() {
+	local patch line path new_line active rc
+	local scan_rc=0
+	load_head_ignores || return 2
+	patch=$(git -c core.quotepath=off diff --cached -M --no-ext-diff --no-color --unified=0)
+	rc=$?
+	if [ "$rc" -ne 0 ]; then
+		printf '%s: cannot read staged diff\n' "$SCAN_HOOK_NAME" >&2
+		return 2
+	fi
+	path=''
+	new_line=0
+	active=0
+	while IFS= read -r line || [ -n "$line" ]; do
+		if [[ "$line" == 'diff --git '* ]]; then
+			path=''
+			active=0
+			continue
+		fi
+		if [[ "$line" =~ ^\+\+\+\ [^/]+/(.*)$ ]]; then
+			path=${BASH_REMATCH[1]}
+			path=${path%$'\t'}
+			active=0
+			continue
+		fi
+		if [[ "$line" =~ ^@@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,([0-9]+))?\ @@ ]]; then
+			new_line=${BASH_REMATCH[2]}
+			active=1
+			continue
+		fi
+		[ "$active" = 1 ] || continue
+		if [[ "$line" == +* ]]; then
+			scan_line "$path" "$new_line" "${line:1}"
+			rc=$?
+			case "$rc" in
+			0) ;;
+			1) scan_rc=1 ;;
+			*) return 2 ;;
+			esac
+			((new_line += 1))
+		elif [[ "$line" == -* ]]; then
+			:
+		elif [[ "$line" == ' '* ]]; then
+			((new_line += 1))
+		fi
+	done <<<"$patch"
+	return "$scan_rc"
+}
+
+resolve_path() {
+	local value="$1" directory basename
+	directory=$(cd -- "$(dirname -- "$value")" 2>/dev/null && pwd -P) || return 1
+	basename=${value##*/}
+	printf '%s/%s\n' "$directory" "$basename"
+}
+
+chain_local_hook() {
+	local hook_name="${1:-pre-commit}" git_dir local_hook self_path hook_path
+	git_dir=$(git rev-parse --git-dir) || {
+		printf '%s: cannot resolve git directory for hook chaining\n' "$hook_name" >&2
+		return 2
+	}
+	[[ "$git_dir" = /* ]] || git_dir="$repo_root/$git_dir"
+	local_hook="$git_dir/hooks/$hook_name"
+	[ -x "$local_hook" ] || return 0
+	self_path=$(resolve_path "$0") || {
+		printf '%s: cannot resolve current hook path\n' "$hook_name" >&2
+		return 2
+	}
+	hook_path=$(resolve_path "$local_hook") || {
+		printf '%s: cannot resolve repository hook path\n' "$hook_name" >&2
+		return 2
+	}
+	[ "$self_path" = "$hook_path" ] && return 0
+	"$local_hook"
+}
+
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+	repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+	cd "$repo_root" || exit 2
+	rc=0
+	shell_lint || rc=1
+	if [ -x "$repo_root/.pre-commit-local" ]; then
+		"$repo_root/.pre-commit-local" || rc=1
+	fi
+	leak_scan
+	scan_rc=$?
+	case "$scan_rc" in
+	0) ;;
+	1) rc=1 ;;
+	*) exit 2 ;;
+	esac
+	[ "$rc" -eq 0 ] || exit "$rc"
+	chain_local_hook
+	exit $?
 fi
-
-exit "$rc"

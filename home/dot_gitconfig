@@ -29,6 +29,13 @@
   autocrlf = input
   eol = lf
   excludesfile = ~/.gitignore
+  # Global hooks (leak scan, push destination check); each chains to the repo's own hook.
+  hooksPath = ~/.config/git/hooks
+
+[pai]
+  # A push to a destination its forge reports public is refused unless the repo
+  # sets pai.publicOk = true.
+  pushPolicy = denypublic
 
 [mergetool "fugitive"]
   cmd = vim -f -c \"Gdiff\" \"$MERGED\"

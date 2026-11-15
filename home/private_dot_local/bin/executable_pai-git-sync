@@ -41,6 +41,14 @@ record_failure() {
 	printf '%s\t%s\n' "$(date -Iseconds)" "$1" >>"$FAILURE_LOG" 2>/dev/null || true
 }
 
+# How a block reaches anyone is the private repo's business: it may ship an
+# executable .sync-notify at its root, called with the event and its details.
+notify_leak_block() {
+	local name="$1" hits="$2" notifier="$HOME/.claude/.sync-notify"
+	[ -x "$notifier" ] || return 0
+	"$notifier" leak-block "$name" "$hits" >/dev/null 2>&1 || true
+}
+
 # Age floor for calling a lock abandoned. Real git operations on these repos
 # finish in seconds, so an empty lock this old with no holder is a corpse.
 STALE_LOCK_MIN_AGE=900
@@ -112,6 +120,17 @@ sync_repo() {
 		fi
 	fi
 
+	# The lint is opt-in per repo, and like hooksPath the choice lives in untracked
+	# .git/config. The dotfiles repo has CI at shellcheck's default severity, so
+	# matching it makes the hook a pre-flight; the other repo has no CI and carries
+	# scripts with warnings, so only errors gate it or the timer would wedge.
+	if [ -z "$(git config --get pai.shellcheckSeverity || true)" ]; then
+		local lint_severity=error
+		[ "$repo" = "$HOME/.local/share/chezmoi" ] && lint_severity=style
+		git config pai.shellcheckSeverity "$lint_severity" ||
+			record_failure "⚠️ pai-git-sync[$name]: could not set pai.shellcheckSeverity (lint gate off)"
+	fi
+
 	if ! git fetch 2>&1; then
 		record_failure "⚠️ pai-git-sync[$name]: fetch failed (SSH key unavailable?)"
 		return 1
@@ -131,10 +150,24 @@ sync_repo() {
 	if ! git diff --cached --quiet; then
 		# Unattended auto-commits skip GPG signing: pinentry/YubiKey is unreachable
 		# from a headless timer unit, so signing fails on cache-cold runs.
-		if ! git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')"; then
-			record_failure "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
+		local commit_err leak_hits
+		commit_err=$(mktemp) || commit_err=/dev/null
+		local commit_rc=0
+		git commit --no-gpg-sign -m "auto: timed sync $(date '+%Y-%m-%d %H:%M')" 2>"$commit_err" || commit_rc=$?
+		cat "$commit_err" >&2 2>/dev/null || true
+		if [ "$commit_rc" -ne 0 ]; then
+			# The hook prints file, line and a fingerprint for each hit, never the value.
+			leak_hits=$(grep -c ' fingerprint=' "$commit_err" 2>/dev/null || true)
+			rm -f "$commit_err"
+			if [ "${leak_hits:-0}" -gt 0 ]; then
+				record_failure "🚨 pai-git-sync[$name]: commit blocked by the leak scan ($leak_hits hit(s)); sync stopped here until resolved"
+				notify_leak_block "$name" "$leak_hits"
+			else
+				record_failure "⚠️ pai-git-sync[$name]: commit failed (shell lint gate?)"
+			fi
 			return 1
 		fi
+		rm -f "$commit_err"
 	fi
 
 	local head_before

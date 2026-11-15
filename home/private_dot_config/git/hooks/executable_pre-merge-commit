@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -uo pipefail
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P) || exit 2
+# shellcheck source=/dev/null
+source "$script_dir/pre-commit"
+# shellcheck disable=SC2034  # read by the sourced scan
+SCAN_HOOK_NAME=pre-merge-commit
+
+repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+cd "$repo_root" || {
+	printf 'pre-merge-commit: cannot enter repository root\n' >&2
+	exit 2
+}
+
+leak_scan
+scan_rc=$?
+case "$scan_rc" in
+0) ;;
+1) exit 1 ;;
+*) exit 2 ;;
+esac
+
+chain_local_hook pre-merge-commit
+exit $?
