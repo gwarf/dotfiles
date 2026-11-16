@@ -98,6 +98,22 @@ clear_stale_index_lock() {
 	record_failure "🧹 pai-git-sync[$name]: cleared stale index.lock (${age}s old, no holder)"
 }
 
+# The commit hooks can run for over a minute while live sessions keep writing,
+# so by now origin may have moved and the tree may be dirty again: fetch anew,
+# and autostash, or the push is rejected or the rebase refuses to start.
+integrate_upstream() {
+	local name="$1"
+	if ! git fetch 2>&1; then
+		record_failure "⚠️ pai-git-sync[$name]: fetch before rebase failed"
+		return 1
+	fi
+	if ! git rebase --autostash origin/main; then
+		git rebase --abort 2>/dev/null || true
+		record_failure "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
+		return 1
+	fi
+}
+
 sync_repo() {
 	local repo="$1"
 	local name
@@ -179,11 +195,7 @@ sync_repo() {
 
 	local head_before
 	head_before=$(git rev-parse HEAD)
-	if ! git rebase origin/main; then
-		git rebase --abort 2>/dev/null || true
-		record_failure "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
-		return 1
-	fi
+	integrate_upstream "$name" || return 1
 
 	if ! git push; then
 		record_failure "⚠️ pai-git-sync[$name]: push failed"
