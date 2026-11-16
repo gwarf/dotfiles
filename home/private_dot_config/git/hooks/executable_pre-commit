@@ -22,9 +22,11 @@ tailscale	(^|[^A-Za-z0-9-])tskey-[A-Za-z0-9-]{20,}([^A-Za-z0-9-]|$)
 age-secret	(^|[^A-Za-z0-9])AGE-SECRET-KEY-1[0-9A-Z]{58}([^A-Za-z0-9]|$)
 google-api-key	(^|[^A-Za-z0-9_-])AIza[0-9A-Za-z_-]{35}([^A-Za-z0-9_-]|$)
 telegram-bot	(^|[^0-9A-Za-z_-])[0-9]{8,10}:[A-Za-z0-9_-]{35}([^A-Za-z0-9_-]|$)
-url-credentials	[a-z][a-z0-9+.-]*://[^/:@[:space:]]+:[^/@[:space:]]+@
+url-credentials	[a-z][a-z0-9+.-]*://[^/:@[:space:]"<>]+:[^/@[:space:]"<>]+@
 PATTERNS
 )
+# url-credentials excludes "<> (never raw in RFC 3986 userinfo) so a match cannot
+# run past a URL's end through JSON or markup to the next colon and email @.
 
 url_credential_is_placeholder() {
 	local candidate="$1" suffix="$2" password host lowered command_pattern
