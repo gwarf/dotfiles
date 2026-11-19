@@ -230,11 +230,49 @@ scan_added() {
 	return 1
 }
 
+# Prints the added lines (a superset: headers and allowed lines included) of the
+# staged diff, limited to the given pathspecs when any are passed.
+staged_additions() {
+	git -c core.quotepath=off diff --cached -M --no-ext-diff --no-color --unified=0 -- "$@" |
+		grep -a '^+' | cut -c2-
+	local -a status=("${PIPESTATUS[@]}")
+	# grep exits 1 when the diff adds nothing, which is not an error.
+	[ "${status[0]}" -eq 0 ] && [ "${status[1]}" -le 1 ] && [ "${status[2]}" -eq 0 ]
+}
+
+# 0 when a pattern may match the additions under the given pathspecs, 1 when none
+# can. Any failure returns 0, so the full scan runs and the gate fails closed.
+additions_may_leak() {
+	local regexes
+	regexes=$(cut -f2 <<<"$LEAK_PATTERNS")
+	staged_additions "$@" | grep -aE -e "$regexes" >/dev/null
+	local -a status=("${PIPESTATUS[@]}")
+	[ "${status[0]}" -eq 0 ] || return 0
+	[ "${status[1]}" -eq 1 ] && return 1
+	return 0
+}
+
+# Sets scope to the staged paths a pattern may match. The bash parse below costs
+# minutes on a large diff (long JSONL lines), so it only sees those paths.
+leak_scope() {
+	local f rc
+	scope=()
+	additions_may_leak
+	rc=$?
+	[ "$rc" -ne 1 ] || return 0
+	while IFS= read -r -d '' f; do
+		additions_may_leak ":(literal)$f"
+		[ $? -eq 1 ] || scope+=(":(literal)$f")
+	done < <(git -c core.quotepath=off diff --cached -M --name-only -z)
+}
+
 leak_scan() {
 	local patch line path new_line active rc
-	local -a added_path=() added_number=() added_text=()
+	local -a added_path=() added_number=() added_text=() scope=()
 	load_head_ignores || return 2
-	patch=$(git -c core.quotepath=off diff --cached -M --no-ext-diff --no-color --unified=0)
+	leak_scope
+	[ "${#scope[@]}" -gt 0 ] || return 0
+	patch=$(git -c core.quotepath=off diff --cached -M --no-ext-diff --no-color --unified=0 -- "${scope[@]}")
 	rc=$?
 	if [ "$rc" -ne 0 ]; then
 		printf '%s: cannot read staged diff\n' "$SCAN_HOOK_NAME" >&2
