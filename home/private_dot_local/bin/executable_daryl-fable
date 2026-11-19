@@ -5,6 +5,9 @@
 # --model > ANTHROPIC_MODEL > ANTHROPIC_DEFAULT_MODEL, and the env value goes
 # through the same alias resolution as the flag, so `fable` tracks the latest
 # Fable release instead of pinning claude-fable-5.
-# Through daryl, so it takes the same arguments (prompt words, -r, -b); pai
-# itself rejects --model and bare prompt words.
-exec env ANTHROPIC_MODEL=fable daryl "$@"
+# The env var (not `pai --model`) because pai's arg parser rejects unknown flags.
+# Flags pass to pai as is; bare words become the first turn (pai wants -i).
+case "${1:-}" in
+'' | -*) exec env ANTHROPIC_MODEL=fable pai "$@" ;;
+esac
+exec env ANTHROPIC_MODEL=fable pai -i "$*"
