@@ -1,9 +1,10 @@
 #!/bin/sh
-# daryl-fable — primary PAI Daryl (Claude Code, full PAI context) on Fable.
+# daryl-fable — daryl (Claude Code, full PAI context) on Fable.
 # ANTHROPIC_MODEL scopes the model to this session only: settings.json `model`
 # and /model stay untouched. Precedence in Claude Code is
 # --model > ANTHROPIC_MODEL > ANTHROPIC_DEFAULT_MODEL, and the env value goes
 # through the same alias resolution as the flag, so `fable` tracks the latest
 # Fable release instead of pinning claude-fable-5.
-# The env var (not `pai --model`) because pai's arg parser rejects unknown flags.
-exec env ANTHROPIC_MODEL=fable pai "$@"
+# Through daryl, so it takes the same arguments (prompt words, -r, -b); pai
+# itself rejects --model and bare prompt words.
+exec env ANTHROPIC_MODEL=fable daryl "$@"
