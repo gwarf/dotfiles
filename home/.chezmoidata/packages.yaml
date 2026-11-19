@@ -252,6 +252,7 @@ packages:
       - "fd-find"
       - "fish"
       - "fzf"
+      - "gawk"
       - "git"
       - "git-delta"
       - "gping"
