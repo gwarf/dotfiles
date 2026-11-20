@@ -92,6 +92,7 @@ bind -N "Send pane to window" s command-prompt -p "send pane to:" "join-pane -t 
 bind -N "Rename window" r command-prompt -I "#W" "rename-window -- '%%'"
 bind -N "Create window" c new-window -c "#{pane_current_path}"
 bind -N "Swap window with" m command-prompt -p "move window to:" "swap-window -t '%%'"
+bind -N "Move window to first, shifting the others" Home move-window -b -t "{start}"
 bind -N "Move window to index" . command-prompt "move-window -r -t '%%'"
 
 bind -N "Switch to window 1" -n M-1 select-window -t 1
