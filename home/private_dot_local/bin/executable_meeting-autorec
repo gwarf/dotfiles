@@ -32,8 +32,9 @@ type Win = Rect & { id: string; caption: string; minimized: boolean; output: str
 type Part = { proc: Subprocess; file: string; region: Rect | null; started: number; audio: boolean };
 
 const log = (msg: string) => console.log(`meeting-autorec: ${msg}`);
+// Bun's $ is lazy: a command never awaited or then-ed never runs, so .then() starts it.
 const notify = (summary: string, body = "", urgency = "normal") =>
-  $`notify-send -a meeting-autorec -i media-record -u ${urgency} ${summary} ${body}`.quiet().nothrow();
+  $`notify-send -a meeting-autorec -i media-record -u ${urgency} ${summary} ${body}`.quiet().nothrow().then(() => {});
 
 // Why video capture is likely broken: the running kernel's modules are gone, or the
 // graphics stack was upgraded since boot (2026-11-20: mesa+linux upgrade, gsr SIGABRT).
@@ -291,7 +292,7 @@ async function stopCall(reason: string) {
   c.save(true);
   const n = c.parts.length;
   const failed = c.failures ? ` (${c.failures} failure${c.failures > 1 ? "s" : ""})` : "";
-  notify(ok ? `Meeting recording saved${failed}` : "Meeting recording failed",
+  await notify(ok ? `Meeting recording saved${failed}` : "Meeting recording failed",
     n > 1 ? `${last} (part ${n} of ${n}, see ${c.manifest})` : last, ok && !c.failures ? "normal" : "critical");
 }
 

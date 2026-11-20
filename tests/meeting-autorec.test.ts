@@ -4,9 +4,12 @@ import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSyn
 import { release, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-const SCRIPT = resolve("home/private_dot_local/bin/executable_meeting-autorec");
+const SCRIPT = resolve(import.meta.dir, "../home/private_dot_local/bin/executable_meeting-autorec");
 const POLL_MS = 50;
 const LIMIT_MS = 30_000;
+const TEST_MS = 45_000;
+// notify-send is fired without await by the daemon, so it may land after the state it reports.
+const NOTIFY_MS = 3_000;
 
 type Fixture = {
   root: string;
@@ -127,6 +130,11 @@ function manifestPath(f: Fixture): string {
   return join(f.out, found[0]!);
 }
 
+function tryManifest(f: Fixture): Manifest | null {
+  const found = readdirSync(f.out).filter((name) => name.endsWith(".parts.json"));
+  return found.length === 1 ? (JSON.parse(readFileSync(join(f.out, found[0]!), "utf8")) as Manifest) : null;
+}
+
 function readManifest(f: Fixture): Manifest {
   return JSON.parse(readFileSync(manifestPath(f), "utf8")) as Manifest;
 }
@@ -139,6 +147,10 @@ function notifications(f: Fixture): string[][] {
 
 function criticalNotifications(f: Fixture): string[][] {
   return notifications(f).filter((argv) => argv.some((arg, i) => arg === "-u" && argv[i + 1] === "critical"));
+}
+
+function hasCritical(f: Fixture, text: string): boolean {
+  return criticalNotifications(f).some((args) => args.join(" ").includes(text));
 }
 
 function allNotificationText(f: Fixture): string {
@@ -191,64 +203,65 @@ describe("meeting-autorec dead-part handling", () => {
   test("SIGABRT raises a critical alert and starts the two-track ffmpeg fallback", async () => {
     const f = makeFixture();
     await startDaemon(f, "abort");
-    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && readManifest(f).parts.length === 2, LIMIT_MS, "SIGABRT fallback");
+    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && tryManifest(f)?.parts.length === 2, LIMIT_MS, "SIGABRT fallback");
     const [manifestName] = readdirSync(f.out).filter((name) => name.endsWith(".parts.json"));
     const stem = join(f.out, manifestName!.replace(/\.parts\.json$/, ""));
     const ffargs = argvLines(f, "ffmpeg.argv")[0]!;
-    assertWithContext(f, criticalNotifications(f).some((args) => args.join(" ").includes("SIGABRT")), "Missing critical SIGABRT notification.");
     assertWithContext(f, readCount(join(f.root, "ffmpeg.argv")) === 1, "ffmpeg should start exactly once.");
     assertWithContext(f, ffargs.includes("-f pulse -i fake_sink.monitor -f pulse -i fake_source -map 0:a -map 1:a -c:a libopus"), "ffmpeg arguments did not contain the expected two-input audio mapping.");
     assertWithContext(f, ffargs.endsWith(`${stem}.part02.mka`), "ffmpeg output was not part02.mka in the configured directory.");
     const manifest = readManifest(f);
     assertWithContext(f, manifest.failures === 1 && !!manifest.parts[0]?.failed && manifest.parts[1]?.audioOnly === true, "Manifest did not record one failed video part followed by audio-only fallback.");
-  }, LIMIT_MS);
+    await waitFor(f, () => hasCritical(f, "SIGABRT"), NOTIFY_MS, "critical SIGABRT notification");
+  }, TEST_MS);
 
   test("nonzero recorder exit reports its code and starts fallback", async () => {
     const f = makeFixture();
     await startDaemon(f, "exit3");
-    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && readManifest(f).parts.length === 2, LIMIT_MS, "exit-code fallback");
-    assertWithContext(f, criticalNotifications(f).some((args) => args.join(" ").includes("code 3")), "Missing critical code 3 notification.");
+    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && tryManifest(f)?.parts.length === 2, LIMIT_MS, "exit-code fallback");
     assertWithContext(f, readManifest(f).parts[1]?.audioOnly === true, "Manifest did not record the audio-only fallback.");
-  }, LIMIT_MS);
+    await waitFor(f, () => hasCritical(f, "code 3"), NOTIFY_MS, "critical code 3 notification");
+  }, TEST_MS);
 
   test("stalled recorder is killed and fallback starts", async () => {
     const f = makeFixture();
     await startDaemon(f, "stall");
-    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && readManifest(f).parts.length === 2, LIMIT_MS, "stalled recorder fallback");
+    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && tryManifest(f)?.parts.length === 2, LIMIT_MS, "stalled recorder fallback");
     await waitFor(f, () => pidIsGone(join(f.root, "recorder.pid")), 3000, "stalled recorder pid to stop running");
-    assertWithContext(f, criticalNotifications(f).some((args) => args.join(" ").includes("no data")), "Missing critical no-data notification.");
-  }, LIMIT_MS);
+    await waitFor(f, () => hasCritical(f, "no data"), NOTIFY_MS, "critical no-data notification");
+  }, TEST_MS);
 
   test("mic close stops fallback after grace and marks the call saved", async () => {
     const f = makeFixture();
     await startDaemon(f, "abort", "ok");
-    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && readManifest(f).parts.length === 2, LIMIT_MS, "audio fallback before mic close");
+    await waitFor(f, () => readCount(join(f.root, "ffmpeg.argv")) === 1 && tryManifest(f)?.parts.length === 2, LIMIT_MS, "audio fallback before mic close");
     rmSync(join(f.root, "mic"));
-    await waitFor(f, () => existsSync(join(f.root, "ffmpeg.got-int")) && readManifest(f).complete, LIMIT_MS, "graceful ffmpeg stop and completed manifest");
-    await waitFor(f, () => allNotificationText(f).toLowerCase().includes("saved"), 2000, "final saved notification");
-    assertWithContext(f, allNotificationText(f).toLowerCase().includes("saved"), "No final notification mentioned the saved recording.");
-  }, LIMIT_MS);
+    await waitFor(f, () => existsSync(join(f.root, "ffmpeg.got-int")) && tryManifest(f)?.complete === true, LIMIT_MS, "graceful ffmpeg stop and completed manifest");
+    await waitFor(f, () => allNotificationText(f).toLowerCase().includes("saved"), NOTIFY_MS, "final saved notification");
+  }, TEST_MS);
 
   test("failed fallback is not retried and reports that the call is not recorded", async () => {
     const f = makeFixture();
     await startDaemon(f, "abort", "die");
-    await waitFor(f, () => readManifest(f).failures === 2 && readCount(join(f.root, "ffmpeg.argv")) === 1, LIMIT_MS, "audio fallback failure");
-    await waitFor(f, () => criticalNotifications(f).some((args) => args.join(" ").includes("NOT being recorded")), 2000, "not-being-recorded notification");
+    await waitFor(f, () => tryManifest(f)?.failures === 2 && readCount(join(f.root, "ffmpeg.argv")) === 1, LIMIT_MS, "audio fallback failure");
     await waitFor(f, () => Date.now() - f.startedAt >= 4000, LIMIT_MS, "four seconds without crash-loop retries");
     assertWithContext(f, readCount(join(f.root, "recorder.argv")) === 1, "Recorder was restarted after a failed fallback.");
     assertWithContext(f, readCount(join(f.root, "ffmpeg.argv")) === 1, "ffmpeg was restarted after its failure.");
     assertWithContext(f, readManifest(f).failures === 2, "Manifest should record both recorder and fallback failures.");
-  }, LIMIT_MS);
+    await waitFor(f, () => hasCritical(f, "NOT being recorded"), NOTIFY_MS, "critical not-being-recorded notification");
+  }, TEST_MS);
 
   test("clean recorder exit is treated as user stop without fallback", async () => {
     const f = makeFixture();
     await startDaemon(f, "exit0");
-    await waitFor(f, () => readCount(join(f.root, "recorder.argv")) === 1 && readManifest(f).complete, LIMIT_MS, "clean user stop");
+    await waitFor(f, () => readCount(join(f.root, "recorder.argv")) === 1 && tryManifest(f)?.complete === true, LIMIT_MS, "clean user stop");
     await waitFor(f, () => Date.now() - f.startedAt >= 3000, LIMIT_MS, "three seconds without restarting a user-stopped recording");
     assertWithContext(f, readCount(join(f.root, "ffmpeg.argv")) === 0, "A clean user stop must not start ffmpeg.");
     assertWithContext(f, criticalNotifications(f).length === 0, "A clean user stop must not issue a critical notification.");
     assertWithContext(f, readCount(join(f.root, "recorder.argv")) === 1, "Recorder restarted after a clean user stop.");
-  }, LIMIT_MS);
+    // Must-match control: without it, "no critical notify" also passes when no notify fires at all.
+    await waitFor(f, () => allNotificationText(f).includes("Meeting recording stopped"), NOTIFY_MS, "user-stop notification");
+  }, TEST_MS);
 
   test("check reports missing running-kernel modules", () => {
     const f = makeFixture();
@@ -283,5 +296,6 @@ describe("meeting-autorec dead-part handling", () => {
     await waitFor(f, () => Date.now() - f.startedAt >= 3000, LIMIT_MS, "three seconds of healthy recording");
     assertWithContext(f, criticalNotifications(f).length === 0, "Healthy recording emitted a critical notification.");
     assertWithContext(f, readCount(join(f.root, "ffmpeg.argv")) === 0, "Healthy recording incorrectly started ffmpeg.");
-  }, LIMIT_MS);
+    await waitFor(f, () => allNotificationText(f).includes("Recording the call"), NOTIFY_MS, "recording-started notification");
+  }, TEST_MS);
 });
