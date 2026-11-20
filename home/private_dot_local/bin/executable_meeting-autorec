@@ -4,27 +4,76 @@
 // Track 1 = Chromium audio, track 2 = mic, the layout meeting-transcribe expects.
 // gsr cannot move its region, so when the window moves or resizes the call continues in
 // a new part file; `meeting-autorec join <first part>` turns the parts into one video.
+// A part that dies (crash, or no data DEAD_S after start) raises a critical alert and the
+// call continues once as an ffmpeg audio-only .mka, same track layout; never retried.
 
 import { $ } from "bun";
 import { spawn, type Subprocess } from "bun";
-import { existsSync, mkdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, renameSync, statSync, unlinkSync, writeFileSync } from "node:fs";
+import { release } from "node:os";
 import { join } from "node:path";
 
-const POLL_MS = 3000;
+const env = process.env;
+const POLL_MS = Number(env.MEETING_AUTOREC_POLL_MS ?? 3000);
 // Long enough to bridge a rejoin or a Zoom audio reconnect without splitting the file.
-const GRACE_S = Number(process.env.MEETING_AUTOREC_GRACE_S ?? 45);
-const OUT_DIR = process.env.MEETING_AUTOREC_DIR ?? join(process.env.HOME!, "Vidéos");
+const GRACE_S = Number(env.MEETING_AUTOREC_GRACE_S ?? 45);
+const DEAD_S = Number(env.MEETING_AUTOREC_DEAD_S ?? 10);
+// A dead gsr leaves its 88-byte mp4 header; a live part passes this within a second.
+const HEADER_BYTES = 1024;
+const OUT_DIR = env.MEETING_AUTOREC_DIR ?? join(env.HOME!, "Vidéos");
 // Whole-screen capture only on explicit opt-in; without it a call with no window is skipped.
-const SCREEN_FALLBACK = process.env.MEETING_AUTOREC_SCREEN_FALLBACK === "1";
+const SCREEN_FALLBACK = env.MEETING_AUTOREC_SCREEN_FALLBACK === "1";
+const RECORDER = env.MEETING_AUTOREC_RECORDER ?? "gpu-screen-recorder";
+const FFMPEG = env.MEETING_AUTOREC_FFMPEG ?? "ffmpeg";
 const RECORDER_PATTERN = "^([^ ]*/)?gpu-screen-recorder .* -o ";
 
 type Rect = { x: number; y: number; w: number; h: number };
 type Win = Rect & { id: string; caption: string; minimized: boolean; output: string; outputRect: Rect };
-type Part = { proc: Subprocess; file: string; region: Rect | null; started: number };
+type Part = { proc: Subprocess; file: string; region: Rect | null; started: number; audio: boolean };
 
 const log = (msg: string) => console.log(`meeting-autorec: ${msg}`);
-const notify = (summary: string, body = "") =>
-  $`notify-send -a meeting-autorec -i media-record ${summary} ${body}`.quiet().nothrow();
+const notify = (summary: string, body = "", urgency = "normal") =>
+  $`notify-send -a meeting-autorec -i media-record -u ${urgency} ${summary} ${body}`.quiet().nothrow();
+
+// Why video capture is likely broken: the running kernel's modules are gone, or the
+// graphics stack was upgraded since boot (2026-11-20: mesa+linux upgrade, gsr SIGABRT).
+function rebootPendingReason(o = {
+  release: release(),
+  modulesRoot: env.MEETING_AUTOREC_MODULES_ROOT ?? "/usr/lib/modules",
+  pacmanLog: env.MEETING_AUTOREC_PACMAN_LOG ?? "/var/log/pacman.log",
+  bootMs: env.MEETING_AUTOREC_BOOT_TIME ? Number(env.MEETING_AUTOREC_BOOT_TIME) * 1000 : bootTimeMs(),
+}): string | null {
+  if (!existsSync(join(o.modulesRoot, o.release))) return `modules for running kernel ${o.release} are gone`;
+  let text = "";
+  try { text = readFileSync(o.pacmanLog, "utf8"); } catch { return null; }
+  const re = /^\[([^\]]+)\] \[ALPM\] upgraded (mesa|linux|nvidia[\w-]*|lib32-mesa) \(/gm;
+  const hits = new Set<string>();
+  for (const m of text.matchAll(re)) if (Date.parse(m[1]) > o.bootMs) hits.add(m[2]);
+  return hits.size ? `${[...hits].join(", ")} upgraded since boot` : null;
+}
+
+function bootTimeMs(): number {
+  const m = readFileSync("/proc/stat", "utf8").match(/^btime (\d+)$/m);
+  return m ? Number(m[1]) * 1000 : 0;
+}
+
+// null while the part is healthy; "stopped" for a clean exit of gsr (gsr-tray stop);
+// otherwise why it is dead. Bun reports a signal death as exitCode null + signalCode.
+function partDeath(part: Part): string | null {
+  const { proc } = part;
+  if (proc.signalCode) return `recorder killed by ${proc.signalCode}`;
+  if (proc.exitCode !== null) return proc.exitCode === 0 && !part.audio ? "stopped" : `recorder exited with code ${proc.exitCode}`;
+  if (Date.now() - part.started < DEAD_S * 1000) return null;
+  let size = 0;
+  try { size = statSync(part.file).size; } catch {}
+  return size < HEADER_BYTES ? `no data written after ${DEAD_S}s (${size} bytes)` : null;
+}
+
+async function defaultDevices(): Promise<{ monitor: string; source: string }> {
+  const get = async (what: string) => (await $`pactl ${what}`.quiet().nothrow()).stdout.toString().trim();
+  const sink = await get("get-default-sink"), source = await get("get-default-source");
+  return { monitor: sink ? `${sink}.monitor` : "@DEFAULT_MONITOR@", source: source || "@DEFAULT_SOURCE@" };
+}
 
 function writeJson(path: string, data: unknown) {
   writeFileSync(`${path}.tmp`, JSON.stringify(data, null, 2) + "\n");
@@ -112,10 +161,11 @@ const stamp = () => {
 // with a <part stem>.window.json, and Video_<stamp>.parts.json listing the parts in order.
 class Call {
   stem: string;
-  parts: { file: string; started: string; region: Rect | null; caption: string }[] = [];
+  parts: { file: string; started: string; region: Rect | null; caption: string; audioOnly?: true; failed?: string }[] = [];
   part: Part | null = null;
   win: Win | null;
   pending: Rect | null = null;
+  failures = 0;
 
   constructor(win: Win | null) {
     mkdirSync(OUT_DIR, { recursive: true });
@@ -131,11 +181,11 @@ class Call {
     // -region is in compositor logical pixels, which is what KWin's frameGeometry reports.
     // gsr 6 deprecates it for `-w WxH+X+Y`, but gsr-tray draws its region marker from -region.
     const target = region ? ["-w", "region", "-region", regionSpec(region)] : ["-w", "screen"];
-    const argv = ["gpu-screen-recorder", ...target, "-c", "mp4", "-f", "30",
+    const argv = [RECORDER, ...target, "-c", "mp4", "-f", "30",
       "-a", "app:Chromium", "-a", "default_input", "-ac", "opus", "-o", file];
     log(`start ${argv.join(" ")}`);
     const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
-    this.part = { proc, file, region, started: Date.now() };
+    this.part = { proc, file, region, started: Date.now(), audio: false };
     const caption = this.win?.caption ?? "";
     this.parts.push({ file, started: new Date().toISOString(), region, caption });
     writeJson(file.replace(/\.mp4$/, ".window.json"),
@@ -143,8 +193,47 @@ class Call {
     this.save(false);
   }
 
+  // No GPU involved: track 1 = default sink monitor (all playback, not only Chromium), track 2 = mic.
+  async startAudio() {
+    const n = this.parts.length + 1;
+    const file = n === 1 ? `${this.stem}.mka` : `${this.stem}.part${String(n).padStart(2, "0")}.mka`;
+    const { monitor, source } = await defaultDevices();
+    const argv = [FFMPEG, "-nostdin", "-hide_banner", "-loglevel", "warning",
+      "-f", "pulse", "-i", monitor, "-f", "pulse", "-i", source,
+      "-map", "0:a", "-map", "1:a", "-c:a", "libopus", "-b:a", "64k",
+      // The Matroska muxer otherwise holds data back, and partDeath reads the file size.
+      "-flush_packets", "1", "-cluster_time_limit", "1000", file];
+    log(`start audio fallback ${argv.join(" ")}`);
+    const proc = spawn(argv, { stdin: "ignore", stdout: "inherit", stderr: "inherit" });
+    this.part = { proc, file, region: null, started: Date.now(), audio: true };
+    this.parts.push({ file, started: new Date().toISOString(), region: null, caption: this.win?.caption ?? "", audioOnly: true });
+    this.save(false);
+  }
+
+  // A dead part is never restarted: the first failure moves the call to audio, a failed
+  // audio part ends the recording for this call.
+  async fail(cause: string, micOpen: boolean) {
+    const part = this.part!;
+    this.part = null;
+    this.failures++;
+    const entry = this.parts.find((p) => p.file === part.file);
+    if (entry) entry.failed = cause;
+    if (part.proc.exitCode === null && !part.proc.signalCode) part.proc.kill("SIGKILL");
+    await Promise.race([part.proc.exited, Bun.sleep(5000)]);
+    log(`part dead (${cause}), failure ${this.failures} this call: ${part.file}`);
+    const hint = rebootPendingReason();
+    const why = `${cause}${hint ? `; reboot pending (${hint})` : ""}`;
+    if (!part.audio && micOpen) {
+      await this.startAudio();
+      notify("Meeting video recording failed, recording audio only", `${why}\n${this.part!.file}`, "critical");
+    } else {
+      notify("Meeting NOT being recorded", `${part.audio ? "audio fallback failed too" : "recorder died"}: ${why}`, "critical");
+    }
+    this.save(false);
+  }
+
   save(complete: boolean) {
-    writeJson(this.manifest, { complete, parts: this.parts });
+    writeJson(this.manifest, { complete, failures: this.failures, parts: this.parts });
   }
 
   async stopPart(): Promise<boolean> {
@@ -177,7 +266,7 @@ class Call {
     // Debounce drags and quick-tile animations: restart only on a geometry seen twice in a row.
     if (!sameRect(region, this.pending)) { this.pending = region; return; }
     // Stopped from outside since the poll began: leave it to the loop, which ends the call.
-    if (stopping || this.part.proc.exitCode !== null) return;
+    if (stopping || this.part.proc.exitCode !== null || this.part.proc.signalCode) return;
     this.pending = null;
     this.win = win;
     log(`window ${regionSpec(this.part.region)} -> ${regionSpec(region)}, new part`);
@@ -197,11 +286,13 @@ async function stopCall(reason: string) {
   if (!c) return;
   call = null;
   log(`stop (${reason}) ${c.stem}`);
+  const last = c.part?.file ?? c.parts.at(-1)?.file ?? c.stem;
   const ok = await c.stopPart();
   c.save(true);
   const n = c.parts.length;
-  notify(ok ? "Meeting recording saved" : "Meeting recording failed",
-    n > 1 ? `${c.stem}.mp4 (+${n - 1} parts)` : `${c.stem}.mp4`);
+  const failed = c.failures ? ` (${c.failures} failure${c.failures > 1 ? "s" : ""})` : "";
+  notify(ok ? `Meeting recording saved${failed}` : "Meeting recording failed",
+    n > 1 ? `${last} (part ${n} of ${n}, see ${c.manifest})` : last, ok && !c.failures ? "normal" : "critical");
 }
 
 async function watch() {
@@ -212,14 +303,17 @@ async function watch() {
   while (true) {
     const mic = await chromiumMicOpen();
     const part = call?.part;
-    if (call && part && part.proc.exitCode !== null) {
-      // Stopped from outside (gsr-tray, crash): don't restart within the same call.
-      log(`recorder exited (${part.proc.exitCode}) ${part.file}`);
-      notify(part.proc.exitCode === 0 ? "Meeting recording stopped" : "Meeting recording failed", part.file);
+    const death = part && partDeath(part);
+    if (call && part && death === "stopped") {
+      // Stopped from outside (gsr-tray): don't restart within the same call.
+      log(`recorder stopped ${part.file}`);
+      notify("Meeting recording stopped", part.file);
       call.part = null;
       call.save(true);
       call = null;
       skipThisCall = true;
+    } else if (call && death) {
+      await call.fail(death, mic);
     }
     if (mic) {
       micClosedSince = null;
@@ -238,6 +332,11 @@ async function watch() {
             call.start(region);
             warnedNoWindow = false;
             notify("Recording the call", region ? win!.caption : "full screen (opted in, no Chromium window)");
+            const pending = rebootPendingReason();
+            if (pending) {
+              log(`reboot pending: ${pending}`);
+              notify("Reboot pending, video capture may fail", `${pending}; audio fallback is armed`, "critical");
+            }
           } else if (!warnedNoWindow) {
             // Retried every poll: the call window may still be appearing.
             log("mic open but no Chromium window on screen, not recording");
@@ -262,7 +361,7 @@ async function watch() {
 // part's frame (letterboxed), both audio tracks kept. Each window move costs about 1 s.
 async function joinParts(arg: string) {
   const manifest = arg.endsWith(".parts.json") ? arg
-    : arg.replace(/(\.part\d+)?\.mp4$/, ".parts.json");
+    : arg.replace(/(\.part\d+)?\.(mp4|mka)$/, ".parts.json");
   const { parts } = JSON.parse(readFileSync(manifest, "utf8")) as { parts: { file: string }[] };
   const files: string[] = [];
   for (const f of parts.map((p) => p.file)) {
@@ -271,6 +370,9 @@ async function joinParts(arg: string) {
     if (ok) files.push(f); else console.error(`skipping unreadable part ${f}`);
   }
   if (files.length < 2) { console.log(files[0] ?? "no parts on disk"); return; }
+  const hasVideo = async (f: string) =>
+    (await $`ffprobe -v error -select_streams v -show_entries stream=index -of csv=p=0 ${f}`.text()).trim() !== "";
+  if (!(await Promise.all(files.map(hasVideo))).every(Boolean)) return joinAudio(manifest, files);
   const probe = async (f: string) =>
     (await $`ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 ${f}`.text()).trim().split(",").map(Number);
   const sizes = await Promise.all(files.map(probe));
@@ -295,6 +397,22 @@ async function joinParts(arg: string) {
   console.log(out);
 }
 
-if (process.argv[2] === "join" && process.argv[3]) await joinParts(process.argv[3]);
-else if (process.argv[2]) { console.error("usage: meeting-autorec [join <Video_….mp4|….parts.json>]"); process.exit(2); }
+// A call that fell back to audio: concatenate the audio tracks only, into <stem>.joined.mka.
+async function joinAudio(manifest: string, files: string[]) {
+  const audio = files.flatMap((_, i) => [0, 1].map((k) =>
+    `[${i}:a:${k}]aformat=sample_rates=48000:channel_layouts=stereo[a${i}_${k}]`));
+  const inputs = files.map((_, i) => `[a${i}_0][a${i}_1]`).join("");
+  const filter = `${audio.join(";")};${inputs}concat=n=${files.length}:v=0:a=2[a1][a2]`;
+  const out = manifest.replace(/\.parts\.json$/, ".joined.mka");
+  const argv = ["ffmpeg", "-v", "error", "-y", ...files.flatMap((f) => ["-i", f]),
+    "-filter_complex", filter, "-map", "[a1]", "-map", "[a2]", "-c:a", "libopus", "-b:a", "64k", out];
+  const proc = spawn(argv, { stdout: "inherit", stderr: "inherit" });
+  if ((await proc.exited) !== 0) throw new Error(`ffmpeg failed joining ${manifest}`);
+  console.log(out);
+}
+
+const [cmd, arg] = process.argv.slice(2);
+if (cmd === "join" && arg) await joinParts(arg);
+else if (cmd === "check") console.log(rebootPendingReason() ?? "no reboot pending");
+else if (cmd) { console.error("usage: meeting-autorec [join <Video_….mp4|.mka|….parts.json> | check]"); process.exit(2); }
 else await watch();
