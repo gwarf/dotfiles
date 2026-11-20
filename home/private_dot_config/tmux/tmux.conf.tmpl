@@ -221,5 +221,9 @@ if "test ! -d ~/.tmux/plugins/tpm" \
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run "~/.tmux/plugins/tpm/tpm"
 
+# After tpm so they override tmux-pain-control's H/L resize (C-M-S-arrows still resize).
+bind -r -N "Move window left" H swap-window -t -1 \; select-window -t -1
+bind -r -N "Move window right" L swap-window -t +1 \; select-window -t +1
+
 # Source local configuration if any
 if "[ -f ~/.tmux.local.conf ]" "run ~/.tmux.local.conf"
