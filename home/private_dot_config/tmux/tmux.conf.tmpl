@@ -93,7 +93,10 @@ bind -N "Rename window" r command-prompt -I "#W" "rename-window -- '%%'"
 bind -N "Create window" c new-window -c "#{pane_current_path}"
 bind -N "Swap window with" m command-prompt -p "move window to:" "swap-window -t '%%'"
 bind -N "Move window to first, shifting the others" Home move-window -b -t "{start}"
-bind -N "Move window to index" . command-prompt "move-window -r -t '%%'"
+# -a when moving right, -b when moving left: a lone -b lands one slot short going right.
+bind -N "Move window to index, shifting the others" . command-prompt -p "move window to:" {
+  if -F "#{e|>:%%,#{window_index}}" "move-window -a -t ':%%'" "move-window -b -t ':%%'"
+}
 
 bind -N "Switch to window 1" -n M-1 select-window -t 1
 bind -N "Switch to window 2" -n M-2 select-window -t 2
