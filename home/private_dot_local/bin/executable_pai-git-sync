@@ -98,20 +98,50 @@ clear_stale_index_lock() {
 	record_failure "🧹 pai-git-sync[$name]: cleared stale index.lock (${age}s old, no holder)"
 }
 
-# The commit hooks can run for over a minute while live sessions keep writing,
-# so by now origin may have moved and the tree may be dirty again: fetch anew,
-# and autostash, or the push is rejected or the rebase refuses to start.
+# Prints the operation the repo is in the middle of, or nothing. A commit made
+# in any of these states lands outside the branch and an abort orphans it.
+repo_mid_operation() {
+	local marker
+	if ! git symbolic-ref -q HEAD >/dev/null; then
+		echo "detached HEAD"
+		return 0
+	fi
+	for marker in rebase-merge rebase-apply MERGE_HEAD CHERRY_PICK_HEAD REVERT_HEAD; do
+		if [ -e "$(git rev-parse --git-path "$marker")" ]; then
+			echo "$marker"
+			return 0
+		fi
+	done
+}
+
+# Fetch anew and autostash: slow commit hooks let origin move and the tree dirty.
+# Merge, not rebase: a rebase detaches HEAD, so a session commit made meanwhile
+# is orphaned by the abort. Both parents passed the leak scan, hence --no-verify.
 integrate_upstream() {
-	local name="$1"
+	local name="$1" out state
 	if ! git fetch 2>&1; then
-		record_failure "⚠️ pai-git-sync[$name]: fetch before rebase failed"
+		record_failure "⚠️ pai-git-sync[$name]: fetch before merge failed"
 		return 1
 	fi
-	if ! git rebase --autostash origin/main; then
-		git rebase --abort 2>/dev/null || true
-		record_failure "⚠️ pai-git-sync[$name]: rebase conflict — resolve manually"
-		return 1
+	out=$(git merge --autostash --no-gpg-sign --no-verify --no-edit origin/main 2>&1) && {
+		printf '%s\n' "$out"
+		return 0
+	}
+	printf '%s\n' "$out" >&2
+	if [ -e "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+		git merge --abort 2>&1 || true
 	fi
+	state=$(repo_mid_operation)
+	if [ -n "$state" ]; then
+		record_failure "🚨 pai-git-sync[$name]: merge abort failed, repo left in $state — resolve manually"
+	elif grep -q 'index.lock' <<<"$out"; then
+		record_failure "⚠️ pai-git-sync[$name]: merge skipped, index.lock held by another git; retried next tick"
+	elif grep -q '^CONFLICT' <<<"$out"; then
+		record_failure "⚠️ pai-git-sync[$name]: merge conflict with origin/main, aborted cleanly — resolve manually"
+	else
+		record_failure "⚠️ pai-git-sync[$name]: merge with origin/main failed, aborted cleanly"
+	fi
+	return 1
 }
 
 sync_repo() {
@@ -162,6 +192,15 @@ sync_repo() {
 	# A crashed git leaves index.lock behind and every later add fails until a
 	# human clears it — three hours of dead syncs on 2026-09-03.
 	clear_stale_index_lock "$repo" "$name" || true
+
+	# Never commit onto, or abort, an operation this run did not start: it may
+	# be a session's or a human's.
+	local mid_op
+	mid_op=$(repo_mid_operation)
+	if [ -n "$mid_op" ]; then
+		record_failure "⚠️ pai-git-sync[$name]: repo is in $mid_op, sync skipped and nothing touched"
+		return 1
+	fi
 
 	# Unguarded, a partial add stages nothing and the rest of the function no-ops
 	# to a false success.
