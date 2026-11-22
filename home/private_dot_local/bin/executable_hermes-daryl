@@ -16,6 +16,9 @@
 set -eu
 
 HERMES_HOME="${HERMES_HOME:-$HOME/.hermes}"
+export HERMES_HOME
+# Converge the mount and SOUL first, then refuse on anything still stale.
+bun "$HOME/.claude/PAI/HERMES/Preflight.ts" || exit 1
 if [ ! -f "$HERMES_HOME/plugins/lifeos/policy.json" ]; then
   echo "hermes-daryl: PAI guard not installed — run: bun ~/.claude/PAI/HERMES/Mount.ts" >&2
   exit 1
