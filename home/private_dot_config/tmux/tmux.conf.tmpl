@@ -196,6 +196,8 @@ set -g @plugin "vascomfnunes/tmux-ludanta"
 set -g @continuum-restore "on"
 # Do not capture panes content to avoid capturing secrets
 set -g @resurrect-capture-pane-contents 'off'
+# Restored claude panes skip the launcher that unsets this, so drop it here too.
+set -g @assistant-resurrect-claude-drop-env 'ANTHROPIC_API_KEY'
 
 # tmux-fzf-links
 # python3, not an absolute path: /usr/bin/python is absent on Ubuntu. The editor
