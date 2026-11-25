@@ -176,7 +176,9 @@ set -g @plugin "catppuccin/tmux#v2.1.3"
 set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin "tmux-plugins/tmux-resurrect"
 set -g @plugin "tmux-plugins/tmux-continuum"
-set -g @plugin 'timvw/tmux-assistant-resurrect'
+# Fork branch carrying the launch-prefix option until upstream PR 141 merges;
+# then back to timvw/tmux-assistant-resurrect.
+set -g @plugin 'gwarf/tmux-assistant-resurrect#feat/launch-prefix'
 # Supplies prefix+| and prefix+- splits plus hjkl pane navigation; the herdr
 # parity bindings above assume they exist.
 set -g @plugin "tmux-plugins/tmux-pain-control"
@@ -199,6 +201,9 @@ set -g @continuum-restore "on"
 set -g @resurrect-capture-pane-contents 'off'
 # Restored claude panes skip the launcher that unsets this, so drop it here too.
 set -g @assistant-resurrect-claude-drop-env 'ANTHROPIC_API_KEY'
+# Resume claude through the pai environment (credstore secrets for MCP servers).
+# Needs the launch-prefix option (upstream PR 141); a missing path falls back.
+set -g @assistant-resurrect-claude-launch-prefix '{{ .chezmoi.homeDir }}/.claude/PAI/TOOLS/PaiExecEnv.ts'
 
 # tmux-fzf-links
 # python3, not an absolute path: /usr/bin/python is absent on Ubuntu. The editor
