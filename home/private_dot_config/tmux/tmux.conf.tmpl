@@ -141,10 +141,11 @@ bind-key T display-popup -EE -w 82% -h 85% '~/.local/bin/daynote --edit'
 
 set -g @catppuccin_flavor "macchiato"
 set -g @catppuccin_window_status_style "rounded"
-# Pane titles are long (Claude Code sets them): full on the current window,
-# truncated on the others so the list does not overflow.
-set -g @catppuccin_window_text " #{=/16/…:pane_title}"
-set -g @catppuccin_window_current_text " #T"
+# Label: the pane's @pai_title (conversation topic, set by a hook), else a
+# hand-set window name, else the pane title (Claude Code sets it to "Claude Code").
+# Full on the current window, truncated on the others so the list fits.
+set -g @catppuccin_window_text " #{=/24/…:#{?@pai_title,#{@pai_title},#{?automatic-rename,#{pane_title},#W}}}"
+set -g @catppuccin_window_current_text " #{?@pai_title,#{@pai_title},#{?automatic-rename,#{pane_title},#W}}"
 # Run catppuccin here rather than from tpm at the bottom: the status line below
 # reads its @catppuccin_status_* and @thm_* options, which only exist once it ran.
 if "test -f ~/.config/tmux/plugins/tmux/catppuccin.tmux" \
