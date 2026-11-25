@@ -17,7 +17,7 @@ Usage:
   daryl [agent] [options] [prompt words...]
 
 Agents:
-  claude   Claude Code through pai (model switched with /model)
+  claude   Claude Code through pai (-m sets the model at launch, this session only)
   codex    OpenAI Codex CLI
   gemini   Google Gemini CLI
   goose    Goose (needs a provider: goose configure)
