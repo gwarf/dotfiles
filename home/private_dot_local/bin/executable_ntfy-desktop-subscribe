@@ -1,0 +1,10 @@
+#!/bin/sh
+# Raises a desktop notification for each message on the PAI alerts topic.
+# The reader token arrives as a systemd credential (ntfy-desktop.service), so it
+# never sits in clear in client.yml; the notifier command drops it again.
+set -eu
+NTFY_TOKEN=$(cat "$CREDENTIALS_DIRECTORY/ntfy-token")
+export NTFY_TOKEN
+# shellcheck disable=SC2016 # ntfy runs this command in its own sh, which sets $p, $t and $m per message
+exec /usr/bin/ntfy subscribe https://ntfy.internal.bapt.name/pai-alerts \
+	'unset NTFY_TOKEN; case "$p" in 5) u=critical ;; 1|2) u=low ;; *) u=normal ;; esac; notify-send -a ntfy -u "$u" "${t:-PAI alert}" "$m"'

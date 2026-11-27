@@ -68,6 +68,10 @@ Mail/.notmuch/hooks/post-new
 .config/systemd/user/graphical-session.target.wants/brave-interceptor.service
 # Hyprland's polkit agent; torpedo's KDE session brings its own.
 .config/systemd/user/graphical-session.target.wants/hyprpolkitagent.service
+# ntfy desktop subscriber; its token credential is sealed on sikaru only.
+.config/systemd/user/ntfy-desktop.service
+.config/systemd/user/graphical-session.target.wants/ntfy-desktop.service
+.local/bin/ntfy-desktop-subscribe
 {{- end }}
 {{- if eq .chezmoi.hostname "assist" }}
 # aerc resolves `rbw` at render time, and chezmoi apply runs unattended here

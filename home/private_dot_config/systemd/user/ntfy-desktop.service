@@ -1,0 +1,18 @@
+[Unit]
+Description=Desktop notifications for the PAI alerts ntfy topic
+Documentation=https://docs.ntfy.sh/subscribe/cli/
+After=graphical-session.target
+PartOf=graphical-session.target
+# Skipped, not failed, until the homelab workstations play installs ntfysh-bin.
+ConditionPathExists=/usr/bin/ntfy
+
+[Service]
+Type=simple
+# User-scoped credential (systemd-creds encrypt --user), sealed on this host.
+LoadCredentialEncrypted=ntfy-token:%h/.config/ntfy/reader-token.cred
+ExecStart=%h/.local/bin/ntfy-desktop-subscribe
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=graphical-session.target
